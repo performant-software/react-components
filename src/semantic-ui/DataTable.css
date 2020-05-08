@@ -1,0 +1,23 @@
+.data-table .ui.table .actions-cell {
+  padding-right: 20px;
+  text-align: right;
+}
+
+.data-table .empty-button {
+  display: inline;
+  margin-left: 5px;
+  margin-right: 4px;
+}
+
+.data-table .empty-container {
+  font-size: 1.1em;
+  padding: 15px;
+}
+
+.data-table .footer {
+  margin-top: 10px;
+}
+
+.data-table .header {
+  margin-bottom: 10px;
+}
