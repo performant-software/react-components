@@ -1,4 +1,5 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs  } from "@storybook/addon-knobs";
 import Keyboard from '../../../src/common/Keyboard';
@@ -10,7 +11,7 @@ import JapaneseLayout from 'simple-keyboard-layouts/build/layouts/japanese';
 
 export default {
   title: 'Components/Common/Keyboard',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const English = () => (

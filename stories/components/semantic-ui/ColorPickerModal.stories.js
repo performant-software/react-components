@@ -1,11 +1,12 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color } from "@storybook/addon-knobs";
 import ColorPickerModal from '../../../src/semantic-ui/ColorPickerModal';
 
 export default {
   title: 'Components/Semantic UI/ColorPickerModal',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const Default = () => (

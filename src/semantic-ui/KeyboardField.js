@@ -86,6 +86,9 @@ class KeyboardField extends Component<Props, State> {
           className={this.props.className}
           error={this.props.error}
           id={this.props.id}
+          input={{
+            'aria-label': this.props.name
+          }}
           label={this.renderLabel()}
           name={this.props.name}
           onChange={this.onInputChange.bind(this)}

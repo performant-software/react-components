@@ -252,6 +252,9 @@ class ListTable extends Component<Props, State> {
       <Input
         type='text'
         icon='search'
+        input={{
+          'aria-label': 'search'
+        }}
         loading={this.state.loading}
         onKeyDown={Timer.clearSearchTimer.bind(this)}
         onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}

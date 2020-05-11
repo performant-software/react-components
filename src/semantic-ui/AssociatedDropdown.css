@@ -29,3 +29,7 @@
 .ui.form .wide.field .ui.input .association-dropdown input.dropdown-search-input {
   width: 100%;
 }
+
+.ui.dropdown:not(.button) > .default.text {
+  color: rgba(95, 95, 95, 0.86);
+}

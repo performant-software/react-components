@@ -178,6 +178,7 @@ class AssociatedDropdown extends Component<Props, State> {
           placeholder={this.props.placeholder}
           search={() => this.state.options}
           searchInput={{
+            'aria-label': this.props.collectionName,
             className: 'dropdown-search-input',
             onKeyDown: Timer.clearSearchTimer.bind(this),
             onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, boolean, text } from "@storybook/addon-knobs";
 import { Form } from 'semantic-ui-react';
 import English from 'simple-keyboard-layouts/build/layouts/english';
@@ -7,7 +7,7 @@ import KeyboardField from '../../../src/semantic-ui/KeyboardField';
 
 export default {
   title: 'Components/Semantic UI/KeyboardField',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const Default = () => {
@@ -18,6 +18,7 @@ export const Default = () => {
       <KeyboardField
         label={text('Field name', 'Field')}
         layout={English}
+        name='test-field'
         onChange={(e, { value }) => setValue(value)}
         required={boolean('Required', false)}
         value={value}
