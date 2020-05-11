@@ -1,4 +1,5 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
@@ -8,7 +9,7 @@ import AssociatedDropdown from '../../../src/semantic-ui/AssociatedDropdown';
 
 export default {
   title: 'Components/Semantic UI/AssociatedDropdown',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 const items = [{

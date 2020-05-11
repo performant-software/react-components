@@ -218,7 +218,7 @@ class DataTable extends Component<Props, State> {
         icon={action.icon}
         key={`${action.name}-${index}`}
         onClick={action.onClick.bind(this, item)}
-        title={action.title}
+        title={action.title || action.name}
       />
     );
   }

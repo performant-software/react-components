@@ -1,4 +1,5 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from "@storybook/addon-knobs";
 import { Input } from 'semantic-ui-react';
@@ -7,7 +8,7 @@ import GooglePlacesSearch from '../../../src/semantic-ui/GooglePlacesSearch';
 
 export default {
   title: 'Components/Semantic UI/GooglePlacesSearch',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const Default = () => (
@@ -19,7 +20,7 @@ export const Default = () => (
     onLocationSelection={action('location-selection')}
     style={{ display: 'inline' }}
   >
-    <Input type='text' />
+    <Input type='text' aria-label='places-search' />
   </GooglePlacesSearch>
 );
 
@@ -32,6 +33,6 @@ export const CustomInput = () => (
     onLocationSelection={action('location-selection')}
     style={{ display: 'inline' }}
   >
-    <Input type='text' icon='world' size='large' />
+    <Input type='text' icon='world' size='large' aria-label='places-search' />
   </GooglePlacesSearch>
 );

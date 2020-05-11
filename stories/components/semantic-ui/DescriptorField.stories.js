@@ -1,10 +1,11 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, number, text } from "@storybook/addon-knobs";
 import DescriptorField from '../../../src/semantic-ui/DescriptorField';
 
 export default {
   title: 'Components/Semantic UI/DescriptorField',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const Default = () => (
