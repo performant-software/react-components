@@ -1,0 +1,31 @@
+.association-dropdown {
+  width: 100%;
+}
+
+.association-dropdown .buttons {
+  width: 30%
+}
+
+.association-dropdown .inline-dropdown {
+  width: 70%;
+}
+
+.association-dropdown .ui.search.selection.dropdown > input.search {
+  width: 100%;
+}
+
+.association-dropdown div[role="listbox"] div[role="option"] span.text {
+  display: block;
+}
+
+.association-dropdown div[role="alert"]  {
+  max-width: 100%;
+}
+
+.ui.form.field .ui.input .association-dropdown input.dropdown-search-input {
+  width: 100%;
+}
+
+.ui.form .wide.field .ui.input .association-dropdown input.dropdown-search-input {
+  width: 100%;
+}

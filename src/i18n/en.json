@@ -1,0 +1,38 @@
+{
+  "Common": {
+    "buttons": {
+      "add": "Add",
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "save": "Save"
+    },
+    "errors": {
+      "title": "Oops!"
+    }
+  },
+  "DataTable": {
+    "buttons": {
+      "add": "Add"
+    },
+    "columns": {
+      "actions": "Actions"
+    },
+    "deleteContent": "Are you sure you want to remove this record?",
+    "deleteHeader": "Confirm Remove",
+    "emptyList": "No matching records found.",
+    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started."
+  },
+  "FileUpload": {
+    "add": "<0>Add files</0> or drop files here",
+    "errors": {
+      "fileType": "Unable to upload {{name}} because {{type}} files are not allowed.",
+      "maxSize": "Unable to upload {{name}} because it exceeds 10 MB."
+    }
+  },
+  "KeyboardField": {
+    "labels": {
+      "hideKeyboard": "Hide Keyboard",
+      "showKeyboard": "Show Keyboard"
+    }
+  }
+}

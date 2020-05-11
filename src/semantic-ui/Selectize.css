@@ -1,0 +1,11 @@
+.selectize .add-button.ui.button {
+  margin-left: 10px;
+}
+
+.selectize .ui.primary.button.button-selected {
+  margin: 5px;
+}
+
+.selectize .empty {
+  opacity: 0.87;
+}
