@@ -26,7 +26,11 @@ export default {
   plugins: [
     babel(),
     resolve(),
-    commonjs(),
+    commonjs({
+      exclude: [
+        'node_modules/symbol-observable/**'
+      ]
+    }),
     postcss({
       plugins: []
     })

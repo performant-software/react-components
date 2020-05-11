@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import { Table } from 'semantic-ui-react';
-import uuid from 'uuid';
+import uuid from 'react-uuid';
 import _ from 'underscore';
 import DataTable from './DataTable';
 import DraggableRow from './DraggableRow';
@@ -142,7 +142,7 @@ class EmbeddedList extends Component<Props, State> {
    * @returns {Promise}
    */
   onSave(item) {
-    const uid = item.uid ? item.uid : uuid.v4();
+    const uid = item.uid ? item.uid : uuid();
     this.props.onSave({ ...item, uid });
 
     return Promise.resolve();
