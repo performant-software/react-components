@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "module": "build/index.es.js",
   "files": [
-    "build"
+    "build",
+    "src"
   ],
   "style": "build/styles.css",
   "scripts": {
