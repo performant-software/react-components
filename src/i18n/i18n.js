@@ -9,16 +9,17 @@ const resources = {
   }
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    debug: true,
-    fallbackLng: 'en',
-    lng: 'en',
-    interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
-    },
-    resources
-  });
+const reactI18n = i18n.createInstance({
+  debug: true,
+  fallbackLng: 'en',
+  lng: 'en',
+  interpolation: {
+    escapeValue: false, // not needed for react as it escapes by default
+  }
+});
 
-export default i18n;
+reactI18n
+  .use(initReactI18next)
+  .init({ resources });
+
+export default reactI18n;
