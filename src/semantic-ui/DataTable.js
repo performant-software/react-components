@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import { Trans, withTranslation } from 'react-i18next';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import createEditModal from './EditModal';
 import './DataTable.css';
 
@@ -276,7 +277,7 @@ class DataTable extends Component<Props, State> {
 
     return (
       <Table.HeaderCell>
-        { this.props.t('DataTable.columns.actions') }
+        { i18n.t('DataTable.columns.actions') }
       </Table.HeaderCell>
     );
   }
@@ -298,7 +299,7 @@ class DataTable extends Component<Props, State> {
         onClick={this.onAddButton.bind(this)}
       >
         <Icon name='plus' />
-        { this.props.t('DataTable.buttons.add') }
+        { i18n.t('DataTable.buttons.add') }
       </Button>
     );
   }
@@ -408,7 +409,7 @@ class DataTable extends Component<Props, State> {
 
     return (
       <Confirm
-        content={this.props.t('DataTable.deleteContent')}
+        content={i18n.t('DataTable.deleteContent')}
         header={<Header icon='trash alternate outline' content={this.props.t('DataTable.deleteHeader')} />}
         onCancel={onCancel}
         onConfirm={onConfirm}
@@ -475,7 +476,7 @@ class DataTable extends Component<Props, State> {
    */
   renderEmptyMessage() {
     if (!(this.props.addButton && this.props.modal)) {
-      return this.props.t('DataTable.emptyList');
+      return i18n.t('DataTable.emptyList');
     }
 
     return (
@@ -600,7 +601,7 @@ class DataTable extends Component<Props, State> {
         sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
         onClick={this.props.onColumnClick.bind(this, column)}
       >
-        { column.label && this.props.t(column.label) }
+        { column.label && i18n.t(column.label) }
       </Table.HeaderCell>
     );
   }
@@ -679,4 +680,4 @@ DataTable.defaultProps = {
   sortDirection: undefined
 };
 
-export default withTranslation()(DataTable);
+export default DataTable;

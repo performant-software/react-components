@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Button, Loader, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import './EditModal.css';
 
 type Props = {
@@ -155,11 +156,11 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
 
         _.each(fieldErrors, (error) => {
           if (error === ERROR_UNIQUE) {
-            _.extend(validationErrors, { [key]: this.props.t('EditModal.errors.unique', { key, value }) });
+            _.extend(validationErrors, { [key]: i18n.t('EditModal.errors.unique', { key, value }) });
 
             validationErrors.push();
           } else if (error === ERROR_EMPTY) {
-            _.extend(validationErrors, { [key]: this.props.t('EditModal.errors.required', { key }) });
+            _.extend(validationErrors, { [key]: i18n.t('EditModal.errors.required', { key }) });
           } else if (componentProps.resolveValidationError) {
             _.extend(validationErrors, componentProps.resolveValidationError(error, this.state.item));
           }
@@ -167,7 +168,7 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
       });
 
       if (status === 400 && !_.keys(validationErrors).length) {
-        _.extend(validationErrors, { error: this.props.t('EditModal.errors.general') });
+        _.extend(validationErrors, { error: i18n.t('EditModal.errors.general') });
       }
 
       this.setState({ saving: false, validationErrors });
@@ -360,7 +361,7 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
               size='medium'
               type='submit'
             >
-              { this.props.t('Common.buttons.save') }
+              { i18n.t('Common.buttons.save') }
               { this.renderLoader() }
             </Button>
             <Button
@@ -371,7 +372,7 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
               size='medium'
               type='button'
             >
-              { this.props.t('Common.buttons.cancel') }
+              { i18n.t('Common.buttons.cancel') }
             </Button>
           </Modal.Actions>
         </WrappedComponent>
@@ -426,7 +427,7 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
         }
 
         if (invalid) {
-          _.extend(validationErrors, { [key]: this.props.t('EditModal.errors.required', { key }) });
+          _.extend(validationErrors, { [key]: i18n.t('EditModal.errors.required', { key }) });
         }
       });
 

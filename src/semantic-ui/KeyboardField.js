@@ -1,9 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import { withTranslation } from 'react-i18next';
 import { Form, Segment, Transition } from 'semantic-ui-react';
 import Keyboard from '../common/Keyboard';
+import i18n from '../i18n/i18n';
 import LinkLabel from './LinkLabel';
 import './KeyboardField.css';
 
@@ -122,8 +122,8 @@ class KeyboardField extends Component<Props, State> {
     return (
       <LinkLabel
         content={this.state.showKeyboard
-          ? this.props.t('KeyboardField.labels.hideKeyboard')
-          : this.props.t('KeyboardField.labels.showKeyboard')}
+          ? i18n.t('KeyboardField.labels.hideKeyboard')
+          : i18n.t('KeyboardField.labels.showKeyboard')}
         htmlFor={this.props.name}
         label={this.props.label}
         onClick={() => this.setState((state) => ({ showKeyboard: !state.showKeyboard }))}
@@ -139,4 +139,4 @@ KeyboardField.defaultProps = {
   id: ''
 };
 
-export default withTranslation()(KeyboardField);
+export default KeyboardField;

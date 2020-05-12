@@ -2,8 +2,9 @@
 
 import React, { Component, createRef } from 'react';
 import { Icon, Message } from 'semantic-ui-react';
-import { Trans, withTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import './FileUpload.css';
 
 type Props = {
@@ -71,7 +72,7 @@ class FileUpload extends Component<Props, State> {
       >
         <Message
           error
-          header={this.props.t('Common.errors.title')}
+          header={i18n.t('Common.errors.title')}
           hidden={!(this.state.errors && this.state.errors.length)}
           onDismiss={() => this.setState({ errors: null })}
           list={this.state.errors}
@@ -147,13 +148,13 @@ class FileUpload extends Component<Props, State> {
       // Files are invalid if they exceed the maximum size
       if (this.props.maxSize && file.size > this.props.maxSize) {
         valid = false;
-        errors.push(this.props.t('FileUpload.errors.maxSize', { name: file.name }));
+        errors.push(i18n.t('FileUpload.errors.maxSize', { name: file.name }));
       }
 
       // Files are invalid if they do not match the acceptable types
       if (this.filePattern && !file.name.match(this.filePattern)) {
         valid = false;
-        errors.push(this.props.t('FileUpload.errors.fileType', { name: file.name, type: /[^.]+$/.exec(file.name) }));
+        errors.push(i18n.t('FileUpload.errors.fileType', { name: file.name, type: /[^.]+$/.exec(file.name) }));
       }
 
       if (valid) {
@@ -167,4 +168,4 @@ class FileUpload extends Component<Props, State> {
   }
 }
 
-export default withTranslation()(FileUpload);
+export default FileUpload;

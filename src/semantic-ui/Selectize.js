@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import {
   Button,
   Form,
@@ -12,9 +13,9 @@ import {
   Segment,
   Table
 } from 'semantic-ui-react';
-import { withTranslation } from 'react-i18next';
 import _ from 'underscore';
 import createEditModal from './EditModal';
+import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './Selectize.css';
 
@@ -224,7 +225,7 @@ class Selectize extends Component<Props, State> {
             size='medium'
             type='submit'
           >
-            { this.props.t('Common.buttons.save') }
+            { i18n.t('Common.buttons.save') }
           </Button>
           <Button
             inverted
@@ -233,7 +234,7 @@ class Selectize extends Component<Props, State> {
             size='medium'
             type='button'
           >
-            { this.props.t('Common.buttons.cancel') }
+            { i18n.t('Common.buttons.cancel') }
           </Button>
         </Modal.Actions>
       </Modal>
@@ -254,7 +255,7 @@ class Selectize extends Component<Props, State> {
       <Button
         basic
         className='add-button'
-        content={this.props.t('Common.buttons.add')}
+        content={i18n.t('Common.buttons.add')}
         icon='plus'
         onClick={() => this.setState({ modalAdd: true })}
       />
@@ -334,7 +335,7 @@ class Selectize extends Component<Props, State> {
             />
           </Grid.Row>
           <Grid.Row>
-            { this.props.t('Selectize.noRecords') }
+            { i18n.t('Selectize.noRecords') }
           </Grid.Row>
         </Grid.Column>
       </Grid>
@@ -456,4 +457,4 @@ Selectize.defaultProps = {
   selectedItems: []
 };
 
-export default withTranslation()(Selectize);
+export default Selectize;
