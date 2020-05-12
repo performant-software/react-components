@@ -24,4 +24,6 @@ export { default as LoginModal } from './semantic-ui/LoginModal';
 export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as Selectize } from './semantic-ui/Selectize';
 
-export { default as en } from './i18n/en.json';
+// I18n
+import en from './i18n/en.json';
+export { en };
