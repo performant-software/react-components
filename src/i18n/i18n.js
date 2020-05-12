@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import en from './en.json';
@@ -9,17 +9,18 @@ const resources = {
   }
 };
 
-const reactI18n = i18n.createInstance({
-  debug: true,
-  fallbackLng: 'en',
-  lng: 'en',
-  interpolation: {
-    escapeValue: false, // not needed for react as it escapes by default
-  }
+const i18n = i18next.createInstance();
+
+i18n
+  .use(initReactI18next)
+  .init({
+    debug: true,
+    fallbackLng: 'en',
+    lng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    resources
 });
 
-reactI18n
-  .use(initReactI18next)
-  .init({ resources });
-
-export default reactI18n;
+export default i18n;
