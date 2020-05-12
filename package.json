@@ -2,6 +2,9 @@
   "name": "react-components",
   "version": "1.0.0",
   "description": "A library of shared React components",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "webpack --mode production",
     "build-storybook": "build-storybook",
