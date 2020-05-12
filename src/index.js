@@ -23,6 +23,3 @@ export { default as ListTable } from './semantic-ui/ListTable';
 export { default as LoginModal } from './semantic-ui/LoginModal';
 export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as Selectize } from './semantic-ui/Selectize';
-
-// I18n
-export { default as i18n } from './i18n/i18n';
