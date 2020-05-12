@@ -12,7 +12,6 @@ const resources = {
 const i18n = i18next.createInstance();
 
 i18n
-  .use(initReactI18next)
   .init({
     debug: true,
     fallbackLng: 'en',
