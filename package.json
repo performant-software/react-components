@@ -5,7 +5,6 @@
   "main": "build/index.js",
   "module": "build/index.es.js",
   "files": [
-    "build",
     "src"
   ],
   "style": "build/styles.css",
@@ -13,7 +12,6 @@
     "build": "webpack --mode production",
     "build-storybook": "build-storybook",
     "flow": "flow",
-    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006"
   },
