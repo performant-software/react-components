@@ -13,17 +13,15 @@ module.exports = {
   },
   plugins: [new CleanWebpackPlugin()],
   module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        include: path.resolve(__dirname, './src')
-      }
-    ]
+    rules: [{
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      use: ['babel-loader']
+    },
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+      include: path.resolve(__dirname, './src')
+    }]
   }
 }
