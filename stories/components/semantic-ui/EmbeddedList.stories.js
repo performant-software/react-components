@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from "@storybook/addon-knobs";
 import AddModal from '../AddModal';
@@ -7,7 +8,7 @@ import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
 
 export default {
   title: 'Components/Semantic UI/EmbeddedList',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 }
 
 const actions = [{

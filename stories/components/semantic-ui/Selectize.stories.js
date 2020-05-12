@@ -1,4 +1,5 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
 import _ from 'underscore';
@@ -8,7 +9,7 @@ import Selectize from '../../../src/semantic-ui/Selectize';
 
 export default {
   title: 'Components/Semantic UI/Selectize',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 const items = [{

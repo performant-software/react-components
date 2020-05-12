@@ -1,11 +1,12 @@
 import React from 'react';
+import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from "@storybook/addon-knobs";
 import Google from '../../../src/config/Google';
 import GoogleMap from '../../../src/semantic-ui/GoogleMap';
 
 export default {
   title: 'Components/Semantic UI/GoogleMap',
-  decorators: [withKnobs]
+  decorators: [withA11y, withKnobs]
 };
 
 export const Default = () => (

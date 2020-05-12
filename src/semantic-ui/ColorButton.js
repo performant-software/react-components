@@ -21,6 +21,7 @@ const ColorButton = (props: Props) => (
       height: props.height,
       width: props.width
     }}
+    title='color-button'
   />
 );
 
