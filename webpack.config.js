@@ -1,5 +1,5 @@
-const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -11,7 +11,9 @@ module.exports = {
     library: '',
     libraryTarget: 'commonjs'
   },
-  plugins: [new CleanWebpackPlugin()],
+  plugins: [
+    new CleanWebpackPlugin()
+  ],
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
@@ -21,9 +23,6 @@ module.exports = {
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
       include: path.resolve(__dirname, './src')
-    }, {
-      test: /\.json/,
-      use: ['json-loader']
     }]
   }
 }

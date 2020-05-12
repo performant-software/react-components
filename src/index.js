@@ -23,3 +23,5 @@ export { default as ListTable } from './semantic-ui/ListTable';
 export { default as LoginModal } from './semantic-ui/LoginModal';
 export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as Selectize } from './semantic-ui/Selectize';
+
+export { default as en } from './i18n/en.json';
