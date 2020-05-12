@@ -25,5 +25,4 @@ export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as Selectize } from './semantic-ui/Selectize';
 
 // I18n
-import en from './i18n/en.json';
-export { en };
+export { default as i18n } from './i18n/i18n';
