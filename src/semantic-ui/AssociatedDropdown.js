@@ -1,10 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Button, Dropdown } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
+import { Button, Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 import createEditModal from './EditModal';
+import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './AssociatedDropdown.css';
 
@@ -213,7 +214,7 @@ class AssociatedDropdown extends Component<Props, State> {
     return (
       <Button
         basic
-        content={this.props.t('Common.buttons.add')}
+        content={i18n.t('Common.buttons.add')}
         icon='plus'
         onClick={() => this.setState({ modalAdd: true })}
         type='button'
@@ -265,7 +266,7 @@ class AssociatedDropdown extends Component<Props, State> {
     return (
       <Button
         basic
-        content={this.props.t('Common.buttons.clear')}
+        content={i18n.t('Common.buttons.clear')}
         icon='times'
         onClick={this.onClear.bind(this)}
         type='button'
@@ -290,4 +291,4 @@ AssociatedDropdown.defaultProps = {
   upward: false
 };
 
-export default withTranslation()(AssociatedDropdown);
+export default AssociatedDropdown;

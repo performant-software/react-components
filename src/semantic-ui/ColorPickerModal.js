@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import { SketchPicker } from 'react-color';
-import { withTranslation } from 'react-i18next';
 import { Button, Modal } from 'semantic-ui-react';
+import i18n from '../i18n/i18n';
 import './ColorPickerModal.css';
 
 type Props = {
@@ -58,7 +58,7 @@ class ColorPickerModal extends Component<Props, State> {
             size='medium'
             type='submit'
           >
-            { this.props.t('Common.buttons.save') }
+            { i18n.t('Common.buttons.save') }
           </Button>
           <Button
             inverted
@@ -67,7 +67,7 @@ class ColorPickerModal extends Component<Props, State> {
             size='medium'
             type='button'
           >
-            { this.props.t('Common.buttons.cancel') }
+            { i18n.t('Common.buttons.cancel') }
           </Button>
         </Modal.Actions>
       </Modal>
@@ -75,4 +75,4 @@ class ColorPickerModal extends Component<Props, State> {
   }
 }
 
-export default withTranslation()(ColorPickerModal);
+export default ColorPickerModal;

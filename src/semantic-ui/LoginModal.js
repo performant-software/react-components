@@ -11,7 +11,7 @@ import {
   Message,
   Modal
 } from 'semantic-ui-react';
-import { withTranslation } from 'react-i18next';
+import i18n from '../i18n/i18n';
 import './LoginModal.css';
 
 type Props = {
@@ -22,7 +22,6 @@ type Props = {
   onPasswordChange: () => void,
   onUsernameChange: () => void,
   open: boolean,
-  t: () => string,
   trigger: () => Component
 };
 
@@ -36,12 +35,12 @@ const LoginModal = (props: Props) => (
   >
     <Header
       icon='user circle'
-      content={props.t('LoginModal.header')}
+      content={i18n.t('LoginModal.header')}
     />
     <Message
       error
-      header={props.t('LoginModal.loginErrorHeader')}
-      content={props.t('LoginModal.loginErrorContent')}
+      header={i18n.t('LoginModal.loginErrorHeader')}
+      content={i18n.t('LoginModal.loginErrorContent')}
     />
     <Grid
       padded='vertically'
@@ -56,7 +55,7 @@ const LoginModal = (props: Props) => (
             className='form-field'
             icon={<Icon name='at' />}
             onChange={props.onUsernameChange.bind(this)}
-            placeholder={props.t('LoginModal.email')}
+            placeholder={i18n.t('LoginModal.email')}
             size='huge'
           />
         </Grid.Row>
@@ -67,7 +66,7 @@ const LoginModal = (props: Props) => (
             className='form-field'
             icon={<Icon name='lock' />}
             onChange={props.onPasswordChange.bind(this)}
-            placeholder={props.t('LoginModal.password')}
+            placeholder={i18n.t('LoginModal.password')}
             size='huge'
             type='password'
           />
@@ -82,7 +81,7 @@ const LoginModal = (props: Props) => (
         size='large'
         type='submit'
       >
-        { props.t('LoginModal.buttonLogin') }
+        { i18n.t('LoginModal.buttonLogin') }
       </Button>
       <Button
         inverted
@@ -90,10 +89,10 @@ const LoginModal = (props: Props) => (
         primary
         size='large'
       >
-        { props.t('LoginModal.buttonCancel') }
+        { i18n.t('LoginModal.buttonCancel') }
       </Button>
     </Modal.Actions>
   </Modal>
 );
 
-export default withTranslation()(LoginModal);
+export default LoginModal;
