@@ -20,5 +20,6 @@ export { default as KeyboardField } from './semantic-ui/KeyboardField';
 export { default as LinkButton } from './semantic-ui/LinkButton';
 export { default as LinkLabel } from './semantic-ui/LinkLabel';
 export { default as ListTable } from './semantic-ui/ListTable';
+export { default as LoginModal } from './semantic-ui/LoginModal';
 export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as Selectize } from './semantic-ui/Selectize';

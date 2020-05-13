@@ -34,5 +34,14 @@
       "hideKeyboard": "Hide Keyboard",
       "showKeyboard": "Show Keyboard"
     }
+  },
+  "LoginModal": {
+    "buttonCancel": "Cancel",
+    "buttonLogin": "Login",
+    "email": "Email",
+    "header": "Login",
+    "loginErrorContent": "The username and/or password you entered is invalid. Please double check and try again.",
+    "loginErrorHeader": "Invalid Credentials",
+    "password": "Password"
   }
 }
