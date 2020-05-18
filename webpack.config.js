@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
+  devtool: 'source-map',
   entry: './src/index.js',
   externals: [nodeExternals()],
   output: {
@@ -25,4 +26,4 @@ module.exports = {
       include: path.resolve(__dirname, './src')
     }]
   }
-}
+};
