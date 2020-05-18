@@ -5,9 +5,16 @@ const nodeExternals = require('webpack-node-externals');
 
 dotenv.config();
 
+const mode = process.env.NODE_ENV;
+let devtool = 'source-map';
+
+if (mode === 'development') {
+  devtool = 'inline-source-map';
+}
+
 module.exports = {
-  mode: process.env.NODE_ENV,
-  devtool: 'source-map',
+  mode,
+  devtool,
   entry: './src/index.js',
   externals: [nodeExternals()],
   output: {
