@@ -8,7 +8,7 @@
   ],
   "style": "build/styles.css",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack",
     "build-storybook": "build-storybook",
     "flow": "flow",
     "prepare": "npm run build",
@@ -50,6 +50,7 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",

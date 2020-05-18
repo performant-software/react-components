@@ -1,8 +1,12 @@
+const dotenv = require('dotenv');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
+dotenv.config();
+
 module.exports = {
+  mode: process.env.NODE_ENV,
   devtool: 'source-map',
   entry: './src/index.js',
   externals: [nodeExternals()],
