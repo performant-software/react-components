@@ -1,0 +1,8 @@
+.tabbed-modal.ui .modal-header .ui.header {
+  display: inline;
+}
+
+.tabbed-modal.ui .modal-header .ui.menu {
+  display: inline-flex;
+  margin-left: 30px;
+}
