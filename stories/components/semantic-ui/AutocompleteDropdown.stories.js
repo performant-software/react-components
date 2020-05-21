@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
@@ -23,14 +23,20 @@ const data = [
   'Pink'
 ];
 
-const onLoad = () => new Promise((resolve) => resolve(_.map(data, (i) => ({ key: i, value: i, text: i }))));
+const onLoad = (options) => new Promise((resolve) => resolve(_.map(options, (o) => ({ key: o, value: o, text: o }))));
 
-export const Default = () => (
-  <AutocompleteDropdown
-    fluid={boolean('Fluid', false)}
-    multiple={boolean('Multiple', false)}
-    onLoad={onLoad.bind(this)}
-    onSelection={action('selected')}
-    value={undefined}
-  />
-);
+export const Default = () => {
+  const [options, setOptions] = useState(data);
+
+  return (
+    <AutocompleteDropdown
+      allowAdditions={boolean('Allow additions', false)}
+      fluid={boolean('Fluid', false)}
+      multiple={boolean('Multiple', false)}
+      onAddItem={(e, { value }) => new Promise((resolve) => resolve(setOptions([...options, value])))}
+      onLoad={onLoad.bind(this, options)}
+      onSelection={action('selected')}
+      value={undefined}
+    />
+  );
+};

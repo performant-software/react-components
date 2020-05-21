@@ -11,9 +11,11 @@ type Option = {
 };
 
 type Props = {
+  allowAdditions?: boolean,
   className?: string,
   fluid?: boolean,
   multiple?: boolean,
+  onAddItem?: (e: Event, data: any) => Promise<any>,
   onLoad: () => Promise<Array<Option>>,
   onSelection: (value: string) => void,
   placeholder?: string,
@@ -46,9 +48,7 @@ class AutocompleteDropdown extends Component<Props, State> {
    * Loads the options and sets the values on the state.
    */
   componentDidMount() {
-    this.props
-      .onLoad()
-      .then((options) => this.setState({ options, loading: false }));
+    this.onLoad();
   }
 
   /**
@@ -63,6 +63,27 @@ class AutocompleteDropdown extends Component<Props, State> {
     }
 
     return classNames.join(' ');
+  }
+
+  /**
+   * Calls the onAddItem prop function and reloads the options.
+   *
+   * @param e
+   * @param data
+   *
+   * @returns {*|Q.Promise<any>|Promise<R>|Promise<any>|void}
+   */
+  onAddItem(e: Event, data: any) {
+    return this.props.onAddItem && this.props.onAddItem(e, data).then(this.onLoad.bind(this));
+  }
+
+  /**
+   * Loads the dropdown options.
+   */
+  onLoad() {
+    this.props
+      .onLoad()
+      .then((options) => this.setState({ options, loading: false }));
   }
 
   /**
@@ -83,12 +104,14 @@ class AutocompleteDropdown extends Component<Props, State> {
   render() {
     return (
       <Dropdown
+        allowAdditions={this.props.allowAdditions}
         className={this.getClassNames()}
         clearable
         deburr
         fluid={this.props.fluid}
         loading={this.state.loading}
         multiple={this.props.multiple}
+        onAddItem={this.onAddItem.bind(this)}
         onChange={this.onOptionSelection.bind(this)}
         options={this.state.options}
         placeholder={this.props.placeholder}
@@ -103,9 +126,11 @@ class AutocompleteDropdown extends Component<Props, State> {
 }
 
 AutocompleteDropdown.defaultProps = {
+  allowAdditions: false,
   className: '',
   fluid: false,
   multiple: false,
+  onAddItem: undefined,
   placeholder: null
 };
 
