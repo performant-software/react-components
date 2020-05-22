@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
-import AutocompleteDropdown from '../../../src/semantic-ui/AutocompleteDropdown';
+import RemoteDropdown from '../../../src/semantic-ui/RemoteDropdown';
 
 export default {
-  title: 'Components/Semantic UI/AutocompleteDropdown',
+  title: 'Components/Semantic UI/RemoveDropdown',
   decorators: [withKnobs]
 };
 
@@ -29,7 +29,7 @@ export const Default = () => {
   const [options, setOptions] = useState(data);
 
   return (
-    <AutocompleteDropdown
+    <RemoteDropdown
       allowAdditions={boolean('Allow additions', false)}
       fluid={boolean('Fluid', false)}
       multiple={boolean('Multiple', false)}

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import './AutocompleteDropdown.css';
+import './RemoteDropdown.css';
 
 type Option = {
   key: number,
@@ -27,7 +27,7 @@ type State = {
   options: Array<Option>
 };
 
-class AutocompleteDropdown extends Component<Props, State> {
+class RemoteDropdown extends Component<Props, State> {
   static defaultProps: any;
 
   /**
@@ -125,7 +125,7 @@ class AutocompleteDropdown extends Component<Props, State> {
   }
 }
 
-AutocompleteDropdown.defaultProps = {
+RemoteDropdown.defaultProps = {
   allowAdditions: false,
   className: '',
   fluid: false,
@@ -134,4 +134,4 @@ AutocompleteDropdown.defaultProps = {
   placeholder: null
 };
 
-export default AutocompleteDropdown;
+export default RemoteDropdown;
