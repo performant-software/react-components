@@ -7,7 +7,7 @@ import _ from 'underscore';
 import RemoteDropdown from '../../../src/semantic-ui/RemoteDropdown';
 
 export default {
-  title: 'Components/Semantic UI/RemoveDropdown',
+  title: 'Components/Semantic UI/RemoteDropdown',
   decorators: [withKnobs]
 };
 
