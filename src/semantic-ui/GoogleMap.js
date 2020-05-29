@@ -1,12 +1,13 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   GoogleMap as MapComponent,
   Marker,
   withGoogleMap,
   withScriptjs
 } from 'react-google-maps';
+import Google from '../utils/Google';
 
 type Props = {
   center: {
@@ -41,4 +42,36 @@ GoogleMap.defaultProps = {
   zoom: 3
 };
 
-export default withScriptjs(withGoogleMap(GoogleMap));
+const GoogleMapElement = withScriptjs(withGoogleMap(GoogleMap));
+
+type WrapperProps = {
+  containerElement?: Component<{}>,
+  googleMapsApiKey: string,
+  loadingElement?: Component<{}>,
+  mapElement?: Component<{}>
+};
+
+const GoogleMapWrapper = ({
+  containerElement,
+  googleMapsApiKey,
+  loadingElement,
+  mapElement,
+  ...rest
+}: WrapperProps) => (
+  <GoogleMapElement
+    {...rest}
+    containerElement={containerElement}
+    googleMapURL={Google.getGoogleMapsUrl(googleMapsApiKey)}
+    loadingElement={loadingElement}
+    mapElement={mapElement}
+  />
+);
+
+GoogleMapWrapper.defaultProps = {
+  containerElement: <div style={{ height: '400px' }} />,
+  loadingElement: <div style={{ height: '100%' }} />,
+  mapElement: <div style={{ height: '100%' }} />
+
+};
+
+export default GoogleMapWrapper;

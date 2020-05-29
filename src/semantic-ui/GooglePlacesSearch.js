@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withGoogleMap, withScriptjs } from 'react-google-maps';
 import StandaloneSearchBox from 'react-google-maps/lib/components/places/StandaloneSearchBox';
 import _ from 'underscore';
-import Google from '../config/Google';
+import Google from '../utils/Google';
 
 type Props = {
   children: Component<{}>,
@@ -42,6 +42,7 @@ const GooglePlacesSearchInput = withScriptjs(withGoogleMap(GooglePlacesSearchBox
 type WrapperProps = {
   children: Component<{}>,
   containerElement?: Component<{}>,
+  googleMapsApiKey: string,
   loadingElement?: Component<{}>,
   mapElement?: Component<{}>,
   onLocationSelection: () => void,
@@ -51,7 +52,7 @@ type WrapperProps = {
 const GooglePlacesSearch = (props: WrapperProps) => (
   <GooglePlacesSearchInput
     containerElement={props.containerElement}
-    googleMapURL={Google.googleMapsUrl}
+    googleMapURL={Google.getGoogleMapsUrl(props.googleMapsApiKey)}
     loadingElement={props.loadingElement}
     mapElement={props.mapElement}
     onLocationSelection={props.onLocationSelection.bind(this)}

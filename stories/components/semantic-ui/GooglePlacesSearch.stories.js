@@ -11,8 +11,8 @@ export default {
 
 export const Default = () => (
   <GooglePlacesSearch
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
     onLocationSelection={action('location-selection')}
-    style={{ display: 'inline' }}
   >
     <Input type='text' aria-label='places-search' />
   </GooglePlacesSearch>
@@ -20,8 +20,8 @@ export const Default = () => (
 
 export const CustomInput = () => (
   <GooglePlacesSearch
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
     onLocationSelection={action('location-selection')}
-    style={{ display: 'inline' }}
   >
     <Input type='text' icon='world' size='large' aria-label='places-search' />
   </GooglePlacesSearch>
