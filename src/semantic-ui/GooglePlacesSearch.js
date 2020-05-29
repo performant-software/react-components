@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import { withGoogleMap, withScriptjs } from 'react-google-maps';
 import StandaloneSearchBox from 'react-google-maps/lib/components/places/StandaloneSearchBox';
 import _ from 'underscore';
+import Google from '../config/Google';
 
 type Props = {
-  children: Component,
+  children: Component<{}>,
   onLocationSelection: ({ lat: number, lng: number }) => void
 }
 
@@ -36,4 +37,37 @@ const GooglePlacesSearchBox = (props: Props) => {
   );
 };
 
-export default withScriptjs(withGoogleMap(GooglePlacesSearchBox));
+const GooglePlacesSearchInput = withScriptjs(withGoogleMap(GooglePlacesSearchBox));
+
+type WrapperProps = {
+  children: Component<{}>,
+  containerElement?: Component<{}>,
+  loadingElement?: Component<{}>,
+  mapElement?: Component<{}>,
+  onLocationSelection: () => void,
+  style?: any
+};
+
+const GooglePlacesSearch = (props: WrapperProps) => (
+  <GooglePlacesSearchInput
+    containerElement={props.containerElement}
+    googleMapURL={Google.googleMapsUrl}
+    loadingElement={props.loadingElement}
+    mapElement={props.mapElement}
+    onLocationSelection={props.onLocationSelection.bind(this)}
+    style={props.style}
+  >
+    { props.children }
+  </GooglePlacesSearchInput>
+);
+
+GooglePlacesSearch.defaultProps = {
+  containerElement: <div style={{ height: '100%' }} />,
+  loadingElement: <div style={{ height: '100%' }} />,
+  mapElement: <div style={{ height: '0px' }} />,
+  style: {
+    display: 'inline'
+  }
+};
+
+export default GooglePlacesSearch;
