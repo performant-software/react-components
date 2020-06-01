@@ -410,7 +410,7 @@ class DataTable extends Component<Props, State> {
     return (
       <Confirm
         content={i18n.t('DataTable.deleteContent')}
-        header={<Header icon='trash alternate outline' content={this.props.t('DataTable.deleteHeader')} />}
+        header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteHeader')} />}
         onCancel={onCancel}
         onConfirm={onConfirm}
         open
@@ -601,7 +601,7 @@ class DataTable extends Component<Props, State> {
         sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
         onClick={this.props.onColumnClick.bind(this, column)}
       >
-        { column.label && i18n.t(column.label) }
+        { column.label }
       </Table.HeaderCell>
     );
   }
