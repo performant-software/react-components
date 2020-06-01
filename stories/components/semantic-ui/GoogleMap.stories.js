@@ -1,46 +1,35 @@
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
-import { withKnobs } from "@storybook/addon-knobs";
-import Google from '../../../src/config/Google';
 import GoogleMap from '../../../src/semantic-ui/GoogleMap';
 
 export default {
   title: 'Components/Semantic UI/GoogleMap',
-  decorators: [withA11y, withKnobs]
+  decorators: [withA11y]
 };
 
 export const Default = () => (
   <GoogleMap
-    containerElement={<div style={{ height: '400px' }} />}
-    googleMapURL={Google.googleMapsUrl}
-    loadingElement={<div style={{ height: '100%' }} />}
-    mapElement={<div style={{ height: '100%' }} />}
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
   />
 );
 
 export const DefaultCenter = () => (
   <GoogleMap
-    containerElement={<div style={{ height: '400px' }} />}
     defaultCenter={{
       lat: 42.3601,
       lng: -71.0589
     }}
-    googleMapURL={Google.googleMapsUrl}
-    loadingElement={<div style={{ height: '100%' }} />}
-    mapElement={<div style={{ height: '100%' }} />}
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
   />
 );
 
 export const DefaultZoom = () => (
   <GoogleMap
-    containerElement={<div style={{ height: '400px' }} />}
     defaultCenter={{
       lat: 42.3601,
       lng: -71.0589
     }}
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
     zoom={12}
-    googleMapURL={Google.googleMapsUrl}
-    loadingElement={<div style={{ height: '100%' }} />}
-    mapElement={<div style={{ height: '100%' }} />}
   />
 );
