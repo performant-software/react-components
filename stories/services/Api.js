@@ -23,7 +23,7 @@ export const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }
       let match = false;
 
       _.each(_.keys(item), (key) => {
-        if (item[key] && item[key].toString().toLowerCase().startsWith(search)) {
+        if (item[key] && item[key].toString().toLowerCase().startsWith(search.toLowerCase())) {
           match = true;
         }
       });
