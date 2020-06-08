@@ -1,6 +1,6 @@
 .data-table .ui.table .actions-cell {
   white-space: nowrap;
-  max-width: 1px;
+  width: 1px;
 }
 
 .data-table .empty-button {
