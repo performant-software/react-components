@@ -40,7 +40,6 @@ const data = [{
 export const Default = () => (
   <NestedAccordion
     getChildItems={(item) => _.where(data, { parent_id: item.id })}
-    isSelected={() => false}
     onItemClick={action('click')}
     onItemToggle={action('toggle')}
     renderItem={(item) => item.name}
