@@ -15,6 +15,7 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import createEditModal from './EditModal';
+import SelectizeHeader from './SelectizeHeader';
 import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './Selectize.css';
@@ -210,7 +211,12 @@ class Selectize extends Component<Props, State> {
             <Grid.Column
               textAlign='center'
             >
-              { this.renderSelectedList() }
+              <SelectizeHeader
+                isSelected={(item) => this.state.selectedItem === item}
+                items={this.state.selectedItems}
+                onItemClick={this.onItemSelection.bind(this)}
+                renderItem={this.props.renderItem.bind(this)}
+              />
               { this.renderItems() }
               { this.renderPagination() }
               { this.renderEmpty() }
@@ -407,47 +413,6 @@ class Selectize extends Component<Props, State> {
         size='mini'
         totalPages={this.state.pages}
       />
-    );
-  }
-
-  /**
-   * Renders the passed selected item.
-   *
-   * @param item
-   * @param index
-   *
-   * @returns {*}
-   */
-  renderSelected(item, index) {
-    return (
-      <Button
-        className='button-selected'
-        content={this.props.renderItem(item)}
-        icon={this.state.selectedItem === item ? 'times circle outline' : undefined}
-        key={index}
-        onClick={this.onItemSelection.bind(this, item)}
-        primary
-        size='small'
-      />
-    );
-  }
-
-  /**
-   * Renders the list of selected items.
-   *
-   * @returns {null|*}
-   */
-  renderSelectedList() {
-    if (!this.state.selectedItems.length) {
-      return null;
-    }
-
-    return (
-      <Segment
-        textAlign='left'
-      >
-        { this.state.selectedItems.map(this.renderSelected.bind(this)) }
-      </Segment>
     );
   }
 }
