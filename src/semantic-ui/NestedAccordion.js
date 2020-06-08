@@ -11,7 +11,7 @@ import './NestedAccordion.css';
 
 type Props = {
   getChildItems: (item: any) => Array<any>,
-  onItemClick: (item: any) => void,
+  onItemClick?: (item: any) => void,
   onItemToggle: (item: any) => void,
   renderItem: (item: any) => string | Component<{}>,
   renderRight?: (item: any) => string | Component<{}>,
@@ -114,7 +114,7 @@ class NestedAccordion extends Component<Props, State> {
       <>
         <Accordion.Title
           active={this.isActive(item)}
-          onClick={this.props.onItemClick.bind(this, item)}
+          onClick={this.props.onItemClick && this.props.onItemClick.bind(this, item)}
         >
           <Grid
             verticalAlign='middle'
@@ -183,6 +183,7 @@ class NestedAccordion extends Component<Props, State> {
 }
 
 NestedAccordion.defaultProps = {
+  onItemClick: () => {},
   renderRight: () => {}
 };
 
