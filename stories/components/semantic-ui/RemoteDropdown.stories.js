@@ -1,9 +1,9 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
+import * as Api from '../../services/Api';
 import RemoteDropdown from '../../../src/semantic-ui/RemoteDropdown';
 
 export default {
@@ -11,32 +11,214 @@ export default {
   decorators: [withKnobs]
 };
 
-const data = [
-  'Red',
-  'Blue',
-  'Orange',
-  'Green',
-  'Yellow',
-  'Black',
-  'White',
-  'Purple',
-  'Pink'
-];
+const onAddItem = (options, setOptions, value) => new Promise(
+  (resolve) => resolve(setOptions([...options, { value }]))
+);
 
-const onLoad = (options) => new Promise((resolve) => resolve(_.map(options, (o) => ({ key: o, value: o, text: o }))));
+const renderOption = (item) => ({
+  key: item.value,
+  value: item.value,
+  text: item.value
+});
+
+const colors = [{
+  value: 'Red'
+}, {
+  value: 'Blue'
+}, {
+  value: 'Orange'
+}, {
+  value: 'Green'
+}, {
+  value: 'Yellow'
+}, {
+  value: 'Black'
+}, {
+  value: 'White'
+}, {
+  value: 'Purple'
+}, {
+  value: 'Pink'
+}];
 
 export const Default = () => {
-  const [options, setOptions] = useState(data);
+  const multiple = boolean('Multiple', false);
+  const [options, setOptions] = useState(colors);
+  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
 
   return (
     <RemoteDropdown
       allowAdditions={boolean('Allow additions', false)}
+      collectionName='items'
       fluid={boolean('Fluid', false)}
-      multiple={boolean('Multiple', false)}
-      onAddItem={(e, { value }) => new Promise((resolve) => resolve(setOptions([...options, value])))}
-      onLoad={onLoad.bind(this, options)}
-      onSelection={action('selected')}
-      value={undefined}
+      multiple={multiple}
+      onAddItem={onAddItem.bind(this, options, setOptions)}
+      onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
+      onSelection={setSelectedValue.bind(this)}
+      renderOption={renderOption.bind(this)}
+      value={selectedValue}
+    />
+  );
+};
+
+export const SelectedValue = () => {
+  const multiple = boolean('Multiple', false);
+  const [options, setOptions] = useState(colors);
+  const [selectedValue, setSelectedValue] = useState(multiple ? ['Red'] : 'Red');
+
+  return (
+    <RemoteDropdown
+      allowAdditions={boolean('Allow additions', false)}
+      collectionName='items'
+      fluid={boolean('Fluid', false)}
+      multiple={multiple}
+      onAddItem={onAddItem.bind(this, options, setOptions)}
+      onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
+      onSelection={setSelectedValue.bind(this)}
+      renderOption={renderOption.bind(this)}
+      value={selectedValue}
+    />
+  );
+};
+
+const movies = [{
+  value: 'Coming Down the Mountain'
+}, {
+  value: 'Me and you (io e te)'
+}, {
+  value: 'Korengal'
+}, {
+  value: 'Jacques Brel Is Alive and Well and Living in Paris'
+}, {
+  value: 'Annie Get Your Gun'
+}, {
+  value: 'Appleseed (Appurushîdo)'
+}, {
+  value: 'Khroustaliov, My Car! (Khrustalyov, mashinu!)'
+}, {
+  value: 'Overboard'
+}, {
+  value: 'Friends of Eddie Coyle, The'
+}, {
+  value: 'Meet the Parents'
+}, {
+  value: 'Wedding Party, The (Die Bluthochzeit)'
+}, {
+  value: 'Beats Rhymes & Life: The Travels of a Tribe Called Quest'
+}, {
+  value: 'Northanger Abbey'
+}, {
+  value: 'In Vanda\'s Room (No Quarto da Vanda)'
+}, {
+  value: 'Asfalto'
+}, {
+  value: 'An Apology to Elephants'
+}, {
+  value: 'Cool Air'
+}, {
+  value: 'Blue Umbrella, The'
+}, {
+  value: 'Earth vs. the Spider'
+}, {
+  value: 'Son of Lassie'
+}, {
+  value: 'Presto'
+}, {
+  value: 'Prisoner of Paradise'
+}, {
+  value: '2-Headed Shark Attack'
+}, {
+  value: 'Shattered'
+}, {
+  value: 'My Life and Times With Antonin Artaud (En compagnie d\'Antonin Artaud)'
+}, {
+  value: 'Hell in the Pacific'
+}, {
+  value: 'Blades of Glory'
+}, {
+  value: 'Lodger, The'
+}, {
+  value: 'Anvil! The Story of Anvil'
+}, {
+  value: 'Please Give'
+}, {
+  value: 'Story of Three Loves, The'
+}, {
+  value: 'Simpsons: The Longest Daycare, The'
+}, {
+  value: 'Unsaid, The'
+}, {
+  value: 'Wisegirls'
+}, {
+  value: 'Enemy of the People, An'
+}, {
+  value: 'Virus'
+}, {
+  value: 'Blue Dahlia, The'
+}, {
+  value: 'Clouds of May (Mayis sikintisi)'
+}, {
+  value: 'Tracker, The'
+}, {
+  value: 'Trailer Park Boys'
+}, {
+  value: 'May 18 (Hwaryeohan hyuga)'
+}, {
+  value: 'Where Eagles Dare'
+}, {
+  value: 'Pocket Money'
+}, {
+  value: 'Charlie Chan\'s Chance'
+}, {
+  value: 'Cat Came Back, The'
+}, {
+  value: 'Good Night, and Good Luck.'
+}, {
+  value: 'White Reindeer'
+}, {
+  value: 'The Phantom of the Opera'
+}, {
+  value: 'Digimon: The Movie'
+}, {
+  value: 'Once Around'
+}];
+
+export const LargeList = () => {
+  const multiple = boolean('Multiple', false);
+  const [options, setOptions] = useState(movies);
+  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
+
+  return (
+    <RemoteDropdown
+      allowAdditions={boolean('Allow additions', false)}
+      collectionName='items'
+      fluid={boolean('Fluid', false)}
+      multiple={multiple}
+      onAddItem={onAddItem.bind(this, options, setOptions)}
+      onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
+      onSelection={setSelectedValue.bind(this)}
+      renderOption={renderOption.bind(this)}
+      value={selectedValue}
+    />
+  );
+};
+
+export const Pagination = () => {
+  const multiple = boolean('Multiple', false);
+  const [options, setOptions] = useState(movies);
+  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
+
+  return (
+    <RemoteDropdown
+      allowAdditions={boolean('Allow additions', false)}
+      collectionName='items'
+      fluid={boolean('Fluid', false)}
+      multiple={multiple}
+      onAddItem={onAddItem.bind(this, options, setOptions)}
+      onLoad={(params) => Api.onLoad(_.extend(params, { items: options, perPage: 10 }))}
+      onSelection={setSelectedValue.bind(this)}
+      renderOption={renderOption.bind(this)}
+      value={selectedValue}
     />
   );
 };
