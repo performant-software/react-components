@@ -37,24 +37,14 @@ const data = [{
   parent_id: 5
 }];
 
-export const Default = () => {
-  const [activeItems, setActiveItems] = useState([]);
-  const isActive = (item) => !!_.findWhere(activeItems, { id: item.id });
-
-  return (
-    <NestedAccordion
-      getChildItems={(item) => _.where(data, { parent_id: item.id })}
-      isActive={isActive.bind(this)}
-      isSelected={() => false}
-      onItemClick={action('click')}
-      onItemToggle={(item) => {
-        setActiveItems(isActive(item)
-          ? _.reject(activeItems, (i) => i.id === item.id)
-          : [...activeItems, item]);
-      }}
-      renderItem={(item) => item.name}
-      rootItems={_.where(data, { parent_id: null })}
-      showToggle={() => true}
-    />
-  );
-};
+export const Default = () => (
+  <NestedAccordion
+    getChildItems={(item) => _.where(data, { parent_id: item.id })}
+    isSelected={() => false}
+    onItemClick={action('click')}
+    onItemToggle={action('toggle')}
+    renderItem={(item) => item.name}
+    rootItems={_.where(data, { parent_id: null })}
+    showToggle={() => true}
+  />
+);

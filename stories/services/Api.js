@@ -92,9 +92,7 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
 
   if (parentId) {
     payload = _.filter(payload, (item) => item[parentKey] === parentId);
-  }
-
-  if (search && search.length) {
+  } else if (search && search.length) {
     payload = _.filter(payload, (item) => {
       let match = false;
 
@@ -106,6 +104,8 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
 
       return match;
     });
+  } else {
+    payload = _.where(payload, { [parentKey]: null });
   }
 
   const response = {

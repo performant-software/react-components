@@ -6,6 +6,7 @@ import {
   Button,
   Grid,
   Header,
+  Icon,
   Input,
   Modal
 } from 'semantic-ui-react';
@@ -40,7 +41,6 @@ type Props = {
 };
 
 type State = {
-  activeItems: Array<any>,
   items: Array<any>,
   modalAdd: boolean,
   searchQuery: string,
@@ -60,7 +60,6 @@ class AccordionSelector extends Component<Props, State> {
     super(props);
 
     this.state = {
-      activeItems: [],
       items: [],
       modalAdd: false,
       searchQuery: '',
@@ -74,17 +73,6 @@ class AccordionSelector extends Component<Props, State> {
    */
   componentDidMount() {
     this.onSearch();
-  }
-
-  /**
-   * Returns true if the passed item is active.
-   *
-   * @param item
-   *
-   * @returns {boolean}
-   */
-  isActive(item) {
-    return !!_.findWhere(this.state.activeItems, { id: item.id });
   }
 
   /**
@@ -140,21 +128,18 @@ class AccordionSelector extends Component<Props, State> {
   }
 
   /**
-   * Opens/collapses the passed item. Child items are lazy loaded.
+   * Lazy-loads the children for the passed item.
    *
    * @param item
    */
   onItemToggle(item) {
     if (!item.loaded) {
       this.onSearch(item.id).then(() => {
-        this.toggleItem(item);
         // Set the "loaded" property on item to prevent multiple API calls
         this.setState((state) => ({
           items: _.map(state.items, (i) => (i.id === item.id ? { ...i, loaded: true } : i))
         }));
       });
-    } else {
-      this.toggleItem(item);
     }
   }
 
@@ -170,9 +155,7 @@ class AccordionSelector extends Component<Props, State> {
       .onSearch(parentId, this.state.searchQuery)
       .then(({ data }) => {
         const items = data[this.props.collectionName];
-        this.setState((state) => (parentId
-          ? this.setItemsByParentId(state, items)
-          : this.setItemsBySearch(state, items)));
+        this.setState((state) => (parentId ? { items: [...state.items || [], ...items] } : { items }));
       });
   }
 
@@ -238,11 +221,10 @@ class AccordionSelector extends Component<Props, State> {
           />
           <NestedAccordion
             getChildItems={this.props.getChildItems.bind(this, this.state.items)}
-            isActive={this.isActive.bind(this)}
-            isSelected={this.isSelected.bind(this)}
             onItemClick={this.onItemClick.bind(this)}
             onItemToggle={this.onItemToggle.bind(this)}
             renderItem={this.props.renderItem.bind(this)}
+            renderRight={this.renderRight.bind(this)}
             rootItems={this.props.getRootItems(this.state.items)}
             showToggle={this.props.showToggle.bind(this)}
           />
@@ -325,59 +307,23 @@ class AccordionSelector extends Component<Props, State> {
   }
 
   /**
-   * Sets the passed items on the state. In this case, the API call was executed by clicking on a parent item. Child
-   * items will be appended to the list.
+   * Renders the right column for the passed item.
    *
-   * @param state
-   * @param items
+   * @param item
    *
-   * @returns {{activeItems: (Array<*>|[]|*[]|*), items: *[]}}
+   * @returns {null|*}
    */
-  setItemsByParentId(state, items) {
-    return {
-      activeItems: state.activeItems || [],
-      items: [...state.items || [], ...items]
-    };
-  }
+  renderRight(item) {
+    if (!this.isSelected(item)) {
+      return null;
+    }
 
-  /**
-   * Sets the passed items on the state. In this case, the API call was executed by searching. The list will be
-   * replaced by the items returned from the API call.
-   *
-   * @param state
-   * @param items
-   *
-   * @returns {{activeItems: [], items: []}}
-   */
-  setItemsBySearch(state, items) {
-    const activeItems = [];
-    const allItems = [];
-
-    _.each(items, (item) => {
-      const hasChildren = this.props.getChildItems(this.state.items, item).length;
-
-      if (hasChildren) {
-        activeItems.push(item);
-      }
-
-      allItems.push({
-        ...item,
-        loaded: hasChildren
-      });
-    });
-
-    return {
-      activeItems,
-      items: allItems
-    };
-  }
-
-  toggleItem(item) {
-    this.setState((state) => ({
-      activeItems: this.isActive(item)
-        ? _.filter(state.activeItems, (i) => i.id !== item.id)
-        : [...state.activeItems, item]
-    }));
+    return (
+      <Icon
+        color='green'
+        name='check'
+      />
+    );
   }
 }
 
