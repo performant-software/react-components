@@ -1,0 +1,11 @@
+.accordion-list .accordion-header {
+  text-align: right;
+}
+
+.accordion-list .accordion-header .add-button {
+  margin-left: 5px;
+}
+
+.accordion-list .accordion-header .input.search {
+  display: inline-block;
+}

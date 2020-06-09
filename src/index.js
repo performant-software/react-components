@@ -5,6 +5,7 @@ export { default as Keyboard } from './common/Keyboard';
 export { default as TagsList } from './common/TagsList';
 
 // Semantic UI
+export { default as AccordionList } from './semantic-ui/AccordionList';
 export { default as AccordionSelector } from './semantic-ui/AccordionSelector';
 export { default as AssociatedDropdown } from './semantic-ui/AssociatedDropdown';
 export { default as BooleanIcon } from './semantic-ui/BooleanIcon';
