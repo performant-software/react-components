@@ -34,3 +34,6 @@ export { default as TabbedModal } from './semantic-ui/TabbedModal';
 
 // Utils
 export { default as Timer } from './utils/Timer';
+
+// Types
+export type { ComponentProps as EditModalProps } from './semantic-ui/EditModal';
