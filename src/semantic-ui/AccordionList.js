@@ -19,6 +19,7 @@ type Props = {
   canAddItem?: (item: any) => boolean,
   canDeleteItem?: (item: any) => boolean,
   canEditItem?: (item: any) => boolean,
+  className?: string,
   collectionName: string,
   getChildItems: (items: Array<any>, item: any) => Array<any>,
   getRootItems: (items: Array<any>) => Array<any>,
@@ -192,7 +193,7 @@ class AccordionList extends Component<Props, State> {
   render() {
     return (
       <div
-        className='accordion-list'
+        className={['accordion-list', this.props.className || ''].join(' ')}
       >
         <Header
           className='accordion-header'
@@ -361,6 +362,7 @@ AccordionList.defaultProps = {
   canAddItem: () => true,
   canDeleteItem: () => true,
   canEditItem: () => true,
+  className: '',
   modal: undefined
 };
 
