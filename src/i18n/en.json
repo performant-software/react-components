@@ -1,4 +1,8 @@
 {
+  "AccordionList": {
+    "deleteContent": "Are you sure you want to remove this record?",
+    "deleteHeader": "Confirm Remove"
+  },
   "Common": {
     "buttons": {
       "add": "Add",

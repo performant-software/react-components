@@ -1,9 +1,11 @@
+// @flow
+
 import _ from 'underscore';
 
 const SORT_DESCENDING = 'descending';
 
 /**
- * TODO: Comment me
+ * Mocks returning the data from an API call for a collection of records.
  *
  * @param items
  * @param page
@@ -75,7 +77,48 @@ export const onLoadEmpty = () => {
   return new Promise((resolve) => resolve(response));
 };
 
+/**
+ * Mocks returning the data from an API call for a collection of hierarchical records.
+ *
+ * @param items
+ * @param parentId
+ * @param parentKey
+ * @param search
+ *
+ * @returns {Promise<unknown>}
+ */
+const onNestedLoad = ({ items, parentId, parentKey, search }) => {
+  let payload = [...items];
+
+  if (parentId) {
+    payload = _.filter(payload, (item) => item[parentKey] === parentId);
+  } else if (search && search.length) {
+    payload = _.filter(payload, (item) => {
+      let match = false;
+
+      _.each(_.keys(item), (key) => {
+        if (item[key] && item[key].toString().toLowerCase().startsWith(search.toLowerCase())) {
+          match = true;
+        }
+      });
+
+      return match;
+    });
+  } else {
+    payload = _.where(payload, { [parentKey]: null });
+  }
+
+  const response = {
+    data: {
+      items: payload
+    }
+  };
+
+  return new Promise((resolve) => resolve(response));
+};
+
 export default {
   onLoad,
-  onLoadEmpty
+  onLoadEmpty,
+  onNestedLoad
 };
