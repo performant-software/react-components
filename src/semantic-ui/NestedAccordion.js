@@ -125,13 +125,13 @@ class NestedAccordion extends Component<Props, State> {
               { this.renderToggle(item) }
             </Grid.Column>
             <Grid.Column
-              width={7}
+              width={13}
             >
               { this.props.renderItem(item) }
             </Grid.Column>
             <Grid.Column
               textAlign='right'
-              width={8}
+              width={2}
             >
               { this.props.renderRight && this.props.renderRight(item) }
             </Grid.Column>
