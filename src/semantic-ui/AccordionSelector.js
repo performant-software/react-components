@@ -69,10 +69,12 @@ class AccordionSelector extends Component<Props, State> {
   }
 
   /**
-   * Executes the initial search.
+   * Executes the initial search when the modal is opened.
    */
-  componentDidMount() {
-    this.onSearch();
+  componentDidUpdate(prevProps) {
+    if (this.props.open && !prevProps.open) {
+      this.onSearch();
+    }
   }
 
   /**
