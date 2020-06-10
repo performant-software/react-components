@@ -75,6 +75,10 @@ class AccordionSelector extends Component<Props, State> {
     if (this.props.open && !prevProps.open) {
       this.onSearch();
     }
+
+    if (this.props.selectedItems !== prevProps.selectedItems) {
+      this.setState({ selectedItems: this.props.selectedItems });
+    }
   }
 
   /**
