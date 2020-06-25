@@ -52,8 +52,11 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
       };
     }
 
+    /**
+     * Loads the item from the API if an onInitialize prop is specified.
+     */
     componentDidMount() {
-      if (componentProps.onInitialize && this.state.item.id) {
+      if (componentProps && componentProps.onInitialize && this.state.item.id) {
         componentProps
           .onInitialize(this.state.item.id)
           .then((item) => this.setState({ item }));
