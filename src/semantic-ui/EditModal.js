@@ -52,6 +52,14 @@ function createEditModal(WrappedComponent, componentProps, initialState) {
       };
     }
 
+    componentDidMount() {
+      if (componentProps.onInitialize && this.state.item.id) {
+        componentProps
+          .onInitialize(this.state.item.id)
+          .then((item) => this.setState({ item }));
+      }
+    }
+
     /**
      * Resets the item on the state.
      *
