@@ -65,6 +65,13 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Executes the initial search.
+   */
+  componentDidMount() {
+    this.onSearch();
+  }
+
+  /**
    * Displays the add modal for the selected item.
    *
    * @param item
