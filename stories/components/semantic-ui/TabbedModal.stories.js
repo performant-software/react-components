@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import {
+  withKnobs,
+  boolean,
+  number,
+  text
+} from '@storybook/addon-knobs';
+import _ from 'underscore';
 import TabbedModal from '../../../src/semantic-ui/TabbedModal';
 
 export default {
@@ -28,3 +34,23 @@ export const Default = () => (
     </TabbedModal.Tab>
   </TabbedModal>
 );
+
+export const DynamicTabs = () => {
+  const tabs = number('Number of tabs', 3);
+
+  return (
+    <TabbedModal
+      header={text('Header', 'Modal Header')}
+      inlineTabs={boolean('Inline tabs', false)}
+      open
+    >
+      { _.times(tabs, (index) => (
+        <TabbedModal.Tab
+          name={`Tab ${index}`}
+        >
+          <div>{`Tab ${index} content`}</div>
+        </TabbedModal.Tab>
+      ))}
+    </TabbedModal>
+  );
+};

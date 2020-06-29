@@ -6,3 +6,9 @@
   display: inline-flex;
   margin-left: 30px;
 }
+
+.tabbed-modal.ui .header .ui.menu {
+  max-width: 100%;
+  overflow: auto;
+  padding: 5px 0px 5px 0px;
+}
