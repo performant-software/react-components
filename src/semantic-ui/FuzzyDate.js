@@ -228,7 +228,7 @@ class FuzzyDate extends Component<Props, State> {
    *
    * @returns {{date: number, month: number, year: number}}
    */
-  parseDate(date: Date) {
+  parseDate(date: string) {
     const m = moment(date);
 
     return {
