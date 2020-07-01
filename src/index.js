@@ -17,6 +17,7 @@ export { default as DraggableRow } from './semantic-ui/DraggableRow';
 export { default as EditModal } from './semantic-ui/EditModal';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
 export { default as FileUpload } from './semantic-ui/FileUpload';
+export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
 export { default as GoogleMap } from './semantic-ui/GoogleMap';
 export { default as GooglePlacesSearch } from './semantic-ui/GooglePlacesSearch';
 export { default as KeyboardField } from './semantic-ui/KeyboardField';
