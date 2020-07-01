@@ -159,7 +159,7 @@ class FuzzyDate extends Component<Props, State> {
         endDate,
         startDate
       };
-    });
+    }, this.afterDateChange.bind(this));
   }
 
   /**
