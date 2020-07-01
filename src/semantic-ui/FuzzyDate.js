@@ -37,9 +37,9 @@ type State = {
   startDate: DateComponents
 };
 
-const ACCURACY_DATE = 'date';
-const ACCURACY_MONTH = 'month';
-const ACCURACY_YEAR = 'year';
+const ACCURACY_DATE = 2;
+const ACCURACY_MONTH = 1;
+const ACCURACY_YEAR = 0;
 
 const DEFAULT_DATE = 1;
 const DEFAULT_MONTH = 0;
