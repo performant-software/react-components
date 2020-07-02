@@ -213,7 +213,10 @@ class FuzzyDate extends Component<Props, State> {
    * Clears the input date(s).
    */
   onClear() {
-    this.setState(this.getInitialState(), this.setEndDate.bind(this));
+    this.setState(this.getInitialState(), () => {
+      this.setEndDate();
+      this.onSave();
+    });
   }
 
   /**
@@ -560,11 +563,11 @@ class FuzzyDate extends Component<Props, State> {
   setDisplay() {
     const display = [];
 
-    if (this.state.startDate) {
+    if (this.state.startDate && !_.isEmpty(this.state.startDate)) {
       display.push(this.getDisplayDate(this.state.startDate));
     }
 
-    if (this.state.range && this.state.endDate) {
+    if (this.state.range && this.state.endDate && !_.isEmpty(this.state.endDate)) {
       display.push(' - ');
       display.push(this.getDisplayDate(this.state.endDate));
     }
