@@ -26,9 +26,9 @@ type DateInput = {
 type DateOutput = {
   accuracy: number,
   description: string,
-  endDate: Date,
+  endDate?: Date,
   range: boolean,
-  startDate: Date
+  startDate?: Date
 };
 
 type DateComponent = {
@@ -104,8 +104,16 @@ class FuzzyDate extends Component<Props, State> {
    */
   afterDateChange() {
     this.setEndDate().then(() => {
-      const startDate = this.convertToDate(this.state.startDate).toDate();
-      const endDate = this.convertToDate(this.state.endDate).toDate();
+      let startDate;
+      let endDate;
+
+      if (!_.isEmpty(this.state.startDate)) {
+        startDate = this.convertToDate(this.state.startDate).toDate();
+      }
+
+      if (!_.isEmpty(this.state.endDate)) {
+        endDate = this.convertToDate(this.state.endDate).toDate();
+      }
 
       const { accuracy, description, range } = this.state;
 
