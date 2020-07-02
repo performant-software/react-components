@@ -231,7 +231,7 @@ class FuzzyDate extends Component<Props, State> {
    * Clears the input date(s).
    */
   onClear() {
-    this.setState(this.getInitialState());
+    this.setState(this.getInitialState(), this.afterDateChange.bind(this));
   }
 
   /**
