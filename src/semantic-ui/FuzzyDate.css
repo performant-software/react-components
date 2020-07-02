@@ -1,14 +1,8 @@
-.fuzzy-date .accuracy-container .ui.radio.checkbox {
+.fuzzy-date-modal .accuracy-container .ui.radio.checkbox {
   padding-right: 10px;
 }
 
-.fuzzy-date .date-part-container {
-  display: inline-block;
-  padding-right: 10px;
-}
-
-.fuzzy-date .date-part-container label {
-  display: block;
-  font-size: .8em;
-  font-weight: bold;
+.fuzzy-date-modal .button-container {
+  margin-left: 8px;
+  margin-top: 23px;
 }

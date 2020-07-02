@@ -61,7 +61,7 @@ export const Controlled = () => {
 
 export const ExisitingValue = () => {
   const [date, setDate] = useState({
-    accuracy: 'month',
+    accuracy: 1,
     range: false,
     startDate: moment()
       .year(1905)
@@ -70,7 +70,7 @@ export const ExisitingValue = () => {
       .hours(0)
       .minutes(0)
       .seconds(0)
-      .toDate(),
+      .format('YYYY-MM-DD'),
     endDate: moment()
       .year(1905)
       .month(3)
@@ -78,7 +78,7 @@ export const ExisitingValue = () => {
       .hours(0)
       .minutes(0)
       .seconds(0)
-      .toDate()
+      .format('YYYY-MM-DD')
   });
 
   return (

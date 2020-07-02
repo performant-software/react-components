@@ -5,41 +5,61 @@ import {
   Button,
   Checkbox,
   Dropdown,
-  Input
+  Form,
+  Input,
+  Modal,
+  TextArea
 } from 'semantic-ui-react';
 import moment from 'moment';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import './FuzzyDate.css';
 
-type DateResult = {
-  accuracy: string,
+type DateInput = {
+  accuracy: number,
+  description: string,
+  endDate: string,
+  range: boolean,
+  startDate: string
+};
+
+type DateOutput = {
+  accuracy: number,
+  description: string,
   endDate: Date,
   range: boolean,
   startDate: Date
 };
 
-type DateComponents = {
+type DateComponent = {
   date: number,
   month: number,
   year: number
 };
 
 type Props = {
-  date: DateResult,
-  onChange: (data: DateResult) => void
+  date: DateInput,
+  onChange: (data: DateOutput) => void,
+  title?: string
 };
 
 type State = {
-  accuracy: string,
-  endDate: DateComponents,
+  accuracy: number,
+  description: string,
+  display: string,
+  endDate: DateComponent,
+  modal: boolean,
   range: boolean,
-  startDate: DateComponents
+  startDate: DateComponent
 };
 
 const ACCURACY_DATE = 2;
 const ACCURACY_MONTH = 1;
 const ACCURACY_YEAR = 0;
+
+const DATE_FORMAT_YEAR = 'YYYY';
+const DATE_FORMAT_MONTH = 'MMMM YYYY';
+const DATE_FORMAT_DATE = 'MM/DD/YYYY';
 
 const DEFAULT_DATE = 1;
 const DEFAULT_MONTH = 0;
@@ -50,7 +70,13 @@ const INTEGER_BASE = 10;
 const MAX_DATES = 31;
 const MAX_YEAR_LENGTH = 6;
 
+const MOMENT_DURATION_DAY = 'day';
+const MOMENT_DURATION_MONTH = 'month';
+const MOMENT_DURATION_YEAR = 'year';
+
 class FuzzyDate extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new FuzzyDate component.
    *
@@ -59,12 +85,7 @@ class FuzzyDate extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      accuracy: ACCURACY_YEAR,
-      endDate: {},
-      range: false,
-      startDate: {}
-    };
+    this.state = this.getInitialState();
   }
 
   /**
@@ -86,10 +107,11 @@ class FuzzyDate extends Component<Props, State> {
       const startDate = this.convertToDate(this.state.startDate).toDate();
       const endDate = this.convertToDate(this.state.endDate).toDate();
 
-      const { accuracy, range } = this.state;
+      const { accuracy, description, range } = this.state;
 
       this.props.onChange({
         accuracy,
+        description,
         range,
         startDate,
         endDate
@@ -104,7 +126,7 @@ class FuzzyDate extends Component<Props, State> {
    *
    * @returns {moment.Moment}
    */
-  convertToDate(date: DateComponents) {
+  convertToDate(date: DateComponent) {
     return moment()
       .year(date.year || DEFAULT_YEAR)
       .month(date.month || DEFAULT_MONTH)
@@ -115,11 +137,53 @@ class FuzzyDate extends Component<Props, State> {
   }
 
   /**
+   * Returns the display string for the passed date component.
+   *
+   * @param dateComponent
+   *
+   * @returns {*}
+   */
+  getDisplayDate(dateComponent: DateComponent) {
+    let displayDate;
+
+    const date = this.convertToDate(dateComponent);
+
+    if (this.state.accuracy === ACCURACY_YEAR) {
+      displayDate = date.format(DATE_FORMAT_YEAR);
+    } else if (this.state.accuracy === ACCURACY_MONTH) {
+      displayDate = date.format(DATE_FORMAT_MONTH);
+    } else if (this.state.accuracy === ACCURACY_DATE) {
+      displayDate = date.format(DATE_FORMAT_DATE);
+    }
+
+    return displayDate;
+  }
+
+  /**
+   * Returns the initial state object.
+   *
+   * @returns {{endDate: {}, display: string, accuracy: number, description: string, range: boolean,
+   *            modal: boolean, startDate: {}}}
+   */
+  getInitialState() {
+    return {
+      accuracy: ACCURACY_YEAR,
+      description: '',
+      display: '',
+      endDate: {},
+      modal: false,
+      range: false,
+      startDate: {}
+    };
+  }
+
+  /**
    * Initializes the date.
    */
   initializeDate() {
     const {
       accuracy,
+      description,
       range,
       startDate,
       endDate
@@ -127,10 +191,11 @@ class FuzzyDate extends Component<Props, State> {
 
     this.setState({
       accuracy,
+      description,
       range,
       startDate: this.parseDate(startDate),
       endDate: this.parseDate(endDate)
-    });
+    }, this.setDisplay.bind(this));
   }
 
   /**
@@ -139,7 +204,7 @@ class FuzzyDate extends Component<Props, State> {
    * @param e
    * @param value
    */
-  onAccuracyChange(e: ?Event, { value }: { value: string }) {
+  onAccuracyChange(e: ?Event, { value }: { value: number }) {
     const accuracy = value;
 
     this.setState((state) => {
@@ -163,6 +228,20 @@ class FuzzyDate extends Component<Props, State> {
   }
 
   /**
+   * Clears the input date(s).
+   */
+  onClear() {
+    this.setState(this.getInitialState());
+  }
+
+  /**
+   * Closes the edit modal.
+   */
+  onClose() {
+    this.setState({ modal: false });
+  }
+
+  /**
    * Sets the date value on the state.
    *
    * @param property
@@ -176,6 +255,23 @@ class FuzzyDate extends Component<Props, State> {
         date: value
       }
     }), this.afterDateChange.bind(this));
+  }
+
+  /**
+   * Sets the date description on the state.
+   *
+   * @param e
+   * @param value
+   */
+  onDescriptionChange(e: Event, { value }: { value: string }) {
+    this.setState({ description: value });
+  }
+
+  /**
+   * Opens the edit modal.
+   */
+  onEdit() {
+    this.setState({ modal: true });
   }
 
   /**
@@ -199,6 +295,14 @@ class FuzzyDate extends Component<Props, State> {
    */
   onRangeChange() {
     this.setState((state) => ({ range: !state.range }), this.afterDateChange.bind(this));
+  }
+
+  /**
+   * Sets the display value and closes the edit modal.
+   */
+  onSave() {
+    this.setDisplay();
+    this.onClose();
   }
 
   /**
@@ -245,64 +349,124 @@ class FuzzyDate extends Component<Props, State> {
    */
   render() {
     return (
-      <div
-        className='fuzzy-date'
-      >
-        <div
-          className='accuracy-container'
+      <>
+        <Input
+          icon='calendar alternate outline'
+          iconPosition='left'
+          onClick={this.onEdit.bind(this)}
+          readOnly
+          value={this.state.display}
+        />
+        <Button.Group>
+          <Button
+            basic
+            icon='times'
+            onClick={this.onClear.bind(this)}
+          />
+        </Button.Group>
+        <Modal
+          as={Form}
+          className='fuzzy-date-modal'
+          open={this.state.modal}
+          onClose={this.onClose.bind(this)}
         >
-          <Checkbox
-            checked={this.state.accuracy === ACCURACY_YEAR}
-            label={i18n.t('FuzzyDate.accuracy.year')}
-            name='accuracy'
-            onChange={this.onAccuracyChange.bind(this)}
-            radio
-            value={ACCURACY_YEAR}
+          <Modal.Header
+            content={this.props.title || i18n.t('FuzzyDate.title')}
           />
-          <Checkbox
-            checked={this.state.accuracy === ACCURACY_MONTH}
-            label={i18n.t('FuzzyDate.accuracy.month')}
-            name='accuracy'
-            onChange={this.onAccuracyChange.bind(this)}
-            radio
-            value={ACCURACY_MONTH}
-          />
-          <Checkbox
-            checked={this.state.accuracy === ACCURACY_DATE}
-            label={i18n.t('FuzzyDate.accuracy.date')}
-            name='accuracy'
-            onChange={this.onAccuracyChange.bind(this)}
-            radio
-            value={ACCURACY_DATE}
-          />
-        </div>
-        <div>
-          { this.renderYear('startDate') }
-          { this.renderMonth('startDate') }
-          { this.renderDate('startDate') }
-          { !this.state.range && (
+          <Modal.Content>
+            <Form.Input
+              className='accuracy-container'
+              label={i18n.t('FuzzyDate.labels.accuracy')}
+            >
+              <Checkbox
+                checked={this.state.accuracy === ACCURACY_YEAR}
+                label={i18n.t('FuzzyDate.accuracy.year')}
+                name='accuracy'
+                onChange={this.onAccuracyChange.bind(this)}
+                radio
+                value={ACCURACY_YEAR}
+              />
+              <Checkbox
+                checked={this.state.accuracy === ACCURACY_MONTH}
+                label={i18n.t('FuzzyDate.accuracy.month')}
+                name='accuracy'
+                onChange={this.onAccuracyChange.bind(this)}
+                radio
+                value={ACCURACY_MONTH}
+              />
+              <Checkbox
+                checked={this.state.accuracy === ACCURACY_DATE}
+                label={i18n.t('FuzzyDate.accuracy.date')}
+                name='accuracy'
+                onChange={this.onAccuracyChange.bind(this)}
+                radio
+                value={ACCURACY_DATE}
+              />
+            </Form.Input>
+            <Form.Group>
+              { this.renderYear('startDate') }
+              { this.renderMonth('startDate') }
+              { this.renderDate('startDate') }
+              { !this.state.range && (
+                <div
+                  className='button-container'
+                >
+                  <Button
+                    basic
+                    content={i18n.t('FuzzyDate.buttons.addRange')}
+                    icon='plus'
+                    onClick={this.onRangeChange.bind(this)}
+                  />
+                </div>
+              )}
+            </Form.Group>
+            { this.state.range && (
+              <Form.Group>
+                { this.renderYear('endDate') }
+                { this.renderMonth('endDate') }
+                { this.renderDate('endDate') }
+                <div
+                  className='button-container'
+                >
+                  <Button
+                    basic
+                    content={i18n.t('FuzzyDate.buttons.removeRange')}
+                    icon='times'
+                    onClick={this.onRangeChange.bind(this)}
+                  />
+                </div>
+              </Form.Group>
+            )}
+            <Form.Input
+              label={i18n.t('FuzzyDate.labels.description')}
+            >
+              <TextArea
+                onChange={this.onDescriptionChange.bind(this)}
+                value={this.state.description}
+              />
+            </Form.Input>
+          </Modal.Content>
+          <Modal.Actions>
             <Button
-              basic
-              compact
-              icon='plus'
-              onClick={this.onRangeChange.bind(this)}
-            />
-          )}
-        </div>
-        { this.state.range && (
-          <div>
-            { this.renderYear('endDate') }
-            { this.renderMonth('endDate') }
-            { this.renderDate('endDate') }
+              onClick={this.onSave.bind(this)}
+              primary
+              size='medium'
+              type='submit'
+            >
+              { i18n.t('Common.buttons.save') }
+            </Button>
             <Button
-              basic
-              compact
-              icon='times'
-              onClick={this.onRangeChange.bind(this)}
-            />
-          </div>
-        )}
-      </div>
+              inverted
+              onClick={this.onClose.bind(this)}
+              primary
+              size='medium'
+              type='button'
+            >
+              { i18n.t('Common.buttons.cancel') }
+            </Button>
+          </Modal.Actions>
+        </Modal>
+      </>
     );
   }
 
@@ -319,20 +483,12 @@ class FuzzyDate extends Component<Props, State> {
     }
 
     const date = this.state[property];
-
-    const dates = date.month && date.year
-      ? moment().month(date.month).year(date.year).daysInMonth()
-      : MAX_DATES;
+    const dates = date.month && date.year ? moment().month(date.month).year(date.year).daysInMonth() : MAX_DATES;
 
     return (
-      <div
-        className='date-part-container'
+      <Form.Input
+        label={i18n.t('FuzzyDate.labels.date')}
       >
-        <label
-          htmlFor='date-dropdown'
-        >
-          { i18n.t('FuzzyDate.labels.date') }
-        </label>
         <Dropdown
           id='date-dropdown'
           onChange={this.onDateChange.bind(this, property)}
@@ -340,7 +496,7 @@ class FuzzyDate extends Component<Props, State> {
           selection
           value={date.date || DEFAULT_DATE}
         />
-      </div>
+      </Form.Input>
     );
   }
 
@@ -357,22 +513,16 @@ class FuzzyDate extends Component<Props, State> {
     }
 
     return (
-      <div
-        className='date-part-container'
+      <Form.Input
+        label={i18n.t('FuzzyDate.labels.month')}
       >
-        <label
-          htmlFor='month-dropdown'
-        >
-          { i18n.t('FuzzyDate.labels.month') }
-        </label>
         <Dropdown
-          id='month-dropdown'
           onChange={this.onMonthChange.bind(this, property)}
           options={_.map(moment.months(), (m, i) => ({ key: i, value: i, text: i18n.t(`FuzzyDate.months.${m}`) }))}
           selection
           value={this.state[property].month || DEFAULT_MONTH}
         />
-      </div>
+      </Form.Input>
     );
   }
 
@@ -385,22 +535,36 @@ class FuzzyDate extends Component<Props, State> {
    */
   renderYear(property: string) {
     return (
-      <div
-        className='date-part-container'
+      <Form.Input
+        label={i18n.t('FuzzyDate.labels.year')}
       >
-        <label
-          htmlFor='year-dropdown'
-        >
-          { i18n.t('FuzzyDate.labels.year') }
-        </label>
         <Input
-          id='year-dropdown'
           onChange={this.onYearChange.bind(this, property)}
           type='number'
           value={this.state[property].year || ''}
         />
-      </div>
+      </Form.Input>
     );
+  }
+
+  /**
+   * Sets the display value.
+   */
+  setDisplay() {
+    const display = [];
+
+    if (this.state.startDate) {
+      display.push(this.getDisplayDate(this.state.startDate));
+    }
+
+    if (this.state.range && this.state.endDate) {
+      display.push(' - ');
+      display.push(this.getDisplayDate(this.state.endDate));
+    }
+
+    this.setState({
+      display: display.join(' ')
+    });
   }
 
   /**
@@ -417,11 +581,11 @@ class FuzzyDate extends Component<Props, State> {
       let duration = null;
 
       if (this.state.accuracy === ACCURACY_YEAR) {
-        duration = 'year';
+        duration = MOMENT_DURATION_YEAR;
       } else if (this.state.accuracy === ACCURACY_MONTH) {
-        duration = 'month';
+        duration = MOMENT_DURATION_MONTH;
       } else if (this.state.accuracy === ACCURACY_DATE) {
-        duration = 'day';
+        duration = MOMENT_DURATION_DAY;
       }
 
       this.setState((state) => {
@@ -440,5 +604,9 @@ class FuzzyDate extends Component<Props, State> {
     });
   }
 }
+
+FuzzyDate.defaultProps = {
+  title: undefined
+};
 
 export default FuzzyDate;
