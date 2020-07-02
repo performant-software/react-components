@@ -582,7 +582,7 @@ class FuzzyDate extends Component<Props, State> {
    */
   setEndDate() {
     return new Promise<void>((resolve) => {
-      if (this.state.range) {
+      if (this.state.range || !this.state.startDate || _.isEmpty(this.state.startDate)) {
         return resolve();
       }
 
