@@ -92,39 +92,7 @@ class FuzzyDate extends Component<Props, State> {
    * Initializes the FuzzyDate component.
    */
   componentDidMount() {
-    if (this.props.date && !_.isEmpty(this.props.date)) {
-      this.initializeDate();
-    } else {
-      this.onAccuracyChange(null, { value: ACCURACY_YEAR });
-    }
-  }
-
-  /**
-   * Sets the end date, converts the date components to JS date object, and calls the onChange prop.
-   */
-  afterDateChange() {
-    this.setEndDate().then(() => {
-      let startDate;
-      let endDate;
-
-      if (!_.isEmpty(this.state.startDate)) {
-        startDate = this.convertToDate(this.state.startDate).toDate();
-      }
-
-      if (!_.isEmpty(this.state.endDate)) {
-        endDate = this.convertToDate(this.state.endDate).toDate();
-      }
-
-      const { accuracy, description, range } = this.state;
-
-      this.props.onChange({
-        accuracy,
-        description,
-        range,
-        startDate,
-        endDate
-      });
-    });
+    this.initializeDate();
   }
 
   /**
@@ -189,21 +157,27 @@ class FuzzyDate extends Component<Props, State> {
    * Initializes the date.
    */
   initializeDate() {
-    const {
-      accuracy,
-      description,
-      range,
-      startDate,
-      endDate
-    } = this.props.date;
+    this.setState(this.getInitialState(), () => {
+      if (this.props.date && !_.isEmpty(this.props.date)) {
+        const {
+          accuracy,
+          description,
+          range,
+          startDate,
+          endDate
+        } = this.props.date;
 
-    this.setState({
-      accuracy,
-      description,
-      range,
-      startDate: this.parseDate(startDate),
-      endDate: this.parseDate(endDate)
-    }, this.setDisplay.bind(this));
+        this.setState({
+          accuracy,
+          description,
+          range,
+          startDate: this.parseDate(startDate),
+          endDate: this.parseDate(endDate)
+        }, this.setDisplay.bind(this));
+      } else {
+        this.onAccuracyChange(null, { value: ACCURACY_YEAR });
+      }
+    });
   }
 
   /**
@@ -232,21 +206,21 @@ class FuzzyDate extends Component<Props, State> {
         endDate,
         startDate
       };
-    }, this.afterDateChange.bind(this));
+    }, this.setEndDate.bind(this));
   }
 
   /**
    * Clears the input date(s).
    */
   onClear() {
-    this.setState(this.getInitialState(), this.afterDateChange.bind(this));
+    this.setState(this.getInitialState(), this.setEndDate.bind(this));
   }
 
   /**
    * Closes the edit modal.
    */
   onClose() {
-    this.setState({ modal: false });
+    this.setState({ modal: false }, this.initializeDate.bind(this));
   }
 
   /**
@@ -262,7 +236,7 @@ class FuzzyDate extends Component<Props, State> {
         ...state[property],
         date: value
       }
-    }), this.afterDateChange.bind(this));
+    }), this.setEndDate.bind(this));
   }
 
   /**
@@ -295,22 +269,47 @@ class FuzzyDate extends Component<Props, State> {
         ...state[property],
         month: value
       }
-    }), this.afterDateChange.bind(this));
+    }), this.setEndDate.bind(this));
   }
 
   /**
    * Sets the range value on the set.
    */
   onRangeChange() {
-    this.setState((state) => ({ range: !state.range }), this.afterDateChange.bind(this));
+    this.setState((state) => ({ range: !state.range }), this.setEndDate.bind(this));
   }
 
   /**
    * Sets the display value and closes the edit modal.
    */
   onSave() {
+    // Set the display value
     this.setDisplay();
-    this.onClose();
+
+    // Convert the state date and end date to Date objects can call the onChange prop
+    let startDate;
+    let endDate;
+
+    if (!_.isEmpty(this.state.startDate)) {
+      startDate = this.convertToDate(this.state.startDate).toDate();
+    }
+
+    if (!_.isEmpty(this.state.endDate)) {
+      endDate = this.convertToDate(this.state.endDate).toDate();
+    }
+
+    const { accuracy, description, range } = this.state;
+
+    this.props.onChange({
+      accuracy,
+      description,
+      range,
+      startDate,
+      endDate
+    });
+
+    // Close the modal
+    this.setState({ modal: false });
   }
 
   /**
@@ -330,7 +329,7 @@ class FuzzyDate extends Component<Props, State> {
         ...state[property],
         year: parseInt(value, INTEGER_BASE)
       }
-    }), this.afterDateChange.bind(this));
+    }), this.setEndDate.bind(this));
   }
 
   /**
@@ -576,39 +575,33 @@ class FuzzyDate extends Component<Props, State> {
   }
 
   /**
-   * Returns a promise that sets the end date value.
-   *
-   * @returns {Promise<R>}
+   * Sets the end date value.
    */
   setEndDate() {
-    return new Promise<void>((resolve) => {
-      if (this.state.range || !this.state.startDate || _.isEmpty(this.state.startDate)) {
-        return resolve();
-      }
+    if (this.state.range || !this.state.startDate || _.isEmpty(this.state.startDate)) {
+      return;
+    }
 
-      let duration = null;
+    let duration = null;
 
-      if (this.state.accuracy === ACCURACY_YEAR) {
-        duration = MOMENT_DURATION_YEAR;
-      } else if (this.state.accuracy === ACCURACY_MONTH) {
-        duration = MOMENT_DURATION_MONTH;
-      } else if (this.state.accuracy === ACCURACY_DATE) {
-        duration = MOMENT_DURATION_DAY;
-      }
+    if (this.state.accuracy === ACCURACY_YEAR) {
+      duration = MOMENT_DURATION_YEAR;
+    } else if (this.state.accuracy === ACCURACY_MONTH) {
+      duration = MOMENT_DURATION_MONTH;
+    } else if (this.state.accuracy === ACCURACY_DATE) {
+      duration = MOMENT_DURATION_DAY;
+    }
 
-      this.setState((state) => {
-        const endDate = this.convertToDate(state.startDate).add(1, duration);
+    this.setState((state) => {
+      const endDate = this.convertToDate(state.startDate).add(1, duration);
 
-        return {
-          endDate: {
-            date: endDate.date(),
-            month: endDate.month(),
-            year: endDate.year()
-          }
-        };
-      }, resolve.bind(this));
-
-      return true;
+      return {
+        endDate: {
+          date: endDate.date(),
+          month: endDate.month(),
+          year: endDate.year()
+        }
+      };
     });
   }
 }
