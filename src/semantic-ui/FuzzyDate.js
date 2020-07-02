@@ -162,17 +162,26 @@ class FuzzyDate extends Component<Props, State> {
         const {
           accuracy,
           description,
-          range,
-          startDate,
-          endDate
+          range
         } = this.props.date;
+
+        let startDate = {};
+        let endDate = {};
+
+        if (this.props.date.startDate) {
+          startDate = this.parseDate(this.props.date.startDate);
+        }
+
+        if (this.props.date.endDate) {
+          endDate = this.parseDate(this.props.date.endDate);
+        }
 
         this.setState({
           accuracy,
           description,
           range,
-          startDate: this.parseDate(startDate),
-          endDate: this.parseDate(endDate)
+          startDate,
+          endDate
         }, this.setDisplay.bind(this));
       } else {
         this.onAccuracyChange(null, { value: ACCURACY_YEAR });
@@ -213,10 +222,7 @@ class FuzzyDate extends Component<Props, State> {
    * Clears the input date(s).
    */
   onClear() {
-    this.setState(this.getInitialState(), () => {
-      this.setEndDate();
-      this.onSave();
-    });
+    this.setState(this.getInitialState(), this.onSave.bind(this));
   }
 
   /**
