@@ -1,6 +1,6 @@
 // @flow
 
-import moment from 'moment-hijri';
+import moment from 'moment-islamic-civil';
 
 const DEFAULT_LOCALE = 'en';
 
@@ -16,7 +16,6 @@ class Calendar {
 
   locale: string;
   name: string;
-  moment: moment;
 
   /**
    * Constructs a new calendar instance for the passed locale and calendar.

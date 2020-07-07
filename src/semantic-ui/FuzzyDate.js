@@ -75,7 +75,10 @@ class FuzzyDate extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = this.getInitialState();
+    this.state = {
+      ...this.getInitialState(),
+      calendar: new Calendar(props.locale, props.calendar)
+    };
   }
 
   /**
@@ -125,7 +128,6 @@ class FuzzyDate extends Component<Props, State> {
   getInitialState() {
     return {
       accuracy: ACCURACY_YEAR,
-      calendar: new Calendar(),
       description: '',
       display: '',
       endDate: {},

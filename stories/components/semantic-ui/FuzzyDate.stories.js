@@ -4,13 +4,13 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, select } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
+import ArrowButtons from '../../../src/semantic-ui/ArrowButtons';
 import Calendar from '../../../src/utils/Calendar';
 import FuzzyDate from '../../../src/semantic-ui/FuzzyDate';
 
 import 'moment/locale/ar-sa';
 import 'moment/locale/es';
 import 'moment/locale/fr';
-
 
 export default {
   title: 'Components/Semantic UI/FuzzyDate',
@@ -141,3 +141,38 @@ export const Locales = () => {
 
   );
 };
+
+export const DateConversion = () => {
+  const [gDate, setGDate] = useState({});
+  const [hDate, setHDate] = useState({});
+
+  return (
+    <Form>
+      <Form.Group
+        width='equal'
+      >
+        <Form.Input
+          label='Hijri date'
+        >
+          <FuzzyDate
+            calendar={Calendar.Calendars.hijri}
+            date={hDate}
+            onChange={(data) => setHDate(data)}
+          />
+        </Form.Input>
+        <ArrowButtons
+          onLeft={() => setHDate(gDate)}
+          onRight={() => setGDate(hDate)}
+        />
+        <Form.Input
+          label='Gregorian date'
+        >
+          <FuzzyDate
+            date={gDate}
+            onChange={(data) => setGDate(data)}
+          />
+        </Form.Input>
+      </Form.Group>
+    </Form>
+  );
+}
