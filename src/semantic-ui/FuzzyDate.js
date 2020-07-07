@@ -10,9 +10,9 @@ import {
   Modal,
   TextArea
 } from 'semantic-ui-react';
-import moment from 'moment';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import Calendar from '../utils/Calendar';
 import './FuzzyDate.css';
 
 type DateInput = {
@@ -38,13 +38,16 @@ type DateComponent = {
 };
 
 type Props = {
+  calendar?: string,
   date: DateInput,
+  locale?: string,
   onChange: (data: DateOutput) => void,
   title?: string
 };
 
 type State = {
   accuracy: number,
+  calendar: Calendar,
   description: string,
   display: string,
   endDate: DateComponent,
@@ -57,22 +60,9 @@ const ACCURACY_DATE = 2;
 const ACCURACY_MONTH = 1;
 const ACCURACY_YEAR = 0;
 
-const DATE_FORMAT_YEAR = 'YYYY';
-const DATE_FORMAT_MONTH = 'MMMM YYYY';
-const DATE_FORMAT_DATE = 'MM/DD/YYYY';
-
-const DEFAULT_DATE = 1;
-const DEFAULT_MONTH = 0;
-const DEFAULT_YEAR = 0;
-
 const INTEGER_BASE = 10;
 
-const MAX_DATES = 31;
 const MAX_YEAR_LENGTH = 6;
-
-const MOMENT_DURATION_DAY = 'day';
-const MOMENT_DURATION_MONTH = 'month';
-const MOMENT_DURATION_YEAR = 'year';
 
 class FuzzyDate extends Component<Props, State> {
   static defaultProps: any;
@@ -96,20 +86,22 @@ class FuzzyDate extends Component<Props, State> {
   }
 
   /**
-   * Converts the passed date components to a momentJS wrapped date.
+   * Sets the state based on prop changes.
    *
-   * @param date
-   *
-   * @returns {moment.Moment}
+   * @param prevProps
    */
-  convertToDate(date: DateComponent) {
-    return moment()
-      .year(date.year || DEFAULT_YEAR)
-      .month(date.month || DEFAULT_MONTH)
-      .date(date.date || DEFAULT_DATE)
-      .hours(0)
-      .minutes(0)
-      .seconds(0);
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.locale !== prevProps.locale || this.props.calendar !== prevProps.calendar) {
+      this.setState({
+        calendar: new Calendar(this.props.locale, this.props.calendar)
+      });
+    }
+
+    if (this.props.date
+      && (this.props.date.startDate !== prevProps.date.startDate
+      || this.props.date.endDate !== prevProps.date.endDate)) {
+      this.initializeDate();
+    }
   }
 
   /**
@@ -120,19 +112,8 @@ class FuzzyDate extends Component<Props, State> {
    * @returns {*}
    */
   getDisplayDate(dateComponent: DateComponent) {
-    let displayDate;
-
-    const date = this.convertToDate(dateComponent);
-
-    if (this.state.accuracy === ACCURACY_YEAR) {
-      displayDate = date.format(DATE_FORMAT_YEAR);
-    } else if (this.state.accuracy === ACCURACY_MONTH) {
-      displayDate = date.format(DATE_FORMAT_MONTH);
-    } else if (this.state.accuracy === ACCURACY_DATE) {
-      displayDate = date.format(DATE_FORMAT_DATE);
-    }
-
-    return displayDate;
+    const date = this.state.calendar.convertToDate(dateComponent);
+    return this.state.calendar.format(date, this.state.accuracy);
   }
 
   /**
@@ -144,6 +125,7 @@ class FuzzyDate extends Component<Props, State> {
   getInitialState() {
     return {
       accuracy: ACCURACY_YEAR,
+      calendar: new Calendar(),
       description: '',
       display: '',
       endDate: {},
@@ -157,36 +139,34 @@ class FuzzyDate extends Component<Props, State> {
    * Initializes the date.
    */
   initializeDate() {
-    this.setState(this.getInitialState(), () => {
-      if (this.props.date && !_.isEmpty(this.props.date)) {
-        const {
-          accuracy,
-          description,
-          range
-        } = this.props.date;
+    if (this.props.date && !_.isEmpty(this.props.date)) {
+      const {
+        accuracy,
+        description,
+        range
+      } = this.props.date;
 
-        let startDate = {};
-        let endDate = {};
+      let startDate = {};
+      let endDate = {};
 
-        if (this.props.date.startDate) {
-          startDate = this.parseDate(this.props.date.startDate);
-        }
-
-        if (this.props.date.endDate) {
-          endDate = this.parseDate(this.props.date.endDate);
-        }
-
-        this.setState({
-          accuracy,
-          description,
-          range,
-          startDate,
-          endDate
-        }, this.setDisplay.bind(this));
-      } else {
-        this.onAccuracyChange(null, { value: ACCURACY_YEAR });
+      if (this.props.date.startDate) {
+        startDate = this.state.calendar.parseDate(this.props.date.startDate);
       }
-    });
+
+      if (this.props.date.endDate) {
+        endDate = this.state.calendar.parseDate(this.props.date.endDate);
+      }
+
+      this.setState({
+        accuracy,
+        description,
+        range,
+        startDate,
+        endDate
+      }, this.setDisplay.bind(this));
+    } else {
+      this.onAccuracyChange(null, { value: ACCURACY_YEAR });
+    }
   }
 
   /**
@@ -203,11 +183,11 @@ class FuzzyDate extends Component<Props, State> {
       let startDate = { ...state.startDate };
 
       if (accuracy === ACCURACY_MONTH) {
-        endDate = { ...endDate, date: DEFAULT_DATE };
-        startDate = { ...startDate, date: DEFAULT_DATE };
+        endDate = { ...endDate, date: state.calendar.getDefaultDate() };
+        startDate = { ...startDate, date: state.calendar.getDefaultDate() };
       } else if (value === ACCURACY_YEAR) {
-        endDate = { ...endDate, date: DEFAULT_DATE, month: DEFAULT_MONTH };
-        startDate = { ...startDate, date: DEFAULT_DATE, month: DEFAULT_MONTH };
+        endDate = { ...endDate, date: state.calendar.getDefaultDate(), month: state.calendar.getDefaultMonth() };
+        startDate = { ...startDate, date: state.calendar.getDefaultDate(), month: state.calendar.getDefaultMonth() };
       }
 
       return {
@@ -300,11 +280,11 @@ class FuzzyDate extends Component<Props, State> {
     let endDate;
 
     if (!_.isEmpty(this.state.startDate)) {
-      startDate = this.convertToDate(this.state.startDate).toDate();
+      startDate = this.state.calendar.convertToDate(this.state.startDate).toDate();
     }
 
     if (!_.isEmpty(this.state.endDate)) {
-      endDate = this.convertToDate(this.state.endDate).toDate();
+      endDate = this.state.calendar.convertToDate(this.state.endDate).toDate();
     }
 
     const { accuracy, description, range } = this.state;
@@ -339,23 +319,6 @@ class FuzzyDate extends Component<Props, State> {
         year: parseInt(value, INTEGER_BASE)
       }
     }), this.setEndDate.bind(this));
-  }
-
-  /**
-   * Parses the passed date into date, month, year components.
-   *
-   * @param date
-   *
-   * @returns {{date: number, month: number, year: number}}
-   */
-  parseDate(date: string) {
-    const m = moment(date);
-
-    return {
-      date: m.date(),
-      month: m.month(),
-      year: m.year()
-    };
   }
 
   /**
@@ -499,7 +462,7 @@ class FuzzyDate extends Component<Props, State> {
     }
 
     const date = this.state[property];
-    const dates = date.month && date.year ? moment().month(date.month).year(date.year).daysInMonth() : MAX_DATES;
+    const daysInMonth = this.state.calendar.daysInMonth(date.year, date.month);
 
     return (
       <Form.Input
@@ -508,9 +471,9 @@ class FuzzyDate extends Component<Props, State> {
         <Dropdown
           id='date-dropdown'
           onChange={this.onDateChange.bind(this, property)}
-          options={_.range(1, dates + 1).map((i) => ({ key: i, value: i, text: i }))}
+          options={_.range(1, daysInMonth + 1).map((i) => ({ key: i, value: i, text: i }))}
           selection
-          value={date.date || DEFAULT_DATE}
+          value={date.date || this.state.calendar.getDefaultDate()}
         />
       </Form.Input>
     );
@@ -534,9 +497,9 @@ class FuzzyDate extends Component<Props, State> {
       >
         <Dropdown
           onChange={this.onMonthChange.bind(this, property)}
-          options={_.map(moment.months(), (m, i) => ({ key: i, value: i, text: i18n.t(`FuzzyDate.months.${m}`) }))}
+          options={_.map(this.state.calendar.listMonths(), (m, i) => ({ key: i, value: i, text: m }))}
           selection
-          value={this.state[property].month || DEFAULT_MONTH}
+          value={this.state[property].month || this.state.calendar.getDefaultMonth()}
         />
       </Form.Input>
     );
@@ -591,31 +554,27 @@ class FuzzyDate extends Component<Props, State> {
       return;
     }
 
-    let duration = null;
-
-    if (this.state.accuracy === ACCURACY_YEAR) {
-      duration = MOMENT_DURATION_YEAR;
-    } else if (this.state.accuracy === ACCURACY_MONTH) {
-      duration = MOMENT_DURATION_MONTH;
-    } else if (this.state.accuracy === ACCURACY_DATE) {
-      duration = MOMENT_DURATION_DAY;
-    }
-
     this.setState((state) => {
-      const endDate = this.convertToDate(state.startDate).add(1, duration);
+      let endDate = state.calendar.convertToDate(state.startDate);
+
+      if (state.accuracy === ACCURACY_YEAR) {
+        endDate = state.calendar.addYear(endDate, 1);
+      } else if (state.accuracy === ACCURACY_MONTH) {
+        endDate = state.calendar.addMonth(endDate, 1);
+      } else if (state.accuracy === ACCURACY_DATE) {
+        endDate = state.calendar.addDate(endDate, 1);
+      }
 
       return {
-        endDate: {
-          date: endDate.date(),
-          month: endDate.month(),
-          year: endDate.year()
-        }
+        endDate: state.calendar.parseDate(endDate)
       };
     });
   }
 }
 
 FuzzyDate.defaultProps = {
+  calendar: Calendar.Calendars.gregorian,
+  locale: 'en',
   title: undefined
 };
 

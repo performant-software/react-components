@@ -7,6 +7,7 @@ export { default as TagsList } from './common/TagsList';
 // Semantic UI
 export { default as AccordionList } from './semantic-ui/AccordionList';
 export { default as AccordionSelector } from './semantic-ui/AccordionSelector';
+export { default as ArrowButtons } from './semantic-ui/ArrowButtons';
 export { default as AssociatedDropdown } from './semantic-ui/AssociatedDropdown';
 export { default as BooleanIcon } from './semantic-ui/BooleanIcon';
 export { default as ColorButton } from './semantic-ui/ColorButton';
@@ -34,6 +35,7 @@ export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
 export { default as TabbedModal } from './semantic-ui/TabbedModal';
 
 // Utils
+export { default as Calendar } from './utils/Calendar';
 export { default as Timer } from './utils/Timer';
 
 // Types
