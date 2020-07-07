@@ -141,7 +141,7 @@ class FuzzyDate extends Component<Props, State> {
    * Initializes the date.
    */
   initializeDate() {
-    if (this.props.date && !_.isEmpty(this.props.date)) {
+    if (this.props.date && this.props.date.startDate && this.props.date.endDate) {
       const {
         accuracy,
         description,
