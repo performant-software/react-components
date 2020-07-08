@@ -33,6 +33,25 @@
       "maxSize": "Unable to upload {{name}} because it exceeds 10 MB."
     }
   },
+  "FuzzyDate": {
+    "accuracy": {
+      "date": "Date",
+      "month": "Month",
+      "year": "Year"
+    },
+    "buttons": {
+      "addRange": "Add Range",
+      "removeRange": "Remove Range"
+    },
+    "labels": {
+      "accuracy": "Accuracy",
+      "date": "Date",
+      "description": "Description",
+      "month": "Month",
+      "year": "Year"
+    },
+    "title": "Fuzzy Date"
+  },
   "KeyboardField": {
     "labels": {
       "hideKeyboard": "Hide Keyboard",

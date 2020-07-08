@@ -38,6 +38,11 @@
     "react/prefer-stateless-function": "off",
     "react/jsx-props-no-spreading": "off",
     "react/sort-comp": "off",
-    "react/static-property-placement": "off"
+    "react/static-property-placement": "off",
+    "quote-props": ["error", "as-needed", {
+      "keywords": false,
+      "unnecessary": true,
+      "numbers": true
+    }]
   }
 }
