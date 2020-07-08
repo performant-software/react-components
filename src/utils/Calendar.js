@@ -1,6 +1,6 @@
 // @flow
 
-import moment from 'moment-islamic-civil';
+import moment from '@whitewater/moment-islamic-civil';
 
 const DEFAULT_LOCALE = 'en';
 
