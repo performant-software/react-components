@@ -35,7 +35,6 @@ export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
 export { default as TabbedModal } from './semantic-ui/TabbedModal';
 
 // Utils
-export { default as Calendar } from './utils/Calendar';
 export { default as Timer } from './utils/Timer';
 
 // Types
