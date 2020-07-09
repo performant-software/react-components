@@ -17,8 +17,8 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@whitewater/moment-islamic-civil": "git+https://git@github.com/ACGC/moment-islamic-civil.git",
     "moment": "^2.27.0",
-    "moment-islamic-civil": "github:ACGC/moment-islamic-civil",
     "react-color": "^2.18.1",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
