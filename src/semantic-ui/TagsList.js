@@ -17,7 +17,7 @@ const TagsList = ({ config, tags = [] }: Props) => (
   <div
     className='tags-list'
   >
-    { _.map(tags, (tag) => (
+    { _.map(tags || [], (tag) => (
       <Label
         style={{
           backgroundColor: config[tag] && config[tag].background,
