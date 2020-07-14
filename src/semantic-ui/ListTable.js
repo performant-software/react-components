@@ -182,7 +182,7 @@ class ListTable extends Component<Props, State> {
    */
   onFilterChange(filters) {
     return new Promise((resolve) => {
-      this.setState({ filters }, () => {
+      this.setState({ filters, page: 1 }, () => {
         this.fetchData();
         resolve();
       });
