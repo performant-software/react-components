@@ -297,7 +297,7 @@ class ListTable extends Component<Props, State> {
 
 ListTable.defaultProps = {
   className: '',
-  filters: undefined,
+  filters: {},
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,
