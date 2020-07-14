@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 import ArrowButtons from '../../../src/semantic-ui/ArrowButtons';
@@ -17,7 +17,7 @@ export default {
   decorators: [withA11y, withKnobs]
 };
 
-export const Default = () => <FuzzyDate onChange={action('change')} />;
+export const Default = () => <FuzzyDate description={boolean('Show description', true)} onChange={action('change')} />;
 
 export const AsForm = () => (
   <Form>

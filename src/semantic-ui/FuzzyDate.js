@@ -40,6 +40,7 @@ type DateComponent = {
 type Props = {
   calendar?: string,
   date: DateInput,
+  description?: boolean,
   locale?: string,
   onChange: (data: DateOutput) => void,
   title?: string
@@ -418,14 +419,16 @@ class FuzzyDate extends Component<Props, State> {
                 </div>
               </Form.Group>
             )}
-            <Form.Input
-              label={i18n.t('FuzzyDate.labels.description')}
-            >
-              <TextArea
-                onChange={this.onDescriptionChange.bind(this)}
-                value={this.state.description}
-              />
-            </Form.Input>
+            { this.props.description && (
+              <Form.Input
+                label={i18n.t('FuzzyDate.labels.description')}
+              >
+                <TextArea
+                  onChange={this.onDescriptionChange.bind(this)}
+                  value={this.state.description}
+                />
+              </Form.Input>
+            )}
           </Modal.Content>
           <Modal.Actions>
             <Button
@@ -576,6 +579,7 @@ class FuzzyDate extends Component<Props, State> {
 
 FuzzyDate.defaultProps = {
   calendar: Calendar.Calendars.gregorian,
+  description: true,
   locale: 'en',
   title: undefined
 };
