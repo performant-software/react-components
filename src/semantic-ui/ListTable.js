@@ -25,6 +25,10 @@ type Props = {
   className?: string,
   collectionName: string,
   columns: Array<Column>,
+  filters?: {
+    component: Component<{}>,
+    props: any
+  },
   modal: {
     component: Component,
     props: any,
@@ -40,6 +44,7 @@ type Props = {
 };
 
 type State = {
+  filters: any,
   loading: boolean,
   page: number,
   pages: number,
@@ -66,6 +71,7 @@ class ListTable extends Component<Props, State> {
     super(props);
 
     this.state = {
+      filters: (props.filters && props.filters.props) || {},
       loading: false,
       page: 1,
       pages: 1,
@@ -111,6 +117,7 @@ class ListTable extends Component<Props, State> {
       } = this.state;
 
       const params = {
+        ...this.state.filters,
         page,
         search,
         sort_by: sortColumn,
@@ -167,6 +174,22 @@ class ListTable extends Component<Props, State> {
   }
 
   /**
+   * Sets the filters on the state and returns a promise.
+   *
+   * @param filters
+   *
+   * @returns {Promise<R>}
+   */
+  onFilterChange(filters) {
+    return new Promise((resolve) => {
+      this.setState({ filters }, () => {
+        this.fetchData();
+        resolve();
+      });
+    });
+  }
+
+  /**
    * Sets the page number and reloads the data.
    *
    * @param e
@@ -215,6 +238,12 @@ class ListTable extends Component<Props, State> {
         actions={this.props.actions}
         className={this.props.className}
         columns={this.props.columns}
+        filters={{
+          active: !_.isEqual(this.state.filters, this.props.filters.props || {}),
+          component: this.props.filters.component,
+          onChange: this.onFilterChange.bind(this),
+          state: this.state.filters
+        }}
         items={this.state.items}
         loading={this.state.loading}
         modal={this.props.modal}
@@ -268,6 +297,7 @@ class ListTable extends Component<Props, State> {
 
 ListTable.defaultProps = {
   className: '',
+  filters: undefined,
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,

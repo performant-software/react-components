@@ -1,7 +1,7 @@
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, number } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
@@ -506,6 +506,28 @@ export const AddButtonEmpty = () => (
     }}
     onCopy={action('copy')}
     onLoad={Api.onLoadEmpty.bind(this)}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+);
+
+export const WithFilters = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    filters={{
+      component: AddModal
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
