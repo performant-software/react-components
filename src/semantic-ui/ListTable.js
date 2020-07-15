@@ -116,8 +116,11 @@ class ListTable extends Component<Props, State> {
         sortDirection
       } = this.state;
 
+      const filterKeys = _.keys((this.props.filters && this.props.filters.props) || {});
+      const filters = _.pick(this.state.filters, filterKeys);
+
       const params = {
-        ...this.state.filters,
+        ...filters,
         page,
         search,
         sort_by: sortColumn,
@@ -138,6 +141,20 @@ class ListTable extends Component<Props, State> {
           });
         });
     });
+  }
+
+  /**
+   * Returns true if the current filters do not match the default filters.
+   *
+   * @returns {boolean}
+   */
+  isFilterActive() {
+    if (!(this.props.filters && this.props.filters.props)) {
+      return false;
+    }
+
+    const { props } = this.props.filters || {};
+    return _.isEqual(_.pick(this.state.filters, _.keys(props)), props);
   }
 
   /**
@@ -239,8 +256,8 @@ class ListTable extends Component<Props, State> {
         className={this.props.className}
         columns={this.props.columns}
         filters={{
-          active: !_.isEqual(this.state.filters, this.props.filters.props || {}),
-          component: this.props.filters.component,
+          active: this.isFilterActive(),
+          component: this.props.filters && this.props.filters.component,
           onChange: this.onFilterChange.bind(this),
           state: this.state.filters
         }}
