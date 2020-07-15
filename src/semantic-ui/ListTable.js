@@ -154,7 +154,7 @@ class ListTable extends Component<Props, State> {
     }
 
     const { props } = this.props.filters || {};
-    return _.isEqual(_.pick(this.state.filters, _.keys(props)), props);
+    return !_.isEqual(_.pick(this.state.filters, _.keys(props)), props);
   }
 
   /**
