@@ -2,7 +2,6 @@
 
 // Common
 export { default as Keyboard } from './common/Keyboard';
-export { default as TagsList } from './common/TagsList';
 
 // Semantic UI
 export { default as AccordionList } from './semantic-ui/AccordionList';
@@ -33,6 +32,7 @@ export { default as RemoteDropdown } from './semantic-ui/RemoteDropdown';
 export { default as Selectize } from './semantic-ui/Selectize';
 export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
 export { default as TabbedModal } from './semantic-ui/TabbedModal';
+export { default as TagsList } from './semantic-ui/TagsList';
 
 // Utils
 export { default as Timer } from './utils/Timer';
