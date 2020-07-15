@@ -113,7 +113,9 @@ class TabbedModal extends Component<Props, State> {
         key={name}
         name={name}
         onClick={() => this.setState({ tab: name })}
-      />
+      >
+        { name }
+      </Menu.Item>
     );
   }
 }

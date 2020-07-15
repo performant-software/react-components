@@ -54,3 +54,22 @@ export const DynamicTabs = () => {
     </TabbedModal>
   );
 };
+
+export const NamedTabs = () => (
+  <TabbedModal
+    header={text('Header', 'Modal Header')}
+    inlineTabs={boolean('Inline tabs', false)}
+    open
+  >
+    <TabbedModal.Tab
+      name={text('Tab 1 Name', 'Tab 1')}
+    >
+      <div>Tab 1 content</div>
+    </TabbedModal.Tab>
+    <TabbedModal.Tab
+      name={text('Tab 2 Name', 'Tab 2')}
+    >
+      <div>Tab 2 content</div>
+    </TabbedModal.Tab>
+  </TabbedModal>
+);
