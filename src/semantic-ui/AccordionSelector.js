@@ -11,6 +11,7 @@ import {
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
 import NestedAccordion from './NestedAccordion';
 import SelectizeHeader from './SelectizeHeader';
@@ -198,7 +199,7 @@ class AccordionSelector extends Component<Props, State> {
               <Header
                 content={this.props.title
                   ? this.props.title
-                  : this.props.t('AccordionSelector.title')}
+                  : i18n.t('AccordionSelector.title')}
               />
             </Grid.Column>
             <Grid.Column
