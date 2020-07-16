@@ -3,6 +3,9 @@
     "deleteContent": "Are you sure you want to remove this record?",
     "deleteHeader": "Confirm Remove"
   },
+  "AccordionSelector": {
+    "title": "Select Items"
+  },
   "Common": {
     "buttons": {
       "add": "Add",
