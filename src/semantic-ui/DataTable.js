@@ -41,6 +41,13 @@ type Props = {
   buttons?: Array<ListButton>,
   className?: string,
   columns: Array<Column>,
+  filters?: {
+    active: boolean,
+    component: Component<{}>,
+    props?: any,
+    state?: any,
+    onChange: (params: any) => void
+  },
   items?: ?Array<any>,
   loading?: boolean,
   modal?: {
@@ -68,6 +75,7 @@ type Props = {
 type State = {
   modalDelete: boolean,
   modalEdit: boolean,
+  modalFilter: boolean,
   selectedItem: any
 };
 
@@ -83,6 +91,7 @@ class DataTable extends Component<Props, State> {
     this.state = {
       modalDelete: false,
       modalEdit: false,
+      modalFilter: false,
       selectedItem: null
     };
   }
@@ -153,6 +162,13 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Opens the filters modal.
+   */
+  onFilterButton() {
+    this.setState({ modalFilter: true });
+  }
+
+  /**
    * Saves the passed item and closes the add/edit modal.
    *
    * @param item
@@ -163,6 +179,19 @@ class DataTable extends Component<Props, State> {
     return this.props
       .onSave(item)
       .then(() => this.setState({ modalEdit: false, selectedItem: null }));
+  }
+
+  /**
+   * Calls the filters onChange prop and closes the modal.
+   *
+   * @param filters
+   *
+   * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+   */
+  onSaveFilter(filters) {
+    return this.props.filters
+      .onChange(filters)
+      .then(() => this.setState({ modalFilter: false }));
   }
 
   /**
@@ -193,6 +222,7 @@ class DataTable extends Component<Props, State> {
         { this.renderFooter() }
         { this.renderEditModal() }
         { this.renderDeleteModal() }
+        { this.renderFilterModal() }
       </div>
     );
   }
@@ -519,6 +549,47 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Renders the filter button component.
+   *
+   * @returns {null|*}
+   */
+  renderFilterButton() {
+    if (!(this.props.filters && this.props.filters.component)) {
+      return null;
+    }
+
+    return (
+      <Button
+        active={this.props.filters.active}
+        basic
+        icon='filter'
+        onClick={this.onFilterButton.bind(this)}
+      />
+    );
+  }
+
+  /**
+   * Renders the filter modal if visible.
+   *
+   * @returns {null|*}
+   */
+  renderFilterModal() {
+    if (!this.props.filters || !this.state.modalFilter) {
+      return null;
+    }
+
+    const { component, props, state } = this.props.filters;
+    const FilterModal = withTranslation()(createEditModal(component, props, state));
+
+    return (
+      <FilterModal
+        onClose={() => this.setState({ modalFilter: false })}
+        onSave={this.onSaveFilter.bind(this)}
+      />
+    );
+  }
+
+  /**
    * Renders the table footer.
    *
    * @returns {null|*}
@@ -576,6 +647,7 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='right'
           >
+            { this.renderFilterButton() }
             { this.props.renderSearch && this.props.renderSearch() }
           </Grid.Column>
         </Grid>
@@ -664,6 +736,7 @@ DataTable.defaultProps = {
   },
   buttons: [],
   className: '',
+  filters: undefined,
   items: [],
   loading: false,
   modal: undefined,

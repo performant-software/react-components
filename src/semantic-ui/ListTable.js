@@ -25,6 +25,10 @@ type Props = {
   className?: string,
   collectionName: string,
   columns: Array<Column>,
+  filters?: {
+    component: Component<{}>,
+    props: any
+  },
   modal: {
     component: Component,
     props: any,
@@ -40,6 +44,7 @@ type Props = {
 };
 
 type State = {
+  filters: any,
   loading: boolean,
   page: number,
   pages: number,
@@ -66,6 +71,7 @@ class ListTable extends Component<Props, State> {
     super(props);
 
     this.state = {
+      filters: (props.filters && props.filters.props) || {},
       loading: false,
       page: 1,
       pages: 1,
@@ -110,7 +116,11 @@ class ListTable extends Component<Props, State> {
         sortDirection
       } = this.state;
 
+      const filterKeys = _.keys((this.props.filters && this.props.filters.props) || {});
+      const filters = _.pick(this.state.filters, filterKeys);
+
       const params = {
+        ...filters,
         page,
         search,
         sort_by: sortColumn,
@@ -131,6 +141,20 @@ class ListTable extends Component<Props, State> {
           });
         });
     });
+  }
+
+  /**
+   * Returns true if the current filters do not match the default filters.
+   *
+   * @returns {boolean}
+   */
+  isFilterActive() {
+    if (!(this.props.filters && this.props.filters.props)) {
+      return false;
+    }
+
+    const { props } = this.props.filters || {};
+    return !_.isEqual(_.pick(this.state.filters, _.keys(props)), props);
   }
 
   /**
@@ -164,6 +188,22 @@ class ListTable extends Component<Props, State> {
     return this.props
       .onDelete(selectedItem)
       .then(this.afterDelete.bind(this));
+  }
+
+  /**
+   * Sets the filters on the state and returns a promise.
+   *
+   * @param filters
+   *
+   * @returns {Promise<R>}
+   */
+  onFilterChange(filters) {
+    return new Promise((resolve) => {
+      this.setState({ filters, page: 1 }, () => {
+        this.fetchData();
+        resolve();
+      });
+    });
   }
 
   /**
@@ -215,6 +255,12 @@ class ListTable extends Component<Props, State> {
         actions={this.props.actions}
         className={this.props.className}
         columns={this.props.columns}
+        filters={{
+          active: this.isFilterActive(),
+          component: this.props.filters && this.props.filters.component,
+          onChange: this.onFilterChange.bind(this),
+          state: this.state.filters
+        }}
         items={this.state.items}
         loading={this.state.loading}
         modal={this.props.modal}
@@ -268,6 +314,7 @@ class ListTable extends Component<Props, State> {
 
 ListTable.defaultProps = {
   className: '',
+  filters: {},
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,
