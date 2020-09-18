@@ -61,7 +61,7 @@ type Props = {
     state?: any,
     onChange: (params: any) => Promise<any>
   },
-  items?: ?Array<any>,
+  items: ?Array<any>,
   loading?: boolean,
   modal?: {
     component: Element<any>,
@@ -539,7 +539,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEmptyTableRow() {
-    if (!(this.props.items && this.props.items.length)) {
+    if (this.props.items.length) {
       return null;
     }
 
