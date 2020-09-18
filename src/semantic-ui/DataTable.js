@@ -1,12 +1,16 @@
 // @flow
 
 import React, { Component } from 'react';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
 import {
-  Button,
+  Button, Checkbox,
   Confirm,
+  Dropdown,
   Grid,
   Header,
   Icon,
+  Menu,
   Pagination,
   Table
 } from 'semantic-ui-react';
@@ -14,6 +18,7 @@ import { Trans, withTranslation } from 'react-i18next';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import createEditModal from './EditModal';
+import Draggable from './Draggable';
 import './DataTable.css';
 
 type Action = {
@@ -89,6 +94,7 @@ class DataTable extends Component<Props, State> {
     super(props);
 
     this.state = {
+      columns: props.columns,
       modalDelete: false,
       modalEdit: false,
       modalFilter: false,
@@ -116,6 +122,17 @@ class DataTable extends Component<Props, State> {
    */
   onAddButton() {
     this.setState({ modalEdit: true });
+  }
+
+  /**
+   * Toggles the hidden property for the passed column.
+   *
+   * @param column
+   */
+  onColumnCheckbox(column) {
+    this.setState((state) => ({
+      columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
+    }));
   }
 
   /**
@@ -150,6 +167,24 @@ class DataTable extends Component<Props, State> {
    */
   onDeleteButton(selectedItem) {
     this.setState({ selectedItem, modalDelete: true });
+  }
+
+  /**
+   * Drags/drops the column at the passed index to the new position.
+   *
+   * @param dragIndex
+   * @param hoverIndex
+   */
+  onDrag(dragIndex: number, hoverIndex: number) {
+    this.setState((state) => {
+      const columns = [...state.columns];
+      const column = columns[dragIndex];
+
+      columns.splice(dragIndex, 1);
+      columns.splice(hoverIndex, 0, column);
+
+      return { columns };
+    });
   }
 
   /**
@@ -201,29 +236,33 @@ class DataTable extends Component<Props, State> {
    */
   render() {
     return (
-      <div
-        className={`data-table ${this.props.className}`}
+      <DndProvider
+        backend={Backend}
       >
-        { this.renderHeader() }
-        <Table
-          {...this.props.tableProps}
+        <div
+          className={`data-table ${this.props.className}`}
         >
-          <Table.Header>
-            <Table.Row>
-              { this.props.columns.map(this.renderHeaderCell.bind(this)) }
-              { this.renderActionsHeader() }
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
-            { this.renderEmptyTableRow() }
-          </Table.Body>
-        </Table>
-        { this.renderFooter() }
-        { this.renderEditModal() }
-        { this.renderDeleteModal() }
-        { this.renderFilterModal() }
-      </div>
+          { this.renderHeader() }
+          <Table
+            {...this.props.tableProps}
+          >
+            <Table.Header>
+              <Table.Row>
+                { this.state.columns.map(this.renderHeaderCell.bind(this)) }
+                { this.renderActionsHeader() }
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
+              { this.renderEmptyTableRow() }
+            </Table.Body>
+          </Table>
+          { this.renderFooter() }
+          { this.renderEditModal() }
+          { this.renderDeleteModal() }
+          { this.renderFilterModal() }
+        </div>
+      </DndProvider>
     );
   }
 
@@ -343,6 +382,10 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderCell(item, column) {
+    if (column.hidden) {
+      return null;
+    }
+
     let value;
 
     if (column.render) {
@@ -360,6 +403,45 @@ class DataTable extends Component<Props, State> {
       >
         { value }
       </Table.Cell>
+    );
+  }
+
+  /**
+   * Renders the list configuration button.
+   *
+   * @returns {*}
+   */
+  renderConfigureButton() {
+    return (
+      <Dropdown
+        basic
+        button
+        icon='cog'
+        className='icon configure-button'
+        simple
+      >
+        <Dropdown.Menu>
+          { this.state.columns.map((c, index) => (
+            <Draggable
+              id={c.name}
+              index={index}
+              key={c.name}
+              onDrag={this.onDrag.bind(this)}
+            >
+              <Dropdown.Item>
+                <Icon
+                  name='bars'
+                />
+                <Checkbox
+                  checked={!c.hidden}
+                  label={c.label}
+                  onClick={this.onColumnCheckbox.bind(this)}
+                />
+              </Dropdown.Item>
+            </Draggable>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 
@@ -647,8 +729,21 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='right'
           >
-            { this.renderFilterButton() }
-            { this.props.renderSearch && this.props.renderSearch() }
+            <Menu
+              compact
+              borderless
+              secondary
+            >
+              <Menu.Menu>
+                { this.renderConfigureButton() }
+              </Menu.Menu>
+              <Menu.Menu>
+                { this.renderFilterButton() }
+              </Menu.Menu>
+              <Menu.Menu>
+                { this.props.renderSearch && this.props.renderSearch() }
+              </Menu.Menu>
+            </Menu>
           </Grid.Column>
         </Grid>
       </div>
@@ -663,6 +758,10 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderHeaderCell(column) {
+    if (column.hidden) {
+      return null;
+    }
+
     if (column.renderHeader) {
       return column.renderHeader();
     }
@@ -688,7 +787,7 @@ class DataTable extends Component<Props, State> {
    */
   renderItem(item, index) {
     const children = [
-      this.props.columns.map(this.renderCell.bind(this, item)),
+      this.state.columns.map(this.renderCell.bind(this, item)),
       this.renderActions(item, index)
     ];
 

@@ -1,13 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
 import { Table } from 'semantic-ui-react';
 import uuid from 'react-uuid';
 import _ from 'underscore';
 import DataTable from './DataTable';
-import DraggableRow from './DraggableRow';
+import Draggable from './Draggable';
 import './EmbeddedList.css';
 
 type Action = {
@@ -155,31 +153,29 @@ class EmbeddedList extends Component<Props, State> {
    */
   render() {
     return (
-      <DndProvider backend={Backend}>
-        <DataTable
-          actions={this.props.actions}
-          addButton={this.props.addButton}
-          buttons={this.props.buttons}
-          className={`embedded-list ${this.props.className}`}
-          columns={this.props.columns}
-          items={this.getItems()}
-          modal={this.props.modal}
-          onColumnClick={this.onColumnClick.bind(this)}
-          onCopy={this.props.onCopy}
-          onDrag={this.props.onDrag}
-          onDelete={this.onDelete.bind(this)}
-          onSave={this.onSave.bind(this)}
-          renderDeleteModal={this.props.renderDeleteModal}
-          renderEmptyRow={this.props.renderEmptyRow}
-          renderItem={this.renderItem.bind(this)}
-          sortColumn={this.state.sortColumn}
-          sortDirection={this.state.sortDirection}
-          tableProps={{
-            celled: true,
-            sortable: !this.props.onDrag
-          }}
-        />
-      </DndProvider>
+      <DataTable
+        actions={this.props.actions}
+        addButton={this.props.addButton}
+        buttons={this.props.buttons}
+        className={`embedded-list ${this.props.className}`}
+        columns={this.props.columns}
+        items={this.getItems()}
+        modal={this.props.modal}
+        onColumnClick={this.onColumnClick.bind(this)}
+        onCopy={this.props.onCopy}
+        onDrag={this.props.onDrag}
+        onDelete={this.onDelete.bind(this)}
+        onSave={this.onSave.bind(this)}
+        renderDeleteModal={this.props.renderDeleteModal}
+        renderEmptyRow={this.props.renderEmptyRow}
+        renderItem={this.renderItem.bind(this)}
+        sortColumn={this.state.sortColumn}
+        sortDirection={this.state.sortDirection}
+        tableProps={{
+          celled: true,
+          sortable: !this.props.onDrag
+        }}
+      />
     );
   }
 
@@ -199,15 +195,16 @@ class EmbeddedList extends Component<Props, State> {
       const key = item.id || item.uid;
 
       return (
-        <DraggableRow
+        <Draggable
           id={key}
           index={index}
-          item={item}
           key={key}
           onDrag={this.props.onDrag.bind(this)}
         >
-          { children }
-        </DraggableRow>
+          <Table.Row>
+            { children }
+          </Table.Row>
+        </Draggable>
       );
     }
 

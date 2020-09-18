@@ -21,3 +21,7 @@
 .data-table .header {
   margin-bottom: 10px;
 }
+
+.data-table .configure-button.ui.icon.button>.icon {
+  vertical-align: middle;
+}
