@@ -6,7 +6,7 @@ import { useDrag, useDrop } from 'react-dnd';
 
 type Props = {
   children: Element<any>,
-  id: number,
+  id: any,
   index: number,
   onDrag: (dragIndex: number, hoverIndex: number) => void
 };

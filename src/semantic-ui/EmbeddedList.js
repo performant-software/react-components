@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type Element } from 'react';
 import { Table } from 'semantic-ui-react';
 import uuid from 'react-uuid';
 import _ from 'underscore';
@@ -21,7 +21,7 @@ type Column = {
 };
 
 type ListButton = {
-  render: () => Component
+  render: () => Element<any>
 };
 
 type Props = {
@@ -31,26 +31,25 @@ type Props = {
     color: string
   },
   buttons?: Array<ListButton>,
-  className?: string,
+  className: string,
   columns: Array<Column>,
   items: ?Array<any>,
   modal?: {
-    component: Component,
+    component: Element<any>,
     props: any,
     state: any
   },
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
-  onSave?: (item: any) => void,
+  onSave: (item: any) => void,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
   renderEmptyRow?: () => void
 };
 
 type State = {
-  modalDelete: boolean,
-  modalEdit: boolean,
-  selectedItem: any
+  sortColumn: ?string,
+  sortDirection: ?string
 };
 
 const PATH_DELIMITER = '.';
@@ -62,12 +61,14 @@ const SORT_DESCENDING = 'descending';
  * especially useful when the collection is to be saved at the same time as the parent.
  */
 class EmbeddedList extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new EmbeddedList component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -100,7 +101,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @param column
    */
-  onColumnClick(column) {
+  onColumnClick(column: Column) {
     /**
      * We'll disable the column sorting if the table rows are draggable. Making the table rows draggable implies
      * that the sorting will be done manually. Allowing column click sorting could make things confusing.
@@ -126,7 +127,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @returns {Promise}
    */
-  onDelete(item) {
+  onDelete(item: any) {
     this.props.onDelete(item);
     return Promise.resolve();
   }
@@ -139,7 +140,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @returns {Promise}
    */
-  onSave(item) {
+  onSave(item: any) {
     const uid = item.uid ? item.uid : uuid();
     this.props.onSave({ ...item, uid });
 
@@ -188,7 +189,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderItem(item, index, children) {
+  renderItem(item: any, index: number, children: Element<any>) {
     if (this.props.onDrag) {
       // Since the item may not be saved yet, we'll look for the ID or UID columns as the key. This is necessary to
       // maintain the correct element when dragging.
