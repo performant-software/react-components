@@ -34,7 +34,7 @@ type ListButton = {
 
 type Props = {
   actions?: Array<Action>,
-  addButton: {
+  addButton?: {
     location: string,
     color: string
   },
