@@ -115,7 +115,9 @@ class DataTable extends Component<Props, State> {
    * Displays the add/edit modal.
    */
   onAddButton() {
-    this.setState({ modalEdit: true });
+    this.props.addButton.onClick
+      ? this.props.addButton.onClick()
+      : this.setState({ modalEdit: true });
   }
 
   /**
@@ -270,19 +272,17 @@ class DataTable extends Component<Props, State> {
     const actions = this.props.actions
       .filter((action) => !action.accept || action.accept(item))
       .map((action) => {
+        let defaults = {};
+
         if (action.name === 'edit') {
-          return { ...action, icon: 'edit outline', onClick: this.onEditButton.bind(this) };
+          defaults = { onClick: this.onEditButton.bind(this), icon: 'edit outline' };
+        } else if (action.name === 'copy') {
+          defaults = { onClick: this.onCopyButton.bind(this), icon: 'copy outline' };
+        } else if (action.name === 'delete') {
+          defaults = { onClick: this.onDeleteButton.bind(this), icon: 'times circle outline' };
         }
 
-        if (action.name === 'copy') {
-          return { ...action, icon: 'copy outline', onClick: this.onCopyButton.bind(this) };
-        }
-
-        if (action.name === 'delete') {
-          return { ...action, icon: 'times circle outline', onClick: this.onDeleteButton.bind(this) };
-        }
-
-        return action;
+        return _.defaults(actions, defaults);
       });
 
     return (
@@ -318,7 +318,7 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderAddButton() {
-    if (!(this.props.addButton && this.props.modal)) {
+    if (!this.props.addButton) {
       return null;
     }
 
