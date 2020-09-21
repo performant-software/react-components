@@ -34,7 +34,7 @@ type ListButton = {
 
 type Props = {
   actions?: Array<Action>,
-  addButton?: {
+  addButton: {
     location: string,
     color: string
   },
@@ -505,7 +505,7 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderEmptyMessage() {
-    if (!(this.props.addButton && this.props.modal)) {
+    if (!this.props.addButton) {
       return i18n.t('DataTable.emptyList');
     }
 
