@@ -282,7 +282,7 @@ class DataTable extends Component<Props, State> {
           defaults = { onClick: this.onDeleteButton.bind(this), icon: 'times circle outline' };
         }
 
-        return _.defaults(actions, defaults);
+        return _.defaults(action, defaults);
       });
 
     return (
