@@ -29,6 +29,13 @@
     "emptyList": "No matching records found.",
     "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started."
   },
+  "EditProvider": {
+    "errors": {
+      "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
+      "required": "The {{key}} field is required.",
+      "unique": "A record with the {{key}} \"{{value}}\" already exists."
+    }
+  },
   "FileUpload": {
     "add": "<0>Add files</0> or drop files here",
     "errors": {

@@ -36,6 +36,7 @@
     "react/jsx-no-bind": "off",
     "react/no-did-update-set-state": "off",
     "react/prefer-stateless-function": "off",
+    "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "react/sort-comp": "off",
     "react/static-property-placement": "off",

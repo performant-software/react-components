@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import createEditModal from './EditModal';
+import EditModal from './EditModal';
 import NestedAccordion from './NestedAccordion';
 import Timer from '../utils/Timer';
 import './AccordionList.css';
@@ -263,14 +263,15 @@ class AccordionList extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, state } = this.props.modal;
-    const AddModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props } = this.props.modal;
 
     return (
-      <AddModal
+      <EditModal
+        component={component}
         item={this.state.selectedItem}
         onClose={() => this.setState({ modalAdd: false, selectedItem: null })}
         onSave={this.onSave.bind(this)}
+        {...props}
       />
     );
   }

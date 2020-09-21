@@ -3,6 +3,9 @@
 // Common
 export { default as Keyboard } from './common/Keyboard';
 
+// Contexts
+export { default as EditContext } from './contexts/EditContext';
+
 // Semantic UI
 export { default as AccordionList } from './semantic-ui/AccordionList';
 export { default as AccordionSelector } from './semantic-ui/AccordionSelector';
@@ -15,6 +18,8 @@ export { default as DataTable } from './semantic-ui/DataTable';
 export { default as DescriptorField } from './semantic-ui/DescriptorField';
 export { default as DraggableRow } from './semantic-ui/DraggableRow';
 export { default as EditModal } from './semantic-ui/EditModal';
+export { default as EditPage } from './semantic-ui/EditPage';
+export { default as EditProvider } from './semantic-ui/EditProvider';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
 export { default as FileUpload } from './semantic-ui/FileUpload';
 export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
@@ -38,4 +43,5 @@ export { default as TagsList } from './semantic-ui/TagsList';
 export { default as Timer } from './utils/Timer';
 
 // Types
-export type { ComponentProps as EditModalProps } from './semantic-ui/EditModal';
+export type { EditProviderProps as EditModalProps } from './semantic-ui/EditProvider'; // Backwards compatability
+export type { EditProviderProps } from './semantic-ui/EditProvider';

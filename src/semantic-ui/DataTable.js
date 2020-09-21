@@ -13,7 +13,7 @@ import {
 import { Trans, withTranslation } from 'react-i18next';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import createEditModal from './EditModal';
+import EditModal from './EditModal';
 import './DataTable.css';
 
 type Action = {
@@ -486,14 +486,15 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, state } = this.props.modal;
-    const EditModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props } = this.props.modal;
 
     return (
       <EditModal
+        component={component}
         onClose={() => this.setState({ selectedItem: null, modalEdit: false })}
         onSave={this.onSave.bind(this)}
         item={this.state.selectedItem}
+        {...props}
       />
     );
   }
@@ -578,13 +579,14 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, state } = this.props.filters;
-    const FilterModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props } = this.props.filters;
 
     return (
-      <FilterModal
+      <EditModal
+        component={component}
         onClose={() => this.setState({ modalFilter: false })}
         onSave={this.onSaveFilter.bind(this)}
+        {...props}
       />
     );
   }

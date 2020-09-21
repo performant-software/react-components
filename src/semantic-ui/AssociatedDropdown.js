@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Button, Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
-import createEditModal from './EditModal';
+import EditModal from './EditModal';
 import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './AssociatedDropdown.css';
@@ -232,23 +232,18 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
-    const {
-      component,
-      props,
-      state,
-      onSave
-    } = this.props.modal;
-
-    const EditModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props, onSave } = this.props.modal;
 
     return (
       <EditModal
+        component={component}
         onClose={() => this.setState({ modalAdd: false })}
         onSave={(item) => onSave(item)
           .then((record) => {
             this.props.onSelection(record);
             this.setState({ modalAdd: false });
           })}
+        {...props}
       />
     );
   }
