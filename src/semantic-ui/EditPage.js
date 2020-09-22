@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import withEditContainer, { type EditContainerProps } from '../utils/EditContainer';
+import Element from '../utils/Element';
 import './EditPage.css';
 
 type Props = EditContainerProps & {
@@ -43,7 +44,7 @@ const EditPage = (props: Props) => (
         />
       )}
     </Button>
-    { React.Children.map(props.children, (c) => React.cloneElement(c, props)) }
+    { Element.cloneChildren(props.children, props) }
   </Form>
 );
 
