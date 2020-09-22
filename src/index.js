@@ -36,7 +36,7 @@ export { default as TabbedModal } from './semantic-ui/TabbedModal';
 export { default as TagsList } from './semantic-ui/TagsList';
 
 // Utils
-export { default as EditContainer } from './utils/EditContainer';
+export { default as withEditContainer } from './utils/EditContainer';
 export { default as Timer } from './utils/Timer';
 
 // Types

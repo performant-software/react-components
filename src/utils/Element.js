@@ -1,18 +1,6 @@
 // @flow
 
-import React, { type Element } from 'react';
-import _ from 'underscore';
-
-/**
- * Clones the passed array of children and applies the passed props.
- *
- * @param children
- * @param props
- * 
- * @returns {Array<$NonMaybeType<*>>}
- */
-const cloneChildren = (children: Element<any>, props: any) => React.Children.map(children,
-  (c) => React.cloneElement(c, _.omit(props, 'children')));
+import React from 'react';
 
 /**
  * Returns the subset of children matching the passed component type. This function is useful for designing components
@@ -44,6 +32,5 @@ const findByType = (children: any, component: any) => {
 };
 
 export default {
-  cloneChildren,
   findByType
 };
