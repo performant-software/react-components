@@ -3,15 +3,16 @@
 import React from 'react';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import withEditContainer, { type EditContainerProps } from '../utils/EditContainer';
 import './EditPage.css';
+
+import type { EditContainerProps } from '../utils/EditContainer';
 
 type Props = EditContainerProps & {
   onClose: () => void,
   onSave: () => Promise<any>
 };
 
-const EditPageContainer = (props: Props) => (
+const EditPage = (props: Props) => (
   <Form
     className='edit-page'
   >
@@ -45,12 +46,6 @@ const EditPageContainer = (props: Props) => (
     </Button>
     { props.children }
   </Form>
-);
-
-const Wrapper = withEditContainer(EditPageContainer);
-
-const EditPage = (props: Props) => (
-  <Wrapper {...props} />
 );
 
 export default EditPage;
