@@ -44,7 +44,7 @@ const EditPage = (props: Props) => (
         />
       )}
     </Button>
-    { Element.cloneChildren(props.children, props) }
+    { props.children }
   </Form>
 );
 
