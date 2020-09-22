@@ -6,13 +6,14 @@ import i18n from '../i18n/i18n';
 import './EditPage.css';
 
 import type { EditContainerProps } from '../utils/EditContainer';
+import withEditContainer from '../utils/EditContainer';
 
 type Props = EditContainerProps & {
   onClose: () => void,
   onSave: () => Promise<any>
 };
 
-const EditPage = (props: Props) => (
+const EditPageContainer = (props: Props) => (
   <Form
     className='edit-page'
   >
@@ -47,5 +48,10 @@ const EditPage = (props: Props) => (
     { props.children }
   </Form>
 );
+
+const EditPage = (props: any) => {
+  const WrappedComponent = withEditContainer(EditPageContainer);
+  return <WrappedComponent {...props} />;
+};
 
 export default EditPage;
