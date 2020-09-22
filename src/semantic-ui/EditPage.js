@@ -43,7 +43,7 @@ const EditPage = (props: Props) => (
         />
       )}
     </Button>
-    { React.Children.map(props.children, (c) => ({ ...c, ...props })) }
+    { React.Children.map(props.children, (c) => React.cloneElement(c, props)) }
   </Form>
 );
 
