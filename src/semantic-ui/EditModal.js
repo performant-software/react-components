@@ -3,61 +3,54 @@
 import React, { type ComponentType } from 'react';
 import { Button, Loader, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import EditProvider from './EditProvider';
-import EditContext from '../contexts/EditContext';
+import withEditContainer, { type EditContainerProps } from '../utils/EditContainer';
 import './EditModal.css';
 
-type Props = {
-  component: ComponentType<{}>,
+type Props = EditContainerProps & {
+  component: ComponentType<any>,
   onClose: () => void,
   onSave: () => Promise<any>
 };
 
-const EditModal = ({ component, onClose, onSave, ...props }: Props) => {
-  const OuterComponent = component;
+const EditModal = (props: Props) => {
+  const OuterComponent = props.component;
   return (
-    <EditProvider
+    <OuterComponent
       {...props}
     >
-      <EditContext.Consumer>
-        { (context) => (
-          <OuterComponent>
-            <Modal.Actions
-              className='edit-modal-actions'
-            >
-              <Button
-                disabled={context.saving}
-                onClick={onSave.bind(this)}
-                primary
-                size='medium'
-                type='submit'
-              >
-                { i18n.t('Common.buttons.save') }
-                { context.saving && (
-                  <Loader
-                    active
-                    className='saving'
-                    inline
-                    size='tiny'
-                  />
-                )}
-              </Button>
-              <Button
-                disabled={context.saving}
-                inverted
-                onClick={onClose.bind(this)}
-                primary
-                size='medium'
-                type='button'
-              >
-                { i18n.t('Common.buttons.cancel') }
-              </Button>
-            </Modal.Actions>
-          </OuterComponent>
-        )}
-      </EditContext.Consumer>
-    </EditProvider>
+      <Modal.Actions
+        className='edit-modal-actions'
+      >
+        <Button
+          disabled={props.saving}
+          onClick={props.onSave.bind(this)}
+          primary
+          size='medium'
+          type='submit'
+        >
+          { i18n.t('Common.buttons.save') }
+          { props.saving && (
+            <Loader
+              active
+              className='saving'
+              inline
+              size='tiny'
+            />
+          )}
+        </Button>
+        <Button
+          disabled={props.saving}
+          inverted
+          onClick={props.onClose.bind(this)}
+          primary
+          size='medium'
+          type='button'
+        >
+          { i18n.t('Common.buttons.cancel') }
+        </Button>
+      </Modal.Actions>
+    </OuterComponent>
   );
 };
 
-export default EditModal;
+export default withEditContainer(EditModal);

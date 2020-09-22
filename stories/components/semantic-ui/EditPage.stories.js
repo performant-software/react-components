@@ -12,20 +12,17 @@ export default {
 
 export const Default = () => (
   <EditPage
-    component={() => (
-      <>
-        <Form.Input
-          label='Name'
-        />
-        <Form.Input
-          label='Address'
-        />
-        <Form.Input
-          label='Phone'
-        />
-      </>
-    )}
     onClose={action('close')}
     onSave={action('save')}
-  />
+  >
+    <Form.Input
+      label='Name'
+    />
+    <Form.Input
+      label='Address'
+    />
+    <Form.Input
+      label='Phone'
+    />
+  </EditPage>
 );

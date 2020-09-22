@@ -12,7 +12,7 @@ export default {
 
 export const Default = () => (
   <EditModal
-    component={() => (
+    component={(props) => (
       <Modal
         as={Form}
         open
@@ -31,6 +31,7 @@ export const Default = () => (
             label='Phone'
           />
         </Modal.Content>
+        { props.children }
       </Modal>
     )}
     onClose={action('close')}
