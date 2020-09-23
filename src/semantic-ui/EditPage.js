@@ -4,7 +4,7 @@ import React, { type ComponentType } from 'react';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 
-import type { EditContainerProps } from '../utils/EditContainer';
+import type { EditContainerProps } from '../common/EditContainer';
 
 type Props = EditContainerProps & {
   onClose: () => void,

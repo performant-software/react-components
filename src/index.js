@@ -1,6 +1,7 @@
 // @flow
 
 // Common
+export { default as useEditContainer } from './common/EditContainer';
 export { default as Keyboard } from './common/Keyboard';
 
 // Semantic UI
@@ -15,7 +16,7 @@ export { default as DataTable } from './semantic-ui/DataTable';
 export { default as DescriptorField } from './semantic-ui/DescriptorField';
 export { default as DraggableRow } from './semantic-ui/DraggableRow';
 export { default as EditModal } from './semantic-ui/EditModal';
-export { default as EditPage } from './semantic-ui/EditPage';
+export { default as useEditPage } from './semantic-ui/EditPage';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
 export { default as FileUpload } from './semantic-ui/FileUpload';
 export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
@@ -36,7 +37,6 @@ export { default as TabbedModal } from './semantic-ui/TabbedModal';
 export { default as TagsList } from './semantic-ui/TagsList';
 
 // Utils
-export { default as withEditContainer } from './common/EditContainer';
 export { default as Timer } from './utils/Timer';
 
 // Types
