@@ -25,7 +25,7 @@ type State = {
 const ERROR_EMPTY = 'can\'t be blank';
 const ERROR_UNIQUE = 'has already been taken';
 
-const withEditContainer = (WrappedComponent: ComponentType<any>) => (
+const useEditContainer = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
     /**
      * Constructs a new EditProvider component.
@@ -36,7 +36,7 @@ const withEditContainer = (WrappedComponent: ComponentType<any>) => (
       super(props);
 
       this.state = {
-        item: _.defaults(props.item || {}, props.defaults),
+        item: _.defaults(props.item || {}, props.defaults || {}),
         saving: false,
         validationErrors: []
       };
@@ -344,6 +344,7 @@ const withEditContainer = (WrappedComponent: ComponentType<any>) => (
           onSaveChildAssociation={this.onSaveChildAssociation.bind(this)}
           onTextInputChange={this.onTextInputChange.bind(this)}
           onSetState={this.onSetState.bind(this)}
+          saving={this.state.saving}
         />
       );
     }
@@ -387,7 +388,7 @@ const withEditContainer = (WrappedComponent: ComponentType<any>) => (
   }
 );
 
-export default withEditContainer;
+export default useEditContainer;
 
 export type EditContainerProps = {
   children: Element<any>,

@@ -1,19 +1,17 @@
 // @flow
 
-import React from 'react';
+import React, { type ComponentType } from 'react';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import './EditPage.css';
 
 import type { EditContainerProps } from '../utils/EditContainer';
-import withEditContainer from '../utils/EditContainer';
 
 type Props = EditContainerProps & {
   onClose: () => void,
   onSave: () => Promise<any>
 };
 
-const EditPageContainer = (props: Props) => (
+const useEditPage = (WrappedComponent: ComponentType<any>) => ((props: Props) => (
   <Form
     className='edit-page'
   >
@@ -45,13 +43,8 @@ const EditPageContainer = (props: Props) => (
         />
       )}
     </Button>
-    { props.children }
+    <WrappedComponent {...props} />
   </Form>
-);
+));
 
-const EditPage = (props: any) => {
-  const WrappedComponent = withEditContainer(EditPageContainer);
-  return <WrappedComponent {...props} />;
-};
-
-export default EditPage;
+export default useEditPage;
