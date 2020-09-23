@@ -3,7 +3,7 @@
 import React, { type ComponentType } from 'react';
 import { Button, Loader, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import withEditContainer, { type EditContainerProps } from '../utils/EditContainer';
+import withEditContainer, { type EditContainerProps } from '../common/EditContainer';
 import './EditModal.css';
 
 type Props = EditContainerProps & {
