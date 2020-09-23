@@ -3,8 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
-import useEditPage from '../../../src/semantic-ui/EditPage';
-import useEditContainer from '../../../src/common/EditContainer';
+import EditPage from '../../../src/semantic-ui/EditPage';
 
 export default {
   title: 'Components/Semantic UI/EditPage',
@@ -25,10 +24,9 @@ const Site = () => (
   </div>
 );
 
-const EditPage = useEditContainer(useEditPage(Site));
-
 export const Default = () => (
   <EditPage
+    component={Site}
     item={{ id: 12 }}
     onClose={action('close')}
     onInitialize={() => new Promise((resolve) => resolve({ id: 12, name: 'Test' }))}
