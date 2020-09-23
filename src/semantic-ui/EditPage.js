@@ -4,6 +4,7 @@ import React, { type ComponentType } from 'react';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import useEditContainer, { type EditContainerProps } from '../common/EditContainer';
+import './EditPage.css';
 
 type Props = EditContainerProps & {
   component: ComponentType<any>,
@@ -22,34 +23,36 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => ((props: Pr
   <Form
     className='edit-page'
   >
-    <Button
-      disabled={props.saving}
-      floated='right'
-      inverted
-      onClick={props.onClose.bind(this)}
-      primary
-      size='medium'
-      type='button'
+    <div
+      className='button-container'
     >
-      { i18n.t('Common.buttons.cancel') }
-    </Button>
-    <Button
-      floated='right'
-      onClick={props.onSave.bind(this)}
-      primary
-      size='medium'
-      type='submit'
-    >
-      { i18n.t('Common.buttons.save') }
-      { props.saving && (
-        <Loader
-          active
-          className='saving'
-          inline
-          size='tiny'
-        />
-      )}
-    </Button>
+      <Button
+        onClick={props.onSave.bind(this)}
+        primary
+        size='medium'
+        type='submit'
+      >
+        { i18n.t('Common.buttons.save') }
+        { props.saving && (
+          <Loader
+            active
+            className='saving'
+            inline
+            size='tiny'
+          />
+        )}
+      </Button>
+      <Button
+        disabled={props.saving}
+        inverted
+        onClick={props.onClose.bind(this)}
+        primary
+        size='medium'
+        type='button'
+      >
+        { i18n.t('Common.buttons.cancel') }
+      </Button>
+    </div>
     <WrappedComponent {...props} />
   </Form>
 ));
