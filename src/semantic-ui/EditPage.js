@@ -1,13 +1,17 @@
 // @flow
 
 import React, { type ComponentType } from 'react';
-import { Button, Form, Loader } from 'semantic-ui-react';
-import i18n from '../i18n/i18n';
+import { Form, Menu, type MenuProps } from 'semantic-ui-react';
+import _ from 'underscore';
 import useEditContainer, { type EditContainerProps } from '../common/EditContainer';
+import CancelButton from './CancelButton';
+import SaveButton from './SaveButton';
 import './EditPage.css';
 
 type Props = EditContainerProps & {
+  className: string,
   component: ComponentType<any>,
+  menu: MenuProps,
   onClose: () => void,
   onSave: () => Promise<any>
 };
@@ -21,38 +25,51 @@ export default EditPage;
 
 export const useEditPage = (WrappedComponent: ComponentType<any>) => ((props: Props) => (
   <Form
-    className='edit-page'
+    className={`edit-page ${props.className || ''}`}
   >
-    <div
-      className='button-container'
-    >
-      <Button
-        onClick={props.onSave.bind(this)}
-        primary
-        size='medium'
-        type='submit'
+    { props.menu && (
+      <Menu
+        {..._.omit(props.menu, 'items')}
       >
-        { i18n.t('Common.buttons.save') }
-        { props.saving && (
-          <Loader
-            active
-            className='saving'
-            inline
-            size='tiny'
+        { _.map(props.menu.items, (item) => (
+          <Menu.Item
+            {...item}
           />
-        )}
-      </Button>
-      <Button
-        disabled={props.saving}
-        inverted
-        onClick={props.onClose.bind(this)}
-        primary
-        size='medium'
-        type='button'
+        ))}
+        <Menu.Menu
+          position='right'
+        >
+          <Menu.Item>
+            <SaveButton
+              onClick={props.onSave.bind(this)}
+              saving={props.saving}
+            />
+          </Menu.Item>
+          <Menu.Item>
+            <CancelButton
+              disabled={props.saving}
+              onClick={props.onClose.bind(this)}
+            />
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    )}
+    { !props.menu && (
+      <div
+        className='button-container'
       >
-        { i18n.t('Common.buttons.cancel') }
-      </Button>
-    </div>
-    <WrappedComponent {...props} />
+        <SaveButton
+          onClick={props.onSave.bind(this)}
+          saving={props.saving}
+        />
+        <CancelButton
+          disabled={props.saving}
+          onClick={props.onClose.bind(this)}
+        />
+      </div>
+    )}
+    <WrappedComponent
+      {...props}
+    />
   </Form>
 ));

@@ -10,7 +10,7 @@ export default {
   decorators: [withA11y, withKnobs]
 };
 
-const Site = () => (
+const TestForm = () => (
   <div>
     <Form.Input
       label='Name'
@@ -26,10 +26,30 @@ const Site = () => (
 
 export const Default = () => (
   <EditPage
-    component={Site}
-    item={{ id: 12 }}
+    component={TestForm}
     onClose={action('close')}
-    onInitialize={() => new Promise((resolve) => resolve({ id: 12, name: 'Test' }))}
+    onSave={action('save')}
+  />
+);
+
+export const WithMenu = () => (
+  <EditPage
+    component={TestForm}
+    menu={{
+      items: [{
+        name: 'Details',
+        key: 'details'
+      }, {
+        name: 'Technical',
+        key: 'technical'
+      }, {
+        name: 'Other',
+        key: 'other'
+      }],
+      pointing: true,
+      secondary: true
+    }}
+    onClose={action('close')}
     onSave={action('save')}
   />
 );
