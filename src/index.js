@@ -42,3 +42,4 @@ export { default as Timer } from './utils/Timer';
 // Types
 export type { EditContainerProps as EditModalProps } from './common/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './common/EditContainer';
+export type { EditPageProps } from './semantic-ui/EditPage';

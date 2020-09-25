@@ -139,3 +139,7 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
     }
   }
 );
+
+export type EditPageProps = EditContainerProps & {
+  currentTab: string
+};
