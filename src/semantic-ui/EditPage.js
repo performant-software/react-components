@@ -1,6 +1,6 @@
 // @flow
 
-import React, { type ComponentType } from 'react';
+import React, { Component, type ComponentType } from 'react';
 import { Form, Menu, type MenuProps } from 'semantic-ui-react';
 import _ from 'underscore';
 import useEditContainer, { type EditContainerProps } from '../common/EditContainer';
@@ -16,6 +16,10 @@ type Props = EditContainerProps & {
   onSave: () => Promise<any>
 };
 
+type State = {
+  currentTab: string
+};
+
 const EditPage = (props: Props) => {
   const Page = useEditContainer(useEditPage(props.component));
   return <Page {...props} />;
@@ -23,53 +27,115 @@ const EditPage = (props: Props) => {
 
 export default EditPage;
 
-export const useEditPage = (WrappedComponent: ComponentType<any>) => ((props: Props) => (
-  <Form
-    className={`edit-page ${props.className || ''}`}
-  >
-    { props.menu && (
-      <Menu
-        {..._.omit(props.menu, 'items')}
-      >
-        { _.map(props.menu.items, (item) => (
-          <Menu.Item
-            {...item}
-          />
-        ))}
-        <Menu.Menu
-          position='right'
+export const useEditPage = (WrappedComponent: ComponentType<any>) => (
+  class extends Component<Props, State> {
+    /**
+     * Constructs a new EditPage component.
+     *
+     * @param props
+     */
+    constructor(props: Props) {
+      super(props);
+
+      this.state = {
+        currentTab: ''
+      };
+    }
+
+    /**
+     * Sets the current tab to the first tab in the array.
+     */
+    componentDidMount() {
+      const tab = _.first(this.props.menu.items);
+      this.setState({ currentTab: tab && tab.key });
+    }
+
+    /**
+     * Renders the EditPage component.
+     *
+     * @returns {*}
+     */
+    render() {
+      return (
+        <Form
+          className={`edit-page ${this.props.className || ''}`}
         >
-          <Menu.Item>
-            <SaveButton
-              onClick={props.onSave.bind(this)}
-              saving={props.saving}
+          { this.renderMenu() }
+          { this.renderButtons() }
+          <WrappedComponent
+            {...this.props}
+            currentTab={this.state.currentTab}
+          />
+        </Form>
+      );
+    }
+
+    /**
+     * Renders the buttons and container if no menu is present.
+     *
+     * @returns {null|*}
+     */
+    renderButtons() {
+      if (this.props.menu) {
+        return null;
+      }
+
+      return (
+        <div
+          className='button-container'
+        >
+          <SaveButton
+            onClick={this.props.onSave.bind(this)}
+            saving={this.props.saving}
+          />
+          <CancelButton
+            disabled={this.props.saving}
+            onClick={this.props.onClose.bind(this)}
+          />
+        </div>
+      );
+    }
+
+    /**
+     * Renders the menu (if present).
+     *
+     * @returns {null|*}
+     */
+    renderMenu() {
+      if (!this.props.menu) {
+        return null;
+      }
+
+      return (
+        <Menu
+          {..._.omit(this.props.menu, 'items')}
+        >
+          { _.map(this.props.menu.items, (item) => (
+            <Menu.Item
+              active={item.key === this.state.currentTab}
+              key={item.key}
+              name={item.name}
+              onClick={() => this.setState({ currentTab: item.key })}
             />
-          </Menu.Item>
-          <Menu.Item>
-            <CancelButton
-              disabled={props.saving}
-              onClick={props.onClose.bind(this)}
-            />
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    )}
-    { !props.menu && (
-      <div
-        className='button-container'
-      >
-        <SaveButton
-          onClick={props.onSave.bind(this)}
-          saving={props.saving}
-        />
-        <CancelButton
-          disabled={props.saving}
-          onClick={props.onClose.bind(this)}
-        />
-      </div>
-    )}
-    <WrappedComponent
-      {...props}
-    />
-  </Form>
-));
+          ))}
+          <Menu.Menu
+            position='right'
+          >
+            <Menu.Item>
+              <SaveButton
+                onClick={this.props.onSave.bind(this)}
+                saving={this.props.saving}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              <CancelButton
+                disabled={this.props.saving}
+                onClick={this.props.onClose.bind(this)}
+              />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      );
+    }
+  }
+);

@@ -45,9 +45,7 @@ export const WithMenu = () => (
       }, {
         name: 'Other',
         key: 'other'
-      }],
-      pointing: true,
-      secondary: true
+      }]
     }}
     onClose={action('close')}
     onSave={action('save')}
