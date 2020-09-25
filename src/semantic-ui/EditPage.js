@@ -46,8 +46,10 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
      * Sets the current tab to the first tab in the array.
      */
     componentDidMount() {
-      const tab = _.first(this.props.menu.items);
-      this.setState({ currentTab: tab && tab.key });
+      if (this.props.menu) {
+        const tab = _.first(this.props.menu.items);
+        this.setState({ currentTab: tab && tab.key });
+      }
     }
 
     /**
@@ -126,8 +128,6 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
                 onClick={this.props.onSave.bind(this)}
                 saving={this.props.saving}
               />
-            </Menu.Item>
-            <Menu.Item>
               <CancelButton
                 disabled={this.props.saving}
                 onClick={this.props.onClose.bind(this)}
