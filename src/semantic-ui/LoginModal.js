@@ -28,6 +28,7 @@ type Props = {
 const LoginModal = (props: Props) => (
   <Modal
     as={Form}
+    className='login-modal'
     error={props.loginFailed}
     open={props.open}
     size='small'
@@ -47,9 +48,7 @@ const LoginModal = (props: Props) => (
       textAlign='center'
     >
       <Grid.Column>
-        <Grid.Row
-          className='row'
-        >
+        <Grid.Row>
           <Input
             autoFocus
             className='form-field'
