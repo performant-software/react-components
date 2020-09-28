@@ -341,6 +341,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
           onDeleteChildAssociation={this.onDeleteChildAssociation.bind(this)}
           onMultiAddChildAssociations={this.onMultiAddChildAssociations.bind(this)}
+          onSave={this.onSave.bind(this)}
           onSaveChildAssociation={this.onSaveChildAssociation.bind(this)}
           onTextInputChange={this.onTextInputChange.bind(this)}
           onSetState={this.onSetState.bind(this)}
@@ -400,6 +401,7 @@ export type EditContainerProps = {
   onCheckboxInputChange: (key: string, value: any) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,
   onMultiAddChildAssociations: (association: string, Array<any>) => void,
+  onSave: () => void,
   onSaveChildAssociation: (association: string, child: any) => void,
   onSetState: (any) => void,
   onTextInputChange: (key: string, value: any) => void,
