@@ -253,8 +253,10 @@ class ListTable extends Component<Props, State> {
     return (
       <DataTable
         actions={this.props.actions}
+        addButton={this.props.addButton}
         className={this.props.className}
         columns={this.props.columns}
+        configurable={this.props.configurable}
         filters={{
           active: this.isFilterActive(),
           component: this.props.filters && this.props.filters.component,
@@ -314,6 +316,7 @@ class ListTable extends Component<Props, State> {
 
 ListTable.defaultProps = {
   className: '',
+  configurable: true,
   filters: {},
   onCopy: undefined,
   renderDeleteModal: undefined,

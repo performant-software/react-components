@@ -14,10 +14,10 @@ import {
   Pagination,
   Table
 } from 'semantic-ui-react';
-import { Trans, withTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import createEditModal from './EditModal';
+import EditModal from './EditModal';
 import Draggable from './Draggable';
 import './DataTable.css';
 
@@ -49,11 +49,13 @@ type Props = {
   actions?: Array<Action>,
   addButton: {
     location: string,
-    color: string
+    color: string,
+    onClick?: () => void
   },
   buttons: Array<ListButton>,
   className: string,
   columns: Array<Column>,
+  configurable: boolean,
   filters?: {
     active: boolean,
     component: Component<{}>,
@@ -132,7 +134,9 @@ class DataTable extends Component<Props, State> {
    * Displays the add/edit modal.
    */
   onAddButton() {
-    this.setState({ modalEdit: true });
+    return this.props.addButton.onClick
+      ? this.props.addButton.onClick()
+      : this.setState({ modalEdit: true });
   }
 
   /**
@@ -324,19 +328,17 @@ class DataTable extends Component<Props, State> {
     const actions = this.props.actions
       .filter((action) => !action.accept || action.accept(item))
       .map((action) => {
+        let defaults = {};
+
         if (action.name === 'edit') {
-          return { ...action, icon: 'edit outline', onClick: this.onEditButton.bind(this) };
+          defaults = { onClick: this.onEditButton.bind(this), icon: 'edit outline' };
+        } else if (action.name === 'copy') {
+          defaults = { onClick: this.onCopyButton.bind(this), icon: 'copy outline' };
+        } else if (action.name === 'delete') {
+          defaults = { onClick: this.onDeleteButton.bind(this), icon: 'times circle outline' };
         }
 
-        if (action.name === 'copy') {
-          return { ...action, icon: 'copy outline', onClick: this.onCopyButton.bind(this) };
-        }
-
-        if (action.name === 'delete') {
-          return { ...action, icon: 'times circle outline', onClick: this.onDeleteButton.bind(this) };
-        }
-
-        return action;
+        return _.defaults(action, defaults);
       });
 
     return (
@@ -372,7 +374,7 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderAddButton() {
-    if (!(this.props.addButton && this.props.modal)) {
+    if (!this.props.addButton) {
       return null;
     }
 
@@ -427,6 +429,10 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderConfigureButton() {
+    if (!this.props.configurable) {
+      return null;
+    }
+
     return (
       <Dropdown
         basic
@@ -499,14 +505,15 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, state } = this.props.modal;
-    const EditModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props } = this.props.modal;
 
     return (
       <EditModal
+        component={component}
         onClose={() => this.setState({ selectedItem: null, modalEdit: false })}
         onSave={this.onSave.bind(this)}
         item={this.state.selectedItem}
+        {...props}
       />
     );
   }
@@ -518,7 +525,7 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderEmptyMessage() {
-    if (!(this.props.addButton && this.props.modal)) {
+    if (!this.props.addButton) {
       return i18n.t('DataTable.emptyList');
     }
 
@@ -591,13 +598,14 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, state } = this.props.filters;
-    const FilterModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props } = this.props.filters;
 
     return (
-      <FilterModal
+      <EditModal
+        component={component}
         onClose={() => this.setState({ modalFilter: false })}
         onSave={this.onSaveFilter.bind(this)}
+        {...props}
       />
     );
   }

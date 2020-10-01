@@ -1,7 +1,7 @@
-.row {
+.login-modal .ui.grid > .column > .row {
   margin: 15px 150px 0px 150px;
 }
 
-.ui.input.form-field {
+.login-modal .ui.input.form-field {
   display: block;
 }

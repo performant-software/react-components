@@ -1,12 +1,14 @@
 // @flow
 
 import React, { Component, type Element } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Input, Table } from 'semantic-ui-react';
 import uuid from 'react-uuid';
 import _ from 'underscore';
 import DataTable from './DataTable';
 import Draggable from './Draggable';
 import './EmbeddedList.css';
+import String from '../utils/String';
+import Timer from '../utils/Timer';
 
 type Action = {
   name: string
@@ -33,6 +35,7 @@ type Props = {
   buttons?: Array<ListButton>,
   className: string,
   columns: Array<Column>,
+  configurable: boolean,
   items: ?Array<any>,
   modal?: {
     component: Element<any>,
@@ -44,10 +47,13 @@ type Props = {
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
   onSave: (item: any) => void,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
-  renderEmptyRow?: () => void
+  renderEmptyRow?: () => void,
+  searchable: boolean
 };
 
 type State = {
+  items: Array<any>,
+  searchQuery: string,
   sortColumn: ?string,
   sortDirection: ?string
 };
@@ -72,6 +78,8 @@ class EmbeddedList extends Component<Props, State> {
     super(props);
 
     this.state = {
+      items: [],
+      searchQuery: '',
       sortColumn: null,
       sortDirection: null
     };
@@ -82,18 +90,7 @@ class EmbeddedList extends Component<Props, State> {
    */
   componentDidMount() {
     this.onColumnClick(_.first(this.props.columns));
-  }
-
-  /**
-   * Returns the sorted, filtered list of items.
-   *
-   * @returns {*}
-   */
-  getItems() {
-    const { items } = this.props;
-    const { sortColumn, sortDirection } = this.state;
-
-    return _.orderBy(_.filter(items, (item) => !item._destroy), sortColumn, sortDirection);
+    this.onSearch();
   }
 
   /**
@@ -148,6 +145,51 @@ class EmbeddedList extends Component<Props, State> {
   }
 
   /**
+   * Sets the items on the state based on the search query.
+   */
+  onSearch() {
+    const { items } = this.props;
+    const { sortColumn, sortDirection } = this.state;
+
+    const filteredItems = _.filter(items, (item) => {
+      // Exclude the item if we're deleting it.
+      if (item._destroy) {
+        return false;
+      }
+
+      // Include the item if there is no search query present
+      if (!(this.state.searchQuery && this.state.searchQuery.length)) {
+        return true;
+      }
+
+      // Include the item if any of the keys matches the search query
+      let match = false;
+
+      _.each(_.keys(item), (key) => {
+        if (String.includes(item[key], this.state.searchQuery)) {
+          match = true;
+        }
+      });
+
+      return match;
+    });
+
+    this.setState({
+      items: _.orderBy(filteredItems, sortColumn, sortDirection)
+    });
+  }
+
+  /**
+   * Sets the search query on the state.
+   *
+   * @param e
+   * @param value
+   */
+  onSearchChange(e: Event, { value }: { value: string }) {
+    this.setState({ searchQuery: value });
+  }
+
+  /**
    * Renders the EmbeddedList component.
    *
    * @returns {*}
@@ -160,7 +202,8 @@ class EmbeddedList extends Component<Props, State> {
         buttons={this.props.buttons}
         className={`embedded-list ${this.props.className}`}
         columns={this.props.columns}
-        items={this.getItems()}
+        configurable={this.props.configurable}
+        items={this.state.items}
         modal={this.props.modal}
         onColumnClick={this.onColumnClick.bind(this)}
         onCopy={this.props.onCopy}
@@ -170,6 +213,7 @@ class EmbeddedList extends Component<Props, State> {
         renderDeleteModal={this.props.renderDeleteModal}
         renderEmptyRow={this.props.renderEmptyRow}
         renderItem={this.renderItem.bind(this)}
+        renderSearch={this.renderSearch.bind(this)}
         sortColumn={this.state.sortColumn}
         sortDirection={this.state.sortDirection}
         tableProps={{
@@ -217,6 +261,32 @@ class EmbeddedList extends Component<Props, State> {
       </Table.Row>
     );
   }
+
+  /**
+   * Renders the search input component.
+   *
+   * @returns {*}
+   */
+  renderSearch() {
+    if (!this.props.searchable) {
+      return null;
+    }
+
+    return (
+      <Input
+        type='text'
+        icon='search'
+        input={{
+          'aria-label': 'search'
+        }}
+        onKeyDown={Timer.clearSearchTimer.bind(this)}
+        onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
+        onChange={this.onSearchChange.bind(this)}
+        size='small'
+        value={this.state.searchQuery}
+      />
+    );
+  }
 }
 
 /**
@@ -246,12 +316,14 @@ EmbeddedList.defaultProps = {
   },
   buttons: [],
   className: '',
+  configurable: false,
   modal: undefined,
   onCopy: undefined,
   onDrag: undefined,
   onSave: () => {},
   renderDeleteModal: undefined,
-  renderEmptyRow: undefined
+  renderEmptyRow: undefined,
+  searchable: false
 };
 
 export default EmbeddedList;

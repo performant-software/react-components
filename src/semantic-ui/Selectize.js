@@ -9,12 +9,12 @@ import {
   Header,
   Icon,
   Input,
-  Modal, Pagination,
-  Segment,
+  Modal,
+  Pagination,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
-import createEditModal from './EditModal';
+import EditModal from './EditModal';
 import SelectizeHeader from './SelectizeHeader';
 import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
@@ -278,20 +278,15 @@ class Selectize extends Component<Props, State> {
       return null;
     }
 
-    const {
-      component,
-      props,
-      state,
-      onSave
-    } = this.props.modal;
-
-    const EditModal = withTranslation()(createEditModal(component, props, state));
+    const { component, props, onSave } = this.props.modal;
 
     return (
       <EditModal
+        component={component}
         onClose={() => this.setState({ modalAdd: false })}
         onSave={(item) => onSave(item)
           .then(() => this.setState({ modalAdd: false, searchQuery: '' }, this.fetchData.bind(this)))}
+        {...props}
       />
     );
   }
