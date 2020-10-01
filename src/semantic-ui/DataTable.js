@@ -1,71 +1,84 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type Element } from 'react';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
 import {
-  Button,
+  Button, Checkbox,
   Confirm,
+  Dropdown,
   Grid,
   Header,
   Icon,
+  Menu,
   Pagination,
   Table
 } from 'semantic-ui-react';
-import { Trans, withTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
+import Draggable from './Draggable';
 import './DataTable.css';
 
 type Action = {
-  name: string
+  accept: (item: any) => boolean,
+  color?: string,
+  icon?: string,
+  name: string,
+  onClick?: (item: any) => void,
+  render?: (item: any, index: number) => Element<any>,
+  title?: string
 };
 
 type Column = {
+  className: string,
+  hidden?: boolean,
   label?: string,
   name: string,
-  render?: () => void,
+  render?: (item: any) => void,
   renderHeader?: (item: any) => void,
   resolve?: (item: any) => void
 };
 
 type ListButton = {
-  render: () => Component
+  render: (index?: number) => Element<any>
 };
 
 type Props = {
   actions?: Array<Action>,
-  addButton?: {
+  addButton: {
     location: string,
     color: string
   },
-  buttons?: Array<ListButton>,
-  className?: string,
+  buttons: Array<ListButton>,
+  className: string,
   columns: Array<Column>,
   filters?: {
     active: boolean,
     component: Component<{}>,
     props?: any,
     state?: any,
-    onChange: (params: any) => void
+    onChange: (params: any) => Promise<any>
   },
-  items?: ?Array<any>,
+  items: ?Array<any>,
   loading?: boolean,
   modal?: {
-    component: Component,
+    component: Element<any>,
     props: any,
     state: any
   },
-  page?: number,
-  pages?: number,
-  onColumnClick?: (column: Column) => void,
+  page: number,
+  pages: number,
+  onColumnClick: (column: Column) => void,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
-  onPageChange?: () => void,
-  onSave: (item: any) => void,
-  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component,
+  onPageChange: () => void,
+  onSave: (item: any) => Promise<any>,
+  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
-  renderItem?: (item: any, index: number) => Component,
-  renderSearch?: () => Component,
+  renderItem?: (item: any, index: number, children?: any) => Element<any>,
+  renderSearch?: () => Element<any>,
   sortColumn?: string,
   sortDirection?: string,
   t: (key: string) => string,
@@ -73,6 +86,7 @@ type Props = {
 };
 
 type State = {
+  columns: Array<Column>,
   modalDelete: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
@@ -80,15 +94,18 @@ type State = {
 };
 
 class DataTable extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new DataTable component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
+      columns: props.columns,
       modalDelete: false,
       modalEdit: false,
       modalFilter: false,
@@ -104,7 +121,7 @@ class DataTable extends Component<Props, State> {
   getColumnCount() {
     let columnCount = this.props.columns.length;
 
-    if (this.props.actions.length) {
+    if (this.props.actions && this.props.actions.length) {
       columnCount += 1;
     }
 
@@ -121,11 +138,22 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Toggles the hidden property for the passed column.
+   *
+   * @param column
+   */
+  onColumnCheckbox(column: Column) {
+    this.setState((state) => ({
+      columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
+    }));
+  }
+
+  /**
    * Copies the selected item and displays the add/edit modal.
    *
    * @param selectedItem
    */
-  onCopyButton(selectedItem) {
+  onCopyButton(selectedItem: any) {
     const copy = this.props.onCopy
       ? this.props.onCopy(selectedItem)
       : _.omit(selectedItem, 'id', 'uid');
@@ -150,8 +178,26 @@ class DataTable extends Component<Props, State> {
    *
    * @param selectedItem
    */
-  onDeleteButton(selectedItem) {
+  onDeleteButton(selectedItem: any) {
     this.setState({ selectedItem, modalDelete: true });
+  }
+
+  /**
+   * Drags/drops the column at the passed index to the new position.
+   *
+   * @param dragIndex
+   * @param hoverIndex
+   */
+  onDrag(dragIndex: number, hoverIndex: number) {
+    this.setState((state) => {
+      const columns = [...state.columns];
+      const column = columns[dragIndex];
+
+      columns.splice(dragIndex, 1);
+      columns.splice(hoverIndex, 0, column);
+
+      return { columns };
+    });
   }
 
   /**
@@ -159,7 +205,7 @@ class DataTable extends Component<Props, State> {
    *
    * @param selectedItem
    */
-  onEditButton(selectedItem) {
+  onEditButton(selectedItem: any) {
     this.setState({ selectedItem, modalEdit: true });
   }
 
@@ -177,7 +223,7 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {*}
    */
-  onSave(item) {
+  onSave(item: any) {
     return this.props
       .onSave(item)
       .then(() => this.setState({ modalEdit: false, selectedItem: null }));
@@ -190,7 +236,11 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
    */
-  onSaveFilter(filters) {
+  onSaveFilter(filters: any) {
+    if (!this.props.filters) {
+      return null;
+    }
+
     return this.props.filters
       .onChange(filters)
       .then(() => this.setState({ modalFilter: false }));
@@ -203,29 +253,33 @@ class DataTable extends Component<Props, State> {
    */
   render() {
     return (
-      <div
-        className={`data-table ${this.props.className}`}
+      <DndProvider
+        backend={Backend}
       >
-        { this.renderHeader() }
-        <Table
-          {...this.props.tableProps}
+        <div
+          className={`data-table ${this.props.className}`}
         >
-          <Table.Header>
-            <Table.Row>
-              { this.props.columns.map(this.renderHeaderCell.bind(this)) }
-              { this.renderActionsHeader() }
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
-            { this.renderEmptyTableRow() }
-          </Table.Body>
-        </Table>
-        { this.renderFooter() }
-        { this.renderEditModal() }
-        { this.renderDeleteModal() }
-        { this.renderFilterModal() }
-      </div>
+          { this.renderHeader() }
+          <Table
+            {...this.props.tableProps}
+          >
+            <Table.Header>
+              <Table.Row>
+                { this.state.columns.map(this.renderHeaderCell.bind(this)) }
+                { this.renderActionsHeader() }
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
+              { this.renderEmptyTableRow() }
+            </Table.Body>
+          </Table>
+          { this.renderFooter() }
+          { this.renderEditModal() }
+          { this.renderDeleteModal() }
+          { this.renderFilterModal() }
+        </div>
+      </DndProvider>
     );
   }
 
@@ -238,7 +292,7 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderActionButton(item, index, action) {
+  renderActionButton(item: any, index: number, action: Action) {
     if (action.render) {
       return action.render(item, index);
     }
@@ -250,7 +304,7 @@ class DataTable extends Component<Props, State> {
         color={action.color}
         icon={action.icon}
         key={`${action.name}-${index}`}
-        onClick={action.onClick.bind(this, item)}
+        onClick={action.onClick && action.onClick.bind(this, item)}
         title={action.title || action.name}
       />
     );
@@ -264,7 +318,7 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {null|*}
    */
-  renderActions(item, index) {
+  renderActions(item: any, index: number) {
     if (!(this.props.actions && this.props.actions.length)) {
       return null;
     }
@@ -342,7 +396,11 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderCell(item, column) {
+  renderCell(item: any, column: Column) {
+    if (column.hidden) {
+      return null;
+    }
+
     let value;
 
     if (column.render) {
@@ -364,58 +422,41 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Renders the copy button for the passed item.
+   * Renders the list configuration button.
    *
-   * @param item
-   *
-   * @returns {null|*}
+   * @returns {*}
    */
-  renderCopyButton(item) {
-    const action = _.findWhere(this.props.actions, { name: 'copy' });
-
-    if (!action) {
-      return null;
-    }
-
-    if (action.render) {
-      return action.render(item);
-    }
-
+  renderConfigureButton() {
     return (
-      <Button
+      <Dropdown
         basic
-        compact
-        icon='copy outline'
-        onClick={this.onCopyButton.bind(this, item)}
-      />
-    );
-  }
-
-  /**
-   * Renders the delete button for the passed item.
-   *
-   * @param item
-   *
-   * @returns {null|*}
-   */
-  renderDeleteButton(item) {
-    const action = _.findWhere(this.props.actions, { name: 'delete' });
-
-    if (!action) {
-      return null;
-    }
-
-    if (action.render) {
-      return action.render(item);
-    }
-
-    return (
-      <Button
-        basic
-        compact
-        icon='times circle outline'
-        onClick={this.onDeleteButton.bind(this, item)}
-      />
+        button
+        icon='cog'
+        className='icon configure-button'
+        simple
+      >
+        <Dropdown.Menu>
+          { this.state.columns.map((c, index) => (
+            <Draggable
+              id={c.name}
+              index={index}
+              key={c.name}
+              onDrag={this.onDrag.bind(this)}
+            >
+              <Dropdown.Item>
+                <Icon
+                  name='bars'
+                />
+                <Checkbox
+                  checked={!c.hidden}
+                  label={c.label}
+                  onClick={this.onColumnCheckbox.bind(this, c)}
+                />
+              </Dropdown.Item>
+            </Draggable>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 
@@ -444,34 +485,6 @@ class DataTable extends Component<Props, State> {
         onCancel={onCancel}
         onConfirm={onConfirm}
         open
-      />
-    );
-  }
-
-  /**
-   * Renders the edit button for the passed item.
-   *
-   * @param item
-   *
-   * @returns {null|*}
-   */
-  renderEditButton(item) {
-    const action = _.findWhere(this.props.actions, { name: 'edit' });
-
-    if (!action) {
-      return null;
-    }
-
-    if (action.render) {
-      return action.render(item);
-    }
-
-    return (
-      <Button
-        basic
-        compact
-        icon='edit outline'
-        onClick={this.onEditButton.bind(this, item)}
       />
     );
   }
@@ -649,8 +662,21 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='right'
           >
-            { this.renderFilterButton() }
-            { this.props.renderSearch && this.props.renderSearch() }
+            <Menu
+              compact
+              borderless
+              secondary
+            >
+              <Menu.Menu>
+                { this.renderConfigureButton() }
+              </Menu.Menu>
+              <Menu.Menu>
+                { this.renderFilterButton() }
+              </Menu.Menu>
+              <Menu.Menu>
+                { this.props.renderSearch && this.props.renderSearch() }
+              </Menu.Menu>
+            </Menu>
           </Grid.Column>
         </Grid>
       </div>
@@ -664,7 +690,11 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderHeaderCell(column) {
+  renderHeaderCell(column: Column) {
+    if (column.hidden) {
+      return null;
+    }
+
     if (column.renderHeader) {
       return column.renderHeader();
     }
@@ -688,9 +718,9 @@ class DataTable extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderItem(item, index) {
+  renderItem(item: any, index: number) {
     const children = [
-      this.props.columns.map(this.renderCell.bind(this, item)),
+      this.state.columns.map(this.renderCell.bind(this, item)),
       this.renderActions(item, index)
     ];
 
@@ -742,8 +772,8 @@ DataTable.defaultProps = {
   items: [],
   loading: false,
   modal: undefined,
-  page: null,
-  pages: null,
+  page: 1,
+  pages: 1,
   onColumnClick: () => {},
   onCopy: undefined,
   onPageChange: () => {},

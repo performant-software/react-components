@@ -1,24 +1,24 @@
 // @flow
 
-import React, { Component, useRef } from 'react';
-import { Ref, Table } from 'semantic-ui-react';
+import React, { type Element, useRef } from 'react';
+import { Ref } from 'semantic-ui-react';
 import { useDrag, useDrop } from 'react-dnd';
 
 type Props = {
-  children: Component,
-  id: number,
+  children: Element<any>,
+  id: any,
   index: number,
   onDrag: (dragIndex: number, hoverIndex: number) => void
 };
 
-const TYPE_ROW = 'row';
+const TYPE_ANY = 'any';
 
-const DraggableRow = (props: Props) => {
+const Draggable = (props: Props) => {
   const { index, id } = props;
 
   const ref = useRef(null);
   const [, drop] = useDrop({
-    accept: TYPE_ROW,
+    accept: TYPE_ANY,
     hover(i, monitor) {
       if (!ref.current) {
         return;
@@ -70,7 +70,7 @@ const DraggableRow = (props: Props) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: TYPE_ROW, id, index },
+    item: { type: TYPE_ANY, id, index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -78,17 +78,17 @@ const DraggableRow = (props: Props) => {
 
   drag(drop(ref));
 
+  if (ref && ref.current) {
+    ref.current.style.opacity = isDragging ? 0 : 1;
+  }
+
   return (
     <Ref
       innerRef={ref}
     >
-      <Table.Row
-        style={{ opacity: isDragging ? 0 : 1 }}
-      >
-        { props.children }
-      </Table.Row>
+      { props.children }
     </Ref>
   );
 };
 
-export default DraggableRow;
+export default Draggable;

@@ -177,5 +177,5 @@ export const DragAndDropRows = () => {
         setList(temp);
       }}
     />
-  )
+  );
 }
