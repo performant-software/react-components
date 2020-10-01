@@ -533,3 +533,50 @@ export const WithFilters = () => (
     searchable={boolean('Searchable', true)}
   />
 );
+
+export const WithCustomizableColumns = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={[{
+      name: 'make',
+      label: 'Make',
+      sortable: true
+    }, {
+      name: 'model',
+      label: 'Model',
+      sortable: true
+    }, {
+      name: 'vin',
+      label: 'Vin',
+      sortable: true,
+      hidden: true
+    }, {
+      name: 'address',
+      label: 'Address',
+      sortable: true
+    }, {
+      name: 'city',
+      label: 'City',
+      sortable: true
+    }, {
+      name: 'state',
+      label: 'State',
+      sortable: true
+    }]}
+    filters={{
+      component: AddModal
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+);
