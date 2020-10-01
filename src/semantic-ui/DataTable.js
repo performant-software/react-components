@@ -49,11 +49,13 @@ type Props = {
   actions?: Array<Action>,
   addButton: {
     location: string,
-    color: string
+    color: string,
+    onClick?: () => void
   },
   buttons: Array<ListButton>,
   className: string,
   columns: Array<Column>,
+  configurable: boolean,
   filters?: {
     active: boolean,
     component: Component<{}>,
@@ -132,7 +134,7 @@ class DataTable extends Component<Props, State> {
    * Displays the add/edit modal.
    */
   onAddButton() {
-    this.props.addButton.onClick
+    return this.props.addButton.onClick
       ? this.props.addButton.onClick()
       : this.setState({ modalEdit: true });
   }
@@ -427,6 +429,10 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderConfigureButton() {
+    if (!this.props.configurable) {
+      return null;
+    }
+
     return (
       <Dropdown
         basic
