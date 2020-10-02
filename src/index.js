@@ -14,7 +14,7 @@ export { default as ColorButton } from './semantic-ui/ColorButton';
 export { default as ColorPickerModal } from './semantic-ui/ColorPickerModal';
 export { default as DataTable } from './semantic-ui/DataTable';
 export { default as DescriptorField } from './semantic-ui/DescriptorField';
-export { default as DraggableRow } from './semantic-ui/DraggableRow';
+export { default as Draggable } from './semantic-ui/Draggable';
 export { default as EditModal } from './semantic-ui/EditModal';
 export { default as EditPage, useEditPage } from './semantic-ui/EditPage';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
