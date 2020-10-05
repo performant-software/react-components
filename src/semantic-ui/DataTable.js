@@ -141,11 +141,9 @@ class DataTable extends Component<Props, State> {
        * Include the button if no location is specified, but the add button is at the passed location.
        * Finally, include the button if the passed location is the top location.
        */
-      if (button.location === location) {
+      if ((button.location || 'top') === location) {
         include = true;
       } else if (!button.location && addButton && addButton.location === location) {
-        include = true;
-      } else if (location === 'top') {
         include = true;
       }
 

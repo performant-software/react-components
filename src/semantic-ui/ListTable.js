@@ -274,6 +274,7 @@ class ListTable extends Component<Props, State> {
       <DataTable
         actions={this.props.actions}
         addButton={this.props.addButton}
+        buttons={this.props.buttons}
         className={this.props.className}
         columns={this.props.columns}
         configurable={this.props.configurable}
