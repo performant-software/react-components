@@ -580,3 +580,26 @@ export const WithCustomizableColumns = () => (
     searchable={boolean('Searchable', true)}
   />
 );
+
+export const WithPolling = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => {
+      console.log('Polling!')
+      return Api.onLoad(_.extend(params, {
+        items,
+        perPage: number('Per page', 10)
+      }));
+    }}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    polling={5000}
+    searchable={boolean('Searchable', true)}
+  />
+);

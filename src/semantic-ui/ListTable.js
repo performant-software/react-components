@@ -39,6 +39,7 @@ type Props = {
   onDelete: (item: any) => void,
   onLoad: (page: number) => void,
   onSave: (item: any) => void,
+  polling?: number,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component,
   renderEmptyRow?: () => void,
   searchable?: boolean
@@ -63,6 +64,8 @@ const SORT_DESCENDING = 'descending';
  * and deleting records. Records displayed in the component will always be fetched from the remote source.
  */
 class ListTable extends Component<Props, State> {
+  pollingInterval: IntervalID;
+
   /**
    * Constructs a new ListTable component.
    *
@@ -87,6 +90,16 @@ class ListTable extends Component<Props, State> {
    */
   componentDidMount() {
     this.onColumnClick(_.first(this.props.columns));
+
+    if (this.props.polling) {
+      this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+    }
   }
 
   /**
