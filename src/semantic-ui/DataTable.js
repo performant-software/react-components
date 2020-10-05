@@ -134,7 +134,7 @@ class DataTable extends Component<Props, State> {
    * Displays the add/edit modal.
    */
   onAddButton() {
-    return this.props.addButton.onClick
+    return this.props.addButton && this.props.addButton.onClick
       ? this.props.addButton.onClick()
       : this.setState({ modalEdit: true });
   }
@@ -616,7 +616,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderFooter() {
-    if (!(this.props.addButton.location === 'bottom' || this.props.pages)) {
+    if (!((this.props.addButton && this.props.addButton.location === 'bottom') || this.props.pages)) {
       return null;
     }
 
@@ -628,7 +628,7 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='left'
           >
-            { this.props.addButton.location === 'bottom' && this.renderAddButton() }
+            { this.props.addButton && this.props.addButton.location === 'bottom' && this.renderAddButton() }
             { this.props.buttons.map((button) => button.render()) }
           </Grid.Column>
           <Grid.Column
@@ -647,7 +647,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderHeader() {
-    if (!(this.props.addButton.location === 'top' || this.props.page)) {
+    if (!((this.props.addButton && this.props.addButton.location === 'top') || this.props.page)) {
       return null;
     }
 
@@ -662,7 +662,7 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='left'
           >
-            { this.props.addButton.location === 'top' && this.renderAddButton() }
+            { this.props.addButton && this.props.addButton.location === 'top' && this.renderAddButton() }
             { this.props.buttons.map((button, index) => button.render(index)) }
           </Grid.Column>
           <Grid.Column
