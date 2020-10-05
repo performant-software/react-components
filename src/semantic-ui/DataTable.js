@@ -116,6 +116,46 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Renders the list of buttons for the passed location.
+   *
+   * @param location
+   */
+  getButtons(location: string) {
+    const buttons = [];
+
+    const { addButton = {}, modal } = this.props;
+
+    // Add the add button to the list of the location specified is the passed location.
+    if (addButton.location === location && (addButton.onClick || modal)) {
+      buttons.push({
+        render: this.renderAddButton.bind(this)
+      });
+    }
+
+    // Resolve the array of other buttons
+    buttons.push(..._.filter(this.props.buttons, (button) => {
+      let include = false;
+
+      /*
+       * Include the button if the buttons specifies the passed location.
+       * Include the button if no location is specified, but the add button is at the passed location.
+       * Finally, include the button if the passed location is the top location.
+       */
+      if (button.location === location) {
+        include = true;
+      } else if (!button.location && addButton && addButton.location === location) {
+        include = true;
+      } else if (location === 'top') {
+        include = true;
+      }
+
+      return include;
+    }));
+
+    return buttons;
+  }
+
+  /**
    * Returns the actual column count. This will be the number of columns +1 if the table allows actions.
    *
    * @returns {number}
@@ -429,10 +469,6 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderConfigureButton() {
-    if (!this.props.configurable) {
-      return null;
-    }
-
     return (
       <Dropdown
         basic
@@ -525,7 +561,8 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderEmptyMessage() {
-    if (!this.props.addButton) {
+    const { addButton = {}, modal } = this.props;
+    if (!(addButton.onClick || modal)) {
       return i18n.t('DataTable.emptyList');
     }
 
@@ -616,7 +653,19 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderFooter() {
-    if (!((this.props.addButton && this.props.addButton.location === 'bottom') || this.props.pages)) {
+    let renderFooter = false;
+
+    const buttons = this.getButtons('bottom');
+    if (buttons && buttons.length) {
+      renderFooter = true;
+    }
+
+    const hasPages = this.props.pages && this.props.pages > 1
+    if (hasPages) {
+      renderFooter = true;
+    }
+
+    if (!renderFooter) {
       return null;
     }
 
@@ -628,13 +677,12 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='left'
           >
-            { this.props.addButton && this.props.addButton.location === 'bottom' && this.renderAddButton() }
-            { this.props.buttons.map((button) => button.render()) }
+            { _.map(buttons, (button) => button.render()) }
           </Grid.Column>
           <Grid.Column
             textAlign='right'
           >
-            { this.renderPagination() }
+            { hasPages && this.renderPagination() }
           </Grid.Column>
         </Grid>
       </div>
@@ -647,7 +695,19 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderHeader() {
-    if (!((this.props.addButton && this.props.addButton.location === 'top') || this.props.page)) {
+    let renderHeader = false;
+    
+    const buttons = this.getButtons('top');
+    if (buttons && buttons.length) {
+      renderHeader = true;
+    }
+
+    const { configurable, filters, renderSearch } = this.props;
+    if (configurable || filters || renderSearch) {
+      renderHeader = true;
+    }
+
+    if (!renderHeader) {
       return null;
     }
 
@@ -662,8 +722,7 @@ class DataTable extends Component<Props, State> {
           <Grid.Column
             textAlign='left'
           >
-            { this.props.addButton && this.props.addButton.location === 'top' && this.renderAddButton() }
-            { this.props.buttons.map((button, index) => button.render(index)) }
+            { _.map(buttons, (button, index) => button.render(index)) }
           </Grid.Column>
           <Grid.Column
             textAlign='right'
@@ -674,13 +733,13 @@ class DataTable extends Component<Props, State> {
               secondary
             >
               <Menu.Menu>
-                { this.renderConfigureButton() }
+                { configurable && this.renderConfigureButton() }
               </Menu.Menu>
               <Menu.Menu>
-                { this.renderFilterButton() }
+                { filters && this.renderFilterButton() }
               </Menu.Menu>
               <Menu.Menu>
-                { this.props.renderSearch && this.props.renderSearch() }
+                { renderSearch && renderSearch() }
               </Menu.Menu>
             </Menu>
           </Grid.Column>
@@ -749,10 +808,6 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderPagination() {
-    if (this.props.pages <= 1) {
-      return null;
-    }
-
     return (
       <Pagination
         activePage={this.props.page}
