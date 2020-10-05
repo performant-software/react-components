@@ -17,7 +17,8 @@ type Column = {
   render?: () => void,
   renderHeader?: (item: any) => void,
   resolve?: (item: any) => void,
-  sortable: boolean
+  sortable: boolean,
+  sortDirection: string
 };
 
 type Props = {
@@ -171,7 +172,17 @@ class ListTable extends Component<Props, State> {
     let sortDirection = SORT_ASCENDING;
 
     if (column.name === this.state.sortColumn) {
-      sortDirection = this.state.sortDirection === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING;
+      /**
+       * If the column has not yet been click-sorted, check to see if there is a default sort
+       * direction on the column. Otherwise, toggle the sort direction on the state.
+       */
+      if (!(this.state.sortDirection && this.state.sortDirection.length) && column.sortDirection) {
+        sortDirection = column.sortDirection;
+      } else if (this.state.sortDirection === SORT_ASCENDING) {
+        sortDirection = SORT_DESCENDING;
+      } else {
+        sortDirection = SORT_ASCENDING;
+      }
     }
 
     this.setState({ sortColumn, sortDirection }, this.fetchData.bind(this));
