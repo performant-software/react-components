@@ -19,11 +19,14 @@
   },
   "DataTable": {
     "buttons": {
-      "add": "Add"
+      "add": "Add",
+      "deleteAll": "Delete All"
     },
     "columns": {
       "actions": "Actions"
     },
+    "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
+    "deleteAllHeader": "Confirm Remove All",
     "deleteContent": "Are you sure you want to remove this record?",
     "deleteHeader": "Confirm Remove",
     "emptyList": "No matching records found.",

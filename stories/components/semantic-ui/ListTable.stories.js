@@ -639,3 +639,27 @@ export const WithExtraButtons = () => (
     searchable={boolean('Searchable', true)}
   />
 );
+
+export const WithDeleteAllButton = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    deleteButton={{
+      color: 'red',
+      location: 'top'
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onDeleteAll={action('delete all')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+);

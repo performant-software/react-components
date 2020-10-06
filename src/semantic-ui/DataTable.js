@@ -48,14 +48,19 @@ type ListButton = {
 type Props = {
   actions?: Array<Action>,
   addButton: {
-    location: string,
     color: string,
+    location: string,
     onClick?: () => void
   },
   buttons: Array<ListButton>,
   className: string,
   columns: Array<Column>,
   configurable: boolean,
+  deleteButton: {
+    color: string,
+    location: string,
+    onClick?: () => void
+  },
   filters?: {
     active: boolean,
     component: Component<{}>,
@@ -75,6 +80,7 @@ type Props = {
   onColumnClick: (column: Column) => void,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
+  onDeleteAll: () => Promise<any>,
   onPageChange: () => void,
   onSave: (item: any) => Promise<any>,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
@@ -90,6 +96,7 @@ type Props = {
 type State = {
   columns: Array<Column>,
   modalDelete: boolean,
+  modalDeleteAll: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
   selectedItem: any
@@ -109,6 +116,7 @@ class DataTable extends Component<Props, State> {
     this.state = {
       columns: props.columns,
       modalDelete: false,
+      modalDeleteAll: false,
       modalEdit: false,
       modalFilter: false,
       selectedItem: null
@@ -123,12 +131,19 @@ class DataTable extends Component<Props, State> {
   getButtons(location: string) {
     const buttons = [];
 
-    const { addButton = {}, modal } = this.props;
+    const { addButton = {}, deleteButton = {}, modal } = this.props;
 
-    // Add the add button to the list of the location specified is the passed location.
+    // Add the add button to the list if the location specified is the passed location.
     if (addButton.location === location && (addButton.onClick || modal)) {
       buttons.push({
         render: this.renderAddButton.bind(this)
+      });
+    }
+
+    // Add the delete all button to the list if the location specified is the passed location.
+    if (deleteButton.location === location && this.props.onDeleteAll) {
+      buttons.push({
+        render: this.renderDeleteAllButton.bind(this)
       });
     }
 
@@ -211,6 +226,23 @@ class DataTable extends Component<Props, State> {
     this.setState({ selectedItem: null, modalDelete: false });
 
     return this.props.onDelete(selectedItem);
+  }
+
+  /**
+   * Deletes all items in the current list and resets the state.
+   *
+   * @returns {*}
+   */
+  onDeleteAll() {
+    this.setState({ modalDeleteAll: false });
+    return this.props.onDeleteAll();
+  }
+
+  /**
+   * Displays the delete all confirmation modal.
+   */
+  onDeleteAllButton() {
+    this.setState({ modalDeleteAll: true });
   }
 
   /**
@@ -317,6 +349,7 @@ class DataTable extends Component<Props, State> {
           { this.renderFooter() }
           { this.renderEditModal() }
           { this.renderDeleteModal() }
+          { this.renderDeleteAllModal() }
           { this.renderFilterModal() }
         </div>
       </DndProvider>
@@ -501,6 +534,49 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Renders the delete all button.
+   *
+   * @returns {null|*}
+   */
+  renderDeleteAllButton() {
+    if (!this.props.deleteButton) {
+      return null;
+    }
+
+    return (
+      <Button
+        basic
+        color={this.props.deleteButton.color}
+        onClick={this.onDeleteAllButton.bind(this)}
+      >
+        <Icon name='times' />
+        { i18n.t('DataTable.buttons.deleteAll') }
+      </Button>
+    );
+  }
+
+  /**
+   * Renders the delete all modal if visible.
+   *
+   * @returns {null|*}
+   */
+  renderDeleteAllModal() {
+    if (!this.state.modalDeleteAll) {
+      return null;
+    }
+
+    return (
+      <Confirm
+        content={i18n.t('DataTable.deleteAllContent')}
+        header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteAllHeader')} />}
+        onCancel={() => this.setState({ modalDeleteAll: false })}
+        onConfirm={this.onDeleteAll.bind(this)}
+        open
+      />
+    );
+  }
+
+  /**
    * Renders the delete modal if visible.
    *
    * @returns {null|*}
@@ -581,7 +657,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEmptyTableRow() {
-    if (this.props.items.length) {
+    if (this.props.items && this.props.items.length) {
       return null;
     }
 
@@ -658,7 +734,7 @@ class DataTable extends Component<Props, State> {
       renderFooter = true;
     }
 
-    const hasPages = this.props.pages && this.props.pages > 1
+    const hasPages = this.props.pages && this.props.pages > 1;
     if (hasPages) {
       renderFooter = true;
     }
@@ -694,7 +770,7 @@ class DataTable extends Component<Props, State> {
    */
   renderHeader() {
     let renderHeader = false;
-    
+
     const buttons = this.getButtons('top');
     if (buttons && buttons.length) {
       renderHeader = true;

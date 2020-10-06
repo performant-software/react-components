@@ -31,16 +31,17 @@ type Props = {
     props: any
   },
   modal: {
-    component: Component,
+    component: Component<{}>,
     props: any,
     state: any
   },
   onCopy?: (item: any) => any,
-  onDelete: (item: any) => void,
-  onLoad: (page: number) => void,
-  onSave: (item: any) => void,
+  onDelete: (item: any) => Promise<any>,
+  onDeleteAll: () => Promise<any>,
+  onLoad: (page: number) => Promise<any>,
+  onSave: (item: any) => Promise<any>,
   polling?: number,
-  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component,
+  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component<{}>,
   renderEmptyRow?: () => void,
   searchable?: boolean
 };
@@ -71,7 +72,7 @@ class ListTable extends Component<Props, State> {
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -116,6 +117,13 @@ class ListTable extends Component<Props, State> {
     }
 
     return this.fetchData();
+  }
+
+  /**
+   * Resets the state and reloads the data.
+   */
+  afterDeleteAll() {
+    this.setState({ page: 1 }, this.fetchData.bind(this));
   }
 
   /**
@@ -211,6 +219,17 @@ class ListTable extends Component<Props, State> {
   }
 
   /**
+   * Deletes all the records and resets the state.
+   *
+   * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+   */
+  onDeleteAll() {
+    return this.props
+      .onDeleteAll()
+      .then(this.afterDeleteAll.bind(this));
+  }
+
+  /**
    * Sets the filters on the state and returns a promise.
    *
    * @param filters
@@ -278,6 +297,7 @@ class ListTable extends Component<Props, State> {
         className={this.props.className}
         columns={this.props.columns}
         configurable={this.props.configurable}
+        deleteButton={this.props.deleteButton}
         filters={{
           active: this.isFilterActive(),
           component: this.props.filters && this.props.filters.component,
@@ -292,6 +312,7 @@ class ListTable extends Component<Props, State> {
         onColumnClick={this.onColumnClick.bind(this)}
         onCopy={this.props.onCopy}
         onDelete={this.onDelete.bind(this)}
+        onDeleteAll={this.onDeleteAll.bind(this)}
         onPageChange={this.onPageChange.bind(this)}
         onSave={this.onSave.bind(this)}
         renderDeleteModal={this.props.renderDeleteModal}
