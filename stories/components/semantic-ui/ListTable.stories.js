@@ -2,6 +2,7 @@ import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
+import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
@@ -576,6 +577,88 @@ export const WithCustomizableColumns = () => (
       perPage: number('Per page', 10)
     }))}
     onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+);
+
+export const WithPolling = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => {
+      console.log('Polling!')
+      return Api.onLoad(_.extend(params, {
+        items,
+        perPage: number('Per page', 10)
+      }));
+    }}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    polling={5000}
+    searchable={boolean('Searchable', true)}
+  />
+);
+
+export const WithExtraButtons = () => (
+  <ListTable
+    actions={actions}
+    buttons={[{
+      render: () => (
+        <Button
+          content='Button 1'
+          onClick={action('button1')}
+        />
+      )
+    }, {
+      location: 'bottom',
+      render: () => (
+        <Button
+          content='Button 2'
+          onClick={action('button2')}
+        />
+      )
+    }]}
+    collectionName='items'
+    columns={columns}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+);
+
+export const WithDeleteAllButton = () => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    deleteButton={{
+      color: 'red',
+      location: 'top'
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onDeleteAll={action('delete all')}
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />

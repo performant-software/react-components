@@ -17,7 +17,8 @@ type Column = {
   render?: () => void,
   renderHeader?: (item: any) => void,
   resolve?: (item: any) => void,
-  sortable: boolean
+  sortable: boolean,
+  sortDirection: string
 };
 
 type Props = {
@@ -30,15 +31,17 @@ type Props = {
     props: any
   },
   modal: {
-    component: Component,
+    component: Component<{}>,
     props: any,
     state: any
   },
   onCopy?: (item: any) => any,
-  onDelete: (item: any) => void,
-  onLoad: (page: number) => void,
-  onSave: (item: any) => void,
-  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component,
+  onDelete: (item: any) => Promise<any>,
+  onDeleteAll: () => Promise<any>,
+  onLoad: (page: number) => Promise<any>,
+  onSave: (item: any) => Promise<any>,
+  polling?: number,
+  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component<{}>,
   renderEmptyRow?: () => void,
   searchable?: boolean
 };
@@ -62,12 +65,14 @@ const SORT_DESCENDING = 'descending';
  * and deleting records. Records displayed in the component will always be fetched from the remote source.
  */
 class ListTable extends Component<Props, State> {
+  pollingInterval: IntervalID;
+
   /**
    * Constructs a new ListTable component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -86,6 +91,16 @@ class ListTable extends Component<Props, State> {
    */
   componentDidMount() {
     this.onColumnClick(_.first(this.props.columns));
+
+    if (this.props.polling) {
+      this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+    }
   }
 
   /**
@@ -102,6 +117,13 @@ class ListTable extends Component<Props, State> {
     }
 
     return this.fetchData();
+  }
+
+  /**
+   * Resets the state and reloads the data.
+   */
+  afterDeleteAll() {
+    this.setState({ page: 1 }, this.fetchData.bind(this));
   }
 
   /**
@@ -170,7 +192,13 @@ class ListTable extends Component<Props, State> {
     const sortColumn = column.name;
     let sortDirection = SORT_ASCENDING;
 
-    if (column.name === this.state.sortColumn) {
+    /**
+     * If the column has not yet been click-sorted, check to see if there is a default sort
+     * direction on the column. Otherwise, toggle the sort direction on the state.
+     */
+    if (column.sortDirection) {
+      sortDirection = column.sortDirection;
+    } else if (column.name === this.state.sortColumn) {
       sortDirection = this.state.sortDirection === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING;
     }
 
@@ -188,6 +216,17 @@ class ListTable extends Component<Props, State> {
     return this.props
       .onDelete(selectedItem)
       .then(this.afterDelete.bind(this));
+  }
+
+  /**
+   * Deletes all the records and resets the state.
+   *
+   * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+   */
+  onDeleteAll() {
+    return this.props
+      .onDeleteAll()
+      .then(this.afterDeleteAll.bind(this));
   }
 
   /**
@@ -254,9 +293,11 @@ class ListTable extends Component<Props, State> {
       <DataTable
         actions={this.props.actions}
         addButton={this.props.addButton}
+        buttons={this.props.buttons}
         className={this.props.className}
         columns={this.props.columns}
         configurable={this.props.configurable}
+        deleteButton={this.props.deleteButton}
         filters={{
           active: this.isFilterActive(),
           component: this.props.filters && this.props.filters.component,
@@ -271,6 +312,7 @@ class ListTable extends Component<Props, State> {
         onColumnClick={this.onColumnClick.bind(this)}
         onCopy={this.props.onCopy}
         onDelete={this.onDelete.bind(this)}
+        onDeleteAll={this.onDeleteAll.bind(this)}
         onPageChange={this.onPageChange.bind(this)}
         onSave={this.onSave.bind(this)}
         renderDeleteModal={this.props.renderDeleteModal}
