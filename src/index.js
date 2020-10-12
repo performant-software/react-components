@@ -35,6 +35,7 @@ export { default as Selectize } from './semantic-ui/Selectize';
 export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
 export { default as TabbedModal } from './semantic-ui/TabbedModal';
 export { default as TagsList } from './semantic-ui/TagsList';
+export { default as ViewXML } from './semantic-ui/ViewXML';
 
 // Utils
 export { default as Timer } from './utils/Timer';

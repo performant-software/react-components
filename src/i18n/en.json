@@ -85,5 +85,11 @@
       "add": "Add",
       "loadMore": "Load more"
     }
+  },
+  "ViewXML": {
+    "buttons": {
+      "view": "View XML"
+    },
+    "title": "XML"
   }
 }
