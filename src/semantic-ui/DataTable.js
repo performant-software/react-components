@@ -3,8 +3,10 @@
 import React, { Component, type Element } from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
+import { Trans } from 'react-i18next';
 import {
-  Button, Checkbox,
+  Button,
+  Checkbox,
   Confirm,
   Dropdown,
   Grid,
@@ -14,11 +16,10 @@ import {
   Pagination,
   Table
 } from 'semantic-ui-react';
-import { Trans } from 'react-i18next';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import EditModal from './EditModal';
 import Draggable from './Draggable';
+import EditModal from './EditModal';
 import './DataTable.css';
 
 type Action = {
@@ -56,7 +57,7 @@ type Props = {
   className: string,
   columns: Array<Column>,
   configurable: boolean,
-  deleteButton: {
+  deleteButton?: {
     color: string,
     location: string,
     onClick?: () => void
@@ -80,7 +81,7 @@ type Props = {
   onColumnClick: (column: Column) => void,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
-  onDeleteAll: () => Promise<any>,
+  onDeleteAll?: () => Promise<any>,
   onPageChange: () => void,
   onSave: (item: any) => Promise<any>,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
@@ -235,7 +236,7 @@ class DataTable extends Component<Props, State> {
    */
   onDeleteAll() {
     this.setState({ modalDeleteAll: false });
-    return this.props.onDeleteAll();
+    return this.props.onDeleteAll && this.props.onDeleteAll();
   }
 
   /**
@@ -500,12 +501,22 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderConfigureButton() {
+    const classNames = [
+      'icon',
+      'configure-button'
+    ];
+
+    // If no search bar is rendered, open the dropdown menu to the right
+    if (!this.props.renderSearch) {
+      classNames.push('open-right');
+    }
+
     return (
       <Dropdown
         basic
         button
         icon='cog'
-        className='icon configure-button'
+        className={classNames.join(' ')}
         simple
       >
         <Dropdown.Menu>
