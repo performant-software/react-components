@@ -2,7 +2,6 @@
 
 import React, { Component, type Element } from 'react';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Trans } from 'react-i18next';
 import {
   Button,
@@ -20,6 +19,7 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Draggable from './Draggable';
 import EditModal from './EditModal';
+import HTML5Backend from '../utils/HTML5Backend';
 import './DataTable.css';
 
 type Action = {
