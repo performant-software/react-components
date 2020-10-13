@@ -2,7 +2,7 @@
 
 import React, { Component, type Element } from 'react';
 import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Trans } from 'react-i18next';
 import {
   Button,
@@ -327,7 +327,7 @@ class DataTable extends Component<Props, State> {
   render() {
     return (
       <DndProvider
-        backend={Backend}
+        backend={HTML5Backend}
       >
         <div
           className={`data-table ${this.props.className}`}
