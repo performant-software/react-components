@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, optionsKnob as options } from "@storybook/addon-knobs";
+import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
 import AddModal from '../AddModal';
 import Colors from '../../services/Colors';
 import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
+import useDragDrop from '../../../src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/EmbeddedList',
@@ -108,25 +109,25 @@ const items = [{
   "gross": "$90456213202.89"
 }];
 
-export const Default = () => (
+export const Default = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     onDelete={action('delete')}
     columns={columns}
     items={items}
   />
-);
+));
 
-export const Empty = () => (
+export const Empty = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     onDelete={action('delete')}
     columns={columns}
     items={[]}
   />
-);
+));
 
-export const AddButton = () => (
+export const AddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
@@ -140,9 +141,9 @@ export const AddButton = () => (
       component: AddModal
     }}
   />
-);
+));
 
-export const EmptyAddButton = () => (
+export const EmptyAddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
@@ -156,9 +157,9 @@ export const EmptyAddButton = () => (
       component: AddModal
     }}
   />
-);
+));
 
-export const DragAndDropRows = () => {
+export const DragAndDropRows = useDragDrop(() => {
   const [list, setList] = useState(items);
 
   return (
@@ -178,4 +179,4 @@ export const DragAndDropRows = () => {
       }}
     />
   );
-}
+});

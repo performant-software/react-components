@@ -1,14 +1,12 @@
 // @flow
 
-import React, { Component, type Element } from 'react';
-import { Input, Table } from 'semantic-ui-react';
+import React, { Component, type ComponentType } from 'react';
+import { Table } from 'semantic-ui-react';
 import uuid from 'react-uuid';
 import _ from 'underscore';
 import DataTable from './DataTable';
 import Draggable from './Draggable';
 import './EmbeddedList.css';
-import String from '../utils/String';
-import Timer from '../utils/Timer';
 
 type Action = {
   name: string
@@ -23,7 +21,7 @@ type Column = {
 };
 
 type ListButton = {
-  render: () => Element<any>
+  render: () => ComponentType<any>
 };
 
 type Props = {
@@ -33,27 +31,24 @@ type Props = {
     color: string
   },
   buttons?: Array<ListButton>,
-  className: string,
+  className?: string,
   columns: Array<Column>,
   configurable: boolean,
   items: ?Array<any>,
   modal?: {
-    component: Element<any>,
+    component: ComponentType<any>,
     props: any,
     state: any
   },
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
-  onSave: (item: any) => void,
+  onSave?: (item: any) => void,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
-  renderEmptyRow?: () => void,
-  searchable: boolean
+  renderEmptyRow?: () => void
 };
 
 type State = {
-  items: Array<any>,
-  searchQuery: string,
   sortColumn: ?string,
   sortDirection: ?string
 };
@@ -78,8 +73,6 @@ class EmbeddedList extends Component<Props, State> {
     super(props);
 
     this.state = {
-      items: [],
-      searchQuery: '',
       sortColumn: null,
       sortDirection: null
     };
@@ -90,7 +83,18 @@ class EmbeddedList extends Component<Props, State> {
    */
   componentDidMount() {
     this.onColumnClick(_.first(this.props.columns));
-    this.onSearch();
+  }
+
+  /**
+   * Returns the sorted, filtered list of items.
+   *
+   * @returns {*}
+   */
+  getItems() {
+    const { items } = this.props;
+    const { sortColumn, sortDirection } = this.state;
+
+    return _.orderBy(_.filter(items, (item) => !item._destroy), sortColumn, sortDirection);
   }
 
   /**
@@ -139,54 +143,12 @@ class EmbeddedList extends Component<Props, State> {
    */
   onSave(item: any) {
     const uid = item.uid ? item.uid : uuid();
-    this.props.onSave({ ...item, uid });
+
+    if (this.props.onSave) {
+      this.props.onSave({ ...item, uid });
+    }
 
     return Promise.resolve();
-  }
-
-  /**
-   * Sets the items on the state based on the search query.
-   */
-  onSearch() {
-    const { items } = this.props;
-    const { sortColumn, sortDirection } = this.state;
-
-    const filteredItems = _.filter(items, (item) => {
-      // Exclude the item if we're deleting it.
-      if (item._destroy) {
-        return false;
-      }
-
-      // Include the item if there is no search query present
-      if (!(this.state.searchQuery && this.state.searchQuery.length)) {
-        return true;
-      }
-
-      // Include the item if any of the keys matches the search query
-      let match = false;
-
-      _.each(_.keys(item), (key) => {
-        if (String.includes(item[key], this.state.searchQuery)) {
-          match = true;
-        }
-      });
-
-      return match;
-    });
-
-    this.setState({
-      items: _.orderBy(filteredItems, sortColumn, sortDirection)
-    });
-  }
-
-  /**
-   * Sets the search query on the state.
-   *
-   * @param e
-   * @param value
-   */
-  onSearchChange(e: Event, { value }: { value: string }) {
-    this.setState({ searchQuery: value });
   }
 
   /**
@@ -200,10 +162,10 @@ class EmbeddedList extends Component<Props, State> {
         actions={this.props.actions}
         addButton={this.props.addButton}
         buttons={this.props.buttons}
-        className={`embedded-list ${this.props.className}`}
-        columns={this.props.columns}
+        className={`embedded-list ${this.props.className ? this.props.className : ''}`}
         configurable={this.props.configurable}
-        items={this.state.items}
+        columns={this.props.columns}
+        items={this.getItems()}
         modal={this.props.modal}
         onColumnClick={this.onColumnClick.bind(this)}
         onCopy={this.props.onCopy}
@@ -213,7 +175,6 @@ class EmbeddedList extends Component<Props, State> {
         renderDeleteModal={this.props.renderDeleteModal}
         renderEmptyRow={this.props.renderEmptyRow}
         renderItem={this.renderItem.bind(this)}
-        renderSearch={this.renderSearch.bind(this)}
         sortColumn={this.state.sortColumn}
         sortDirection={this.state.sortDirection}
         tableProps={{
@@ -233,7 +194,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderItem(item: any, index: number, children: Element<any>) {
+  renderItem(item: any, index: number, children: ComponentType<any>) {
     if (this.props.onDrag) {
       // Since the item may not be saved yet, we'll look for the ID or UID columns as the key. This is necessary to
       // maintain the correct element when dragging.
@@ -243,6 +204,7 @@ class EmbeddedList extends Component<Props, State> {
         <Draggable
           id={key}
           index={index}
+          item={item}
           key={key}
           onDrag={this.props.onDrag.bind(this)}
         >
@@ -259,32 +221,6 @@ class EmbeddedList extends Component<Props, State> {
       >
         { children }
       </Table.Row>
-    );
-  }
-
-  /**
-   * Renders the search input component.
-   *
-   * @returns {*}
-   */
-  renderSearch() {
-    if (!this.props.searchable) {
-      return null;
-    }
-
-    return (
-      <Input
-        type='text'
-        icon='search'
-        input={{
-          'aria-label': 'search'
-        }}
-        onKeyDown={Timer.clearSearchTimer.bind(this)}
-        onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
-        onChange={this.onSearchChange.bind(this)}
-        size='small'
-        value={this.state.searchQuery}
-      />
     );
   }
 }
@@ -316,14 +252,13 @@ EmbeddedList.defaultProps = {
   },
   buttons: [],
   className: '',
-  configurable: false,
+  configurable: true,
   modal: undefined,
   onCopy: undefined,
   onDrag: undefined,
   onSave: () => {},
   renderDeleteModal: undefined,
-  renderEmptyRow: undefined,
-  searchable: false
+  renderEmptyRow: undefined
 };
 
 export default EmbeddedList;

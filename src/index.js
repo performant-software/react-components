@@ -39,6 +39,7 @@ export { default as ViewXML } from './semantic-ui/ViewXML';
 
 // Utils
 export { default as Timer } from './utils/Timer';
+export { default as useDragDrop } from './utils/DragDrop';
 
 // Types
 export type { EditContainerProps as EditModalProps } from './common/EditContainer'; // Backwards compatability
