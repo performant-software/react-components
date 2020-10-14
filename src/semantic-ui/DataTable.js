@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component, type Element } from 'react';
-import { DndProvider } from 'react-dnd';
 import { Trans } from 'react-i18next';
 import {
   Button,
@@ -19,7 +18,6 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Draggable from './Draggable';
 import EditModal from './EditModal';
-import HTML5Backend from '../utils/HTML5Backend';
 import './DataTable.css';
 
 type Action = {
@@ -326,34 +324,30 @@ class DataTable extends Component<Props, State> {
    */
   render() {
     return (
-      <DndProvider
-        backend={HTML5Backend}
+      <div
+        className={`data-table ${this.props.className}`}
       >
-        <div
-          className={`data-table ${this.props.className}`}
+        { this.renderHeader() }
+        <Table
+          {...this.props.tableProps}
         >
-          { this.renderHeader() }
-          <Table
-            {...this.props.tableProps}
-          >
-            <Table.Header>
-              <Table.Row>
-                { this.state.columns.map(this.renderHeaderCell.bind(this)) }
-                { this.renderActionsHeader() }
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
-              { this.renderEmptyTableRow() }
-            </Table.Body>
-          </Table>
-          { this.renderFooter() }
-          { this.renderEditModal() }
-          { this.renderDeleteModal() }
-          { this.renderDeleteAllModal() }
-          { this.renderFilterModal() }
-        </div>
-      </DndProvider>
+          <Table.Header>
+            <Table.Row>
+              { this.state.columns.map(this.renderHeaderCell.bind(this)) }
+              { this.renderActionsHeader() }
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
+            { this.renderEmptyTableRow() }
+          </Table.Body>
+        </Table>
+        { this.renderFooter() }
+        { this.renderEditModal() }
+        { this.renderDeleteModal() }
+        { this.renderDeleteAllModal() }
+        { this.renderFilterModal() }
+      </div>
     );
   }
 

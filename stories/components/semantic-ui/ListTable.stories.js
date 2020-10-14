@@ -7,6 +7,7 @@ import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
 import ListTable from '../../../src/semantic-ui/ListTable';
+import useDragDrop from '../../../src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/ListTable',
@@ -449,7 +450,7 @@ const items = [{
   "state": "Georgia"
 }];
 
-export const Default = () => (
+export const Default = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -463,9 +464,9 @@ export const Default = () => (
     onSave={action('save')}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const Empty = () => (
+export const Empty = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -476,9 +477,9 @@ export const Empty = () => (
     onSave={action('save')}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const AddButton = () => (
+export const AddButton = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -495,9 +496,9 @@ export const AddButton = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const AddButtonEmpty = () => (
+export const AddButtonEmpty = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -511,9 +512,9 @@ export const AddButtonEmpty = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const WithFilters = () => (
+export const WithFilters = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -533,9 +534,9 @@ export const WithFilters = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const WithCustomizableColumns = () => (
+export const WithCustomizableColumns = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -580,9 +581,9 @@ export const WithCustomizableColumns = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const WithPolling = () => (
+export const WithPolling = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -603,9 +604,9 @@ export const WithPolling = () => (
     polling={5000}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const WithExtraButtons = () => (
+export const WithExtraButtons = useDragDrop(() => (
   <ListTable
     actions={actions}
     buttons={[{
@@ -638,9 +639,9 @@ export const WithExtraButtons = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
 
-export const WithDeleteAllButton = () => (
+export const WithDeleteAllButton = useDragDrop(() => (
   <ListTable
     actions={actions}
     collectionName='items'
@@ -662,4 +663,4 @@ export const WithDeleteAllButton = () => (
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
   />
-);
+));
