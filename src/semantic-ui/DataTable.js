@@ -101,6 +101,9 @@ type State = {
   selectedItem: any
 };
 
+const BUTTON_KEY_ADD = 'add';
+const BUTTON_KEY_DELETE_ALL = 'delete-all';
+
 class DataTable extends Component<Props, State> {
   static defaultProps: any;
 
@@ -448,6 +451,7 @@ class DataTable extends Component<Props, State> {
       <Button
         basic
         color={this.props.addButton.color}
+        key={BUTTON_KEY_ADD}
         onClick={this.onAddButton.bind(this)}
       >
         <Icon name='plus' />
@@ -552,6 +556,7 @@ class DataTable extends Component<Props, State> {
       <Button
         basic
         color={this.props.deleteButton.color}
+        key={BUTTON_KEY_DELETE_ALL}
         onClick={this.onDeleteAllButton.bind(this)}
       >
         <Icon name='times' />
