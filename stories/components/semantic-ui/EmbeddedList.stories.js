@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
-import { Button, Container } from 'semantic-ui-react';
+import { Button, Container, Icon } from 'semantic-ui-react';
 import AddModal from '../AddModal';
 import Colors from '../../services/Colors';
 import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
@@ -169,7 +169,15 @@ export const DragAndDropRows = useDragDrop(() => {
     <EmbeddedList
       actions={actions}
       onDelete={action('delete')}
-      columns={columns}
+      columns={[{
+        name: 'drag-drop',
+        label: '',
+        render: () => (
+          <div 
+            style={{ textAlign: 'center'}}>
+            <Icon name='bars' />
+          </div>)
+      }, ...columns]}
       items={list}
       onDrag={(dragIndex, hoverIndex) => {
         const temp = [...list];

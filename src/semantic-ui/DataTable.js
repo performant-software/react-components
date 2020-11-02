@@ -261,11 +261,24 @@ class DataTable extends Component<Props, State> {
    */
   onDrag(dragIndex: number, hoverIndex: number) {
     this.setState((state) => {
-      const columns = [...state.columns];
-      const column = columns[dragIndex];
+      const columns = [];
+      const anchoredColumns = [];
 
+      // Preserve the index of any unlabeled columns
+      _.each(state.columns, (column, index) => {
+        if (column.label && column.label.length) {
+          columns.push(column);
+        } else {
+          anchoredColumns.push({ index, column });
+        }
+      });
+
+      const column = columns[dragIndex];
       columns.splice(dragIndex, 1);
       columns.splice(hoverIndex, 0, column);
+
+      // Add the unlabeled columns back in
+      _.each(anchoredColumns, (c) => columns.splice(c.index, 0, c.column));
 
       return { columns };
     });
@@ -514,25 +527,27 @@ class DataTable extends Component<Props, State> {
         simple
       >
         <Dropdown.Menu>
-          { this.state.columns.map((c, index) => (
-            <Draggable
-              id={c.name}
-              index={index}
-              key={c.name}
-              onDrag={this.onDrag.bind(this)}
-            >
-              <Dropdown.Item>
-                <Icon
-                  name='bars'
-                />
-                <Checkbox
-                  checked={!c.hidden}
-                  label={c.label}
-                  onClick={this.onColumnCheckbox.bind(this, c)}
-                />
-              </Dropdown.Item>
-            </Draggable>
-          ))}
+          { this.state.columns
+            .filter((c) => c.label && c.label.length)
+            .map((c, index) => (
+              <Draggable
+                id={c.name}
+                index={index}
+                key={c.name}
+                onDrag={this.onDrag.bind(this)}
+              >
+                <Dropdown.Item>
+                  <Icon
+                    name='bars'
+                  />
+                  <Checkbox
+                    checked={!c.hidden}
+                    label={c.label}
+                    onClick={this.onColumnCheckbox.bind(this, c)}
+                  />
+                </Dropdown.Item>
+              </Draggable>
+            ))}
         </Dropdown.Menu>
       </Dropdown>
     );
