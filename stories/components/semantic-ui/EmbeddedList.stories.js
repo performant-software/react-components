@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
+import { Button, Container } from 'semantic-ui-react';
 import AddModal from '../AddModal';
 import Colors from '../../services/Colors';
 import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
+import EditModal from '../../../src/semantic-ui/EditModal';
+import TabbedModal from '../../../src/semantic-ui/TabbedModal';
 import useDragDrop from '../../../src/utils/DragDrop';
 
 export default {
@@ -178,5 +181,55 @@ export const DragAndDropRows = useDragDrop(() => {
         setList(temp);
       }}
     />
+  );
+});
+
+const EmbeddedListModal = (props) => (
+  <TabbedModal
+    open={props.open}
+  >
+    <TabbedModal.Tab
+      name='Tab 1'
+    >
+      <EmbeddedList
+        actions={actions}
+        addButton={{
+          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+          color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
+        }}
+        onDelete={action('delete')}
+        columns={columns}
+        items={items}
+        modal={{
+          component: AddModal
+        }}
+      />
+    </TabbedModal.Tab>
+    <TabbedModal.Tab
+      name='Tab 2'
+    >
+      Tab 2
+    </TabbedModal.Tab>
+    { props.children }
+  </TabbedModal>
+);
+
+export const TabbedModalConfig = useDragDrop(() => {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <Container>
+      <Button
+        content='Open Modal'
+        icon='plus'
+        onClick={() => setShowModal(true)}
+      />
+      <EditModal
+        component={EmbeddedListModal}
+        open={showModal}
+        onClose={() => new Promise((resolve) => resolve(setShowModal(false)))}
+        onSave={() => new Promise((resolve) => resolve(setShowModal(false)))}
+      />
+    </Container>
   );
 });
