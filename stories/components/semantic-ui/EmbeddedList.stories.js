@@ -135,7 +135,7 @@ export const AddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
       color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
@@ -151,7 +151,7 @@ export const EmptyAddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
       color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
@@ -198,7 +198,7 @@ const EmbeddedListModal = (props) => (
       <EmbeddedList
         actions={actions}
         addButton={{
-          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
           color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
         }}
         onDelete={action('delete')}
