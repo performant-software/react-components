@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, type Element } from 'react';
+import React, { Component, type Element, createRef } from 'react';
 import { Trans } from 'react-i18next';
 import {
   Button,
@@ -12,11 +12,13 @@ import {
   Icon,
   Menu,
   Pagination,
+  Ref,
   Popup,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import ColumnResize from './ColumnResize';
 import Draggable from './Draggable';
 import EditModal from './EditModal';
 import './DataTable.css';
@@ -103,11 +105,20 @@ type State = {
   modalDeleteAll: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
+  resize: ?{
+    columnRef: typeof Ref,
+    offset: number
+  },
   selectedItem: any
 };
 
 class DataTable extends Component<Props, State> {
   static defaultProps: any;
+
+  columnRefs: any;
+  onClick: (e: Event) => void;
+  onMouseMove: (e: Event) => void;
+  onMouseUp: (e: Event) => void;
 
   /**
    * Constructs a new DataTable component.
@@ -123,8 +134,53 @@ class DataTable extends Component<Props, State> {
       modalDeleteAll: false,
       modalEdit: false,
       modalFilter: false,
+      resize: null,
       selectedItem: null
     };
+
+    this.initializeColumnRefs();
+
+    this.onClick = this.onPreventClick.bind(this);
+    this.onMouseMove = this.onColumnResize.bind(this);
+    this.onMouseUp = this.afterColumnResize.bind(this);
+  }
+
+  /**
+   * If the resize object is present on the state, sets the capture click handler on the document and
+   * clears the resize object on the state.
+   */
+  afterColumnResize() {
+    if (this.state.resize) {
+      document.addEventListener('click', this.onClick, true);
+      this.setState({ resize: undefined });
+    }
+  }
+
+  /**
+   * Initializes a ref for each table column.
+   */
+  initializeColumnRefs() {
+    this.columnRefs = {};
+
+    _.each(this.state.columns, (c) => {
+      this.columnRefs[c.name] = createRef();
+    });
+  }
+
+  /**
+   * Adds the mousemove and mouseup event listeners for dynamic column resizing.
+   */
+  componentDidMount() {
+    document.addEventListener('mousemove', this.onMouseMove);
+    document.addEventListener('mouseup', this.onMouseUp);
+  }
+
+  /**
+   * Removes the mousemove and mouseup event listeners.
+   */
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.onMouseMove);
+    document.removeEventListener('mouseup', this.onMouseUp);
   }
 
   /**
@@ -205,6 +261,20 @@ class DataTable extends Component<Props, State> {
     this.setState((state) => ({
       columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
     }));
+  }
+
+  /**
+   * Resizes the current column based on the user's mouse position.
+   *
+   * @param e
+   */
+  onColumnResize(e: MouseEvent) {
+    const { resize } = this.state;
+
+    if (resize) {
+      const { columnRef, offset } = resize;
+      columnRef.current.style.width = `${offset + e.pageX}px`;
+    }
   }
 
   /**
@@ -290,6 +360,21 @@ class DataTable extends Component<Props, State> {
    */
   onFilterButton() {
     this.setState({ modalFilter: true });
+  }
+
+  /**
+   * Stops progagation of the onclick event. The column resizing seems to trigger the 'click' event on the <th>
+   * containing the <div> used to resize the column. Since the <th> already provides a 'click' event, this makes for
+   * an awkward user experience because it will trigger a column sort each time a column is resized.
+   *
+   * This function will capture the onclick prior to it bubbling to the <th> element and prevent it from happening. It
+   * will also remove the event listener from the document so that clicks elsewhere in the document are not prevented.
+   *
+   * @param e
+   */
+  onPreventClick(e: Event) {
+    e.stopPropagation();
+    document.removeEventListener('click', this.onClick, true);
   }
 
   /**
@@ -890,13 +975,24 @@ class DataTable extends Component<Props, State> {
     }
 
     return (
-      <Table.HeaderCell
-        key={column.name}
-        sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
-        onClick={this.props.onColumnClick.bind(this, column)}
+      <Ref
+        innerRef={this.columnRefs[column.name]}
       >
-        { column.label }
-      </Table.HeaderCell>
+        <Table.HeaderCell
+          key={column.name}
+          sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
+          onClick={this.props.onColumnClick.bind(this, column)}
+        >
+          { column.label }
+          <ColumnResize
+            onMouseDown={(e: MouseEvent) => {
+              const columnRef = this.columnRefs[column.name];
+              const offset = columnRef.current.offsetWidth - e.pageX;
+              this.setState({ resize: { columnRef, offset } });
+            }}
+          />
+        </Table.HeaderCell>
+      </Ref>
     );
   }
 

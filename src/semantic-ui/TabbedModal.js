@@ -100,7 +100,13 @@ class TabbedModal extends Component<Props, State> {
           </Menu>
         </Modal.Header>
         <Modal.Content>
-          { tab && tab.props.children }
+          { tab && (
+            <div
+              key={tab.props.name}
+            >
+              { tab.props.children }
+            </div>
+          )}
         </Modal.Content>
         { Element.findByType(this.props.children, Modal.Actions) }
       </Modal>
