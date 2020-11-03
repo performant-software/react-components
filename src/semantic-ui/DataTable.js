@@ -12,6 +12,7 @@ import {
   Icon,
   Menu,
   Pagination,
+  Popup,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -26,6 +27,10 @@ type Action = {
   icon?: string,
   name: string,
   onClick?: (item: any) => void,
+  popup: {
+    content: string,
+    title: string
+  },
   render?: (item: any, index: number) => Element<any>,
   title?: string
 };
@@ -361,11 +366,12 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderActionButton(item: any, index: number, action: Action) {
+    // If the action specified its own render function, return the result of the function call
     if (action.render) {
       return action.render(item, index);
     }
 
-    return (
+    const actionButton = (
       <Button
         basic
         compact
@@ -373,9 +379,28 @@ class DataTable extends Component<Props, State> {
         icon={action.icon}
         key={`${action.name}-${index}`}
         onClick={action.onClick && action.onClick.bind(this, item)}
-        title={action.title || action.name}
+        title={action.title}
       />
     );
+
+    // Wrap the button in a popup if the action specifies a popup attribute
+    if (action.popup) {
+      const { content, title } = action.popup;
+
+      return (
+        <Popup
+          content={content}
+          header={title}
+          hideOnScroll
+          mouseEnterDelay={500}
+          position='top right'
+          trigger={actionButton}
+        />
+      );
+    }
+
+    // Otherwise, simply return the button
+    return actionButton;
   }
 
   /**
@@ -397,11 +422,32 @@ class DataTable extends Component<Props, State> {
         let defaults = {};
 
         if (action.name === 'edit') {
-          defaults = { onClick: this.onEditButton.bind(this), icon: 'edit outline' };
+          defaults = {
+            icon: 'edit outline',
+            onClick: this.onEditButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.edit.title'),
+              content: i18n.t('DataTable.actions.edit.content')
+            }
+          };
         } else if (action.name === 'copy') {
-          defaults = { onClick: this.onCopyButton.bind(this), icon: 'copy outline' };
+          defaults = {
+            icon: 'copy outline',
+            onClick: this.onCopyButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.copy.title'),
+              content: i18n.t('DataTable.actions.copy.content')
+            }
+          };
         } else if (action.name === 'delete') {
-          defaults = { onClick: this.onDeleteButton.bind(this), icon: 'times circle outline' };
+          defaults = {
+            icon: 'times circle outline',
+            onClick: this.onDeleteButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.delete.title'),
+              content: i18n.t('DataTable.actions.delete.content')
+            }
+          };
         }
 
         return _.defaults(action, defaults);
