@@ -102,7 +102,7 @@ class TabbedModal extends Component<Props, State> {
         <Modal.Content>
           { tab && (
             <div
-              key={tab.props.key}
+              key={tab.props.name}
             >
               { tab.props.children }
             </div>
