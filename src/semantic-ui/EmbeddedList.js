@@ -248,7 +248,8 @@ _.mixin({
 
 EmbeddedList.defaultProps = {
   addButton: {
-    color: 'grey'
+    color: 'grey',
+    location: 'top'
   },
   buttons: [],
   className: '',
