@@ -41,7 +41,7 @@ class TabbedModal extends Component<Props, State> {
    */
   componentDidMount() {
     const tab = _.first(Element.findByType(this.props.children, TabbedModal.Tab));
-    this.setState({ tab: tab.props.name });
+    this.setState({ tab });
   }
 
   /**
@@ -80,9 +80,6 @@ class TabbedModal extends Component<Props, State> {
    * @returns {*}
    */
   render() {
-    const tabs = Element.findByType(this.props.children, TabbedModal.Tab);
-    const tab = _.find(tabs, (t) => t.props.name === this.state.tab);
-
     return (
       <Modal
         className={this.getModalClasses()}
@@ -100,7 +97,7 @@ class TabbedModal extends Component<Props, State> {
           </Menu>
         </Modal.Header>
         <Modal.Content>
-          { tab && tab.props.children }
+          { this.state.tab && this.state.tab.props.children }
         </Modal.Content>
         { Element.findByType(this.props.children, Modal.Actions) }
       </Modal>
@@ -134,10 +131,10 @@ class TabbedModal extends Component<Props, State> {
 
     return (
       <Menu.Item
-        active={this.state.tab === name}
+        active={this.state.tab === tab}
         key={name}
         name={name}
-        onClick={() => this.setState({ tab: name })}
+        onClick={() => this.setState({ tab })}
       >
         { name }
       </Menu.Item>
