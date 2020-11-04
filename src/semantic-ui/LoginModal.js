@@ -22,7 +22,8 @@ type Props = {
   onPasswordChange: () => void,
   onUsernameChange: () => void,
   open: boolean,
-  trigger: () => Component
+  trigger: () => Component,
+  placeholder: string
 };
 
 const LoginModal = (props: Props) => (
@@ -54,7 +55,7 @@ const LoginModal = (props: Props) => (
             className='form-field'
             icon={<Icon name='at' />}
             onChange={props.onUsernameChange.bind(this)}
-            placeholder={i18n.t('LoginModal.email')}
+            placeholder={props.placeholder}
             size='huge'
           />
         </Grid.Row>
@@ -93,5 +94,9 @@ const LoginModal = (props: Props) => (
     </Modal.Actions>
   </Modal>
 );
+
+LoginModal.defaultProps = {
+  placeholder: i18n.t('LoginModal.email')
+}
 
 export default LoginModal;
