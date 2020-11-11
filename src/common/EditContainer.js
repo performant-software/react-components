@@ -155,17 +155,19 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
 
         _.each(fieldErrors, (error) => {
           if (error === ERROR_UNIQUE) {
-            _.extend(validationErrors, { [key]: i18n.t('EditProvider.errors.unique', { key, value }) });
+            _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.unique', { key, value }) });
           } else if (error === ERROR_EMPTY) {
-            _.extend(validationErrors, { [key]: i18n.t('EditProvider.errors.required', { key }) });
+            _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.required', { key }) });
           } else if (this.props.resolveValidationError) {
             _.extend(validationErrors, this.props.resolveValidationError(error, this.state.item));
           }
         });
       });
 
-      if (status === 400 && !_.keys(validationErrors).length) {
-        _.extend(validationErrors, { error: i18n.t('EditProvider.errors.general') });
+      if (status === 400 && _.isEmpty(validationErrors)) {
+        _.extend(validationErrors, { error: i18n.t('EditContainer.errors.general') });
+      } else if (status === 500 && _.isEmpty(validationErrors)) {
+        _.extend(validationErrors, { error: i18n.t('EditContainer.errors.system') });
       }
 
       this.setState({ saving: false, validationErrors });
