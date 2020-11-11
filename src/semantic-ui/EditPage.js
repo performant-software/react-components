@@ -79,15 +79,18 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       return (
-        <Form
+        <div
           className={`edit-page ${this.props.className || ''}`}
-          noValidate
         >
-          { this.renderMenu() }
-          { this.renderButtons() }
-          { this.renderComponent() }
-          { this.renderToaster() }
-        </Form>
+          <Form
+            noValidate
+          >
+            { this.renderMenu() }
+            { this.renderButtons() }
+            { this.renderComponent() }
+            { this.renderToaster() }
+          </Form>
+        </div>
       );
     }
 
