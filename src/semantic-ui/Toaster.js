@@ -12,7 +12,7 @@ type Props = {
   type: string
 };
 
-const TRANSITION_DURATION = 500;
+const TRANSITION_DURATION = 700;
 
 const Toaster = (props: Props) => {
   const [visible, setVisible] = useState(true);
