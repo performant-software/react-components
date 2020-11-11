@@ -201,6 +201,9 @@ class AssociatedDropdown extends Component<Props, State> {
           <Toaster
             onDismiss={() => this.setState({ saved: false })}
             type={Toaster.MessageTypes.positive}
+            style={{
+              position: 'fixed'
+            }}
           >
             <Message.Header
               content={i18n.t('Common.messages.save.header')}
