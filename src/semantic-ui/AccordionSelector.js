@@ -8,6 +8,7 @@ import {
   Header,
   Icon,
   Input,
+  Message,
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -15,6 +16,7 @@ import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
 import NestedAccordion from './NestedAccordion';
 import SelectizeHeader from './SelectizeHeader';
+import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 import './AccordionSelector.css';
 
@@ -44,6 +46,7 @@ type Props = {
 type State = {
   items: Array<any>,
   modalAdd: boolean,
+  saved: boolean,
   searchQuery: string,
   selectedItem: ?any,
   selectedItems: Array<any>
@@ -63,6 +66,7 @@ class AccordionSelector extends Component<Props, State> {
     this.state = {
       items: [],
       modalAdd: false,
+      saved: false,
       searchQuery: '',
       selectedItem: null,
       selectedItems: props.selectedItems
@@ -236,6 +240,19 @@ class AccordionSelector extends Component<Props, State> {
             showToggle={this.props.showToggle.bind(this)}
           />
           { this.renderAddModal() }
+          { this.state.saved && (
+            <Toaster
+              onDismiss={() => this.setState({ saved: false })}
+              type={Toaster.MessageTypes.positive}
+            >
+              <Message.Header
+                content={i18n.t('Common.messages.save.header')}
+              />
+              <Message.Content
+                content={i18n.t('Common.messages.save.content')}
+              />
+            </Toaster>
+          )}
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -291,24 +308,20 @@ class AccordionSelector extends Component<Props, State> {
       return null;
     }
 
-    const {
-      component,
-      props,
-      state,
-      onSave
-    } = this.props.modal;
-
-    const AddModal = withTranslation()(EditModal(component, props, state));
+    const { component, props, onSave } = this.props.modal;
 
     return (
-      <AddModal
-        onClose={() => this.setState({ modalAdd: false })}
+      <EditModal
+        component={component}
+        onClose={() => this.setState({ modalAdd: false, selectedItem: null })}
         onSave={(item) => onSave(item)
           .then((saved) => this.setState({
             modalAdd: false,
+            saved: true,
             searchQuery: '',
             selectedItems: [saved]
           }, this.onSearch.bind(this)))}
+        {...props}
       />
     );
   }

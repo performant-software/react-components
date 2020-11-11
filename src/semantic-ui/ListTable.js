@@ -1,9 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import DataTable from './DataTable';
+import Toaster from './Toaster';
+import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './ListTable.css';
 
@@ -51,6 +53,7 @@ type State = {
   loading: boolean,
   page: number,
   pages: number,
+  saved: boolean,
   search: string,
   sortColumn: string,
   sortDirection: string
@@ -80,6 +83,7 @@ class ListTable extends Component<Props, State> {
       loading: false,
       page: 1,
       pages: 1,
+      saved: false,
       search: null,
       sortColumn: null,
       sortDirection: null
@@ -263,7 +267,7 @@ class ListTable extends Component<Props, State> {
   onSave(item) {
     return this.props
       .onSave(item)
-      .then(this.fetchData.bind(this));
+      .then(this.setState({ saved: true }, this.fetchData.bind(this)));
   }
 
   /**
@@ -290,41 +294,56 @@ class ListTable extends Component<Props, State> {
    */
   render() {
     return (
-      <DataTable
-        actions={this.props.actions}
-        addButton={this.props.addButton}
-        buttons={this.props.buttons}
-        className={this.props.className}
-        columns={this.props.columns}
-        configurable={this.props.configurable}
-        deleteButton={this.props.deleteButton}
-        filters={{
-          active: this.isFilterActive(),
-          component: this.props.filters && this.props.filters.component,
-          onChange: this.onFilterChange.bind(this),
-          state: this.state.filters
-        }}
-        items={this.state.items}
-        loading={this.state.loading}
-        modal={this.props.modal}
-        page={this.state.page}
-        pages={this.state.pages}
-        onColumnClick={this.onColumnClick.bind(this)}
-        onCopy={this.props.onCopy}
-        onDelete={this.onDelete.bind(this)}
-        onDeleteAll={this.onDeleteAll.bind(this)}
-        onPageChange={this.onPageChange.bind(this)}
-        onSave={this.onSave.bind(this)}
-        renderDeleteModal={this.props.renderDeleteModal}
-        renderEmptyRow={this.props.renderEmptyRow}
-        renderSearch={this.renderSearch.bind(this)}
-        sortColumn={this.state.sortColumn}
-        sortDirection={this.state.sortDirection}
-        tableProps={{
-          celled: true,
-          sortable: true
-        }}
-      />
+      <>
+        <DataTable
+          actions={this.props.actions}
+          addButton={this.props.addButton}
+          buttons={this.props.buttons}
+          className={this.props.className}
+          columns={this.props.columns}
+          configurable={this.props.configurable}
+          deleteButton={this.props.deleteButton}
+          filters={{
+            active: this.isFilterActive(),
+            component: this.props.filters && this.props.filters.component,
+            onChange: this.onFilterChange.bind(this),
+            state: this.state.filters
+          }}
+          items={this.state.items}
+          loading={this.state.loading}
+          modal={this.props.modal}
+          page={this.state.page}
+          pages={this.state.pages}
+          onColumnClick={this.onColumnClick.bind(this)}
+          onCopy={this.props.onCopy}
+          onDelete={this.onDelete.bind(this)}
+          onDeleteAll={this.onDeleteAll.bind(this)}
+          onPageChange={this.onPageChange.bind(this)}
+          onSave={this.onSave.bind(this)}
+          renderDeleteModal={this.props.renderDeleteModal}
+          renderEmptyRow={this.props.renderEmptyRow}
+          renderSearch={this.renderSearch.bind(this)}
+          sortColumn={this.state.sortColumn}
+          sortDirection={this.state.sortDirection}
+          tableProps={{
+            celled: true,
+            sortable: true
+          }}
+        />
+        { this.state.saved && (
+          <Toaster
+            onDismiss={() => this.setState({ saved: false })}
+            type={Toaster.MessageTypes.positive}
+          >
+            <Message.Header
+              content={i18n.t('Common.messages.save.header')}
+            />
+            <Message.Content
+              content={i18n.t('Common.messages.save.content')}
+            />
+          </Toaster>
+        )}
+      </>
     );
   }
 

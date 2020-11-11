@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
@@ -6,6 +8,7 @@ import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
 import AccordionSelector from '../../../src/semantic-ui/AccordionSelector';
+import { Button } from 'semantic-ui-react';
 
 export default {
   title: 'Components/Semantic UI/AccordionSelector',
@@ -314,22 +317,48 @@ const data = [{
   manager_id: 1
 }];
 
-export const Default = () => (
-  <AccordionSelector
-    collectionName='items'
-    getChildItems={(items, item) => _.where(items, { manager_id: item.id })}
-    getRootItems={(items) => _.where(items, { manager_id: null })}
-    isSelectable={() => true}
-    modal={{
-      component: AddModal
-    }}
-    multiple={boolean('Multiple', false)}
-    onClose={action('close')}
-    onSave={action('save')}
-    onSearch={(parentId, search) => Api.onNestedLoad({ items: data, parentId, parentKey: 'manager_id', search })}
-    open
-    renderItem={(item) => `${item.first_name} ${item.last_name} (${item.title})`}
-    showToggle={() => true}
-    title={text('Title', 'Select some')}
-  />
-);
+export const Default = () => {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <>
+      <Button
+        content='Open'
+        onClick={() => setVisible(true)}
+      />
+      <AccordionSelector
+        collectionName='items'
+        getChildItems={(items, item) => _.where(items, { manager_id: item.id })}
+        getRootItems={(items) => _.where(items, { manager_id: null })}
+        isSelectable={() => true}
+        modal={{
+          component: AddModal,
+          onSave: () => {
+            action('add save')();
+            return Promise.resolve({});
+          }
+        }}
+        multiple={boolean('Multiple', false)}
+        onClose={() => {
+          action('close')();
+          setVisible(false);
+        }}
+        onSave={() => {
+          action('save')();
+          setVisible(false);
+          return Promise.resolve();
+        }}
+        onSearch={(parentId, search) => Api.onNestedLoad({
+          items: data,
+          parentKey: 'manager_id',
+          parentId,
+          search
+        })}
+        open={visible}
+        renderItem={(item) => `${item.first_name} ${item.last_name} (${item.title})`}
+        showToggle={() => true}
+        title={text('Title', 'Select some')}
+      />
+    </>
+  );
+}

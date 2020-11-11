@@ -15,6 +15,22 @@
     },
     "errors": {
       "title": "Oops!"
+    },
+    "messages": {
+      "error": {
+        "header": "Oops!"
+      },
+      "save": {
+        "content": "Your changes have been saved.",
+        "header": "Success!"
+      }
+    }
+  },
+  "EditContainer": {
+    "errors": {
+      "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
+      "required": "The {{key}} field is required.",
+      "unique": "A record with the {{key}} \"{{value}}\" already exists."
     }
   },
   "DataTable": {

@@ -1,11 +1,18 @@
 // @flow
 
 import React, { Component, type ComponentType } from 'react';
-import { Form, Menu, type MenuProps } from 'semantic-ui-react';
+import {
+  Form,
+  Menu,
+  Message,
+  type MenuProps
+} from 'semantic-ui-react';
 import _ from 'underscore';
-import useEditContainer, { type EditContainerProps } from '../common/EditContainer';
 import CancelButton from './CancelButton';
 import SaveButton from './SaveButton';
+import Toaster from './Toaster';
+import i18n from '../i18n/i18n';
+import useEditContainer, { type EditContainerProps } from '../common/EditContainer';
 import './EditPage.css';
 
 type Props = EditContainerProps & {
@@ -17,7 +24,8 @@ type Props = EditContainerProps & {
 };
 
 type State = {
-  currentTab: string
+  currentTab: string,
+  showToaster: boolean
 };
 
 const EditPage = (props: Props) => {
@@ -38,7 +46,8 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
       super(props);
 
       this.state = {
-        currentTab: ''
+        currentTab: '',
+        showToaster: true
       };
     }
 
@@ -53,6 +62,17 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Resets the <code>showToaster</code> property when the set of errors changes.
+     *
+     * @param prevProps
+     */
+    componentDidUpdate(prevProps: Props) {
+      if (!_.isEmpty(this.props.errors) && !_.isEmpty(prevProps.errors) && prevProps.errors !== this.props.errors) {
+        this.setState({ showToaster: true });
+      }
+    }
+
+    /**
      * Renders the EditPage component.
      *
      * @returns {*}
@@ -61,13 +81,12 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
       return (
         <Form
           className={`edit-page ${this.props.className || ''}`}
+          noValidate
         >
           { this.renderMenu() }
           { this.renderButtons() }
-          <WrappedComponent
-            {...this.props}
-            currentTab={this.state.currentTab}
-          />
+          { this.renderComponent() }
+          { this.renderToaster() }
         </Form>
       );
     }
@@ -95,6 +114,20 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
             onClick={this.props.onClose.bind(this)}
           />
         </div>
+      );
+    }
+
+    /**
+     * Renders the wrapped component.
+     *
+     * @returns {*}
+     */
+    renderComponent() {
+      return (
+        <WrappedComponent
+          {...this.props}
+          currentTab={this.state.currentTab}
+        />
       );
     }
 
@@ -135,6 +168,36 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
             </Menu.Item>
           </Menu.Menu>
         </Menu>
+      );
+    }
+
+    /**
+     * Renders the toaster component.
+     *
+     * @returns {null|*}
+     */
+    renderToaster() {
+      if (!this.state.showToaster) {
+        return null;
+      }
+
+      if (!(this.props.errors && this.props.errors.length)) {
+        return null;
+      }
+
+      return (
+        <Toaster
+          onDismiss={() => this.setState({ showToaster: false })}
+          timeout={0}
+          type={Toaster.MessageTypes.negative}
+        >
+          <Message.Header
+            content={i18n.t('Common.messages.error.header')}
+          />
+          <Message.List
+            items={this.props.errors}
+          />
+        </Toaster>
       );
     }
   }

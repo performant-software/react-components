@@ -493,7 +493,10 @@ export const AddButton = useDragDrop(() => (
       perPage: number('Per page', 10)
     }))}
     onDelete={action('delete')}
-    onSave={() => Promise.resolve()}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
     searchable={boolean('Searchable', true)}
   />
 ));

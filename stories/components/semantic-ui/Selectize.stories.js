@@ -368,14 +368,21 @@ export const Default = () => (
   <Selectize
     collectionName='items'
     modal={{
-      component: AddModal
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
     }}
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
       perPage: number('Per page', 10)
     }))}
-    onSave={action('save')}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
     title={text('Title', 'Select some')}
   />

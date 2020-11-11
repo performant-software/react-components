@@ -156,8 +156,6 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
         _.each(fieldErrors, (error) => {
           if (error === ERROR_UNIQUE) {
             _.extend(validationErrors, { [key]: i18n.t('EditProvider.errors.unique', { key, value }) });
-
-            validationErrors.push();
           } else if (error === ERROR_EMPTY) {
             _.extend(validationErrors, { [key]: i18n.t('EditProvider.errors.required', { key }) });
           } else if (this.props.resolveValidationError) {
@@ -378,7 +376,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
         }
 
         if (invalid) {
-          _.extend(validationErrors, { [key]: i18n.t('EditModal.errors.required', { key }) });
+          _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.required', { key }) });
         }
       });
 
