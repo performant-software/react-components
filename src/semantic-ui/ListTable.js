@@ -45,6 +45,7 @@ type Props = {
   polling?: number,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component<{}>,
   renderEmptyRow?: () => void,
+  saved?: boolean,
   searchable?: boolean
 };
 
@@ -83,7 +84,7 @@ class ListTable extends Component<Props, State> {
       loading: false,
       page: 1,
       pages: 1,
-      saved: false,
+      saved: props.saved || false,
       search: null,
       sortColumn: null,
       sortDirection: null
