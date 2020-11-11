@@ -30,7 +30,7 @@
     "errors": {
       "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
       "required": "The {{key}} field is required.",
-      "system": "A system error occurred while saving the record. Please contain your system administrator.",
+      "system": "A system error occurred while saving the record. Please contact your system administrator.",
       "unique": "A record with the {{key}} \"{{value}}\" already exists."
     }
   },
