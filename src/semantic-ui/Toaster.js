@@ -44,7 +44,7 @@ const Toaster = (props: Props) => {
       visible={visible}
     >
       <Message
-        className='toaster message'
+        className='toaster'
         info={props.type === Toaster.MessageTypes.info}
         negative={props.type === Toaster.MessageTypes.negative}
         onDismiss={() => setVisible(false)}
