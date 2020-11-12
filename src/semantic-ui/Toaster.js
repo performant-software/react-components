@@ -8,7 +8,6 @@ import './Toaster.css';
 type Props = {
   children: Array<Element<any>>,
   onDismiss?: () => void,
-  style: any,
   timeout: number,
   type: string
 };
@@ -50,7 +49,6 @@ const Toaster = (props: Props) => {
         negative={props.type === Toaster.MessageTypes.negative}
         onDismiss={() => setVisible(false)}
         positive={props.type === Toaster.MessageTypes.positive}
-        style={props.style}
         warning={props.type === Toaster.MessageTypes.negative}
       >
         { props.children }
