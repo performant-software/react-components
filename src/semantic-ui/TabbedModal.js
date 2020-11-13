@@ -45,26 +45,51 @@ class TabbedModal extends Component<Props, State> {
   }
 
   /**
+   * Returns the header classes.
+   *
+   * @returns {string}
+   */
+  getHeaderClasses() {
+    const classes = ['modal-header'];
+
+    if (this.props.inlineTabs) {
+      classes.push('inline-header');
+    }
+
+    return classes.join(' ');
+  }
+
+  /**
+   * Returns the modal classes.
+   *
+   * @returns {string}
+   */
+  getModalClasses() {
+    const classes = ['tabbed-modal'];
+
+    if (this.props.className) {
+      classes.push(this.props.className);
+    }
+
+    return classes.join(' ');
+  }
+
+  /**
    * Renders the TabbedModal component.
    *
    * @returns {*}
    */
   render() {
-    const classes = ['tabbed-modal'];
-    if (this.props.className) {
-      classes.push(this.props.className);
-    }
-
     const tabs = Element.findByType(this.props.children, TabbedModal.Tab);
     const tab = _.find(tabs, (t) => t.props.name === this.state.tab);
 
     return (
       <Modal
-        className={classes.join(' ')}
+        className={this.getModalClasses()}
         {..._.omit(this.props, 'header', 'renderHeader', 'inlineTabs', 'className')}
       >
         <Modal.Header
-          className={this.props.inlineTabs ? 'modal-header' : null}
+          className={this.getHeaderClasses()}
         >
           { this.renderHeader() }
           <Menu
@@ -75,7 +100,13 @@ class TabbedModal extends Component<Props, State> {
           </Menu>
         </Modal.Header>
         <Modal.Content>
-          { tab && tab.props.children }
+          { tab && (
+            <div
+              key={tab.props.name}
+            >
+              { tab.props.children }
+            </div>
+          )}
         </Modal.Content>
         { Element.findByType(this.props.children, Modal.Actions) }
       </Modal>

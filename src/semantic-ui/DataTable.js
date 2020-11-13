@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, type Element } from 'react';
+import React, { Component, type Element, createRef } from 'react';
 import { Trans } from 'react-i18next';
 import {
   Button,
@@ -12,10 +12,13 @@ import {
   Icon,
   Menu,
   Pagination,
+  Ref,
+  Popup,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import ColumnResize from './ColumnResize';
 import Draggable from './Draggable';
 import EditModal from './EditModal';
 import './DataTable.css';
@@ -26,6 +29,10 @@ type Action = {
   icon?: string,
   name: string,
   onClick?: (item: any) => void,
+  popup: {
+    content: string,
+    title: string
+  },
   render?: (item: any, index: number) => Element<any>,
   title?: string
 };
@@ -98,11 +105,23 @@ type State = {
   modalDeleteAll: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
+  resize: ?{
+    columnRef: typeof Ref,
+    offset: number
+  },
   selectedItem: any
 };
 
+const BUTTON_KEY_ADD = 'add';
+const BUTTON_KEY_DELETE_ALL = 'delete-all';
+
 class DataTable extends Component<Props, State> {
   static defaultProps: any;
+
+  columnRefs: any;
+  onClick: (e: Event) => void;
+  onMouseMove: (e: Event) => void;
+  onMouseUp: (e: Event) => void;
 
   /**
    * Constructs a new DataTable component.
@@ -118,8 +137,53 @@ class DataTable extends Component<Props, State> {
       modalDeleteAll: false,
       modalEdit: false,
       modalFilter: false,
+      resize: null,
       selectedItem: null
     };
+
+    this.initializeColumnRefs();
+
+    this.onClick = this.onPreventClick.bind(this);
+    this.onMouseMove = this.onColumnResize.bind(this);
+    this.onMouseUp = this.afterColumnResize.bind(this);
+  }
+
+  /**
+   * If the resize object is present on the state, sets the capture click handler on the document and
+   * clears the resize object on the state.
+   */
+  afterColumnResize() {
+    if (this.state.resize) {
+      document.addEventListener('click', this.onClick, true);
+      this.setState({ resize: undefined });
+    }
+  }
+
+  /**
+   * Initializes a ref for each table column.
+   */
+  initializeColumnRefs() {
+    this.columnRefs = {};
+
+    _.each(this.state.columns, (c) => {
+      this.columnRefs[c.name] = createRef();
+    });
+  }
+
+  /**
+   * Adds the mousemove and mouseup event listeners for dynamic column resizing.
+   */
+  componentDidMount() {
+    document.addEventListener('mousemove', this.onMouseMove);
+    document.addEventListener('mouseup', this.onMouseUp);
+  }
+
+  /**
+   * Removes the mousemove and mouseup event listeners.
+   */
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.onMouseMove);
+    document.removeEventListener('mouseup', this.onMouseUp);
   }
 
   /**
@@ -200,6 +264,20 @@ class DataTable extends Component<Props, State> {
     this.setState((state) => ({
       columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
     }));
+  }
+
+  /**
+   * Resizes the current column based on the user's mouse position.
+   *
+   * @param e
+   */
+  onColumnResize(e: MouseEvent) {
+    const { resize } = this.state;
+
+    if (resize) {
+      const { columnRef, offset } = resize;
+      columnRef.current.style.width = `${offset + e.pageX}px`;
+    }
   }
 
   /**
@@ -301,6 +379,21 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
+   * Stops progagation of the onclick event. The column resizing seems to trigger the 'click' event on the <th>
+   * containing the <div> used to resize the column. Since the <th> already provides a 'click' event, this makes for
+   * an awkward user experience because it will trigger a column sort each time a column is resized.
+   *
+   * This function will capture the onclick prior to it bubbling to the <th> element and prevent it from happening. It
+   * will also remove the event listener from the document so that clicks elsewhere in the document are not prevented.
+   *
+   * @param e
+   */
+  onPreventClick(e: Event) {
+    e.stopPropagation();
+    document.removeEventListener('click', this.onClick, true);
+  }
+
+  /**
    * Saves the passed item and closes the add/edit modal.
    *
    * @param item
@@ -374,11 +467,12 @@ class DataTable extends Component<Props, State> {
    * @returns {*}
    */
   renderActionButton(item: any, index: number, action: Action) {
+    // If the action specified its own render function, return the result of the function call
     if (action.render) {
       return action.render(item, index);
     }
 
-    return (
+    const actionButton = (
       <Button
         basic
         compact
@@ -386,9 +480,28 @@ class DataTable extends Component<Props, State> {
         icon={action.icon}
         key={`${action.name}-${index}`}
         onClick={action.onClick && action.onClick.bind(this, item)}
-        title={action.title || action.name}
+        title={action.title}
       />
     );
+
+    // Wrap the button in a popup if the action specifies a popup attribute
+    if (action.popup) {
+      const { content, title } = action.popup;
+
+      return (
+        <Popup
+          content={content}
+          header={title}
+          hideOnScroll
+          mouseEnterDelay={500}
+          position='top right'
+          trigger={actionButton}
+        />
+      );
+    }
+
+    // Otherwise, simply return the button
+    return actionButton;
   }
 
   /**
@@ -410,11 +523,32 @@ class DataTable extends Component<Props, State> {
         let defaults = {};
 
         if (action.name === 'edit') {
-          defaults = { onClick: this.onEditButton.bind(this), icon: 'edit outline' };
+          defaults = {
+            icon: 'edit outline',
+            onClick: this.onEditButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.edit.title'),
+              content: i18n.t('DataTable.actions.edit.content')
+            }
+          };
         } else if (action.name === 'copy') {
-          defaults = { onClick: this.onCopyButton.bind(this), icon: 'copy outline' };
+          defaults = {
+            icon: 'copy outline',
+            onClick: this.onCopyButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.copy.title'),
+              content: i18n.t('DataTable.actions.copy.content')
+            }
+          };
         } else if (action.name === 'delete') {
-          defaults = { onClick: this.onDeleteButton.bind(this), icon: 'times circle outline' };
+          defaults = {
+            icon: 'times circle outline',
+            onClick: this.onDeleteButton.bind(this),
+            popup: {
+              title: i18n.t('DataTable.actions.delete.title'),
+              content: i18n.t('DataTable.actions.delete.content')
+            }
+          };
         }
 
         return _.defaults(action, defaults);
@@ -461,6 +595,7 @@ class DataTable extends Component<Props, State> {
       <Button
         basic
         color={this.props.addButton.color}
+        key={BUTTON_KEY_ADD}
         onClick={this.onAddButton.bind(this)}
       >
         <Icon name='plus' />
@@ -567,6 +702,7 @@ class DataTable extends Component<Props, State> {
       <Button
         basic
         color={this.props.deleteButton.color}
+        key={BUTTON_KEY_DELETE_ALL}
         onClick={this.onDeleteAllButton.bind(this)}
       >
         <Icon name='times' />
@@ -859,13 +995,24 @@ class DataTable extends Component<Props, State> {
     }
 
     return (
-      <Table.HeaderCell
-        key={column.name}
-        sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
-        onClick={this.props.onColumnClick.bind(this, column)}
+      <Ref
+        innerRef={this.columnRefs[column.name]}
       >
-        { column.label }
-      </Table.HeaderCell>
+        <Table.HeaderCell
+          key={column.name}
+          sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
+          onClick={this.props.onColumnClick.bind(this, column)}
+        >
+          { column.label }
+          <ColumnResize
+            onMouseDown={(e: MouseEvent) => {
+              const columnRef = this.columnRefs[column.name];
+              const offset = columnRef.current.offsetWidth - e.pageX;
+              this.setState({ resize: { columnRef, offset } });
+            }}
+          />
+        </Table.HeaderCell>
+      </Ref>
     );
   }
 

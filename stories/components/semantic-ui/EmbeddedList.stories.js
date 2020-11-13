@@ -3,6 +3,7 @@ import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
 import { Button, Container, Icon } from 'semantic-ui-react';
+import _ from 'underscore';
 import AddModal from '../AddModal';
 import Colors from '../../services/Colors';
 import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
@@ -134,7 +135,7 @@ export const AddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
       color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
@@ -150,7 +151,7 @@ export const EmptyAddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
       color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
@@ -194,6 +195,9 @@ export const DragAndDropRows = useDragDrop(() => {
 
 const EmbeddedListModal = (props) => (
   <TabbedModal
+    centered={false}
+    header='This is a Test'
+    inlineTabs={false}
     open={props.open}
   >
     <TabbedModal.Tab
@@ -202,7 +206,7 @@ const EmbeddedListModal = (props) => (
       <EmbeddedList
         actions={actions}
         addButton={{
-          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'bottom', { display: 'inline-radio' }),
+          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
           color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
         }}
         onDelete={action('delete')}
@@ -213,11 +217,14 @@ const EmbeddedListModal = (props) => (
         }}
       />
     </TabbedModal.Tab>
-    <TabbedModal.Tab
-      name='Tab 2'
-    >
-      Tab 2
-    </TabbedModal.Tab>
+    { _.times(20, (i) => (
+      <TabbedModal.Tab
+        key={i + 2}
+        name={`Tab ${i + 2}`}
+      >
+        { `Tab ${i + 2}` }
+      </TabbedModal.Tab>
+    ))}
     { props.children }
   </TabbedModal>
 );
