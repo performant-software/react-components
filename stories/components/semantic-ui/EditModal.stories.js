@@ -129,6 +129,7 @@ export const WithSaveError = () => (
       <Modal
         as={Form}
         open
+        noValidate
       >
         <Modal.Header
           content='Add Record'
