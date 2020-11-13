@@ -1,7 +1,13 @@
 // @flow
 
-import React, { type ComponentType } from 'react';
-import { Button, Loader, Modal } from 'semantic-ui-react';
+import React, { type ComponentType, useEffect, useState } from 'react';
+import {
+  Button,
+  Loader,
+  Message,
+  Modal
+} from 'semantic-ui-react';
+import Toaster from './Toaster';
 import i18n from '../i18n/i18n';
 import withEditContainer, { type EditContainerProps } from '../common/EditContainer';
 import './EditModal.css';
@@ -14,10 +20,31 @@ type Props = EditContainerProps & {
 
 const EditModal = (props: Props) => {
   const OuterComponent = props.component;
+
+  const [showToaster, setShowToaster] = useState(true);
+  const hasErrors = !!(props.errors && props.errors.length);
+
+  // Allow the user to clear the error toaster. If the set of validation errors changes, display the toaster again.
+  useEffect(() => setShowToaster(true), [props.errors]);
+
   return (
     <OuterComponent
       {...props}
     >
+      { showToaster && hasErrors && (
+        <Toaster
+          onDismiss={() => setShowToaster(false)}
+          timeout={0}
+          type={Toaster.MessageTypes.negative}
+        >
+          <Message.Header
+            content={i18n.t('Common.messages.error.header')}
+          />
+          <Message.List
+            items={props.errors}
+          />
+        </Toaster>
+      )}
       <Modal.Actions
         className='edit-modal-actions'
       >

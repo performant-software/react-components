@@ -1,10 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import { withTranslation } from 'react-i18next';
-import { Button, Dropdown } from 'semantic-ui-react';
+import { Button, Dropdown, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import EditModal from './EditModal';
+import Toaster from './Toaster';
 import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './AssociatedDropdown.css';
@@ -197,6 +197,19 @@ class AssociatedDropdown extends Component<Props, State> {
           { this.renderClearButton() }
         </Button.Group>
         { this.renderAddModal() }
+        { this.state.saved && (
+          <Toaster
+            onDismiss={() => this.setState({ saved: false })}
+            type={Toaster.MessageTypes.positive}
+          >
+            <Message.Header
+              content={i18n.t('Common.messages.save.header')}
+            />
+            <Message.Content
+              content={i18n.t('Common.messages.save.content')}
+            />
+          </Toaster>
+        )}
       </div>
     );
   }
@@ -241,7 +254,7 @@ class AssociatedDropdown extends Component<Props, State> {
         onSave={(item) => onSave(item)
           .then((record) => {
             this.props.onSelection(record);
-            this.setState({ modalAdd: false });
+            this.setState({ modalAdd: false, saved: true });
           })}
         {...props}
       />

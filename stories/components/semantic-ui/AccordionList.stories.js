@@ -50,7 +50,10 @@ export const Default = () => (
       component: AddModal
     }}
     onDelete={action('delete')}
-    onSave={action('save')}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
     onSearch={(parentId, search) => Api.onNestedLoad({ items: data, parentId, parentKey: 'parent_id', search })}
     renderItem={(item) => item.name}
     showToggle={() => true}

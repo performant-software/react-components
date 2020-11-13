@@ -1,17 +1,18 @@
 // @flow
 
 import React, { Component } from 'react';
-import { withTranslation } from 'react-i18next';
 import {
   Button,
   Confirm,
   Header,
-  Input
+  Input,
+  Message
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
 import NestedAccordion from './NestedAccordion';
+import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 import './AccordionList.css';
 
@@ -40,6 +41,7 @@ type State = {
   items: Array<any>,
   modalAdd: boolean,
   modalDelete: boolean,
+  saved: boolean,
   searchQuery: string,
   selectedItem: ?any
 };
@@ -59,6 +61,7 @@ class AccordionList extends Component<Props, State> {
       items: [],
       modalAdd: false,
       modalDelete: false,
+      saved: false,
       searchQuery: '',
       selectedItem: null
     };
@@ -152,6 +155,7 @@ class AccordionList extends Component<Props, State> {
         this.setState((state) => ({
           modalAdd: false,
           selectedItem: false,
+          saved: true,
           items: item.id ? _.map(state.items, (i) => (i.id === saved.id ? saved : i)) : [...state.items, saved]
         }));
       });
@@ -227,6 +231,19 @@ class AccordionList extends Component<Props, State> {
           onCancel={() => this.setState({ modalDelete: false, selectedItem: null })}
           onConfirm={this.onDelete.bind(this)}
         />
+        { this.state.saved && (
+          <Toaster
+            onDismiss={() => this.setState({ saved: false })}
+            type={Toaster.MessageTypes.positive}
+          >
+            <Message.Header
+              content={i18n.t('Common.messages.save.header')}
+            />
+            <Message.Content
+              content={i18n.t('Common.messages.save.content')}
+            />
+          </Toaster>
+        )}
       </div>
     );
   }

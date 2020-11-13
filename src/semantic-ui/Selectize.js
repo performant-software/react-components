@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react';
-import { withTranslation } from 'react-i18next';
 import {
   Button,
   Form,
@@ -9,6 +8,7 @@ import {
   Header,
   Icon,
   Input,
+  Message,
   Modal,
   Pagination,
   Table
@@ -16,6 +16,7 @@ import {
 import _ from 'underscore';
 import EditModal from './EditModal';
 import SelectizeHeader from './SelectizeHeader';
+import Toaster from './Toaster';
 import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './Selectize.css';
@@ -42,6 +43,7 @@ type State = {
   loading: boolean,
   page: number,
   pages: number,
+  saved: boolean,
   searchQuery: string,
   selectedItem: any,
   selectedItems: Array<any>
@@ -61,6 +63,7 @@ class Selectize extends Component<Props, State> {
       loading: false,
       page: 1,
       pages: 1,
+      saved: false,
       searchQuery: '',
       selectedItems: props.selectedItems,
       selectedItem: null
@@ -223,6 +226,19 @@ class Selectize extends Component<Props, State> {
               { this.renderAddModal() }
             </Grid.Column>
           </Grid>
+          { this.state.saved && (
+            <Toaster
+              onDismiss={() => this.setState({ saved: false })}
+              type={Toaster.MessageTypes.positive}
+            >
+              <Message.Header
+                content={i18n.t('Common.messages.save.header')}
+              />
+              <Message.Content
+                content={i18n.t('Common.messages.save.content')}
+              />
+            </Toaster>
+          )}
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -285,7 +301,7 @@ class Selectize extends Component<Props, State> {
         component={component}
         onClose={() => this.setState({ modalAdd: false })}
         onSave={(item) => onSave(item)
-          .then(() => this.setState({ modalAdd: false, searchQuery: '' }, this.fetchData.bind(this)))}
+          .then(() => this.setState({ modalAdd: false, searchQuery: '', saved: true }, this.fetchData.bind(this)))}
         {...props}
       />
     );

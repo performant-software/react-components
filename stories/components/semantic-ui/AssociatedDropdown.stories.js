@@ -318,7 +318,11 @@ export const Default = () => (
   <AssociatedDropdown
     collectionName='items'
     modal={{
-      component: AddModal
+      component: AddModal,
+      onSave: () => {
+        action('save')();
+        return Promise.resolve({});
+      }
     }}
     onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
     onSelection={action('selection')}
@@ -342,7 +346,11 @@ export const FormField = () => (
       <AssociatedDropdown
         collectionName='items'
         modal={{
-          component: AddModal
+          component: AddModal,
+          onSave: () => {
+            action('save')();
+            return Promise.resolve({});
+          }
         }}
         onSearch={(search) => Api.onLoad({ items, search })}
         onSelection={action('selection')}

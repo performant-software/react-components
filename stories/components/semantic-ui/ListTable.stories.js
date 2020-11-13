@@ -493,7 +493,10 @@ export const AddButton = useDragDrop(() => (
       perPage: number('Per page', 10)
     }))}
     onDelete={action('delete')}
-    onSave={() => Promise.resolve()}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
     searchable={boolean('Searchable', true)}
   />
 ));
@@ -662,5 +665,25 @@ export const WithDeleteAllButton = useDragDrop(() => (
     onDeleteAll={action('delete all')}
     onSave={() => Promise.resolve()}
     searchable={boolean('Searchable', true)}
+  />
+));
+
+export const WithInitialSave = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+    saved
   />
 ));
