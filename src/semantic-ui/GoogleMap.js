@@ -29,29 +29,47 @@ type Props = {
     lat: number,
     lng: number
   }
-}
+};
 
-const GoogleMap = (props: Props) => (
-  <MapComponent
-    defaultCenter={props.defaultCenter}
-    defaultZoom={props.defaultZoom}
-  >
-    <Marker
-      draggable={!!props.onDragEnd}
-      onDragEnd={({ latLng }) => {
-        if (props.onDragEnd) {
-          props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
-        }
-      }}
-      position={props.position}
-      visible={!!(props.position || props.defaultPosition)}
-    />
-  </MapComponent>
-);
+const DEFAULT_ZOOM = 3;
+const DEFAULT_ZOOM_MARKER = 12;
+
+const GoogleMap = (props: Props) => {
+  let { defaultZoom } = props;
+
+  // If no default zoom is provided and a position is provided, set the default zoom to 12.
+  if (!defaultZoom) {
+    if (props.position) {
+      defaultZoom = DEFAULT_ZOOM_MARKER;
+    } else {
+      defaultZoom = DEFAULT_ZOOM;
+    }
+  }
+
+  return (
+    <MapComponent
+      defaultCenter={props.defaultCenter}
+      defaultZoom={defaultZoom}
+    >
+      <Marker
+        draggable={!!props.onDragEnd}
+        onDragEnd={({ latLng }) => {
+          if (props.onDragEnd) {
+            props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
+          }
+        }}
+        position={props.position}
+        visible={!!(props.position || props.defaultPosition)}
+      />
+    </MapComponent>
+  );
+};
 
 GoogleMap.defaultProps = {
-  defaultZoom: 3,
-  zoom: 3
+  defaultCenter: {
+    lat: 0,
+    lng: 0
+  }
 };
 
 const GoogleMapElement = withScriptjs(withGoogleMap(GoogleMap));
