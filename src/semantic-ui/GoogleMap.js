@@ -9,35 +9,47 @@ import {
 } from 'react-google-maps';
 import Google from '../utils/Google';
 
+type LatLng = {
+  lat: () => number,
+  lng: () => number
+};
+
 type Props = {
-  center: {
-    lat: number,
-    lng: number
-  },
   defaultCenter?: {
     lat: number,
     lng: number
   },
+  defaultPosition?: {
+    lat: number,
+    lng: number
+  },
   defaultZoom?: number,
-  zoom?: number
+  onDragEnd: (latLng: LatLng) => ({ lat: number, lng: number }),
+  position: {
+    lat: number,
+    lng: number
+  }
 }
 
 const GoogleMap = (props: Props) => (
   <MapComponent
-    center={props.center || props.defaultCenter}
     defaultCenter={props.defaultCenter}
     defaultZoom={props.defaultZoom}
-    zoom={props.zoom}
   >
     <Marker
-      position={props.center}
-      visible={!!props.center}
+      draggable={!!props.onDragEnd}
+      onDragEnd={({ latLng }) => {
+        if (props.onDragEnd) {
+          props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
+        }
+      }}
+      position={props.position}
+      visible={props.position || props.defaultPosition}
     />
   </MapComponent>
 );
 
 GoogleMap.defaultProps = {
-  defaultCenter: { lat: 30.0444, lng: 31.2357 }, // Cairo, Egypt
   defaultZoom: 3,
   zoom: 3
 };
