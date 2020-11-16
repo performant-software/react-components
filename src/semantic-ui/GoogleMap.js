@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { useEffect, useState, type Element } from 'react';
 import {
   GoogleMap as MapComponent,
   Marker,
@@ -35,9 +35,13 @@ const DEFAULT_ZOOM = 3;
 const DEFAULT_ZOOM_MARKER = 12;
 
 const GoogleMap = (props: Props) => {
-  let { defaultZoom } = props;
+  const { defaultPosition } = props;
+  const [center, setCenter] = useState(defaultPosition);
+  const [map, setMap] = useState();
 
   // If no default zoom is provided and a position is provided, set the default zoom to 12.
+  let { defaultZoom } = props;
+
   if (!defaultZoom) {
     if (props.position) {
       defaultZoom = DEFAULT_ZOOM_MARKER;
@@ -46,30 +50,51 @@ const GoogleMap = (props: Props) => {
     }
   }
 
-  const onPositionChange = ({ latLng }) => {
+  // Convert the position props to floats to avoid Javascript errors.
+  const position = {
+    lat: props.position && props.position.lat && parseFloat(props.position.lat),
+    lng: props.position && props.position.lng && parseFloat(props.position.lng)
+  };
+
+  // Call the onDragEnd prop, passing the new location.
+  const onDragEnd = ({ latLng }) => {
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+
     if (props.onDragEnd) {
-      props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
+      props.onDragEnd({ lat, lng });
     }
   };
 
+  // If the position is changed manually and the new location is outside of the current bounds, re-center the map.
+  useEffect(() => {
+    if (map) {
+      const bounds = map.getBounds();
+      if (bounds && !bounds.contains(position)) {
+        setCenter(position);
+      }
+    }
+  }, [props.position]);
+
   return (
     <MapComponent
-      defaultCenter={props.defaultCenter}
       defaultZoom={defaultZoom}
-      onClick={onPositionChange.bind(this)}
+      center={center}
+      onClick={onDragEnd}
+      ref={(m) => setMap(m)}
     >
       <Marker
         draggable={!!props.onDragEnd}
-        onDragEnd={onPositionChange.bind(this)}
-        position={props.position}
-        visible={!!(props.position || props.defaultPosition)}
+        onDragEnd={onDragEnd}
+        position={position}
+        visible={!!(position || props.defaultPosition)}
       />
     </MapComponent>
   );
 };
 
 GoogleMap.defaultProps = {
-  defaultCenter: {
+  defaultPosition: {
     lat: 0,
     lng: 0
   }
@@ -78,10 +103,10 @@ GoogleMap.defaultProps = {
 const GoogleMapElement = withScriptjs(withGoogleMap(GoogleMap));
 
 type WrapperProps = {
-  containerElement?: Component<{}>,
+  containerElement?: Element<any>,
   googleMapsApiKey: string,
-  loadingElement?: Component<{}>,
-  mapElement?: Component<{}>
+  loadingElement?: Element<any>,
+  mapElement?: Element<any>
 };
 
 const GoogleMapWrapper = ({
