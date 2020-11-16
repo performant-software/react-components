@@ -46,18 +46,21 @@ const GoogleMap = (props: Props) => {
     }
   }
 
+  const onPositionChange = ({ latLng }) => {
+    if (props.onDragEnd) {
+      props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
+    }
+  };
+
   return (
     <MapComponent
       defaultCenter={props.defaultCenter}
       defaultZoom={defaultZoom}
+      onClick={onPositionChange.bind(this)}
     >
       <Marker
         draggable={!!props.onDragEnd}
-        onDragEnd={({ latLng }) => {
-          if (props.onDragEnd) {
-            props.onDragEnd({ lat: latLng.lat(), lng: latLng.lng() });
-          }
-        }}
+        onDragEnd={onPositionChange.bind(this)}
         position={props.position}
         visible={!!(props.position || props.defaultPosition)}
       />

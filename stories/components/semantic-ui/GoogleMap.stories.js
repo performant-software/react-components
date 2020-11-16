@@ -50,11 +50,11 @@ export const WithMapMarker = () => {
         position={position}
       />
       <div>
-        <strong>Latitude:</strong>
+        <strong>Latitude: </strong>
         { position.lat }
       </div>
       <div>
-        <strong>Longitude:</strong>
+        <strong>Longitude: </strong>
         { position.lng }
       </div>
     </>
