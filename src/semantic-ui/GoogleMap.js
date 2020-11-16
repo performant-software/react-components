@@ -44,7 +44,7 @@ const GoogleMap = (props: Props) => (
         }
       }}
       position={props.position}
-      visible={props.position || props.defaultPosition}
+      visible={!!(props.position || props.defaultPosition)}
     />
   </MapComponent>
 );
