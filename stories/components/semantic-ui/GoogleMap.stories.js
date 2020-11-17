@@ -87,3 +87,27 @@ export const EditableCooridnates = () => {
     </Form>
   );
 };
+
+export const EditableCoordinatesWithDefaults = () => {
+  const [position, setPosition] = useState({ lat: 42.3601, lng: -71.0589 });
+
+  return (
+    <Form>
+      <GoogleMap
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+        onDragEnd={(p) => setPosition(p)}
+        position={position}
+      />
+      <Form.Input
+        label='Latitude'
+        onChange={(e, { value }) => setPosition({ ...position, lat: value })}
+        value={(position && position.lat) || ''}
+      />
+      <Form.Input
+        label='Longitude'
+        onChange={(e, { value }) => setPosition({ ...position, lng: value })}
+        value={(position && position.lng) || ''}
+      />
+    </Form>
+  );
+};

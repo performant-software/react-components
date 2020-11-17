@@ -32,11 +32,11 @@ const DEFAULT_ZOOM = 3;
 const DEFAULT_ZOOM_MARKER = 12;
 
 const GoogleMap = (props: Props) => {
-  const [center, setCenter] = useState(props.defaultCenter);
-  const [map, setMap] = useState();
-
   // Convert the position props to floats to avoid Javascript errors.
   const position = Map.getPosition(props.position);
+
+  const [center, setCenter] = useState(position || props.defaultCenter);
+  const [map, setMap] = useState();
 
   // If no default zoom is provided and a position is provided, set the default zoom to 12.
   let { defaultZoom } = props;
@@ -47,11 +47,6 @@ const GoogleMap = (props: Props) => {
     } else {
       defaultZoom = DEFAULT_ZOOM;
     }
-  }
-
-  // If a position is provided, set the position as the center.
-  if (position) {
-    setCenter(position);
   }
 
   // Call the onDragEnd prop, passing the new location.
