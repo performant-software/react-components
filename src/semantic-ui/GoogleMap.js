@@ -20,10 +20,6 @@ type Props = {
     lat: number,
     lng: number
   },
-  defaultPosition?: {
-    lat: number,
-    lng: number
-  },
   defaultZoom?: number,
   onDragEnd: (latLng: LatLng) => ({ lat: number, lng: number }),
   position: {
@@ -36,8 +32,8 @@ const DEFAULT_ZOOM = 3;
 const DEFAULT_ZOOM_MARKER = 12;
 
 const GoogleMap = (props: Props) => {
-  const { defaultPosition } = props;
-  const [center, setCenter] = useState(defaultPosition);
+  const { defaultCenter } = props;
+  const [center, setCenter] = useState(defaultCenter);
   const [map, setMap] = useState();
 
   // If no default zoom is provided and a position is provided, set the default zoom to 12.
@@ -81,18 +77,20 @@ const GoogleMap = (props: Props) => {
       onClick={onDragEnd}
       ref={(m) => setMap(m)}
     >
-      <Marker
-        draggable={!!props.onDragEnd}
-        onDragEnd={onDragEnd}
-        position={position}
-        visible={!!(position || props.defaultPosition)}
-      />
+      { position && (
+        <Marker
+          draggable={!!props.onDragEnd}
+          onDragEnd={onDragEnd}
+          position={position}
+          visible
+        />
+      )}
     </MapComponent>
   );
 };
 
 GoogleMap.defaultProps = {
-  defaultPosition: {
+  defaultCenter: {
     lat: 0,
     lng: 0
   }
