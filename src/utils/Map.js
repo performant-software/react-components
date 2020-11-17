@@ -14,7 +14,7 @@ const getPosition = (coords: { lat: any, lng: any }) => {
     const lat = Number.parseFloat(coords.lat);
     const lng = Number.parseFloat(coords.lng);
 
-    if (!(Number.isNaN(lat) || Number.isNaN(lng))) {
+    if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
       position = { lat, lng };
     }
   }
