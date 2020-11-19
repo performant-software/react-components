@@ -24,6 +24,7 @@ export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
 export { default as GoogleMap } from './semantic-ui/GoogleMap';
 export { default as GooglePlacesSearch } from './semantic-ui/GooglePlacesSearch';
 export { default as KeyboardField } from './semantic-ui/KeyboardField';
+export { default as LazyImage } from './semantic-ui/LazyImage';
 export { default as LinkButton } from './semantic-ui/LinkButton';
 export { default as LinkLabel } from './semantic-ui/LinkLabel';
 export { default as ListTable } from './semantic-ui/ListTable';
