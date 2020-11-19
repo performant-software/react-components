@@ -122,6 +122,9 @@
       "loadMore": "Load more"
     }
   },
+  "Selectize": {
+    "noRecords": "No matching records."
+  },
   "ViewXML": {
     "buttons": {
       "view": "View XML"
