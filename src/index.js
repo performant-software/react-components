@@ -42,6 +42,7 @@ export { default as Toaster } from './semantic-ui/Toaster';
 export { default as ViewXML } from './semantic-ui/ViewXML';
 
 // Utils
+export { default as Date } from './utils/Date';
 export { default as Timer } from './utils/Timer';
 export { default as useDragDrop } from './utils/DragDrop';
 
