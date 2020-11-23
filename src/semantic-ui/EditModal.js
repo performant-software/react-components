@@ -3,6 +3,7 @@
 import React, { type ComponentType, useEffect, useState } from 'react';
 import {
   Button,
+  Dimmer,
   Loader,
   Message,
   Modal
@@ -15,7 +16,8 @@ import './EditModal.css';
 type Props = EditContainerProps & {
   component: ComponentType<any>,
   onClose: () => void,
-  onSave: () => Promise<any>
+  onSave: () => Promise<any>,
+  showLoading: boolean
 };
 
 const EditModal = (props: Props) => {
@@ -31,6 +33,16 @@ const EditModal = (props: Props) => {
     <OuterComponent
       {...props}
     >
+      { props.showLoading && props.loading && (
+        <Dimmer
+          active={props.loading}
+          inverted
+        >
+          <Loader
+            content={i18n.t('Common.messages.loading')}
+          />
+        </Dimmer>
+      )}
       { showToaster && hasErrors && (
         <Toaster
           onDismiss={() => setShowToaster(false)}
@@ -78,6 +90,10 @@ const EditModal = (props: Props) => {
       </Modal.Actions>
     </OuterComponent>
   );
+};
+
+EditModal.defaultProps = {
+  showLoading: true
 };
 
 export default withEditContainer(EditModal);
