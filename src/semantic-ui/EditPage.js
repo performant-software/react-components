@@ -82,7 +82,8 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       return (
-        <div
+        <Dimmer.Dimmable
+          as='div'
           className={`edit-page ${this.props.className || ''}`}
         >
           { this.renderLoading() }
@@ -94,7 +95,7 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
             { this.renderComponent() }
             { this.renderToaster() }
           </Form>
-        </div>
+        </Dimmer.Dimmable>
       );
     }
 
