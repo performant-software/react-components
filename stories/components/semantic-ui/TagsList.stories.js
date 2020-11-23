@@ -12,8 +12,8 @@ export const Default = () => {
 
   const config = {
     'Tag 1': {
-      background: '#51A3A3',
-      color: 'white'
+      background: '#fff',
+      color: 'black'
     },
     'Tag 2': {
       background: '#75485E',
