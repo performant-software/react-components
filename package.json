@@ -13,7 +13,8 @@
     "flow": "flow",
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "chromatic": "npx chromatic --project-token vjfkp3izgp7"
   },
   "license": "ISC",
   "dependencies": {
@@ -51,6 +52,7 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "babel-loader": "^8.1.0",
+    "chromatic": "^5.4.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
