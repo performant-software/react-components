@@ -22,6 +22,7 @@ import Timer from '../utils/Timer';
 import './Selectize.css';
 
 type Props = {
+  centered: boolean,
   collectionName: string,
   modal?: {
     component: Component,
@@ -175,6 +176,7 @@ class Selectize extends Component<Props, State> {
     return (
       <Modal
         as={Form}
+        centered={this.props.centered}
         className='selectize'
         open
         noValidate
@@ -429,6 +431,7 @@ class Selectize extends Component<Props, State> {
 }
 
 Selectize.defaultProps = {
+  centered: false,
   modal: undefined,
   selectedItems: []
 };

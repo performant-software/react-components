@@ -102,6 +102,11 @@
       "showKeyboard": "Show Keyboard"
     }
   },
+  "LazyImage": {
+    "buttons": {
+      "view": "View image"
+    }
+  },
   "LoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",
@@ -116,6 +121,9 @@
       "add": "Add",
       "loadMore": "Load more"
     }
+  },
+  "Selectize": {
+    "noRecords": "No matching records."
   },
   "ViewXML": {
     "buttons": {
