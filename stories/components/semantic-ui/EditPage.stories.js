@@ -1,13 +1,15 @@
+// @flow
+
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
-import { Form, Modal } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
+import _ from 'underscore';
 import EditPage from '../../../src/semantic-ui/EditPage';
 import AssociatedDropdown from '../../../src/semantic-ui/AssociatedDropdown';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
-import EditModal from '../../../src/semantic-ui/EditModal';
 
 export default {
   title: 'Components/Semantic UI/EditPage',
@@ -170,5 +172,17 @@ export const WithSaveError = () => (
       return Promise.resolve();
     }}
     required={['name', 'address', 'phone']}
+  />
+);
+
+export const WithLoading = () => (
+  <EditPage
+    component={TestForm}
+    item={{ id: 1 }}
+    onClose={action('close')}
+    onInitialize={() => new Promise((resolve) => {
+      _.delay(resolve.bind(this), 5000);
+    })}
+    onSave={action('save')}
   />
 );

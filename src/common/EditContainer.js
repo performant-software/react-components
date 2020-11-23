@@ -18,6 +18,7 @@ type Props = {
 
 type State = {
   item: any,
+  loading: boolean,
   saving: boolean,
   validationErrors: Array<string>
 };
@@ -37,6 +38,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
 
       this.state = {
         item: _.defaults(props.item || {}, props.defaults || {}),
+        loading: false,
         saving: false,
         validationErrors: []
       };
@@ -47,7 +49,9 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     componentDidMount() {
       if (this.props.onInitialize && this.props.item && this.props.item.id) {
-        this.props.onInitialize(this.props.item.id).then((item) => this.setState({ item }));
+        this.setState({ loading: true }, () => {
+          this.props.onInitialize(this.props.item.id).then((item) => this.setState({ item, loading: false }));
+        });
       }
     }
 
@@ -337,6 +341,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           isError={this.isError.bind(this)}
           isRequired={this.isRequired.bind(this)}
           item={this.state.item}
+          loading={this.state.loading}
           onAssociationInputChange={this.onAssociationInputChange.bind(this)}
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
           onDeleteChildAssociation={this.onDeleteChildAssociation.bind(this)}
@@ -397,6 +402,7 @@ export type EditContainerProps = {
   isError: (property: string) => boolean,
   isRequired: (property: string) => boolean,
   item: any,
+  loading: boolean,
   onAssociationInputChange: (idKey: string, valueKey: string, item: any) => void,
   onCheckboxInputChange: (key: string, value: any) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,

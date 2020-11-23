@@ -20,6 +20,7 @@
       "error": {
         "header": "Oops!"
       },
+      "loading": "Loading",
       "save": {
         "content": "Your changes have been saved.",
         "header": "Success!"

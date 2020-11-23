@@ -2,7 +2,9 @@
 
 import React, { Component, type ComponentType } from 'react';
 import {
+  Dimmer,
   Form,
+  Loader,
   Menu,
   Message,
   type MenuProps
@@ -20,7 +22,8 @@ type Props = EditContainerProps & {
   component: ComponentType<any>,
   menu: MenuProps,
   onClose: () => void,
-  onSave: () => Promise<any>
+  onSave: () => Promise<any>,
+  showLoading: boolean
 };
 
 type State = {
@@ -79,9 +82,11 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       return (
-        <div
+        <Dimmer.Dimmable
+          as='div'
           className={`edit-page ${this.props.className || ''}`}
         >
+          { this.renderLoading() }
           <Form
             noValidate
           >
@@ -90,7 +95,7 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
             { this.renderComponent() }
             { this.renderToaster() }
           </Form>
-        </div>
+        </Dimmer.Dimmable>
       );
     }
 
@@ -131,6 +136,28 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
           {...this.props}
           currentTab={this.state.currentTab}
         />
+      );
+    }
+
+    /**
+     * Renders the loading indicator.
+     *
+     * @returns {null|*}
+     */
+    renderLoading() {
+      if (!(this.props.showLoading && this.props.loading)) {
+        return null;
+      }
+
+      return (
+        <Dimmer
+          active={this.props.loading}
+          inverted
+        >
+          <Loader
+            content={i18n.t('Common.messages.loading')}
+          />
+        </Dimmer>
       );
     }
 
@@ -205,6 +232,10 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
     }
   }
 );
+
+EditPage.defaultProps = {
+  showLoading: true
+};
 
 export type EditPageProps = EditContainerProps & {
   currentTab: string
