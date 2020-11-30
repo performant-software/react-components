@@ -308,7 +308,7 @@ class ListTable extends Component<Props, State> {
             active: this.isFilterActive(),
             component: this.props.filters && this.props.filters.component,
             onChange: this.onFilterChange.bind(this),
-            state: this.state.filters
+            props: this.state.filters
           }}
           items={this.state.items}
           loading={this.state.loading}
