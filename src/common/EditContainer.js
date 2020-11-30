@@ -12,7 +12,7 @@ type Props = {
   onInitialize?: (id: number) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   required?: Array<string>,
-  resolveValidationError?: (error: string, item: any) => Array<string>,
+  resolveValidationError?: (error: string, item: any, status: number) => Array<string>,
   validate?: (item: any) => Array<string>
 };
 
@@ -163,7 +163,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           } else if (error === ERROR_EMPTY) {
             _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.required', { key }) });
           } else if (this.props.resolveValidationError) {
-            _.extend(validationErrors, this.props.resolveValidationError(error, this.state.item));
+            _.extend(validationErrors, this.props.resolveValidationError(error, this.state.item, status));
           }
         });
       });

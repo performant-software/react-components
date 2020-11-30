@@ -268,7 +268,7 @@ class ListTable extends Component<Props, State> {
   onSave(item) {
     return this.props
       .onSave(item)
-      .then(this.setState({ saved: true }, this.fetchData.bind(this)));
+      .then(() => this.setState({ saved: true }, this.fetchData.bind(this)));
   }
 
   /**
