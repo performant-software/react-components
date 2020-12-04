@@ -5,6 +5,7 @@ import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
+import FilterModal from '../FilterModal';
 import Api from '../../services/Api';
 import ListTable from '../../../src/semantic-ui/ListTable';
 import useDragDrop from '../../../src/utils/DragDrop';
@@ -523,7 +524,10 @@ export const WithFilters = useDragDrop(() => (
     collectionName='items'
     columns={columns}
     filters={{
-      component: AddModal
+      component: FilterModal,
+      props: {
+        test: ''
+      }
     }}
     modal={{
       component: AddModal
