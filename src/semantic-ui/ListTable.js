@@ -324,6 +324,7 @@ class ListTable extends Component<Props, State> {
           onPageChange={this.onPageChange.bind(this)}
           onSave={this.onSave.bind(this)}
           renderDeleteModal={this.props.renderDeleteModal}
+          renderItem={this.props.renderItem}
           renderEmptyRow={this.props.renderEmptyRow}
           renderSearch={this.renderSearch.bind(this)}
           sortColumn={this.state.sortColumn}
