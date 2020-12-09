@@ -95,7 +95,7 @@ class ListTable extends Component<Props, State> {
    * Loads the data.
    */
   componentDidMount() {
-    this.onColumnClick(_.first(this.props.columns));
+    this.onColumnClick(_.findWhere(this.props.columns, { sortable: true }));
 
     if (this.props.polling) {
       this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
