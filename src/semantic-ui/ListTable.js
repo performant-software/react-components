@@ -45,8 +45,10 @@ type Props = {
   polling?: number,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component<{}>,
   renderEmptyRow?: () => void,
+  renderItem?: (item: any) => Component<{}>,
   saved?: boolean,
-  searchable?: boolean
+  searchable?: boolean,
+  tableProps: any
 };
 
 type State = {
@@ -329,10 +331,7 @@ class ListTable extends Component<Props, State> {
           renderSearch={this.renderSearch.bind(this)}
           sortColumn={this.state.sortColumn}
           sortDirection={this.state.sortDirection}
-          tableProps={{
-            celled: true,
-            sortable: true
-          }}
+          tableProps={this.props.tableProps}
         />
         { this.state.saved && (
           <Toaster
@@ -386,7 +385,11 @@ ListTable.defaultProps = {
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,
-  searchable: true
+  searchable: true,
+  tableProps: {
+    celled: true,
+    sortable: true
+  }
 };
 
 export default ListTable;
