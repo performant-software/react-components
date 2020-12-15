@@ -62,6 +62,7 @@ const LazyVideo = (props: Props) => {
                     icon='video'
                     onClick={() => setModal(true)}
                     primary
+                    size={props.size}
                   />
                 )
               }}

@@ -61,6 +61,7 @@ const LazyImage = (props: Props) => {
                     icon='photo'
                     onClick={() => setModal(true)}
                     primary
+                    size={props.size}
                   />
                 )
               }}
