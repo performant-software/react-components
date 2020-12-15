@@ -56,7 +56,7 @@ const LazyVideo = (props: Props) => {
               as={Image}
               dimmed={props.dimmable && dimmer}
               dimmer={{
-                active: dimmer,
+                active: props.dimmable && dimmer,
                 content: (
                   <Button
                     content={i18n.t('LazyVideo.buttons.play')}
