@@ -53,7 +53,6 @@ const LazyVideo = (props: Props) => {
           { props.src && props.preview && (
             <Dimmer.Dimmable
               as={Image}
-              className='image-dimmer'
               dimmed={dimmer}
               dimmer={{
                 active: dimmer,

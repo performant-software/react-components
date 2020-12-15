@@ -1,7 +1,13 @@
 .lazy-image.ui.segment.placeholder {
   min-height: inherit;
+  text-align: center;
+  width: 100%;
 }
 
 .lazy-image.ui.segment.placeholder .icon {
+  height: inherit;
+}
+
+.lazy-image.ui.placeholder .image:not(.header):not(.ui) {
   height: inherit;
 }

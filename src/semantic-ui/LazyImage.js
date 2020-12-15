@@ -52,7 +52,6 @@ const LazyImage = (props: Props) => {
           { props.src && (
             <Dimmer.Dimmable
               as={Image}
-              className='image-dimmer'
               dimmed={dimmer}
               dimmer={{
                 active: dimmer,
