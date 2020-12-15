@@ -1,9 +1,11 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useState, type Element } from 'react';
 import {
   Button,
-  Dimmer, Icon,
+  Dimmer,
+  Header,
+  Icon,
   Image,
   Loader, Segment,
   Transition,
@@ -14,6 +16,7 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
+  children?: Element<any>,
   dimmable: boolean,
   duration?: number,
   preview?: string,
@@ -50,58 +53,53 @@ const LazyVideo = (props: Props) => {
         transitionOnMount
         visible
       >
-        <>
-          { props.src && props.preview && (
-            <Dimmer.Dimmable
-              as={Image}
-              dimmed={props.dimmable && dimmer}
-              dimmer={{
-                active: props.dimmable && dimmer,
-                content: (
-                  <Button
-                    content={i18n.t('LazyVideo.buttons.play')}
-                    icon='video'
-                    onClick={() => setModal(true)}
-                    primary
-                    size={props.size}
-                  />
-                )
-              }}
-              onMouseEnter={() => setDimmer(true)}
-              onMouseLeave={() => setDimmer(false)}
-              size={props.size}
+        <Dimmer.Dimmable
+          as={Segment}
+          className='lazy-video'
+          compact
+          onMouseEnter={() => setDimmer(true)}
+          onMouseLeave={() => setDimmer(false)}
+          padded
+        >
+          { props.preview && (
+            <Image
               src={props.preview}
+              size={props.size}
             />
           )}
           { !props.preview && (
-            <Segment
-              className='lazy-video'
-              compact
-              onMouseEnter={() => setDimmer(true)}
-              onMouseLeave={() => setDimmer(false)}
-              padded
-              placeholder
-              size={props.size}
+            <Header
+              icon
             >
               <Icon
+                className='image'
                 name='image'
                 size='huge'
               />
-              { props.src && (
-                <Dimmer
-                  active={dimmer}
-                >
-                  <Button
-                    content={i18n.t('LazyVideo.buttons.play')}
-                    icon='video'
-                    onClick={() => setModal(true)}
-                    primary
-                  />
-                </Dimmer>
-              )}
-            </Segment>
+            </Header>
           )}
-        </>
+          { props.src && props.dimmable && (
+            <Dimmer
+              active={dimmer}
+            >
+              <div
+                className='video-buttons'
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <Button
+                  content={i18n.t('LazyVideo.buttons.play')}
+                  icon='video'
+                  onClick={() => setModal(true)}
+                  primary
+                />
+                { props.children }
+              </div>
+            </Dimmer>
+          )}
+        </Dimmer.Dimmable>
       </Transition>
       { props.src && (
         <VideoPlayer

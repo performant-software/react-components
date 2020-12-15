@@ -1,9 +1,16 @@
-.lazy-video.ui.segment.placeholder {
-  min-height: inherit;
-  text-align: center;
-  width: 100%;
+.lazy-video.ui.segment {
+  background-color: #f9fafb;
 }
 
-.lazy-video.ui.segment.placeholder .icon {
-  height: inherit;
+.lazy-video.ui.segment.compact {
+  display: table !important;
+}
+
+.lazy-video.ui.segment .ui.icon.header {
+  margin: 0;
+}
+
+.lazy-video .video-buttons .ui.primary.button {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
