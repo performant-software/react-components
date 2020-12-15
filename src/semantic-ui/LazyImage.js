@@ -3,19 +3,20 @@
 import React, { useState } from 'react';
 import {
   Button,
-  Dimmer,
+  Dimmer, Icon,
   Image,
-  Loader,
+  Loader, Segment,
   Transition,
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import PhotoViewer from './PhotoViewer';
+import './LazyImage.css';
 
 type Props = {
   duration?: number,
   size?: string,
-  src: string
+  src?: string
 };
 
 const LazyImage = (props: Props) => {
@@ -29,6 +30,7 @@ const LazyImage = (props: Props) => {
         as='span'
         fireOnMount
         onTopVisible={() => setVisible(true)}
+        updateOn='repaint'
       >
         <Loader
           active
@@ -39,15 +41,6 @@ const LazyImage = (props: Props) => {
     );
   }
 
-  const content = (
-    <Button
-      content={i18n.t('LazyImage.buttons.view')}
-      icon='photo'
-      onClick={() => setModal(true)}
-      primary
-    />
-  );
-
   return (
     <>
       <Transition
@@ -55,23 +48,52 @@ const LazyImage = (props: Props) => {
         transitionOnMount
         visible
       >
-        <Dimmer.Dimmable
-          as={Image}
-          className='image-dimmer'
-          dimmed={dimmer}
-          dimmer={{ active: dimmer, content }}
-          onMouseEnter={() => setDimmer(true)}
-          onMouseLeave={() => setDimmer(false)}
-          size={props.size}
-          src={props.src}
-        />
+        <>
+          { props.src && (
+            <Dimmer.Dimmable
+              as={Image}
+              className='image-dimmer'
+              dimmed={dimmer}
+              dimmer={{
+                active: dimmer,
+                content: (
+                  <Button
+                    content={i18n.t('LazyImage.buttons.view')}
+                    icon='photo'
+                    onClick={() => setModal(true)}
+                    primary
+                  />
+                )
+              }}
+              onMouseEnter={() => setDimmer(true)}
+              onMouseLeave={() => setDimmer(false)}
+              size={props.size}
+              src={props.src}
+            />
+          )}
+          { !props.src && (
+            <Segment
+              className='lazy-image'
+              compact
+              padded
+              placeholder
+            >
+              <Icon
+                name='image'
+                size='huge'
+              />
+            </Segment>
+          )}
+        </>
       </Transition>
-      <PhotoViewer
-        image={props.src}
-        onClose={() => setModal(false)}
-        open={modal}
-        size='large'
-      />
+      { props.src && (
+        <PhotoViewer
+          image={props.src}
+          onClose={() => setModal(false)}
+          open={modal}
+          size='large'
+        />
+      )}
     </>
   );
 };

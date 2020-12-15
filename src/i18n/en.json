@@ -108,6 +108,11 @@
       "view": "View image"
     }
   },
+  "LazyVideo": {
+    "buttons": {
+      "play": "Play video"
+    }
+  },
   "LoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",

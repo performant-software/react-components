@@ -1,0 +1,7 @@
+.lazy-video.ui.segment.placeholder {
+  min-height: inherit;
+}
+
+.lazy-video.ui.segment.placeholder .icon {
+  height: inherit;
+}
