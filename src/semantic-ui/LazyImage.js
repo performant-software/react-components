@@ -14,6 +14,7 @@ import PhotoViewer from './PhotoViewer';
 import './LazyImage.css';
 
 type Props = {
+  dimmable: boolean,
   duration?: number,
   size?: string,
   src?: string
@@ -52,7 +53,7 @@ const LazyImage = (props: Props) => {
           { props.src && (
             <Dimmer.Dimmable
               as={Image}
-              dimmed={dimmer}
+              dimmed={props.dimmable && dimmer}
               dimmer={{
                 active: dimmer,
                 content: (
@@ -99,6 +100,7 @@ const LazyImage = (props: Props) => {
 };
 
 LazyImage.defaultProps = {
+  dimmable: true,
   duration: 1000,
   size: 'medium'
 };

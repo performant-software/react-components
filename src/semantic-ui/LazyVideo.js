@@ -14,6 +14,7 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
+  dimmable: boolean,
   duration?: number,
   preview?: string,
   size?: string,
@@ -53,7 +54,7 @@ const LazyVideo = (props: Props) => {
           { props.src && props.preview && (
             <Dimmer.Dimmable
               as={Image}
-              dimmed={dimmer}
+              dimmed={props.dimmable && dimmer}
               dimmer={{
                 active: dimmer,
                 content: (
@@ -66,7 +67,7 @@ const LazyVideo = (props: Props) => {
                   />
                 )
               }}
-              onMouseEnter={() => { console.log('enter'); setDimmer(true); }}
+              onMouseEnter={() => setDimmer(true)}
               onMouseLeave={() => setDimmer(false)}
               size={props.size}
               src={props.preview}
@@ -115,6 +116,7 @@ const LazyVideo = (props: Props) => {
 };
 
 LazyVideo.defaultProps = {
+  dimmable: true,
   duration: 1000,
   size: 'medium'
 };
