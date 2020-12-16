@@ -45,8 +45,10 @@ type Props = {
   polling?: number,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Component<{}>,
   renderEmptyRow?: () => void,
+  renderItem?: (item: any) => Component<{}>,
   saved?: boolean,
-  searchable?: boolean
+  searchable?: boolean,
+  tableProps: any
 };
 
 type State = {
@@ -95,7 +97,7 @@ class ListTable extends Component<Props, State> {
    * Loads the data.
    */
   componentDidMount() {
-    this.onColumnClick(_.first(this.props.columns));
+    this.onColumnClick(_.findWhere(this.props.columns, { sortable: true }));
 
     if (this.props.polling) {
       this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
@@ -324,14 +326,12 @@ class ListTable extends Component<Props, State> {
           onPageChange={this.onPageChange.bind(this)}
           onSave={this.onSave.bind(this)}
           renderDeleteModal={this.props.renderDeleteModal}
+          renderItem={this.props.renderItem}
           renderEmptyRow={this.props.renderEmptyRow}
           renderSearch={this.renderSearch.bind(this)}
           sortColumn={this.state.sortColumn}
           sortDirection={this.state.sortDirection}
-          tableProps={{
-            celled: true,
-            sortable: true
-          }}
+          tableProps={this.props.tableProps}
         />
         { this.state.saved && (
           <Toaster
@@ -385,7 +385,11 @@ ListTable.defaultProps = {
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,
-  searchable: true
+  searchable: true,
+  tableProps: {
+    celled: true,
+    sortable: true
+  }
 };
 
 export default ListTable;
