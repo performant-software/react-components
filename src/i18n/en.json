@@ -136,6 +136,10 @@
     "buttons": {
       "select": "Select frame"
     },
+    "labels": {
+      "interval": "Interval: {{count}} second",
+      "interval_plural": "Interval: {{count}} seconds"
+    },
     "title": "Select Frame"
   },
   "ViewXML": {

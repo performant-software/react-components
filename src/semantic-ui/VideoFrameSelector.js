@@ -1,21 +1,43 @@
 // @flow
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Button, Modal, Segment } from 'semantic-ui-react';
+import {
+  Button,
+  Grid,
+  Input,
+  Label,
+  Modal,
+  Segment
+} from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import './VideoFrameSelector.css';
 
 type Props = {
   button: any,
-  interval: number,
+  defaultInterval: number,
   onSelect: (file: File) => void,
   src: string,
   title: string
 };
 
+const INTERVAL_STEP = 1;
+const MIN_INTERVAL = 1;
+const MAX_INTERVAL = 300;
+
 const VideoFrameSelector = (props: Props) => {
+  const [duration, setDuration] = useState(0);
+  const [interval, setInterval] = useState(props.defaultInterval);
+  const [time, setTime] = useState(0);
   const [modal, setModal] = useState(false);
+
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+    }
+  }, [time]);
 
   return (
     <>
@@ -25,6 +47,7 @@ const VideoFrameSelector = (props: Props) => {
       />
       <Modal
         centered={false}
+        className='video-frame-selector'
         open={modal}
         size='small'
       >
@@ -35,37 +58,47 @@ const VideoFrameSelector = (props: Props) => {
           <Segment>
             <video
               crossOrigin='anonymous'
+              onLoadedMetadata={() => videoRef.current && setDuration(videoRef.current.duration)}
               ref={videoRef}
               src={props.src}
-              style={{
-                width: '100%'
-              }}
             />
           </Segment>
-          <div
-            style={{
-              textAlign: 'center'
-            }}
+          <Grid
+            columns={2}
           >
-            <Button
-              basic
-              icon='arrow left'
-              onClick={() => {
-                if (videoRef.current) {
-                  videoRef.current.currentTime -= props.interval;
-                }
-              }}
-            />
-            <Button
-              basic
-              icon='arrow right'
-              onClick={() => {
-                if (videoRef.current) {
-                  videoRef.current.currentTime += props.interval;
-                }
-              }}
-            />
-          </div>
+            <Grid.Column>
+              <div>
+                <Label
+                  content={i18n.t('VideoFrameSelector.labels.interval', { count: interval })}
+                />
+              </div>
+              <Input
+                min={MIN_INTERVAL}
+                max={MAX_INTERVAL}
+                name='duration'
+                onChange={(e, { value }) => setInterval(Number(value))}
+                step={INTERVAL_STEP}
+                type='range'
+                value={interval}
+              />
+            </Grid.Column>
+            <Grid.Column
+              textAlign='right'
+            >
+              <Button
+                basic
+                disabled={time === 0}
+                icon='arrow left'
+                onClick={() => setTime(Math.max(time - interval, 0))}
+              />
+              <Button
+                basic
+                disabled={time === duration}
+                icon='arrow right'
+                onClick={() => setTime(Math.min(time + interval, duration))}
+              />
+            </Grid.Column>
+          </Grid>
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -107,7 +140,7 @@ VideoFrameSelector.defaultProps = {
     content: i18n.t('VideoFrameSelector.buttons.select'),
     icon: 'image'
   },
-  interval: 15,
+  defaultInterval: 15,
   title: i18n.t('VideoFrameSelector.title'),
 };
 
