@@ -1,11 +1,14 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useState, type Node } from 'react';
 import {
   Button,
-  Dimmer, Header, Icon,
+  Dimmer,
+  Header,
+  Icon,
   Image,
-  Loader, Segment,
+  Loader,
+  Segment,
   Transition,
   Visibility
 } from 'semantic-ui-react';
@@ -14,6 +17,7 @@ import PhotoViewer from './PhotoViewer';
 import './LazyImage.css';
 
 type Props = {
+  children?: Node,
   dimmable: boolean,
   duration?: number,
   size?: string,
@@ -66,13 +70,17 @@ const LazyImage = (props: Props) => {
                 <Dimmer
                   active={dimmer}
                 >
-                  <Button
-                    content={i18n.t('LazyImage.buttons.view')}
-                    icon='photo'
-                    onClick={() => setModal(true)}
-                    primary
-                    size={props.size}
-                  />
+                  <div
+                    className='buttons'
+                  >
+                    <Button
+                      content={i18n.t('LazyImage.buttons.view')}
+                      icon='photo'
+                      onClick={() => setModal(true)}
+                      primary
+                    />
+                    { props.children }
+                  </div>
                 </Dimmer>
               )}
             </>

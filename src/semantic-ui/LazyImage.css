@@ -11,3 +11,13 @@
   margin: 0;
   padding: 40px 60px 40px 60px;
 }
+
+.lazy-image.ui.segment .buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.lazy-image.ui.segment .buttons .ui.button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

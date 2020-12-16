@@ -1,13 +1,14 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
   Header,
   Icon,
   Image,
-  Loader, Segment,
+  Loader,
+  Segment,
   Transition,
   Visibility
 } from 'semantic-ui-react';
@@ -16,6 +17,7 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
+  children?: Node,
   dimmable: boolean,
   duration?: number,
   preview?: ?string,
@@ -62,11 +64,12 @@ const LazyVideo = (props: Props) => {
           { props.preview && (
             <Image
               src={props.preview}
-              size={props.size}
             />
           )}
           { !props.preview && (
-            <Image>
+            <Image
+              size={props.size}
+            >
               <Header
                 icon
               >
@@ -80,12 +83,17 @@ const LazyVideo = (props: Props) => {
             <Dimmer
               active={dimmer}
             >
-              <Button
-                content={i18n.t('LazyVideo.buttons.play')}
-                icon='video'
-                onClick={() => setModal(true)}
-                primary
-              />
+              <div
+                className='buttons'
+              >
+                <Button
+                  content={i18n.t('LazyVideo.buttons.play')}
+                  icon='video'
+                  onClick={() => setModal(true)}
+                  primary
+                />
+                { props.children }
+              </div>
             </Dimmer>
           )}
         </Dimmer.Dimmable>
