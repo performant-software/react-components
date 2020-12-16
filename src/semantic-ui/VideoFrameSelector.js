@@ -102,8 +102,9 @@ const VideoFrameSelector = (props: Props) => {
 };
 
 VideoFrameSelector.defaultProps = {
+  content: i18n.t('VideoFrameSelector.buttons.select'),
   interval: 15,
-  title: i18n.t('VideoFrameSelector.title')
+  title: i18n.t('VideoFrameSelector.title'),
 };
 
 export default withTranslation()(VideoFrameSelector);

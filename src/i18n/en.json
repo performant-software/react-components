@@ -133,6 +133,9 @@
     "noRecords": "No matching records."
   },
   "VideoFrameSelector": {
+    "buttons": {
+      "select": "Select frame"
+    },
     "title": "Select Frame"
   },
   "ViewXML": {
