@@ -64,6 +64,7 @@ const LazyVideo = (props: Props) => {
           { props.preview && (
             <Image
               src={props.preview}
+              size={props.size}
             />
           )}
           { !props.preview && (

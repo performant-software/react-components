@@ -6,7 +6,7 @@ import { Button, Modal, Segment } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 
 type Props = {
-  content: string,
+  button: any,
   interval: number,
   onSelect: (file: File) => void,
   src: string,
@@ -20,9 +20,7 @@ const VideoFrameSelector = (props: Props) => {
   return (
     <>
       <Button
-        basic
-        content={props.content}
-        icon='image'
+        {...props.button}
         onClick={() => setModal(true)}
       />
       <Modal
@@ -103,7 +101,11 @@ const VideoFrameSelector = (props: Props) => {
 };
 
 VideoFrameSelector.defaultProps = {
-  content: i18n.t('VideoFrameSelector.buttons.select'),
+  button: {
+    basic: true,
+    content: i18n.t('VideoFrameSelector.buttons.select'),
+    icon: 'image'
+  },
   interval: 15,
   title: i18n.t('VideoFrameSelector.title'),
 };
