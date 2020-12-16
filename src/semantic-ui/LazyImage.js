@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import {
   Button,
-  Dimmer, Icon,
+  Dimmer, Header, Icon,
   Image,
   Loader, Segment,
   Transition,
@@ -49,14 +49,24 @@ const LazyImage = (props: Props) => {
         transitionOnMount
         visible
       >
-        <>
+        <Dimmer.Dimmable
+          as={Segment}
+          className='lazy-image'
+          compact
+          onMouseEnter={() => setDimmer(true)}
+          onMouseLeave={() => setDimmer(false)}
+          padded
+        >
           { props.src && (
-            <Dimmer.Dimmable
-              as={Image}
-              dimmed={props.dimmable && dimmer}
-              dimmer={{
-                active: props.dimmable && dimmer,
-                content: (
+            <>
+              <Image
+                size={props.size}
+                src={props.src}
+              />
+              { props.dimmable && (
+                <Dimmer
+                  active={dimmer}
+                >
                   <Button
                     content={i18n.t('LazyImage.buttons.view')}
                     icon='photo'
@@ -64,28 +74,22 @@ const LazyImage = (props: Props) => {
                     primary
                     size={props.size}
                   />
-                )
-              }}
-              onMouseEnter={() => setDimmer(true)}
-              onMouseLeave={() => setDimmer(false)}
-              size={props.size}
-              src={props.src}
-            />
+                </Dimmer>
+              )}
+            </>
           )}
           { !props.src && (
-            <Segment
-              className='lazy-image'
-              compact
-              padded
-              placeholder
-            >
-              <Icon
-                name='image'
-                size='huge'
-              />
-            </Segment>
+            <Image>
+              <Header
+                icon
+              >
+                <Icon
+                  name='image'
+                />
+              </Header>
+            </Image>
           )}
-        </>
+        </Dimmer.Dimmable>
       </Transition>
       { props.src && (
         <PhotoViewer

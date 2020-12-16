@@ -1,13 +1,12 @@
-.lazy-image.ui.segment.placeholder {
-  min-height: inherit;
-  text-align: center;
-  width: 100%;
+.lazy-image.ui.segment {
+  background-color: #f9fafb;
 }
 
-.lazy-image.ui.segment.placeholder .icon {
-  height: inherit;
+.lazy-image.ui.segment.compact {
+  display: table !important;
 }
 
-.lazy-image.ui.placeholder .image:not(.header):not(.ui) {
-  height: inherit;
+.lazy-image.ui.segment .ui.icon.header {
+  margin: 0;
+  padding: 20px 40px 20px 40px;
 }

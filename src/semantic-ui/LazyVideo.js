@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Element } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Dimmer,
@@ -16,7 +16,6 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
-  children?: Element<any>,
   dimmable: boolean,
   duration?: number,
   preview?: string,
@@ -68,35 +67,26 @@ const LazyVideo = (props: Props) => {
             />
           )}
           { !props.preview && (
-            <Header
-              className='image small'
-              icon
-            >
-              <Icon
-                name='image'
-                size='huge'
-              />
-            </Header>
+            <Image>
+              <Header
+                icon
+              >
+                <Icon
+                  name='image'
+                />
+              </Header>
+            </Image>
           )}
           { props.src && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
-              <div
-                className='video-buttons'
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <Button
-                  content={i18n.t('LazyVideo.buttons.play')}
-                  icon='video'
-                  onClick={() => setModal(true)}
-                  primary
-                />
-                { props.children }
-              </div>
+              <Button
+                content={i18n.t('LazyVideo.buttons.play')}
+                icon='video'
+                onClick={() => setModal(true)}
+                primary
+              />
             </Dimmer>
           )}
         </Dimmer.Dimmable>
