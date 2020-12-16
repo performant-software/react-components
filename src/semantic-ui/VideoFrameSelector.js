@@ -34,6 +34,7 @@ const VideoFrameSelector = (props: Props) => {
         <Modal.Content>
           <Segment>
             <video
+              crossOrigin='anonymous'
               ref={videoRef}
               src={props.src}
               style={{
