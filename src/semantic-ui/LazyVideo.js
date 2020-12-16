@@ -67,9 +67,7 @@ const LazyVideo = (props: Props) => {
             />
           )}
           { !props.preview && (
-            <Image
-              size={props.size}
-            >
+            <Image>
               <Header
                 icon
               >
