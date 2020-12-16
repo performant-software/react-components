@@ -58,6 +58,7 @@ const LazyVideo = (props: Props) => {
           as={Segment}
           className='lazy-video'
           compact
+          onBlur={() => setDimmer(false)}
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >

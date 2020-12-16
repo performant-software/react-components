@@ -57,6 +57,7 @@ const LazyImage = (props: Props) => {
           as={Segment}
           className='lazy-image'
           compact
+          onBlur={() => setDimmer(false)}
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
