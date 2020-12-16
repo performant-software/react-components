@@ -58,7 +58,6 @@ const LazyVideo = (props: Props) => {
           compact
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
-          padded
         >
           { props.preview && (
             <Image

@@ -1,5 +1,6 @@
 .lazy-video.ui.segment {
   background-color: #f9fafb;
+  padding: 0;
 }
 
 .lazy-video.ui.segment.compact {
@@ -8,5 +9,5 @@
 
 .lazy-video.ui.segment .ui.icon.header {
   margin: 0;
-  padding: 20px 40px 20px 40px;
+  padding: 40px 60px 40px 60px;
 }

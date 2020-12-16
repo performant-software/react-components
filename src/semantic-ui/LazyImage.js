@@ -55,7 +55,6 @@ const LazyImage = (props: Props) => {
           compact
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
-          padded
         >
           { props.src && (
             <>
