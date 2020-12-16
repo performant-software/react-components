@@ -18,7 +18,7 @@ import './LazyVideo.css';
 type Props = {
   dimmable: boolean,
   duration?: number,
-  preview?: string,
+  preview?: ?string,
   size?: string,
   src?: string
 };

@@ -11,6 +11,7 @@
       "add": "Add",
       "cancel": "Cancel",
       "clear": "Clear",
+      "ok": "OK",
       "save": "Save"
     },
     "errors": {
@@ -130,6 +131,9 @@
   },
   "Selectize": {
     "noRecords": "No matching records."
+  },
+  "VideoFrameSelector": {
+    "title": "Select Frame"
   },
   "ViewXML": {
     "buttons": {
