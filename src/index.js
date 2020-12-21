@@ -25,6 +25,7 @@ export { default as GoogleMap } from './semantic-ui/GoogleMap';
 export { default as GooglePlacesSearch } from './semantic-ui/GooglePlacesSearch';
 export { default as KeyboardField } from './semantic-ui/KeyboardField';
 export { default as LazyImage } from './semantic-ui/LazyImage';
+export { default as LazyVideo } from './semantic-ui/LazyVideo';
 export { default as LinkButton } from './semantic-ui/LinkButton';
 export { default as LinkLabel } from './semantic-ui/LinkLabel';
 export { default as ListTable } from './semantic-ui/ListTable';
@@ -39,6 +40,8 @@ export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
 export { default as TabbedModal } from './semantic-ui/TabbedModal';
 export { default as TagsList } from './semantic-ui/TagsList';
 export { default as Toaster } from './semantic-ui/Toaster';
+export { default as VideoFrameSelector } from './semantic-ui/VideoFrameSelector';
+export { default as VideoPlayer } from './semantic-ui/VideoPlayer';
 export { default as ViewXML } from './semantic-ui/ViewXML';
 
 // Utils

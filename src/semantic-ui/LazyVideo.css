@@ -1,0 +1,23 @@
+.lazy-video.ui.segment {
+  background-color: #f9fafb;
+  padding: 0;
+}
+
+.lazy-video.ui.segment.compact {
+  display: table !important;
+}
+
+.lazy-video.ui.segment .ui.icon.header {
+  margin: 0;
+  padding: 40px 60px 40px 60px;
+}
+
+.lazy-video.ui.segment .buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.lazy-video.ui.segment .buttons .ui.button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

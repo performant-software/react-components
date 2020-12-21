@@ -11,6 +11,7 @@
       "add": "Add",
       "cancel": "Cancel",
       "clear": "Clear",
+      "ok": "OK",
       "save": "Save"
     },
     "errors": {
@@ -108,6 +109,11 @@
       "view": "View image"
     }
   },
+  "LazyVideo": {
+    "buttons": {
+      "play": "Play video"
+    }
+  },
   "LoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",
@@ -125,6 +131,16 @@
   },
   "Selectize": {
     "noRecords": "No matching records."
+  },
+  "VideoFrameSelector": {
+    "buttons": {
+      "select": "Select frame"
+    },
+    "labels": {
+      "interval": "Interval: {{count}} second",
+      "interval_plural": "Interval: {{count}} seconds"
+    },
+    "title": "Select Frame"
   },
   "ViewXML": {
     "buttons": {

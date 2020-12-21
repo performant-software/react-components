@@ -26,6 +26,7 @@
     "class-methods-use-this": "off",
     "comma-dangle": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "jsx-a11y/media-has-caption": "off",
     "jsx-quotes": ["error", "prefer-single"],
     "lines-between-class-members": "off",
     "max-len": ["error", { "code": 120 }],
