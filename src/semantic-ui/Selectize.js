@@ -26,7 +26,7 @@ type Props = {
   collectionName: string,
   modal?: {
     component: Component,
-    onSave: (item: any) => void,
+    onSave: (item: any) => Promise<any>,
     props: any,
     state: any,
   },
@@ -300,11 +300,16 @@ class Selectize extends Component<Props, State> {
 
     return (
       <EditModal
+        {...props}
         component={component}
         onClose={() => this.setState({ modalAdd: false })}
-        onSave={(item) => onSave(item)
-          .then(() => this.setState({ modalAdd: false, searchQuery: '', saved: true }, this.fetchData.bind(this)))}
-        {...props}
+        onSave={(item) => onSave(item).then((saved) => {
+          if (saved) {
+            this.onItemSelection(saved);
+          }
+
+          this.setState({ modalAdd: false, searchQuery: '', saved: true }, this.fetchData.bind(this));
+        })}
       />
     );
   }
