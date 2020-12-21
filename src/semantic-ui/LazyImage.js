@@ -4,7 +4,6 @@ import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
-  Header,
   Icon,
   Image,
   Loader,
@@ -46,6 +45,21 @@ const LazyImage = (props: Props) => {
     );
   }
 
+  // If no src prop is present, render a placeholder
+  if (!props.src) {
+    return (
+      <Image
+        className='lazy-image placeholder-image'
+        size={props.size}
+      >
+        <Icon
+          name='image'
+          size='big'
+        />
+      </Image>
+    );
+  }
+
   return (
     <>
       <Transition
@@ -61,52 +75,35 @@ const LazyImage = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { props.src && (
-            <>
-              <Image
-                size={props.size}
-                src={props.src}
-              />
-              { props.dimmable && (
-                <Dimmer
-                  active={dimmer}
-                >
-                  <div
-                    className='buttons'
-                  >
-                    <Button
-                      content={i18n.t('LazyImage.buttons.view')}
-                      icon='photo'
-                      onClick={() => setModal(true)}
-                      primary
-                    />
-                    { props.children }
-                  </div>
-                </Dimmer>
-              )}
-            </>
-          )}
-          { !props.src && (
-            <Image>
-              <Header
-                icon
+          <Image
+            size={props.size}
+            src={props.src}
+          />
+          { props.dimmable && (
+            <Dimmer
+              active={dimmer}
+            >
+              <div
+                className='buttons'
               >
-                <Icon
-                  name='image'
+                <Button
+                  content={i18n.t('LazyImage.buttons.view')}
+                  icon='photo'
+                  onClick={() => setModal(true)}
+                  primary
                 />
-              </Header>
-            </Image>
+                { props.children }
+              </div>
+            </Dimmer>
           )}
         </Dimmer.Dimmable>
       </Transition>
-      { props.src && (
-        <PhotoViewer
-          image={props.src}
-          onClose={() => setModal(false)}
-          open={modal}
-          size='large'
-        />
-      )}
+      <PhotoViewer
+        image={props.src}
+        onClose={() => setModal(false)}
+        open={modal}
+        size='large'
+      />
     </>
   );
 };

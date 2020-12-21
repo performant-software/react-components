@@ -4,7 +4,6 @@ import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
-  Header,
   Icon,
   Image,
   Loader,
@@ -69,14 +68,14 @@ const LazyVideo = (props: Props) => {
             />
           )}
           { !props.preview && (
-            <Image>
-              <Header
-                icon
-              >
-                <Icon
-                  name='image'
-                />
-              </Header>
+            <Image
+              className='placeholder-image'
+              size={props.size}
+            >
+              <Icon
+                name='image'
+                size='big'
+              />
             </Image>
           )}
           { props.src && props.dimmable && (

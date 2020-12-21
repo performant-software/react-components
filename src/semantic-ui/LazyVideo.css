@@ -1,10 +1,6 @@
 .lazy-video.ui.segment {
-  background-color: #f9fafb;
   padding: 0;
-}
-
-.lazy-video.ui.segment.compact {
-  display: table !important;
+  text-align: center;
 }
 
 .lazy-video.ui.segment .ui.icon.header {
@@ -20,4 +16,12 @@
 .lazy-video.ui.segment .buttons .ui.button {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.lazy-video .placeholder-image.ui.image {
+  background-color: #f9fafb;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  text-align: center;
 }
