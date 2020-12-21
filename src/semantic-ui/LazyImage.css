@@ -2,10 +2,6 @@
   padding: 0;
 }
 
-.lazy-image.ui.segment.compact {
-  display: table !important;
-}
-
 .lazy-image.ui.segment .buttons {
   display: flex;
   flex-direction: column;
@@ -16,10 +12,9 @@
   margin-bottom: 5px;
 }
 
-.lazy-image.placeholder-image {
+.lazy-image .placeholder-image.ui.image {
   background-color: #f9fafb;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  margin-bottom: 1rem;
   padding-top: 20%;
   padding-bottom: 20%;
   text-align: center;

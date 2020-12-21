@@ -45,21 +45,6 @@ const LazyImage = (props: Props) => {
     );
   }
 
-  // If no src prop is present, render a placeholder
-  if (!props.src) {
-    return (
-      <Image
-        className='lazy-image placeholder-image'
-        size={props.size}
-      >
-        <Icon
-          name='image'
-          size='big'
-        />
-      </Image>
-    );
-  }
-
   return (
     <>
       <Transition
@@ -75,11 +60,24 @@ const LazyImage = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          <Image
-            size={props.size}
-            src={props.src}
-          />
-          { props.dimmable && (
+          { props.src && (
+            <Image
+              size={props.size}
+              src={props.src}
+            />
+          )}
+          { !props.src && (
+            <Image
+              className='placeholder-image'
+              size={props.size}
+            >
+              <Icon
+                name='image'
+                size='big'
+              />
+            </Image>
+          )}
+          { props.src && props.dimmable && (
             <Dimmer
               active={dimmer}
             >

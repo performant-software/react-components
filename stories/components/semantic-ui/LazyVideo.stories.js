@@ -99,36 +99,36 @@ export const onBlur = () => {
 export const CardContent = () => (
   <Card.Group>
     <Card>
-      <Card.Content>
-        <LazyVideo
-          preview={image}
-          src={video}
-        />
-        <Card.Header>Test 1</Card.Header>
-      </Card.Content>
+      <LazyVideo
+        preview={image}
+        src={video}
+      />
+      <Card.Content
+        header='Test 1'
+      />
     </Card>
     <Card>
-      <Card.Content>
-        <LazyVideo
-          preview={portraitImage}
-          src={video}
-        />
-        <Card.Header>Test 2</Card.Header>
-      </Card.Content>
+      <LazyVideo
+        preview={portraitImage}
+        src={video}
+      />
+      <Card.Content
+        header='Test 2'
+      />
     </Card>
     <Card>
-      <Card.Content>
-        <LazyVideo
-          src={video}
-        />
-        <Card.Header>Test 3</Card.Header>
-      </Card.Content>
+      <LazyVideo
+        src={video}
+      />
+      <Card.Content
+        header='Test 3'
+      />
     </Card>
     <Card>
-      <Card.Content>
-        <LazyVideo />
-        <Card.Header>Test 4</Card.Header>
-      </Card.Content>
+      <LazyVideo />
+      <Card.Content
+        header='Test 4'
+      />
     </Card>
   </Card.Group>
 );

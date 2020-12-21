@@ -51,30 +51,26 @@ export const ExtraButtons = () => (
 export const CardContent = () => (
   <Card.Group>
     <Card>
-      <Card.Content>
-        <LazyImage
-          src={image}
-        />
-        <Card.Header>Test 1</Card.Header>
-      </Card.Content>
-    </Card>
-    <Card>
+      <LazyImage
+        src={image}
+      />
       <Card.Content
-        style={{
-          minHeight: '0'
-        }}
-      >
-        <LazyImage
-          src={portraitImage}
-        />
-        <Card.Header>Test 2</Card.Header>
-      </Card.Content>
+        header='Test 1'
+      />
     </Card>
     <Card>
-      <Card.Content>
-        <LazyImage />
-        <Card.Header>Test 3</Card.Header>
-      </Card.Content>
+      <LazyImage
+        src={portraitImage}
+      />
+      <Card.Content
+        header='Test 2'
+      />
+    </Card>
+    <Card>
+      <LazyImage />
+      <Card.Content
+        header='Test 3'
+      />
     </Card>
   </Card.Group>
 );

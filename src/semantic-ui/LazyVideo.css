@@ -1,11 +1,5 @@
 .lazy-video.ui.segment {
   padding: 0;
-  text-align: center;
-}
-
-.lazy-video.ui.segment .ui.icon.header {
-  margin: 0;
-  padding: 40px 60px 40px 60px;
 }
 
 .lazy-video.ui.segment .buttons {
