@@ -305,7 +305,7 @@ class Selectize extends Component<Props, State> {
         onClose={() => this.setState({ modalAdd: false })}
         onSave={(item) => onSave(item).then((saved) => {
           if (saved) {
-            this.onItemSelection(saved);
+            this.onSelect(saved);
           }
 
           this.setState({ modalAdd: false, searchQuery: '', saved: true }, this.fetchData.bind(this));
