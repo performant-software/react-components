@@ -4,7 +4,6 @@ import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
-  Header,
   Icon,
   Image,
   Loader,
@@ -62,51 +61,47 @@ const LazyImage = (props: Props) => {
           onMouseLeave={() => setDimmer(false)}
         >
           { props.src && (
-            <>
-              <Image
-                size={props.size}
-                src={props.src}
-              />
-              { props.dimmable && (
-                <Dimmer
-                  active={dimmer}
-                >
-                  <div
-                    className='buttons'
-                  >
-                    <Button
-                      content={i18n.t('LazyImage.buttons.view')}
-                      icon='photo'
-                      onClick={() => setModal(true)}
-                      primary
-                    />
-                    { props.children }
-                  </div>
-                </Dimmer>
-              )}
-            </>
+            <Image
+              size={props.size}
+              src={props.src}
+            />
           )}
           { !props.src && (
-            <Image>
-              <Header
-                icon
-              >
-                <Icon
-                  name='image'
-                />
-              </Header>
+            <Image
+              className='placeholder-image'
+              size={props.size}
+            >
+              <Icon
+                name='image'
+                size='big'
+              />
             </Image>
+          )}
+          { props.src && props.dimmable && (
+            <Dimmer
+              active={dimmer}
+            >
+              <div
+                className='buttons'
+              >
+                <Button
+                  content={i18n.t('LazyImage.buttons.view')}
+                  icon='photo'
+                  onClick={() => setModal(true)}
+                  primary
+                />
+                { props.children }
+              </div>
+            </Dimmer>
           )}
         </Dimmer.Dimmable>
       </Transition>
-      { props.src && (
-        <PhotoViewer
-          image={props.src}
-          onClose={() => setModal(false)}
-          open={modal}
-          size='large'
-        />
-      )}
+      <PhotoViewer
+        image={props.src}
+        onClose={() => setModal(false)}
+        open={modal}
+        size='large'
+      />
     </>
   );
 };

@@ -19,6 +19,7 @@ export { default as Draggable } from './semantic-ui/Draggable';
 export { default as EditModal } from './semantic-ui/EditModal';
 export { default as EditPage, useEditPage } from './semantic-ui/EditPage';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
+export { default as FileInputButton } from './semantic-ui/FileInputButton';
 export { default as FileUpload } from './semantic-ui/FileUpload';
 export { default as FileUploadModal } from './semantic-ui/FileUploadModal';
 export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
