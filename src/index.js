@@ -20,6 +20,7 @@ export { default as EditModal } from './semantic-ui/EditModal';
 export { default as EditPage, useEditPage } from './semantic-ui/EditPage';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
 export { default as FileUpload } from './semantic-ui/FileUpload';
+export { default as FileUploadModal } from './semantic-ui/FileUploadModal';
 export { default as FuzzyDate } from './semantic-ui/FuzzyDate';
 export { default as GoogleMap } from './semantic-ui/GoogleMap';
 export { default as GooglePlacesSearch } from './semantic-ui/GooglePlacesSearch';
@@ -54,3 +55,4 @@ export { default as Map } from './utils/Map';
 export type { EditContainerProps as EditModalProps } from './common/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './common/EditContainer';
 export type { EditPageProps } from './semantic-ui/EditPage';
+export type { FileUploadProps } from './semantic-ui/FileUploadModal';

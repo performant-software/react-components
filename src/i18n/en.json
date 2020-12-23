@@ -79,6 +79,13 @@
       "maxSize": "Unable to upload {{name}} because it exceeds 10 MB."
     }
   },
+  "FileUploadModal": {
+    "errors": {
+      "required": "{{filename}} - The following fields are required: {{fields}}"
+    },
+    "loader": "Uploading files...",
+    "title": "Upload Files"
+  },
   "FuzzyDate": {
     "accuracy": {
       "date": "Date",
