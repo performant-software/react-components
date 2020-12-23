@@ -111,6 +111,11 @@
       "showKeyboard": "Show Keyboard"
     }
   },
+  "LazyDocument": {
+    "buttons": {
+      "download": "Download"
+    }
+  },
   "LazyImage": {
     "buttons": {
       "view": "View image"
