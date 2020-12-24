@@ -105,6 +105,13 @@
     },
     "title": "Fuzzy Date"
   },
+  "ItemList": {
+    "actions": {
+      "copy": "Copy",
+      "delete": "Remove",
+      "edit": "Edit"
+    }
+  },
   "KeyboardField": {
     "labels": {
       "hideKeyboard": "Hide Keyboard",
