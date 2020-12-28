@@ -133,7 +133,19 @@ class Items extends Component<Props, {}> {
               { this.props.renderMeta(item) }
             </Card.Meta>
           )}
+          { this.props.renderDescription && (
+            <Card.Description>
+              { this.props.renderDescription(item) }
+            </Card.Description>
+          )}
         </Card.Content>
+        { this.props.renderExtra && (
+          <Card.Content
+            extra
+          >
+            { this.props.renderExtra(item) }
+          </Card.Content>
+        )}
         { this.props.actions && this.props.actions.length && (
           <Card.Content
             extra
