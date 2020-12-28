@@ -465,6 +465,19 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       );
     }
 
+    renderButton(button: any, index: number) {
+      if (button.render) {
+        return button.render(index);
+      }
+
+      return (
+        <Button
+          key={index}
+          {...button}
+        />
+      );
+    }
+
     /**
      * Renders the delete all button.
      *
@@ -701,7 +714,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='left'
             >
-              { _.map(buttons, (button, index) => button.render(index)) }
+              { _.map(buttons, this.renderButton.bind(this)) }
             </Grid.Column>
             <Grid.Column
               textAlign='right'
