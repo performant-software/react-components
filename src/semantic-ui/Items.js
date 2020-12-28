@@ -82,7 +82,7 @@ class Items extends Component<Props, {}> {
         className={this.getClassName()}
       >
         { this.renderLoading() }
-        { this.renderListHeader.bind(this) }
+        { this.renderListHeader() }
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
