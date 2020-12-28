@@ -155,6 +155,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     onPageChange(e: Event, { activePage }: { activePage: number }) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       this.setState({ page: activePage }, this.fetchData.bind(this));
     }
 
