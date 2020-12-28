@@ -39,6 +39,11 @@ const SORT_DESCENDING = 'descending';
 
 const useDataList = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
+    static defaultProps = {
+      filters: {},
+      searchable: true
+    };
+
     pollingInterval: IntervalID;
 
     constructor(props: Props) {

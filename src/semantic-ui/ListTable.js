@@ -61,11 +61,9 @@ const ListTable = (props: Props) => {
 
 ListTable.defaultProps = {
   configurable: true,
-  filters: {},
   onCopy: undefined,
   renderDeleteModal: undefined,
   renderEmptyRow: undefined,
-  searchable: true,
   tableProps: {
     celled: true,
     sortable: true
