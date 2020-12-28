@@ -3,6 +3,7 @@
 import React, { Component, createRef, type Element } from 'react';
 import {
   Button,
+  Loader,
   Ref,
   Popup,
   Table
@@ -31,6 +32,7 @@ type Props = {
   className: string,
   columns: Array<Column>,
   items: ?Array<any>,
+  loading: boolean,
   onColumnClick: (column: Column) => void,
   renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
@@ -176,6 +178,7 @@ class DataTable extends Component<Props, State> {
         <Table.Body>
           { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
           { this.renderEmptyTableRow() }
+          { this.renderLoading() }
         </Table.Body>
       </Table>
     );
@@ -379,7 +382,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEmptyTableRow() {
-    if (this.props.items && this.props.items.length) {
+    if (this.props.loading || (this.props.items && this.props.items.length)) {
       return null;
     }
 
@@ -462,6 +465,27 @@ class DataTable extends Component<Props, State> {
         key={index}
       >
         { children }
+      </Table.Row>
+    );
+  }
+
+  renderLoading() {
+    if (!this.props.loading) {
+      return null;
+    }
+
+    return (
+      <Table.Row>
+        <Table.Cell
+          colSpan={this.getColumnCount()}
+          textAlign='center'
+        >
+          <Loader
+            active
+            content={i18n.t('DataTable.loading')}
+            inline
+          />
+        </Table.Cell>
       </Table.Row>
     );
   }

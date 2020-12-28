@@ -63,7 +63,8 @@
     "deleteContent": "Are you sure you want to remove this record?",
     "deleteHeader": "Confirm Remove",
     "emptyList": "No matching records found.",
-    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started."
+    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
+    "loading": "Loading"
   },
   "EditProvider": {
     "errors": {
@@ -111,6 +112,9 @@
       "delete": "Remove",
       "edit": "Edit"
     }
+  },
+  "Items": {
+    "loading": "Loading"
   },
   "KeyboardField": {
     "labels": {

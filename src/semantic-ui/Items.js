@@ -4,9 +4,11 @@ import React, { Component, type Element } from 'react';
 import {
   Button,
   Card,
+  Dimmer,
   Header,
   Icon,
   Item,
+  Loader,
   Segment
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -21,6 +23,7 @@ import type { Props as ListProps } from './List';
 type Props = ListProps & {
   className: string,
   items: Array<any>,
+  loading: boolean,
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
   renderAdditionalContent?: (item: any) => Element<any>,
   renderDescription?: (item: any) => Element<any>,
@@ -78,6 +81,7 @@ class Items extends Component<Props, {}> {
       <div
         className={this.getClassName()}
       >
+        { this.renderLoading() }
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
@@ -86,7 +90,7 @@ class Items extends Component<Props, {}> {
   }
 
   renderEmptyList() {
-    if (this.props.items && this.props.items.length) {
+    if (this.props.loading || (this.props.items && this.props.items.length)) {
       return null;
     }
 
@@ -114,7 +118,9 @@ class Items extends Component<Props, {}> {
 
   renderCard(item, index) {
     const card = (
-      <Card>
+      <Card
+        key={index}
+      >
         { this.props.renderImage && this.props.renderImage(item) }
         <Card.Content>
           { this.props.renderHeader && (
@@ -178,7 +184,9 @@ class Items extends Component<Props, {}> {
 
   renderItem(item, index) {
     const listItem = (
-      <Item>
+      <Item
+        key={index}
+      >
         { this.props.renderImage && (
           <Item.Image>
             { this.props.renderImage(item) }
@@ -251,6 +259,23 @@ class Items extends Component<Props, {}> {
       >
         { _.map(this.props.items, this.renderItem.bind(this)) }
       </Item.Group>
+    );
+  }
+
+  renderLoading() {
+    if (!this.props.loading) {
+      return null;
+    }
+
+    return (
+      <Dimmer
+        active
+        inverted
+      >
+        <Loader
+          content={i18n.t('Items.loading')}
+        />
+      </Dimmer>
     );
   }
 }

@@ -7,10 +7,8 @@ import useDataList from './DataList';
 
 const ItemList = (props) => {
   useEffect(() => {
-    const sort = _.first(props.sort);
-    if (sort) {
-      props.onSort(sort.value);
-    }
+    const { value } = (_.first(props.sort) || {});
+    props.onSort(value);
   }, []);
 
   return (

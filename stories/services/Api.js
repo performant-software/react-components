@@ -117,8 +117,11 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
   return new Promise((resolve) => resolve(response));
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default {
   onLoad,
   onLoadEmpty,
-  onNestedLoad
+  onNestedLoad,
+  sleep
 };

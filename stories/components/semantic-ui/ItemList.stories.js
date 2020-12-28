@@ -674,3 +674,22 @@ export const Sortable = useDragDrop(() => (
     }]}
   />
 ));
+
+export const Loading = useDragDrop(() => (
+  <ItemList
+    actions={actions}
+    collectionName='items'
+    onCopy={action('copy')}
+    onLoad={(params) => Api.sleep(5000).then(() => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    })))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderDescription={(item) => item.vin}
+    renderExtra={(item) => item.address}
+    renderHeader={(item) => <Header content={item.model} />}
+    renderMeta={(item) => item.make}
+    searchable={boolean('Searchable', true)}
+  />
+));
