@@ -17,7 +17,6 @@ const ItemCollection = (props: Props) => (
   <Items
     {...props}
     className={`item-collection ${props.className ? props.className : ''}`}
-    items={_.filter(props.items, (item) => !item._destroy)}
     onDelete={(item) => {
       props.onDelete(item);
       return Promise.resolve();
