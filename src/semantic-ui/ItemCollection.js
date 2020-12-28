@@ -2,7 +2,6 @@
 
 import React from 'react';
 import uuid from 'react-uuid';
-import _ from 'underscore';
 import Items from './Items';
 import './ItemCollection.css';
 
@@ -13,6 +12,11 @@ type Props = {
   onSave?: (item: any) => void,
 };
 
+/**
+ * The ItemCollection component can be used to display a collection of records that live within a parent object.
+ * This is especially useful when the collection is to be saved at the same time as the parent. Records will be
+ * rendered as a list of items (see semantic-ui items).
+ */
 const ItemCollection = (props: Props) => (
   <Items
     {...props}

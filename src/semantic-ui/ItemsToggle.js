@@ -11,10 +11,10 @@ type Sort = {
 };
 
 type Props = {
-  onSort: (sortColumn: string) => void,
+  onSort?: (sortColumn: string) => void,
   sort?: Array<Sort>,
-  sortColumn: string,
-  sortDirection: string
+  sortColumn?: string,
+  sortDirection?: string
 };
 
 type State = {
@@ -28,14 +28,28 @@ const Views = {
 
 const SORT_ASCENDING = 'ascending';
 
-const useListToggle = (WrappedComponent: ComponentType<any>) => (
-  class ItemListToggle extends Component<Props, State> {
+/**
+ * Returns a function to wrap the passed component in a ItemToggle. The ItemToggle component can be used to toggle a
+ * list of records between list and grid views. It will also render a sort dropdown component if a list of sort
+ * properties is provided.
+ *
+ * @param WrappedComponent
+ */
+const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
+  class extends Component<Props, State> {
+    // Default props
     static defaultProps = {
       sort: []
     };
 
+    // Sort dropdown ref
     sortDropdown: typeof Dropdown;
 
+    /**
+     * Constructs a new ItemsToggle component.
+     *
+     * @param props
+     */
     constructor(props: any) {
       super(props);
 
@@ -44,15 +58,32 @@ const useListToggle = (WrappedComponent: ComponentType<any>) => (
       };
     }
 
+    /**
+     * Renders the sort value for the current option.
+     *
+     * @returns {NodePath<Node> | void | T | T | number | undefined | *}
+     */
     getSortValue() {
       const sort = _.find(this.props.sort, { value: this.props.sortColumn });
       return sort && sort.text;
     }
 
+    /**
+     * Calls the onSort prop.
+     *
+     * @param sort
+     *
+     * @returns {*|void}
+     */
     onSort(sort: Sort) {
-      this.props.onSort(sort.value);
+      return this.props.onSort && this.props.onSort(sort.value);
     }
 
+    /**
+     * Renders the ItemsToggle component.
+     *
+     * @returns {*}
+     */
     render() {
       return (
         <WrappedComponent
@@ -63,6 +94,15 @@ const useListToggle = (WrappedComponent: ComponentType<any>) => (
       );
     }
 
+    /**
+     * Renders the list header icons:
+     * <ul>
+     *   <li>List/Grid view toggle</li>
+     *   <li>Sort dropdown</li>
+     * </ul>
+     *
+     * @returns {*}
+     */
     renderHeader() {
       return (
         <>
@@ -78,7 +118,7 @@ const useListToggle = (WrappedComponent: ComponentType<any>) => (
             icon='grid layout'
             onClick={() => this.setState({ view: Views.grid })}
           />
-          { this.props.sort && this.props.sort.length > 1 && (
+          { this.props.sort && this.props.sort.length > 1 && this.props.onSort && (
             <Button.Group
               basic
               style={{
@@ -111,7 +151,7 @@ const useListToggle = (WrappedComponent: ComponentType<any>) => (
   }
 );
 
-export default useListToggle;
+export default useItemsToggle;
 
 export {
   Views

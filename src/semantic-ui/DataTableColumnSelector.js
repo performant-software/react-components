@@ -4,6 +4,7 @@ import React, { Component, type ComponentType } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import Draggable from './Draggable';
+import './DataTableColumnSelector.css';
 
 import type { Column } from './DataTable';
 
@@ -15,8 +16,19 @@ type State = {
   columns: Array<Column>
 };
 
+/**
+ * Returns a function to wrap the passed component in a column selector. The ColumnSelector component will bind a
+ * renderListHeader function, which can be used in the wrapped component to render a column selector dropdown button.
+ *
+ * @param WrappedComponent
+ */
 const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
+    /**
+     * Constructs a new DataTableColumnSelector component.
+     *
+     * @param props
+     */
     constructor(props: Props) {
       super(props);
 
@@ -67,16 +79,27 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
       });
     }
 
+    /**
+     * Renders the DataTableColumnSelector component.
+     *
+     * @returns {*}
+     */
     render() {
       return (
         <WrappedComponent
           {...this.props}
+          className='data-table-column-selector'
           columns={this.state.columns}
           renderListHeader={this.renderHeader.bind(this)}
         />
       );
     }
 
+    /**
+     * Renders the dropdown column selector.
+     *
+     * @returns {*}
+     */
     renderHeader() {
       return (
         <Dropdown

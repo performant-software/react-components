@@ -22,17 +22,6 @@
   margin-bottom: 10px;
 }
 
-.data-table .configure-button.ui.icon.button > .icon {
-  vertical-align: middle;
-}
-
-.data-table .ui.dropdown.open-right > .menu {
-  top: 100%;
-  bottom: auto;
-  right: 0;
-  left: auto;
-}
-
 .data-table .ui.celled.table tr th {
   position: relative;
 }

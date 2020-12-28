@@ -11,7 +11,8 @@ type Props = {
   collectionName: string,
   filters?: {
     component: Component<{}>,
-    props: any
+    props: any,
+    onChange: (filter: any) => Promise<any>
   },
   onDelete: (item: any) => Promise<any>,
   onDeleteAll: () => Promise<any>,
@@ -37,15 +38,29 @@ type State = {
 const SORT_ASCENDING = 'ascending';
 const SORT_DESCENDING = 'descending';
 
+/**
+ * Returns a function to wrap the passed component as a DataList. The DataList component is intended to be used to load
+ * records from an API and display them using the wrapped component. This HOC will handle calling the API, pagination,
+ * storing search, filters, and sorting.
+ *
+ * @param WrappedComponent
+ */
 const useDataList = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
+    // Default props
     static defaultProps = {
       filters: {},
       searchable: true
     };
 
-    pollingInterval: IntervalID;
+    // Polling
+    pollingInterval: any;
 
+    /**
+     * Constructs a new DataList component.
+     *
+     * @param props
+     */
     constructor(props: Props) {
       super(props);
 
@@ -62,18 +77,29 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       };
     }
 
+    /**
+     * Sets up the polling interval.
+     */
     componentDidMount() {
       if (this.props.polling) {
         this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
       }
     }
 
+    /**
+     * Tears down the polling interval.
+     */
     componentWillUnmount() {
       if (this.pollingInterval) {
         clearInterval(this.pollingInterval);
       }
     }
 
+    /**
+     * Resets the page number and reloads the data.
+     *
+     * @returns {void|any|Promise<State>}
+     */
     afterDelete() {
       if (this.state.items.length === 1) {
         return this.setState((state) => ({
@@ -84,10 +110,16 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       return this.fetchData();
     }
 
+    /**
+     * Resets the page number and reloads the data.
+     */
     afterDeleteAll() {
       this.setState({ page: 1 }, this.fetchData.bind(this));
     }
 
+    /**
+     * Calls the onLoad prop to populate the array of items in the state.
+     */
     fetchData() {
       this.setState({ loading: true }, () => {
         const {
@@ -124,6 +156,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       });
     }
 
+    /**
+     * Returns true if any filters have been set.
+     *
+     * @returns {boolean}
+     */
     isFilterActive() {
       if (!(this.props.filters && this.props.filters.props)) {
         return false;
@@ -133,20 +170,39 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       return !_.isEqual(_.pick(this.state.filters, _.keys(props)), props);
     }
 
+    /**
+     * Calls the onDelete prop.
+     *
+     * @param selectedItem
+     *
+     * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+     */
     onDelete(selectedItem: any) {
       return this.props
         .onDelete(selectedItem)
         .then(this.afterDelete.bind(this));
     }
 
+    /**
+     * Calls the onDeleteAll prop.
+     *
+     * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+     */
     onDeleteAll() {
       return this.props
         .onDeleteAll()
         .then(this.afterDeleteAll.bind(this));
     }
 
+    /**
+     * Updates the state with the passed filters.
+     *
+     * @param filters
+     *
+     * @returns {Promise<R>}
+     */
     onFilterChange(filters: any) {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         this.setState({ filters, page: 1 }, () => {
           this.fetchData();
           resolve();
@@ -154,24 +210,51 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       });
     }
 
+    /**
+     * Sets the new active page and reloads the data.
+     *
+     * @param e
+     * @param activePage
+     */
     onPageChange(e: Event, { activePage }: { activePage: number }) {
       this.setState({ page: activePage }, this.fetchData.bind(this));
     }
 
+    /**
+     * Calls the onSave prop and reloads the data.
+     *
+     * @param item
+     *
+     * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
+     */
     onSave(item: any) {
       return this.props
         .onSave(item)
         .then(() => this.setState({ saved: true }, this.fetchData.bind(this)));
     }
 
+    /**
+     * Resets the page and reloads the data.
+     */
     onSearch() {
       this.setState({ page: 1 }, this.fetchData.bind(this));
     }
 
+    /**
+     * Updates the search value on the state.
+     *
+     * @param e
+     * @param value
+     */
     onSearchChange(e: Event, { value }: { value: any }) {
       this.setState({ search: value });
     }
 
+    /**
+     * Updates the sortColumn and sortDirection props on the state.
+     *
+     * @param sortColumn
+     */
     onSort(sortColumn: string) {
       this.setState((state) => ({
         sortColumn,
@@ -180,6 +263,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }), this.fetchData.bind(this));
     }
 
+    /**
+     * Renders the DataList component.
+     *
+     * @returns {*}
+     */
     render() {
       return (
         <>
@@ -223,6 +311,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       );
     }
 
+    /**
+     * Renders the search input component.
+     *
+     * @returns {null|*}
+     */
     renderSearch() {
       if (!this.props.searchable) {
         return null;

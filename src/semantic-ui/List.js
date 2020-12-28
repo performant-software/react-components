@@ -9,8 +9,7 @@ import {
   Header,
   Icon,
   Menu,
-  Pagination,
-  Popup,
+  Pagination
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -90,8 +89,16 @@ type State = {
 const BUTTON_KEY_ADD = 'add';
 const BUTTON_KEY_DELETE_ALL = 'delete-all';
 
+/**
+ * Renders a function to wrap the passed component in a List. This component will be used as the presentation for the
+ * list, additional logic will be defined elsewhere. This component will render list header buttons, pagination,
+ * search input, add/edit/delete modals, filter button, filter modal.
+ *
+ * @param WrappedComponent
+ */
 const useList = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
+    // Default props
     static defaultProps = {
       actions: [],
       addButton: {
@@ -118,7 +125,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     };
 
     /**
-     * Constructs a new DataTable component.
+     * Constructs a new List component.
      *
      * @param props
      */
@@ -293,7 +300,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     render() {
       return (
         <div
-          className={`data-table ${this.props.className}`}
+          className={`list ${this.props.className}`}
         >
           { this.renderHeader() }
           <WrappedComponent
@@ -310,6 +317,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       );
     }
 
+    /**
+     * Returns the list of actions with pre-populated defaults for edit, copy, and delete.
+     *
+     * @returns {*}
+     */
     getActions() {
       return _.map(this.props.actions, (action) => {
         let defaults = {};
@@ -336,113 +348,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Renders the action button for the passed item and action.
-     *
-     * @param item
-     * @param action
-     * @param index
-     *
-     * @returns {*}
-     */
-    renderActionButton(item: any, index: number, action: Action) {
-      // If the action specified its own render function, return the result of the function call
-      if (action.render) {
-        return action.render(item, index);
-      }
-
-      const actionButton = (
-        <Button
-          basic
-          compact
-          color={action.color}
-          icon={action.icon}
-          key={`${action.name}-${index}`}
-          onClick={action.onClick && action.onClick.bind(this, item)}
-          title={action.title}
-        />
-      );
-
-      // Wrap the button in a popup if the action specifies a popup attribute
-      if (action.popup) {
-        const { content, title } = action.popup;
-
-        return (
-          <Popup
-            content={content}
-            header={title}
-            hideOnScroll
-            mouseEnterDelay={500}
-            position='top right'
-            trigger={actionButton}
-          />
-        );
-      }
-
-      // Otherwise, simply return the button
-      return actionButton;
-    }
-
-    // /**
-    //  * Renders the actions for the passed item.
-    //  *
-    //  * @param item
-    //  * @param index
-    //  *
-    //  * @returns {null|*}
-    //  */
-    // renderActions(item: any, index: number) {
-    //   if (!(this.props.actions && this.props.actions.length)) {
-    //     return null;
-    //   }
-    //
-    //   const actions = this.props.actions
-    //     .filter((action) => !action.accept || action.accept(item))
-    //     .map((action) => {
-    //       let defaults = {};
-    //
-    //       if (action.name === 'edit') {
-    //         defaults = {
-    //           icon: 'edit outline',
-    //           onClick: this.onEditButton.bind(this),
-    //           popup: {
-    //             title: i18n.t('DataTable.actions.edit.title'),
-    //             content: i18n.t('DataTable.actions.edit.content')
-    //           }
-    //         };
-    //       } else if (action.name === 'copy') {
-    //         defaults = {
-    //           icon: 'copy outline',
-    //           onClick: this.onCopyButton.bind(this),
-    //           popup: {
-    //             title: i18n.t('DataTable.actions.copy.title'),
-    //             content: i18n.t('DataTable.actions.copy.content')
-    //           }
-    //         };
-    //       } else if (action.name === 'delete') {
-    //         defaults = {
-    //           icon: 'times circle outline',
-    //           onClick: this.onDeleteButton.bind(this),
-    //           popup: {
-    //             title: i18n.t('DataTable.actions.delete.title'),
-    //             content: i18n.t('DataTable.actions.delete.content')
-    //           }
-    //         };
-    //       }
-    //
-    //       return _.defaults(action, defaults);
-    //     });
-    //
-    //   return (
-    //     <Table.Cell
-    //       className='actions-cell'
-    //       key={index}
-    //     >
-    //       { actions.map(this.renderActionButton.bind(this, item, index)) }
-    //     </Table.Cell>
-    //   );
-    // }
-
-    /**
      * Renders the add button.
      *
      * @returns {*}
@@ -460,11 +365,20 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           onClick={this.onAddButton.bind(this)}
         >
           <Icon name='plus' />
-          { i18n.t('DataTable.buttons.add') }
+          { i18n.t('List.buttons.add') }
         </Button>
       );
     }
 
+    /**
+     * Renders the passed button. If a render function is provided, call the render function. Otherwise, assume
+     * button props.
+     *
+     * @param button
+     * @param index
+     *
+     * @returns {*}
+     */
     renderButton(button: any, index: number) {
       if (button.render) {
         return button.render(index);
@@ -496,7 +410,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           onClick={this.onDeleteAllButton.bind(this)}
         >
           <Icon name='times' />
-          { i18n.t('DataTable.buttons.deleteAll') }
+          { i18n.t('List.buttons.deleteAll') }
         </Button>
       );
     }
@@ -513,8 +427,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Confirm
-          content={i18n.t('DataTable.deleteAllContent')}
-          header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteAllHeader')} />}
+          content={i18n.t('List.deleteAllContent')}
+          header={<Header icon='trash alternate outline' content={i18n.t('List.deleteAllHeader')} />}
           onCancel={() => this.setState({ modalDeleteAll: false })}
           onConfirm={this.onDeleteAll.bind(this)}
           open
@@ -542,8 +456,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Confirm
-          content={i18n.t('DataTable.deleteContent')}
-          header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteHeader')} />}
+          content={i18n.t('List.deleteContent')}
+          header={<Header icon='trash alternate outline' content={i18n.t('List.deleteHeader')} />}
           onCancel={onCancel}
           onConfirm={onConfirm}
           open
@@ -583,11 +497,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     renderEmptyMessage() {
       const { addButton = {}, modal } = this.props;
       if (!(addButton.onClick || modal)) {
-        return i18n.t('DataTable.emptyList');
+        return i18n.t('List.emptyList');
       }
 
       return (
-        <Trans i18nKey='DataTable.emptyListAdd'>
+        <Trans i18nKey='List.emptyListAdd'>
           You haven&apos;t added any yet. Click
           <div className='empty-button'>
             { this.renderAddButton() }
@@ -640,7 +554,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Renders the table footer.
+     * Renders the list footer.
      *
      * @returns {null|*}
      */

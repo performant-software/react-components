@@ -14,7 +14,7 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import useList from './List';
-import useListToggle, { Views } from './ItemsToggle';
+import useItemsToggle, { Views } from './ItemsToggle';
 import Draggable from './Draggable';
 import './Items.css';
 
@@ -35,9 +35,20 @@ type Props = ListProps & {
   view: number
 };
 
+/**
+ * The Items component is used as the presentation for a list of records. The component renders both a list
+ * (see Semantic-UI List) and grid (see Semantic-UI Card) views.
+ */
 class Items extends Component<Props, {}> {
   static defaultProps: any;
 
+  /**
+   * Returns the list of actions for the passed item.
+   *
+   * @param item
+   *
+   * @returns {Array<*>}
+   */
   getActions(item) {
     return this.props.actions
       .filter((action) => !action.accept || action.accept(item))
@@ -66,6 +77,11 @@ class Items extends Component<Props, {}> {
       });
   }
 
+  /**
+   * Returns a space delimited string of class names.
+   *
+   * @returns {string}
+   */
   getClassName() {
     const classNames = ['item-list'];
 
@@ -76,6 +92,11 @@ class Items extends Component<Props, {}> {
     return classNames.join(' ');
   }
 
+  /**
+   * Renders the Items component.
+   *
+   * @returns {*}
+   */
   render() {
     return (
       <div
@@ -89,33 +110,14 @@ class Items extends Component<Props, {}> {
     );
   }
 
-  renderEmptyList() {
-    if (this.props.loading || (this.props.items && this.props.items.length)) {
-      return null;
-    }
-
-    if (this.props.renderEmptyList) {
-      return this.props.renderEmptyList();
-    }
-
-    // TODO: Add CSS
-    return (
-      <Segment
-        padded='very'
-        textAlign='center'
-      >
-        <Header
-          icon
-        >
-          <Icon
-            name='file outline'
-          />
-        </Header>
-        { this.props.renderEmptyMessage() }
-      </Segment>
-    );
-  }
-
+  /**
+   * Renders the card for the passed item.
+   *
+   * @param item
+   * @param index
+   *
+   * @returns {*}
+   */
   renderCard(item, index) {
     const card = (
       <Card
@@ -182,6 +184,42 @@ class Items extends Component<Props, {}> {
     );
   }
 
+  /**
+   * Renders the empty list.
+   *
+   * @returns {null|*}
+   */
+  renderEmptyList() {
+    if (this.props.loading || (this.props.items && this.props.items.length)) {
+      return null;
+    }
+
+    if (this.props.renderEmptyList) {
+      return this.props.renderEmptyList();
+    }
+
+    return (
+      <Segment
+        padded='very'
+        textAlign='center'
+      >
+        <Header
+          icon
+        >
+          <Icon
+            name='file outline'
+          />
+        </Header>
+        { this.props.renderEmptyMessage() }
+      </Segment>
+    );
+  }
+
+  /**
+   * Renders the grid view.
+   *
+   * @returns {null|*}
+   */
   renderGrid() {
     if (this.props.view !== Views.grid || !(this.props.items && this.props.items.length)) {
       return null;
@@ -194,6 +232,14 @@ class Items extends Component<Props, {}> {
     );
   }
 
+  /**
+   * Renders the list item for the passed item.
+   *
+   * @param item
+   * @param index
+   *
+   * @returns {*}
+   */
   renderItem(item, index) {
     const listItem = (
       <Item
@@ -259,6 +305,11 @@ class Items extends Component<Props, {}> {
     );
   }
 
+  /**
+   * Renders the list view.
+   *
+   * @returns {null|*}
+   */
   renderList() {
     if (this.props.view !== Views.list || !(this.props.items && this.props.items.length)) {
       return null;
@@ -274,6 +325,11 @@ class Items extends Component<Props, {}> {
     );
   }
 
+  /**
+   * Renders the loading indicator.
+   *
+   * @returns {null|*}
+   */
   renderLoading() {
     if (!this.props.loading) {
       return null;
@@ -296,4 +352,4 @@ Items.defaultProps = {
   actions: []
 };
 
-export default useListToggle(useList(Items));
+export default useItemsToggle(useList(Items));
