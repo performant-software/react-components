@@ -82,20 +82,11 @@ class Items extends Component<Props, {}> {
         className={this.getClassName()}
       >
         { this.renderLoading() }
-        { this.renderListHeader() }
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
       </div>
     );
-  }
-  
-  renderListHeader() {
-    if (!this.props.renderListHeader) {
-      return null;
-    }
-
-    return this.props.renderListHeader();
   }
 
   renderEmptyList() {
