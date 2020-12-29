@@ -78,19 +78,21 @@ const LazyVideo = (props: Props) => {
               />
             </Image>
           )}
-          { props.src && props.dimmable && (
+          { (props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                <Button
-                  content={i18n.t('LazyVideo.buttons.play')}
-                  icon='video'
-                  onClick={() => setModal(true)}
-                  primary
-                />
+                { props.src && (
+                  <Button
+                    content={i18n.t('LazyVideo.buttons.play')}
+                    icon='video'
+                    onClick={() => setModal(true)}
+                    primary
+                  />
+                )}
                 { props.children }
               </div>
             </Dimmer>
