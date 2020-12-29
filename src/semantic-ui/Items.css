@@ -1,3 +1,7 @@
+.item-list {
+  margin: 1em 0em 1em 0em;
+}
+
 .item-list .ui.icon.header {
   display: block;
 }
