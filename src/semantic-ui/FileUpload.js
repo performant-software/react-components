@@ -8,17 +8,19 @@ import i18n from '../i18n/i18n';
 import './FileUpload.css';
 
 type Props = {
-  fileTypes: Array<string>,
-  maxSize: number,
-  onFilesAdded: (files: Array<File>) => void,
-  t: (key: string) => string
+  fileTypes?: Array<string>,
+  maxSize?: number,
+  onFilesAdded: (files: Array<File>) => void
 };
 
 type State = {
-  errors: Array<string>
+  errors: ?Array<string>
 };
 
 class FileUpload extends Component<Props, State> {
+  fileInput: any;
+  filePattern: any;
+
   /**
    * Constructs a new FileUpload component.
    *
