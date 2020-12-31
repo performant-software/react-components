@@ -8,17 +8,8 @@ import DataTable from './DataTable';
 import Draggable from './Draggable';
 import './EmbeddedList.css';
 
-type Action = {
-  name: string
-};
-
-type Column = {
-  label?: string,
-  name: string,
-  render?: () => void,
-  renderHeader?: (item: any) => void,
-  resolve?: (item: any) => void
-};
+import type { Action } from './List';
+import type { Column } from './DataTable';
 
 type ListButton = {
   render: () => ComponentType<any>

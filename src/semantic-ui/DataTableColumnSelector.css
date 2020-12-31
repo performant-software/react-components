@@ -1,0 +1,10 @@
+.data-table-column-selector .configure-button.ui.icon.button > .icon {
+  vertical-align: middle;
+}
+
+.data-table-column-selector .ui.dropdown.open-right > .menu {
+  top: 100%;
+  bottom: auto;
+  right: 0;
+  left: auto;
+}

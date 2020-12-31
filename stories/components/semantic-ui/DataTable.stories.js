@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import { Confirm, Header, Modal } from 'semantic-ui-react';
 import DataTable from '../../../src/semantic-ui/DataTable';
+import useDragDrop from '../../../src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/DataTable',
@@ -107,7 +108,7 @@ const items = [{
   "country": "China"
 }];
 
-export const Default = () => (
+export const Default = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -117,9 +118,9 @@ export const Default = () => (
     onDelete={action('delete')}
     onSave={action('save')}
   />
-);
+));
 
-export const Empty = () => (
+export const Empty = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -129,9 +130,9 @@ export const Empty = () => (
     onDelete={action('delete')}
     onSave={action('save')}
   />
-);
+));
 
-export const AddButton = () => (
+export const AddButton = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -152,9 +153,9 @@ export const AddButton = () => (
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
   />
-);
+));
 
-export const EmptyAddButton = () => (
+export const EmptyAddButton = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -175,9 +176,9 @@ export const EmptyAddButton = () => (
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
   />
-);
+));
 
-export const CustomActions = () => (
+export const CustomActions = useDragDrop(() => (
   <DataTable
     actions={[{
       name: 'view',
@@ -199,9 +200,9 @@ export const CustomActions = () => (
     onDelete={action('delete')}
     onSave={action('save')}
   />
-);
+));
 
-export const Pagination = () => (
+export const Pagination = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -213,9 +214,9 @@ export const Pagination = () => (
     page={number('Page', 1)}
     pages={number('Pages', 10)}
   />
-);
+));
 
-export const CustomDeleteModal = () => (
+export const CustomDeleteModal = useDragDrop(() => (
   <DataTable
     actions={actions}
     columns={columns}
@@ -234,4 +235,4 @@ export const CustomDeleteModal = () => (
       />
     )}
   />
-);
+));

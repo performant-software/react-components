@@ -1,17 +1,9 @@
 // @flow
 
-import React, { Component, type Element, createRef } from 'react';
-import { Trans } from 'react-i18next';
+import React, { Component, createRef, type Element } from 'react';
 import {
   Button,
-  Checkbox,
-  Confirm,
-  Dropdown,
-  Grid,
-  Header,
-  Icon,
-  Menu,
-  Pagination,
+  Loader,
   Ref,
   Popup,
   Table
@@ -19,26 +11,14 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
-import Draggable from './Draggable';
-import EditModal from './EditModal';
+import useList from './List';
+import useColumnSelector from './DataTableColumnSelector';
 import './DataTable.css';
 
-type Action = {
-  accept: (item: any) => boolean,
-  color?: string,
-  icon?: string,
-  name: string,
-  onClick?: (item: any) => void,
-  popup: {
-    content: string,
-    title: string
-  },
-  render?: (item: any, index: number) => Element<any>,
-  title?: string
-};
+import type { Action } from './List';
 
 type Column = {
-  className: string,
+  className?: string,
   hidden?: boolean,
   label?: string,
   name: string,
@@ -47,52 +27,16 @@ type Column = {
   resolve?: (item: any) => void
 };
 
-type ListButton = {
-  render: (index?: number) => Element<any>
-};
-
 type Props = {
-  actions?: Array<Action>,
-  addButton: {
-    color: string,
-    location: string,
-    onClick?: () => void
-  },
-  buttons: Array<ListButton>,
+  actions: Array<Action>,
   className: string,
   columns: Array<Column>,
-  configurable: boolean,
-  deleteButton?: {
-    color: string,
-    location: string,
-    onClick?: () => void
-  },
-  filters?: {
-    active: boolean,
-    component: Component<{}>,
-    props?: any,
-    state?: any,
-    onChange: (params: any) => Promise<any>
-  },
   items: ?Array<any>,
-  loading?: boolean,
-  modal?: {
-    component: Element<any>,
-    props: any,
-    state: any
-  },
-  page: number,
-  pages: number,
+  loading: boolean,
   onColumnClick: (column: Column) => void,
-  onCopy?: (item: any) => any,
-  onDelete: (item: any) => void,
-  onDeleteAll?: () => Promise<any>,
-  onPageChange: () => void,
-  onSave: (item: any) => Promise<any>,
-  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
+  renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
-  renderSearch?: () => Element<any>,
   sortColumn?: string,
   sortDirection?: string,
   t: (key: string) => string,
@@ -100,20 +44,11 @@ type Props = {
 };
 
 type State = {
-  columns: Array<Column>,
-  modalDelete: boolean,
-  modalDeleteAll: boolean,
-  modalEdit: boolean,
-  modalFilter: boolean,
   resize: ?{
     columnRef: typeof Ref,
     offset: number
-  },
-  selectedItem: any
+  }
 };
-
-const BUTTON_KEY_ADD = 'add';
-const BUTTON_KEY_DELETE_ALL = 'delete-all';
 
 class DataTable extends Component<Props, State> {
   static defaultProps: any;
@@ -132,13 +67,7 @@ class DataTable extends Component<Props, State> {
     super(props);
 
     this.state = {
-      columns: props.columns,
-      modalDelete: false,
-      modalDeleteAll: false,
-      modalEdit: false,
-      modalFilter: false,
-      resize: null,
-      selectedItem: null
+      resize: null
     };
 
     this.initializeColumnRefs();
@@ -165,7 +94,7 @@ class DataTable extends Component<Props, State> {
   initializeColumnRefs() {
     this.columnRefs = {};
 
-    _.each(this.state.columns, (c) => {
+    _.each(this.props.columns, (c) => {
       this.columnRefs[c.name] = createRef();
     });
   }
@@ -187,51 +116,6 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Renders the list of buttons for the passed location.
-   *
-   * @param location
-   */
-  getButtons(location: string) {
-    const buttons = [];
-
-    const { addButton = {}, deleteButton = {}, modal } = this.props;
-
-    // Add the add button to the list if the location specified is the passed location.
-    if (addButton.location === location && (addButton.onClick || modal)) {
-      buttons.push({
-        render: this.renderAddButton.bind(this)
-      });
-    }
-
-    // Add the delete all button to the list if the location specified is the passed location.
-    if (deleteButton.location === location && this.props.onDeleteAll) {
-      buttons.push({
-        render: this.renderDeleteAllButton.bind(this)
-      });
-    }
-
-    // Resolve the array of other buttons
-    buttons.push(..._.filter(this.props.buttons, (button) => {
-      let include = false;
-
-      /*
-       * Include the button if the buttons specifies the passed location.
-       * Include the button if no location is specified, but the add button is at the passed location.
-       * Finally, include the button if the passed location is the top location.
-       */
-      if ((button.location || 'top') === location) {
-        include = true;
-      } else if (!button.location && addButton && addButton.location === location) {
-        include = true;
-      }
-
-      return include;
-    }));
-
-    return buttons;
-  }
-
-  /**
    * Returns the actual column count. This will be the number of columns +1 if the table allows actions.
    *
    * @returns {number}
@@ -247,26 +131,6 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Displays the add/edit modal.
-   */
-  onAddButton() {
-    return this.props.addButton && this.props.addButton.onClick
-      ? this.props.addButton.onClick()
-      : this.setState({ modalEdit: true });
-  }
-
-  /**
-   * Toggles the hidden property for the passed column.
-   *
-   * @param column
-   */
-  onColumnCheckbox(column: Column) {
-    this.setState((state) => ({
-      columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
-    }));
-  }
-
-  /**
    * Resizes the current column based on the user's mouse position.
    *
    * @param e
@@ -278,104 +142,6 @@ class DataTable extends Component<Props, State> {
       const { columnRef, offset } = resize;
       columnRef.current.style.width = `${offset + e.pageX}px`;
     }
-  }
-
-  /**
-   * Copies the selected item and displays the add/edit modal.
-   *
-   * @param selectedItem
-   */
-  onCopyButton(selectedItem: any) {
-    const copy = this.props.onCopy
-      ? this.props.onCopy(selectedItem)
-      : _.omit(selectedItem, 'id', 'uid');
-
-    this.setState({ selectedItem: copy, modalEdit: true });
-  }
-
-  /**
-   * Deletes the currently selected item and clears the state.
-   *
-   * @returns {*}
-   */
-  onDelete() {
-    const { selectedItem } = this.state;
-    this.setState({ selectedItem: null, modalDelete: false });
-
-    return this.props.onDelete(selectedItem);
-  }
-
-  /**
-   * Deletes all items in the current list and resets the state.
-   *
-   * @returns {*}
-   */
-  onDeleteAll() {
-    this.setState({ modalDeleteAll: false });
-    return this.props.onDeleteAll && this.props.onDeleteAll();
-  }
-
-  /**
-   * Displays the delete all confirmation modal.
-   */
-  onDeleteAllButton() {
-    this.setState({ modalDeleteAll: true });
-  }
-
-  /**
-   * Displays the delete confirmation modal for the selected item.
-   *
-   * @param selectedItem
-   */
-  onDeleteButton(selectedItem: any) {
-    this.setState({ selectedItem, modalDelete: true });
-  }
-
-  /**
-   * Drags/drops the column at the passed index to the new position.
-   *
-   * @param dragIndex
-   * @param hoverIndex
-   */
-  onDrag(dragIndex: number, hoverIndex: number) {
-    this.setState((state) => {
-      const columns = [];
-      const anchoredColumns = [];
-
-      // Preserve the index of any unlabeled columns
-      _.each(state.columns, (column, index) => {
-        if (column.label && column.label.length) {
-          columns.push(column);
-        } else {
-          anchoredColumns.push({ index, column });
-        }
-      });
-
-      const column = columns[dragIndex];
-      columns.splice(dragIndex, 1);
-      columns.splice(hoverIndex, 0, column);
-
-      // Add the unlabeled columns back in
-      _.each(anchoredColumns, (c) => columns.splice(c.index, 0, c.column));
-
-      return { columns };
-    });
-  }
-
-  /**
-   * Displays the add/edit modal for the selected item.
-   *
-   * @param selectedItem
-   */
-  onEditButton(selectedItem: any) {
-    this.setState({ selectedItem, modalEdit: true });
-  }
-
-  /**
-   * Opens the filters modal.
-   */
-  onFilterButton() {
-    this.setState({ modalFilter: true });
   }
 
   /**
@@ -394,66 +160,27 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Saves the passed item and closes the add/edit modal.
-   *
-   * @param item
-   *
-   * @returns {*}
-   */
-  onSave(item: any) {
-    return this.props
-      .onSave(item)
-      .then(() => this.setState({ modalEdit: false, selectedItem: null }));
-  }
-
-  /**
-   * Calls the filters onChange prop and closes the modal.
-   *
-   * @param filters
-   *
-   * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
-   */
-  onSaveFilter(filters: any) {
-    if (!this.props.filters) {
-      return null;
-    }
-
-    return this.props.filters
-      .onChange(filters)
-      .then(() => this.setState({ modalFilter: false }));
-  }
-
-  /**
    * Renders the DataTable component.
    *
    * @returns {*}
    */
   render() {
     return (
-      <div
-        className={`data-table ${this.props.className}`}
+      <Table
+        {...this.props.tableProps}
       >
-        { this.renderHeader() }
-        <Table
-          {...this.props.tableProps}
-        >
-          <Table.Header>
-            <Table.Row>
-              { this.state.columns.map(this.renderHeaderCell.bind(this)) }
-              { this.renderActionsHeader() }
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
-            { this.renderEmptyTableRow() }
-          </Table.Body>
-        </Table>
-        { this.renderFooter() }
-        { this.renderEditModal() }
-        { this.renderDeleteModal() }
-        { this.renderDeleteAllModal() }
-        { this.renderFilterModal() }
-      </div>
+        <Table.Header>
+          <Table.Row>
+            { this.props.columns.map(this.renderHeaderCell.bind(this)) }
+            { this.renderActionsHeader() }
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          { this.props.items && this.props.items.map(this.renderItem.bind(this)) }
+          { this.renderEmptyTableRow() }
+          { this.renderLoading() }
+        </Table.Body>
+      </Table>
     );
   }
 
@@ -524,8 +251,6 @@ class DataTable extends Component<Props, State> {
 
         if (action.name === 'edit') {
           defaults = {
-            icon: 'edit outline',
-            onClick: this.onEditButton.bind(this),
             popup: {
               title: i18n.t('DataTable.actions.edit.title'),
               content: i18n.t('DataTable.actions.edit.content')
@@ -533,8 +258,6 @@ class DataTable extends Component<Props, State> {
           };
         } else if (action.name === 'copy') {
           defaults = {
-            icon: 'copy outline',
-            onClick: this.onCopyButton.bind(this),
             popup: {
               title: i18n.t('DataTable.actions.copy.title'),
               content: i18n.t('DataTable.actions.copy.content')
@@ -542,8 +265,6 @@ class DataTable extends Component<Props, State> {
           };
         } else if (action.name === 'delete') {
           defaults = {
-            icon: 'times circle outline',
-            onClick: this.onDeleteButton.bind(this),
             popup: {
               title: i18n.t('DataTable.actions.delete.title'),
               content: i18n.t('DataTable.actions.delete.content')
@@ -582,29 +303,6 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Renders the add button.
-   *
-   * @returns {*}
-   */
-  renderAddButton() {
-    if (!this.props.addButton) {
-      return null;
-    }
-
-    return (
-      <Button
-        basic
-        color={this.props.addButton.color}
-        key={BUTTON_KEY_ADD}
-        onClick={this.onAddButton.bind(this)}
-      >
-        <Icon name='plus' />
-        { i18n.t('DataTable.buttons.add') }
-      </Button>
-    );
-  }
-
-  /**
    * Renders the table cell for the passed item/column.
    *
    * @param item
@@ -637,175 +335,46 @@ class DataTable extends Component<Props, State> {
     );
   }
 
-  /**
-   * Renders the list configuration button.
-   *
-   * @returns {*}
-   */
-  renderConfigureButton() {
-    const classNames = [
-      'icon',
-      'configure-button'
-    ];
-
-    // If no search bar is rendered, open the dropdown menu to the right
-    if (!this.props.renderSearch) {
-      classNames.push('open-right');
-    }
-
-    return (
-      <Dropdown
-        basic
-        button
-        icon='cog'
-        className={classNames.join(' ')}
-        simple
-      >
-        <Dropdown.Menu>
-          { this.state.columns
-            .filter((c) => c.label && c.label.length)
-            .map((c, index) => (
-              <Draggable
-                id={c.name}
-                index={index}
-                key={c.name}
-                onDrag={this.onDrag.bind(this)}
-              >
-                <Dropdown.Item>
-                  <Icon
-                    name='bars'
-                  />
-                  <Checkbox
-                    checked={!c.hidden}
-                    label={c.label}
-                    onClick={this.onColumnCheckbox.bind(this, c)}
-                  />
-                </Dropdown.Item>
-              </Draggable>
-            ))}
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  }
-
-  /**
-   * Renders the delete all button.
-   *
-   * @returns {null|*}
-   */
-  renderDeleteAllButton() {
-    if (!this.props.deleteButton) {
-      return null;
-    }
-
-    return (
-      <Button
-        basic
-        color={this.props.deleteButton.color}
-        key={BUTTON_KEY_DELETE_ALL}
-        onClick={this.onDeleteAllButton.bind(this)}
-      >
-        <Icon name='times' />
-        { i18n.t('DataTable.buttons.deleteAll') }
-      </Button>
-    );
-  }
-
-  /**
-   * Renders the delete all modal if visible.
-   *
-   * @returns {null|*}
-   */
-  renderDeleteAllModal() {
-    if (!this.state.modalDeleteAll) {
-      return null;
-    }
-
-    return (
-      <Confirm
-        content={i18n.t('DataTable.deleteAllContent')}
-        header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteAllHeader')} />}
-        onCancel={() => this.setState({ modalDeleteAll: false })}
-        onConfirm={this.onDeleteAll.bind(this)}
-        open
-      />
-    );
-  }
-
-  /**
-   * Renders the delete modal if visible.
-   *
-   * @returns {null|*}
-   */
-  renderDeleteModal() {
-    if (!this.state.modalDelete) {
-      return null;
-    }
-
-    const { selectedItem } = this.state;
-    const onCancel = () => this.setState({ selectedItem: null, modalDelete: false });
-    const onConfirm = this.onDelete.bind(this);
-
-    if (this.props.renderDeleteModal) {
-      return this.props.renderDeleteModal({ selectedItem, onConfirm, onCancel });
-    }
-
-    return (
-      <Confirm
-        content={i18n.t('DataTable.deleteContent')}
-        header={<Header icon='trash alternate outline' content={i18n.t('DataTable.deleteHeader')} />}
-        onCancel={onCancel}
-        onConfirm={onConfirm}
-        open
-      />
-    );
-  }
-
-  /**
-   * Renders the edit modal if visible.
-   *
-   * @returns {null|*}
-   */
-  renderEditModal() {
-    if (!this.props.modal || !this.state.modalEdit) {
-      return null;
-    }
-
-    const { component, props } = this.props.modal;
-
-    return (
-      <EditModal
-        component={component}
-        onClose={() => this.setState({ selectedItem: null, modalEdit: false })}
-        onSave={this.onSave.bind(this)}
-        item={this.state.selectedItem}
-        {...props}
-      />
-    );
-  }
-
-  /**
-   * Renders the empty message text/component. The message content is based on whether or not records can be added
-   * to this data table.
-   *
-   * @returns {*}
-   */
-  renderEmptyMessage() {
-    const { addButton = {}, modal } = this.props;
-    if (!(addButton.onClick || modal)) {
-      return i18n.t('DataTable.emptyList');
-    }
-
-    return (
-      <Trans i18nKey='DataTable.emptyListAdd'>
-        You haven&apos;t added any yet. Click
-        <div className='empty-button'>
-          { this.renderAddButton() }
-        </div>
-        to get started.
-      </Trans>
-    );
-  }
+  // /**
+  //  * Renders the list configuration button.
+  //  *
+  //  * @returns {*}
+  //  */
+  // renderConfigureButton() {
+  //   return (
+  //     <Dropdown
+  //       basic
+  //       button
+  //       icon='cog'
+  //       className='icon configure-button open-right'
+  //       simple
+  //     >
+  //       <Dropdown.Menu>
+  //         { this.state.columns
+  //           .filter((c) => c.label && c.label.length)
+  //           .map((c, index) => (
+  //             <Draggable
+  //               id={c.name}
+  //               index={index}
+  //               key={c.name}
+  //               onDrag={this.onDrag.bind(this)}
+  //             >
+  //               <Dropdown.Item>
+  //                 <Icon
+  //                   name='bars'
+  //                 />
+  //                 <Checkbox
+  //                   checked={!c.hidden}
+  //                   label={c.label}
+  //                   onClick={this.onColumnCheckbox.bind(this, c)}
+  //                 />
+  //               </Dropdown.Item>
+  //             </Draggable>
+  //           ))}
+  //       </Dropdown.Menu>
+  //     </Dropdown>
+  //   );
+  // }
 
   /**
    * Renders the empty table row.
@@ -813,7 +382,7 @@ class DataTable extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEmptyTableRow() {
-    if (this.props.items && this.props.items.length) {
+    if (this.props.loading || (this.props.items && this.props.items.length)) {
       return null;
     }
 
@@ -828,153 +397,10 @@ class DataTable extends Component<Props, State> {
           textAlign='center'
         >
           <div className='empty-container'>
-            { this.renderEmptyMessage() }
+            { this.props.renderEmptyMessage() }
           </div>
         </Table.Cell>
       </Table.Row>
-    );
-  }
-
-  /**
-   * Renders the filter button component.
-   *
-   * @returns {null|*}
-   */
-  renderFilterButton() {
-    if (!(this.props.filters && this.props.filters.component)) {
-      return null;
-    }
-
-    return (
-      <Button
-        active={this.props.filters.active}
-        basic
-        icon='filter'
-        onClick={this.onFilterButton.bind(this)}
-      />
-    );
-  }
-
-  /**
-   * Renders the filter modal if visible.
-   *
-   * @returns {null|*}
-   */
-  renderFilterModal() {
-    if (!this.props.filters || !this.state.modalFilter) {
-      return null;
-    }
-
-    const { component, props } = this.props.filters;
-
-    return (
-      <EditModal
-        component={component}
-        onClose={() => this.setState({ modalFilter: false })}
-        onSave={this.onSaveFilter.bind(this)}
-        {...props}
-      />
-    );
-  }
-
-  /**
-   * Renders the table footer.
-   *
-   * @returns {null|*}
-   */
-  renderFooter() {
-    let renderFooter = false;
-
-    const buttons = this.getButtons('bottom');
-    if (buttons && buttons.length) {
-      renderFooter = true;
-    }
-
-    const hasPages = this.props.pages && this.props.pages > 1;
-    if (hasPages) {
-      renderFooter = true;
-    }
-
-    if (!renderFooter) {
-      return null;
-    }
-
-    return (
-      <div className='footer'>
-        <Grid
-          columns={2}
-        >
-          <Grid.Column
-            textAlign='left'
-          >
-            { _.map(buttons, (button) => button.render()) }
-          </Grid.Column>
-          <Grid.Column
-            textAlign='right'
-          >
-            { hasPages && this.renderPagination() }
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
-  }
-
-  /**
-   * Renders the table header.
-   *
-   * @returns {null|*}
-   */
-  renderHeader() {
-    let renderHeader = false;
-
-    const buttons = this.getButtons('top');
-    if (buttons && buttons.length) {
-      renderHeader = true;
-    }
-
-    const { configurable, filters, renderSearch } = this.props;
-    if (configurable || filters || renderSearch) {
-      renderHeader = true;
-    }
-
-    if (!renderHeader) {
-      return null;
-    }
-
-    return (
-      <div
-        className='header'
-      >
-        <Grid
-          columns={2}
-          verticalAlign='bottom'
-        >
-          <Grid.Column
-            textAlign='left'
-          >
-            { _.map(buttons, (button, index) => button.render(index)) }
-          </Grid.Column>
-          <Grid.Column
-            textAlign='right'
-          >
-            <Menu
-              compact
-              borderless
-              secondary
-            >
-              <Menu.Menu>
-                { configurable && this.renderConfigureButton() }
-              </Menu.Menu>
-              <Menu.Menu>
-                { filters && this.renderFilterButton() }
-              </Menu.Menu>
-              <Menu.Menu>
-                { renderSearch && renderSearch() }
-              </Menu.Menu>
-            </Menu>
-          </Grid.Column>
-        </Grid>
-      </div>
     );
   }
 
@@ -1026,7 +452,7 @@ class DataTable extends Component<Props, State> {
    */
   renderItem(item: any, index: number) {
     const children = [
-      this.state.columns.map(this.renderCell.bind(this, item)),
+      this.props.columns.map(this.renderCell.bind(this, item)),
       this.renderActions(item, index)
     ];
 
@@ -1043,21 +469,24 @@ class DataTable extends Component<Props, State> {
     );
   }
 
-  /**
-   * Renders the pagination component.
-   *
-   * @returns {null|*}
-   */
-  renderPagination() {
+  renderLoading() {
+    if (!this.props.loading) {
+      return null;
+    }
+
     return (
-      <Pagination
-        activePage={this.props.page}
-        firstItem={null}
-        lastItem={null}
-        onPageChange={this.props.onPageChange.bind(this)}
-        size='mini'
-        totalPages={this.props.pages}
-      />
+      <Table.Row>
+        <Table.Cell
+          colSpan={this.getColumnCount()}
+          textAlign='center'
+        >
+          <Loader
+            active
+            content={i18n.t('DataTable.loading')}
+            inline
+          />
+        </Table.Cell>
+      </Table.Row>
     );
   }
 }
@@ -1087,4 +516,8 @@ DataTable.defaultProps = {
   sortDirection: undefined
 };
 
-export default DataTable;
+export default useColumnSelector(useList(DataTable));
+
+export type {
+  Column
+};

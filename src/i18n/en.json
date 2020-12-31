@@ -51,19 +51,10 @@
         "title": "Edit"
       }
     },
-    "buttons": {
-      "add": "Add",
-      "deleteAll": "Delete All"
-    },
     "columns": {
       "actions": "Actions"
     },
-    "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
-    "deleteAllHeader": "Confirm Remove All",
-    "deleteContent": "Are you sure you want to remove this record?",
-    "deleteHeader": "Confirm Remove",
-    "emptyList": "No matching records found.",
-    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started."
+    "loading": "Loading"
   },
   "EditProvider": {
     "errors": {
@@ -105,6 +96,16 @@
     },
     "title": "Fuzzy Date"
   },
+  "ItemList": {
+    "actions": {
+      "copy": "Copy",
+      "delete": "Remove",
+      "edit": "Edit"
+    }
+  },
+  "Items": {
+    "loading": "Loading"
+  },
   "KeyboardField": {
     "labels": {
       "hideKeyboard": "Hide Keyboard",
@@ -125,6 +126,18 @@
     "buttons": {
       "play": "Play video"
     }
+  },
+  "List": {
+    "buttons": {
+      "add": "Add",
+      "deleteAll": "Delete all"
+    },
+    "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
+    "deleteAllHeader": "Confirm Remove All",
+    "deleteContent": "Are you sure you want to remove this record?",
+    "deleteHeader": "Confirm Remove",
+    "emptyList": "No matching records found.",
+    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started."
   },
   "LoginModal": {
     "buttonCancel": "Cancel",

@@ -691,3 +691,22 @@ export const WithInitialSave = useDragDrop(() => (
     saved
   />
 ));
+
+export const Loading = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.sleep(5000).then(() => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    })))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+));

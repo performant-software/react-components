@@ -16,7 +16,7 @@ const SORT_DESCENDING = 'descending';
  *
  * @returns {Promise<unknown>}
  */
-export const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }) => {
+const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }) => {
   let payload = [...items];
 
   // Apply search filter
@@ -72,7 +72,7 @@ export const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }
  *
  * @returns {Promise<unknown>}
  */
-export const onLoadEmpty = () => {
+const onLoadEmpty = () => {
   const response = { data: { items: [], list: { pages: 1 } } };
   return new Promise((resolve) => resolve(response));
 };
@@ -117,8 +117,11 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
   return new Promise((resolve) => resolve(response));
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default {
   onLoad,
   onLoadEmpty,
-  onNestedLoad
+  onNestedLoad,
+  sleep
 };
