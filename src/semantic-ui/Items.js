@@ -31,6 +31,7 @@ type Props = ListProps & {
   renderExtra?: (item: any) => Element<any>,
   renderHeader?: (item: any) => Element<any>,
   renderImage?: (item: any) => Element<any>,
+  renderList: (list: Element<any>) => Element<any>,
   renderMeta?: (item: any) => Element<any>,
   view: number
 };
@@ -225,7 +226,7 @@ class Items extends Component<Props, {}> {
       return null;
     }
 
-    return (
+    return this.props.renderList(
       <Card.Group>
         { _.map(this.props.items, this.renderCard.bind(this)) }
       </Card.Group>
@@ -315,7 +316,7 @@ class Items extends Component<Props, {}> {
       return null;
     }
 
-    return (
+    return this.props.renderList(
       <Item.Group
         divided
         relaxed='very'
@@ -349,7 +350,8 @@ class Items extends Component<Props, {}> {
 }
 
 Items.defaultProps = {
-  actions: []
+  actions: [],
+  renderList: (list) => list
 };
 
 export default useItemsToggle(useList(Items));

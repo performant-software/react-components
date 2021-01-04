@@ -26,74 +26,214 @@ const actions = [{
 
 const items = [{
   id: 1,
-  movie: 'Breakout',
-  genre: 'Action|Adventure',
-  date: '04/09/1979',
+  movie: 'Robinson in Space',
+  genre: 'Documentary|Sci-Fi',
+  date: '3/2/1910',
   country: 'China',
-  gross: '$97877758344.93'
+  gross: '$1910101.82'
 }, {
   id: 2,
-  movie: 'Ladykillers, The',
-  genre: 'Comedy|Crime',
-  date: '05/17/2018',
-  country: 'China',
-  gross: '$9759970621.35'
+  movie: 'We Live in Public',
+  genre: 'Documentary',
+  date: '8/3/1998',
+  country: 'Peru',
+  gross: '$6485511.29'
 }, {
   id: 3,
-  movie: 'Wilson',
-  genre: 'Drama',
-  date: '01/05/1981',
-  country: 'Indonesia',
-  gross: '$32929566919.13'
+  movie: 'Map of the Sounds of Tokyo',
+  genre: 'Drama|Thriller',
+  date: '3/10/1998',
+  country: 'Uganda',
+  gross: '$4564944.94'
 }, {
   id: 4,
-  movie: 'Macon County Line',
-  genre: 'Action|Drama',
-  date: '10/26/1935',
-  country: 'Philippines',
-  gross: '$32422166052.64'
+  movie: 'Marvin Hamlisch: What He Did for Love',
+  genre: 'Documentary|Musical',
+  date: '2/19/2001',
+  country: 'Denmark',
+  gross: '$429177.98'
 }, {
   id: 5,
-  movie: 'Bless Me, Ultima',
-  genre: 'Drama|War',
-  date: '04/01/1942',
-  country: 'Israel',
-  gross: '$25860349604.38'
+  movie: 'Mélo',
+  genre: 'Drama|Romance',
+  date: '8/30/1953',
+  country: 'Myanmar',
+  gross: '$3237889.86'
 }, {
   id: 6,
-  movie: 'Julius Caesar',
-  genre: 'Drama',
-  date: '12/15/1980',
-  country: 'China',
-  gross: '$96267131975.97'
+  movie: 'Jungle Creature: Hugo, The (Jungledyret) (Go Hugo Go)',
+  genre: 'Animation|Children|Musical|Romance',
+  date: '8/17/1965',
+  country: 'Canada',
+  gross: '$2986786.12'
 }, {
   id: 7,
-  movie: 'Left-Hand Side of the Fridge, The (Moitié gauche du frigo, La)',
-  genre: 'Comedy',
-  date: '09/14/1970',
-  country: 'China',
-  gross: '$86302448886.10'
+  movie: 'Me and Morrison (Minä ja Morrison)',
+  genre: 'Romance',
+  date: '5/7/2013',
+  country: 'Indonesia',
+  gross: '$9630314.96'
 }, {
   id: 8,
-  movie: 'London Conspiracy',
-  genre: 'Action|Mystery',
-  date: '09/30/1995',
-  country: 'Norway',
-  gross: '$70230233914.51'
+  movie: 'Army of Darkness',
+  genre: 'Action|Adventure|Comedy|Fantasy|Horror',
+  date: '4/16/1950',
+  country: 'Thailand',
+  gross: '$1298926.22'
 }, {
   id: 9,
-  movie: 'Cat Run 2',
-  genre: 'Action',
-  date: '04/10/1923',
-  country: 'Latvia',
-  gross: '$64514647938.68'
+  movie: 'Zen',
+  genre: 'Drama',
+  date: '2/6/1988',
+  country: 'China',
+  gross: '$4940875.82'
 }, {
   id: 10,
-  movie: 'Lady in the Water',
-  genre: 'Drama|Fantasy|Mystery',
-  date: '12/07/1919',
+  movie: 'The Walking Stick',
+  genre: 'Crime|Drama|Romance',
+  date: '11/3/1953',
+  country: 'Vietnam',
+  gross: '$878261.41'
+}, {
+  id: 11,
+  movie: 'Solo Sunny',
+  genre: 'Drama|Musical|Romance',
+  date: '7/18/1991',
   country: 'China',
-  gross: '$90456213202.89'
+  gross: '$8576387.38'
+}, {
+  id: 12,
+  movie: 'Necessities of Life, The (Ce qu\'il faut pour vivre)',
+  genre: 'Drama',
+  date: '8/11/1924',
+  country: 'China',
+  gross: '$7056408.21'
+}, {
+  id: 13,
+  movie: 'At Land',
+  genre: '(no genres listed)',
+  date: '5/8/1951',
+  country: 'Russia',
+  gross: '$8352326.48'
+}, {
+  id: 14,
+  movie: 'Alien Nation: The Enemy Within',
+  genre: 'Sci-Fi',
+  date: '3/21/1909',
+  country: 'Portugal',
+  gross: '$4205944.76'
+}, {
+  id: 15,
+  movie: 'Bedtime Stories',
+  genre: 'Adventure|Children|Comedy',
+  date: '2/13/1962',
+  country: 'Bulgaria',
+  gross: '$8510830.84'
+}, {
+  id: 16,
+  movie: 'Story of Louis Pasteur, The',
+  genre: 'Drama',
+  date: '1/6/1928',
+  country: 'Malaysia',
+  gross: '$9666164.00'
+}, {
+  id: 17,
+  movie: 'Inkheart',
+  genre: 'Adventure|Fantasy',
+  date: '9/21/1920',
+  country: 'Russia',
+  gross: '$1588984.00'
+}, {
+  id: 18,
+  movie: 'Good, the Bad and the Ugly, The (Buono, il brutto, il cattivo, Il)',
+  genre: 'Action|Adventure|Western',
+  date: '4/2/1904',
+  country: 'Indonesia',
+  gross: '$2238129.98'
+}, {
+  id: 19,
+  movie: 'First $20 Million Is Always the Hardest, The',
+  genre: 'Comedy',
+  date: '1/31/1908',
+  country: 'Poland',
+  gross: '$9035879.24'
+}, {
+  id: 20,
+  movie: 'Still Mine',
+  genre: 'Drama',
+  date: '7/16/1937',
+  country: 'China',
+  gross: '$1116071.68'
+}, {
+  id: 21,
+  movie: 'Young Lions, The',
+  genre: 'Drama|War',
+  date: '1/14/1940',
+  country: 'Portugal',
+  gross: '$8692281.57'
+}, {
+  id: 22,
+  movie: 'Take Care of My Cat (Goyangileul butaghae)',
+  genre: 'Drama',
+  date: '9/14/1949',
+  country: 'Senegal',
+  gross: '$221844.90'
+}, {
+  id: 23,
+  movie: 'Go for It',
+  genre: 'Action|Adventure|Comedy',
+  date: '1/31/2005',
+  country: 'Palestinian Territory',
+  gross: '$9167515.82'
+}, {
+  id: 24,
+  movie: 'High Hopes',
+  genre: 'Comedy',
+  date: '8/8/1929',
+  country: 'China',
+  gross: '$2801618.88'
+}, {
+  id: 25,
+  movie: 'Loneliness of the Long Distance Runner, The',
+  genre: 'Drama',
+  date: '4/25/1949',
+  country: 'China',
+  gross: '$5283671.78'
+}, {
+  id: 26,
+  movie: 'And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)',
+  genre: 'Drama',
+  date: '6/17/1917',
+  country: 'Indonesia',
+  gross: '$907845.74'
+}, {
+  id: 27,
+  movie: 'The Red Inn',
+  genre: 'Comedy|Crime',
+  date: '1/26/1962',
+  country: 'Haiti',
+  gross: '$4958727.46'
+}, {
+  id: 28,
+  movie: 'World of Suzie Wong, The',
+  genre: 'Drama|Romance',
+  date: '7/16/2008',
+  country: 'Syria',
+  gross: '$7645650.99'
+}, {
+  id: 29,
+  movie: 'State of Things, The (Stand der Dinge, Der)',
+  genre: 'Drama',
+  date: '5/15/1931',
+  country: 'Philippines',
+  gross: '$6304922.04'
+}, {
+  id: 30,
+  movie: 'Farewell, The (Abschied - Brechts letzter Sommer)',
+  genre: 'Drama',
+  date: '7/21/2001',
+  country: 'Czech Republic',
+  gross: '$8525619.21'
 }];
 
 export const Default = useDragDrop(() => (
@@ -241,3 +381,16 @@ export const TabbedModalConfig = useDragDrop(() => {
     </Container>
   );
 });
+
+export const InfiniteScroll = useDragDrop(() => (
+  <ItemCollection
+    actions={actions}
+    items={items}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    perPage={10}
+    renderHeader={(item) => <Header content={item.movie} />}
+    renderMeta={(item) => item.genre}
+  />
+));
