@@ -11,6 +11,9 @@ import './ItemCollection.css';
 
 type Props = {
   className?: string,
+  context: {
+    current: HTMLElement
+  },
   items: ?Array<any>,
   onDelete: (item: any) => void,
   onSave?: (item: any) => void,
@@ -68,6 +71,7 @@ const ItemCollection = (props: Props) => {
       }}
       renderList={(list) => (
         <InfiniteScroll
+          context={props.context}
           offset={props.scrollOffset}
           onBottomReached={() => setPage((prevPage) => prevPage + 1)}
         >

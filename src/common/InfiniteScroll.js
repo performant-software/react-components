@@ -1,28 +1,76 @@
 // @flow
 
-import { useEffect, type Element } from 'react';
+import { useCallback, useEffect, type Element } from 'react';
 
 type Props = {
   children: Element<any>,
-  context?: HTMLElement,
+  context?: { current: HTMLElement },
   offset: number,
   onBottomReached: () => void
 };
 
 const InfiniteScroll = (props: Props) => {
-  const onScroll = () => {
-    const context = props.context || document.documentElement || {};
-    const { scrollTop, clientHeight, scrollHeight } = context;
+  /**
+   * Returns the container to use for the scroll list.
+   *
+   * @type {function(): *}
+   */
+  const getScrollContainer = useCallback(() => {
+    let scrollContainer;
 
-    if ((scrollTop + clientHeight) >= (scrollHeight - props.offset)) {
-      props.onBottomReached();
+    if (props.context) {
+      scrollContainer = props.context.current;
+    } else {
+      scrollContainer = window;
+    }
+
+    return scrollContainer;
+  });
+
+  /**
+   * Returns the scrolling element.
+   *
+   * @returns {*}
+   */
+  const getScrollElement = () => {
+    let scrollElement;
+
+    if (props.context) {
+      scrollElement = props.context.current;
+    } else {
+      scrollElement = document.documentElement;
+    }
+
+    return scrollElement;
+  };
+
+  /**
+   * Calls the onBottomReached prop if the scroll has reached the end.
+   */
+  const onScroll = () => {
+    const element = getScrollElement();
+
+    if (element) {
+      const { scrollTop, clientHeight, scrollHeight } = element;
+
+      if ((scrollTop + clientHeight) >= (scrollHeight - props.offset)) {
+        props.onBottomReached();
+      }
     }
   };
 
+  /**
+   * Sets up the container scroll event listeners.
+   */
   useEffect(() => {
-    window.addEventListener('scroll', onScroll.bind(this), { passive: true });
-    return () => window.removeEventListener('scroll', onScroll.bind(this));
-  }, []);
+    const container = getScrollContainer();
+    if (!container) {
+      return undefined;
+    }
+
+    container.addEventListener('scroll', onScroll);
+    return () => container.removeEventListener('scroll', onScroll);
+  }, [getScrollContainer]);
 
   return props.children;
 };

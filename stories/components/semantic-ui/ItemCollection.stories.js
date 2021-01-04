@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
@@ -394,3 +394,28 @@ export const InfiniteScroll = useDragDrop(() => (
     renderMeta={(item) => item.genre}
   />
 ));
+
+export const InfiniteScrollDiv = useDragDrop(() => {
+  const containerRef = createRef();
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        maxHeight: '400px',
+        overflow: 'scroll'
+      }}
+    >
+      <ItemCollection
+        actions={actions}
+        context={containerRef}
+        items={items}
+        onCopy={action('copy')}
+        onDelete={action('delete')}
+        onSave={action('save')}
+        perPage={5}
+        renderHeader={(item) => <Header content={item.movie} />}
+        renderMeta={(item) => item.genre}
+      />
+    </div>
+  );
+});
