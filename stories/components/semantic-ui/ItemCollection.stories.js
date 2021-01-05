@@ -4,7 +4,12 @@ import React, { createRef, useEffect, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
-import { Button, Container, Dropdown, Header } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Dropdown,
+  Header
+} from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import { SemanticColors } from '../../services/Colors';
@@ -377,7 +382,7 @@ export const TabbedModalConfig = useDragDrop(() => {
       <EditModal
         component={ItemCollectionModal}
         open={showModal}
-        onClose={() => new Promise((resolve) => resolve(setShowModal(false)))}
+        onClose={() => setShowModal(false)}
         onSave={() => new Promise((resolve) => resolve(setShowModal(false)))}
       />
     </Container>
@@ -427,7 +432,7 @@ const genres = _.uniq(_.flatten(_.map(items, (i) => i.genre.split('|'))));
 export const InfiniteScrollFilter = useDragDrop(() => {
   const [movies, setMovies] = useState(items);
   const [genre, setGenre] = useState(null);
-  
+
   useEffect(() => {
     let records;
 
@@ -442,16 +447,20 @@ export const InfiniteScrollFilter = useDragDrop(() => {
 
   return (
     <>
-      <Dropdown
-        clearable
-        placeholder='Genre'
-        search
-        selection
-        onChange={(e, { value }) => setGenre(value)}
-        options={_.map(genres, (g) => ({ key: g, value: g, text: g }))}
-      />
       <ItemCollection
         actions={actions}
+        buttons={[{
+          render: () => (
+            <Dropdown
+              clearable
+              placeholder='Genre'
+              search
+              selection
+              onChange={(e, { value }) => setGenre(value)}
+              options={_.map(genres, (g) => ({ key: g, value: g, text: g }))}
+            />
+          )
+        }]}
         items={movies}
         onCopy={action('copy')}
         onDelete={action('delete')}

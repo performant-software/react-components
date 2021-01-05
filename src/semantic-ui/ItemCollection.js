@@ -116,22 +116,19 @@ class ItemCollection extends Component<Props, State> {
    */
   render() {
     return (
-      <Items
-        {...this.props}
-        items={this.state.items}
-        className={`item-collection ${this.props.className ? this.props.className : ''}`}
-        onDelete={this.onDelete.bind(this)}
-        onSave={this.onSave.bind(this)}
-        renderList={(list) => (
-          <InfiniteScroll
-            context={this.props.context}
-            offset={this.props.scrollOffset}
-            onBottomReached={this.onBottomReached.bind(this)}
-          >
-            { list }
-          </InfiniteScroll>
-        )}
-      />
+      <InfiniteScroll
+        context={this.props.context}
+        offset={this.props.scrollOffset}
+        onBottomReached={this.onBottomReached.bind(this)}
+      >
+        <Items
+          {...this.props}
+          items={this.state.items}
+          className={`item-collection ${this.props.className ? this.props.className : ''}`}
+          onDelete={this.onDelete.bind(this)}
+          onSave={this.onSave.bind(this)}
+        />
+      </InfiniteScroll>
     );
   }
 }
