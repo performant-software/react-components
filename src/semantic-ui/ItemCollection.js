@@ -1,9 +1,6 @@
 // @flow
 
-import React, {
-  useEffect,
-  useState
-} from 'react';
+import React, { Component } from 'react';
 import uuid from 'react-uuid';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Items from './Items';
@@ -14,73 +11,130 @@ type Props = {
   context: {
     current: HTMLElement
   },
-  items: ?Array<any>,
+  items: Array<any>,
   onDelete: (item: any) => void,
   onSave?: (item: any) => void,
   perPage: number,
   scrollOffset: number
 };
 
-/**
- * The ItemCollection component can be used to display a collection of records that live within a parent object.
- * This is especially useful when the collection is to be saved at the same time as the parent. Records will be
- * rendered as a list of items (see semantic-ui items).
- */
-const ItemCollection = (props: Props) => {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(0);
-
-  /**
-   * Set the page to "1" when the component mounts.
-   */
-  useEffect(() => {
-    setPage(1);
-  }, []);
-
-  /**
-   * Append to the new page of items to the list.
-   */
-  useEffect(() => {
-    const endIndex = page * props.perPage;
-    const startIndex = endIndex - props.perPage;
-    const nextItems = (props.items && props.items.slice(startIndex, endIndex)) || [];
-
-    setItems([
-      ...items,
-      ...nextItems
-    ]);
-  }, [page, props.perPage, props.items]);
-
-  return (
-    <Items
-      {...props}
-      items={items}
-      className={`item-collection ${props.className ? props.className : ''}`}
-      onDelete={(item) => {
-        props.onDelete(item);
-        return Promise.resolve();
-      }}
-      onSave={(item) => {
-        const uid = item.uid ? item.uid : uuid();
-
-        if (props.onSave) {
-          props.onSave({ ...item, uid });
-        }
-
-        return Promise.resolve();
-      }}
-      renderList={(list) => (
-        <InfiniteScroll
-          context={props.context}
-          offset={props.scrollOffset}
-          onBottomReached={() => setPage((prevPage) => prevPage + 1)}
-        >
-          { list }
-        </InfiniteScroll>
-      )}
-    />
-  );
+type State = {
+  items: Array<any>,
+  page: number
 };
+
+class ItemCollection extends Component<Props, State> {
+  static defaultProps: any;
+
+  /**
+   * Constructs a new ItemCollection component.
+   *
+   * @param props
+   */
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      items: [],
+      page: 1
+    };
+  }
+
+  /**
+   * Loads the data.
+   */
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  /**
+   * Resets the page and the list of items.
+   *
+   * @param prevProps
+   */
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.items !== this.props.items) {
+      this.setState({ page: 1, items: [] }, this.fetchData.bind(this));
+    }
+  }
+
+  /**
+   * Loads the next page of data into the state.
+   */
+  fetchData() {
+    const endIndex = this.state.page * this.props.perPage;
+    const startIndex = endIndex - this.props.perPage;
+    const items = (this.props.items && this.props.items.slice(startIndex, endIndex)) || [];
+
+    this.setState((state) => ({
+      items: [
+        ...state.items,
+        ...items
+      ]
+    }));
+  }
+
+  /**
+   * Increments the page number and fetches the data.
+   */
+  onBottomReached() {
+    this.setState((state) => ({ page: state.page + 1 }), this.fetchData.bind(this));
+  }
+
+  /**
+   * Calls the onDelete prop and returns a promise.
+   *
+   * @param item
+   *
+   * @returns {Promise<unknown>}
+   */
+  onDelete(item: any) {
+    this.props.onDelete(item);
+    return Promise.resolve();
+  }
+
+  /**
+   * Calls the onSave prop and returns a promise.
+   *
+   * @param item
+   *
+   * @returns {Promise<unknown>}
+   */
+  onSave(item: any) {
+    if (this.props.onSave) {
+      const uid = item.uid ? item.uid : uuid();
+      this.props.onSave({ ...item, uid });
+    }
+
+    return Promise.resolve();
+  }
+
+  /**
+   * Renders the ItemCollection component.
+   *
+   * @returns {*}
+   */
+  render() {
+    return (
+      <Items
+        {...this.props}
+        items={this.state.items}
+        className={`item-collection ${this.props.className ? this.props.className : ''}`}
+        onDelete={this.onDelete.bind(this)}
+        onSave={this.onSave.bind(this)}
+        renderList={(list) => (
+          <InfiniteScroll
+            context={this.props.context}
+            offset={this.props.scrollOffset}
+            onBottomReached={this.onBottomReached.bind(this)}
+          >
+            { list }
+          </InfiniteScroll>
+        )}
+      />
+    );
+  }
+}
 
 ItemCollection.defaultProps = {
   addButton: {

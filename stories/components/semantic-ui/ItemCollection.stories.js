@@ -1,8 +1,10 @@
-import React, { createRef, useState } from 'react';
+// @flow
+
+import React, { createRef, useEffect, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
-import { Button, Container, Header } from 'semantic-ui-react';
+import { Button, Container, Dropdown, Header } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import { SemanticColors } from '../../services/Colors';
@@ -417,5 +419,47 @@ export const InfiniteScrollDiv = useDragDrop(() => {
         renderMeta={(item) => item.genre}
       />
     </div>
+  );
+});
+
+const genres = _.uniq(_.flatten(_.map(items, (i) => i.genre.split('|'))));
+
+export const InfiniteScrollFilter = useDragDrop(() => {
+  const [movies, setMovies] = useState(items);
+  const [genre, setGenre] = useState(null);
+  
+  useEffect(() => {
+    let records;
+
+    if (genre && genre.length) {
+      records = _.filter(items, (i) => i.genre && i.genre.indexOf(genre) > 0);
+    } else {
+      records = [...items];
+    }
+
+    setMovies(records);
+  }, [genre]);
+
+  return (
+    <>
+      <Dropdown
+        clearable
+        placeholder='Genre'
+        search
+        selection
+        onChange={(e, { value }) => setGenre(value)}
+        options={_.map(genres, (g) => ({ key: g, value: g, text: g }))}
+      />
+      <ItemCollection
+        actions={actions}
+        items={movies}
+        onCopy={action('copy')}
+        onDelete={action('delete')}
+        onSave={action('save')}
+        perPage={10}
+        renderHeader={(item) => <Header content={item.movie} />}
+        renderMeta={(item) => item.genre}
+      />
+    </>
   );
 });
