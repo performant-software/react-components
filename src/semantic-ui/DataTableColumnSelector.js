@@ -9,6 +9,7 @@ import './DataTableColumnSelector.css';
 import type { Column } from './DataTable';
 
 type Props = {
+  className: string,
   columns: Array<Column>
 };
 
@@ -24,6 +25,10 @@ type State = {
  */
 const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
+    static defaultProps = {
+      className: ''
+    };
+
     /**
      * Constructs a new DataTableColumnSelector component.
      *
@@ -88,7 +93,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
       return (
         <WrappedComponent
           {...this.props}
-          className='data-table-column-selector'
+          className={`data-table-column-selector ${this.props.className}`}
           columns={this.state.columns}
           renderListHeader={this.renderHeader.bind(this)}
         />
