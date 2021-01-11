@@ -32,7 +32,6 @@ const LazyDocument = (props: Props) => {
         as='span'
         fireOnMount
         onTopVisible={() => setVisible(true)}
-        updateOn='repaint'
       >
         <Loader
           active
@@ -47,7 +46,6 @@ const LazyDocument = (props: Props) => {
     <>
       <Transition
         duration={props.duration}
-        transitionOnMount
         visible
       >
         <Dimmer.Dimmable
