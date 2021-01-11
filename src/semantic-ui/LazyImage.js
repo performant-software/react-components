@@ -48,7 +48,6 @@ const LazyImage = (props: Props) => {
     <>
       <Transition
         duration={props.duration}
-        transitionOnMount
         visible
       >
         <Dimmer.Dimmable
