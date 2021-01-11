@@ -34,7 +34,6 @@ const LazyImage = (props: Props) => {
         as='span'
         fireOnMount
         onTopVisible={() => setVisible(true)}
-        updateOn='repaint'
       >
         <Loader
           active
