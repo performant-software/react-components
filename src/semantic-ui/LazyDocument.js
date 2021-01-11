@@ -88,6 +88,7 @@ const LazyDocument = (props: Props) => {
                   primary
                   url={props.src}
                 />
+                { props.children }
               </div>
             </Dimmer>
           )}
