@@ -17,6 +17,7 @@ export { default as useDataList } from './semantic-ui/DataList';
 export { default as DescriptorField } from './semantic-ui/DescriptorField';
 export { default as DownloadButton } from './semantic-ui/DownloadButton';
 export { default as Draggable } from './semantic-ui/Draggable';
+export { default as DropdownButton } from './semantic-ui/DropdownButton';
 export { default as EditModal } from './semantic-ui/EditModal';
 export { default as EditPage, useEditPage } from './semantic-ui/EditPage';
 export { default as EmbeddedList } from './semantic-ui/EmbeddedList';
