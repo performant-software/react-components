@@ -10,6 +10,7 @@ type Option = {
 };
 
 type Props = {
+  color?: string,
   icon?: string,
   options: Array<Option>,
   onChange: (e: Event, { value: any }) => void,
@@ -22,7 +23,7 @@ const DropdownButton = (props: Props) => {
 
   return (
     <Button.Group
-      color='teal'
+      color={props.color}
     >
       <Button
         content={props.text}
@@ -43,6 +44,7 @@ const DropdownButton = (props: Props) => {
 };
 
 DropdownButton.defaultProps = {
+  color: undefined,
   icon: undefined
 };
 
