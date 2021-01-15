@@ -22,7 +22,12 @@ const GooglePlacesSearchBox = (props: Props) => {
     const lat = location.lat();
     const lng = location.lng();
 
-    props.onLocationSelection({ name, lat, lng });
+    props.onLocationSelection({
+      name,
+      lat,
+      lng,
+      result: place
+    });
   };
 
   return (
