@@ -200,6 +200,7 @@ class Items extends Component<Props, {}> {
 
     return (
       <Segment
+        className='empty-list'
         padded='very'
         textAlign='center'
       >
