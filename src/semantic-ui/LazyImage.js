@@ -1,6 +1,6 @@
 // @flow
 
-import React, { memo, useState, type Node } from 'react';
+import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -112,4 +112,4 @@ LazyImage.defaultProps = {
   size: 'medium'
 };
 
-export default memo(LazyImage);
+export default LazyImage;
