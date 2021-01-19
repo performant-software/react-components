@@ -38,6 +38,26 @@ class ItemCollection extends Component<Props, State> {
     };
   }
 
+  /**
+   * Returns the concatenated class names.
+   *
+   * @returns {string}
+   */
+  getClassName() {
+    const classNames = ['item-collection'];
+
+    if (this.props.className) {
+      classNames.push(this.props.className);
+    }
+
+    return classNames.join(' ');
+  }
+
+  /**
+   * Returns the list of items to render based on the current page.
+   *
+   * @returns {Array<T>|*[]}
+   */
   getItems(): Array<any> {
     const endIndex = this.state.page * this.props.perPage;
     return (this.props.items && this.props.items.slice(0, endIndex)) || [];
@@ -93,7 +113,7 @@ class ItemCollection extends Component<Props, State> {
         <Items
           {...this.props}
           items={this.getItems()}
-          className={`item-collection ${this.props.className ? this.props.className : ''}`}
+          className={this.getClassName()}
           onDelete={this.onDelete.bind(this)}
           onSave={this.onSave.bind(this)}
         />
