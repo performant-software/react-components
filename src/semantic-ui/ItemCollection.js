@@ -19,7 +19,6 @@ type Props = {
 };
 
 type State = {
-  items: Array<any>,
   page: number
 };
 
@@ -35,50 +34,20 @@ class ItemCollection extends Component<Props, State> {
     super(props);
 
     this.state = {
-      items: [],
       page: 1
     };
   }
 
-  /**
-   * Loads the data.
-   */
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  /**
-   * Resets the page and the list of items.
-   *
-   * @param prevProps
-   */
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.items !== this.props.items) {
-      this.setState({ page: 1, items: [] }, this.fetchData.bind(this));
-    }
-  }
-
-  /**
-   * Loads the next page of data into the state.
-   */
-  fetchData() {
+  getItems(): Array<any> {
     const endIndex = this.state.page * this.props.perPage;
-    const startIndex = endIndex - this.props.perPage;
-    const items = (this.props.items && this.props.items.slice(startIndex, endIndex)) || [];
-
-    this.setState((state) => ({
-      items: [
-        ...state.items,
-        ...items
-      ]
-    }));
+    return (this.props.items && this.props.items.slice(0, endIndex)) || [];
   }
 
   /**
    * Increments the page number and fetches the data.
    */
   onBottomReached() {
-    this.setState((state) => ({ page: state.page + 1 }), this.fetchData.bind(this));
+    this.setState((state) => ({ page: state.page + 1 }));
   }
 
   /**
@@ -123,7 +92,7 @@ class ItemCollection extends Component<Props, State> {
       >
         <Items
           {...this.props}
-          items={this.state.items}
+          items={this.getItems()}
           className={`item-collection ${this.props.className ? this.props.className : ''}`}
           onDelete={this.onDelete.bind(this)}
           onSave={this.onSave.bind(this)}
