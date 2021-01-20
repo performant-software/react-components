@@ -5,3 +5,7 @@
 .item-list .ui.icon.header {
   display: block;
 }
+
+.item-list .empty-list {
+  opacity: 0.8;
+}
