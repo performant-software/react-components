@@ -35,7 +35,6 @@ const LazyVideo = (props: Props) => {
         as='span'
         fireOnMount
         onTopVisible={() => setVisible(true)}
-        updateOn='repaint'
       >
         <Loader
           active
@@ -50,7 +49,6 @@ const LazyVideo = (props: Props) => {
     <>
       <Transition
         duration={props.duration}
-        transitionOnMount
         visible
       >
         <Dimmer.Dimmable

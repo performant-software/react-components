@@ -53,6 +53,7 @@ export { default as ViewXML } from './semantic-ui/ViewXML';
 
 // Utils
 export { default as Date } from './utils/Date';
+export { default as Element } from './utils/Element';
 export { default as Timer } from './utils/Timer';
 export { default as useDragDrop } from './utils/DragDrop';
 export { default as Map } from './utils/Map';

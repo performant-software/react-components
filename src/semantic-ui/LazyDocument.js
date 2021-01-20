@@ -32,7 +32,6 @@ const LazyDocument = (props: Props) => {
         as='span'
         fireOnMount
         onTopVisible={() => setVisible(true)}
-        updateOn='repaint'
       >
         <Loader
           active
@@ -47,7 +46,6 @@ const LazyDocument = (props: Props) => {
     <>
       <Transition
         duration={props.duration}
-        transitionOnMount
         visible
       >
         <Dimmer.Dimmable
@@ -75,19 +73,22 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          { props.src && props.dimmable && (
+          { (props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                <DownloadButton
-                  content={i18n.t('LazyDocument.buttons.download')}
-                  icon='cloud download'
-                  primary
-                  url={props.src}
-                />
+                { props.src && (
+                  <DownloadButton
+                    content={i18n.t('LazyDocument.buttons.download')}
+                    icon='cloud download'
+                    primary
+                    url={props.src}
+                  />
+                )}
+                { props.children }
               </div>
             </Dimmer>
           )}
