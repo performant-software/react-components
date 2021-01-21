@@ -304,7 +304,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           ? SORT_DESCENDING : SORT_ASCENDING;
       }
 
-      this.setState({ sortColumn, sortDirection }, this.fetchData.bind(this));
+      this.setState({ sortColumn, sortDirection, page: 1 }, this.fetchData.bind(this));
     }
 
     /**
