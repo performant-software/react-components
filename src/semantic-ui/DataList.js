@@ -369,7 +369,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }
 
       const { storage } = this.props.session;
-      const session = JSON.parse(storage.getItem(SESSION_KEY) || SESSION_DEFAULT);
+      const session = storage.getItem(SESSION_KEY) || SESSION_DEFAULT;
 
       const {
         filters = {},
