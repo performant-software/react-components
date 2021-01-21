@@ -70,17 +70,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     constructor(props: Props) {
       super(props);
 
-      this.state = {
-        filters: (props.filters && props.filters.props) || {},
-        items: [],
-        loading: false,
-        page: 1,
-        pages: 1,
-        saved: props.saved || false,
-        search: null,
-        sortColumn: null,
-        sortDirection: null
-      };
+      this.state = this.initializeState(props);
     }
 
     /**
@@ -90,8 +80,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       if (this.props.polling) {
         this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
       }
-
-      this.restoreSession();
     }
 
     /**
@@ -166,6 +154,38 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             });
           });
       });
+    }
+
+    /**
+     * Initializes the state based on the passed props.
+     *
+     * @param props
+     *
+     * @returns {{search: (*|null), sortColumn: (string|string|null), sortDirection: (string|null), pages: number,
+     * saved: (*|boolean), filters: ({component: Component<{}>, props: *,
+     * onChange}|*|{}|boolean|PrettyError.Callback|PrettyError.Callback[]), page: (*|number), loading: boolean,
+     * items: []}}
+     */
+    initializeState(props: Props) {
+      const session = this.restoreSession();
+
+      const filters = session.filters || (props.filters && props.filters.props) || {};
+      const page = session.page || 1;
+      const search = session.search || null;
+      const sortColumn = session.sortColumn || null;
+      const sortDirection = session.sortDirection || null;
+
+      return {
+        filters,
+        items: [],
+        loading: false,
+        page,
+        pages: 1,
+        saved: props.saved || false,
+        search,
+        sortColumn,
+        sortDirection
+      };
     }
 
     /**
@@ -293,6 +313,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
+      console.log('render data list');
       return (
         <>
           <WrappedComponent
@@ -368,27 +389,13 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     restoreSession() {
       if (!(this.props.session && this.props.session.storage)) {
-        return;
+        return {};
       }
 
       const { storage } = this.props.session;
       const session = storage.getItem(SESSION_KEY) || SESSION_DEFAULT;
 
-      const {
-        filters,
-        page,
-        search,
-        sortColumn,
-        sortDirection
-      } = JSON.parse(session);
-
-      this.setState((state) => ({
-        filters: filters || state.filters,
-        page: page || state.page,
-        search: search || state.search,
-        sortColumn: sortColumn || state.sortColumn,
-        sortDirection: sortDirection || state.sortDirection
-      }));
+      return JSON.parse(session);
     }
 
     /**
