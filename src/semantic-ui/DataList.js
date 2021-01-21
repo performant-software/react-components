@@ -20,7 +20,10 @@ type Props = {
   onSave: (item: any) => Promise<any>,
   polling: number,
   saved?: boolean,
-  searchable: boolean
+  searchable: boolean,
+  session: {
+    storage: typeof sessionStorage
+  }
 };
 
 type State = {
@@ -34,6 +37,9 @@ type State = {
   sortColumn: ?string,
   sortDirection: ?string
 };
+
+const SESSION_KEY = 'DataList';
+const SESSION_DEFAULT = '{}';
 
 const SORT_ASCENDING = 'ascending';
 const SORT_DESCENDING = 'descending';
@@ -84,6 +90,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       if (this.props.polling) {
         this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
       }
+
+      this.restoreSession();
     }
 
     /**
@@ -121,6 +129,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Calls the onLoad prop to populate the array of items in the state.
      */
     fetchData() {
+      // Store the session information before fetching the data.
+      this.setSession();
+
+      // Set the loading indicator and fetch the data.
       this.setState({ loading: true }, () => {
         const {
           page,
@@ -224,7 +236,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Resets the filters on the state to the default values.
      */
     onResetFilters() {
-      this.setState({ filters: (this.props.filters && this.props.filters.props) || {} });
+      this.setState({
+        filters: (this.props.filters && this.props.filters.props) || {}
+      });
     }
 
     /**
@@ -344,6 +358,59 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           value={this.state.search}
         />
       );
+    }
+
+    /**
+     * Restores the DataList session object.
+     */
+    restoreSession() {
+      if (!(this.props.session && this.props.session.storage)) {
+        return;
+      }
+
+      const { storage } = this.props.session;
+      const session = JSON.parse(storage.getItem(SESSION_KEY) || SESSION_DEFAULT);
+
+      const {
+        filters = {},
+        page = 1,
+        search = '',
+        sortColumn,
+        sortDirection
+      } = JSON.parse(session);
+
+      this.setState({
+        filters,
+        page,
+        search,
+        sortColumn,
+        sortDirection
+      });
+    }
+
+    /**
+     * Sets the DataList session object.
+     */
+    setSession() {
+      if (!(this.props.session && this.props.session.storage)) {
+        return;
+      }
+
+      const {
+        filters,
+        page,
+        search,
+        sortColumn,
+        sortDirection
+      } = this.state;
+
+      this.props.session.storage.setItem(SESSION_KEY, JSON.stringify({
+        filters,
+        page,
+        search,
+        sortColumn,
+        sortDirection
+      }));
     }
   }
 );
