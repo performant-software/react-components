@@ -599,13 +599,10 @@ export const WithPolling = useDragDrop(() => (
       component: AddModal
     }}
     onCopy={action('copy')}
-    onLoad={(params) => {
-      console.log('Polling!')
-      return Api.onLoad(_.extend(params, {
-        items,
-        perPage: number('Per page', 10)
-      }));
-    }}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
     polling={5000}

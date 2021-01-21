@@ -313,7 +313,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
-      console.log('render data list');
       return (
         <>
           <WrappedComponent
