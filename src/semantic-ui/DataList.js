@@ -372,20 +372,20 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       const session = storage.getItem(SESSION_KEY) || SESSION_DEFAULT;
 
       const {
-        filters = {},
-        page = 1,
-        search = '',
-        sortColumn,
-        sortDirection
-      } = JSON.parse(session);
-
-      this.setState({
         filters,
         page,
         search,
         sortColumn,
         sortDirection
-      });
+      } = JSON.parse(session);
+
+      this.setState((state) => ({
+        filters: filters || state.filters,
+        page: page || state.page,
+        search: search || state.search,
+        sortColumn: sortColumn || state.sortColumn,
+        sortDirection: sortDirection || state.sortDirection
+      }));
     }
 
     /**
