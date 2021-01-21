@@ -276,12 +276,15 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      *
      * @param sortColumn
      */
-    onSort(sortColumn: string) {
-      this.setState((state) => ({
-        sortColumn,
-        sortDirection: (state.sortColumn === sortColumn && state.sortDirection === SORT_ASCENDING)
-          ? SORT_DESCENDING : SORT_ASCENDING
-      }), this.fetchData.bind(this));
+    onSort(sortColumn: string, direction?: string) {
+      let sortDirection = direction;
+
+      if (!sortDirection) {
+        sortDirection = this.state.sortColumn === sortColumn && this.state.sortDirection === SORT_ASCENDING
+          ? SORT_DESCENDING : SORT_ASCENDING;
+      }
+
+      this.setState({ sortColumn, sortDirection }, this.fetchData.bind(this));
     }
 
     /**
@@ -416,3 +419,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 );
 
 export default useDataList;
+
+export {
+  SORT_ASCENDING,
+  SORT_DESCENDING
+};
