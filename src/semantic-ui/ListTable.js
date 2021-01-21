@@ -10,7 +10,8 @@ import type { Column } from './DataTable';
 
 type Props = {
   columns: Array<Column>,
-  onSort: (sortColumn: string, sortDirection: string) => void,
+  page: number,
+  onSort: (sortColumn: string, sortDirection: string, page?: number) => void,
   sortColumn: string,
   sortDirection: string
 };
@@ -47,10 +48,10 @@ const ListTable = (props: Props) => {
    * sortable column.
    */
   useEffect(() => {
-    const { sortColumn, sortDirection = SORT_ASCENDING } = props;
+    const { page, sortColumn, sortDirection = SORT_ASCENDING } = props;
 
     if (props.sortColumn) {
-      props.onSort(sortColumn, sortDirection);
+      props.onSort(sortColumn, sortDirection, page);
     } else {
       onColumnClick(_.findWhere(props.columns, { sortable: true }));
     }

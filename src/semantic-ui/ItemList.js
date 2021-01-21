@@ -12,7 +12,8 @@ type Sort = {
 };
 
 type Props = {
-  onSort: (column: string, direction?: string) => void,
+  page: number,
+  onSort: (column: string, direction?: string, page?: number) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
   sortDirection?: string
@@ -29,7 +30,7 @@ type Props = {
  */
 const ItemList = (props: Props) => {
   useEffect(() => {
-    const { sortDirection = SORT_ASCENDING } = props;
+    const { page, sortDirection = SORT_ASCENDING } = props;
 
     let { sortColumn } = props;
 
@@ -38,7 +39,7 @@ const ItemList = (props: Props) => {
       sortColumn = defaultSort && defaultSort.value;
     }
 
-    props.onSort(sortColumn, sortDirection);
+    props.onSort(sortColumn, sortDirection, page);
   }, []);
 
   return (
