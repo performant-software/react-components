@@ -21,6 +21,13 @@ export const Default = () => {
   );
 };
 
+export const Uncontrolled = () => (
+  <DatePicker
+    onChange={() => {}}
+    value={null}
+  />
+);
+
 export const AsForm = () => {
   const [date, setDate] = useState(null);
 
