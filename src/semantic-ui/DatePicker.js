@@ -1,8 +1,8 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
-import { Icon, Portal } from 'semantic-ui-react';
+import { Icon, Transition } from 'semantic-ui-react';
 import DateInput from './DateInput';
 import './DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -17,6 +17,21 @@ type Props = {
 
 const DatePicker = (props: Props) => {
   const [calendar, setCalendar] = useState(false);
+  const calendarWrapper = useRef(null);
+
+  useEffect(() => {
+    const onDocumentClick = (event) => {
+      if (calendarWrapper.current && !calendarWrapper.current.contains(event.target)) {
+        setCalendar(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', onDocumentClick);
+
+    // Unbind the event listener
+    return () => document.removeEventListener('mousedown', onDocumentClick);
+  }, [calendarWrapper]);
 
   return (
     <>
@@ -27,25 +42,32 @@ const DatePicker = (props: Props) => {
         onClick={() => setCalendar(true)}
         value={props.value}
       />
-      <Portal
-        onClose={() => setCalendar(false)}
-        open={calendar}
+      <Transition
+        visible={calendar}
       >
-        <Calendar
-          locale={props.locale}
-          onChange={(date) => {
-            props.onChange(date);
-            if (props.closeOnSelection) {
-              setCalendar(false);
-            }
+        <div
+          ref={calendarWrapper}
+          style={{
+            position: 'absolute',
+            zIndex: '999'
           }}
-          next2Label={<Icon name='angle double right' />}
-          nextLabel={<Icon name='chevron right' />}
-          prev2Label={<Icon name='angle double left' />}
-          prevLabel={<Icon name='chevron left' />}
-          value={props.value}
-        />
-      </Portal>
+        >
+          <Calendar
+            locale={props.locale}
+            onChange={(date) => {
+              props.onChange(date);
+              if (props.closeOnSelection) {
+                setCalendar(false);
+              }
+            }}
+            next2Label={<Icon name='angle double right' />}
+            nextLabel={<Icon name='chevron right' />}
+            prev2Label={<Icon name='angle double left' />}
+            prevLabel={<Icon name='chevron left' />}
+            value={props.value}
+          />
+        </div>
+      </Transition>
     </>
   );
 };
