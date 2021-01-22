@@ -1,0 +1,6 @@
+.date-input.ui.icon.input > i.icon.right {
+  cursor: pointer;
+  pointer-events: inherit;
+  left: auto;
+  right: 1px;
+}

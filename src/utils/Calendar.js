@@ -1,6 +1,7 @@
 // @flow
 
 import moment from 'moment-islamic-civil';
+import 'moment/min/locales';
 
 const DEFAULT_LOCALE = 'en';
 
@@ -176,7 +177,7 @@ class Calendar {
   moment(date: ?any = null) {
     const m = date ? moment(date) : moment();
     m.locale(this.locale);
-
+    
     return m;
   }
 
@@ -207,7 +208,7 @@ Calendar.DateFormats = {
   [Calendar.Calendars.gregorian]: {
     '0': 'YYYY',
     '1': 'MMMM YYYY',
-    '2': 'M/D/YYYY'
+    '2': 'L'
   },
   [Calendar.Calendars.hijri]: {
     '0': 'iYYYY',

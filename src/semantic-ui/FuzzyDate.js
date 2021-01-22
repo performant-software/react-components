@@ -13,6 +13,7 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Calendar from '../utils/Calendar';
+import DateField from './DateInput';
 import './FuzzyDate.css';
 
 type DateInput = {
@@ -328,20 +329,11 @@ class FuzzyDate extends Component<Props, State> {
   render() {
     return (
       <>
-        <Input
-          icon='calendar alternate outline'
-          iconPosition='left'
+        <DateField
+          display={this.state.display}
           onClick={this.onEdit.bind(this)}
-          readOnly
-          value={this.state.display}
+          onChange={this.onClear.bind(this)}
         />
-        <Button.Group>
-          <Button
-            basic
-            icon='times'
-            onClick={this.onClear.bind(this)}
-          />
-        </Button.Group>
         <Modal
           as={Form}
           className='fuzzy-date-modal'
@@ -576,7 +568,7 @@ class FuzzyDate extends Component<Props, State> {
 FuzzyDate.defaultProps = {
   calendar: Calendar.Calendars.gregorian,
   description: true,
-  locale: 'en',
+  locale: navigator.language,
   title: undefined
 };
 
