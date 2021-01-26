@@ -3,24 +3,23 @@
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import DataTable from './DataTable';
-import useDataList from './DataList';
+import useDataList, { SORT_ASCENDING, SORT_DESCENDING } from './DataList';
 import './ListTable.css';
 
 import type { Column } from './DataTable';
 
 type Props = {
   columns: Array<Column>,
-  onSort: (sortColumn: string, sortDirection: string) => void,
+  page: number,
+  onSort: (sortColumn: string, sortDirection: string, page?: number) => void,
   sortColumn: string,
   sortDirection: string
 };
 
-const SORT_ASCENDING = 'ascending';
-const SORT_DESCENDING = 'descending';
-
 const ListTable = (props: Props) => {
   /**
-   * TODO: Comment me
+   * Sorts the list by the selected column, and/or reverse the direction.
+   *
    * @param column
    */
   const onColumnClick = (column) => {
@@ -45,10 +44,17 @@ const ListTable = (props: Props) => {
   };
 
   /**
-   * TODO: Comment me
+   * Initializes the list by calling the onSort prop. If no sortColumn prop is passed, we'll sort the list by the first
+   * sortable column.
    */
   useEffect(() => {
-    onColumnClick(_.findWhere(props.columns, { sortable: true }));
+    const { page, sortColumn, sortDirection = SORT_ASCENDING } = props;
+
+    if (props.sortColumn) {
+      props.onSort(sortColumn, sortDirection, page);
+    } else {
+      onColumnClick(_.findWhere(props.columns, { sortable: true }));
+    }
   }, []);
 
   return (

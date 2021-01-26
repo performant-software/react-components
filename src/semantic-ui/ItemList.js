@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import Items from './Items';
-import useDataList from './DataList';
+import useDataList, { SORT_ASCENDING } from './DataList';
 
 type Sort = {
   key: any,
@@ -12,8 +12,11 @@ type Sort = {
 };
 
 type Props = {
-  onSort: (value: any) => void,
-  sort?: Array<Sort>
+  page: number,
+  onSort: (column: string, direction?: string, page?: number) => void,
+  sort?: Array<Sort>,
+  sortColumn?: string,
+  sortDirection?: string
 };
 
 /**
@@ -27,8 +30,16 @@ type Props = {
  */
 const ItemList = (props: Props) => {
   useEffect(() => {
-    const { value } = (_.first(props.sort) || {});
-    props.onSort(value);
+    const { page, sortDirection = SORT_ASCENDING } = props;
+
+    let { sortColumn } = props;
+
+    if (!sortColumn) {
+      const defaultSort = _.first(props.sort);
+      sortColumn = defaultSort && defaultSort.value;
+    }
+
+    props.onSort(sortColumn, sortDirection, page);
   }, []);
 
   return (
