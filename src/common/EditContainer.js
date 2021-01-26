@@ -37,7 +37,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       super(props);
 
       this.state = {
-        item: _.defaults(props.item || {}, props.defaults || {}),
+        item: this.getDefaultItem(props),
         loading: false,
         saving: false,
         validationErrors: []
@@ -71,6 +71,17 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     componentWillUnmount() {
       this.onSetState({ saving: false });
+    }
+
+    /**
+     * Returns the default item for the passed props.
+     *
+     * @param props
+     *
+     * @returns {*}
+     */
+    getDefaultItem(props: Props) {
+      return _.defaults(props.item || {}, props.defaults || {});
     }
 
     /**
@@ -227,6 +238,13 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Resets the item on the state to the default item and calls the onReset prop.
+     */
+    onReset() {
+      this.setState({ item: this.getDefaultItem(this.props) });
+    }
+
+    /**
      * Saves the current item.
      */
     onSave() {
@@ -346,6 +364,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
           onDeleteChildAssociation={this.onDeleteChildAssociation.bind(this)}
           onMultiAddChildAssociations={this.onMultiAddChildAssociations.bind(this)}
+          onReset={this.onReset.bind(this)}
           onSave={this.onSave.bind(this)}
           onSaveChildAssociation={this.onSaveChildAssociation.bind(this)}
           onTextInputChange={this.onTextInputChange.bind(this)}
@@ -407,6 +426,7 @@ export type EditContainerProps = {
   onCheckboxInputChange: (key: string, value: any) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,
   onMultiAddChildAssociations: (association: string, Array<any>) => void,
+  onReset: () => void,
   onSave: () => void,
   onSaveChildAssociation: (association: string, child: any) => void,
   onSetState: (any) => void,

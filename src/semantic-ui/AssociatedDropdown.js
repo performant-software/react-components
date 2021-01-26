@@ -19,12 +19,12 @@ type Props = {
   className?: string,
   collectionName: string,
   modal?: {
-    component: Component,
+    component: Component<{}>,
     props: any,
     onSave: (item: any) => void,
     state: any
   },
-  onSearch: () => void,
+  onSearch: () => Promise<any>,
   onSelection: () => void,
   placeholder?: string,
   renderOption: (option: any) => Option,
@@ -137,14 +137,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * Executes the search to load the options.
    */
   onSearch() {
-    this.props
-      .onSearch(this.state.searchQuery)
-      .then(({ data }) => {
-        const items = data[this.props.collectionName];
-        const options = items.map(this.props.renderOption.bind(this));
-
-        this.setState({ items, options });
-      });
+    this.setState({ loading: true }, this.search.bind(this));
   }
 
   /**
@@ -155,6 +148,17 @@ class AssociatedDropdown extends Component<Props, State> {
    */
   onSearchChange(e, { searchQuery }) {
     this.setState({ searchQuery });
+  }
+
+  search() {
+    this.props
+      .onSearch(this.state.searchQuery)
+      .then(({ data }) => {
+        const items = data[this.props.collectionName];
+        const options = items.map(this.props.renderOption.bind(this));
+
+        this.setState({ items, options, loading: false });
+      });
   }
 
   /**
