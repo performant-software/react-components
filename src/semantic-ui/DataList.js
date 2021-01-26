@@ -253,15 +253,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Resets the filters on the state to the default values.
-     */
-    onResetFilters() {
-      this.setState({
-        filters: (this.props.filters && this.props.filters.props) || {}
-      });
-    }
-
-    /**
      * Calls the onSave prop and reloads the data.
      *
      * @param item
@@ -322,7 +313,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               component: this.props.filters && this.props.filters.component,
               onChange: this.onFilterChange.bind(this),
               props: {
-                onReset: this.onResetFilters.bind(this),
                 item: this.state.filters
               }
             }}
