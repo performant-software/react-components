@@ -14,6 +14,8 @@ export { default as CancelButton } from './semantic-ui/CancelButton';
 export { default as ColorButton } from './semantic-ui/ColorButton';
 export { default as ColorPickerModal } from './semantic-ui/ColorPickerModal';
 export { default as useDataList } from './semantic-ui/DataList';
+export { default as DateInput } from './semantic-ui/DateInput';
+export { default as DatePicker } from './semantic-ui/DatePicker';
 export { default as DescriptorField } from './semantic-ui/DescriptorField';
 export { default as DownloadButton } from './semantic-ui/DownloadButton';
 export { default as Draggable } from './semantic-ui/Draggable';

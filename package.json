@@ -19,6 +19,7 @@
   "dependencies": {
     "moment": "^2.27.0",
     "moment-islamic-civil": "ACGC/moment-islamic-civil",
+    "react-calendar": "^3.3.0",
     "react-color": "^2.18.1",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
