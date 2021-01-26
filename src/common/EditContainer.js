@@ -10,7 +10,6 @@ type Props = {
   item?: any,
   onClose: () => void,
   onInitialize?: (id: number) => Promise<any>,
-  onReset?: () => void,
   onSave: (item: any) => Promise<any>,
   required?: Array<string>,
   resolveValidationError?: (error: string, item: any, status: number) => Array<string>,
@@ -242,11 +241,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * Resets the item on the state to the default item and calls the onReset prop.
      */
     onReset() {
-      this.setState({ item: this.getDefaultItem(this.props) }, () => {
-        if (this.props.onReset) {
-          this.props.onReset();
-        }
-      });
+      this.setState({ item: this.getDefaultItem(this.props) });
     }
 
     /**
