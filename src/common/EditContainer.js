@@ -37,7 +37,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       super(props);
 
       this.state = {
-        item: this.getDefaultItem(props),
+        item: _.defaults(props.item || {}, props.defaults || {}),
         loading: false,
         saving: false,
         validationErrors: []
@@ -71,17 +71,6 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     componentWillUnmount() {
       this.onSetState({ saving: false });
-    }
-
-    /**
-     * Returns the default item for the passed props.
-     *
-     * @param props
-     *
-     * @returns {*}
-     */
-    getDefaultItem(props: Props) {
-      return _.defaults(props.item || {}, props.defaults || {});
     }
 
     /**
@@ -241,7 +230,9 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * Resets the item on the state to the default item and calls the onReset prop.
      */
     onReset() {
-      this.setState({ item: this.getDefaultItem(this.props) });
+      this.setState({
+        item: this.props.defaults
+      });
     }
 
     /**
