@@ -83,6 +83,12 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }
     }
 
+    componentDidUpdate(prevProps: Props) {
+      if (prevProps.saved !== this.props.saved) {
+        this.setState({ saved: this.props.saved });
+      }
+    }
+
     /**
      * Tears down the polling interval.
      */
