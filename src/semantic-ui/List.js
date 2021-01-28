@@ -361,7 +361,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Button
-          basic={this.props.addButton.basic === true}
+          basic={this.props.addButton.basic !== false}
           color={this.props.addButton.color}
           key={BUTTON_KEY_ADD}
           onClick={this.onAddButton.bind(this)}
