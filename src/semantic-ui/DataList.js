@@ -83,9 +83,15 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }
     }
 
+    /**
+     * Sets the saved prop on the state (if changed) and fetches the data. This can provide as a way to manually toggle
+     * a save event outside of the DataList context.
+     *
+     * @param prevProps
+     */
     componentDidUpdate(prevProps: Props) {
       if (prevProps.saved !== this.props.saved) {
-        this.setState({ saved: this.props.saved });
+        this.setState({ saved: this.props.saved }, this.fetchData.bind(this));
       }
     }
 
