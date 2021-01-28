@@ -21,7 +21,8 @@ type Props = {
   polling: number,
   saved?: boolean,
   searchable: boolean,
-  session: {
+  session?: {
+    key: string,
     storage: typeof sessionStorage
   }
 };
@@ -154,6 +155,19 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             });
           });
       });
+    }
+
+    /**
+     * Returns the session storage key for the current list.
+     *
+     * @returns {string|null}
+     */
+    getSessionKey() {
+      if (!this.props.session) {
+        return null;
+      }
+
+      return `${SESSION_KEY}.${this.props.session.key}`;
     }
 
     /**
@@ -377,13 +391,13 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Restores the DataList session object.
      */
     restoreSession() {
-      if (!(this.props.session && this.props.session.storage)) {
+      const key = this.getSessionKey();
+
+      if (!key) {
         return {};
       }
 
-      const { storage } = this.props.session;
-      const session = storage.getItem(SESSION_KEY) || SESSION_DEFAULT;
-
+      const session = sessionStorage.getItem(key) || SESSION_DEFAULT;
       return JSON.parse(session);
     }
 
@@ -391,7 +405,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Sets the DataList session object.
      */
     setSession() {
-      if (!(this.props.session && this.props.session.storage)) {
+      const key = this.getSessionKey();
+      
+      if (!key) {
         return;
       }
 
@@ -403,7 +419,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         sortDirection
       } = this.state;
 
-      this.props.session.storage.setItem(SESSION_KEY, JSON.stringify({
+      sessionStorage.setItem(key, JSON.stringify({
         filters,
         page,
         search,
