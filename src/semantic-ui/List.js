@@ -37,6 +37,7 @@ type ListButton = {
 type Props = {
   actions: Array<Action>,
   addButton: {
+    basic: boolean,
     color: string,
     location: string,
     onClick?: () => void
@@ -102,8 +103,9 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     static defaultProps = {
       actions: [],
       addButton: {
-        location: 'top',
-        color: 'green'
+        basic: true,
+        color: 'green',
+        location: 'top'
       },
       buttons: [],
       className: '',
@@ -359,7 +361,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Button
-          basic
+          basic={this.props.addButton.basic !== false}
           color={this.props.addButton.color}
           key={BUTTON_KEY_ADD}
           onClick={this.onAddButton.bind(this)}
