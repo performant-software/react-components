@@ -19,6 +19,7 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   polling: number,
+  resolveErrors?: (error: any) => Array<string>,
   saved?: boolean,
   searchable: boolean,
   session?: {
@@ -28,6 +29,7 @@ type Props = {
 };
 
 type State = {
+  error: ?any,
   filters: any,
   items: Array<any>,
   loading: boolean,
@@ -202,6 +204,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       const sortDirection = session.sortDirection || null;
 
       return {
+        error: null,
         filters,
         items: [],
         loading: false,
@@ -238,7 +241,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     onDelete(selectedItem: any) {
       return this.props
         .onDelete(selectedItem)
-        .then(this.afterDelete.bind(this));
+        .then(this.afterDelete.bind(this))
+        .catch(this.onError.bind(this));
     }
 
     /**
@@ -250,6 +254,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       return this.props
         .onDeleteAll()
         .then(this.afterDeleteAll.bind(this));
+    }
+
+    onError(error: any) {
+      return this.props.resolveErrors && this.setState({ error });
     }
 
     /**
@@ -366,6 +374,19 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               />
               <Message.Content
                 content={i18n.t('Common.messages.save.content')}
+              />
+            </Toaster>
+          )}
+          { this.state.error && (
+            <Toaster
+              onDismiss={() => this.setState({ error: false })}
+              type={Toaster.MessageTypes.negative}
+            >
+              <Message.Header
+                content={i18n.t('Common.messages.error.header')}
+              />
+              <Message.List
+                items={this.props.resolveErrors && this.props.resolveErrors(this.state.error)}
               />
             </Toaster>
           )}
