@@ -367,6 +367,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           { this.state.saved && (
             <Toaster
               onDismiss={() => this.setState({ saved: false })}
+              timeout={0}
               type={Toaster.MessageTypes.positive}
             >
               <Message.Header
