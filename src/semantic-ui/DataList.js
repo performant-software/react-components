@@ -367,7 +367,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           { this.state.saved && (
             <Toaster
               onDismiss={() => this.setState({ saved: false })}
-              timeout={0}
               type={Toaster.MessageTypes.positive}
             >
               <Message.Header
@@ -381,6 +380,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           { this.state.error && (
             <Toaster
               onDismiss={() => this.setState({ error: false })}
+              timeout={0}
               type={Toaster.MessageTypes.negative}
             >
               <Message.Header
