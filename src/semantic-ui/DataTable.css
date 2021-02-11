@@ -22,6 +22,6 @@
   margin-bottom: 10px;
 }
 
-.data-table .ui.celled.table tr th {
+.data-table.ui.celled.table tr th {
   position: relative;
 }

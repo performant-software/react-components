@@ -167,6 +167,7 @@ class DataTable extends Component<Props, State> {
   render() {
     return (
       <Table
+        className='data-table'
         {...this.props.tableProps}
       >
         <Table.Header>
