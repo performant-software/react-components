@@ -256,6 +256,13 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         .then(this.afterDeleteAll.bind(this));
     }
 
+    /**
+     * Sets the error on the state if the component is configured to display errors.
+     *
+     * @param error
+     *
+     * @returns {*|void|Promise<State>}
+     */
     onError(error: any) {
       return this.props.resolveErrors && this.setState({ error });
     }
