@@ -25,3 +25,7 @@
 .data-table.ui.celled.table tr th {
   position: relative;
 }
+
+.data-table.ui.celled.table tr td.actions-cell {
+  white-space: nowrap;
+}
