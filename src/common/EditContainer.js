@@ -202,7 +202,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     onMultiAddChildAssociations(association: string, children: any) {
       const items = this.state.item[association];
-      
+
       // Add new children or update existing children
       _.each(children, this.onSaveChildAssociation.bind(this, association));
 
