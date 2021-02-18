@@ -27,7 +27,7 @@ const EditModal = (props: Props) => {
   const hasErrors = !!(props.errors && props.errors.length);
 
   // Allow the user to clear the error toaster. If the set of validation errors changes, display the toaster again.
-  useEffect(() => setShowToaster(true), [props.errors]);
+  // useEffect(() => setShowToaster(true), [props.errors]);
 
   return (
     <OuterComponent
