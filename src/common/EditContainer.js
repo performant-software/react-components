@@ -20,7 +20,7 @@ type State = {
   item: any,
   loading: boolean,
   saving: boolean,
-  validationErrors: Array<string>
+  validationErrors: any
 };
 
 const ERROR_EMPTY = 'can\'t be blank';
@@ -151,7 +151,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * @param status
      */
     onError({ response: { data: { errors = {} }, status } }: any) {
-      const validationErrors = [];
+      const validationErrors = {};
 
       _.each(Object.keys(errors), (key) => {
         const fieldErrors = errors[key];
