@@ -23,11 +23,8 @@ type Props = EditContainerProps & {
 const EditModal = (props: Props) => {
   const OuterComponent = props.component;
 
-  const [showToaster, setShowToaster] = useState(true);
+  const [showToaster, setShowToaster] = useState(false);
   const hasErrors = !!(props.errors && props.errors.length);
-
-  // Allow the user to clear the error toaster. If the set of validation errors changes, display the toaster again.
-  useEffect(() => setShowToaster(true), [props.errors]);
 
   return (
     <OuterComponent
@@ -62,7 +59,10 @@ const EditModal = (props: Props) => {
       >
         <Button
           disabled={props.saving}
-          onClick={props.onSave.bind(this)}
+          onClick={() => {
+            setShowToaster(true);
+            return props.onSave();
+          }}
           primary
           size='medium'
           type='submit'

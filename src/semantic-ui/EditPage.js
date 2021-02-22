@@ -50,7 +50,7 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
 
       this.state = {
         currentTab: '',
-        showToaster: true
+        showToaster: false
       };
     }
 
@@ -114,7 +114,10 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
           className='button-container'
         >
           <SaveButton
-            onClick={this.props.onSave.bind(this)}
+            onClick={() => {
+              this.setState({ showToaster: true });
+              return this.props.onSave();
+            }}
             saving={this.props.saving}
           />
           <CancelButton
@@ -188,7 +191,7 @@ export const useEditPage = (WrappedComponent: ComponentType<any>) => (
           >
             <Menu.Item>
               <SaveButton
-                onClick={this.props.onSave.bind(this)}
+                onClick={this.onSave.bind(this)}
                 saving={this.props.saving}
               />
               <CancelButton
