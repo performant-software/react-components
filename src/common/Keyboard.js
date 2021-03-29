@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import Keyboard from 'simple-keyboard';
-import 'simple-keyboard/build/css/index.css';
+//import 'simple-keyboard/build/css/index.css';
 
 type Props = {
   layout: any,
