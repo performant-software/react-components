@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import { Icon, Transition } from 'semantic-ui-react';
 import DateInput from './DateInput';
 import './DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
+//import 'react-calendar/dist/Calendar.css';
 
 type Props = {
   closeOnSelection?: boolean,
