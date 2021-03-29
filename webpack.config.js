@@ -21,7 +21,7 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
     library: '',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'commonjs2'
   },
   plugins: [
     new CleanWebpackPlugin()
@@ -34,6 +34,10 @@ module.exports = {
     }, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
+      include: path.resolve(__dirname, './src')
+    }, {
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
       include: path.resolve(__dirname, './src')
     }, {
       test: /\.xml$/,
