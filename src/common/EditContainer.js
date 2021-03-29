@@ -20,7 +20,7 @@ type State = {
   item: any,
   loading: boolean,
   saving: boolean,
-  validationErrors: Array<string>
+  validationErrors: any
 };
 
 const ERROR_EMPTY = 'can\'t be blank';
@@ -151,7 +151,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * @param status
      */
     onError({ response: { data: { errors = {} }, status } }: any) {
-      const validationErrors = [];
+      const validationErrors = {};
 
       _.each(Object.keys(errors), (key) => {
         const fieldErrors = errors[key];
@@ -202,10 +202,12 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     onMultiAddChildAssociations(association: string, children: any) {
       const items = this.state.item[association];
-      const childrenToAdd = _.filter(children, (child) => !_.find(items, this.isChild.bind(this, child)));
-      const childrenToRemove = _.filter(items, (item) => !_.find(children, this.isChild.bind(this, item)));
 
-      _.each(childrenToAdd, this.onSaveChildAssociation.bind(this, association));
+      // Add new children or update existing children
+      _.each(children, this.onSaveChildAssociation.bind(this, association));
+
+      // Remove any children that no longer exist
+      const childrenToRemove = _.filter(items, (item) => !_.find(children, this.isChild.bind(this, item)));
       _.each(childrenToRemove, this.onDeleteChildAssociation.bind(this, association));
     }
 
