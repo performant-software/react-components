@@ -2,6 +2,7 @@
 
 // Common
 export { default as useEditContainer } from './common/EditContainer';
+export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 
 // Semantic UI
