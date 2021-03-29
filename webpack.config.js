@@ -16,9 +16,7 @@ module.exports = {
   mode,
   devtool,
   entry: './src/index.js',
-  externals: [nodeExternals({
-    allowlist: ['simple-keyboard', 'react-date-picker']
-  })],
+  externals: [nodeExternals()],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
