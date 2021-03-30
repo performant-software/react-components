@@ -12,8 +12,6 @@ import JapaneseLayout from 'simple-keyboard-layouts/build/layouts/japanese';
 
 import Keyboard from '../../../src/common/Keyboard';
 
-import 'simple-keyboard/build/css/index.css';
-
 export default {
   title: 'Components/Common/Keyboard',
   decorators: [withA11y, withKnobs]
