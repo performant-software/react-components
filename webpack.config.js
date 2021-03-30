@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 dotenv.config();
 
@@ -15,7 +16,6 @@ if (mode === 'development') {
 module.exports = {
   mode,
   devtool,
-  target: process.env.TARGET || 'web',
   entry: './src/index.js',
   externals: [nodeExternals()],
   output: {
@@ -25,7 +25,8 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin()
   ],
   module: {
     rules: [{
@@ -34,7 +35,7 @@ module.exports = {
       use: ['babel-loader']
     }, {
       test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
+      use: [MiniCssExtractPlugin.loader, 'css-loader'],
       include: path.resolve(__dirname, './src')
     }, {
       test: /\.scss$/,
