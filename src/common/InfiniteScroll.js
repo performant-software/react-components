@@ -1,6 +1,7 @@
 // @flow
 
 import { useCallback, useEffect, type Element } from 'react';
+import { isBrowser } from '../utils/Browser';
 
 type Props = {
   children: Element<any>,
@@ -20,7 +21,7 @@ const InfiniteScroll = (props: Props) => {
 
     if (props.context) {
       scrollContainer = props.context.current;
-    } else {
+    } else if (isBrowser()) {
       scrollContainer = window;
     }
 
@@ -37,7 +38,7 @@ const InfiniteScroll = (props: Props) => {
 
     if (props.context) {
       scrollElement = props.context.current;
-    } else {
+    } else if (isBrowser()) {
       scrollElement = document.documentElement;
     }
 
