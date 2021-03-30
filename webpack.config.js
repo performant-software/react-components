@@ -15,6 +15,7 @@ if (mode === 'development') {
 module.exports = {
   mode,
   devtool,
+  target: process.env.TARGET || 'web',
   entry: './src/index.js',
   externals: [nodeExternals()],
   output: {
