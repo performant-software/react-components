@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import Keyboard from 'simple-keyboard';
-import 'simple-keyboard/build/css/index.css';
+import './Keyboard.css';
 
 type Props = {
   layout: any,
@@ -33,7 +33,7 @@ const KeyboardSimple = (props: Props) => {
   // Sets up the keyboard reference and the initial value when the component is first rendered.
   useEffect(() => {
     const { layout, onChange } = props;
-    keyboardRef.current = new Keyboard({ layout, onChange, onKeyPress });
+    keyboardRef.current = new Keyboard({ ...layout, onChange, onKeyPress });
     keyboardRef.current.setInput(props.value);
   }, []);
 

@@ -11,6 +11,7 @@ import {
   Segment
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import { isBrowser } from '../utils/Browser';
 import './VideoFrameSelector.css';
 
 type Props = {
@@ -107,7 +108,7 @@ const VideoFrameSelector = (props: Props) => {
             onClick={() => {
               const video = videoRef.current;
 
-              if (video) {
+              if (video && isBrowser()) {
                 const canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;

@@ -16,6 +16,7 @@ import useColumnSelector from './DataTableColumnSelector';
 import './DataTable.css';
 
 import type { Action } from './List';
+import { isBrowser } from '../utils/Browser';
 
 type Column = {
   className?: string,
@@ -82,7 +83,7 @@ class DataTable extends Component<Props, State> {
    * clears the resize object on the state.
    */
   afterColumnResize() {
-    if (this.state.resize) {
+    if (this.state.resize && isBrowser()) {
       document.addEventListener('click', this.onClick, true);
       this.setState({ resize: undefined });
     }
@@ -103,16 +104,20 @@ class DataTable extends Component<Props, State> {
    * Adds the mousemove and mouseup event listeners for dynamic column resizing.
    */
   componentDidMount() {
-    document.addEventListener('mousemove', this.onMouseMove);
-    document.addEventListener('mouseup', this.onMouseUp);
+    if (isBrowser()) {
+      document.addEventListener('mousemove', this.onMouseMove);
+      document.addEventListener('mouseup', this.onMouseUp);
+    }
   }
 
   /**
    * Removes the mousemove and mouseup event listeners.
    */
   componentWillUnmount() {
-    document.removeEventListener('mousemove', this.onMouseMove);
-    document.removeEventListener('mouseup', this.onMouseUp);
+    if (isBrowser()) {
+      document.removeEventListener('mousemove', this.onMouseMove);
+      document.removeEventListener('mouseup', this.onMouseUp);
+    }
   }
 
   /**
@@ -156,7 +161,10 @@ class DataTable extends Component<Props, State> {
    */
   onPreventClick(e: Event) {
     e.stopPropagation();
-    document.removeEventListener('click', this.onClick, true);
+
+    if (isBrowser()) {
+      document.removeEventListener('click', this.onClick, true);
+    }
   }
 
   /**

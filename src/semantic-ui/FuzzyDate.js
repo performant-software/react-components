@@ -14,6 +14,7 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Calendar from '../utils/Calendar';
 import DateField from './DateInput';
+import { isBrowser } from '../utils/Browser';
 import './FuzzyDate.css';
 
 type DateInput = {
@@ -568,7 +569,7 @@ class FuzzyDate extends Component<Props, State> {
 FuzzyDate.defaultProps = {
   calendar: Calendar.Calendars.gregorian,
   description: true,
-  locale: navigator.language,
+  locale: isBrowser() && navigator.language,
   title: undefined
 };
 
