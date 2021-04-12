@@ -1,0 +1,12 @@
+// @flow
+
+import type { EditContainerProps } from './common/EditContainer';
+import type { EditPageProps } from './semantic-ui/EditPage';
+import type { FileUploadProps } from './semantic-ui/FileUploadModal';
+
+declare module 'react-components' {
+  declare export type EditContainerProps = EditContainerProps;
+  declare export type EditModalProps = EditContainerProps;
+  declare export type EditPageProps = EditPageProps;
+  declare export type FileUploadProps = FileUploadProps;
+}
