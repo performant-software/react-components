@@ -61,3 +61,9 @@ export { default as Element } from './utils/Element';
 export { default as Timer } from './utils/Timer';
 export { default as useDragDrop } from './utils/DragDrop';
 export { default as Map } from './utils/Map';
+
+// Types
+export type { EditContainerProps as EditModalProps } from './common/EditContainer'; // Backwards compatability
+export type { EditContainerProps } from './common/EditContainer';
+export type { EditPageProps } from './semantic-ui/EditPage';
+export type { FileUploadProps } from './semantic-ui/FileUploadModal';
