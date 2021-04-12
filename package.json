@@ -4,12 +4,12 @@
   "description": "A library of shared React components",
   "files": [
     "build",
-    "index.js",
-    "types.js"
+    "types",
+    "index.js"
   ],
   "style": "build/styles.css",
   "scripts": {
-    "build": "webpack --mode production && flow-copy-source -v src build",
+    "build": "webpack --mode production && flow-copy-source -v src types",
     "build-storybook": "build-storybook",
     "flow": "flow",
     "prepare": "npm run build",
