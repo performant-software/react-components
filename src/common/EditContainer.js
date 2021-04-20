@@ -423,7 +423,6 @@ export type EditContainerProps = {
   onSave: () => void,
   onSaveChildAssociation: (association: string, child: any) => void,
   onSetState: (any) => void,
-  onTextInputChange: (key: string, value: any) => void,
-  saving: boolean,
-  t: () => void
+  onTextInputChange: (key: string, e: ?Event, value: any) => void,
+  saving: boolean
 };
