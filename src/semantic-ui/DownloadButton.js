@@ -1,27 +1,24 @@
 // @flow
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from 'semantic-ui-react';
 
 type Props = {
   url: string
 };
 
-const DownloadButton = ({ url, ...button }: Props) => {
-  const linkRef = useRef();
-
-  return (
-    <a
-      download
-      href={url}
-      ref={linkRef}
-    >
-      <Button
-        {...button}
-        onClick={() => linkRef.current && linkRef.current.click()}
-      />
-    </a>
-  );
-};
+const DownloadButton = ({ url, ...button }: Props) => (
+  <Button
+    {...button}
+    onClick={() => fetch(url).then((response) => {
+      response.blob().then((blob) => {
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.click();
+      });
+    })}
+  />
+);
 
 export default DownloadButton;
