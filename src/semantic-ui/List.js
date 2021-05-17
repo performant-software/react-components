@@ -76,7 +76,8 @@ type Props = {
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
   renderListHeader?: () => Element<any>,
   renderSearch?: () => Element<any>,
-  t: (key: string) => string
+  t: (key: string) => string,
+  onRowSelect: (Array<{id: number}>) => void
 };
 
 type State = {
@@ -84,7 +85,8 @@ type State = {
   modalDeleteAll: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
-  selectedItem: any
+  selectedItem: ?{id: number},
+  selectedRows: Array<any>
 };
 
 const BUTTON_KEY_ADD = 'add';
@@ -139,7 +141,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         modalDeleteAll: false,
         modalEdit: false,
         modalFilter: false,
-        selectedItem: null
+        selectedItem: null,
+        selectedRows: []
       };
     }
 
@@ -308,6 +311,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           <WrappedComponent
             {...this.props}
             actions={this.getActions()}
+            isRowSelected={this.getIsRowSelected.bind(this)}
+            onRowSelection={this.onRowSelection.bind(this)}
             renderEmptyMessage={this.renderEmptyMessage.bind(this)}
           />
           { this.renderFooter() }
@@ -347,6 +352,39 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
         return _.defaults(action, defaults);
       });
+    }
+
+    /**
+     * Returns if item is selected.
+     *
+     * @returns {bool}
+     */
+    getIsRowSelected(item: {id: number}) {
+      return this.state.selectedRows && this.state.selectedRows
+        ? !!this.state.selectedRows.find((r) => r.id === item.id)
+        : false;
+    }
+
+    /**
+     * Returns the selected rows.
+     *
+     * @returns {*}
+     */
+    onRowSelection(item: {id: number}) {
+      const selectedItem = this.state.selectedRows
+        ? this.state.selectedRows.find((r) => r.id === item.id)
+        : false;
+      if (selectedItem) {
+        this.setState((state) => ({
+          ...state,
+          selectedRows: state.selectedRows.filter((r) => r.id !== item.id)
+        }), () => this.props.onRowSelect(this.state.selectedRows));
+      } else {
+        this.setState((state) => ({
+          ...state,
+          selectedRows: [...(state.selectedRows ? state.selectedRows : []), item]
+        }), () => this.props.onRowSelect(this.state.selectedRows));
+      }
     }
 
     /**

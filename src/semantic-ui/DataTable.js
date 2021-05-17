@@ -6,7 +6,8 @@ import {
   Loader,
   Ref,
   Popup,
-  Table
+  Table,
+  Checkbox
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -41,7 +42,12 @@ type Props = {
   sortColumn?: string,
   sortDirection?: string,
   t: (key: string) => string,
-  tableProps: any
+  tableProps: any,
+  onRowSelection: (item: any) => void,
+  isRowSelected: (item: any) => void,
+  selectable: boolean,
+  selectedRows: ?Array<{id: number}>,
+  onRowSelect: (?any, ?any, ?any)=>void
 };
 
 type State = {
@@ -180,6 +186,7 @@ class DataTable extends Component<Props, State> {
       >
         <Table.Header>
           <Table.Row>
+            { this.renderSelectHeader() }
             { this.props.columns.map(this.renderHeaderCell.bind(this)) }
             { this.renderActionsHeader() }
           </Table.Row>
@@ -308,6 +315,60 @@ class DataTable extends Component<Props, State> {
       <Table.HeaderCell>
         { i18n.t('DataTable.columns.actions') }
       </Table.HeaderCell>
+    );
+  }
+
+  /**
+   * Renders the select list header.
+   *
+   * @returns {null|*}
+   */
+  renderSelectHeader() {
+    if (!this.props.selectable) {
+      return null;
+    }
+
+    return (
+      <Table.HeaderCell>
+        { i18n.t('DataTable.columns.select') }
+      </Table.HeaderCell>
+    );
+  }
+
+  /**
+   * Renders the select checkbox for the passed item.
+   *
+   * @returns {null|*}
+   */
+  renderSelectCheckbox(item, index) {
+    if (!this.props.selectable) {
+      return null;
+    }
+    if (this.props.selectedRows) {
+      // if the component is controlled
+      const selected = this.props.selectedRows.find((r) => r.id === item.id);
+      return (
+        <Table.Cell
+          className='actions-cell'
+          key={`select-cell-${index}`}
+        >
+          <Checkbox
+            onClick={(e, el) => this.props.onRowSelect(el, item, e)}
+            checked={!!selected}
+          />
+        </Table.Cell>
+      );
+    }
+    return (
+      <Table.Cell
+        className='actions-cell'
+        key={`select-cell-${index}`}
+      >
+        <Checkbox
+          onClick={this.props.onRowSelection.bind(this, item)}
+          checked={this.props.isRowSelected.bind(this, item)()}
+        />
+      </Table.Cell>
     );
   }
 
@@ -461,6 +522,7 @@ class DataTable extends Component<Props, State> {
    */
   renderItem(item: any, index: number) {
     const children = [
+      this.renderSelectCheckbox(item, index),
       this.props.columns.map(this.renderCell.bind(this, item)),
       this.renderActions(item, index)
     ];
@@ -522,7 +584,8 @@ DataTable.defaultProps = {
   renderSearch: undefined,
   renderItem: undefined,
   sortColumn: undefined,
-  sortDirection: undefined
+  sortDirection: undefined,
+  selectedRows: null,
 };
 
 export default useColumnSelector(useList(DataTable));
