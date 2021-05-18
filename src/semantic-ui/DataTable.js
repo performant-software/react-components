@@ -2,12 +2,12 @@
 
 import React, { Component, createRef, type Element } from 'react';
 import {
+  Checkbox,
   Button,
   Loader,
-  Ref,
   Popup,
-  Table,
-  Checkbox
+  Ref,
+  Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -36,6 +36,7 @@ type Props = {
   items: ?Array<any>,
   loading: boolean,
   onColumnClick: (column: Column) => void,
+  onRowSelect: (?any, ?any, ?any)=>void,
   renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
@@ -45,7 +46,6 @@ type Props = {
   tableProps: any,
   selectable: boolean,
   selectedRows: Array<{id: number}>,
-  onRowSelect: (?any, ?any, ?any)=>void
 };
 
 type State = {
@@ -343,7 +343,7 @@ class DataTable extends Component<Props, State> {
     const selected = this.props.selectedRows.find((r) => r.id === item.id);
     return (
       <Table.Cell
-        className='actions-cell'
+        className='select-cell'
         key={`select-cell-${index}`}
       >
         <Checkbox
@@ -565,9 +565,9 @@ DataTable.defaultProps = {
   renderEmptyRow: undefined,
   renderSearch: undefined,
   renderItem: undefined,
+  selectedRows: [],
   sortColumn: undefined,
   sortDirection: undefined,
-  selectedRows: [],
 };
 
 export default useColumnSelector(useList(DataTable));
