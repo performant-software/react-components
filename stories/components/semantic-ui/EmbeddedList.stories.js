@@ -126,6 +126,7 @@ export const Selectable = useDragDrop(() => (
   <EmbeddedList
     selectable
     onRowSelect={action('row selected')}
+    selectedRows={[{ id: 5 }, { id: 6 }, { id: 7 }]}
     actions={actions}
     onDelete={action('delete')}
     columns={columns}

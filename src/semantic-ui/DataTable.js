@@ -43,10 +43,8 @@ type Props = {
   sortDirection?: string,
   t: (key: string) => string,
   tableProps: any,
-  onRowSelection: (item: any) => void,
-  isRowSelected: (item: any) => void,
   selectable: boolean,
-  selectedRows: ?Array<{id: number}>,
+  selectedRows: Array<{id: number}>,
   onRowSelect: (?any, ?any, ?any)=>void
 };
 
@@ -329,9 +327,7 @@ class DataTable extends Component<Props, State> {
     }
 
     return (
-      <Table.HeaderCell>
-        { i18n.t('DataTable.columns.select') }
-      </Table.HeaderCell>
+      <Table.HeaderCell content='' />
     );
   }
 
@@ -344,29 +340,15 @@ class DataTable extends Component<Props, State> {
     if (!this.props.selectable) {
       return null;
     }
-    if (this.props.selectedRows) {
-      // if the component is controlled
-      const selected = this.props.selectedRows.find((r) => r.id === item.id);
-      return (
-        <Table.Cell
-          className='actions-cell'
-          key={`select-cell-${index}`}
-        >
-          <Checkbox
-            onClick={(e, el) => this.props.onRowSelect(el, item, e)}
-            checked={!!selected}
-          />
-        </Table.Cell>
-      );
-    }
+    const selected = this.props.selectedRows.find((r) => r.id === item.id);
     return (
       <Table.Cell
         className='actions-cell'
         key={`select-cell-${index}`}
       >
         <Checkbox
-          onClick={this.props.onRowSelection.bind(this, item)}
-          checked={this.props.isRowSelected.bind(this, item)()}
+          onClick={(e, el) => this.props.onRowSelect(el, item, e)}
+          checked={!!selected}
         />
       </Table.Cell>
     );
@@ -585,7 +567,7 @@ DataTable.defaultProps = {
   renderItem: undefined,
   sortColumn: undefined,
   sortDirection: undefined,
-  selectedRows: null,
+  selectedRows: [],
 };
 
 export default useColumnSelector(useList(DataTable));

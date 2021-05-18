@@ -473,7 +473,7 @@ export const Selectable = useDragDrop(() => (
     collectionName='items'
     selectable
     onRowSelect={action('row selected')}
-    // selectedRows={[{ id: 7 }, { id: 31 }, { id: 20 }]}
+    selectedRows={[{ id: 7 }, { id: 31 }, { id: 20 }]}
     columns={columns}
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {

@@ -38,7 +38,8 @@ type Props = {
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
   renderEmptyRow?: () => void,
   selectable: boolean,
-  onRowSelect: (Array<{id: number}>)
+  onRowSelect: (Array<{id: number}>),
+  selectedRows: Array<{id: number}>,
 };
 
 type State = {
@@ -176,6 +177,7 @@ class EmbeddedList extends Component<Props, State> {
         }}
         selectable={this.props.selectable}
         onRowSelect={this.props.onRowSelect}
+        selectedRows={this.props.selectedRows}
       />
     );
   }
