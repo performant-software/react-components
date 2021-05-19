@@ -84,7 +84,6 @@ type State = {
   modalDeleteAll: boolean,
   modalEdit: boolean,
   modalFilter: boolean,
-  selectedItem: any
 };
 
 const BUTTON_KEY_ADD = 'add';
@@ -138,8 +137,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         modalDelete: false,
         modalDeleteAll: false,
         modalEdit: false,
-        modalFilter: false,
-        selectedItem: null
+        modalFilter: false
       };
     }
 

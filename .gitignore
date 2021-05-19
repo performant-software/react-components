@@ -1,4 +1,5 @@
 build/
 node_modules/
-types/
 .env
+.vscode/launch.json
+types/

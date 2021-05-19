@@ -2,10 +2,11 @@
 
 import React, { Component, createRef, type Element } from 'react';
 import {
+  Checkbox,
   Button,
   Loader,
-  Ref,
   Popup,
+  Ref,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -35,13 +36,16 @@ type Props = {
   items: ?Array<any>,
   loading: boolean,
   onColumnClick: (column: Column) => void,
+  onRowSelect: (?any, ?any, ?any)=>void,
   renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
   sortColumn?: string,
   sortDirection?: string,
   t: (key: string) => string,
-  tableProps: any
+  tableProps: any,
+  selectable: boolean,
+  selectedRows: Array<{id: number}>,
 };
 
 type State = {
@@ -180,6 +184,7 @@ class DataTable extends Component<Props, State> {
       >
         <Table.Header>
           <Table.Row>
+            { this.renderSelectHeader() }
             { this.props.columns.map(this.renderHeaderCell.bind(this)) }
             { this.renderActionsHeader() }
           </Table.Row>
@@ -308,6 +313,44 @@ class DataTable extends Component<Props, State> {
       <Table.HeaderCell>
         { i18n.t('DataTable.columns.actions') }
       </Table.HeaderCell>
+    );
+  }
+
+  /**
+   * Renders the select list header.
+   *
+   * @returns {null|*}
+   */
+  renderSelectHeader() {
+    if (!this.props.selectable) {
+      return null;
+    }
+
+    return (
+      <Table.HeaderCell content='' />
+    );
+  }
+
+  /**
+   * Renders the select checkbox for the passed item.
+   *
+   * @returns {null|*}
+   */
+  renderSelectCheckbox(item, index) {
+    if (!this.props.selectable) {
+      return null;
+    }
+    const selected = this.props.selectedRows.find((r) => r.id === item.id);
+    return (
+      <Table.Cell
+        className='select-cell'
+        key={`select-cell-${index}`}
+      >
+        <Checkbox
+          onClick={(e, el) => this.props.onRowSelect(el, item, e)}
+          checked={!!selected}
+        />
+      </Table.Cell>
     );
   }
 
@@ -461,6 +504,7 @@ class DataTable extends Component<Props, State> {
    */
   renderItem(item: any, index: number) {
     const children = [
+      this.renderSelectCheckbox(item, index),
       this.props.columns.map(this.renderCell.bind(this, item)),
       this.renderActions(item, index)
     ];
@@ -521,8 +565,9 @@ DataTable.defaultProps = {
   renderEmptyRow: undefined,
   renderSearch: undefined,
   renderItem: undefined,
+  selectedRows: [],
   sortColumn: undefined,
-  sortDirection: undefined
+  sortDirection: undefined,
 };
 
 export default useColumnSelector(useList(DataTable));

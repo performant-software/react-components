@@ -36,7 +36,10 @@ type Props = {
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
   onSave?: (item: any) => void,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
-  renderEmptyRow?: () => void
+  renderEmptyRow?: () => void,
+  selectable: boolean,
+  onRowSelect: (Array<{id: number}>),
+  selectedRows: Array<{id: number}>,
 };
 
 type State = {
@@ -172,6 +175,9 @@ class EmbeddedList extends Component<Props, State> {
           celled: true,
           sortable: !this.props.onDrag
         }}
+        selectable={this.props.selectable}
+        onRowSelect={this.props.onRowSelect}
+        selectedRows={this.props.selectedRows}
       />
     );
   }
