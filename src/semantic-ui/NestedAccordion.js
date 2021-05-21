@@ -71,7 +71,7 @@ class NestedAccordion extends Component<Props, State> {
         className='nested-accordion'
         fluid
         panels={_.map(this.props.rootItems, this.renderPanel.bind(this))}
-        styled
+        styled={props.styled}
       />
     );
   }
@@ -184,7 +184,8 @@ class NestedAccordion extends Component<Props, State> {
 
 NestedAccordion.defaultProps = {
   onItemClick: () => {},
-  renderRight: () => {}
+  renderRight: () => {},
+  styled: true
 };
 
 export default NestedAccordion;
