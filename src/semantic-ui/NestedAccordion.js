@@ -16,7 +16,8 @@ type Props = {
   renderItem: (item: any) => string | Component<{}>,
   renderRight?: (item: any) => string | Component<{}>,
   rootItems: Array<any>,
-  showToggle: (item: any) => boolean
+  showToggle: (item: any) => boolean,
+  styled: boolean
 };
 
 type State = {
@@ -71,7 +72,7 @@ class NestedAccordion extends Component<Props, State> {
         className='nested-accordion'
         fluid
         panels={_.map(this.props.rootItems, this.renderPanel.bind(this))}
-        styled={props.styled}
+        styled={this.props.styled}
       />
     );
   }
