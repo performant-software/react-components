@@ -1,28 +1,31 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type Element } from 'react';
 import {
   Accordion,
-  Button,
-  Grid
+  Button
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import './NestedAccordion.css';
 
 type Props = {
+  defaultActive?: Array<number>,
   getChildItems: (item: any) => Array<any>,
+  inverted?: boolean,
+  isItemActive?: (item: any) => boolean,
   onItemClick?: (item: any) => void,
   onItemToggle: (item: any) => void,
-  renderItem: (item: any) => string | Component<{}>,
-  renderRight?: (item: any) => string | Component<{}>,
+  renderItem: (item: any) => string | Element<any>,
+  renderRight?: (item: any) => string | Element<any>,
   rootItems: Array<any>,
   showToggle: (item: any) => boolean,
-  styled: boolean
+  styled?: boolean,
+  toggleOnClick?: boolean
 };
 
 type State = {
   activeItems: Array<any>
-}
+};
 
 class NestedAccordion extends Component<Props, State> {
   static defaultProps: any;
@@ -41,6 +44,36 @@ class NestedAccordion extends Component<Props, State> {
   }
 
   /**
+   * Sets the activeItems on the state if the defaultActive prop changes.
+   *
+   * @param prevProps
+   */
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.defaultActive !== this.props.defaultActive
+      && this.props.defaultActive
+      && this.props.defaultActive.length) {
+      this.setState({ activeItems: _.map(this.props.defaultActive, (id) => ({ id })) });
+    }
+  }
+
+  /**
+   * Returns the toggle button class names.
+   *
+   * @param item
+   *
+   * @returns {string}
+   */
+  getButtonClass(item: any) {
+    const classNames = ['accordion-button'];
+
+    if (this.props.showToggle && !this.props.showToggle(item)) {
+      classNames.push('hidden');
+    }
+
+    return classNames.join(' ');
+  }
+
+  /**
    * Returns true if the passed item is active.
    *
    * @param item
@@ -49,6 +82,32 @@ class NestedAccordion extends Component<Props, State> {
    */
   isActive(item: any) {
     return !!_.findWhere(this.state.activeItems, { id: item.id });
+  }
+
+  /**
+   * Returns true if the passed item is active.
+   *
+   * @param item
+   *
+   * @returns {*}
+   */
+  isItemActive(item: any) {
+    return this.props.isItemActive && this.props.isItemActive(item);
+  }
+
+  /**
+   * Calls the onItemClick prop. Optionally toggles the item active.
+   *
+   * @param item
+   */
+  onItemClick(item: any) {
+    if (this.props.toggleOnClick) {
+      this.onItemToggle(item);
+    }
+
+    if (this.props.onItemClick) {
+      this.props.onItemClick(item);
+    }
   }
 
   /**
@@ -71,6 +130,7 @@ class NestedAccordion extends Component<Props, State> {
       <Accordion
         className='nested-accordion'
         fluid
+        inverted={this.props.inverted}
         panels={_.map(this.props.rootItems, this.renderPanel.bind(this))}
         styled={this.props.styled}
       />
@@ -115,28 +175,30 @@ class NestedAccordion extends Component<Props, State> {
       <>
         <Accordion.Title
           active={this.isActive(item)}
-          onClick={this.props.onItemClick && this.props.onItemClick.bind(this, item)}
+          onClick={this.onItemClick.bind(this, item)}
+          style={{
+            backgroundColor: this.isItemActive(item) ? 'rgba(255, 255, 255, 0.08)' : undefined
+          }}
         >
-          <Grid
-            verticalAlign='middle'
+          <div
+            className='container'
           >
-            <Grid.Column
-              width={1}
-            >
+            <div>
               { this.renderToggle(item) }
-            </Grid.Column>
-            <Grid.Column
-              width={13}
-            >
-              { this.props.renderItem(item) }
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-              width={2}
-            >
-              { this.props.renderRight && this.props.renderRight(item) }
-            </Grid.Column>
-          </Grid>
+              <div
+                className='item-container'
+              >
+                { this.props.renderItem(item) }
+              </div>
+            </div>
+            { this.props.renderRight && (
+              <div
+                className='right-container'
+              >
+                { this.props.renderRight(item) }
+              </div>
+            )}
+          </div>
         </Accordion.Title>
         { this.renderContent(item) }
       </>
@@ -151,15 +213,12 @@ class NestedAccordion extends Component<Props, State> {
    * @returns {null|*}
    */
   renderToggle(item: any) {
-    if (!this.props.showToggle(item)) {
-      return null;
-    }
-
     return (
       <Button
         compact
-        className='accordion-button'
+        className={this.getButtonClass(item)}
         icon='dropdown'
+        inverted={this.props.inverted}
         onClick={(e) => {
           // Since the containing row also has an onclick, we'll want to prevent that from being triggered.
           e.stopPropagation();
@@ -184,9 +243,13 @@ class NestedAccordion extends Component<Props, State> {
 }
 
 NestedAccordion.defaultProps = {
+  defaultActive: [],
+  inverted: false,
+  isItemActive: undefined,
   onItemClick: () => {},
   renderRight: () => {},
-  styled: true
+  styled: true,
+  toggleOnClick: false
 };
 
 export default NestedAccordion;
