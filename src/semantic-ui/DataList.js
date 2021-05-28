@@ -9,6 +9,7 @@ import Timer from '../utils/Timer';
 
 type Props = {
   collectionName: string,
+  defaultSearch: ?string,
   filters?: {
     component: Component<{}>,
     props: any,
@@ -199,7 +200,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       const filters = session.filters || (props.filters && props.filters.props) || {};
       const page = session.page || 1;
-      const search = session.search || null;
+      const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || null;
       const sortDirection = session.sortDirection || null;
 
@@ -448,7 +449,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     setSession() {
       const key = this.getSessionKey();
-      
+
       if (!key) {
         return;
       }
