@@ -33,6 +33,8 @@ type Props = {
   actions: Array<Action>,
   className: string,
   columns: Array<Column>,
+  expandableRows: boolean,
+  expandPanel: Component<any>,
   items: ?Array<any>,
   loading: boolean,
   onColumnClick: (column: Column) => void,
@@ -72,7 +74,8 @@ class DataTable extends Component<Props, State> {
     super(props);
 
     this.state = {
-      resize: null
+      resize: null,
+      activePanel: null
     };
 
     this.initializeColumnRefs();
@@ -509,17 +512,52 @@ class DataTable extends Component<Props, State> {
       this.renderActions(item, index)
     ];
 
+    const handleCellClick = (e) => {
+      if (e.target.nodeName === "TD") {
+        this.setState({
+          activePanel: this.state.activePanel === item.id ? '' : item.id
+        });
+      }
+    };
+
+    const panelStyle = {
+      display: `${this.state.activePanel === item.id ? 'table-row' : 'none'}`
+    };
+
+    const parentRowStyle = {
+      cursor: 'pointer'
+    };
+
     if (this.props.renderItem) {
       return this.props.renderItem(item, index, children);
     }
 
-    return (
-      <Table.Row
-        key={index}
-      >
-        { children }
-      </Table.Row>
-    );
+    if (this.props.expandableRows) {
+      return (
+        <>
+          <Table.Row
+            key={index}
+            onClick={handleCellClick}
+            style={parentRowStyle}
+          >
+            { children }
+          </Table.Row>
+          <Table.Row
+            style={panelStyle}
+          >
+            { this.props.expandPanel(item, this.state.activePanel) }
+          </Table.Row>
+        </>
+      );
+    } else {
+      return (
+        <Table.Row
+          key={index}
+        >
+          { children }
+        </Table.Row>
+      );
+    }
   }
 
   renderLoading() {
@@ -552,6 +590,8 @@ DataTable.defaultProps = {
   },
   buttons: [],
   className: '',
+  expandableRows: false,
+  expandPanel: undefined,
   filters: undefined,
   items: [],
   loading: false,
