@@ -522,6 +522,10 @@ class DataTable extends Component<Props, State> {
       display: `${this.state.activePanel === item.id ? 'table-row' : 'none'}`
     };
 
+    const parentRowStyle = {
+      cursor: 'pointer'
+    };
+
     if (this.props.renderItem) {
       return this.props.renderItem(item, index, children);
     }
@@ -532,6 +536,7 @@ class DataTable extends Component<Props, State> {
           <Table.Row
             key={index}
             onClick={handleCellClick}
+            style={parentRowStyle}
           >
             { children }
           </Table.Row>
