@@ -1,5 +1,7 @@
 .association-dropdown {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .association-dropdown .buttons {
