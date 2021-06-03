@@ -14,12 +14,24 @@
   padding: 15px;
 }
 
+.data-table .expandable {
+  cursor: pointer;
+}
+
+.data-table .expanded-panel {
+  display: table-row;
+}
+
 .data-table .footer {
   margin-top: 10px;
 }
 
 .data-table .header {
   margin-bottom: 10px;
+}
+
+.data-table .hidden {
+  display: none;
 }
 
 .data-table.ui.celled.table tr th {
