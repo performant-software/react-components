@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
-import * as Api from '../../services/Api';
+import Api from '../../services/Api';
 import RemoteDropdown from '../../../src/semantic-ui/RemoteDropdown';
 
 export default {
@@ -18,13 +18,16 @@ const onAddItem = (options, setOptions, value) => new Promise(
 const renderOption = (item) => ({
   key: item.value,
   value: item.value,
-  text: item.value
+  text: item.value,
+  description: item.description
 });
 
 const colors = [{
-  value: 'Red'
+  value: 'Red',
+  description: 'Duis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officia.'
 }, {
-  value: 'Blue'
+  value: 'Blue',
+  description: 'Duis adipisicing ullamco aliqua dolore officia.'
 }, {
   value: 'Orange'
 }, {
@@ -219,6 +222,7 @@ export const Pagination = () => {
       onSelection={setSelectedValue.bind(this)}
       renderOption={renderOption.bind(this)}
       value={selectedValue}
+      style={{ width: 600 }}
     />
   );
 };
