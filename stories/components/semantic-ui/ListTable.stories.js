@@ -26,27 +26,27 @@ const actions = [{
 const columns = [{
   name: 'make',
   label: 'Make',
-  sortable: false
+  sortable: true
 }, {
   name: 'model',
   label: 'Model',
-  sortable: false
+  sortable: true
 }, {
   name: 'vin',
   label: 'Vin',
-  sortable: false
+  sortable: true
 }, {
   name: 'address',
   label: 'Address',
-  sortable: false
+  sortable: true
 }, {
   name: 'city',
   label: 'City',
-  sortable: false
+  sortable: true
 }, {
   name: 'state',
   label: 'State',
-  sortable: false
+  sortable: true
 }];
 
 const items = [{
@@ -456,6 +456,22 @@ export const Default = useDragDrop(() => (
     actions={actions}
     collectionName='items'
     columns={columns}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const Unsortable = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns.map((c) => ({ ...c, sortable: false }))}
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
