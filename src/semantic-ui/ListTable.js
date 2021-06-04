@@ -23,6 +23,14 @@ const ListTable = (props: Props) => {
    * @param column
    */
   const onColumnClick = (column) => {
+    /**
+     * If there is no sortable column provide no sort parameters
+     */
+    if (!column) {
+      props.onSort('', '');
+      return;
+    }
+
     if (!column.sortable) {
       return;
     }

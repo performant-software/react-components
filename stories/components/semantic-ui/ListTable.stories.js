@@ -26,27 +26,27 @@ const actions = [{
 const columns = [{
   name: 'make',
   label: 'Make',
-  sortable: true
+  sortable: false
 }, {
   name: 'model',
   label: 'Model',
-  sortable: true
+  sortable: false
 }, {
   name: 'vin',
   label: 'Vin',
-  sortable: true
+  sortable: false
 }, {
   name: 'address',
   label: 'Address',
-  sortable: true
+  sortable: false
 }, {
   name: 'city',
   label: 'City',
-  sortable: true
+  sortable: false
 }, {
   name: 'state',
   label: 'State',
-  sortable: true
+  sortable: false
 }];
 
 const items = [{
