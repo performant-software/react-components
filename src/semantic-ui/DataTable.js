@@ -34,7 +34,7 @@ type Props = {
   className: string,
   columns: Array<Column>,
   expandableRows: boolean,
-  expandPanel: Component<any>,
+  expandPanel: () => Component<any>,
   items: ?Array<any>,
   loading: boolean,
   onColumnClick: (column: Column) => void,
@@ -513,6 +513,7 @@ class DataTable extends Component<Props, State> {
     ];
 
     const handleCellClick = (e) => {
+      // only target table cells, not action buttons or checkboxes, etc.
       if (e.target.nodeName === "TD") {
         this.setState({
           activePanel: this.state.activePanel === item.id ? '' : item.id
@@ -520,44 +521,28 @@ class DataTable extends Component<Props, State> {
       }
     };
 
-    const panelStyle = {
-      display: `${this.state.activePanel === item.id ? 'table-row' : 'none'}`
-    };
-
-    const parentRowStyle = {
-      cursor: 'pointer'
-    };
-
     if (this.props.renderItem) {
       return this.props.renderItem(item, index, children);
     }
 
-    if (this.props.expandableRows) {
-      return (
-        <>
-          <Table.Row
-            key={index}
-            onClick={handleCellClick}
-            style={parentRowStyle}
-          >
-            { children }
-          </Table.Row>
-          <Table.Row
-            style={panelStyle}
-          >
-            { this.props.expandPanel(item, this.state.activePanel) }
-          </Table.Row>
-        </>
-      );
-    } else {
-      return (
+    return (
+      <>
         <Table.Row
           key={index}
+          onClick={this.props.expandableRows ? handleCellClick : {}}
+          className={this.props.expandableRows ? 'expandable' : ''}
         >
           { children }
         </Table.Row>
-      );
-    }
+        { this.props.expandableRows && (
+          <Table.Row
+            className={this.state.activePanel === item.id ? 'expanded-panel' : 'hidden'}
+          >
+            { this.props.expandPanel && this.props.expandPanel(item, this.state.activePanel) }
+          </Table.Row>
+        )}
+      </>
+    );
   }
 
   renderLoading() {
