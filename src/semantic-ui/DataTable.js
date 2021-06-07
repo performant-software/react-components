@@ -529,7 +529,7 @@ class DataTable extends Component<Props, State> {
       <>
         <Table.Row
           key={index}
-          onClick={this.props.expandableRows ? handleCellClick : () => return }
+          onClick={this.props.expandableRows ? handleCellClick : () => { return } }
           className={this.props.expandableRows ? 'expandable' : ''}
         >
           { children }
