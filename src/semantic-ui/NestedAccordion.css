@@ -29,7 +29,13 @@
   width: 100%;
 }
 
-.nested-accordion .title > .container > div:first-child > .right-container {
+.nested-accordion .title > .container > .right-container {
   margin-left: 1em;
   text-align: right;
+  display: flex;
+  align-items: center;
+}
+
+.nested-accordion .title > .container > .right-container > .row-select-checkbox {
+  margin-left: 1.5em;
 }

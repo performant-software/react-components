@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import {
   Button,
+  Checkbox,
   Confirm,
   Grid,
   Header,
@@ -19,6 +20,7 @@ import Timer from '../utils/Timer';
 import './AccordionList.css';
 
 type Props = {
+  buttons: Array<Object>,
   canAddItem?: (item: any) => boolean,
   canDeleteItem?: (item: any) => boolean,
   canEditItem?: (item: any) => boolean,
@@ -33,10 +35,13 @@ type Props = {
     state: any,
   },
   onDelete: (item: any) => Promise<any>,
+  onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
   onSearch: (parentId: ?number, search: ?string) => Promise<any>,
   pagination: (item: any) => boolean,
   renderItem: (item: any) => string | Component<{}>,
+  selectable: boolean,
+  selectedRows: Array<{id: number}>,
   showToggle: (item: any) => boolean
 };
 
@@ -191,25 +196,24 @@ class AccordionList extends Component<Props, State> {
           this.setState((state) => (parentId
             ? { items: [...state.items || [], ...items] }
             : { items }));
-            if (this.props.pagination) {
-              const pageCount = data.list.pages;
-              this.setState({ pages: pageCount });
-            }
-      });
-    } else {
-      // for models that use a join table or a relationship
-      // structure other than nestable node levels/ancestors
-        return this.props
-          .onSearch(this.state.searchQuery, this.state.page)
-          .then(({ data }) => {
-            const items = data[this.props.collectionName];
-            this.setState({ items: items });
-            if (this.props.pagination) {
-              const pageCount = data.list.pages;
-              this.setState({ pages: pageCount });
-            }
-          });
+          if (this.props.pagination) {
+            const pageCount = data.list.pages;
+            this.setState({ pages: pageCount });
+          }
+        });
     }
+    // for models that use a join table or a relationship
+    // structure other than nestable node levels/ancestors
+    return this.props
+      .onSearch(this.state.searchQuery, this.state.page)
+      .then(({ data }) => {
+        const items = data[this.props.collectionName];
+        this.setState({ items });
+        if (this.props.pagination) {
+          const pageCount = data.list.pages;
+          this.setState({ pages: pageCount });
+        }
+      });
   }
 
   /**
@@ -247,6 +251,7 @@ class AccordionList extends Component<Props, State> {
             value={this.state.searchQuery}
           />
           { this.renderHeaderAddButton() }
+          { this.props.buttons.map((b) => b.render()) }
         </Header>
         <NestedAccordion
           getChildItems={this.props.getChildItems.bind(this, this.state.items)}
@@ -409,8 +414,7 @@ class AccordionList extends Component<Props, State> {
         >
           <Grid.Column
             textAlign='left'
-          >
-          </Grid.Column>
+          />
           <Grid.Column
             textAlign='right'
           >
@@ -425,6 +429,25 @@ class AccordionList extends Component<Props, State> {
       </div>
     );
   }
+  /**
+   * Renders the select checkbox for the passed item.
+   *
+   * @returns {null|*}
+   */
+  renderSelectCheckbox(item: {id: number}) {
+    if (!this.props.selectable) {
+      return null;
+    }
+    const selected = this.props.selectedRows.find((r) => r.id === item.id);
+    return (
+      <Checkbox
+        key={`select-checkbox-${item.id}`}
+        className='row-select-checkbox'
+        onClick={(e, el) => this.props.onRowSelect(el, item, e)}
+        checked={!!selected}
+      />
+    );
+  }
 
   /**
    * Renders the right side of the passed item.
@@ -435,16 +458,20 @@ class AccordionList extends Component<Props, State> {
    */
   renderRight(item: any) {
     return (
-      <Button.Group>
-        { this.renderAddButton(item) }
-        { this.renderEditButton(item) }
-        { this.renderDeleteButton(item) }
-      </Button.Group>
+      <>
+        <Button.Group>
+          { this.renderAddButton(item) }
+          { this.renderEditButton(item) }
+          { this.renderDeleteButton(item) }
+        </Button.Group>
+        { this.renderSelectCheckbox(item) }
+      </>
     );
   }
 }
 
 AccordionList.defaultProps = {
+  buttons: [],
   canAddItem: () => true,
   canDeleteItem: () => true,
   canEditItem: () => true,
