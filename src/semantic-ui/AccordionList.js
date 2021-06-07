@@ -33,6 +33,7 @@ type Props = {
   onDelete: (item: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   onSearch: (parentId: ?number, search: ?string) => Promise<any>,
+  page: ?number,
   renderItem: (item: any) => string | Component<{}>,
   showToggle: (item: any) => boolean
 };
@@ -72,6 +73,15 @@ class AccordionList extends Component<Props, State> {
    */
   componentDidMount() {
     this.onSearch();
+  }
+
+  /**
+   * Executes new search when component updates (i.e. pagination props change).
+   */
+  componentDidUpdate(prevProps) {
+    if (this.props.page !== prevProps.page) {
+      this.onSearch();
+    }
   }
 
   /**
@@ -169,7 +179,8 @@ class AccordionList extends Component<Props, State> {
    * @returns {*}
    */
   onSearch(parentId?: number) {
-    return this.props
+    if (parentId) {
+      return this.props
       .onSearch(parentId, this.state.searchQuery)
       .then(({ data }) => {
         const items = data[this.props.collectionName];
@@ -177,6 +188,16 @@ class AccordionList extends Component<Props, State> {
           ? { items: [...state.items || [], ...items] }
           : { items }));
       });
+    } else {
+      // for models that use a join table or a relationship
+      // structure other than nestable node levels/ancestors
+        return this.props
+          .onSearch(this.state.searchQuery)
+          .then(({ data }) => {
+            const items = data[this.props.collectionName];
+            this.setState({ items: items });
+          });
+    }
   }
 
   /**
