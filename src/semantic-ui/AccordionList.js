@@ -4,9 +4,11 @@ import React, { Component } from 'react';
 import {
   Button,
   Confirm,
+  Grid,
   Header,
   Input,
-  Message
+  Message,
+  Pagination
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -33,7 +35,7 @@ type Props = {
   onDelete: (item: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   onSearch: (parentId: ?number, search: ?string) => Promise<any>,
-  page: ?number,
+  pagination: (item: any) => boolean,
   renderItem: (item: any) => string | Component<{}>,
   showToggle: (item: any) => boolean
 };
@@ -42,6 +44,8 @@ type State = {
   items: Array<any>,
   modalAdd: boolean,
   modalDelete: boolean,
+  page: ?number,
+  pages: ?number,
   saved: boolean,
   searchQuery: string,
   selectedItem: ?any
@@ -62,6 +66,8 @@ class AccordionList extends Component<Props, State> {
       items: [],
       modalAdd: false,
       modalDelete: false,
+      page: 1,
+      pages: 1,
       saved: false,
       searchQuery: '',
       selectedItem: null
@@ -73,15 +79,6 @@ class AccordionList extends Component<Props, State> {
    */
   componentDidMount() {
     this.onSearch();
-  }
-
-  /**
-   * Executes new search when component updates (i.e. pagination props change).
-   */
-  componentDidUpdate(prevProps) {
-    if (this.props.page !== prevProps.page) {
-      this.onSearch();
-    }
   }
 
   /**
@@ -152,6 +149,13 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+  * Changes active page and fetches new set of paginated data.
+  */
+  onPageChange(e: any, selectedPage: any) {
+    this.setState({ page: selectedPage.activePage }, () => this.onSearch());
+  }
+
+  /**
    * Saves the passed item.
    *
    * @param item
@@ -181,21 +185,29 @@ class AccordionList extends Component<Props, State> {
   onSearch(parentId?: number) {
     if (parentId) {
       return this.props
-      .onSearch(parentId, this.state.searchQuery)
-      .then(({ data }) => {
-        const items = data[this.props.collectionName];
-        this.setState((state) => (parentId
-          ? { items: [...state.items || [], ...items] }
-          : { items }));
+        .onSearch(parentId, this.state.searchQuery, this.state.page)
+        .then(({ data }) => {
+          const items = data[this.props.collectionName];
+          this.setState((state) => (parentId
+            ? { items: [...state.items || [], ...items] }
+            : { items }));
+            if (this.props.pagination) {
+              const pageCount = data.list.pages;
+              this.setState({ pages: pageCount });
+            }
       });
     } else {
       // for models that use a join table or a relationship
       // structure other than nestable node levels/ancestors
         return this.props
-          .onSearch(this.state.searchQuery)
+          .onSearch(this.state.searchQuery, this.state.page)
           .then(({ data }) => {
             const items = data[this.props.collectionName];
             this.setState({ items: items });
+            if (this.props.pagination) {
+              const pageCount = data.list.pages;
+              this.setState({ pages: pageCount });
+            }
           });
     }
   }
@@ -244,6 +256,7 @@ class AccordionList extends Component<Props, State> {
           rootItems={this.props.getRootItems(this.state.items)}
           showToggle={this.props.showToggle.bind(this)}
         />
+        { this.renderPagination() }
         { this.renderAddModal() }
         <Confirm
           content={i18n.t('AccordionList.deleteContent')}
@@ -376,6 +389,40 @@ class AccordionList extends Component<Props, State> {
         icon='plus'
         onClick={() => this.setState({ modalAdd: true })}
       />
+    );
+  }
+
+  /**
+   * Renders the pagination button row.
+   *
+   * @returns {null|*}
+   */
+  renderPagination() {
+    if (!this.props.pagination) {
+      return null;
+    }
+
+    return (
+      <div className='footer'>
+        <Grid
+          columns={2}
+        >
+          <Grid.Column
+            textAlign='left'
+          >
+          </Grid.Column>
+          <Grid.Column
+            textAlign='right'
+          >
+            <Pagination
+              activePage={this.state.page}
+              onPageChange={this.onPageChange.bind(this)}
+              size='mini'
+              totalPages={this.state.pages}
+            />
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 
