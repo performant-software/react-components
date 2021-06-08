@@ -46,4 +46,8 @@ const KeyboardSimple = (props: Props) => {
   return <div className={props.keyboardClass} />;
 };
 
+KeyboardSimple.defaultProps = {
+  keyboardClass: 'simple-keyboard'
+};
+
 export default KeyboardSimple;
