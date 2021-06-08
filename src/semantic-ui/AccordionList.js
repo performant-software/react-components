@@ -449,7 +449,8 @@ AccordionList.defaultProps = {
   canDeleteItem: () => true,
   canEditItem: () => true,
   className: '',
-  modal: undefined
+  modal: undefined,
+  pagination: () => false
 };
 
 export default AccordionList;
