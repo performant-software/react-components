@@ -341,6 +341,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * When no columns are sortable, load data as is
+     *
+     */
+    onInit(page?: number = 1) {
+      this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
+    }
+
+    /**
      * Renders the DataList component.
      *
      * @returns {*}
@@ -368,6 +376,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             onPageChange={this.onPageChange.bind(this)}
             onSave={this.onSave.bind(this)}
             onSort={this.onSort.bind(this)}
+            onInit={this.onInit.bind(this)}
             renderSearch={this.renderSearch.bind(this)}
             sortColumn={this.state.sortColumn}
             sortDirection={this.state.sortDirection}

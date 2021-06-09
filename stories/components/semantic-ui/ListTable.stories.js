@@ -467,6 +467,22 @@ export const Default = useDragDrop(() => (
   />
 ));
 
+export const Unsortable = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns.map((c) => ({ ...c, sortable: false }))}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
 export const Selectable = useDragDrop(() => (
   <ListTable
     actions={actions}

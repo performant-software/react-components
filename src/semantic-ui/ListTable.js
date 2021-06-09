@@ -12,6 +12,7 @@ type Props = {
   columns: Array<Column>,
   page: number,
   onSort: (sortColumn: string, sortDirection: string, page?: number) => void,
+  onInit: (page?: number) => void,
   sortColumn: string,
   sortDirection: string
 };
@@ -53,7 +54,13 @@ const ListTable = (props: Props) => {
     if (props.sortColumn) {
       props.onSort(sortColumn, sortDirection, page);
     } else {
-      onColumnClick(_.findWhere(props.columns, { sortable: true }));
+      const sortableColumn = _.findWhere(props.columns, { sortable: true });
+      if (sortableColumn) {
+        onColumnClick(sortableColumn);
+      } else {
+        // If no columns are sortable, load the data as is
+        props.onInit();
+      }
     }
   }, []);
 
