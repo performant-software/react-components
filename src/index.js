@@ -61,6 +61,7 @@ export { default as Element } from './utils/Element';
 export { default as Timer } from './utils/Timer';
 export { default as useDragDrop } from './utils/DragDrop';
 export { default as Map } from './utils/Map';
+export { default as CustomKeyboardLayouts } from './utils/CustomKeyboardLayouts';
 
 // Types
 export type { EditContainerProps as EditModalProps } from './common/EditContainer'; // Backwards compatability

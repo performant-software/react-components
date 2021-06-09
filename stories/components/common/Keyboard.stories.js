@@ -11,6 +11,7 @@ import EnglishLayout from 'simple-keyboard-layouts/build/layouts/english';
 import JapaneseLayout from 'simple-keyboard-layouts/build/layouts/japanese';
 
 import Keyboard from '../../../src/common/Keyboard';
+import layouts from '../../../src/utils/CustomKeyboardLayouts';
 
 export default {
   title: 'Components/Common/Keyboard',
@@ -42,5 +43,21 @@ export const Japanese = () => (
   <Keyboard
     layout={JapaneseLayout}
     onChange={action('change')}
+  />
+);
+
+export const TransliteraionAlaLc = () => (
+  <Keyboard
+    layout={layouts.transliterationAlaLc}
+    onChange={action('change')}
+    keyboardClass='transliteration'
+  />
+);
+
+export const TransliteraionBetacode = () => (
+  <Keyboard
+    layout={layouts.transliterationBetacode}
+    onChange={action('change')}
+    keyboardClass='transliteration'
   />
 );
