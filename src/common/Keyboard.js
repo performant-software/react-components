@@ -7,7 +7,8 @@ import './Keyboard.css';
 type Props = {
   layout: any,
   onChange: (value: string) => void,
-  value: string
+  value: string,
+  keyboardClass: string,
 };
 
 const KEY_CAPS_LOCK = '{lock}';
@@ -33,7 +34,7 @@ const KeyboardSimple = (props: Props) => {
   // Sets up the keyboard reference and the initial value when the component is first rendered.
   useEffect(() => {
     const { layout, onChange } = props;
-    keyboardRef.current = new Keyboard({ ...layout, onChange, onKeyPress });
+    keyboardRef.current = new Keyboard(`.${props.keyboardClass}`, { ...layout, onChange, onKeyPress });
     keyboardRef.current.setInput(props.value);
   }, []);
 
@@ -42,7 +43,11 @@ const KeyboardSimple = (props: Props) => {
     keyboardRef.current.setInput(props.value);
   }, [props.value]);
 
-  return <div className='simple-keyboard' />;
+  return <div className={props.keyboardClass} />;
+};
+
+KeyboardSimple.defaultProps = {
+  keyboardClass: 'simple-keyboard'
 };
 
 export default KeyboardSimple;
