@@ -172,7 +172,7 @@ class NestedAccordion extends Component<Props, State> {
    */
   renderPanel(item: any) {
     return (
-      <>
+      <div key={item.id}>
         <Accordion.Title
           active={this.isActive(item)}
           onClick={this.onItemClick.bind(this, item)}
@@ -201,7 +201,7 @@ class NestedAccordion extends Component<Props, State> {
           </div>
         </Accordion.Title>
         { this.renderContent(item) }
-      </>
+      </div>
     );
   }
 
