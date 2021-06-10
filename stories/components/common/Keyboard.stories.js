@@ -45,19 +45,3 @@ export const Japanese = () => (
     onChange={action('change')}
   />
 );
-
-export const TransliteraionAlaLc = () => (
-  <Keyboard
-    layout={layouts.transliterationAlaLc}
-    onChange={action('change')}
-    keyboardClass='transliteration'
-  />
-);
-
-export const TransliteraionBetacode = () => (
-  <Keyboard
-    layout={layouts.transliterationBetacode}
-    onChange={action('change')}
-    keyboardClass='transliteration'
-  />
-);
