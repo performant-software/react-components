@@ -201,20 +201,19 @@ class AccordionList extends Component<Props, State> {
             this.setState({ pages: pageCount });
           }
         });
-    } else {
-      // for models that use a join table or a relationship
-      // structure other than nestable node levels/ancestors
-      return this.props
-        .onSearch(this.state.searchQuery, this.state.page)
-        .then(({ data }) => {
-          const items = data[this.props.collectionName];
-          this.setState({ items });
-          if (this.props.pagination) {
-            const pageCount = data.list.pages;
-            this.setState({ pages: pageCount });
-          }
-        });
     }
+    // for models that use a join table or a relationship
+    // structure other than nestable node levels/ancestors
+    return this.props
+      .onSearch(this.state.searchQuery, this.state.page)
+      .then(({ data }) => {
+        const items = data[this.props.collectionName];
+        this.setState({ items });
+        if (this.props.pagination) {
+          const pageCount = data.list.pages;
+          this.setState({ pages: pageCount });
+        }
+      });
   }
 
   /**
