@@ -13,8 +13,30 @@ export default {
 };
 
 export const Default = () => {
-  const [value, setValue] = useState('a');
-  const [value2, setValue2] = useState('b');
+  const [value, setValue] = useState('');
+
+  return (
+    <Form>
+      <KeyboardField
+        label={text('Field name', 'Field')}
+        layout={English}
+        name='test-field'
+        onChange={(e, { value }) => setValue(value)}
+        required={boolean('Required', false)}
+        value={value}
+      >
+        <input
+          className='english'
+          type='text'
+        />
+      </KeyboardField>
+    </Form>
+  );
+};
+
+export const MultipleOnOneForm = () => {
+  const [value, setValue] = useState('');
+  const [value2, setValue2] = useState('');
 
   return (
     <Form>
@@ -33,7 +55,7 @@ export const Default = () => {
       </KeyboardField>
       <KeyboardField
         label={text('Field name', 'Field')}
-        layout={layouts.transliterationIjmes}
+        layout={Arabic}
         name='test-field-2'
         onChange={(e, { value }) => setValue2(value)}
         required={boolean('Required', false)}
@@ -42,6 +64,28 @@ export const Default = () => {
         <input
           className='arabic'
           dir='rtl'
+          type='text'
+        />
+      </KeyboardField>
+    </Form>
+  );
+};
+
+export const WithAlternativeCharacters = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <Form>
+      <KeyboardField
+        label={text('Field name', 'Field')}
+        layout={layouts.transliterationIjmes}
+        name='test-field'
+        onChange={(e, { value }) => setValue(value)}
+        required={boolean('Required', false)}
+        value={value}
+      >
+        <input
+          className='english'
           type='text'
         />
       </KeyboardField>
