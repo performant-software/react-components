@@ -38,7 +38,7 @@ type Props = {
   onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
   onSearch: (parentId: ?number, search: ?string) => Promise<any>,
-  pagination: (item: any) => boolean,
+  pagination: boolean,
   renderItem: (item: any) => string | Component<{}>,
   selectable: boolean,
   selectedRows: Array<{id: number}>,
@@ -478,7 +478,7 @@ AccordionList.defaultProps = {
   canEditItem: () => true,
   className: '',
   modal: undefined,
-  pagination: () => false
+  pagination: false
 };
 
 export default AccordionList;
