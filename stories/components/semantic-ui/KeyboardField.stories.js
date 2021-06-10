@@ -5,6 +5,7 @@ import { Form } from 'semantic-ui-react';
 import English from 'simple-keyboard-layouts/build/layouts/english';
 import Arabic from 'simple-keyboard-layouts/build/layouts/arabic';
 import KeyboardField from '../../../src/semantic-ui/KeyboardField';
+import layouts from '../../../src/utils/CustomKeyboardLayouts';
 
 export default {
   title: 'Components/Semantic UI/KeyboardField',
@@ -32,7 +33,7 @@ export const Default = () => {
       </KeyboardField>
       <KeyboardField
         label={text('Field name', 'Field')}
-        layout={Arabic}
+        layout={layouts.transliterationIjmes}
         name='test-field-2'
         onChange={(e, { value }) => setValue2(value)}
         required={boolean('Required', false)}

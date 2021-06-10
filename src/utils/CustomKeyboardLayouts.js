@@ -1,26 +1,41 @@
 const layouts = {
-  transliterationAlaLc: {
+  transliterationIjmes: {
     layout: {
       default: [
-        '1 2 3 4 5 6 7 8 9 0 - = {bksp}',
-        '{tab} b t j ḥ d r z s ṣ ḍ ṭ ẓ ʿ f q k l m n h',
-        '{lock} th ḫ dh sh gh ʾ ā/á b. Ibn al- at āt {enter}',
-        '{shift} ā ū ī á īy ūw a u i aw ay {shift}',
-        '{space}',
+        '` 1 2 3 4 5 6 7 8 9 0 ʾ — {bksp}',
+        '{tab} q w e r t y u i o p [ ] \\',
+        "{lock} a s d f g h j k l ; ' {enter}",
+        '{shift} z x c v b n m , . / {shift}',
+        '.com @ {space}'
       ],
+      shift: [
+        '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
+        '{tab} Q W E R T Y U I O P { } |',
+        '{lock} A S D F G H J K L : " {enter}',
+        '{shift} Z X C V B N M < > ? {shift}',
+        '.com @ {space}'
+      ]
+    },
+    enableLayoutCandidates: true,
+    layoutCandidates: {
+      a: 'ā au aw ai ay',
+      d: 'dh',
+      h: 'ḥ',
+      i: 'ī iyy',
+      k: 'kh',
+      s: 'ṣ sh',
+      t: 'th',
+      u: 'ū uww',
+      A: 'Ā Au Aw Ai Ay',
+      D: 'Dh',
+      H: 'Ḥ',
+      I: 'Ī Iyy',
+      K: 'Kh',
+      S: 'Ṣ Sh',
+      T: 'Th',
+      U: 'Ū Uww'
     }
   },
-  transliterationBetacode: {
-    layout: {
-      default: [
-        '1 2 3 4 5 6 7 8 9 0 - = {bksp}',
-        '{tab} b t j/^g *h d r z s *s *d *t *z ` f *k k l m n h',
-        '{lock} _t _h _d ^s *g a/ b. Ibn All_ah All~ah lill_ah lill~ah a u i ū ī a=t _a=t ?a*n ?i*n ?u {enter}',
-        '{shift} _a/*a _u/*w _i /a iyy uww a u i !o aw {shift}',
-        '{space}',
-      ]
-    }
-  }
 };
 
 export default layouts;
