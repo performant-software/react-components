@@ -28,6 +28,7 @@ type Props = {
   collectionName: string,
   getChildItems: (items: Array<any>, item: any) => Array<any>,
   getRootItems: (items: Array<any>) => Array<any>,
+  lazyLoad: boolean,
   modal?: {
     component: Component<{}>,
     onAddItem: (item: any) => any,
@@ -37,12 +38,12 @@ type Props = {
   onDelete: (item: any) => Promise<any>,
   onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
-  onSearch: (parentId: ?number, search: ?string) => Promise<any>,
+  onSearch: (?number | ?string, ?number | ?string) => Promise<any>,
   pagination: boolean,
   renderItem: (item: any) => string | Component<{}>,
   selectable: boolean,
   selectedRows: Array<{id: number}>,
-  showToggle: (item: any) => boolean
+  showToggle: (item: any) => boolean,
 };
 
 type State = {
@@ -143,7 +144,7 @@ class AccordionList extends Component<Props, State> {
    * @param item
    */
   onItemToggle(item: any) {
-    if (!item.loaded) {
+    if (!item.loaded && this.props.lazyLoad) {
       this.onSearch(item.id).then(() => {
         // Set the "loaded" property on item to prevent multiple API calls
         this.setState((state) => ({
@@ -188,18 +189,14 @@ class AccordionList extends Component<Props, State> {
    * @returns {*}
    */
   onSearch(parentId?: number) {
-    if (parentId) {
+    if (this.props.lazyLoad) {
       return this.props
-        .onSearch(parentId, this.state.searchQuery, this.state.page)
+        .onSearch(parentId, this.state.searchQuery)
         .then(({ data }) => {
           const items = data[this.props.collectionName];
           this.setState((state) => (parentId
             ? { items: [...state.items || [], ...items] }
             : { items }));
-          if (this.props.pagination) {
-            const pageCount = data.list.pages;
-            this.setState({ pages: pageCount });
-          }
         });
     }
     // for models that use a join table or a relationship
@@ -476,6 +473,7 @@ AccordionList.defaultProps = {
   canDeleteItem: () => true,
   canEditItem: () => true,
   className: '',
+  lazyLoad: true,
   modal: undefined,
   pagination: false
 };
