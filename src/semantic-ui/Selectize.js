@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type ComponentType, type Element } from 'react';
 import {
   Button,
   Form,
@@ -21,22 +21,26 @@ import i18n from '../i18n/i18n';
 import Timer from '../utils/Timer';
 import './Selectize.css';
 
+type Item = {
+  id: number
+};
+
 type Props = {
   centered: boolean,
   collectionName: string,
   modal?: {
-    component: Component,
-    onSave: (item: any) => Promise<any>,
+    component: ComponentType<any>,
+    onSave: (item: Item) => Promise<any>,
     props: any,
     state: any,
   },
   multiple?: boolean,
   onClose: () => void,
-  onLoad: () => void,
-  onSave: (selectedItems: Array<any>) => void,
-  renderHeader?: () => any, // TODO: fix me
-  renderItem: () => any,
-  selectedItems?: Array<any>,
+  onLoad: ({ page: number, search: string }) => Promise<any>,
+  onSave: (selectedItems: Array<Item>) => void,
+  renderHeader?: (props: any) => ComponentType<any>,
+  renderItem: (item: Item) => Element<any>,
+  selectedItems?: Array<Item>,
   t: (key: string) => string,
   title: string
 };
@@ -44,6 +48,7 @@ type Props = {
 type State = {
   items: Array<any>,
   loading: boolean,
+  modalAdd: boolean,
   page: number,
   pages: number,
   saved: boolean,
@@ -53,22 +58,25 @@ type State = {
 };
 
 class Selectize extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new Selectize component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       items: [],
       loading: false,
+      modalAdd: false,
       page: 1,
       pages: 1,
       saved: false,
       searchQuery: '',
-      selectedItems: props.selectedItems,
+      selectedItems: props.selectedItems || [],
       selectedItem: null
     };
   }
@@ -104,7 +112,7 @@ class Selectize extends Component<Props, State> {
    *
    * @returns {boolean}
    */
-  isSelected(item) {
+  isSelected(item: any) {
     return !!_.findWhere(this.state.selectedItems, { id: item.id });
   }
 
@@ -113,7 +121,7 @@ class Selectize extends Component<Props, State> {
    *
    * @param item
    */
-  onItemSelection(item) {
+  onItemSelection(item: Item) {
     if (this.state.selectedItem === item) {
       this.setState({ selectedItem: null }, this.onSelect.bind(this, item));
     } else {
@@ -127,7 +135,7 @@ class Selectize extends Component<Props, State> {
    * @param e
    * @param activePage
    */
-  onPageChange(e, { activePage }) {
+  onPageChange(e: Event, { activePage }: { activePage: number }) {
     this.setState({ page: activePage }, this.fetchData.bind(this));
   }
 
@@ -145,7 +153,7 @@ class Selectize extends Component<Props, State> {
    * @param e
    * @param value
    */
-  onSearchChange(e, { value }) {
+  onSearchChange(e: Event, { value }: { value: string }) {
     this.setState({ searchQuery: value });
   }
 
@@ -154,7 +162,7 @@ class Selectize extends Component<Props, State> {
    *
    * @param item
    */
-  onSelect(item) {
+  onSelect(item: Item) {
     if (this.isSelected(item)) {
       this.setState((state) => ({
         selectedItems: _.filter(state.selectedItems, (i) => i.id !== item.id)
@@ -320,7 +328,7 @@ class Selectize extends Component<Props, State> {
    *
    * @returns {null|*}
    */
-  renderCheckmark(item) {
+  renderCheckmark(item: Item) {
     if (!this.isSelected(item)) {
       return null;
     }
@@ -393,7 +401,7 @@ class Selectize extends Component<Props, State> {
    *
    * @returns {*}
    */
-  renderItem(item, index) {
+  renderItem(item: Item, index: number) {
     return (
       <Table.Row
         key={index}
@@ -457,7 +465,6 @@ Selectize.defaultProps = {
   centered: false,
   modal: undefined,
   multiple: true,
-  renderHeader: undefined,
   selectedItems: []
 };
 
