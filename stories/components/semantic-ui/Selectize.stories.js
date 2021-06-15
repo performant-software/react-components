@@ -387,3 +387,28 @@ export const Default = () => (
     title={text('Title', 'Select some')}
   />
 );
+
+export const SingleSelect = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    multiple={false}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);

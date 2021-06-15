@@ -30,6 +30,7 @@ type Props = {
     props: any,
     state: any,
   },
+  multiple?: boolean,
   onClose: () => void,
   onLoad: () => void,
   onSave: (selectedItems: Array<any>) => void,
@@ -157,6 +158,8 @@ class Selectize extends Component<Props, State> {
       this.setState((state) => ({
         selectedItems: _.filter(state.selectedItems, (i) => i.id !== item.id)
       }));
+    } else if (!this.props.multiple) {
+      this.setState({ selectedItems: [item] });
     } else {
       this.setState((state) => ({
         selectedItems: [
@@ -438,6 +441,7 @@ class Selectize extends Component<Props, State> {
 Selectize.defaultProps = {
   centered: false,
   modal: undefined,
+  multiple: true,
   selectedItems: []
 };
 
