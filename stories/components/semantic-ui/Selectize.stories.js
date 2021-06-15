@@ -1,11 +1,15 @@
+// @flow
+
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
+import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
 import Selectize from '../../../src/semantic-ui/Selectize';
+import SelectizeHeader from '../../../src/semantic-ui/SelectizeHeader';
 
 export default {
   title: 'Components/Semantic UI/Selectize',
@@ -408,6 +412,49 @@ export const SingleSelect = () => (
       action('save')();
       return Promise.resolve();
     }}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);
+
+export const CustomHeader = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
+    renderHeader={({ onItemClick, selectedItem, selectedItems }) => (
+      <SelectizeHeader
+        isSelected={(item) => item === selectedItem}
+        items={selectedItems}
+        onItemClick={onItemClick}
+        renderItem={(item) => (
+          <Card>
+            <Card.Content>
+              <Card.Header
+                content={`${item.first_name} ${item.last_name}`}
+              />
+              <Card.Meta
+                content={item.email}
+              />
+            </Card.Content>
+          </Card>
+        )}
+      />
+    )}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
     title={text('Title', 'Select some')}
   />

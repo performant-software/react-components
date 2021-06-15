@@ -34,6 +34,7 @@ type Props = {
   onClose: () => void,
   onLoad: () => void,
   onSave: (selectedItems: Array<any>) => void,
+  renderHeader?: () => any, // TODO: fix me
   renderItem: () => any,
   selectedItems?: Array<any>,
   t: (key: string) => string,
@@ -219,12 +220,7 @@ class Selectize extends Component<Props, State> {
             <Grid.Column
               textAlign='center'
             >
-              <SelectizeHeader
-                isSelected={(item) => this.state.selectedItem === item}
-                items={this.state.selectedItems}
-                onItemClick={this.onItemSelection.bind(this)}
-                renderItem={this.props.renderItem.bind(this)}
-              />
+              { this.renderHeader() }
               { this.renderItems() }
               { this.renderPagination() }
               { this.renderEmpty() }
@@ -370,6 +366,25 @@ class Selectize extends Component<Props, State> {
     );
   }
 
+  renderHeader() {
+    if (this.props.renderHeader) {
+      return this.props.renderHeader({
+        onItemClick: this.onItemSelection.bind(this),
+        selectedItem: this.state.selectedItem,
+        selectedItems: this.state.selectedItems,
+      });
+    }
+
+    return (
+      <SelectizeHeader
+        isSelected={(item) => this.state.selectedItem === item}
+        items={this.state.selectedItems}
+        onItemClick={this.onItemSelection.bind(this)}
+        renderItem={this.props.renderItem.bind(this)}
+      />
+    );
+  }
+
   /**
    * Renders the passed item.
    *
@@ -442,6 +457,7 @@ Selectize.defaultProps = {
   centered: false,
   modal: undefined,
   multiple: true,
+  renderHeader: undefined,
   selectedItems: []
 };
 
