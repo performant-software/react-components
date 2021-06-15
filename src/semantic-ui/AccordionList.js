@@ -18,10 +18,12 @@ import NestedAccordion from './NestedAccordion';
 import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 import './AccordionList.css';
+import Utility from '../utils/Utility';
 
 type Props = {
   buttons: Array<Object>,
   canAddItem?: (item: any) => boolean,
+  canCopyItem?: (item: any) => boolean,
   canDeleteItem?: (item: any) => boolean,
   canEditItem?: (item: any) => boolean,
   className?: string,
@@ -35,6 +37,7 @@ type Props = {
     props: any,
     state: any,
   },
+  onCopy: (item: any) => any,
   onDelete: (item: any) => Promise<any>,
   onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
@@ -136,6 +139,26 @@ class AccordionList extends Component<Props, State> {
    */
   onEditButton(item: any) {
     this.setState({ modalAdd: true, selectedItem: item });
+  }
+
+  /**
+   * Copies the selected item and displays the add/edit modal.
+   *
+   * @param selectedItem
+   */
+  onCopyButton(selectedItem: any) {
+    let copy;
+    if (this.props.onCopy) {
+      copy = this.props.onCopy(selectedItem);
+      if (Utility.isPromise(copy)) {
+        copy.then((item) => {
+          this.setState({ selectedItem: item, modalAdd: true });
+        });
+      } else {
+        copy = _.omit(selectedItem, 'id', 'uid');
+        this.setState({ selectedItem: copy, modalAdd: true });
+      }
+    }
   }
 
   /**
@@ -315,7 +338,6 @@ class AccordionList extends Component<Props, State> {
     if (!(this.state.modalAdd && this.props.modal)) {
       return null;
     }
-
     const { component, props } = this.props.modal;
 
     return (
@@ -369,6 +391,28 @@ class AccordionList extends Component<Props, State> {
         compact
         icon='edit'
         onClick={this.onEditButton.bind(this, item)}
+      />
+    );
+  }
+
+  /**
+   * Renders the copy button for the passed item (if applicable).
+   *
+   * @param item
+   *
+   * @returns {null|*}
+   */
+  renderCopyButton(item: any) {
+    if (this.props.canCopyItem && !this.props.canCopyItem(item)) {
+      return null;
+    }
+
+    return (
+      <Button
+        basic
+        compact
+        icon='copy'
+        onClick={() => this.onCopyButton(item)}
       />
     );
   }
@@ -459,6 +503,7 @@ class AccordionList extends Component<Props, State> {
         <Button.Group>
           { this.renderAddButton(item) }
           { this.renderEditButton(item) }
+          { this.renderCopyButton(item) }
           { this.renderDeleteButton(item) }
         </Button.Group>
         { this.renderSelectCheckbox(item) }
@@ -472,6 +517,7 @@ AccordionList.defaultProps = {
   canAddItem: () => true,
   canDeleteItem: () => true,
   canEditItem: () => true,
+  canCopyItem: () => false,
   className: '',
   lazyLoad: true,
   modal: undefined,
