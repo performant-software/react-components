@@ -19,6 +19,7 @@ type Props = {
   children?: Node,
   dimmable: boolean,
   duration?: number,
+  image?: any,
   size?: string,
   src?: string
 };
@@ -60,12 +61,14 @@ const LazyImage = (props: Props) => {
         >
           { props.src && (
             <Image
+              {...props.image}
               size={props.size}
               src={props.src}
             />
           )}
           { !props.src && (
             <Image
+              {...props.image}
               className='placeholder-image'
               size={props.size}
             >
