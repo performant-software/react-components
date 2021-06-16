@@ -5,39 +5,26 @@ import {
   Button,
   Form,
   Grid,
-  Header,
   Icon,
-  Input,
-  Message,
   Modal,
-  Pagination,
   Table
 } from 'semantic-ui-react';
 import _ from 'underscore';
-import EditModal from './EditModal';
 import SelectizeHeader from './SelectizeHeader';
-import Toaster from './Toaster';
 import i18n from '../i18n/i18n';
-import Timer from '../utils/Timer';
+import useDataList from './DataList';
 import './Selectize.css';
+import useList, { type Props as ListProps } from './List';
 
 type Item = {
   id: number
 };
 
-type Props = {
+type Props = ListProps & {
   centered: boolean,
-  collectionName: string,
-  modal?: {
-    component: ComponentType<any>,
-    onSave: (item: Item) => Promise<any>,
-    props: any,
-    state: any,
-  },
   multiple?: boolean,
   onClose: () => void,
-  onLoad: ({ page: number, search: string }) => Promise<any>,
-  onSave: (selectedItems: Array<Item>) => void,
+  onInit: () => void,
   renderHeader?: (props: any) => ComponentType<any>,
   renderItem: (item: Item) => Element<any>,
   selectedItems?: Array<Item>,
@@ -46,13 +33,6 @@ type Props = {
 };
 
 type State = {
-  items: Array<any>,
-  loading: boolean,
-  modalAdd: boolean,
-  page: number,
-  pages: number,
-  saved: boolean,
-  searchQuery: string,
   selectedItem: any,
   selectedItems: Array<any>
 };
@@ -69,13 +49,6 @@ class Selectize extends Component<Props, State> {
     super(props);
 
     this.state = {
-      items: [],
-      loading: false,
-      modalAdd: false,
-      page: 1,
-      pages: 1,
-      saved: false,
-      searchQuery: '',
       selectedItems: props.selectedItems || [],
       selectedItem: null
     };
@@ -85,24 +58,7 @@ class Selectize extends Component<Props, State> {
    * Loads the data after the component has mounted.
    */
   componentDidMount() {
-    this.fetchData();
-  }
-
-  /**
-   * Executes the search and sets the results on the state.
-   */
-  fetchData() {
-    const { page, searchQuery } = this.state;
-
-    this.setState({ loading: true }, () => {
-      this.props
-        .onLoad({ page, search: searchQuery })
-        .then(({ data }) => {
-          const items = data[this.props.collectionName] || [];
-          const { pages = 1 } = data.list;
-          this.setState({ items, pages, loading: false });
-        });
-    });
+    this.props.onInit();
   }
 
   /**
@@ -127,34 +83,6 @@ class Selectize extends Component<Props, State> {
     } else {
       this.setState({ selectedItem: item });
     }
-  }
-
-  /**
-   * Sets the active page on the state and reloads the data.
-   *
-   * @param e
-   * @param activePage
-   */
-  onPageChange(e: Event, { activePage }: { activePage: number }) {
-    this.setState({ page: activePage }, this.fetchData.bind(this));
-  }
-
-  /**
-   * Sets the active page to "1" and reloads the data.
-   *
-   */
-  onSearch() {
-    this.setState({ page: 1 }, this.fetchData.bind(this));
-  }
-
-  /**
-   * Sets the search query value on the state.
-   *
-   * @param e
-   * @param value
-   */
-  onSearchChange(e: Event, { value }: { value: string }) {
-    this.setState({ searchQuery: value });
   }
 
   /**
@@ -185,6 +113,18 @@ class Selectize extends Component<Props, State> {
    * @returns {*}
    */
   render() {
+    const SelectizeGrid = useList(() => (
+      <Grid>
+        <Grid.Column
+          textAlign='center'
+        >
+          { this.renderHeader() }
+          { this.renderItems() }
+          { this.renderEmpty() }
+        </Grid.Column>
+      </Grid>
+    ));
+
     return (
       <Modal
         as={Form}
@@ -194,60 +134,13 @@ class Selectize extends Component<Props, State> {
         noValidate
         size='small'
       >
-        <Modal.Header>
-          <Grid
-            columns={2}
-            verticalAlign='middle'
-          >
-            <Grid.Column
-              textAlign='left'
-            >
-              <Header
-                content={this.props.title}
-              />
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-            >
-              <Input
-                autoFocus
-                icon='search'
-                onKeyDown={Timer.clearSearchTimer.bind(this)}
-                onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
-                onChange={this.onSearchChange.bind(this)}
-                size='mini'
-                type='text'
-                value={this.state.searchQuery}
-              />
-              { this.renderAddButton() }
-            </Grid.Column>
-          </Grid>
-        </Modal.Header>
+        <Modal.Header
+          content={this.props.title}
+        />
         <Modal.Content>
-          <Grid>
-            <Grid.Column
-              textAlign='center'
-            >
-              { this.renderHeader() }
-              { this.renderItems() }
-              { this.renderPagination() }
-              { this.renderEmpty() }
-              { this.renderAddModal() }
-            </Grid.Column>
-          </Grid>
-          { this.state.saved && (
-            <Toaster
-              onDismiss={() => this.setState({ saved: false })}
-              type={Toaster.MessageTypes.positive}
-            >
-              <Message.Header
-                content={i18n.t('Common.messages.save.header')}
-              />
-              <Message.Content
-                content={i18n.t('Common.messages.save.content')}
-              />
-            </Toaster>
-          )}
+          <SelectizeGrid
+            {...this.props}
+          />
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -269,55 +162,6 @@ class Selectize extends Component<Props, State> {
           </Button>
         </Modal.Actions>
       </Modal>
-    );
-  }
-
-  /**
-   * Renders the add button component.
-   *
-   * @returns {null|*}
-   */
-  renderAddButton() {
-    if (!this.props.modal) {
-      return null;
-    }
-
-    return (
-      <Button
-        basic
-        className='add-button'
-        content={i18n.t('Common.buttons.add')}
-        icon='plus'
-        onClick={() => this.setState({ modalAdd: true })}
-      />
-    );
-  }
-
-  /**
-   * Renders the add modal component (if provided).
-   *
-   * @returns {null|*}
-   */
-  renderAddModal() {
-    if (!(this.state.modalAdd && this.props.modal)) {
-      return null;
-    }
-
-    const { component, props, onSave } = this.props.modal;
-
-    return (
-      <EditModal
-        {...props}
-        component={component}
-        onClose={() => this.setState({ modalAdd: false })}
-        onSave={(item) => onSave(item).then((saved) => {
-          if (saved) {
-            this.onSelect(saved);
-          }
-
-          this.setState({ modalAdd: false, searchQuery: '', saved: true }, this.fetchData.bind(this));
-        })}
-      />
     );
   }
 
@@ -347,7 +191,7 @@ class Selectize extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEmpty() {
-    if (this.state.items.length || this.state.loading) {
+    if ((this.props.items && this.props.items.length) || this.props.loading) {
       return null;
     }
 
@@ -361,7 +205,7 @@ class Selectize extends Component<Props, State> {
         >
           <Grid.Row>
             <Icon
-              name='meh outline'
+              name='search'
               size='huge'
             />
           </Grid.Row>
@@ -421,7 +265,7 @@ class Selectize extends Component<Props, State> {
    * @returns {null|*}
    */
   renderItems() {
-    if (!this.state.items.length) {
+    if (_.isEmpty(this.props.items)) {
       return null;
     }
 
@@ -432,31 +276,9 @@ class Selectize extends Component<Props, State> {
         selectable
       >
         <Table.Body>
-          { this.state.items.map(this.renderItem.bind(this)) }
+          { _.map(this.props.items, this.renderItem.bind(this)) }
         </Table.Body>
       </Table>
-    );
-  }
-
-  /**
-   * Renders the pagination component.
-   *
-   * @returns {null|*}
-   */
-  renderPagination() {
-    if (!this.state.items.length) {
-      return null;
-    }
-
-    return (
-      <Pagination
-        activePage={this.state.page}
-        firstItem={null}
-        lastItem={null}
-        onPageChange={this.onPageChange.bind(this)}
-        size='mini'
-        totalPages={this.state.pages}
-      />
     );
   }
 }
@@ -465,7 +287,8 @@ Selectize.defaultProps = {
   centered: false,
   modal: undefined,
   multiple: true,
+  searchable: true,
   selectedItems: []
 };
 
-export default Selectize;
+export default useDataList(Selectize);
