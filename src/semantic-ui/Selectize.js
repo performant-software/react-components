@@ -37,6 +37,18 @@ type State = {
   selectedItems: Array<any>
 };
 
+const SelectizeGrid = useList((props) => (
+  <Grid>
+    <Grid.Column
+      textAlign='center'
+    >
+      { props.renderHeader() }
+      { props.renderItems() }
+      { props.renderEmpty() }
+    </Grid.Column>
+  </Grid>
+));
+
 class Selectize extends Component<Props, State> {
   static defaultProps: any;
 
@@ -113,18 +125,6 @@ class Selectize extends Component<Props, State> {
    * @returns {*}
    */
   render() {
-    const SelectizeGrid = useList(() => (
-      <Grid>
-        <Grid.Column
-          textAlign='center'
-        >
-          { this.renderHeader() }
-          { this.renderItems() }
-          { this.renderEmpty() }
-        </Grid.Column>
-      </Grid>
-    ));
-
     return (
       <Modal
         as={Form}
@@ -140,6 +140,9 @@ class Selectize extends Component<Props, State> {
         <Modal.Content>
           <SelectizeGrid
             {...this.props}
+            renderHeader={this.renderHeader.bind(this)}
+            renderEmpty={this.renderEmpty.bind(this)}
+            renderItems={this.renderItems.bind(this)}
           />
         </Modal.Content>
         <Modal.Actions>
