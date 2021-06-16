@@ -11,7 +11,6 @@ import EnglishLayout from 'simple-keyboard-layouts/build/layouts/english';
 import JapaneseLayout from 'simple-keyboard-layouts/build/layouts/japanese';
 
 import Keyboard from '../../../src/common/Keyboard';
-import layouts from '../../../src/utils/CustomKeyboardLayouts';
 
 export default {
   title: 'Components/Common/Keyboard',

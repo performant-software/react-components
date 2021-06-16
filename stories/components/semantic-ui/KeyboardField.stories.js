@@ -5,7 +5,6 @@ import { Form } from 'semantic-ui-react';
 import English from 'simple-keyboard-layouts/build/layouts/english';
 import Arabic from 'simple-keyboard-layouts/build/layouts/arabic';
 import KeyboardField from '../../../src/semantic-ui/KeyboardField';
-import layouts from '../../../src/utils/CustomKeyboardLayouts';
 
 export default {
   title: 'Components/Semantic UI/KeyboardField',
@@ -73,12 +72,57 @@ export const MultipleOnOneForm = () => {
 
 export const WithAlternativeCharacters = () => {
   const [value, setValue] = useState('');
+  const exampleTransliterationLayout = {
+    layout: {
+      default: [
+        '` 1 2 3 4 5 6 7 8 9 0 ʾ ʿ — {bksp}',
+        '{tab} q w e r t y u i o p [ ] \\',
+        "{lock} a s d f g h j k l ; ' {enter}",
+        '{shift} z x c v b n m , . / {shift}',
+        '.com @ {space}'
+      ],
+      shift: [
+        '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
+        '{tab} Q W E R T Y U I O P { } |',
+        '{lock} A S D F G H J K L : " {enter}',
+        '{shift} Z X C V B N M < > ? {shift}',
+        '.com @ {space}'
+      ]
+    },
+    enableLayoutCandidates: true,
+    layoutCandidates: {
+      a: 'ā á à â',
+      c: 'ç',
+      d: 'ḍ',
+      e: 'ē é è æ ə',
+      g: 'ğ',
+      h: 'ḥ',
+      i: 'ī i ı í ï',
+      k: 'ḳ',
+      o: 'о̄ ö',
+      s: 'ṣ ş',
+      t: 'ṭ',
+      u: 'ū ü',
+      z: 'ẓ',
+      A: 'Ā Á À Â Ä',
+      D: 'Ḍ',
+      G: 'Ğ',
+      H: 'Ḥ',
+      I: 'Ī İ I Í Ï',
+      K: 'Ḳ',
+      O: 'Ō Ö',
+      S: 'Ṣ Ş',
+      T: 'Ṭ',
+      U: 'Ū Ü',
+      Z: 'Ẓ'
+    }
+  };
 
   return (
     <Form>
       <KeyboardField
         label={text('Field name', 'Field')}
-        layout={layouts.transliterationIjmes}
+        layout={exampleTransliterationLayout}
         name='test-field'
         onChange={(e, { value }) => setValue(value)}
         required={boolean('Required', false)}
