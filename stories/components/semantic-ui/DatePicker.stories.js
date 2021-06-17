@@ -5,8 +5,6 @@ import { withA11y } from '@storybook/addon-a11y';
 import { Form } from 'semantic-ui-react';
 import DatePicker from '../../../src/semantic-ui/DatePicker';
 
-import 'react-calendar/dist/Calendar.css';
-
 export default {
   title: 'Components/Semantic UI/DatePicker',
   decorators: [withA11y]
