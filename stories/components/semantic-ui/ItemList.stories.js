@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -691,5 +693,38 @@ export const Loading = useDragDrop(() => (
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
     searchable={boolean('Searchable', true)}
+  />
+));
+
+export const SortDescending = useDragDrop(() => (
+  <ItemList
+    actions={actions}
+    collectionName='items'
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderDescription={(item) => item.vin}
+    renderExtra={(item) => item.address}
+    renderHeader={(item) => <Header content={item.model} />}
+    renderMeta={(item) => item.make}
+    searchable={boolean('Searchable', true)}
+    sort={[{
+      key: 'make',
+      value: 'make',
+      text: 'Make'
+    }, {
+      key: 'model',
+      value: 'model',
+      text: 'Model'
+    }, {
+      key: 'vin',
+      value: 'vin',
+      text: 'VIN',
+      direction: 'descending'
+    }]}
   />
 ));

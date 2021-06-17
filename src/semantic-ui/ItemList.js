@@ -8,12 +8,13 @@ import useDataList, { SORT_ASCENDING } from './DataList';
 type Sort = {
   key: any,
   value: any,
-  text: string
+  text: string,
+  direction:? string
 };
 
 type Props = {
   page: number,
-  onSort: (column: string, direction?: string, page?: number) => void,
+  onSort: (column: string, direction: ?string, page?: number) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
   sortDirection?: string
