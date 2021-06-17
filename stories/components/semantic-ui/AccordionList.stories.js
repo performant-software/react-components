@@ -3,6 +3,7 @@ import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
+import { Button } from 'semantic-ui-react';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
 import AccordionList from '../../../src/semantic-ui/AccordionList';
@@ -54,8 +55,45 @@ export const Default = () => (
       action('save')();
       return Promise.resolve();
     }}
-    onSearch={(parentId, search) => Api.onNestedLoad({ items: data, parentId, parentKey: 'parent_id', search })}
+    onSearch={(parentId, search) => Api.onNestedLoad({
+      items: data, parentId, parentKey: 'parent_id', search
+    })}
     renderItem={(item) => item.name}
+    showToggle={() => true}
+  />
+);
+
+export const Selectable = () => (
+  <AccordionList
+    buttons={[
+      {
+        render: () => <Button key='1'>Test</Button>
+      },
+      {
+        render: () => <Button key='2'>Test 2</Button>
+      },
+    ]}
+    canAddItem={() => boolean('Can add', true)}
+    canDeleteItem={() => boolean('Can delete', true)}
+    canEditItem={() => boolean('Can edit', true)}
+    collectionName='items'
+    getChildItems={(items, item) => _.where(items, { parent_id: item.id })}
+    getRootItems={(items) => _.where(items, { parent_id: null })}
+    modal={{
+      component: AddModal
+    }}
+    onDelete={action('delete')}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
+    onSearch={(parentId, search) => Api.onNestedLoad({
+      items: data, parentId, parentKey: 'parent_id', search
+    })}
+    renderItem={(item) => item.name}
+    selectable
+    selectedRows={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+    onRowSelect={action('row selected')}
     showToggle={() => true}
   />
 );

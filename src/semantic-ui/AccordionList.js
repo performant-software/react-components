@@ -3,10 +3,13 @@
 import React, { Component } from 'react';
 import {
   Button,
+  Checkbox,
   Confirm,
+  Grid,
   Header,
   Input,
-  Message
+  Message,
+  Pagination
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -15,32 +18,43 @@ import NestedAccordion from './NestedAccordion';
 import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 import './AccordionList.css';
+import Utility from '../utils/Utility';
 
 type Props = {
+  buttons: Array<Object>,
   canAddItem?: (item: any) => boolean,
+  canCopyItem?: (item: any) => boolean,
   canDeleteItem?: (item: any) => boolean,
   canEditItem?: (item: any) => boolean,
   className?: string,
   collectionName: string,
   getChildItems: (items: Array<any>, item: any) => Array<any>,
   getRootItems: (items: Array<any>) => Array<any>,
+  lazyLoad: boolean,
   modal?: {
     component: Component<{}>,
     onAddItem: (item: any) => any,
     props: any,
     state: any,
   },
+  onCopy: (item: any) => any,
   onDelete: (item: any) => Promise<any>,
+  onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
-  onSearch: (parentId: ?number, search: ?string) => Promise<any>,
+  onSearch: (?number | ?string, ?number | ?string) => Promise<any>,
+  pagination: boolean,
   renderItem: (item: any) => string | Component<{}>,
-  showToggle: (item: any) => boolean
+  selectable: boolean,
+  selectedRows: Array<{id: number}>,
+  showToggle: (item: any) => boolean,
 };
 
 type State = {
   items: Array<any>,
   modalAdd: boolean,
   modalDelete: boolean,
+  page: ?number,
+  pages: ?number,
   saved: boolean,
   searchQuery: string,
   selectedItem: ?any
@@ -61,6 +75,8 @@ class AccordionList extends Component<Props, State> {
       items: [],
       modalAdd: false,
       modalDelete: false,
+      page: 1,
+      pages: 1,
       saved: false,
       searchQuery: '',
       selectedItem: null
@@ -126,12 +142,32 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Copies the selected item and displays the add/edit modal.
+   *
+   * @param selectedItem
+   */
+  onCopyButton(selectedItem: any) {
+    let copy;
+    if (this.props.onCopy) {
+      copy = this.props.onCopy(selectedItem);
+      if (Utility.isPromise(copy)) {
+        copy.then((item) => {
+          this.setState({ selectedItem: item, modalAdd: true });
+        });
+      } else {
+        copy = _.omit(selectedItem, 'id', 'uid');
+        this.setState({ selectedItem: copy, modalAdd: true });
+      }
+    }
+  }
+
+  /**
    * Lazy-loads the children of the passed item and sets them on the state..
    *
    * @param item
    */
   onItemToggle(item: any) {
-    if (!item.loaded) {
+    if (!item.loaded && this.props.lazyLoad) {
       this.onSearch(item.id).then(() => {
         // Set the "loaded" property on item to prevent multiple API calls
         this.setState((state) => ({
@@ -139,6 +175,13 @@ class AccordionList extends Component<Props, State> {
         }));
       });
     }
+  }
+
+  /**
+  * Changes active page and fetches new set of paginated data.
+  */
+  onPageChange(e: any, selectedPage: any) {
+    this.setState({ page: selectedPage.activePage }, () => this.onSearch());
   }
 
   /**
@@ -169,13 +212,27 @@ class AccordionList extends Component<Props, State> {
    * @returns {*}
    */
   onSearch(parentId?: number) {
+    if (this.props.lazyLoad) {
+      return this.props
+        .onSearch(parentId, this.state.searchQuery)
+        .then(({ data }) => {
+          const items = data[this.props.collectionName];
+          this.setState((state) => (parentId
+            ? { items: [...state.items || [], ...items] }
+            : { items }));
+        });
+    }
+    // for models that use a join table or a relationship
+    // structure other than nestable node levels/ancestors
     return this.props
-      .onSearch(parentId, this.state.searchQuery)
+      .onSearch(this.state.searchQuery, this.state.page)
       .then(({ data }) => {
         const items = data[this.props.collectionName];
-        this.setState((state) => (parentId
-          ? { items: [...state.items || [], ...items] }
-          : { items }));
+        this.setState({ items });
+        if (this.props.pagination) {
+          const pageCount = data.list.pages;
+          this.setState({ pages: pageCount });
+        }
       });
   }
 
@@ -214,6 +271,7 @@ class AccordionList extends Component<Props, State> {
             value={this.state.searchQuery}
           />
           { this.renderHeaderAddButton() }
+          { this.props.buttons.map((b) => b.render()) }
         </Header>
         <NestedAccordion
           getChildItems={this.props.getChildItems.bind(this, this.state.items)}
@@ -223,6 +281,7 @@ class AccordionList extends Component<Props, State> {
           rootItems={this.props.getRootItems(this.state.items)}
           showToggle={this.props.showToggle.bind(this)}
         />
+        { this.renderPagination() }
         { this.renderAddModal() }
         <Confirm
           content={i18n.t('AccordionList.deleteContent')}
@@ -279,7 +338,6 @@ class AccordionList extends Component<Props, State> {
     if (!(this.state.modalAdd && this.props.modal)) {
       return null;
     }
-
     const { component, props } = this.props.modal;
 
     return (
@@ -338,6 +396,28 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Renders the copy button for the passed item (if applicable).
+   *
+   * @param item
+   *
+   * @returns {null|*}
+   */
+  renderCopyButton(item: any) {
+    if (this.props.canCopyItem && !this.props.canCopyItem(item)) {
+      return null;
+    }
+
+    return (
+      <Button
+        basic
+        compact
+        icon='copy'
+        onClick={() => this.onCopyButton(item)}
+      />
+    );
+  }
+
+  /**
    * Renders the header add button.
    *
    * @returns {null|*}
@@ -359,6 +439,58 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Renders the pagination button row.
+   *
+   * @returns {null|*}
+   */
+  renderPagination() {
+    if (!this.props.pagination) {
+      return null;
+    }
+
+    return (
+      <div className='footer'>
+        <Grid
+          columns={2}
+        >
+          <Grid.Column
+            textAlign='left'
+          />
+          <Grid.Column
+            textAlign='right'
+          >
+            <Pagination
+              activePage={this.state.page}
+              onPageChange={this.onPageChange.bind(this)}
+              size='mini'
+              totalPages={this.state.pages}
+            />
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
+  }
+  /**
+   * Renders the select checkbox for the passed item.
+   *
+   * @returns {null|*}
+   */
+  renderSelectCheckbox(item: {id: number}) {
+    if (!this.props.selectable) {
+      return null;
+    }
+    const selected = this.props.selectedRows.find((r) => r.id === item.id);
+    return (
+      <Checkbox
+        key={`select-checkbox-${item.id}`}
+        className='row-select-checkbox'
+        onClick={(e, el) => this.props.onRowSelect(el, item, e)}
+        checked={!!selected}
+      />
+    );
+  }
+
+  /**
    * Renders the right side of the passed item.
    *
    * @param item
@@ -367,21 +499,29 @@ class AccordionList extends Component<Props, State> {
    */
   renderRight(item: any) {
     return (
-      <Button.Group>
-        { this.renderAddButton(item) }
-        { this.renderEditButton(item) }
-        { this.renderDeleteButton(item) }
-      </Button.Group>
+      <>
+        <Button.Group>
+          { this.renderAddButton(item) }
+          { this.renderEditButton(item) }
+          { this.renderCopyButton(item) }
+          { this.renderDeleteButton(item) }
+        </Button.Group>
+        { this.renderSelectCheckbox(item) }
+      </>
     );
   }
 }
 
 AccordionList.defaultProps = {
+  buttons: [],
   canAddItem: () => true,
   canDeleteItem: () => true,
   canEditItem: () => true,
+  canCopyItem: () => false,
   className: '',
-  modal: undefined
+  lazyLoad: true,
+  modal: undefined,
+  pagination: false
 };
 
 export default AccordionList;

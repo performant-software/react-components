@@ -9,3 +9,7 @@
 .accordion-list .accordion-header .input.search {
   display: inline-block;
 }
+
+.accordion-list .footer {
+  margin-top: 15px;
+}
