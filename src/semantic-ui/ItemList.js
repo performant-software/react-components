@@ -31,13 +31,20 @@ type Props = {
  */
 const ItemList = (props: Props) => {
   useEffect(() => {
-    const { page, sortDirection = SORT_ASCENDING } = props;
+    const { page } = props;
 
-    let { sortColumn } = props;
+    let { sortColumn = '', sortDirection = SORT_ASCENDING } = props;
 
     if (!sortColumn) {
       const defaultSort = _.first(props.sort);
-      sortColumn = defaultSort && defaultSort.value;
+
+      if (defaultSort) {
+        sortColumn = defaultSort.value;
+
+        if (defaultSort.direction) {
+          sortDirection = defaultSort.direction;
+        }
+      }
     }
 
     props.onSort(sortColumn, sortDirection, page);

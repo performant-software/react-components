@@ -715,7 +715,8 @@ export const SortDescending = useDragDrop(() => (
     sort={[{
       key: 'make',
       value: 'make',
-      text: 'Make'
+      text: 'Make',
+      direction: 'descending'
     }, {
       key: 'model',
       value: 'model',
