@@ -3,7 +3,7 @@
     "deleteContent": "Are you sure you want to remove this record?",
     "deleteHeader": "Confirm Remove",
     "record": "Record",
-    "records": "Records"
+    "record_plural": "Records"
   },
   "AccordionSelector": {
     "title": "Select Items"
@@ -142,7 +142,7 @@
     "emptyList": "No matching records found.",
     "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
     "record": "Record",
-    "records": "Records"
+    "record_plural": "Records"
   },
   "LoginModal": {
     "buttonCancel": "Cancel",

@@ -691,7 +691,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       const { count } = this.props;
       return (
         <p className='record-count'>
-          {`${Number(count).toLocaleString()} ${count > 1 ? i18n.t('List.records') : i18n.t('List.record')}`}
+          {`${Number(count).toLocaleString()} ${i18n.t('List.record', { count })}`}
         </p>
       );
     }

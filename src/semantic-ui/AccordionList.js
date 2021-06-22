@@ -457,9 +457,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <span className='record-count'>
-        {`${Number(recordCount).toLocaleString()} ${recordCount > 1
-          ? i18n.t('AccordionList.records')
-          : i18n.t('AccordionList.record')}`}
+        {`${Number(recordCount).toLocaleString()} ${i18n.t('AccordionList.record', { count: recordCount })}`}
       </span>
     );
   }
