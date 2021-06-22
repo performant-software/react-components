@@ -122,6 +122,16 @@ export const Default = useDragDrop(() => (
   />
 ));
 
+export const WithRecordCount = useDragDrop(() => (
+  <EmbeddedList
+    actions={actions}
+    onDelete={action('delete')}
+    columns={columns}
+    items={items}
+    showRecordCount
+  />
+));
+
 export const Selectable = useDragDrop(() => (
   <EmbeddedList
     selectable
