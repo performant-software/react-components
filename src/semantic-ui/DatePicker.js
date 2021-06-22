@@ -5,7 +5,6 @@ import Calendar from 'react-calendar';
 import { Icon, Transition } from 'semantic-ui-react';
 import DateInput from './DateInput';
 
-import 'react-calendar/dist/Calendar.css';
 import './DatePicker.css';
 
 type Props = {
