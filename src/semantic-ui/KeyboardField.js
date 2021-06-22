@@ -109,6 +109,7 @@ class KeyboardField extends Component<Props, State> {
               layout={this.props.layout}
               onChange={this.onKeyboardChange.bind(this)}
               value={this.props.value}
+              keyboardClass={this.props.name}
             />
           </Segment>
         </Transition>
