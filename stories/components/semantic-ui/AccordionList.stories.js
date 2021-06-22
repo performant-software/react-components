@@ -63,6 +63,30 @@ export const Default = () => (
   />
 );
 
+export const WithRecordCount = () => (
+  <AccordionList
+    canAddItem={() => boolean('Can add', true)}
+    canDeleteItem={() => boolean('Can delete', true)}
+    canEditItem={() => boolean('Can edit', true)}
+    collectionName='items'
+    getChildItems={(items, item) => _.where(items, { parent_id: item.id })}
+    getRootItems={(items) => _.where(items, { parent_id: null })}
+    modal={{
+      component: AddModal
+    }}
+    onDelete={action('delete')}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
+    onSearch={(parentId, search) => Api.onNestedLoad({
+      items: data, parentId, parentKey: 'parent_id', search
+    })}
+    renderItem={(item) => item.name}
+    showToggle={() => true}
+  />
+);
+
 export const Selectable = () => (
   <AccordionList
     buttons={[

@@ -46,10 +46,12 @@ type Props = {
   renderItem: (item: any) => string | Component<{}>,
   selectable: boolean,
   selectedRows: Array<{id: number}>,
+  showRecordCount: boolean,
   showToggle: (item: any) => boolean,
 };
 
 type State = {
+  count: number,
   items: Array<any>,
   modalAdd: boolean,
   modalDelete: boolean,
@@ -72,6 +74,7 @@ class AccordionList extends Component<Props, State> {
     super(props);
 
     this.state = {
+      count: 0,
       items: [],
       modalAdd: false,
       modalDelete: false,
@@ -229,6 +232,9 @@ class AccordionList extends Component<Props, State> {
       .then(({ data }) => {
         const items = data[this.props.collectionName];
         this.setState({ items });
+        if (this.props.showRecordCount) {
+          this.setState({ count: data.list.count });
+        }
         if (this.props.pagination) {
           const pageCount = data.list.pages;
           this.setState({ pages: pageCount });
@@ -282,6 +288,7 @@ class AccordionList extends Component<Props, State> {
           showToggle={this.props.showToggle.bind(this)}
         />
         { this.renderPagination() }
+        { this.renderRecordCount() }
         { this.renderAddModal() }
         <Confirm
           content={i18n.t('AccordionList.deleteContent')}
@@ -470,6 +477,27 @@ class AccordionList extends Component<Props, State> {
       </div>
     );
   }
+
+  /**
+   * Renders the record count component.
+   *
+   * @returns {null|*}
+   */
+  renderRecordCount() {
+    const recordCount = this.state.count;
+    if (!this.props.showRecordCount || !recordCount) {
+      return null;
+    }
+
+    return (
+      <p className='record-count'>
+        {`${Number(recordCount).toLocaleString()} ${recordCount > 1
+          ? i18n.t('AccordionList.records')
+          : i18n.t('AccordionList.record')}`}
+      </p>
+    );
+  }
+
   /**
    * Renders the select checkbox for the passed item.
    *

@@ -1,7 +1,9 @@
 {
   "AccordionList": {
     "deleteContent": "Are you sure you want to remove this record?",
-    "deleteHeader": "Confirm Remove"
+    "deleteHeader": "Confirm Remove",
+    "record": "Record",
+    "records": "Records"
   },
   "AccordionSelector": {
     "title": "Select Items"
