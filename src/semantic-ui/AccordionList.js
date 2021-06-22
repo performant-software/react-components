@@ -287,8 +287,7 @@ class AccordionList extends Component<Props, State> {
           rootItems={this.props.getRootItems(this.state.items)}
           showToggle={this.props.showToggle.bind(this)}
         />
-        { this.renderPagination() }
-        { this.renderRecordCount() }
+        { this.renderFooter() }
         { this.renderAddModal() }
         <Confirm
           content={i18n.t('AccordionList.deleteContent')}
@@ -446,6 +445,26 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Renders the record count component.
+   *
+   * @returns {null|*}
+   */
+  renderRecordCount() {
+    const recordCount = this.state.count;
+    if (!recordCount) {
+      return null;
+    }
+
+    return (
+      <span className='record-count'>
+        {`${Number(recordCount).toLocaleString()} ${recordCount > 1
+          ? i18n.t('AccordionList.records')
+          : i18n.t('AccordionList.record')}`}
+      </span>
+    );
+  }
+
+  /**
    * Renders the pagination button row.
    *
    * @returns {null|*}
@@ -456,46 +475,42 @@ class AccordionList extends Component<Props, State> {
     }
 
     return (
-      <div className='footer'>
-        <Grid
-          columns={2}
-        >
-          <Grid.Column
-            textAlign='left'
-          />
-          <Grid.Column
-            textAlign='right'
-          >
-            <Pagination
-              activePage={this.state.page}
-              onPageChange={this.onPageChange.bind(this)}
-              size='mini'
-              totalPages={this.state.pages}
-            />
-          </Grid.Column>
-        </Grid>
-      </div>
+      <Pagination
+        activePage={this.state.page}
+        onPageChange={this.onPageChange.bind(this)}
+        size='mini'
+        totalPages={this.state.pages}
+      />
     );
   }
 
   /**
-   * Renders the record count component.
+   * Renders the footer.
    *
    * @returns {null|*}
    */
-  renderRecordCount() {
-    const recordCount = this.state.count;
-    if (!this.props.showRecordCount || !recordCount) {
-      return null;
+  renderFooter() {
+    if (this.props.pagination || this.props.showRecordCount) {
+      return (
+        <div className='footer'>
+          <Grid
+            columns={2}
+          >
+            <Grid.Column
+              textAlign='left'
+            >
+              { this.renderRecordCount() }
+            </Grid.Column>
+            <Grid.Column
+              textAlign='right'
+            >
+              { this.renderPagination() }
+            </Grid.Column>
+          </Grid>
+        </div>
+      );
     }
-
-    return (
-      <p className='record-count'>
-        {`${Number(recordCount).toLocaleString()} ${recordCount > 1
-          ? i18n.t('AccordionList.records')
-          : i18n.t('AccordionList.record')}`}
-      </p>
-    );
+    return null;
   }
 
   /**
