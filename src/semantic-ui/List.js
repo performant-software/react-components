@@ -590,13 +590,13 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='left'
             >
+              {showCount ? this.renderRecordCount() : ''}
               { _.map(buttons, (button) => button.render()) }
             </Grid.Column>
             <Grid.Column
               textAlign='right'
             >
               { hasPages ? this.renderPagination() : ''}
-              {showCount ? this.renderRecordCount(!!hasPages) : ''}
             </Grid.Column>
           </Grid>
         </div>
@@ -687,10 +687,10 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      *
      * @returns {null|*}
      */
-    renderRecordCount(hasPages: boolean) {
+    renderRecordCount() {
       const { count } = this.props;
       return (
-        <p className='record-count' style={hasPages ? { marginTop: 10 } : {}}>
+        <p className='record-count'>
           {`${Number(count).toLocaleString()} ${count > 1 ? i18n.t('List.records') : i18n.t('List.record')}`}
         </p>
       );
