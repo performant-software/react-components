@@ -30,6 +30,7 @@ type Props = {
 };
 
 type State = {
+  count: number,
   error: ?any,
   filters: any,
   items: Array<any>,
@@ -160,9 +161,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           .onLoad(params)
           .then(({ data }) => {
             const items = data[this.props.collectionName];
-            const { pages } = data.list;
+            const { pages, count } = data.list;
 
             this.setState({
+              count,
               items,
               page,
               pages,
@@ -205,6 +207,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       const sortDirection = session.sortDirection || null;
 
       return {
+        count: 0,
         error: null,
         filters,
         items: [],
@@ -358,6 +361,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         <>
           <WrappedComponent
             {...this.props}
+            count={this.state.count}
             filters={{
               active: this.isFilterActive(),
               component: this.props.filters && this.props.filters.component,

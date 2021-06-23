@@ -10,6 +10,11 @@
   display: inline-block;
 }
 
+.accordion-list p.record-count {
+  text-align: right;
+  margin-top: 10px;
+}
+
 .accordion-list .footer {
   margin-top: 15px;
 }

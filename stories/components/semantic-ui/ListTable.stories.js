@@ -467,6 +467,23 @@ export const Default = useDragDrop(() => (
   />
 ));
 
+export const WithRecordCount = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    searchable={boolean('Searchable', true)}
+    showRecordCount
+  />
+));
+
 export const Unsortable = useDragDrop(() => (
   <ListTable
     actions={actions}

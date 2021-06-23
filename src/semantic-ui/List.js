@@ -43,6 +43,7 @@ type Props = {
     onClick?: () => void
   },
   buttons: Array<ListButton>,
+  count: number,
   className: string,
   configurable: boolean,
   deleteButton?: {
@@ -76,6 +77,7 @@ type Props = {
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
   renderListHeader?: () => Element<any>,
   renderSearch?: () => Element<any>,
+  showRecordCount: boolean,
   t: (key: string) => string
 };
 
@@ -571,6 +573,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         renderFooter = true;
       }
 
+      const showCount = this.props.count && this.props.showRecordCount;
+      if (showCount) {
+        renderFooter = true;
+      }
+
       if (!renderFooter) {
         return null;
       }
@@ -583,12 +590,13 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='left'
             >
+              {showCount ? this.renderRecordCount() : ''}
               { _.map(buttons, (button) => button.render()) }
             </Grid.Column>
             <Grid.Column
               textAlign='right'
             >
-              { hasPages && this.renderPagination() }
+              { hasPages ? this.renderPagination() : ''}
             </Grid.Column>
           </Grid>
         </div>
@@ -671,6 +679,20 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           size='mini'
           totalPages={this.props.pages}
         />
+      );
+    }
+
+    /**
+     * Renders the record count component.
+     *
+     * @returns {null|*}
+     */
+    renderRecordCount() {
+      const { count } = this.props;
+      return (
+        <p className='record-count'>
+          {`${Number(count).toLocaleString()} ${i18n.t('List.record', { count })}`}
+        </p>
       );
     }
   }

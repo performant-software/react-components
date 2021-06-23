@@ -59,6 +59,7 @@ const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }) => {
     data: {
       items: payload,
       list: {
+        count: items.length,
         pages
       }
     }

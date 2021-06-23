@@ -25,7 +25,7 @@ type Props = {
   className?: string,
   columns: Array<Column>,
   configurable: boolean,
-  items: ?Array<any>,
+  items: Array<any>,
   modal?: {
     component: ComponentType<any>,
     props: any,
@@ -40,6 +40,7 @@ type Props = {
   selectable: boolean,
   onRowSelect: (Array<{id: number}>),
   selectedRows: Array<{id: number}>,
+  showRecordCount: boolean,
 };
 
 type State = {
@@ -159,6 +160,7 @@ class EmbeddedList extends Component<Props, State> {
         className={`embedded-list ${this.props.className ? this.props.className : ''}`}
         configurable={this.props.configurable}
         columns={this.props.columns}
+        count={this.props.items.length}
         items={this.getItems()}
         modal={this.props.modal}
         onColumnClick={this.onColumnClick.bind(this)}
@@ -178,6 +180,7 @@ class EmbeddedList extends Component<Props, State> {
         selectable={this.props.selectable}
         onRowSelect={this.props.onRowSelect}
         selectedRows={this.props.selectedRows}
+        showRecordCount={this.props.showRecordCount}
       />
     );
   }
@@ -244,6 +247,7 @@ _.mixin({
 });
 
 EmbeddedList.defaultProps = {
+  items: [],
   addButton: {
     location: 'top'
   },

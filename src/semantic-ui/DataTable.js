@@ -574,6 +574,7 @@ DataTable.defaultProps = {
     color: 'green'
   },
   buttons: [],
+  count: 0,
   className: '',
   expandableRows: false,
   expandPanel: undefined,
@@ -590,6 +591,7 @@ DataTable.defaultProps = {
   renderEmptyRow: undefined,
   renderSearch: undefined,
   renderItem: undefined,
+  showRecordCount: false,
   selectedRows: [],
   sortColumn: undefined,
   sortDirection: undefined,

@@ -46,10 +46,12 @@ type Props = {
   renderItem: (item: any) => string | Component<{}>,
   selectable: boolean,
   selectedRows: Array<{id: number}>,
+  showRecordCount: boolean,
   showToggle: (item: any) => boolean,
 };
 
 type State = {
+  count: number,
   items: Array<any>,
   modalAdd: boolean,
   modalDelete: boolean,
@@ -72,6 +74,7 @@ class AccordionList extends Component<Props, State> {
     super(props);
 
     this.state = {
+      count: 0,
       items: [],
       modalAdd: false,
       modalDelete: false,
@@ -229,6 +232,9 @@ class AccordionList extends Component<Props, State> {
       .then(({ data }) => {
         const items = data[this.props.collectionName];
         this.setState({ items });
+        if (this.props.showRecordCount) {
+          this.setState({ count: data.list.count });
+        }
         if (this.props.pagination) {
           const pageCount = data.list.pages;
           this.setState({ pages: pageCount });
@@ -281,7 +287,7 @@ class AccordionList extends Component<Props, State> {
           rootItems={this.props.getRootItems(this.state.items)}
           showToggle={this.props.showToggle.bind(this)}
         />
-        { this.renderPagination() }
+        { this.renderFooter() }
         { this.renderAddModal() }
         <Confirm
           content={i18n.t('AccordionList.deleteContent')}
@@ -439,6 +445,24 @@ class AccordionList extends Component<Props, State> {
   }
 
   /**
+   * Renders the record count component.
+   *
+   * @returns {null|*}
+   */
+  renderRecordCount() {
+    const recordCount = this.state.count;
+    if (!recordCount) {
+      return null;
+    }
+
+    return (
+      <span className='record-count'>
+        {`${Number(recordCount).toLocaleString()} ${i18n.t('AccordionList.record', { count: recordCount })}`}
+      </span>
+    );
+  }
+
+  /**
    * Renders the pagination button row.
    *
    * @returns {null|*}
@@ -449,27 +473,44 @@ class AccordionList extends Component<Props, State> {
     }
 
     return (
-      <div className='footer'>
-        <Grid
-          columns={2}
-        >
-          <Grid.Column
-            textAlign='left'
-          />
-          <Grid.Column
-            textAlign='right'
-          >
-            <Pagination
-              activePage={this.state.page}
-              onPageChange={this.onPageChange.bind(this)}
-              size='mini'
-              totalPages={this.state.pages}
-            />
-          </Grid.Column>
-        </Grid>
-      </div>
+      <Pagination
+        activePage={this.state.page}
+        onPageChange={this.onPageChange.bind(this)}
+        size='mini'
+        totalPages={this.state.pages}
+      />
     );
   }
+
+  /**
+   * Renders the footer.
+   *
+   * @returns {null|*}
+   */
+  renderFooter() {
+    if (this.props.pagination || this.props.showRecordCount) {
+      return (
+        <div className='footer'>
+          <Grid
+            columns={2}
+          >
+            <Grid.Column
+              textAlign='left'
+            >
+              { this.renderRecordCount() }
+            </Grid.Column>
+            <Grid.Column
+              textAlign='right'
+            >
+              { this.renderPagination() }
+            </Grid.Column>
+          </Grid>
+        </div>
+      );
+    }
+    return null;
+  }
+
   /**
    * Renders the select checkbox for the passed item.
    *
