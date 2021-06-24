@@ -1,14 +1,15 @@
 // @flow
 
-import React from 'react';
+import React, { type Element } from 'react';
 import { Embed, Modal } from 'semantic-ui-react';
 import './VideoPlayer.css';
 
 type Props = {
   embedded?: boolean,
+  icon?: string | Element<any>,
   onClose: () => void,
   open: boolean,
-  placeholder?: string,
+  placeholder?: ?string,
   size?: string,
   video: string
 };
@@ -25,7 +26,7 @@ const VideoPlayer = (props: Props) => (
     <Modal.Content>
       { props.embedded && (
         <Embed
-          icon='right circle arrow'
+          icon={props.icon}
           placeholder={props.placeholder}
           url={props.video}
         />
@@ -42,6 +43,7 @@ const VideoPlayer = (props: Props) => (
 
 VideoPlayer.defaultProps = {
   embedded: false,
+  icon: 'right circle arrow',
   size: 'small'
 };
 
