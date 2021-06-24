@@ -1,12 +1,14 @@
 // @flow
 
 import React from 'react';
-import { Modal } from 'semantic-ui-react';
+import { Embed, Modal } from 'semantic-ui-react';
 import './VideoPlayer.css';
 
 type Props = {
+  embedded?: boolean,
   onClose: () => void,
   open: boolean,
+  placeholder?: string,
   size?: string,
   video: string
 };
@@ -21,15 +23,25 @@ const VideoPlayer = (props: Props) => (
     size={props.size}
   >
     <Modal.Content>
-      <video
-        controls
-        src={props.video}
-      />
+      { props.embedded && (
+        <Embed
+          icon='right circle arrow'
+          placeholder={props.placeholder}
+          url={props.video}
+        />
+      )}
+      { !props.embedded && (
+        <video
+          controls
+          src={props.video}
+        />
+      )}
     </Modal.Content>
   </Modal>
 );
 
 VideoPlayer.defaultProps = {
+  embedded: false,
   size: 'small'
 };
 

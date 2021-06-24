@@ -19,6 +19,7 @@ type Props = {
   children?: Node,
   dimmable: boolean,
   duration?: number,
+  embedded?: boolean,
   preview?: ?string,
   size?: string,
   src?: string
@@ -99,8 +100,10 @@ const LazyVideo = (props: Props) => {
       </Transition>
       { props.src && (
         <VideoPlayer
+          embedded={props.embedded}
           onClose={() => setModal(false)}
           open={modal}
+          placeholder={props.preview}
           size='large'
           video={props.src}
         />
@@ -112,6 +115,7 @@ const LazyVideo = (props: Props) => {
 LazyVideo.defaultProps = {
   dimmable: true,
   duration: 1000,
+  embedded: false,
   size: 'medium'
 };
 
