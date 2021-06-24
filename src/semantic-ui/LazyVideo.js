@@ -16,6 +16,7 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
+  autoPlay?: boolean,
   children?: Node,
   dimmable: boolean,
   duration?: number,
@@ -101,6 +102,7 @@ const LazyVideo = (props: Props) => {
       </Transition>
       { props.src && (
         <VideoPlayer
+          autoPlay={props.autoPlay}
           embedded={props.embedded}
           icon={props.icon}
           onClose={() => setModal(false)}
@@ -115,6 +117,7 @@ const LazyVideo = (props: Props) => {
 };
 
 LazyVideo.defaultProps = {
+  autoPlay: false,
   dimmable: true,
   duration: 1000,
   embedded: false,

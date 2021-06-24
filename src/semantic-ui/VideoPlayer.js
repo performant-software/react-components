@@ -5,6 +5,7 @@ import { Embed, Modal } from 'semantic-ui-react';
 import './VideoPlayer.css';
 
 type Props = {
+  autoPlay?: boolean,
   embedded?: boolean,
   icon?: string | Element<any>,
   onClose: () => void,
@@ -26,13 +27,16 @@ const VideoPlayer = (props: Props) => (
     <Modal.Content>
       { props.embedded && (
         <Embed
+          active={props.autoPlay}
           icon={props.icon}
+          iframe={props.autoPlay ? { allow: 'autoplay' } : undefined}
           placeholder={props.placeholder}
-          url={props.video}
+          url={`${props.video}${props.autoPlay ? '?autoplay=true' : ''}`}
         />
       )}
       { !props.embedded && (
         <video
+          autoPlay={props.autoPlay}
           controls
           src={props.video}
         />
@@ -42,6 +46,7 @@ const VideoPlayer = (props: Props) => (
 );
 
 VideoPlayer.defaultProps = {
+  autoPlay: false,
   embedded: false,
   icon: 'right circle arrow',
   size: 'small'
