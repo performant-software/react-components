@@ -17,8 +17,10 @@ import Toaster from './Toaster';
 
 type Props = {
   button: string,
+  includeButton?: boolean,
   itemComponent: ComponentType<any>,
   onAddFile: (file: File) => any,
+  onClose?: () => void,
   onSave: (items: Array<any>) => Promise<any>,
   required: { [string]: string },
   title?: string
@@ -33,6 +35,8 @@ type State = {
 const LIST_DELIMITER = ', ';
 
 class FileUploadModal extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new FileUploadModal component.
    *
@@ -52,7 +56,7 @@ class FileUploadModal extends Component<Props, State> {
   getInitialState() {
     return {
       items: [],
-      modal: false,
+      modal: !this.props.includeButton,
       saving: false
     };
   }
@@ -101,10 +105,14 @@ class FileUploadModal extends Component<Props, State> {
   }
 
   /**
-   * Resets the state.
+   * Resets the state or calls the onClose prop.
    */
   onClose() {
-    this.setState(this.getInitialState());
+    if (this.props.onClose) {
+      this.props.onClose();
+    } else {
+      this.setState(this.getInitialState());
+    }
   }
 
   /**
@@ -178,12 +186,14 @@ class FileUploadModal extends Component<Props, State> {
   render() {
     return (
       <>
-        <Button
-          content={this.props.button}
-          icon='cloud upload'
-          onClick={() => this.setState({ modal: true })}
-          primary
-        />
+        { this.props.includeButton && (
+          <Button
+            content={this.props.button}
+            icon='cloud upload'
+            onClick={() => this.setState({ modal: true })}
+            primary
+          />
+        )}
         { this.state.modal && (
           <Modal
             centered={false}
@@ -380,6 +390,10 @@ class FileUploadModal extends Component<Props, State> {
     return { ...item, errors };
   }
 }
+
+FileUploadModal.defaultProps = {
+  includeButton: true
+};
 
 export type FileUploadProps = {
   isError: (key: string) => boolean,

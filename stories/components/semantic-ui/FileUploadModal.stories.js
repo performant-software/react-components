@@ -25,3 +25,22 @@ export const Default = () => (
     }}
   />
 );
+
+export const NoButton = () => (
+  <FileUploadModal
+    button='Upload files'
+    includeButton={false}
+    itemComponent={({ item }) => (
+      <Form.Input
+        label='Name'
+        value={item.name || ''}
+      />
+    )}
+    onAddFile={(file) => file}
+    onClose={action('close')}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
+    }}
+  />
+);
