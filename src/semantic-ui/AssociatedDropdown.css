@@ -1,15 +1,22 @@
 .association-dropdown {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   width: 100%;
+}
+
+.association-dropdown .buttons {
+  width: 30%;
   display: flex;
   flex-wrap: wrap;
 }
 
-.association-dropdown .buttons {
-  width: 30%
+.association-dropdown .dropdown-container {
+  width: 70%;
 }
 
 .association-dropdown .inline-dropdown {
-  width: 70%;
+  width: 100%;
 }
 
 .association-dropdown .ui.search.selection.dropdown > input.search {
