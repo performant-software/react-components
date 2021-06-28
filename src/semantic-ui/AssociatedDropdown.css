@@ -6,13 +6,13 @@
 }
 
 .association-dropdown .buttons {
-  width: 30%;
+  width: 40%;
   display: flex;
   flex-wrap: wrap;
 }
 
 .association-dropdown .dropdown-container {
-  width: 70%;
+  width: 60%;
 }
 
 .association-dropdown .inline-dropdown {
