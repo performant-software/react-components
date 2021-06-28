@@ -251,7 +251,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEditButton() {
-    if (!this.props.modal || !this.props.modal.props.onInitialize || !this.state.value) {
+    if (!this.props.modal || !this.props.modal.props || !this.props.modal.props.onInitialize || !this.state.value) {
       return null;
     }
 
