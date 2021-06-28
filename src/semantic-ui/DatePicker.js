@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
 import { Icon, Transition } from 'semantic-ui-react';
 import DateInput from './DateInput';
+
 import './DatePicker.css';
 
 type Props = {
@@ -18,13 +19,15 @@ const DatePicker = (props: Props) => {
   const [calendar, setCalendar] = useState(false);
   const calendarWrapper = useRef(null);
 
-  useEffect(() => {
-    const onDocumentClick = (event) => {
-      if (calendarWrapper.current && !calendarWrapper.current.contains(event.target)) {
-        setCalendar(false);
-      }
-    }
+  const onDocumentClick = (event) => {
+    const calendarInstance = calendarWrapper.current;
 
+    if (calendarInstance && !calendarInstance.contains(event.target)) {
+      setCalendar(false);
+    }
+  };
+
+  useEffect(() => {
     // Bind the event listener
     document.addEventListener('mousedown', onDocumentClick);
 

@@ -3,15 +3,17 @@
 import React, { Component, type ComponentType } from 'react';
 import { Button, Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
+import { SORT_ASCENDING } from './DataList';
 
 type Sort = {
   key: string,
   text: string,
-  value: string
+  value: string,
+  direction?: ?string
 };
 
 type Props = {
-  onSort?: (sortColumn: string) => void,
+  onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
   sortDirection?: string
@@ -25,8 +27,6 @@ const Views = {
   list: 0,
   grid: 1
 };
-
-const SORT_ASCENDING = 'ascending';
 
 /**
  * Returns a function to wrap the passed component in a ItemToggle. The ItemToggle component can be used to toggle a
@@ -76,7 +76,17 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*|void}
      */
     onSort(sort: Sort) {
-      return this.props.onSort && this.props.onSort(sort.value);
+      if (!this.props.onSort) {
+        return;
+      }
+
+      let sortDirection;
+
+      if (sort.value !== this.props.sortColumn) {
+        sortDirection = sort.direction;
+      }
+
+      this.props.onSort(sort.value, sortDirection);
     }
 
     /**

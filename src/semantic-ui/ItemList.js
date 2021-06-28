@@ -8,12 +8,13 @@ import useDataList, { SORT_ASCENDING } from './DataList';
 type Sort = {
   key: any,
   value: any,
-  text: string
+  text: string,
+  direction:? string
 };
 
 type Props = {
   page: number,
-  onSort: (column: string, direction?: string, page?: number) => void,
+  onSort: (column: string, direction: ?string, page?: number) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
   sortDirection?: string
@@ -30,13 +31,20 @@ type Props = {
  */
 const ItemList = (props: Props) => {
   useEffect(() => {
-    const { page, sortDirection = SORT_ASCENDING } = props;
+    const { page } = props;
 
-    let { sortColumn } = props;
+    let { sortColumn = '', sortDirection = SORT_ASCENDING } = props;
 
     if (!sortColumn) {
       const defaultSort = _.first(props.sort);
-      sortColumn = defaultSort && defaultSort.value;
+
+      if (defaultSort) {
+        sortColumn = defaultSort.value;
+
+        if (defaultSort.direction) {
+          sortDirection = defaultSort.direction;
+        }
+      }
     }
 
     props.onSort(sortColumn, sortDirection, page);

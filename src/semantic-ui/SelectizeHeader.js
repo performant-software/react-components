@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { type Element } from 'react';
 import { Button, Segment } from 'semantic-ui-react';
 import _ from 'underscore';
 import './SelectizeHeader.css';
@@ -9,7 +9,7 @@ type Props = {
   isSelected: (item: any) => boolean,
   items: Array<any>,
   onItemClick: (item: any) => void,
-  renderItem: (item: any) => string | Component<{}>
+  renderItem: (item: any) => string | Element<any>
 };
 
 const SelectizeHeader = (props: Props) => {
