@@ -116,8 +116,9 @@ export const Selectable = () => (
     })}
     renderItem={(item) => item.name}
     selectable
-    selectedRows={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+    selectedRows={[{ id: 1 }]}
     onRowSelect={action('row selected')}
+    onSelectAll={action('select all')}
     showToggle={() => true}
   />
 );

@@ -39,6 +39,7 @@ type Props = {
   loading: boolean,
   onColumnClick: (column: Column) => void,
   onRowSelect: (?any, ?any, ?any)=>void,
+  onSelectAll: (?any, ?any, ?any, ?any)=>void,
   renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
@@ -328,9 +329,30 @@ class DataTable extends Component<Props, State> {
     if (!this.props.selectable) {
       return null;
     }
+    if (!this.props.onSelectAll) {
+      return (
+        <Table.HeaderCell
+          className='select-cell'
+          content=''
+        />
+
+      );
+    }
+
+    const selectedRowIds = this.props.selectedRows.map((r) => r.id);
+    const itemsOnPage = this.props.items ? this.props.items : [];
+    const toBeSelected = itemsOnPage.reduce((tbs, item) => (
+      selectedRowIds.includes(item.id) ? tbs : [...tbs, item]), []);
 
     return (
-      <Table.HeaderCell content='' />
+      <Table.HeaderCell
+        className='select-cell'
+      >
+        <Checkbox
+          onClick={(e, el) => this.props.onSelectAll(el, toBeSelected, this.props.items, e)}
+          checked={!toBeSelected.length}
+        />
+      </Table.HeaderCell>
     );
   }
 
@@ -514,7 +536,7 @@ class DataTable extends Component<Props, State> {
 
     const handleCellClick = (e) => {
       // only target table cells, not action buttons or checkboxes, etc.
-      if (e.target.nodeName === "TD") {
+      if (e.target.nodeName === 'TD') {
         this.setState({
           activePanel: this.state.activePanel === item.id ? '' : item.id
         });
@@ -529,7 +551,7 @@ class DataTable extends Component<Props, State> {
       <>
         <Table.Row
           key={index}
-          onClick={this.props.expandableRows ? handleCellClick : () => { return } }
+          onClick={this.props.expandableRows ? handleCellClick : () => { }}
           className={this.props.expandableRows ? 'expandable' : ''}
         >
           { children }

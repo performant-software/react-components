@@ -18,3 +18,10 @@
 .accordion-list .footer {
   margin-top: 15px;
 }
+
+.accordion-list .sub-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: .75em 1em;
+}

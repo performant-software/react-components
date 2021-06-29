@@ -43,6 +43,7 @@ type Props = {
   onRowSelect: (?any, ?any, ?any) => void,
   onSave: (item: any) => Promise<any>,
   onSearch: (?number | ?string, ?number | ?string) => Promise<any>,
+  onSelectAll: (?any, ?any, ?any, ?any) => void,
   pagination: boolean,
   renderItem: (item: any) => string | Component<{}>,
   selectable: boolean,
@@ -280,6 +281,7 @@ class AccordionList extends Component<Props, State> {
           { this.renderHeaderAddButton() }
           { this.props.buttons.map((b) => b.render()) }
         </Header>
+        { this.renderSubHeader() }
         <NestedAccordion
           getChildItems={this.props.getChildItems.bind(this, this.state.items)}
           onItemToggle={this.onItemToggle.bind(this)}
@@ -333,6 +335,32 @@ class AccordionList extends Component<Props, State> {
         icon='plus'
         onClick={this.onAddButton.bind(this, item)}
       />
+    );
+  }
+
+  renderSelectAll() {
+    if (!this.props.selectable && !this.props.onSelectAll) {
+      return null;
+    }
+
+    const selectedRowIds = this.props.selectedRows.map((r) => r.id);
+    const itemsOnPage = this.state.items ? this.state.items : [];
+    const toBeSelected = itemsOnPage.reduce((tbs, item) => (
+      selectedRowIds.includes(item.id) ? tbs : [...tbs, item]), []);
+
+    return (
+      <Checkbox
+        onClick={(e, el) => this.props.onSelectAll(el, toBeSelected, this.state.items, e)}
+        checked={!toBeSelected.length}
+      />
+    );
+  }
+
+  renderSubHeader() {
+    return (
+      <div className='sub-header'>
+        { this.renderSelectAll() }
+      </div>
     );
   }
 
