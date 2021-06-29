@@ -22,6 +22,7 @@ type Props = {
   duration?: number,
   embedded?: boolean,
   icon?: string | Element<any>,
+  image?: any,
   preview?: ?string,
   size?: string,
   src?: string
@@ -64,12 +65,14 @@ const LazyVideo = (props: Props) => {
         >
           { props.preview && (
             <Image
+              {...props.image}
               src={props.preview}
               size={props.size}
             />
           )}
           { !props.preview && (
             <Image
+              {...props.image}
               className='placeholder-image'
               size={props.size}
             >

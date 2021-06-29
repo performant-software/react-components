@@ -67,3 +67,7 @@ export type { EditContainerProps as EditModalProps } from './common/EditContaine
 export type { EditContainerProps } from './common/EditContainer';
 export type { EditPageProps } from './semantic-ui/EditPage';
 export type { FileUploadProps } from './semantic-ui/FileUploadModal';
+export type { Props as ListProps } from './semantic-ui/List';
+
+// Constants
+export { SORT_ASCENDING, SORT_DESCENDING } from './semantic-ui/DataList';

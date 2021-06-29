@@ -30,6 +30,7 @@ type Props = {
   collectionName: string,
   getChildItems: (items: Array<any>, item: any) => Array<any>,
   getRootItems: (items: Array<any>) => Array<any>,
+  hideAddRootButton: boolean,
   lazyLoad: boolean,
   modal?: {
     component: Component<{}>,
@@ -429,7 +430,7 @@ class AccordionList extends Component<Props, State> {
    * @returns {null|*}
    */
   renderHeaderAddButton() {
-    if (!this.props.modal) {
+    if (!this.props.modal || this.props.hideAddRootButton) {
       return null;
     }
 

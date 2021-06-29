@@ -25,7 +25,7 @@ type Props = {
     state: any
   },
   onSearch: () => Promise<any>,
-  onSelection: () => void,
+  onSelection: (value: number | string) => void,
   placeholder?: string,
   renderOption: (option: any) => Option,
   required?: boolean,
@@ -36,12 +36,14 @@ type Props = {
 };
 
 type State = {
+  item: ?Object,
   items: Array<any>,
   loading: boolean,
   modalAdd: boolean,
   options: Array<Option>,
+  saved: boolean,
   searchQuery: string,
-  value: number
+  value: number | string
 };
 
 const TIMEOUT = 500;
@@ -60,6 +62,7 @@ class AssociatedDropdown extends Component<Props, State> {
       loading: false,
       modalAdd: false,
       options: [],
+      saved: false,
       searchQuery: props.searchQuery || '',
       value: props.value || ''
     };
@@ -171,32 +174,35 @@ class AssociatedDropdown extends Component<Props, State> {
       <div
         className='association-dropdown'
       >
-        <Dropdown
-          className={`inline-dropdown ${this.props.className}`}
-          disabled={this.state.loading}
-          loading={this.state.loading}
-          onBlur={this.onBlur.bind(this)}
-          onChange={this.onOptionSelection.bind(this)}
-          onOpen={this.onOpen.bind(this)}
-          onSearchChange={this.onSearchChange.bind(this)}
-          options={this.state.options}
-          placeholder={this.props.placeholder}
-          search={() => this.state.options}
-          searchInput={{
-            'aria-label': this.props.collectionName,
-            className: 'dropdown-search-input',
-            onKeyDown: Timer.clearSearchTimer.bind(this),
-            onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))
-          }}
-          searchQuery={this.state.searchQuery}
-          selectOnBlur={false}
-          selection
-          upward={this.props.upward}
-          value={this.state.value}
-        />
+        <div className='dropdown-container'>
+          <Dropdown
+            className={`inline-dropdown ${this.props.className}`}
+            disabled={this.state.loading}
+            loading={this.state.loading}
+            onBlur={this.onBlur.bind(this)}
+            onChange={this.onOptionSelection.bind(this)}
+            onOpen={this.onOpen.bind(this)}
+            onSearchChange={this.onSearchChange.bind(this)}
+            options={this.state.options}
+            placeholder={this.props.placeholder}
+            search={() => this.state.options}
+            searchInput={{
+              'aria-label': this.props.collectionName,
+              className: 'dropdown-search-input',
+              onKeyDown: Timer.clearSearchTimer.bind(this),
+              onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))
+            }}
+            searchQuery={this.state.searchQuery}
+            selectOnBlur={false}
+            selection
+            upward={this.props.upward}
+            value={this.state.value}
+          />
+        </div>
         <Button.Group
           className='buttons'
         >
+          { this.renderEditButton() }
           { this.renderAddButton() }
           { this.renderClearButton() }
         </Button.Group>
@@ -240,6 +246,27 @@ class AssociatedDropdown extends Component<Props, State> {
   }
 
   /**
+   * Renders the edit button (if applicable).
+   *
+   * @returns {null|*}
+   */
+  renderEditButton() {
+    if (!this.props.modal || !this.props.modal.props || !this.props.modal.props.onInitialize || !this.state.value) {
+      return null;
+    }
+
+    return (
+      <Button
+        basic
+        content={i18n.t('Common.buttons.edit')}
+        icon='pencil'
+        onClick={() => this.setState({ modalAdd: true })}
+        type='button'
+      />
+    );
+  }
+
+  /**
    * Renders the add association button.
    *
    * @returns {null|*}
@@ -249,11 +276,14 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
-    const { component, props, onSave } = this.props.modal;
+    const {
+      component, props, onSave
+    } = this.props.modal;
 
     return (
       <EditModal
         component={component}
+        item={{ id: this.state.value }}
         onClose={() => this.setState({ modalAdd: false })}
         onSave={(item) => onSave(item)
           .then((record) => {

@@ -35,10 +35,10 @@ const ListTable = (props: Props) => {
      * If the column has not yet been click-sorted, check to see if there is a default sort
      * direction on the column. Otherwise, toggle the sort direction on the state.
      */
-    if (column.sortDirection) {
-      sortDirection = column.sortDirection;
-    } else if (column.name === props.sortColumn) {
+    if (column.name === props.sortColumn) {
       sortDirection = props.sortDirection === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING;
+    } else if (column.sortDirection) {
+      sortDirection = column.sortDirection;
     }
 
     props.onSort(sortColumn, sortDirection);
