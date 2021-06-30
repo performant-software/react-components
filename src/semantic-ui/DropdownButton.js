@@ -11,6 +11,7 @@ type Option = {
 
 type Props = {
   color?: string,
+  direction?: string,
   icon?: string,
   options: Array<Option>,
   onChange: (e: Event, { value: any }) => void,
@@ -32,6 +33,7 @@ const DropdownButton = (props: Props) => {
       />
       <Dropdown
         className='button icon'
+        direction={props.direction}
         floating
         onChange={props.onChange.bind(this)}
         options={props.options}

@@ -177,3 +177,11 @@ export const ListContent = () => (
     </Item>
   </Item.Group>
 );
+
+export const Embedded = () => (
+  <LazyVideo
+    embedded
+    preview='http://img.youtube.com/vi/YXiZ8OsS3kk/0.jpg'
+    src='https://www.youtube.com/embed/YXiZ8OsS3kk'
+  />
+);

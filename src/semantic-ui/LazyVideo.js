@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useState, type Element, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -16,9 +16,12 @@ import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
+  autoPlay?: boolean,
   children?: Node,
   dimmable: boolean,
   duration?: number,
+  embedded?: boolean,
+  icon?: string | Element<any>,
   image?: any,
   preview?: ?string,
   size?: string,
@@ -102,8 +105,12 @@ const LazyVideo = (props: Props) => {
       </Transition>
       { props.src && (
         <VideoPlayer
+          autoPlay={props.autoPlay}
+          embedded={props.embedded}
+          icon={props.icon}
           onClose={() => setModal(false)}
           open={modal}
+          placeholder={props.preview}
           size='large'
           video={props.src}
         />
@@ -113,8 +120,11 @@ const LazyVideo = (props: Props) => {
 };
 
 LazyVideo.defaultProps = {
+  autoPlay: false,
   dimmable: true,
   duration: 1000,
+  embedded: false,
+  icon: 'right circle arrow',
   size: 'medium'
 };
 
