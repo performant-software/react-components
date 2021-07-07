@@ -77,7 +77,11 @@ class EmbeddedList extends Component<Props, State> {
    * Sorts the table by the first column.
    */
   componentDidMount() {
-    this.onColumnClick(_.first(this.props.columns));
+    const column = _.find(this.props.columns, (c) => c.sortable !== false);
+
+    if (column) {
+      this.onColumnClick(column);
+    }
   }
 
   /**
