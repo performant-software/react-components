@@ -77,7 +77,11 @@ class EmbeddedList extends Component<Props, State> {
    * Sorts the table by the first column.
    */
   componentDidMount() {
-    this.onColumnClick(_.first(this.props.columns));
+    const column = _.find(this.props.columns, (c) => c.sortable !== false);
+
+    if (column) {
+      this.onColumnClick(column);
+    }
   }
 
   /**
@@ -98,11 +102,19 @@ class EmbeddedList extends Component<Props, State> {
    * @param column
    */
   onColumnClick(column: Column) {
-    /**
+    /*
      * We'll disable the column sorting if the table rows are draggable. Making the table rows draggable implies
      * that the sorting will be done manually. Allowing column click sorting could make things confusing.
      */
     if (this.props.onDrag) {
+      return;
+    }
+
+    /*
+     * If the column is not sortable, we'll do nothing. Check explicity for "false" here because the default behavior
+     * should allow columns to be sortable.
+     */
+    if (column.sortable === false) {
       return;
     }
 

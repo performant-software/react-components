@@ -272,3 +272,12 @@ export const TabbedModalConfig = useDragDrop(() => {
     </Container>
   );
 });
+
+export const NoSortableColumns = useDragDrop(() => (
+  <EmbeddedList
+    actions={actions}
+    onDelete={action('delete')}
+    columns={_.map(columns, (c) => ({ ...c, sortable: false }))}
+    items={items}
+  />
+));

@@ -20,6 +20,7 @@ type Props = {
   dimmable: boolean,
   duration?: number,
   image?: any,
+  preview?: string,
   size?: string,
   src?: string
 };
@@ -63,7 +64,7 @@ const LazyImage = (props: Props) => {
             <Image
               {...props.image}
               size={props.size}
-              src={props.src}
+              src={props.preview || props.src}
             />
           )}
           { !props.src && (

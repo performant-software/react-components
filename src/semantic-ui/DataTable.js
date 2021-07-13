@@ -26,7 +26,8 @@ type Column = {
   name: string,
   render?: (item: any) => void,
   renderHeader?: (item: any) => void,
-  resolve?: (item: any) => void
+  resolve?: (item: any) => void,
+  sortable: boolean
 };
 
 type Props = {
