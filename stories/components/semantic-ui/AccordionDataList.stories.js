@@ -1,10 +1,11 @@
 // @flow
 
-import React from 'react';
+import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { Button } from 'semantic-ui-react';
+import _ from 'underscore';
 import AccordionDataList from '../../../src/semantic-ui/AccordionDataList';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
@@ -174,3 +175,55 @@ export const Selectable = () => (
     showToggle={() => true}
   />
 );
+
+export const SelectableControlled = () => {
+  const [selected, setSelected] = useState([]);
+
+  console.log(selected);
+
+  return (
+    <AccordionDataList
+      actions={[{
+        name: 'edit',
+        accept: () => boolean('Can edit', true)
+      }, {
+        name: 'copy',
+        accept: () => boolean('Can copy', true)
+      }, {
+        name: 'delete',
+        accept: () => boolean('Can delete', true)
+      }]}
+      buttons={[
+        {
+          render: () => <Button key='1'>Test</Button>
+        },
+        {
+          render: () => <Button key='2'>Test 2</Button>
+        },
+      ]}
+      collectionName='items'
+      getChildItems={(items, item) => item.children}
+      getRootItems={(items) => items}
+      modal={{
+        component: AddModal
+      }}
+      onDelete={action('delete')}
+      onSave={() => {
+        action('save')();
+        return Promise.resolve();
+      }}
+      onLoad={(params) => Api.onLoad({ ...params, items: data })}
+      onRowSelect={({ checked }, item) => {
+        if (checked) {
+          setSelected((prevSelected) => [...prevSelected, item]);
+        } else {
+          setSelected((prevSelected) => _.filter(prevSelected, (i) => i !== item));
+        }
+      }}
+      renderItem={(item) => item.name}
+      selectable
+      selectedRows={selected}
+      showToggle={() => true}
+    />
+  );
+};

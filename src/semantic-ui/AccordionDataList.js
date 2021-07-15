@@ -91,7 +91,7 @@ const Accordion = useList((props: AccordionProps) => {
         checked={!!props.selectedRows.find((r) => r.id === item.id)}
       />
     );
-  }, [props.selectable]);
+  }, [props.onRowSelect, props.selectable, props.selectedRows]);
 
   return (
     <div
