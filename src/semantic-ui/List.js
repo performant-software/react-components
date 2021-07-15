@@ -31,6 +31,7 @@ type Action = {
 };
 
 type ListButton = {
+  accept?: () => boolean,
   render: (index?: number) => Element<any>
 };
 
@@ -384,6 +385,10 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     renderButton(button: any, index: number) {
       if (button.render) {
         return button.render(index);
+      }
+
+      if (button.accept && !button.accept()) {
+        return null;
       }
 
       return (
