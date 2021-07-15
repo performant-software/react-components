@@ -1,0 +1,7 @@
+.accordion-data-list {
+  margin-top: 1em;
+}
+
+.accordion-data-list .ui.styled.accordion div[index="0"] .title {
+  border-top: none;
+}

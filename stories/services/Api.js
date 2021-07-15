@@ -111,7 +111,11 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
 
   const response = {
     data: {
-      items: payload
+      items: payload,
+      list: {
+        count: payload.length,
+        pages: 1
+      }
     }
   };
 

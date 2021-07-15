@@ -75,7 +75,7 @@ type Props = {
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
-  renderListHeader?: () => Element<any>,
+  renderListHeader?: () => ?Element<any>,
   renderSearch?: () => Element<any>,
   showRecordCount: boolean,
   t: (key: string) => string
