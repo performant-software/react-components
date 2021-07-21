@@ -14,7 +14,7 @@ type Props = {
   inverted?: boolean,
   isItemActive?: (item: any) => boolean,
   onItemClick?: (item: any) => void,
-  onItemToggle: (item: any) => void,
+  onItemToggle?: (item: any) => void,
   renderItem: (item: any) => string | Element<any>,
   renderRight?: (item: any) => string | Element<any>,
   rootItems: Array<any>,
@@ -116,7 +116,10 @@ class NestedAccordion extends Component<Props, State> {
    * @param item
    */
   onItemToggle(item: any) {
-    this.props.onItemToggle(item);
+    if (this.props.onItemToggle) {
+      this.props.onItemToggle(item);
+    }
+
     this.toggleItem(item);
   }
 

@@ -6,6 +6,7 @@ export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 
 // Semantic UI
+export { default as AccordionDataList } from './semantic-ui/AccordionDataList';
 export { default as AccordionList } from './semantic-ui/AccordionList';
 export { default as AccordionSelector } from './semantic-ui/AccordionSelector';
 export { default as ArrowButtons } from './semantic-ui/ArrowButtons';
