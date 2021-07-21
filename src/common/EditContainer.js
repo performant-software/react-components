@@ -248,7 +248,8 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       this.setState({ saving: true }, () => {
         this.props
           .onSave(this.state.item)
-          .catch(this.onError.bind(this));
+          .catch(this.onError.bind(this))
+          .finally(() => this.setState({ saving: false }));
       });
     }
 
