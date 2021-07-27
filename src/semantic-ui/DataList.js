@@ -305,8 +305,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
      */
     onSave(item: any) {
-      return this.props
-        .onSave(item)
+      return Promise.resolve(this.props.onSave(item))
         .then(() => this.setState({ saved: true }, this.fetchData.bind(this)));
     }
 
