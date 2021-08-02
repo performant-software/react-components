@@ -12,6 +12,7 @@ type Props = {
   defaultSearch: ?string,
   filters?: {
     component: Component<{}>,
+    defaults: any,
     props: any,
     onChange: (filter: any) => Promise<any>
   },
@@ -366,7 +367,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               component: this.props.filters && this.props.filters.component,
               onChange: this.onFilterChange.bind(this),
               props: {
-                defaults: this.props.filters && this.props.filters.props,
+                ...(this.props.filters || {}).props,
+                defaults: this.props.filters && this.props.filters.defaults,
                 item: this.state.filters
               }
             }}
