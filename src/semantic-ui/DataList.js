@@ -357,6 +357,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
+      const { filters = {} } = this.props;
+
       return (
         <>
           <WrappedComponent
@@ -364,11 +366,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             count={this.state.count}
             filters={{
               active: this.isFilterActive(),
-              component: this.props.filters && this.props.filters.component,
+              component: filters.component,
               onChange: this.onFilterChange.bind(this),
+              ...filters.props,
               props: {
-                ...(this.props.filters || {}).props,
-                defaults: this.props.filters && this.props.filters.defaults,
+                defaults: filters.defaults,
                 item: this.state.filters
               }
             }}
