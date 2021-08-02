@@ -201,7 +201,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     initializeState(props: Props) {
       const session = this.restoreSession();
 
-      const filters = session.filters || (props.filters && props.filters.props) || {};
+      const filters = session.filters || (props.filters && props.filters.defaults) || {};
       const page = session.page || 1;
       const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || null;
