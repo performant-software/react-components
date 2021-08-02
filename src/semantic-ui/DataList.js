@@ -368,8 +368,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               active: this.isFilterActive(),
               component: filters.component,
               onChange: this.onFilterChange.bind(this),
-              ...filters.props,
               props: {
+                ...filters.props,
                 defaults: filters.defaults,
                 item: this.state.filters
               }
