@@ -15,6 +15,7 @@ type Props = {
   icon?: string,
   options: Array<Option>,
   onChange: (e: Event, { value: any }) => void,
+  selectOnBlur?: boolean,
   text: string,
   value: any
 };
@@ -38,6 +39,7 @@ const DropdownButton = (props: Props) => {
         onChange={props.onChange.bind(this)}
         options={props.options}
         ref={dropdownRef}
+        selectOnBlur={props.selectOnBlur}
         trigger={<></>}
         value={props.value}
       />
@@ -47,7 +49,8 @@ const DropdownButton = (props: Props) => {
 
 DropdownButton.defaultProps = {
   color: undefined,
-  icon: undefined
+  icon: undefined,
+  selectOnBlur: false
 };
 
 export default DropdownButton;
