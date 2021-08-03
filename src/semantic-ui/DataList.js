@@ -147,13 +147,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           sortDirection
         } = this.state;
 
-        const filterKeys = _.keys((this.props.filters && this.props.filters.props) || {});
-        const filters = _.pick(this.state.filters, filterKeys);
-
         const params = {
-          ...filters,
           page,
           search,
+          filters: this.state.filters,
           sort_by: sortColumn,
           sort_direction: sortDirection
         };
