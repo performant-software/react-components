@@ -148,9 +148,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         } = this.state;
 
         const params = {
+          ...this.state.filters,
           page,
           search,
-          filters: this.state.filters,
           sort_by: sortColumn,
           sort_direction: sortDirection
         };
