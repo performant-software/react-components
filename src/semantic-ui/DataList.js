@@ -229,8 +229,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         return false;
       }
 
-      const { props } = this.props.filters || {};
-      return !_.isEqual(_.pick(this.state.filters, _.keys(props)), props);
+      return !_.isEmpty(this.state.filters);
     }
 
     /**
@@ -355,6 +354,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       const { filters = {} } = this.props;
+      const { component, defaults, props } = filters;
 
       return (
         <>
@@ -363,11 +363,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             count={this.state.count}
             filters={{
               active: this.isFilterActive(),
-              component: filters.component,
+              component,
               onChange: this.onFilterChange.bind(this),
               props: {
-                ...filters.props,
-                defaults: filters.defaults,
+                ...props,
+                defaults,
                 item: this.state.filters
               }
             }}
