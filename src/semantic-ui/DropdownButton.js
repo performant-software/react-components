@@ -15,6 +15,7 @@ type Props = {
   icon?: string,
   options: Array<Option>,
   onChange: (e: Event, { value: any }) => void,
+  scrolling?: boolean,
   selectOnBlur?: boolean,
   text: string,
   value: any
@@ -39,6 +40,7 @@ const DropdownButton = (props: Props) => {
         onChange={props.onChange.bind(this)}
         options={props.options}
         ref={dropdownRef}
+        scrolling={props.scrolling}
         selectOnBlur={props.selectOnBlur}
         trigger={<></>}
         value={props.value}
