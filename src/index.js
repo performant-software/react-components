@@ -38,6 +38,7 @@ export { default as LazyDocument } from './semantic-ui/LazyDocument';
 export { default as LazyImage } from './semantic-ui/LazyImage';
 export { default as LazyVideo } from './semantic-ui/LazyVideo';
 export { default as LinkButton } from './semantic-ui/LinkButton';
+export { default as ListFilters } from './semantic-ui/ListFilters';
 export { default as LinkLabel } from './semantic-ui/LinkLabel';
 export { default as useList } from './semantic-ui/List';
 export { default as ListTable } from './semantic-ui/ListTable';
@@ -72,3 +73,4 @@ export type { Props as ListProps } from './semantic-ui/List';
 
 // Constants
 export { SORT_ASCENDING, SORT_DESCENDING } from './semantic-ui/DataList';
+export { FilterTypes } from './semantic-ui/ListFilters';

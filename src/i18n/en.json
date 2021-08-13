@@ -145,6 +145,23 @@
     "record": "Record",
     "record_plural": "Records"
   },
+  "ListFilters": {
+    "buttons": {
+      "add": "Add",
+      "reset": "Reset filters"
+    },
+    "operators": {
+      "contain": "Contains",
+      "empty": "Is empty",
+      "equal": "Equals",
+      "greaterThan": "Is greater than",
+      "lessThan": "Is less than",
+      "notContain": "Does not contain",
+      "notEmpty": "Is not empty",
+      "notEqual": "Does not equal"
+    },
+    "title": "Filters"
+  },
   "LoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",

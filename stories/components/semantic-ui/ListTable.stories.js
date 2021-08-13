@@ -9,6 +9,7 @@ import FilterModal from '../FilterModal';
 import Api from '../../services/Api';
 import ListTable from '../../../src/semantic-ui/ListTable';
 import useDragDrop from '../../../src/utils/DragDrop';
+import { ListFilters } from '../../../src';
 
 export default {
   title: 'Components/Semantic UI/ListTable',
@@ -659,6 +660,36 @@ export const WithFilters = useDragDrop(() => (
       component: FilterModal,
       props: {
         test: ''
+      }
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const WithListFilters = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    filters={{
+      component: ListFilters,
+      props: {
+        filters: [{
+          attributeName: 'test',
+          label: 'Test',
+          key: 'test',
+          type: 'string'
+        }]
       }
     }}
     modal={{
