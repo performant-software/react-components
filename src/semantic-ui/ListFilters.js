@@ -1,6 +1,11 @@
 // @flow
 
-import React, { useCallback, useEffect, type Element } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  type Element
+} from 'react';
 import uuid from 'react-uuid';
 import {
   Button,
@@ -44,7 +49,8 @@ type Filter = {
 type Props = EditContainerProps & {
   filters: Array<Filter>,
   item: {
-    filters: Array<Filter>
+    filters: Array<Filter>,
+    onSort: (filter: Filter) => any
   }
 };
 
@@ -149,6 +155,13 @@ const ListFilters = (props: Props) => {
   }, []);
 
   /**
+   * Default sort function.
+   *
+   * @param filter
+   */
+  const onDefaultSort = (filter) => filter.label;
+
+  /**
    * Renders the input element for the passed filter.
    *
    * @type {(function(Filter): (null|*))|*}
@@ -247,6 +260,16 @@ const ListFilters = (props: Props) => {
   }, [props.item.filters, props.onSaveChildAssociation]);
 
   /**
+   * Sort the filters according to the onSort prop if provided.
+   *
+   * @type {unknown}
+   */
+  const filters = useMemo(() => _.sortBy(
+    props.item.filters,
+    props.item.onSort || onDefaultSort
+  ), [props.item.filters, props.item.onSort]);
+
+  /**
    * Since the filters may be restored from the session storage, complex object and functions are not serialized. Here
    * we'll default any properties for existing filters that could not be serialized when the component is mounted.
    */
@@ -283,7 +306,7 @@ const ListFilters = (props: Props) => {
             <DropdownButton
               color='green'
               icon='plus'
-              options={_.map(props.filters, (filter) => ({
+              options={_.map(filters, (filter) => ({
                 key: filter.key,
                 value: filter.key,
                 text: filter.label
