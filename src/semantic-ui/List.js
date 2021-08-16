@@ -5,6 +5,7 @@ import { Trans } from 'react-i18next';
 import {
   Button,
   Confirm,
+  Dropdown,
   Grid,
   Header,
   Icon,
@@ -68,10 +69,13 @@ type Props = {
   },
   page: number,
   pages: number,
+  perPage: number,
+  perPageOptions: Array<number>,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDeleteAll?: () => Promise<any>,
   onPageChange: () => void,
+  onPerPageChange: () => void,
   onSave: (item: any) => Promise<any>,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
@@ -595,7 +599,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='left'
             >
-              {showCount ? this.renderRecordCount() : ''}
+              { showCount ? this.renderRecordCount() : '' }
               { _.map(buttons, (button) => button.render()) }
             </Grid.Column>
             <Grid.Column
@@ -617,12 +621,19 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       let renderHeader = false;
 
       const buttons = this.getButtons('top');
+
       if (buttons && buttons.length) {
         renderHeader = true;
       }
 
-      const { filters, renderListHeader, renderSearch } = this.props;
-      if (filters || renderListHeader || renderSearch) {
+      const {
+        filters,
+        perPageOptions,
+        renderListHeader,
+        renderSearch
+      } = this.props;
+
+      if (filters || perPageOptions || renderListHeader || renderSearch) {
         renderHeader = true;
       }
 
@@ -659,6 +670,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                 <Menu.Menu>
                   { filters && this.renderFilterButton() }
                 </Menu.Menu>
+                { perPageOptions && (
+                  <Menu.Menu>
+                    { this.renderPerPage() }
+                  </Menu.Menu>
+                )}
                 <Menu.Menu>
                   { renderSearch && renderSearch() }
                 </Menu.Menu>
@@ -683,6 +699,33 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           onPageChange={this.props.onPageChange.bind(this)}
           size='mini'
           totalPages={this.props.pages}
+        />
+      );
+    }
+
+    /**
+     * Renders the per page selector.
+     *
+     * @returns {JSX.Element}
+     */
+    renderPerPage() {
+      const { perPage } = this.props;
+
+      return (
+        <Dropdown
+          basic
+          button
+          className='icon'
+          icon='list'
+          labeled
+          onChange={this.props.onPerPageChange.bind(this)}
+          options={_.map(this.props.perPageOptions, (count) => ({
+            key: count,
+            value: count,
+            text: count
+          }))}
+          text={i18n.t('List.labels.perPage', { perPage })}
+          value={perPage}
         />
       );
     }

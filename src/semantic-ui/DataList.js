@@ -9,6 +9,7 @@ import Timer from '../utils/Timer';
 
 type Props = {
   collectionName: string,
+  defaultPerPage?: number,
   defaultSearch: ?string,
   filters?: {
     component: Component<{}>,
@@ -37,6 +38,7 @@ type State = {
   loading: boolean,
   page: number,
   pages: number,
+  perPage: number,
   saved: boolean,
   search: ?string,
   sortColumn: ?string,
@@ -141,6 +143,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       this.setState({ loading: true }, () => {
         const {
           page,
+          perPage,
           search,
           sortColumn,
           sortDirection
@@ -153,6 +156,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           ...filters,
           page,
           search,
+          per_page: perPage,
           sort_by: sortColumn,
           sort_direction: sortDirection
         };
@@ -202,6 +206,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       const filters = session.filters || (props.filters && props.filters.props) || {};
       const page = session.page || 1;
+      const perPage = session.perPage || props.defaultPerPage;
       const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || null;
       const sortDirection = session.sortDirection || null;
@@ -214,6 +219,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         loading: false,
         page,
         pages: 1,
+        perPage,
         saved: props.saved || false,
         search,
         sortColumn,
@@ -298,6 +304,16 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Sets the perPage value and reloads the data.
+     *
+     * @param e
+     * @param value
+     */
+    onPerPageChange(e: Event, { value }: { value: number }) {
+      this.setState({ perPage: value }, this.fetchData.bind(this));
+    }
+
+    /**
      * Calls the onSave prop and reloads the data.
      *
      * @param item
@@ -374,9 +390,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             loading={this.state.loading}
             page={this.state.page}
             pages={this.state.pages}
+            perPage={this.state.perPage}
             onDelete={this.onDelete.bind(this)}
             onDeleteAll={this.onDeleteAll.bind(this)}
             onPageChange={this.onPageChange.bind(this)}
+            onPerPageChange={this.onPerPageChange.bind(this)}
             onSave={this.onSave.bind(this)}
             onSort={this.onSort.bind(this)}
             onInit={this.onInit.bind(this)}
@@ -469,6 +487,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       const {
         filters,
         page,
+        perPage,
         search,
         sortColumn,
         sortDirection
@@ -477,6 +496,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       sessionStorage.setItem(key, JSON.stringify({
         filters,
         page,
+        perPage,
         search,
         sortColumn,
         sortDirection
