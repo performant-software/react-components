@@ -265,9 +265,9 @@ const ListFilters = (props: Props) => {
    * @type {unknown}
    */
   const filters = useMemo(() => _.sortBy(
-    props.item.filters,
+    props.filters,
     props.item.onSort || onDefaultSort
-  ), [props.item.filters, props.item.onSort]);
+  ), [props.filters, props.item.onSort]);
 
   /**
    * Since the filters may be restored from the session storage, complex object and functions are not serialized. Here
