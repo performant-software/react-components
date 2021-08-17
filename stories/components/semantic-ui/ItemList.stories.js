@@ -762,7 +762,6 @@ export const Selectable = useDragDrop(() => {
       modal={{
         component: AddModal
       }}
-      onClearSelected={() => setSelectedItems([])}
       onCopy={action('copy')}
       onLoad={(params) => Api.onLoad(_.extend(params, {
         items,
@@ -771,15 +770,6 @@ export const Selectable = useDragDrop(() => {
       onDelete={action('delete')}
       onRowSelect={onRowSelect.bind(this)}
       onSave={action('save')}
-      onSelectAll={(records) => setSelectedItems((prevSelected) => {
-        const filteredItems = _.reject(records, isSelected.bind(this));
-        const selected = _.pluck(filteredItems, 'id');
-
-        return [
-          ...prevSelected,
-          ...selected
-        ];
-      })}
       renderDescription={(item) => item.vin}
       renderExtra={(item) => item.address}
       renderHeader={(item) => <Header content={item.model} />}

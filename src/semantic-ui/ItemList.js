@@ -1,9 +1,16 @@
 // @flow
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import Items from './Items';
 import useDataList, { SORT_ASCENDING } from './DataList';
+
+type ListButton = {
+  ...typeof Button,
+  accept: () => boolean
+};
 
 type Sort = {
   key: any,
@@ -13,11 +20,13 @@ type Sort = {
 };
 
 type Props = {
+  buttons: Array<ListButton>,
+  isRowSelected: (item: any) => boolean,
   items: Array<any>,
   page: number,
-  onClearSelected?: () => void,
-  onSelectAll: (items: Array<any>) => void,
+  onRowSelect: (item: any) => void,
   onSort: (column: string, direction: ?string, page?: number) => void,
+  selectable?: boolean,
   sort?: Array<Sort>,
   sortColumn?: string,
   sortDirection?: string
@@ -53,11 +62,41 @@ const ItemList = (props: Props) => {
     props.onSort(sortColumn, sortDirection, page);
   }, []);
 
+  /**
+   * Sets the variable to true if every item in the passed collection is selected.
+   */
+  const allSelected = useMemo(() => props.items && props.items.length && _.every(
+    props.items,
+    props.isRowSelected.bind(this)
+  ), [props.items, props.isRowSelected]);
+
+  /**
+   * Selects all items in the collection. If all items are currently selected, deselects all items.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onSelectAll = useCallback(() => {
+    let items;
+
+    if (allSelected) {
+      items = [...props.items];
+    } else {
+      items = _.reject(props.items, props.isRowSelected.bind(this));
+    }
+
+    _.each(items, props.onRowSelect.bind(this));
+  }, [allSelected, props.isRowSelected, props.items, props.onRowSelect]);
+
   return (
     <Items
       {...props}
-      onClearSelected={props.onClearSelected && props.onClearSelected.bind(this)}
-      onSelectAll={props.onSelectAll && props.onSelectAll.bind(this, props.items)}
+      buttons={[...(props.buttons || []), {
+        accept: () => props.selectable,
+        content: allSelected ? i18n.t('ItemList.buttons.deselectAll') : i18n.t('ItemList.buttons.selectAll'),
+        icon: 'checkmark',
+        primary: true,
+        onClick: onSelectAll.bind(this)
+      }]}
     />
   );
 };

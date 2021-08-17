@@ -176,21 +176,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         });
       }
 
-      // Add the "Select all" and "Clear selected" buttons when the list is in the selectable state.
-      if (selectable && location === 'top') {
-        if (this.props.onSelectAll) {
-          buttons.push({
-            render: this.renderSelectAllButton.bind(this)
-          });
-        }
-
-        if (this.props.onClearSelected) {
-          buttons.push({
-            render: this.renderClearSelectedButton.bind(this)
-          });
-        }
-      }
-
       // Resolve the array of other buttons
       buttons.push(..._.filter(this.props.buttons, (button) => {
         let include = false;
@@ -418,23 +403,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         <Button
           key={index}
           {...button}
-        />
-      );
-    }
-
-    /**
-     * Renders the clear selected button.
-     *
-     * @returns {JSX.Element}
-     */
-    renderClearSelectedButton() {
-      return (
-        <Button
-          color='red'
-          content={i18n.t('List.buttons.clear')}
-          icon='times circle outline'
-          inverted
-          onClick={this.props.onClearSelected && this.props.onClearSelected.bind(this)}
         />
       );
     }
@@ -738,22 +706,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         <p className='record-count'>
           {`${Number(count).toLocaleString()} ${i18n.t('List.record', { count })}`}
         </p>
-      );
-    }
-
-    /**
-     * Renders the select all button.
-     *
-     * @returns {JSX.Element}
-     */
-    renderSelectAllButton() {
-      return (
-        <Button
-          content={i18n.t('List.buttons.selectAll')}
-          icon='checkmark'
-          primary
-          onClick={this.props.onSelectAll && this.props.onSelectAll.bind(this)}
-        />
       );
     }
   }

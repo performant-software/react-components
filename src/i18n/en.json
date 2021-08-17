@@ -105,6 +105,11 @@
       "copy": "Copy",
       "delete": "Remove",
       "edit": "Edit"
+    },
+    "buttons": {
+      "clear": "Clear selected",
+      "deselectAll": "Deselect all",
+      "selectAll": "Select all"
     }
   },
   "Items": {
@@ -134,9 +139,7 @@
   "List": {
     "buttons": {
       "add": "Add",
-      "clear": "Clear selected",
-      "deleteAll": "Delete all",
-      "selectAll": "Select all"
+      "deleteAll": "Delete all"
     },
     "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
     "deleteAllHeader": "Confirm Remove All",

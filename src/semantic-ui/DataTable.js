@@ -12,8 +12,8 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
-import useList from './List';
 import useColumnSelector from './DataTableColumnSelector';
+import useList from './List';
 import './DataTable.css';
 
 import type { Action } from './List';
@@ -36,11 +36,13 @@ type Props = {
   columns: Array<Column>,
   expandableRows: boolean,
   expandPanel: () => Component<any>,
+  isRowSelected: (item: any) => boolean,
   items: ?Array<any>,
   loading: boolean,
+  onClearSelected: () => void,
   onColumnClick: (column: Column) => void,
-  onRowSelect: (?any, ?any, ?any)=>void,
-  onSelectAll: (?any, ?any, ?any, ?any)=>void,
+  onRowSelect?: (item: any)=>void,
+  onSelectAll: (items: Array<any>)=>void,
   renderEmptyMessage: () => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
@@ -48,7 +50,7 @@ type Props = {
   sortDirection?: string,
   t: (key: string) => string,
   tableProps: any,
-  selectable: boolean,
+  selectable?: boolean,
   selectedRows: Array<{id: number}>,
 };
 
@@ -174,6 +176,23 @@ class DataTable extends Component<Props, State> {
     if (isBrowser()) {
       document.removeEventListener('click', this.onClick, true);
     }
+  }
+
+  /**
+   * Selects all of the items in the current collection.
+   *
+   * @param allSelected
+   */
+  onSelectAll(allSelected) {
+    let items;
+
+    if (allSelected) {
+      items = [...this.props.items || []];
+    } else {
+      items = _.reject(this.props.items, this.props.isRowSelected.bind(this));
+    }
+
+    _.each(items, this.props.onRowSelect && this.props.onRowSelect.bind(this));
   }
 
   /**
@@ -322,65 +341,6 @@ class DataTable extends Component<Props, State> {
   }
 
   /**
-   * Renders the select list header.
-   *
-   * @returns {null|*}
-   */
-  renderSelectHeader() {
-    if (!this.props.selectable) {
-      return null;
-    }
-    if (!this.props.onSelectAll) {
-      return (
-        <Table.HeaderCell
-          className='select-cell'
-          content=''
-        />
-
-      );
-    }
-
-    const selectedRowIds = this.props.selectedRows.map((r) => r.id);
-    const itemsOnPage = this.props.items ? this.props.items : [];
-    const toBeSelected = itemsOnPage.reduce((tbs, item) => (
-      selectedRowIds.includes(item.id) ? tbs : [...tbs, item]), []);
-
-    return (
-      <Table.HeaderCell
-        className='select-cell'
-      >
-        <Checkbox
-          onClick={(e, el) => this.props.onSelectAll(el, toBeSelected, this.props.items, e)}
-          checked={!toBeSelected.length}
-        />
-      </Table.HeaderCell>
-    );
-  }
-
-  /**
-   * Renders the select checkbox for the passed item.
-   *
-   * @returns {null|*}
-   */
-  renderSelectCheckbox(item, index) {
-    if (!this.props.selectable) {
-      return null;
-    }
-    const selected = this.props.selectedRows.find((r) => r.id === item.id);
-    return (
-      <Table.Cell
-        className='select-cell'
-        key={`select-cell-${index}`}
-      >
-        <Checkbox
-          onClick={(e, el) => this.props.onRowSelect(el, item, e)}
-          checked={!!selected}
-        />
-      </Table.Cell>
-    );
-  }
-
-  /**
    * Renders the table cell for the passed item/column.
    *
    * @param item
@@ -412,47 +372,6 @@ class DataTable extends Component<Props, State> {
       </Table.Cell>
     );
   }
-
-  // /**
-  //  * Renders the list configuration button.
-  //  *
-  //  * @returns {*}
-  //  */
-  // renderConfigureButton() {
-  //   return (
-  //     <Dropdown
-  //       basic
-  //       button
-  //       icon='cog'
-  //       className='icon configure-button open-right'
-  //       simple
-  //     >
-  //       <Dropdown.Menu>
-  //         { this.state.columns
-  //           .filter((c) => c.label && c.label.length)
-  //           .map((c, index) => (
-  //             <Draggable
-  //               id={c.name}
-  //               index={index}
-  //               key={c.name}
-  //               onDrag={this.onDrag.bind(this)}
-  //             >
-  //               <Dropdown.Item>
-  //                 <Icon
-  //                   name='bars'
-  //                 />
-  //                 <Checkbox
-  //                   checked={!c.hidden}
-  //                   label={c.label}
-  //                   onClick={this.onColumnCheckbox.bind(this, c)}
-  //                 />
-  //               </Dropdown.Item>
-  //             </Draggable>
-  //           ))}
-  //       </Dropdown.Menu>
-  //     </Dropdown>
-  //   );
-  // }
 
   /**
    * Renders the empty table row.
@@ -586,6 +505,55 @@ class DataTable extends Component<Props, State> {
           />
         </Table.Cell>
       </Table.Row>
+    );
+  }
+
+  /**
+   * Renders the select checkbox for the passed item.
+   *
+   * @returns {null|*}
+   */
+  renderSelectCheckbox(item, index) {
+    if (!(this.props.selectable && this.props.onRowSelect && this.props.isRowSelected)) {
+      return null;
+    }
+
+    return (
+      <Table.Cell
+        className='select-cell'
+        key={`select-cell-${index}`}
+      >
+        <Checkbox
+          onClick={this.props.onRowSelect.bind(this, item)}
+          checked={this.props.isRowSelected(item)}
+        />
+      </Table.Cell>
+    );
+  }
+
+  /**
+   * Renders the select list header.
+   *
+   * @returns {null|*}
+   */
+  renderSelectHeader() {
+    if (!this.props.selectable) {
+      return null;
+    }
+
+    const allSelected = this.props.items
+      && this.props.items.length
+      && _.every(this.props.items, this.props.isRowSelected.bind(this));
+
+    return (
+      <Table.HeaderCell
+        className='select-cell'
+      >
+        <Checkbox
+          onClick={this.onSelectAll.bind(this, allSelected)}
+          checked={allSelected}
+        />
+      </Table.HeaderCell>
     );
   }
 }

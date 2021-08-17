@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import React, { useCallback, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
@@ -500,107 +502,49 @@ export const Unsortable = useDragDrop(() => (
   />
 ));
 
-export const Selectable = useDragDrop(() => (
-  <ListTable
-    actions={actions}
-    collectionName='items'
-    selectable
-    onRowSelect={action('row selected')}
-    selectedRows={[
-      {
-        id: 31,
-        make: 'Acura',
-        model: 'CL',
-        vin: '1GYUKDEF0AR622718',
-        address: '00081 Park Meadow Way',
-        city: 'Newport News',
-        state: 'Virginia'
-      },
-      {
-        id: 7,
-        make: 'Audi',
-        model: '100',
-        vin: '5UXFB33503L412708',
-        address: '82693 Nobel Park',
-        city: 'Salt Lake City',
-        state: 'Utah'
-      },
-      {
-        id: 20,
-        make: 'BMW',
-        model: 'X5',
-        vin: 'WA1YD64B72N141248',
-        address: '25 Dovetail Hill',
-        city: 'Hicksville',
-        state: 'New York'
-      },
-      {
-        id: 33,
-        make: 'BMW',
-        model: '8 Series',
-        vin: 'JM3TB2BA6E0664553',
-        address: '6 Susan Trail',
-        city: 'Topeka',
-        state: 'Kansas'
-      },
-      {
-        id: 45,
-        make: 'BMW',
-        model: '3 Series',
-        vin: '5J6YH1H33AL810569',
-        address: '7892 Maryland Court',
-        city: 'Evansville',
-        state: 'Indiana'
-      },
-      {
-        id: 40,
-        make: 'Bentley',
-        model: 'Continental',
-        vin: '3VW4A7AT2CM707695',
-        address: '4052 Ridgeview Place',
-        city: 'New Orleans',
-        state: 'Louisiana'
-      },
-      {
-        id: 12,
-        make: 'Buick',
-        model: 'LeSabre',
-        vin: 'WAUGL78E18A037401',
-        address: '15002 Sloan Crossing',
-        city: 'Philadelphia',
-        state: 'Pennsylvania'
-      },
-      {
-        id: 24,
-        make: 'Cadillac',
-        model: 'SRX',
-        vin: 'TRUSC28N231502752',
-        address: '59 Eagle Crest Center',
-        city: 'El Paso',
-        state: 'Texas'
-      },
-      {
-        id: 11,
-        make: 'Chevrolet',
-        model: '3500',
-        vin: 'WAUGL68E55A176260',
-        address: '45510 Anderson Place',
-        city: 'Corpus Christi',
-        state: 'Texas'
-      }
-    ]}
-    columns={columns}
-    onCopy={action('copy')}
-    onLoad={(params) => Api.onLoad(_.extend(params, {
-      items,
-      perPage: number('Per page', 10)
-    }))}
-    onDelete={action('delete')}
-    onSave={action('save')}
-    onSelectAll={action('select all')}
-    searchable={boolean('Searchable', true)}
-  />
-));
+export const Selectable = useDragDrop(() => {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  /**
+   * Returns true if the passed item is in the list of selected items.
+   *
+   * @type {function(*): *}
+   */
+  const isSelected = useCallback((item) => _.contains(selectedItems, item.id), [selectedItems]);
+
+  /**
+   * Removes the passed item from the list of selected items if selected. Adds the passed item to the list of selected
+   * items if not selected.
+   *
+   * @type {(function(*=): void)|*}
+   */
+  const onRowSelect = useCallback((item) => {
+    if (isSelected(item)) {
+      setSelectedItems((prevItems) => _.filter(prevItems, (id) => id !== item.id));
+    } else {
+      setSelectedItems((prevItems) => ([...prevItems, item.id]));
+    }
+  }, [selectedItems]);
+
+  return (
+    <ListTable
+      actions={actions}
+      collectionName='items'
+      columns={columns}
+      isRowSelected={isSelected.bind(this)}
+      onCopy={action('copy')}
+      onLoad={(params) => Api.onLoad(_.extend(params, {
+        items,
+        perPage: number('Per page', 10)
+      }))}
+      onDelete={action('delete')}
+      onRowSelect={onRowSelect.bind(this)}
+      onSave={action('save')}
+      searchable={boolean('Searchable', true)}
+      selectable
+    />
+  );
+});
 
 export const Empty = useDragDrop(() => (
   <ListTable
