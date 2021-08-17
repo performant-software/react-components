@@ -5,7 +5,6 @@ import { Trans } from 'react-i18next';
 import {
   Button,
   Confirm,
-  Dropdown,
   Grid,
   Header,
   Icon,
@@ -14,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import DropdownButton from './DropdownButton';
 import EditModal from './EditModal';
 import './List.css';
 
@@ -712,12 +712,9 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       const { perPage } = this.props;
 
       return (
-        <Dropdown
+        <DropdownButton
           basic
-          button
-          className='icon'
           icon='list'
-          labeled
           onChange={this.props.onPerPageChange.bind(this)}
           options={_.map(this.props.perPageOptions, (count) => ({
             key: count,
