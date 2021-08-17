@@ -20,6 +20,7 @@ type Props = {
   onDeleteAll: () => Promise<any>,
   onLoad: (params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
+  perPageOptions?: Array<number>,
   polling: number,
   resolveErrors?: (error: any) => Array<string>,
   saved?: boolean,
@@ -206,7 +207,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       const filters = session.filters || (props.filters && props.filters.props) || {};
       const page = session.page || 1;
-      const perPage = session.perPage || props.defaultPerPage;
+      const perPage = session.perPage || props.defaultPerPage || _.first(props.perPageOptions);
       const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || null;
       const sortDirection = session.sortDirection || null;
