@@ -65,7 +65,7 @@ const ItemList = (props: Props) => {
   /**
    * Sets the variable to true if every item in the passed collection is selected.
    */
-  const allSelected = useMemo(() => props.items && props.items.length && _.every(
+  const allSelected = useMemo(() => props.isRowSelected && props.items && props.items.length && _.every(
     props.items,
     props.isRowSelected.bind(this)
   ), [props.items, props.isRowSelected]);
@@ -76,15 +76,17 @@ const ItemList = (props: Props) => {
    * @type {(function(): void)|*}
    */
   const onSelectAll = useCallback(() => {
-    let items;
+    if (props.items && props.isRowSelected && props.onRowSelect) {
+      let items;
 
-    if (allSelected) {
-      items = [...props.items];
-    } else {
-      items = _.reject(props.items, props.isRowSelected.bind(this));
+      if (allSelected) {
+        items = [...props.items];
+      } else {
+        items = _.reject(props.items, props.isRowSelected.bind(this));
+      }
+
+      _.each(items, props.onRowSelect.bind(this));
     }
-
-    _.each(items, props.onRowSelect.bind(this));
   }, [allSelected, props.isRowSelected, props.items, props.onRowSelect]);
 
   return (
