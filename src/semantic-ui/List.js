@@ -68,16 +68,19 @@ type Props = {
   },
   page: number,
   pages: number,
+  onClearSelected?: () => void,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDeleteAll?: () => Promise<any>,
   onPageChange: () => void,
   onSave: (item: any) => Promise<any>,
+  onSelectAll?: (items: Array<any>) => void,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
   renderListHeader?: () => ?Element<any>,
   renderSearch?: () => Element<any>,
+  selectable?: boolean,
   showRecordCount: boolean,
   t: (key: string) => string
 };
@@ -152,20 +155,40 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     getButtons(location: string) {
       const buttons = [];
 
-      const { addButton = {}, deleteButton = {}, modal } = this.props;
+      const {
+        addButton = {},
+        deleteButton = {},
+        modal,
+        selectable
+      } = this.props;
 
       // Add the add button to the list if the location specified is the passed location.
-      if (addButton.location === location && (addButton.onClick || modal)) {
+      if (addButton.location === location && (addButton.onClick || modal) && !selectable) {
         buttons.push({
           render: this.renderAddButton.bind(this)
         });
       }
 
       // Add the delete all button to the list if the location specified is the passed location.
-      if (deleteButton.location === location && this.props.onDeleteAll) {
+      if (deleteButton.location === location && this.props.onDeleteAll && !selectable) {
         buttons.push({
           render: this.renderDeleteAllButton.bind(this)
         });
+      }
+
+      // Add the "Select all" and "Clear selected" buttons when the list is in the selectable state.
+      if (selectable && location === 'top') {
+        if (this.props.onSelectAll) {
+          buttons.push({
+            render: this.renderSelectAllButton.bind(this)
+          });
+        }
+
+        if (this.props.onClearSelected) {
+          buttons.push({
+            render: this.renderClearSelectedButton.bind(this)
+          });
+        }
       }
 
       // Resolve the array of other buttons
@@ -395,6 +418,23 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         <Button
           key={index}
           {...button}
+        />
+      );
+    }
+
+    /**
+     * Renders the clear selected button.
+     *
+     * @returns {JSX.Element}
+     */
+    renderClearSelectedButton() {
+      return (
+        <Button
+          color='red'
+          content={i18n.t('List.buttons.clear')}
+          icon='times circle outline'
+          inverted
+          onClick={this.props.onClearSelected && this.props.onClearSelected.bind(this)}
         />
       );
     }
@@ -698,6 +738,22 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         <p className='record-count'>
           {`${Number(count).toLocaleString()} ${i18n.t('List.record', { count })}`}
         </p>
+      );
+    }
+
+    /**
+     * Renders the select all button.
+     *
+     * @returns {JSX.Element}
+     */
+    renderSelectAllButton() {
+      return (
+        <Button
+          content={i18n.t('List.buttons.selectAll')}
+          icon='checkmark'
+          primary
+          onClick={this.props.onSelectAll && this.props.onSelectAll.bind(this)}
+        />
       );
     }
   }

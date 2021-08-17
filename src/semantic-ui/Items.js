@@ -4,6 +4,7 @@ import React, { Component, type Element } from 'react';
 import {
   Button,
   Card,
+  Checkbox,
   Dimmer,
   Header,
   Icon,
@@ -22,9 +23,12 @@ import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
   className: string,
+  isRowSelected?: (item: any) => boolean,
   items: Array<any>,
   loading: boolean,
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
+  onRowSelect?: (item: any) => void,
+  onSelectAllRows?: (items: Array<any>) => void,
   renderAdditionalContent?: (item: any) => Element<any>,
   renderDescription?: (item: any) => Element<any>,
   renderEmptyList: () => Element<any>,
@@ -32,6 +36,7 @@ type Props = ListProps & {
   renderHeader?: (item: any) => Element<any>,
   renderImage?: (item: any) => Element<any>,
   renderMeta?: (item: any) => Element<any>,
+  selectable?: boolean,
   view: number
 };
 
@@ -90,6 +95,15 @@ class Items extends Component<Props, {}> {
     }
 
     return classNames.join(' ');
+  }
+
+  /**
+   * Returns true if the component has the necessary props to render itself in the "selectable" state.
+   *
+   * @returns {boolean}
+   */
+  isSelectable() {
+    return !!(this.props.selectable && this.props.isRowSelected && this.props.onRowSelect);
   }
 
   /**
@@ -162,6 +176,14 @@ class Items extends Component<Props, {}> {
                 onClick={action.onClick.bind(this, item)}
               />
             ))}
+            { this.isSelectable() && (
+              <Button
+                basic
+                color={this.props.isRowSelected && this.props.isRowSelected(item) ? 'green' : undefined}
+                icon='checkmark'
+                onClick={this.props.onRowSelect && this.props.onRowSelect.bind(this, item)}
+              />
+            )}
           </Card.Content>
         )}
       </Card>
@@ -286,6 +308,16 @@ class Items extends Component<Props, {}> {
           ))}
         </Item.Content>
         { this.props.renderAdditionalContent && this.props.renderAdditionalContent(item) }
+        { this.isSelectable() && (
+          <div
+            className='checkbox-container'
+          >
+            <Checkbox
+              checked={this.props.isRowSelected && this.props.isRowSelected(item)}
+              onChange={this.props.onRowSelect && this.props.onRowSelect.bind(this, item)}
+            />
+          </div>
+        )}
       </Item>
     );
 

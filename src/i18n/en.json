@@ -134,7 +134,9 @@
   "List": {
     "buttons": {
       "add": "Add",
-      "deleteAll": "Delete all"
+      "clear": "Clear selected",
+      "deleteAll": "Delete all",
+      "selectAll": "Select all"
     },
     "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
     "deleteAllHeader": "Confirm Remove All",

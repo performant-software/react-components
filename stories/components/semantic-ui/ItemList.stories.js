@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
@@ -729,3 +729,63 @@ export const SortDescending = useDragDrop(() => (
     }]}
   />
 ));
+
+export const Selectable = useDragDrop(() => {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  /**
+   * Returns true if the passed item is in the list of selected items.
+   *
+   * @type {function(*): *}
+   */
+  const isSelected = useCallback((item) => _.contains(selectedItems, item.id), [selectedItems]);
+
+  /**
+   * Removes the passed item from the list of selected items if selected. Adds the passed item to the list of selected
+   * items if not selected.
+   *
+   * @type {(function(*=): void)|*}
+   */
+  const onRowSelect = useCallback((item) => {
+    if (isSelected(item)) {
+      setSelectedItems((prevItems) => _.filter(prevItems, (id) => id !== item.id));
+    } else {
+      setSelectedItems((prevItems) => ([...prevItems, item.id]));
+    }
+  }, [selectedItems]);
+
+  return (
+    <ItemList
+      actions={actions}
+      collectionName='items'
+      isRowSelected={isSelected.bind(this)}
+      modal={{
+        component: AddModal
+      }}
+      onClearSelected={() => setSelectedItems([])}
+      onCopy={action('copy')}
+      onLoad={(params) => Api.onLoad(_.extend(params, {
+        items,
+        perPage: number('Per page', 10)
+      }))}
+      onDelete={action('delete')}
+      onRowSelect={onRowSelect.bind(this)}
+      onSave={action('save')}
+      onSelectAll={(records) => setSelectedItems((prevSelected) => {
+        const filteredItems = _.reject(records, isSelected.bind(this));
+        const selected = _.pluck(filteredItems, 'id');
+
+        return [
+          ...prevSelected,
+          ...selected
+        ];
+      })}
+      renderDescription={(item) => item.vin}
+      renderExtra={(item) => item.address}
+      renderHeader={(item) => <Header content={item.model} />}
+      renderMeta={(item) => item.make}
+      searchable={boolean('Searchable', true)}
+      selectable
+    />
+  );
+});

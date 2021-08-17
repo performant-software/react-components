@@ -13,7 +13,10 @@ type Sort = {
 };
 
 type Props = {
+  items: Array<any>,
   page: number,
+  onClearSelected?: () => void,
+  onSelectAll: (items: Array<any>) => void,
   onSort: (column: string, direction: ?string, page?: number) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
@@ -53,6 +56,8 @@ const ItemList = (props: Props) => {
   return (
     <Items
       {...props}
+      onClearSelected={props.onClearSelected && props.onClearSelected.bind(this)}
+      onSelectAll={props.onSelectAll && props.onSelectAll.bind(this, props.items)}
     />
   );
 };
