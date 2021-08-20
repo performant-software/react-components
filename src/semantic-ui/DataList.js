@@ -94,7 +94,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @param prevProps
      */
     componentDidUpdate(prevProps: Props) {
-      if (prevProps.saved !== this.props.saved) {
+      if (prevProps.saved !== this.props.saved && this.props.saved) {
         this.setState({ saved: this.props.saved }, this.fetchData.bind(this));
       }
     }
