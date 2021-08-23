@@ -94,9 +94,9 @@ const ItemList = (props: Props) => {
       {...props}
       buttons={[...(props.buttons || []), {
         accept: () => props.selectable,
+        color: 'green',
         content: allSelected ? i18n.t('ItemList.buttons.deselectAll') : i18n.t('ItemList.buttons.selectAll'),
         icon: 'checkmark',
-        primary: true,
         onClick: onSelectAll.bind(this)
       }]}
     />
