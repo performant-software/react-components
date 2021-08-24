@@ -12,6 +12,7 @@ type Props = {
   defaultSearch: ?string,
   filters?: {
     component: Component<{}>,
+    defaults: any,
     props: any,
     onChange: (filter: any) => Promise<any>
   },
@@ -146,11 +147,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           sortDirection
         } = this.state;
 
-        const filterKeys = _.keys((this.props.filters && this.props.filters.props) || {});
-        const filters = _.pick(this.state.filters, filterKeys);
-
         const params = {
-          ...filters,
+          ...this.state.filters,
           page,
           search,
           sort_by: sortColumn,
@@ -200,7 +198,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     initializeState(props: Props) {
       const session = this.restoreSession();
 
-      const filters = session.filters || (props.filters && props.filters.props) || {};
+      const filters = session.filters || (props.filters && props.filters.defaults) || {};
       const page = session.page || 1;
       const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || null;
@@ -231,8 +229,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         return false;
       }
 
-      const { props } = this.props.filters || {};
-      return !_.isEqual(_.pick(this.state.filters, _.keys(props)), props);
+      return !_.isEmpty(this.state.filters);
     }
 
     /**
@@ -356,6 +353,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
+      const { filters = {} } = this.props;
+      const { component, defaults, props } = filters;
+
       return (
         <>
           <WrappedComponent
@@ -363,10 +363,11 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             count={this.state.count}
             filters={{
               active: this.isFilterActive(),
-              component: this.props.filters && this.props.filters.component,
+              component,
               onChange: this.onFilterChange.bind(this),
               props: {
-                defaults: this.props.filters && this.props.filters.props,
+                ...props,
+                defaults,
                 item: this.state.filters
               }
             }}

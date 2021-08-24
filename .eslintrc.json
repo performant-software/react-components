@@ -4,6 +4,7 @@
     "es6": true
   },
   "extends": [
+    "plugin:flowtype/recommended",
     "plugin:react/recommended",
     "airbnb"
   ],
@@ -20,6 +21,7 @@
     "sourceType": "module"
   },
   "plugins": [
+    "flowtype",
     "react"
   ],
   "rules": {

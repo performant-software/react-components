@@ -552,10 +552,10 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <EditModal
+          {...props}
           component={component}
           onClose={() => this.setState({ modalFilter: false })}
           onSave={this.onSaveFilter.bind(this)}
-          {...props}
         />
       );
     }
