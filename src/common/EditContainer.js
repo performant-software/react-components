@@ -233,7 +233,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     onReset() {
       this.setState({
-        item: this.props.defaults
+        item: this.props.defaults || {}
       });
     }
 

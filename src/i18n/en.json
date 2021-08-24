@@ -147,8 +147,28 @@
     "deleteHeader": "Confirm Remove",
     "emptyList": "No matching records found.",
     "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
+    "labels": {
+      "perPage": "Show {{perPage}}"
+    },
     "record": "Record",
     "record_plural": "Records"
+  },
+  "ListFilters": {
+    "buttons": {
+      "add": "Add",
+      "reset": "Reset filters"
+    },
+    "operators": {
+      "contain": "Contains",
+      "empty": "Is empty",
+      "equal": "Equals",
+      "greaterThan": "Is greater than",
+      "lessThan": "Is less than",
+      "notContain": "Does not contain",
+      "notEmpty": "Is not empty",
+      "notEqual": "Does not equal"
+    },
+    "title": "Filters"
   },
   "LoginModal": {
     "buttonCancel": "Cancel",

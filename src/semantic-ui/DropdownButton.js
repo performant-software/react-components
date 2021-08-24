@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { Button, Dropdown } from 'semantic-ui-react';
+import './DropdownButton.css';
 
 type Option = {
   key: any,
@@ -10,12 +11,15 @@ type Option = {
 };
 
 type Props = {
+  basic?: boolean,
   color?: string,
   direction?: string,
   disabled?: boolean,
   icon?: string,
   options: Array<Option>,
   onChange: (e: Event, { value: any }) => void,
+  scrolling?: boolean,
+  selectOnBlur?: boolean,
   text: string,
   value: any
 };
@@ -25,6 +29,8 @@ const DropdownButton = (props: Props) => {
 
   return (
     <Button.Group
+      basic={props.basic}
+      className='dropdown-button'
       color={props.color}
     >
       <Button
@@ -41,6 +47,8 @@ const DropdownButton = (props: Props) => {
         onChange={props.onChange.bind(this)}
         options={props.options}
         ref={dropdownRef}
+        scrolling={props.scrolling}
+        selectOnBlur={props.selectOnBlur}
         trigger={<></>}
         value={props.value}
       />
@@ -50,7 +58,8 @@ const DropdownButton = (props: Props) => {
 
 DropdownButton.defaultProps = {
   color: undefined,
-  icon: undefined
+  icon: undefined,
+  selectOnBlur: false
 };
 
 export default DropdownButton;

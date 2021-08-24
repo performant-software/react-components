@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import DropdownButton from './DropdownButton';
 import EditModal from './EditModal';
 import './List.css';
 
@@ -68,13 +69,15 @@ type Props = {
   },
   page: number,
   pages: number,
-  onClearSelected?: () => void,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDeleteAll?: () => Promise<any>,
   onPageChange: () => void,
+  onPerPageChange: () => void,
   onSave: (item: any) => Promise<any>,
   onSelectAll?: (items: Array<any>) => void,
+  perPage: number,
+  perPageOptions: Array<number>,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
@@ -560,10 +563,10 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <EditModal
+          {...props}
           component={component}
           onClose={() => this.setState({ modalFilter: false })}
           onSave={this.onSaveFilter.bind(this)}
-          {...props}
         />
       );
     }
@@ -603,7 +606,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='left'
             >
-              {showCount ? this.renderRecordCount() : ''}
+              { showCount ? this.renderRecordCount() : '' }
               { _.map(buttons, (button) => button.render()) }
             </Grid.Column>
             <Grid.Column
@@ -625,12 +628,19 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       let renderHeader = false;
 
       const buttons = this.getButtons('top');
+
       if (buttons && buttons.length) {
         renderHeader = true;
       }
 
-      const { filters, renderListHeader, renderSearch } = this.props;
-      if (filters || renderListHeader || renderSearch) {
+      const {
+        filters,
+        perPageOptions,
+        renderListHeader,
+        renderSearch
+      } = this.props;
+
+      if (filters || perPageOptions || renderListHeader || renderSearch) {
         renderHeader = true;
       }
 
@@ -667,6 +677,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                 <Menu.Menu>
                   { filters && this.renderFilterButton() }
                 </Menu.Menu>
+                { perPageOptions && (
+                  <Menu.Menu>
+                    { this.renderPerPage() }
+                  </Menu.Menu>
+                )}
                 <Menu.Menu>
                   { renderSearch && renderSearch() }
                 </Menu.Menu>
@@ -691,6 +706,30 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           onPageChange={this.props.onPageChange.bind(this)}
           size='mini'
           totalPages={this.props.pages}
+        />
+      );
+    }
+
+    /**
+     * Renders the per page selector.
+     *
+     * @returns {JSX.Element}
+     */
+    renderPerPage() {
+      const { perPage } = this.props;
+
+      return (
+        <DropdownButton
+          basic
+          icon='list'
+          onChange={this.props.onPerPageChange.bind(this)}
+          options={_.map(this.props.perPageOptions, (count) => ({
+            key: count,
+            value: count,
+            text: count
+          }))}
+          text={i18n.t('List.labels.perPage', { perPage })}
+          value={perPage}
         />
       );
     }

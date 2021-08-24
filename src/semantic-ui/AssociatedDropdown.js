@@ -10,8 +10,8 @@ import Timer from '../utils/Timer';
 import './AssociatedDropdown.css';
 
 type Option = {
-  key: number,
-  value: number,
+  key: number | string,
+  value: number | string,
   text: string
 };
 
@@ -21,40 +21,42 @@ type Props = {
   modal?: {
     component: Component<{}>,
     props: any,
-    onSave: (item: any) => void,
+    onSave: (item: any) => Promise<any>,
     state: any
   },
-  onSearch: () => Promise<any>,
-  onSelection: (value: number | string) => void,
+  onSearch: (search: string) => Promise<any>,
+  onSelection: (item: any) => void,
   placeholder?: string,
   renderOption: (option: any) => Option,
   required?: boolean,
   searchQuery: string,
-  value: number,
-  t: () => string,
+  value: ?number,
   upward?: boolean
 };
 
 type State = {
-  item: ?Object,
   items: Array<any>,
   loading: boolean,
   modalAdd: boolean,
   options: Array<Option>,
   saved: boolean,
   searchQuery: string,
-  value: number | string
+  value: ?number | ?string
 };
 
 const TIMEOUT = 500;
 
 class AssociatedDropdown extends Component<Props, State> {
+  static defaultProps: any;
+
+  timeout: ?TimeoutID;
+
   /**
    * Constructs a new AssociatedDropdown component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -75,7 +77,7 @@ class AssociatedDropdown extends Component<Props, State> {
    *
    * @param prevProps
    */
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.value !== this.props.value) {
       const { searchQuery, value } = this.props;
       this.setState({ searchQuery, value });
@@ -126,7 +128,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * @param e
    * @param value
    */
-  onOptionSelection(e, { value }) {
+  onOptionSelection(e: Event, { value }: { value: any }) {
     this.setState((state) => {
       const option = _.findWhere(state.options, { value }) || {};
       this.setState({ searchQuery: option.text, value: option.value });
@@ -149,7 +151,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * @param e
    * @param searchQuery
    */
-  onSearchChange(e, { searchQuery }) {
+  onSearchChange(e: Event, { searchQuery }: { searchQuery: string }) {
     this.setState({ searchQuery });
   }
 
@@ -176,7 +178,7 @@ class AssociatedDropdown extends Component<Props, State> {
       >
         <div className='dropdown-container'>
           <Dropdown
-            className={`inline-dropdown ${this.props.className}`}
+            className={`inline-dropdown ${this.props.className || ''}`}
             disabled={this.state.loading}
             loading={this.state.loading}
             onBlur={this.onBlur.bind(this)}

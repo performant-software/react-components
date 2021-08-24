@@ -16,7 +16,7 @@ const SORT_DESCENDING = 'descending';
  *
  * @returns {Promise<unknown>}
  */
-const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }) => {
+const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction }) => {
   let payload = [...items];
 
   // Apply search filter
@@ -46,11 +46,11 @@ const onLoad = ({ items, page, search, sort_by, sort_direction, perPage }) => {
   // Apply pagination
   let pages = 0;
 
-  if (page && perPage) {
-    pages = Math.floor((payload.length / perPage) || 1);
+  if (page && per_page) {
+    pages = Math.floor((payload.length / per_page) || 1);
 
-    const startIndex = (page - 1) * perPage;
-    const endIndex = startIndex + (perPage - 1);
+    const startIndex = (page - 1) * per_page;
+    const endIndex = startIndex + (per_page - 1);
 
     payload = payload.slice(startIndex, endIndex);
   }
