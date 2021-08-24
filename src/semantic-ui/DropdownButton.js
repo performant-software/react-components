@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { Button, Dropdown } from 'semantic-ui-react';
+import './DropdownButton.css';
 
 type Option = {
   key: any,
@@ -10,6 +11,7 @@ type Option = {
 };
 
 type Props = {
+  basic?: boolean,
   color?: string,
   direction?: string,
   icon?: string,
@@ -26,6 +28,8 @@ const DropdownButton = (props: Props) => {
 
   return (
     <Button.Group
+      basic={props.basic}
+      className='dropdown-button'
       color={props.color}
     >
       <Button

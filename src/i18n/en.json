@@ -142,6 +142,9 @@
     "deleteHeader": "Confirm Remove",
     "emptyList": "No matching records found.",
     "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
+    "labels": {
+      "perPage": "Show {{perPage}}"
+    },
     "record": "Record",
     "record_plural": "Records"
   },

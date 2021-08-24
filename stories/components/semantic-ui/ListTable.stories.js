@@ -887,3 +887,32 @@ export const SortDescending = useDragDrop(() => (
     searchable={boolean('Searchable', true)}
   />
 ));
+
+export const WithPerPage = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    defaultPerPage={10}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    perPageOptions={[10, 25, 50, 100]}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const WithPerPageNoDefault = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    perPageOptions={[10, 25, 50, 100]}
+    searchable={boolean('Searchable', true)}
+  />
+));
