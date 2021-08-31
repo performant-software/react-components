@@ -69,19 +69,21 @@ type Props = {
   },
   page: number,
   pages: number,
-  perPage: number,
-  perPageOptions: Array<number>,
   onCopy?: (item: any) => any,
   onDelete: (item: any) => void,
   onDeleteAll?: () => Promise<any>,
   onPageChange: () => void,
   onPerPageChange: () => void,
   onSave: (item: any) => Promise<any>,
+  onSelectAll?: (items: Array<any>) => void,
+  perPage: number,
+  perPageOptions: Array<number>,
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
   renderEmptyRow?: () => void,
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
   renderListHeader?: () => ?Element<any>,
   renderSearch?: () => Element<any>,
+  selectable?: boolean,
   showRecordCount: boolean,
   t: (key: string) => string
 };
@@ -156,17 +158,22 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     getButtons(location: string) {
       const buttons = [];
 
-      const { addButton = {}, deleteButton = {}, modal } = this.props;
+      const {
+        addButton = {},
+        deleteButton = {},
+        modal,
+        selectable
+      } = this.props;
 
       // Add the add button to the list if the location specified is the passed location.
-      if (addButton.location === location && (addButton.onClick || modal)) {
+      if (addButton.location === location && (addButton.onClick || modal) && !selectable) {
         buttons.push({
           render: this.renderAddButton.bind(this)
         });
       }
 
       // Add the delete all button to the list if the location specified is the passed location.
-      if (deleteButton.location === location && this.props.onDeleteAll) {
+      if (deleteButton.location === location && this.props.onDeleteAll && !selectable) {
         buttons.push({
           render: this.renderDeleteAllButton.bind(this)
         });

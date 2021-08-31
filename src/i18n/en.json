@@ -105,6 +105,11 @@
       "copy": "Copy",
       "delete": "Remove",
       "edit": "Edit"
+    },
+    "buttons": {
+      "clear": "Clear selected",
+      "deselectAll": "Deselect all",
+      "selectAll": "Select all"
     }
   },
   "Items": {

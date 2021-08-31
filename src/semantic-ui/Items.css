@@ -9,3 +9,11 @@
 .item-list .empty-list {
   opacity: 0.8;
 }
+
+.item-list .ui.items > .item > .checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 100px;
+  width: 20%;
+}
