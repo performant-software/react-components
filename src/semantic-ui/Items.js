@@ -135,7 +135,7 @@ class Items extends Component<Props, {}> {
   renderCard(item, index) {
     const card = (
       <Card
-        key={item.id || index}
+        key={item.id || item.uid}
       >
         { this.props.renderImage && this.props.renderImage(item) }
         <Card.Content>
@@ -266,7 +266,7 @@ class Items extends Component<Props, {}> {
   renderItem(item, index) {
     const listItem = (
       <Item
-        key={item.id || index}
+        key={item.id || item.uid}
       >
         { this.props.renderImage && (
           <Item.Image>
