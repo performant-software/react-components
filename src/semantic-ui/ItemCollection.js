@@ -12,6 +12,7 @@ type Props = {
     current: HTMLElement
   },
   items: Array<any>,
+  onBottomReached?: (page: number) => void,
   onDelete: (item: any) => void,
   onSave?: (item: any) => void,
   perPage: number,
@@ -67,7 +68,11 @@ class ItemCollection extends Component<Props, State> {
    * Increments the page number and fetches the data.
    */
   onBottomReached() {
-    this.setState((state) => ({ page: state.page + 1 }));
+    this.setState((state) => ({ page: state.page + 1 }), () => {
+      if (this.props.onBottomReached) {
+        this.props.onBottomReached(this.state.page);
+      }
+    });
   }
 
   /**
