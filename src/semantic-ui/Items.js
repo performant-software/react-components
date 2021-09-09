@@ -20,6 +20,7 @@ import './Items.css';
 import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
+  children: Element<any>,
   className: string,
   isRowSelected?: (item: any) => boolean,
   items: Array<any>,
@@ -117,6 +118,7 @@ class Items extends Component<Props, {}> {
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
+        { this.props.children }
       </div>
     );
   }

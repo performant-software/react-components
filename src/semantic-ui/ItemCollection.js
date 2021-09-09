@@ -122,19 +122,18 @@ class ItemCollection extends Component<Props, State> {
         offset={this.props.scrollOffset}
         onBottomReached={this.onBottomReached.bind(this)}
       >
-        <>
+        <Items
+          {...this.props}
+          items={this.getItems()}
+          className={this.getClassName()}
+          onDelete={this.onDelete.bind(this)}
+          onSave={this.onSave.bind(this)}
+        >
           <Loader
             active={this.props.loading}
-            content={i18n.t('Common.loading')}
+            content={i18n.t('Common.messages.loading')}
           />
-          <Items
-            {...this.props}
-            items={this.getItems()}
-            className={this.getClassName()}
-            onDelete={this.onDelete.bind(this)}
-            onSave={this.onSave.bind(this)}
-          />
-        </>
+        </Items>
       </InfiniteScroll>
     );
   }

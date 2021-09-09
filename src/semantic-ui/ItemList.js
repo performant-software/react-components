@@ -97,7 +97,7 @@ const ItemList = (props: Props) => {
         inverted
       >
         <Loader
-          content={i18n.t('Common.loading')}
+          content={i18n.t('Common.messages.loading')}
         />
       </Dimmer>
       <Items
