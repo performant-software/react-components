@@ -427,6 +427,19 @@ export const InfiniteScrollDiv = useDragDrop(() => {
   );
 });
 
+export const Loading = useDragDrop(() => (
+  <ItemCollection
+    actions={actions}
+    items={items}
+    loading
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderHeader={(item) => <Header content={item.movie} />}
+    renderMeta={(item) => item.genre}
+  />
+));
+
 const genres = _.uniq(_.flatten(_.map(items, (i) => i.genre.split('|'))));
 
 export const InfiniteScrollFilter = useDragDrop(() => {

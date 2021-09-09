@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
+import { Loader } from 'semantic-ui-react';
+import i18n from '../i18n/i18n';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Items from './Items';
 import './ItemCollection.css';
@@ -120,13 +122,19 @@ class ItemCollection extends Component<Props, State> {
         offset={this.props.scrollOffset}
         onBottomReached={this.onBottomReached.bind(this)}
       >
-        <Items
-          {...this.props}
-          items={this.getItems()}
-          className={this.getClassName()}
-          onDelete={this.onDelete.bind(this)}
-          onSave={this.onSave.bind(this)}
-        />
+        <>
+          <Loader
+            active={this.props.loading}
+            content={i18n.t('Common.loading')}
+          />
+          <Items
+            {...this.props}
+            items={this.getItems()}
+            className={this.getClassName()}
+            onDelete={this.onDelete.bind(this)}
+            onSave={this.onSave.bind(this)}
+          />
+        </>
       </InfiniteScroll>
     );
   }

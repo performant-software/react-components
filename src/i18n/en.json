@@ -112,9 +112,6 @@
       "selectAll": "Select all"
     }
   },
-  "Items": {
-    "loading": "Loading"
-  },
   "KeyboardField": {
     "labels": {
       "hideKeyboard": "Hide Keyboard",

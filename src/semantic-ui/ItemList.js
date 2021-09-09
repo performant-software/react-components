@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Dimmer, Loader } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Items from './Items';
@@ -16,13 +16,14 @@ type Sort = {
   key: any,
   value: any,
   text: string,
-  direction:? string
+  direction: ?string
 };
 
 type Props = {
   buttons: Array<ListButton>,
   isRowSelected: (item: any) => boolean,
   items: Array<any>,
+  loading?: boolean,
   page: number,
   onRowSelect: (item: any) => void,
   onSort: (column: string, direction: ?string, page?: number) => void,
@@ -90,16 +91,26 @@ const ItemList = (props: Props) => {
   }, [allSelected, props.isRowSelected, props.items, props.onRowSelect]);
 
   return (
-    <Items
-      {...props}
-      buttons={[...(props.buttons || []), {
-        accept: () => props.selectable,
-        color: 'green',
-        content: allSelected ? i18n.t('ItemList.buttons.deselectAll') : i18n.t('ItemList.buttons.selectAll'),
-        icon: 'checkmark',
-        onClick: onSelectAll.bind(this)
-      }]}
-    />
+    <>
+      <Dimmer
+        active={props.loading}
+        inverted
+      >
+        <Loader
+          content={i18n.t('Common.loading')}
+        />
+      </Dimmer>
+      <Items
+        {...props}
+        buttons={[...(props.buttons || []), {
+          accept: () => props.selectable,
+          color: 'green',
+          content: allSelected ? i18n.t('ItemList.buttons.deselectAll') : i18n.t('ItemList.buttons.selectAll'),
+          icon: 'checkmark',
+          onClick: onSelectAll.bind(this)
+        }]}
+      />
+    </>
   );
 };
 

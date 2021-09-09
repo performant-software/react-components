@@ -5,11 +5,9 @@ import {
   Button,
   Card,
   Checkbox,
-  Dimmer,
   Header,
   Icon,
   Item,
-  Loader,
   Segment
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -116,7 +114,6 @@ class Items extends Component<Props, {}> {
       <div
         className={this.getClassName()}
       >
-        { this.renderLoading() }
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
@@ -355,28 +352,6 @@ class Items extends Component<Props, {}> {
       >
         { _.map(this.props.items, this.renderItem.bind(this)) }
       </Item.Group>
-    );
-  }
-
-  /**
-   * Renders the loading indicator.
-   *
-   * @returns {null|*}
-   */
-  renderLoading() {
-    if (!this.props.loading) {
-      return null;
-    }
-
-    return (
-      <Dimmer
-        active
-        inverted
-      >
-        <Loader
-          content={i18n.t('Items.loading')}
-        />
-      </Dimmer>
     );
   }
 }
