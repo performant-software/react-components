@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
+import { Loader } from 'semantic-ui-react';
+import i18n from '../i18n/i18n';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Items from './Items';
 import './ItemCollection.css';
@@ -12,6 +14,8 @@ type Props = {
     current: HTMLElement
   },
   items: Array<any>,
+  loading?: boolean,
+  onBottomReached?: (page: number) => void,
   onDelete: (item: any) => void,
   onSave?: (item: any) => void,
   perPage: number,
@@ -67,7 +71,15 @@ class ItemCollection extends Component<Props, State> {
    * Increments the page number and fetches the data.
    */
   onBottomReached() {
-    this.setState((state) => ({ page: state.page + 1 }));
+    if (this.props.loading) {
+      return;
+    }
+
+    this.setState((state) => ({ page: state.page + 1 }), () => {
+      if (this.props.onBottomReached) {
+        this.props.onBottomReached(this.state.page);
+      }
+    });
   }
 
   /**
@@ -116,7 +128,12 @@ class ItemCollection extends Component<Props, State> {
           className={this.getClassName()}
           onDelete={this.onDelete.bind(this)}
           onSave={this.onSave.bind(this)}
-        />
+        >
+          <Loader
+            active={this.props.loading}
+            content={i18n.t('Common.messages.loading')}
+          />
+        </Items>
       </InfiniteScroll>
     );
   }

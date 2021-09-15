@@ -5,11 +5,9 @@ import {
   Button,
   Card,
   Checkbox,
-  Dimmer,
   Header,
   Icon,
   Item,
-  Loader,
   Segment
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -22,6 +20,7 @@ import './Items.css';
 import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
+  children: Element<any>,
   className: string,
   isRowSelected?: (item: any) => boolean,
   items: Array<any>,
@@ -116,10 +115,10 @@ class Items extends Component<Props, {}> {
       <div
         className={this.getClassName()}
       >
-        { this.renderLoading() }
         { this.renderList() }
         { this.renderGrid() }
         { this.renderEmptyList() }
+        { this.props.children }
       </div>
     );
   }
@@ -355,28 +354,6 @@ class Items extends Component<Props, {}> {
       >
         { _.map(this.props.items, this.renderItem.bind(this)) }
       </Item.Group>
-    );
-  }
-
-  /**
-   * Renders the loading indicator.
-   *
-   * @returns {null|*}
-   */
-  renderLoading() {
-    if (!this.props.loading) {
-      return null;
-    }
-
-    return (
-      <Dimmer
-        active
-        inverted
-      >
-        <Loader
-          content={i18n.t('Items.loading')}
-        />
-      </Dimmer>
     );
   }
 }
