@@ -54,9 +54,9 @@ class NestedAccordion extends Component<Props, State> {
       && this.props.defaultActive
       && this.props.defaultActive.length) {
         if (this.props.multipleItemTypes 
-          && !this.props.defaultActive.some(active => {
+          && !this.props.defaultActive.some(active =>
             typeof active !== 'object' || !_.has(active, 'id') || !_.has(active, 'type')
-          })
+          )
         ) {
           this.setState({ activeItems: this.props.defaultActive });
         } else {
