@@ -254,7 +254,7 @@ class NestedAccordion extends Component<Props, State> {
       activeItems: this.isActive(item)
         ? _.filter(state.activeItems, (i) => {
             if (this.props.multipleItemTypes && _.has(item, 'type') && _.has(i, 'type')) {
-              return i.id !== item.id && i.type !== item.type;
+              return i.id !== item.id || i.type !== item.type;
             }
             return i.id !== item.id;
           })
