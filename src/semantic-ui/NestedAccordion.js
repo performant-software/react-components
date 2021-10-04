@@ -9,10 +9,11 @@ import _ from 'underscore';
 import './NestedAccordion.css';
 
 type Props = {
-  defaultActive?: Array<number>,
+  defaultActive?: Array<number> | Array<any>,
   getChildItems: (item: any) => Array<any>,
   inverted?: boolean,
   isItemActive?: (item: any) => boolean,
+  multipleItemTypes?: boolean,
   onItemClick?: (item: any) => void,
   onItemToggle?: (item: any) => void,
   renderItem: (item: any) => string | Element<any>,
@@ -52,7 +53,15 @@ class NestedAccordion extends Component<Props, State> {
     if (prevProps.defaultActive !== this.props.defaultActive
       && this.props.defaultActive
       && this.props.defaultActive.length) {
-      this.setState({ activeItems: _.map(this.props.defaultActive, (id) => ({ id })) });
+        if (this.props.multipleItemTypes 
+          && !this.props.defaultActive.some(active => {
+            typeof active !== 'object' || !_.has(active, 'id') || !_.has(active, 'type')
+          })
+        ) {
+          this.setState({ activeItems: this.props.defaultActive });
+        } else {
+          this.setState({ activeItems: _.map(this.props.defaultActive, (id) => ({ id })) });
+        }
     }
   }
 
@@ -81,7 +90,11 @@ class NestedAccordion extends Component<Props, State> {
    * @returns {boolean}
    */
   isActive(item: any) {
-    return !!_.findWhere(this.state.activeItems, { id: item.id });
+    let properties = { id: item.id };
+    if (this.props.multipleItemTypes && _.has(item, 'type')) {
+      properties = { id: item.id, type: item.type };
+    }
+    return !!_.findWhere(this.state.activeItems, properties);
   }
 
   /**
@@ -175,7 +188,7 @@ class NestedAccordion extends Component<Props, State> {
    */
   renderPanel(item: any) {
     return (
-      <div key={item.id}>
+      <div key={_.has(item, 'type') ? `${item.type}-${item.id}` : item.id}>
         <Accordion.Title
           active={this.isActive(item)}
           onClick={this.onItemClick.bind(this, item)}
@@ -239,7 +252,12 @@ class NestedAccordion extends Component<Props, State> {
   toggleItem(item: any) {
     this.setState((state) => ({
       activeItems: this.isActive(item)
-        ? _.filter(state.activeItems, (i) => i.id !== item.id)
+        ? _.filter(state.activeItems, (i) => {
+            if (this.props.multipleItemTypes && _.has(item, 'type') && _.has(i, 'type')) {
+              return i.id !== item.id && i.type !== item.type;
+            }
+            return i.id !== item.id;
+          })
         : [...state.activeItems, item]
     }));
   }
@@ -249,6 +267,7 @@ NestedAccordion.defaultProps = {
   defaultActive: [],
   inverted: false,
   isItemActive: undefined,
+  multipleItemTypes: false,
   onItemClick: () => {},
   renderRight: () => {},
   styled: true,
