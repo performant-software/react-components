@@ -76,6 +76,7 @@ class FileUpload extends Component<Props, State> {
           error
           header={i18n.t('Common.errors.title')}
           hidden={!(this.state.errors && this.state.errors.length)}
+          visible={this.state.errors && this.state.errors.length}
           onDismiss={() => this.setState({ errors: null })}
           list={this.state.errors}
         />
