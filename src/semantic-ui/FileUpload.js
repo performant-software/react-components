@@ -10,7 +10,8 @@ import './FileUpload.css';
 type Props = {
   fileTypes?: Array<string>,
   maxSize?: number,
-  onFilesAdded: (files: Array<File>) => void
+  onFilesAdded: (files: Array<File>) => void,
+  onSuccess?: () => void,
 };
 
 type State = {
@@ -165,6 +166,9 @@ class FileUpload extends Component<Props, State> {
       }
     });
 
+    if (!(errors && errors.length) && this.props.onSuccess) {
+      this.props.onSuccess();
+    }
     this.setState({ errors });
 
     return validFiles;
