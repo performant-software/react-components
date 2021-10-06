@@ -277,6 +277,11 @@ const ListFilters = (props: Props) => {
   useEffect(() => {
     _.each(props.item.filters, (filter) => {
       const defaults = _.findWhere(props.filters, { key: filter.key });
+
+      if (filter.type === FilterTypes.boolean) {
+        defaults.value = false;
+      }
+
       props.onSaveChildAssociation('filters', _.defaults(filter, defaults));
     });
   }, []);
