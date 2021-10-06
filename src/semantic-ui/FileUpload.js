@@ -11,7 +11,6 @@ type Props = {
   fileTypes?: Array<string>,
   maxSize?: number,
   onFilesAdded: (files: Array<File>) => void,
-  onSuccess?: () => void,
 };
 
 type State = {
@@ -52,7 +51,11 @@ class FileUpload extends Component<Props, State> {
    */
   onDropFiles(e) {
     e.preventDefault();
-    this.props.onFilesAdded(this.validate(this.toArray(e.dataTransfer.files)));
+    const files = this.toArray(e.dataTransfer.files);
+    const validFiles = this.validate(files);
+    if (validFiles.length === files.length) {
+      this.props.onFilesAdded(files);
+    }
   }
 
   /**
@@ -62,7 +65,11 @@ class FileUpload extends Component<Props, State> {
    */
   onFilesAdded(e) {
     e.preventDefault();
-    this.props.onFilesAdded(this.validate(this.toArray(e.target.files)));
+    const files = this.toArray(e.target.files);
+    const validFiles = this.validate(files);
+    if (validFiles.length === files.length) {
+      this.props.onFilesAdded(files);
+    }
   }
 
   /**
@@ -166,9 +173,6 @@ class FileUpload extends Component<Props, State> {
       }
     });
 
-    if (!(errors && errors.length) && this.props.onSuccess) {
-      this.props.onSuccess();
-    }
     this.setState({ errors });
 
     return validFiles;
