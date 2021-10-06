@@ -10,7 +10,7 @@ import './FileUpload.css';
 type Props = {
   fileTypes?: Array<string>,
   maxSize?: number,
-  onFilesAdded: (files: Array<File>) => void
+  onFilesAdded: (files: Array<File>) => void,
 };
 
 type State = {
@@ -51,7 +51,11 @@ class FileUpload extends Component<Props, State> {
    */
   onDropFiles(e) {
     e.preventDefault();
-    this.props.onFilesAdded(this.validate(this.toArray(e.dataTransfer.files)));
+    const files = this.toArray(e.dataTransfer.files);
+    const validFiles = this.validate(files);
+    if (validFiles.length === files.length) {
+      this.props.onFilesAdded(files);
+    }
   }
 
   /**
@@ -61,7 +65,11 @@ class FileUpload extends Component<Props, State> {
    */
   onFilesAdded(e) {
     e.preventDefault();
-    this.props.onFilesAdded(this.validate(this.toArray(e.target.files)));
+    const files = this.toArray(e.target.files);
+    const validFiles = this.validate(files);
+    if (validFiles.length === files.length) {
+      this.props.onFilesAdded(files);
+    }
   }
 
   /**
@@ -76,6 +84,7 @@ class FileUpload extends Component<Props, State> {
           error
           header={i18n.t('Common.errors.title')}
           hidden={!(this.state.errors && this.state.errors.length)}
+          visible={this.state.errors && this.state.errors.length}
           onDismiss={() => this.setState({ errors: null })}
           list={this.state.errors}
         />
