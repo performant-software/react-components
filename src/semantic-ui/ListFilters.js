@@ -57,6 +57,7 @@ type Props = EditContainerProps & {
 const FilterTypes = {
   boolean: 'boolean',
   date: 'date',
+  integer: 'integer',
   relationship: 'relationship',
   select: 'select',
   string: 'string',
@@ -182,8 +183,8 @@ const ListFilters = (props: Props) => {
       );
     }
 
-    // Render a text input for string and text types
-    if (filter.type === FilterTypes.string || filter.type === FilterTypes.text) {
+    // Render a text input for string, text, and integer types
+    if (filter.type === FilterTypes.string || filter.type === FilterTypes.text || filter.type === FilterTypes.integer) {
       return (
         <Input
           onChange={(e, { value }) => props.onSaveChildAssociation('filters', { ...filter, value })}
@@ -276,6 +277,11 @@ const ListFilters = (props: Props) => {
   useEffect(() => {
     _.each(props.item.filters, (filter) => {
       const defaults = _.findWhere(props.filters, { key: filter.key });
+
+      if (filter.type === FilterTypes.boolean) {
+        defaults.value = false;
+      }
+
       props.onSaveChildAssociation('filters', _.defaults(filter, defaults));
     });
   }, []);
