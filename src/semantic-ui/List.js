@@ -668,9 +668,10 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                 compact
                 borderless
                 secondary
+                className='flex-end-menu'
               >
                 { renderListHeader && (
-                  <Menu.Menu>
+                  <Menu.Menu className='list-header-menu'>
                     { renderListHeader() }
                   </Menu.Menu>
                 )}
@@ -678,7 +679,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                   { filters && this.renderFilterButton() }
                 </Menu.Menu>
                 { perPageOptions && (
-                  <Menu.Menu>
+                  <Menu.Menu className='per-page-menu'>
                     { this.renderPerPage() }
                   </Menu.Menu>
                 )}

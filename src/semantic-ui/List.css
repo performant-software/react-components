@@ -1,0 +1,8 @@
+.header .flex-end-menu {
+  justify-content: flex-end;
+}
+
+.header .list-header-menu,
+.header .per-page-menu {
+  flex-shrink: 0;
+}
