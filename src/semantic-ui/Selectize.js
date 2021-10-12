@@ -229,7 +229,7 @@ const Selectize = (props: Props) => {
    */
   const onSave = useCallback((item) => {
     if (props.modal && props.modal.onSave) {
-      return props.modal.onSave(item);
+      return props.modal.onSave(item).then((saved) => onSelect(saved));
     }
 
     return Promise.resolve();
