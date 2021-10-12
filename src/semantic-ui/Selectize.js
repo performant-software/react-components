@@ -225,11 +225,11 @@ const Selectize = (props: Props) => {
   /**
    * Returns the promise from the modal onSave prop, if provided. Otherwise returns a resolved promise.
    *
-   * @type {(function(): (*))|*}
+   * @type {(function(*=): (*))|*}
    */
-  const onSave = useCallback(() => {
+  const onSave = useCallback((item) => {
     if (props.modal && props.modal.onSave) {
-      return props.modal.onSave();
+      return props.modal.onSave(item);
     }
 
     return Promise.resolve();
