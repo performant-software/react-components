@@ -233,7 +233,7 @@ const Selectize = (props: Props) => {
     }
 
     return Promise.resolve();
-  }, [props.modal]);
+  }, [onSelect, props.modal]);
 
   return (
     <Modal
