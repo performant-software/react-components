@@ -383,10 +383,7 @@ export const Default = () => (
       items,
       perPage: number('Per page', 10)
     }))}
-    onSave={() => {
-      action('save')();
-      return Promise.resolve();
-    }}
+    onSave={action('save')}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
     title={text('Title', 'Select some')}
   />
@@ -408,10 +405,7 @@ export const SingleSelect = () => (
       items,
       perPage: number('Per page', 10)
     }))}
-    onSave={() => {
-      action('save')();
-      return Promise.resolve();
-    }}
+    onSave={action('save')}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
     title={text('Title', 'Select some')}
   />
@@ -432,10 +426,7 @@ export const CustomHeader = () => (
       items,
       perPage: number('Per page', 10)
     }))}
-    onSave={() => {
-      action('save')();
-      return Promise.resolve();
-    }}
+    onSave={action('save')}
     renderHeader={({ onItemClick, selectedItem, selectedItems }) => (
       <SelectizeHeader
         isSelected={(item) => item === selectedItem}

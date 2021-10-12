@@ -1,6 +1,11 @@
 // @flow
 
-import React, { Component, type ComponentType, type Element } from 'react';
+import React, {
+  useEffect,
+  useState,
+  type Component,
+  type Element, useCallback
+} from 'react';
 import {
   Button,
   Form,
@@ -16,167 +21,50 @@ import useDataList from './DataList';
 import './Selectize.css';
 import useList, { type Props as ListProps } from './List';
 
-type Item = {
-  id: number
-};
-
-type Props = ListProps & {
-  centered: boolean,
+type Props = {
+  centered?: boolean,
+  collectionName: string,
+  filters?: {
+    component: Component<{}>,
+    defaults: any,
+    props: any,
+    onChange: (filter: any) => Promise<any>
+  },
+  modal?: {
+    onSave: (item: any) => Promise<any>
+  },
   multiple?: boolean,
   onClose: () => void,
-  onInit: () => void,
-  renderHeader?: (props: any) => ComponentType<any>,
-  renderItem: (item: Item) => Element<any>,
-  selectedItems?: Array<Item>,
-  t: (key: string) => string,
+  onLoad: (params: any) => Promise<any>,
+  onSave: (items: any) => void,
   title: string
 };
 
-type State = {
+type GridProps = ListProps & {
+  isSelected: (item: any) => boolean,
+  onInit: () => void,
+  onItemSelection: (item: any) => void,
+  onSelect: (item: any) => void,
+  renderHeader: (params: any) => Element<any>,
+  renderItem: (item: any) => Element<any>,
   selectedItem: any,
   selectedItems: Array<any>
 };
 
-const SelectizeGrid = useList((props) => (
-  <Grid>
-    <Grid.Column
-      textAlign='center'
-    >
-      { props.renderHeader() }
-      { props.renderItems() }
-      { props.renderEmpty() }
-    </Grid.Column>
-  </Grid>
-));
-
-class Selectize extends Component<Props, State> {
-  static defaultProps: any;
-
-  /**
-   * Constructs a new Selectize component.
-   *
-   * @param props
-   */
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      selectedItems: props.selectedItems || [],
-      selectedItem: null
-    };
-  }
-
-  /**
-   * Loads the data after the component has mounted.
-   */
-  componentDidMount() {
-    this.props.onInit();
-  }
-
-  /**
-   * Returns true if the passed item is selected.
-   *
-   * @param item
-   *
-   * @returns {boolean}
-   */
-  isSelected(item: any) {
-    return !!_.findWhere(this.state.selectedItems, { id: item.id });
-  }
-
-  /**
-   * Toggles the selection for the passed item.
-   *
-   * @param item
-   */
-  onItemSelection(item: Item) {
-    if (this.state.selectedItem === item) {
-      this.setState({ selectedItem: null }, this.onSelect.bind(this, item));
-    } else {
-      this.setState({ selectedItem: item });
+const SelectizeGrid = useDataList(useList((props: GridProps) => {
+  useEffect(() => {
+    if (props.onInit) {
+      props.onInit();
     }
-  }
+  }, []);
 
   /**
-   * Toggles the selection for the passed item.
+   * Renders a checkmark of the passed item is selected.
    *
-   * @param item
+   * @type {(function(*): (null|*))|*}
    */
-  onSelect(item: Item) {
-    if (this.isSelected(item)) {
-      this.setState((state) => ({
-        selectedItems: _.filter(state.selectedItems, (i) => i.id !== item.id)
-      }));
-    } else if (!this.props.multiple) {
-      this.setState({ selectedItems: [item] });
-    } else {
-      this.setState((state) => ({
-        selectedItems: [
-          ...state.selectedItems,
-          item
-        ]
-      }));
-    }
-  }
-
-  /**
-   * Renders the Selectize component.
-   *
-   * @returns {*}
-   */
-  render() {
-    return (
-      <Modal
-        as={Form}
-        centered={this.props.centered}
-        className='selectize'
-        open
-        noValidate
-        size='small'
-      >
-        <Modal.Header
-          content={this.props.title}
-        />
-        <Modal.Content>
-          <SelectizeGrid
-            {...this.props}
-            renderHeader={this.renderHeader.bind(this)}
-            renderEmpty={this.renderEmpty.bind(this)}
-            renderItems={this.renderItems.bind(this)}
-          />
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            onClick={this.props.onSave.bind(this, this.state.selectedItems)}
-            primary
-            size='medium'
-            type='submit'
-          >
-            { i18n.t('Common.buttons.save') }
-          </Button>
-          <Button
-            inverted
-            onClick={this.props.onClose.bind(this)}
-            primary
-            size='medium'
-            type='button'
-          >
-            { i18n.t('Common.buttons.cancel') }
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    );
-  }
-
-  /**
-   * Renders the checkmark if the passed item is selected.
-   *
-   * @param item
-   *
-   * @returns {null|*}
-   */
-  renderCheckmark(item: Item) {
-    if (!this.isSelected(item)) {
+  const renderCheckmark = useCallback((item: any) => {
+    if (!props.isSelected(item)) {
       return null;
     }
 
@@ -186,15 +74,72 @@ class Selectize extends Component<Props, State> {
         name='check'
       />
     );
-  }
+  }, [props.selectedItems]);
 
   /**
-   * Renders no results.
+   * Renders the selectize header component.
    *
-   * @returns {null|*}
+   * @returns {JSX.Element|*}
    */
-  renderEmpty() {
-    if ((this.props.items && this.props.items.length) || this.props.loading) {
+  const renderHeader = () => {
+    if (props.renderHeader) {
+      return props.renderHeader({
+        onItemClick: props.onItemSelection.bind(this),
+        selectedItem: props.selectedItem,
+        selectedItems: props.selectedItems,
+      });
+    }
+
+    return (
+      <SelectizeHeader
+        isSelected={(item) => props.selectedItem === item}
+        items={props.selectedItems}
+        onItemClick={props.onItemSelection.bind(this)}
+        renderItem={props.renderItem.bind(this)}
+      />
+    );
+  };
+
+  /**
+   * Renders the list of items as a table.
+   *
+   * @type {(function(): (null|*))|*}
+   */
+  const renderItems = useCallback(() => {
+    if (_.isEmpty(props.items)) {
+      return null;
+    }
+
+    return (
+      <Table
+        basic
+        padded
+        selectable
+      >
+        <Table.Body>
+          { _.map(props.items, (item, index) => (
+            <Table.Row
+              key={index}
+              onClick={props.onSelect.bind(this, item)}
+            >
+              <Table.Cell>{ props.renderItem(item) }</Table.Cell>
+              <Table.Cell>
+                { renderCheckmark(item) }
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    );
+  }, [renderCheckmark, props.items, props.onSelect, props.renderItem]);
+
+  /**
+   * Renders the empty list component.
+   *
+   * @type {(function(): (null|*))|*}
+   */
+  const renderEmpty = useCallback(() => {
+    if ((props.items && props.items.length) || props.loading) {
       return null;
     }
 
@@ -217,74 +162,127 @@ class Selectize extends Component<Props, State> {
           </Grid.Row>
         </Grid.Column>
       </Grid>
-
     );
-  }
+  }, [props.items, props.loading]);
 
-  renderHeader() {
-    if (this.props.renderHeader) {
-      return this.props.renderHeader({
-        onItemClick: this.onItemSelection.bind(this),
-        selectedItem: this.state.selectedItem,
-        selectedItems: this.state.selectedItems,
-      });
+  return (
+    <Grid>
+      <Grid.Column
+        textAlign='center'
+      >
+        { renderHeader() }
+        { renderItems() }
+        { renderEmpty() }
+      </Grid.Column>
+    </Grid>
+  );
+}));
+
+const Selectize = (props: Props) => {
+  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  /**
+   * Returns true if the passed item is selected.
+   *
+   * @type {function(*): boolean}
+   */
+  const isSelected = useCallback((item) => !!_.findWhere(selectedItems, { id: item.id }, [selectedItems]));
+
+  /**
+   * If the passed item is selected, deselect the item. If we're not allowing multiple select, replace the selected
+   * items with the passed item. Otherwise, append the passed item to the list of selected items.
+   *
+   * @type {(function(*=): void)|*}
+   */
+  const onSelect = useCallback((item) => {
+    if (isSelected(item)) {
+      setSelectedItems((prevItems) => _.filter(prevItems, (i) => i.id !== item.id));
+    } else if (!props.multiple) {
+      setSelectedItems([item]);
+    } else {
+      setSelectedItems((prevItems) => [
+        ...prevItems,
+        item
+      ]);
+    }
+  }, [isSelected, props.multiple]);
+
+  /**
+   * Selects or deselects the single passed item.
+   *
+   * @type {(function(*=): void)|*}
+   */
+  const onItemSelection = useCallback((item) => {
+    if (selectedItem === item) {
+      setSelectedItem(null);
+      onSelect(item);
+    } else {
+      setSelectedItem(item);
+    }
+  }, [selectedItem, onSelect]);
+
+  /**
+   * Returns the promise from the modal onSave prop, if provided. Otherwise returns a resolved promise.
+   *
+   * @type {(function(): (*))|*}
+   */
+  const onSave = useCallback(() => {
+    if (props.modal && props.modal.onSave) {
+      return props.modal.onSave();
     }
 
-    return (
-      <SelectizeHeader
-        isSelected={(item) => this.state.selectedItem === item}
-        items={this.state.selectedItems}
-        onItemClick={this.onItemSelection.bind(this)}
-        renderItem={this.props.renderItem.bind(this)}
+    return Promise.resolve();
+  }, [props.modal]);
+
+  return (
+    <Modal
+      as={Form}
+      centered={props.centered}
+      className='selectize'
+      open
+      noValidate
+      size='small'
+    >
+      <Modal.Header
+        content={props.title}
       />
-    );
-  }
-
-  /**
-   * Renders the passed item.
-   *
-   * @param item
-   * @param index
-   *
-   * @returns {*}
-   */
-  renderItem(item: Item, index: number) {
-    return (
-      <Table.Row
-        key={index}
-        onClick={this.onSelect.bind(this, item)}
-      >
-        <Table.Cell>{ this.props.renderItem(item) }</Table.Cell>
-        <Table.Cell>
-          { this.renderCheckmark(item) }
-        </Table.Cell>
-      </Table.Row>
-    );
-  }
-
-  /**
-   * Renders the list of items on the state.
-   *
-   * @returns {null|*}
-   */
-  renderItems() {
-    if (_.isEmpty(this.props.items)) {
-      return null;
-    }
-
-    return (
-      <Table
-        basic
-        padded
-        selectable
-      >
-        <Table.Body>
-          { _.map(this.props.items, this.renderItem.bind(this)) }
-        </Table.Body>
-      </Table>
-    );
-  }
-}
+      <Modal.Content>
+        <SelectizeGrid
+          {...props}
+          actions={[]}
+          isSelected={isSelected}
+          onDelete={() => Promise.resolve()}
+          onDeleteAll={() => Promise.resolve()}
+          onItemSelection={onItemSelection}
+          onSave={onSave}
+          onSelect={onSelect}
+          selectedItem={selectedItem}
+          selectedItems={selectedItems}
+        />
+      </Modal.Content>
+      <Modal.Actions>
+        <Button
+          onClick={props.onSave.bind(this, selectedItems)}
+          primary
+          size='medium'
+          type='submit'
+        >
+          { i18n.t('Common.buttons.save') }
+        </Button>
+        <Button
+          inverted
+          onClick={props.onClose.bind(this)}
+          primary
+          size='medium'
+          type='button'
+        >
+          { i18n.t('Common.buttons.cancel') }
+        </Button>
+      </Modal.Actions>
+    </Modal>
+  );
+};
 
 Selectize.defaultProps = {
   centered: false,
@@ -294,4 +292,4 @@ Selectize.defaultProps = {
   selectedItems: []
 };
 
-export default useDataList(Selectize);
+export default Selectize;
