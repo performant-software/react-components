@@ -10,7 +10,7 @@ import Timer from '../utils/Timer';
 type Props = {
   collectionName: string,
   defaultPerPage?: number,
-  defaultSearch: ?string,
+  defaultSearch?: string,
   filters?: {
     component: Component<{}>,
     defaults: any,
@@ -22,7 +22,7 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   perPageOptions?: Array<number>,
-  polling: number,
+  polling?: number,
   resolveErrors?: (error: any) => Array<string>,
   saved?: boolean,
   searchable: boolean,
