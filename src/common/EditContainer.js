@@ -55,7 +55,9 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     componentDidMount() {
       if (this.props.onInitialize && this.props.item && this.props.item.id) {
         this.setState({ loading: true }, () => {
-          this.props.onInitialize(this.props.item.id).then((item) => this.setState({ item, loading: false }));
+          this.props
+            .onInitialize(this.props.item.id)
+            .then((item) => this.setState({ item, originalItem: item, loading: false }));
         });
       }
     }
@@ -67,7 +69,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      */
     componentDidUpdate(prevProps: Props) {
       if (prevProps.item !== this.props.item) {
-        this.setState({ item: this.props.item });
+        this.setState({ item: this.props.item, originalItem: this.props.item });
       }
     }
 
