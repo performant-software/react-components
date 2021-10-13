@@ -4,7 +4,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
-import { Form, Modal } from 'semantic-ui-react';
+import { Form, Grid, Icon, Message, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
 import EditModal from '../../../src/semantic-ui/EditModal';
 import AssociatedDropdown from '../../../src/semantic-ui/AssociatedDropdown';
@@ -196,6 +196,59 @@ export const WithLoading = () => (
     onInitialize={() => new Promise((resolve) => {
       _.delay(resolve.bind(this), 5000);
     })}
+    onSave={action('save')}
+  />
+);
+
+export const WithUnsavedChanged = () => (
+  <EditModal
+    component={(props) => (
+      <Modal
+        as={Form}
+        open
+      >
+        <Modal.Header
+          content='Add record'
+        />
+        <Modal.Content>
+          <Message
+            warning
+            visible={props.dirty}
+          >
+            <Message.Header>
+              <Icon
+                name='exclamation triangle'
+              />
+              Warning
+            </Message.Header>
+            <p>You have unsaved changes.</p>
+          </Message>
+          <Form.Input
+            label='Name'
+            onChange={props.onTextInputChange.bind(this, 'name')}
+            value={props.item.name || ''}
+          />
+          <Form.Input
+            label='Address'
+            onChange={props.onTextInputChange.bind(this, 'address')}
+            value={props.item.address || ''}
+          />
+          <Form.Input
+            label='Phone'
+            onChange={props.onTextInputChange.bind(this, 'phone')}
+            value={props.item.phone || ''}
+          />
+        </Modal.Content>
+        { props.children }
+      </Modal>
+    )}
+    item={{
+      id: 1,
+      name: 'Test',
+      address: '123 Main St',
+      phone: '867-5309'
+    }}
+    onClose={action('close')}
     onSave={action('save')}
   />
 );

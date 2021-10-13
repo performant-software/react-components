@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component, type ComponentType, type Element } from 'react';
+import isEqual from 'react-fast-compare';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 
@@ -19,6 +20,7 @@ type Props = {
 type State = {
   item: any,
   loading: boolean,
+  originalItem: any,
   saving: boolean,
   validationErrors: any
 };
@@ -36,9 +38,12 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     constructor(props: Props) {
       super(props);
 
+      const item = _.defaults(props.item || {}, props.defaults || {});
+
       this.state = {
-        item: _.defaults(props.item || {}, props.defaults || {}),
+        item,
         loading: false,
+        originalItem: item,
         saving: false,
         validationErrors: []
       };
@@ -349,6 +354,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       return (
         <WrappedComponent
           {...this.props}
+          dirty={!!(this.state.item.id && !isEqual(this.state.item, this.state.originalItem))}
           errors={_.values(this.state.validationErrors)}
           isError={this.isError.bind(this)}
           isRequired={this.isRequired.bind(this)}
