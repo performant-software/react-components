@@ -39,6 +39,7 @@ export const isEqual = (a: any, b: any) => {
 
     _.each(_.keys(a), (key) => {
       if (!(_.has(b, key) && isEqual(a[key], b[key]))) {
+        console.log(key);
         equal = false;
       }
     });
