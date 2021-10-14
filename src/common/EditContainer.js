@@ -239,8 +239,11 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * Resets the item on the state to the default item and calls the onReset prop.
      */
     onReset() {
+      const item = this.props.defaults || {};
+
       this.setState({
-        item: this.props.defaults || {}
+        item,
+        originalItem: item
       });
     }
 
