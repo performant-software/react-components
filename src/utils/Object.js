@@ -5,7 +5,9 @@ import _ from 'underscore';
 const EMPTY_VALUES = [
   '',
   null,
-  undefined
+  undefined,
+  [],
+  {}
 ];
 
 /**
