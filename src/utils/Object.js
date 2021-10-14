@@ -2,6 +2,12 @@
 
 import _ from 'underscore';
 
+const EMPTY_VALUES = [
+  '',
+  null,
+  undefined
+];
+
 /**
  * Returns true if the passed two arguments as deep equal. This function will perform a recursive check against all of
  * the keys in the objects.
@@ -13,7 +19,7 @@ import _ from 'underscore';
  */
 export const isEqual = (a: any, b: any) => {
   // Check equality, consider empty strings and "null" values as equal
-  if (a === b || (a === null && b === '') || (a === '' && b === null)) {
+  if (a === b || (_.contains(EMPTY_VALUES, a) && _.contains(EMPTY_VALUES, b))) {
     return true;
   }
 

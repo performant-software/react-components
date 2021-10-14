@@ -346,7 +346,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       this.setState((state) => ({
         item: {
           ...state.item,
-          [key]: value === '' ? null : value
+          [key]: value
         },
         validationErrors: _.omit(state.validationErrors, key)
       }));
