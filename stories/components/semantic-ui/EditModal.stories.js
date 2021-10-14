@@ -246,7 +246,7 @@ export const WithUnsavedChanged = () => (
       id: 1,
       name: 'Test',
       address: '123 Main St',
-      phone: '867-5309'
+      phone: null
     }}
     onClose={action('close')}
     onSave={action('save')}

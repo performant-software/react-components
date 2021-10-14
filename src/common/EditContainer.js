@@ -1,9 +1,9 @@
 // @flow
 
 import React, { Component, type ComponentType, type Element } from 'react';
-import isEqual from 'react-fast-compare';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import { isEqual } from '../utils/Object';
 
 type Props = {
   children?: Element<any>,
