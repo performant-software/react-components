@@ -364,7 +364,6 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           isError={this.isError.bind(this)}
           isRequired={this.isRequired.bind(this)}
           item={this.state.item}
-          originalItem={this.state.originalItem}
           loading={this.state.loading}
           onAssociationInputChange={this.onAssociationInputChange.bind(this)}
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
