@@ -1,9 +1,9 @@
 // @flow
 
 import React, { Component, type ComponentType, type Element } from 'react';
-import isEqual from 'react-fast-compare';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
+import { isEqual } from '../utils/Object';
 
 type Props = {
   children?: Element<any>,
@@ -239,8 +239,11 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      * Resets the item on the state to the default item and calls the onReset prop.
      */
     onReset() {
+      const item = this.props.defaults || {};
+
       this.setState({
-        item: this.props.defaults || {}
+        item,
+        originalItem: item
       });
     }
 
