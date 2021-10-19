@@ -73,6 +73,23 @@ const InfiniteScroll = (props: Props) => {
     return () => container.removeEventListener('scroll', onScroll);
   }, [getScrollContainer]);
 
+  /**
+   * Upon initial render, the DOM may not be tall enough to scroll and trigger the onScroll event. In this case,
+   * we'll call the onBottomReached prop when the component is mounted until the container's scrollHeight is greater
+   * than the height of the container.
+   */
+  useEffect(() => {
+    const element = getScrollElement();
+
+    if (element) {
+      const { clientHeight, scrollHeight } = element;
+
+      if (scrollHeight === clientHeight) {
+        props.onBottomReached();
+      }
+    }
+  });
+
   return props.children;
 };
 
