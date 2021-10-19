@@ -12,23 +12,6 @@ type Props = {
 
 const InfiniteScroll = (props: Props) => {
   /**
-   * Returns the container to use for the scroll list.
-   *
-   * @type {function(): *}
-   */
-  const getScrollContainer = useCallback(() => {
-    let scrollContainer;
-
-    if (props.context) {
-      scrollContainer = props.context.current;
-    } else if (isBrowser()) {
-      scrollContainer = window;
-    }
-
-    return scrollContainer;
-  });
-
-  /**
    * Returns the scrolling element.
    *
    * @returns {*}
@@ -64,14 +47,21 @@ const InfiniteScroll = (props: Props) => {
    * Sets up the container scroll event listeners.
    */
   useEffect(() => {
-    const container = getScrollContainer();
-    if (!container) {
+    let scrollContainer;
+
+    if (props.context) {
+      scrollContainer = props.context.current;
+    } else if (isBrowser()) {
+      scrollContainer = window;
+    }
+
+    if (!scrollContainer) {
       return undefined;
     }
 
-    container.addEventListener('scroll', onScroll);
-    return () => container.removeEventListener('scroll', onScroll);
-  }, [getScrollContainer]);
+    scrollContainer.addEventListener('scroll', onScroll);
+    return () => scrollContainer && scrollContainer.removeEventListener('scroll', onScroll);
+  }, [props.context]);
 
   /**
    * Upon initial render, the DOM may not be tall enough to scroll and trigger the onScroll event. In this case,
@@ -83,9 +73,6 @@ const InfiniteScroll = (props: Props) => {
 
     if (element) {
       const { clientHeight, scrollHeight } = element;
-
-      console.log('clientHeight', clientHeight);
-      console.log('scrollHeight', scrollHeight);
 
       if (scrollHeight === clientHeight) {
         props.onBottomReached();
