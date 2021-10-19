@@ -74,14 +74,9 @@ const InfiniteScroll = (props: Props) => {
     if (element) {
       const { clientHeight, scrollHeight } = element;
 
-      console.log('client height', clientHeight);
-      console.log('scroll height', scrollHeight);
-
       if (scrollHeight === clientHeight) {
         props.onBottomReached();
       }
-    } else {
-      console.log('no element');
     }
   });
 
