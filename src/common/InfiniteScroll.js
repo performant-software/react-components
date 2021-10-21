@@ -78,7 +78,7 @@ const InfiniteScroll = (props: Props) => {
         props.onBottomReached();
       }
     }
-  });
+  }, []);
 
   return props.children;
 };
