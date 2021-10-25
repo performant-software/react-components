@@ -47,3 +47,25 @@ export const Default = useDragDrop(() => {
     </InfiniteScroll>
   );
 });
+
+export const EmptyList = useDragDrop(() => {
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+
+  return (
+    <InfiniteScroll
+      offset={100}
+      onBottomReached={() => setPage((prevPage) => prevPage + 1)}
+    >
+      <Card.Group>
+        { _.map(items, (item) => (
+          <Card
+            header={item.make}
+            meta={item.model}
+            description={item.address}
+          />
+        ))}
+      </Card.Group>
+    </InfiniteScroll>
+  );
+});

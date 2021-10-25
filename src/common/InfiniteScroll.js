@@ -1,6 +1,11 @@
 // @flow
 
-import { useEffect, type Element } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type Element
+} from 'react';
 import { isBrowser } from '../utils/Browser';
 
 type Props = {
@@ -11,6 +16,9 @@ type Props = {
 };
 
 const InfiniteScroll = (props: Props) => {
+  const [height, setHeight] = useState(0);
+  const containerRef = useRef();
+
   /**
    * Returns the scrolling element.
    *
@@ -64,23 +72,45 @@ const InfiniteScroll = (props: Props) => {
   }, [props.context]);
 
   /**
+   * Returns true if the context element is scrollable.
+   *
+   * @returns {boolean}
+   */
+  const isScrollable = () => {
+    let scrollable = false;
+
+    const element = getScrollElement();
+    if (element) {
+      const { clientHeight, scrollHeight } = element;
+      scrollable = scrollHeight > clientHeight;
+    }
+
+    return scrollable;
+  };
+
+  /**
    * Upon initial render, the DOM may not be tall enough to scroll and trigger the onScroll event. In this case,
    * we'll call the onBottomReached prop when the component is mounted until the container's scrollHeight is greater
    * than the height of the container.
    */
   useEffect(() => {
-    const element = getScrollElement();
+    if (!isScrollable() && containerRef && containerRef.current) {
+      const { clientHeight } = containerRef.current;
 
-    if (element) {
-      const { clientHeight, scrollHeight } = element;
-
-      if (scrollHeight === clientHeight) {
+      if (clientHeight > height) {
+        setHeight(clientHeight);
         props.onBottomReached();
       }
     }
   });
 
-  return props.children;
+  return (
+    <div
+      ref={containerRef}
+    >
+      { props.children }
+    </div>
+  );
 };
 
 InfiniteScroll.defaultProps = {
