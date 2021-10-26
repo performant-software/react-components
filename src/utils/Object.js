@@ -17,10 +17,12 @@ const EMPTY_VALUES = [
 
 const DEFAULT_OPTIONS = {
   emptyValues: EMPTY_VALUES,
-  ignoreHtml: true
+  ignoreHtml: true,
+  ignoreWhitespace: true
 };
 
 const HTML_REGEX = /(<([^>]+)>)/gi;
+const WHITESPACE_REGEX = /\s\s+/g;
 
 /**
  * Returns true if the passed two arguments as deep equal. This function will perform a recursive check against all of
@@ -39,9 +41,26 @@ export const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
     return true;
   }
 
-  // If we're ignoring HTML, compare the string values with HTML tags removed
-  if (options.ignoreHtml && _.isString(a) && _.isString(b) && a.replace(HTML_REGEX, '') === b.replace(HTML_REGEX, '')) {
-    return true;
+  // Deep string comparison
+  if (_.isString(a) && _.isString(b)) {
+    let aString = a;
+    let bString = b;
+
+    // Remove superfluous whitespace
+    if (options.ignoreWhitespace) {
+      aString = a.replace(WHITESPACE_REGEX, ' ');
+      bString = b.replace(WHITESPACE_REGEX, ' ');
+    }
+
+    // If we're ignoring HTML, compare the string values with HTML tags removed
+    if (options.ignoreHtml) {
+      aString = aString.replace(HTML_REGEX, '');
+      bString = bString.replace(HTML_REGEX, '');
+    }
+
+    if (aString === bString) {
+      return true;
+    }
   }
 
   if (a !== null && typeof a === 'object' && b !== null && typeof b === 'object') {
