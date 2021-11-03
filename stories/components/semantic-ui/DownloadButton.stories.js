@@ -16,3 +16,22 @@ export const Default = () => (
     url={image}
   />
 );
+
+export const LargeFile = () => (
+  <DownloadButton
+    content='Download'
+    icon='cloud download'
+    primary
+    url='https://speed.hetzner.de/100MB.bin'
+  />
+);
+
+export const WithFilename = () => (
+  <DownloadButton
+    content='Download'
+    filename='Test12345'
+    icon='cloud download'
+    primary
+    url={image}
+  />
+);

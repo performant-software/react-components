@@ -1,32 +1,23 @@
 // @flow
 
-import React, { useState } from 'react';
+import React from 'react';
+import uuid from 'react-uuid';
 import { Button } from 'semantic-ui-react';
 
 type Props = {
+  filename?: string,
   url: string
 };
 
-const DownloadButton = ({ url, ...button }: Props) => {
-  const [loading, setLoading] = useState(false);
-
-  return (
+const DownloadButton = ({ filename, url, ...button }: Props) => (
+  <a
+    download={filename || uuid()}
+    href={url}
+  >
     <Button
       {...button}
-      loading={loading}
-      onClick={() => {
-        setLoading(true);
-        return fetch(url).then((response) => {
-          response.blob().then((blob) => {
-            const downloadUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.click();
-          });
-        }).finally(() => setLoading(false));
-      }}
     />
-  );
-};
+  </a>
+);
 
 export default DownloadButton;
