@@ -37,6 +37,7 @@ type Props = {
   onClose: () => void,
   onLoad: (params: any) => Promise<any>,
   onSave: (items: any) => void,
+  selectedItems: Array<any>,
   title: string
 };
 
@@ -180,7 +181,7 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
 
 const Selectize = (props: Props) => {
   const [selectedItem, setSelectedItem] = useState();
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState(props.selectedItems || []);
 
   /**
    * Returns true if the passed item is selected.
