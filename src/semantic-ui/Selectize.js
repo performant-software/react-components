@@ -38,8 +38,8 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
   onSave: (items: any) => void,
   selectedItems: Array<any>,
-  size?: string,
-  title: string
+  title: string,
+  width?: string
 };
 
 type GridProps = ListProps & {
@@ -244,7 +244,10 @@ const Selectize = (props: Props) => {
       className='selectize'
       open
       noValidate
-      size={props.size}
+      size='small'
+      style={{
+        width: props.width
+      }}
     >
       <Modal.Header
         content={props.title}
@@ -292,7 +295,7 @@ Selectize.defaultProps = {
   multiple: true,
   searchable: true,
   selectedItems: [],
-  size: 'small'
+  width: undefined
 };
 
 export default Selectize;
