@@ -38,6 +38,7 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
   onSave: (items: any) => void,
   selectedItems: Array<any>,
+  size?: string,
   title: string
 };
 
@@ -243,7 +244,7 @@ const Selectize = (props: Props) => {
       className='selectize'
       open
       noValidate
-      size='small'
+      size={props.size}
     >
       <Modal.Header
         content={props.title}
@@ -290,7 +291,8 @@ Selectize.defaultProps = {
   modal: undefined,
   multiple: true,
   searchable: true,
-  selectedItems: []
+  selectedItems: [],
+  size: 'small'
 };
 
 export default Selectize;
