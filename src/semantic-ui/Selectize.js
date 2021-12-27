@@ -37,6 +37,7 @@ type Props = {
   onClose: () => void,
   onLoad: (params: any) => Promise<any>,
   onSave: (items: any) => void,
+  scrolling?: boolean,
   selectedItems: Array<any>,
   title: string,
   width?: string
@@ -252,7 +253,9 @@ const Selectize = (props: Props) => {
       <Modal.Header
         content={props.title}
       />
-      <Modal.Content>
+      <Modal.Content
+        scrolling={props.scrolling}
+      >
         <SelectizeGrid
           {...props}
           actions={[]}
@@ -293,6 +296,7 @@ Selectize.defaultProps = {
   centered: false,
   modal: undefined,
   multiple: true,
+  scrolling: false,
   searchable: true,
   selectedItems: [],
   width: undefined
