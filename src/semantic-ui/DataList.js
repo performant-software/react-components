@@ -11,6 +11,8 @@ type Props = {
   collectionName: string,
   defaultPerPage?: number,
   defaultSearch?: string,
+  defaultSort?: string,
+  defaultSortDirection?: string,
   filters?: {
     component: Component<{}>,
     defaults: any,
@@ -207,8 +209,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       const page = session.page || 1;
       const perPage = session.perPage || props.defaultPerPage || _.first(props.perPageOptions);
       const search = session.search || props.defaultSearch || null;
-      const sortColumn = session.sortColumn || null;
-      const sortDirection = session.sortDirection || null;
+      const sortColumn = session.sortColumn || props.defaultSort || null;
+      const sortDirection = session.sortDirection || props.defaultSortDirection || null;
 
       return {
         count: 0,
