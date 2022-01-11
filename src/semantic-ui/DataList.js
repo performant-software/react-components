@@ -287,7 +287,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     onFilterChange(filters: any) {
       return new Promise<void>((resolve) => {
         // TODO: Comment me
-        if (this.props.filters.onChange) {
+        if (this.props.filters && this.props.filters.onChange) {
           this.props.filters.onChange(filters);
         }
 
