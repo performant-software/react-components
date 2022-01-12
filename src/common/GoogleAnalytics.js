@@ -90,5 +90,6 @@ export default {
 };
 
 export {
-  GoogleAnalyticsScript
+  GoogleAnalyticsScript,
+  Status
 };
