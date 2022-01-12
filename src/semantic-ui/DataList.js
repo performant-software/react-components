@@ -286,12 +286,12 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     onFilterChange(filters: any) {
       return new Promise<void>((resolve) => {
-        // TODO: Comment me
+        // Call the custom onChange prop
         if (this.props.filters && this.props.filters.onChange) {
           this.props.filters.onChange(filters);
         }
 
-        // TODO: Comment me
+        // Set the filters and re-fetch the data
         this.setState({ filters, page: 1 }, () => {
           this.fetchData();
           resolve();
