@@ -34,7 +34,7 @@ const Status = {
  * @returns {function(Props)}
  */
 const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Props) => {
-  const [status, setStatus] = useState(Status.notSet);
+  const [status, setStatus] = useState();
 
   /**
    * Returns the Google Analytics consent value from local storage.
@@ -90,7 +90,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    * Sets the status on local storage when the state changes.
    */
   useEffect(() => {
-    setGoogleAnalyticsConsent(props.storageKey, status);
+    setGoogleAnalyticsConsent(props.storageKey, status || '');
   }, [status, props.storageKey]);
 
   /**
