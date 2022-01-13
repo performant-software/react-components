@@ -3,16 +3,11 @@
 import React from 'react';
 import _ from 'underscore';
 
-type GA = {
-  id: string,
-  key: string
-};
-
 type Props = {
-  googleAnalytics: GA
+  id: string
 };
 
-const GA_CONSENT_KEY = 'ga_content';
+const GA_CONSENT_KEY = 'ga_consent';
 
 const GoogleAnalyticsStatus = {
   accepted: 'accepted',
@@ -22,7 +17,7 @@ const GoogleAnalyticsStatus = {
 
 const GoogleAnalyticsScript = (props: Props) => {
   // Only include the script if an API key is provided.
-  if (_.isEmpty(props.googleAnalytics && props.googleAnalytics.id)) {
+  if (_.isEmpty(props.id)) {
     return null;
   }
 
@@ -30,18 +25,18 @@ const GoogleAnalyticsScript = (props: Props) => {
     <>
       <script
         async
-        src={`https://www.googletagmanager.com/gtag/js?id=${props.googleAnalytics.id}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${props.id}`}
       />
       <script
         dangerouslySetInnerHTML={{
           __html: `
-            const cookies = localStorage.getItem('${props.googleAnalytics.key}');
+            const cookies = localStorage.getItem('${GA_CONSENT_KEY}');
             
             window.initializeAnalytics = () => {
               window.dataLayer = window.dataLayer || [];
               function gtag() { dataLayer.push(arguments); }
               gtag('js', new Date());
-              gtag('config', '${props.googleAnalytics.id}', {
+              gtag('config', '${props.id}', {
                 page_path: window.location.pathname,
               });
             };
@@ -61,25 +56,25 @@ const GoogleAnalyticsScript = (props: Props) => {
  *
  * @returns {?string}
  */
-const getGoogleAnalyticsConsent = (key: string = GA_CONSENT_KEY) => localStorage.getItem(key);
+const getGoogleAnalyticsConsent = () => localStorage.getItem(GA_CONSENT_KEY);
 
 /**
  * Sets the "ga_consent" value on local storage.
  *
  * @param status
  */
-const setGoogleAnalyticsConsent = (key: string = GA_CONSENT_KEY, status: string) => localStorage.setItem(key, status);
+const setGoogleAnalyticsConsent = (status: string) => localStorage.setItem(GA_CONSENT_KEY, status);
 
 /**
  * Sends the page view event to Google Analytics.
  *
- * @param ga
+ * @param id
  * @param url
  */
-const pageView = (ga: GA, url: string) => {
-  const cookies = getGoogleAnalyticsConsent(ga.key);
+const pageView = (id: string, url: string) => {
+  const cookies = getGoogleAnalyticsConsent();
   if (cookies === GoogleAnalyticsStatus.accepted && window.gtag) {
-    window.gtag('config', ga.id, { page_path: url });
+    window.gtag('config', id, { page_path: url });
   }
 };
 
