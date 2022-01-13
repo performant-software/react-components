@@ -50,7 +50,7 @@ const setGoogleAnalyticsConsent = (storageKey: string, status: string) => localS
  */
 const pageView = (id: string, storageKey: string) => {
   const status = getGoogleAnalyticsConsent(storageKey);
-  if (status === Status.accepted && window.gtag) {
+  if (status === Status.accepted && window.ga) {
     window.ga('send', 'pageview');
   }
 };
