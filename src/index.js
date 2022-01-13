@@ -1,11 +1,8 @@
 // @flow
 
-import * as GoogleAnalytics from './common/GoogleAnalytics';
-
 // Common
+export { default as withCookiePolicy } from './common/CookiePolicy';
 export { default as useEditContainer } from './common/EditContainer';
-export { default as withGoogleAnalytics } from './common/GoogleAnalytics';
-export { GoogleAnalytics };
 export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 export { default as useScript } from './common/Script';
@@ -77,6 +74,6 @@ export type { FileUploadProps } from './semantic-ui/FileUploadModal';
 export type { Props as ListProps } from './semantic-ui/List';
 
 // Constants
+export { Status as CookiePolicyStatus } from './common/CookiePolicy';
 export { SORT_ASCENDING, SORT_DESCENDING } from './semantic-ui/DataList';
 export { FilterTypes } from './semantic-ui/ListFilters';
-export { GoogleAnalyticsStatus } from './common/GoogleAnalytics';
