@@ -6,12 +6,11 @@ import React, {
   useState,
   type ComponentType
 } from 'react';
-import _ from 'underscore';
-import useScript from './Script';
+import GoogleAnalytics from 'react-ga4';
 
 type Props = {
   id: string,
-  location?: string,
+  location?: any,
   storageKey: string,
 };
 
@@ -62,22 +61,14 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    *
    * @type {(function(): void)|*}
    */
-  const onAccept = useCallback(() => {
-    setStatus(Status.accepted);
-
-    if (window.initializeAnalytics) {
-      window.initializeAnalytics();
-    }
-  }, []);
+  const onAccept = useCallback(() => setStatus(Status.accepted), []);
 
   /**
    * Sets the "rejected" status.
    *
    * @type {(function(): void)|*}
    */
-  const onDecline = useCallback(() => {
-    setStatus(Status.rejected);
-  }, []);
+  const onDecline = useCallback(() => setStatus(Status.rejected), []);
 
   /**
    * Sets the initial status on the state from local storage.
@@ -97,67 +88,30 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    * Sends the page view event if the location changes.
    */
   useEffect(() => {
-    if (props.location && status === Status.accepted && window.gtag) {
-      window.gtag('config', props.id);
+    if (props.location && status === Status.accepted) {
+      GoogleAnalytics.send('pageview');
     }
-  }, [status, props.id, props.location]);
+  }, [status, props.location]);
 
-  return (
-    <>
-      <GoogleAnalyticsScript
-        id={props.id}
-        storageKey={props.storageKey}
-      />
-      { status === Status.notSet && (
-        <BannerComponent
-          {...props}
-          onAccept={onAccept}
-          onDecline={onDecline}
-        />
-      )}
-    </>
-  );
-};
+  /**
+   * Initializes GoogleAnalytics when the status is set to accepted.
+   */
+  useEffect(() => {
+    if (status === Status.accepted) {
+      GoogleAnalytics.initialize(props.id);
+    }
+  }, [status]);
 
-/**
- * Renders the component to insert the necessary scripts for Google Analytics.
- *
- * @param props
- *
- * @returns {JSX.Element|null}
- *
- * @constructor
- */
-const GoogleAnalyticsScript = (props: Props) => {
-  // Only include the script if an API key is provided.
-  if (_.isEmpty(props.id)) {
+  if (status !== Status.notSet) {
     return null;
   }
 
-  useScript(`https://www.googletagmanager.com/gtag/js?id=${props.id}`);
-
   return (
-    <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            const cookies = localStorage.getItem('${props.storageKey}');
-
-            window.initializeAnalytics = () => {
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${props.id}');
-            };
-
-            if (cookies === '${Status.accepted}') {
-              console.log('analytics initialized');
-              window.initializeAnalytics();
-            }
-          `,
-        }}
-      />
-    </>
+    <BannerComponent
+      {...props}
+      onAccept={onAccept}
+      onDecline={onDecline}
+    />
   );
 };
 
