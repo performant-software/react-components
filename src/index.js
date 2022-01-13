@@ -2,7 +2,8 @@
 
 // Common
 export { default as useEditContainer } from './common/EditContainer';
-export * as GoogleAnalytics from './common/GoogleAnalytics';
+export { default as GoogleAnalytics } from './common/GoogleAnalytics';
+export { GoogleAnalyticsScript } from './common/GoogleAnalytics';
 export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 
@@ -75,3 +76,4 @@ export type { Props as ListProps } from './semantic-ui/List';
 // Constants
 export { SORT_ASCENDING, SORT_DESCENDING } from './semantic-ui/DataList';
 export { FilterTypes } from './semantic-ui/ListFilters';
+export { GoogleAnalyticsStatus } from './common/GoogleAnalytics';

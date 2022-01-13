@@ -14,7 +14,7 @@ type Props = {
 
 const GA_CONSENT_KEY = 'ga_content';
 
-const Status = {
+const GoogleAnalyticsStatus = {
   accepted: 'accepted',
   notSet: 'not_set',
   rejected: 'rejected',
@@ -46,7 +46,7 @@ const GoogleAnalyticsScript = (props: Props) => {
               });
             };
             
-            if (cookies === '${Status.accepted}') {
+            if (cookies === '${GoogleAnalyticsStatus.accepted}') {
               window.initializeAnalytics();
             }
           `,
@@ -78,7 +78,7 @@ const setGoogleAnalyticsConsent = (key: string = GA_CONSENT_KEY, status: string)
  */
 const pageView = (ga: GA, url: string) => {
   const cookies = getGoogleAnalyticsConsent(ga.key);
-  if (cookies === Status.accepted && window.gtag) {
+  if (cookies === GoogleAnalyticsStatus.accepted && window.gtag) {
     window.gtag('config', ga.id, { page_path: url });
   }
 };
@@ -91,5 +91,5 @@ export default {
 
 export {
   GoogleAnalyticsScript,
-  Status
+  GoogleAnalyticsStatus
 };
