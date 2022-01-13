@@ -1,9 +1,11 @@
 // @flow
 
+import * as GoogleAnalytics from './common/GoogleAnalytics';
+
 // Common
 export { default as useEditContainer } from './common/EditContainer';
 export { default as withGoogleAnalytics } from './common/GoogleAnalytics';
-export * as GoogleAnalytics from './common/GoogleAnalytics';
+export { GoogleAnalytics };
 export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 
