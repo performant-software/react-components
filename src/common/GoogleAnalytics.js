@@ -151,6 +151,7 @@ const GoogleAnalyticsScript = (props: Props) => {
             };
 
             if (cookies === '${Status.accepted}') {
+              console.log('analytics initialized');
               window.initializeAnalytics();
             }
           `,
