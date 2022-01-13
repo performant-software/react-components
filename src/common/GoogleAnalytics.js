@@ -7,6 +7,7 @@ import React, {
   type ComponentType
 } from 'react';
 import _ from 'underscore';
+import useScript from './Script';
 
 type Props = {
   id: string,
@@ -133,12 +134,10 @@ const GoogleAnalyticsScript = (props: Props) => {
     return null;
   }
 
+  useScript(`https://www.googletagmanager.com/gtag/js?id=${props.id}`);
+
   return (
     <>
-      <script
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${props.id}`}
-      />
       <script
         dangerouslySetInnerHTML={{
           __html: `

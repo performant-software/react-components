@@ -8,6 +8,7 @@ export { default as withGoogleAnalytics } from './common/GoogleAnalytics';
 export { GoogleAnalytics };
 export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
+export { default as useScript } from './common/Script';
 
 // Semantic UI
 export { default as AccordionDataList } from './semantic-ui/AccordionDataList';
