@@ -47,12 +47,11 @@ const setGoogleAnalyticsConsent = (storageKey: string, status: string) => localS
  *
  * @param id
  * @param storageKey
- * @param url
  */
-const pageView = (id: string, storageKey: string, url: string) => {
+const pageView = (id: string, storageKey: string) => {
   const status = getGoogleAnalyticsConsent(storageKey);
   if (status === Status.accepted && window.gtag) {
-    window.gtag('config', id, { page_path: url });
+    window.ga('send', 'pageview');
   }
 };
 
@@ -144,12 +143,9 @@ const GoogleAnalyticsScript = (props: Props) => {
             const cookies = localStorage.getItem('${props.storageKey}');
 
             window.initializeAnalytics = () => {
-              window.dataLayer = window.dataLayer || [];
-              function gtag() { dataLayer.push(arguments); }
-              gtag('js', new Date());
-              gtag('config', '${props.id}', {
-                page_path: window.location.pathname,
-              });
+              window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+              ga('create', '${props.id}', 'auto');
+              ga('send', 'pageview');
             };
 
             if (cookies === '${Status.accepted}') {
