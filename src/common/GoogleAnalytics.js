@@ -13,7 +13,12 @@ type Props = {
   storageKey: string
 };
 
-const GoogleAnalyticsStatus = {
+/**
+ * Status constants.
+ *
+ * @type {{rejected: string, notSet: string, accepted: string}}
+ */
+const Status = {
   accepted: 'accepted',
   notSet: 'not_set',
   rejected: 'rejected'
@@ -26,7 +31,7 @@ const GoogleAnalyticsStatus = {
  *
  * @returns {string|string}
  */
-const getGoogleAnalyticsConsent = (storageKey) => localStorage.getItem(storageKey) || GoogleAnalyticsStatus.notSet;
+const getGoogleAnalyticsConsent = (storageKey) => localStorage.getItem(storageKey) || Status.notSet;
 
 /**
  * Sets the Google Analytics consent value in local storage.
@@ -40,11 +45,12 @@ const setGoogleAnalyticsConsent = (storageKey: string, status: string) => localS
  * Sends the page view event to Google Analytics.
  *
  * @param id
+ * @param storageKey
  * @param url
  */
 const pageView = (id: string, storageKey: string, url: string) => {
   const status = getGoogleAnalyticsConsent(storageKey);
-  if (status === GoogleAnalyticsStatus.accepted && window.gtag) {
+  if (status === Status.accepted && window.gtag) {
     window.gtag('config', id, { page_path: url });
   }
 };
@@ -57,7 +63,7 @@ const pageView = (id: string, storageKey: string, url: string) => {
  * @returns {function(Props)}
  */
 const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Props) => {
-  const [status, setStatus] = useState(GoogleAnalyticsStatus.notSet);
+  const [status, setStatus] = useState(Status.notSet);
 
   /**
    * Sets the "accepted" status and initializes analytics.
@@ -65,7 +71,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    * @type {(function(): void)|*}
    */
   const onAccept = useCallback(() => {
-    setStatus(GoogleAnalyticsStatus.accepted);
+    setStatus(Status.accepted);
 
     if (window.initializeAnalytics) {
       window.initializeAnalytics();
@@ -78,7 +84,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    * @type {(function(): void)|*}
    */
   const onDecline = useCallback(() => {
-    setStatus(GoogleAnalyticsStatus.rejected);
+    setStatus(Status.rejected);
   }, []);
 
   /**
@@ -101,7 +107,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
         id={props.id}
         storageKey={props.storageKey}
       />
-      { status === GoogleAnalyticsStatus.notSet && (
+      { status === Status.notSet && (
         <BannerComponent
           {...props}
           onAccept={onAccept}
@@ -147,7 +153,7 @@ const GoogleAnalyticsScript = (props: Props) => {
               });
             };
 
-            if (cookies === '${GoogleAnalyticsStatus.accepted}') {
+            if (cookies === '${Status.accepted}') {
               window.initializeAnalytics();
             }
           `,
