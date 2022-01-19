@@ -13,7 +13,8 @@ type Props = {
   onInitialize?: (id: number) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   required?: Array<string>,
-  resolveValidationError?: ({ error: string, item: any, status: number, key: string }) => Array<string>,
+  resolveValidationError?: ({ error: string, item: any, status: number, key: string }) => any,
+  resolveValidationErrors?: (errors: any) => any,
   validate?: (item: any) => Array<string>
 };
 
@@ -160,30 +161,34 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     onError({ response: { data: { errors = {} }, status } }: any) {
       const validationErrors = {};
 
-      _.each(Object.keys(errors), (key) => {
-        const fieldErrors = errors[key];
-        const value = this.state.item[key];
+      if (this.props.resolveValidationErrors) {
+        _.extend(validationErrors, this.props.resolveValidationErrors(errors));
+      } else {
+        _.each(Object.keys(errors), (key) => {
+          const fieldErrors = errors[key];
+          const value = this.state.item[key];
 
-        _.each(fieldErrors, (error) => {
-          if (error === ERROR_UNIQUE) {
-            _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.unique', { key, value }) });
-          } else if (error === ERROR_EMPTY) {
-            _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.required', { key }) });
-          } else if (this.props.resolveValidationError) {
-            _.extend(validationErrors, this.props.resolveValidationError({
-              key,
-              error,
-              status,
-              item: this.state.item
-            }));
-          }
+          _.each(fieldErrors, (error) => {
+            if (error === ERROR_UNIQUE) {
+              _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.unique', { key, value }) });
+            } else if (error === ERROR_EMPTY) {
+              _.extend(validationErrors, { [key]: i18n.t('EditContainer.errors.required', { key }) });
+            } else if (this.props.resolveValidationError) {
+              _.extend(validationErrors, this.props.resolveValidationError({
+                key,
+                error,
+                status,
+                item: this.state.item
+              }));
+            }
+          });
         });
-      });
 
-      if (status === 400 && _.isEmpty(validationErrors)) {
-        _.extend(validationErrors, { error: i18n.t('EditContainer.errors.general') });
-      } else if (status === 500 && _.isEmpty(validationErrors)) {
-        _.extend(validationErrors, { error: i18n.t('EditContainer.errors.system') });
+        if (status === 400 && _.isEmpty(validationErrors)) {
+          _.extend(validationErrors, { error: i18n.t('EditContainer.errors.general') });
+        } else if (status === 500 && _.isEmpty(validationErrors)) {
+          _.extend(validationErrors, { error: i18n.t('EditContainer.errors.system') });
+        }
       }
 
       this.setState({ saving: false, validationErrors });
