@@ -1,31 +1,40 @@
+// @flow
+
 import React from 'react';
-import { Label } from 'semantic-ui-react';
+import { Icon, Label } from 'semantic-ui-react';
 import _ from 'underscore';
 import './TagsList.css';
 
 type Props = {
-  config: {
+  config?: {
     [key: string]: {
       background: string,
       color: string
     }
   },
+  onDelete: (tag: string) => void,
   tags: Array<string>
 };
 
-const TagsList = ({ config, tags = [] }: Props) => (
+const TagsList = (props: Props) => (
   <div
     className='tags-list'
   >
-    { _.map(tags || [], (tag) => (
+    { _.map(props.tags || [], (tag) => (
       <Label
         style={{
-          backgroundColor: config[tag] && config[tag].background,
-          color: config[tag] && config[tag].color,
+          backgroundColor: props.config && props.config[tag] && props.config[tag].background,
+          color: props.config && props.config[tag] && props.config[tag].color,
           marginRight: '10px'
         }}
       >
         { tag }
+        { props.onDelete && (
+          <Icon
+            name='delete'
+            onClick={props.onDelete.bind(this, tag)}
+          />
+        )}
       </Label>
     ))}
   </div>

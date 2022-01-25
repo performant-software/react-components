@@ -27,7 +27,7 @@ export const Default = () => {
       background: '#DFCC74',
       color: 'white'
     }
-  }
+  };
 
   return (
     <TagsList
@@ -36,3 +36,10 @@ export const Default = () => {
     />
   );
 };
+
+export const WithDelete = () => (
+  <TagsList
+    onDelete={() => {}}
+    tags={['Apple', 'Orange', 'Banana']}
+  />
+);
