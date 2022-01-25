@@ -37,7 +37,7 @@ export const isEmpty = (value: any) => {
     return _.isEmpty(value);
   }
 
-  return !!value;
+  return !value;
 };
 
 /**
