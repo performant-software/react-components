@@ -234,11 +234,15 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {boolean}
      */
     isFilterActive() {
-      if (!(this.props.filters && this.props.filters.props)) {
-        return false;
-      }
+      let isEmpty = true;
 
-      return !_.isEmpty(this.state.filters);
+      _.each(_.values(this.state.filters), (value) => {
+        if (value) {
+          isEmpty = false;
+        }
+      });
+
+      return isEmpty;
     }
 
     /**
