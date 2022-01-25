@@ -4,6 +4,7 @@ import React, { Component, type ComponentType } from 'react';
 import _ from 'underscore';
 import { Input, Message } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import { isEmpty } from '../utils/Object';
 import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 
@@ -237,7 +238,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       let isActive = false;
 
       _.each(_.values(this.state.filters), (value) => {
-        if (value) {
+        if (!isEmpty(value)) {
           isActive = true;
         }
       });
