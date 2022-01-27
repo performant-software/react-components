@@ -4,6 +4,7 @@ import React, { Component, type ComponentType } from 'react';
 import _ from 'underscore';
 import { Input, Message } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import { isEmpty } from '../utils/Object';
 import Toaster from './Toaster';
 import Timer from '../utils/Timer';
 
@@ -234,11 +235,15 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {boolean}
      */
     isFilterActive() {
-      if (!(this.props.filters && this.props.filters.props)) {
-        return false;
-      }
+      let isActive = false;
 
-      return !_.isEmpty(this.state.filters);
+      _.each(_.values(this.state.filters), (value) => {
+        if (!isEmpty(value)) {
+          isActive = true;
+        }
+      });
+
+      return isActive;
     }
 
     /**
