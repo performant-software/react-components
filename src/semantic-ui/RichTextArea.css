@@ -1,0 +1,26 @@
+.ui.form .field .ui.input .rich-text-area.quill {
+  width: 100%;
+}
+
+.ui.form .field .ui.input .rich-text-area.quill .ql-container,
+.ui.form .field .ui.input .rich-text-area.quill .ql-editor {
+  height: auto;
+  min-height: 7em;
+}
+
+.ui.form .field .ui.input .rich-text-area.quill .ql-container,
+.ui.form .field .ui.input .rich-text-area.quill .ql-toolbar {
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  margin: 0em;
+  outline: none;
+  -webkit-appearance: none;
+  tap-highlight-color: rgba(255, 255, 255, 0);
+  line-height: 1.21428571em;
+  font-size: 1em;
+  background: #FFFFFF;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 0.28571429rem;
+  box-shadow: 0em 0em 0em 0em transparent inset;
+  transition: color 0.1s ease, border-color 0.1s ease;
+}
