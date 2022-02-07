@@ -97,7 +97,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
    * Initializes GoogleAnalytics when the status is set to accepted.
    */
   useEffect(() => {
-    if (status === Status.accepted) {
+    if (status === Status.accepted && props.id) {
       GoogleAnalytics.initialize(props.id);
     }
   }, [status]);
