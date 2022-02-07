@@ -102,7 +102,7 @@ const withGoogleAnalytics = (BannerComponent: ComponentType<any>) => (props: Pro
     }
   }, [status]);
 
-  if (status !== Status.notSet) {
+  if (!props.id || !props.storageKey || status !== Status.notSet) {
     return null;
   }
 
