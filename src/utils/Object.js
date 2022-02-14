@@ -25,6 +25,22 @@ const HTML_REGEX = /(<([^>]+)>)/gi;
 const WHITESPACE_REGEX = /\s\s+/g;
 
 /**
+ * Returns true if the passed value is considered "empty".
+ *
+ * @param value
+ *
+ * @returns {boolean|*}
+ */
+export const isEmpty = (value: any) => {
+  // If the value is an object or array, use underscore's isEmpty check.
+  if (_.isObject(value) || _.isArray(value)) {
+    return _.isEmpty(value);
+  }
+
+  return !value;
+};
+
+/**
  * Returns true if the passed two arguments as deep equal. This function will perform a recursive check against all of
  * the keys in the objects.
  *
