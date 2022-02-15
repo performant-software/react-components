@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import './RichTextArea.css';
-import 'react-quill/dist/quill.snow.css';
 
 type Props = {
   formats?: any,
