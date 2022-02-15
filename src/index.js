@@ -49,7 +49,6 @@ export { default as ModalDropdown } from './semantic-ui/ModalDropdown';
 export { default as NestedAccordion } from './semantic-ui/NestedAccordion';
 export { default as PhotoViewer } from './semantic-ui/PhotoViewer';
 export { default as RemoteDropdown } from './semantic-ui/RemoteDropdown';
-export { default as RichTextArea } from './semantic-ui/RichTextArea';
 export { default as SaveButton } from './semantic-ui/SaveButton';
 export { default as Selectize } from './semantic-ui/Selectize';
 export { default as SelectizeHeader } from './semantic-ui/SelectizeHeader';
