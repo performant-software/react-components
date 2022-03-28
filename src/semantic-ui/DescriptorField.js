@@ -1,12 +1,13 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { type Component } from 'react';
 import { Popup } from 'semantic-ui-react';
 
 type Props = {
+  className?: string,
   content: string,
   delayInterval?: number,
-  renderPopup?: () => Component,
+  renderPopup?: () => Component<any>,
   popupContent?: string
 }
 
@@ -19,8 +20,9 @@ type Props = {
  *
  * @constructor
  */
-const DescriptorField = (props : Props) => (
+const DescriptorField = (props: Props) => (
   <Popup
+    className={props.className}
     content={props.popupContent}
     hoverable
     mouseEnterDelay={props.delayInterval}
