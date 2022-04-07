@@ -21,7 +21,6 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
-    library: '',
     libraryTarget: 'commonjs2'
   },
   plugins: [
@@ -44,6 +43,11 @@ module.exports = {
     }, {
       test: /\.xml$/,
       use: 'raw-loader'
+    }, {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false
+      }
     }]
   }
 };

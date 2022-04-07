@@ -7,7 +7,7 @@
  *
  * @returns {*}
  */
-const getPosition = (coords: { lat: any, lng: any }) => {
+const getPosition = (coords: ?{ lat: any, lng: any }) => {
   let position;
 
   if (coords) {
