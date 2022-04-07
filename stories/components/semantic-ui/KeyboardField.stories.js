@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
@@ -20,7 +22,7 @@ export const Default = () => {
         label={text('Field name', 'Field')}
         layout={English}
         name='test-field'
-        onChange={(e, { value }) => setValue(value)}
+        onChange={(e, data) => setValue(data.value)}
         required={boolean('Required', false)}
         value={value}
       >
@@ -43,7 +45,7 @@ export const MultipleOnOneForm = () => {
         label={text('Field name', 'Field')}
         layout={English}
         name='test-field'
-        onChange={(e, { value }) => setValue(value)}
+        onChange={(e, data) => setValue(data.value)}
         required={boolean('Required', false)}
         value={value}
       >
@@ -56,7 +58,7 @@ export const MultipleOnOneForm = () => {
         label={text('Field name', 'Field')}
         layout={Arabic}
         name='test-field-2'
-        onChange={(e, { value }) => setValue2(value)}
+        onChange={(e, data) => setValue2(data.value)}
         required={boolean('Required', false)}
         value={value2}
       >
@@ -124,7 +126,7 @@ export const WithAlternativeCharacters = () => {
         label={text('Field name', 'Field')}
         layout={exampleTransliterationLayout}
         name='test-field'
-        onChange={(e, { value }) => setValue(value)}
+        onChange={(e, data) => setValue(data.value)}
         required={boolean('Required', false)}
         value={value}
       >

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { type ComponentType, useEffect, useState } from 'react';
+import React, { type ComponentType, useState } from 'react';
 import {
   Button,
   Dimmer,

@@ -1,11 +1,11 @@
 // @flow
 
 import { LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
-import React, { Component, useCallback, useState } from 'react';
+import React, { useCallback, useState, type Element } from 'react';
 import _ from 'underscore';
 
 type Props = {
-  children: Component<{}>,
+  children: Element<any>,
   googleMapsApiKey: string,
   onLocationSelection: ({ lat: number, lng: number }) => void
 }

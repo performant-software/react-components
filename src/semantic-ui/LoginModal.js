@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { type Element } from 'react';
 import {
   Button,
   Form,
@@ -22,7 +22,7 @@ type Props = {
   onPasswordChange: () => void,
   onUsernameChange: () => void,
   open: boolean,
-  trigger: () => Component,
+  trigger?: () => Element<any>,
   placeholder: string
 };
 
@@ -97,6 +97,6 @@ const LoginModal = (props: Props) => (
 
 LoginModal.defaultProps = {
   placeholder: i18n.t('LoginModal.email')
-}
+};
 
 export default LoginModal;

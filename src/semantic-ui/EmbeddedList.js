@@ -166,6 +166,7 @@ class EmbeddedList extends Component<Props, State> {
   render() {
     return (
       <DataTable
+        {...this.props}
         actions={this.props.actions}
         addButton={this.props.addButton}
         buttons={this.props.buttons}

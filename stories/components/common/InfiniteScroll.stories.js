@@ -36,8 +36,9 @@ export const Default = useDragDrop(() => {
       onBottomReached={() => setPage((prevPage) => prevPage + 1)}
     >
       <Card.Group>
-        { _.map(items, (item) => (
+        { _.map(items, (item, index) => (
           <Card
+            key={index}
             header={item.make}
             meta={item.model}
             description={item.address}
@@ -49,17 +50,17 @@ export const Default = useDragDrop(() => {
 });
 
 export const EmptyList = useDragDrop(() => {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
+  const items = [];
 
   return (
     <InfiniteScroll
       offset={100}
-      onBottomReached={() => setPage((prevPage) => prevPage + 1)}
+      onBottomReached={() => {}}
     >
       <Card.Group>
-        { _.map(items, (item) => (
+        { _.map(items, (item, index) => (
           <Card
+            key={index}
             header={item.make}
             meta={item.model}
             description={item.address}

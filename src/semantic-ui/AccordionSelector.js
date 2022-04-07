@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type ComponentType, type Element } from 'react';
 import { withTranslation } from 'react-i18next';
 import {
   Button,
@@ -26,7 +26,7 @@ type Props = {
   getRootItems: (items: Array<any>) => Array<any>,
   isSelectable?: (item: any) => boolean,
   modal?: {
-    component: Component<{}>,
+    component: ComponentType<{}>,
     onSave: (item: any) => Promise<any>,
     props: any,
     state: any,
@@ -36,7 +36,7 @@ type Props = {
   onSave: (selectedItems: Array<any>) => void,
   onSearch: (parentId: ?number, search: ?string) => any,
   open?: boolean,
-  renderItem: (item: any) => string | Component<{}>,
+  renderItem: (item: any) => string | Element<any>,
   selectedItems?: Array<any>,
   showToggle: (item: any) => boolean,
   t: (key: string) => string,

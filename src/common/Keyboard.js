@@ -24,9 +24,9 @@ const KeyboardSimple = (props: Props) => {
   const onKeyPress = (value) => {
     const isCaps = value === KEY_CAPS_LOCK || value === KEY_SHIFT;
 
-    if (isCaps && keyboardRef.current.options.layoutName === LAYOUT_SHIFT) {
+    if (isCaps && keyboardRef.current && keyboardRef.current.options.layoutName === LAYOUT_SHIFT) {
       keyboardRef.current.setOptions({ layoutName: LAYOUT_DEFAULT });
-    } else if (isCaps && keyboardRef.current.options.layoutName !== LAYOUT_SHIFT) {
+    } else if (isCaps && keyboardRef.current && keyboardRef.current.options.layoutName !== LAYOUT_SHIFT) {
       keyboardRef.current.setOptions({ layoutName: LAYOUT_SHIFT });
     }
   };
@@ -40,7 +40,9 @@ const KeyboardSimple = (props: Props) => {
 
   // Sets the keyboard value when the value property changes.
   useEffect(() => {
-    keyboardRef.current.setInput(props.value);
+    if (keyboardRef.current) {
+      keyboardRef.current.setInput(props.value);
+    }
   }, [props.value]);
 
   return <div className={props.keyboardClass} />;

@@ -15,13 +15,13 @@ type Props = {
   defaultSort?: string,
   defaultSortDirection?: string,
   filters?: {
-    component: Component<{}>,
-    defaults: any,
-    props: any,
-    onChange: (filter: any) => Promise<any>
+    component: ComponentType<any>,
+    defaults?: any,
+    props?: any,
+    onChange?: (filter: any) => Promise<any>
   },
   onDelete: (item: any) => Promise<any>,
-  onDeleteAll: () => Promise<any>,
+  onDeleteAll?: () => Promise<any>,
   onLoad: (params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   perPageOptions?: Array<number>,
@@ -197,11 +197,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Initializes the state based on the passed props.
      *
      * @param props
-     *
-     * @returns {{search: (*|null), sortColumn: (string|string|null), sortDirection: (string|null), pages: number,
-     * saved: (*|boolean), filters: ({component: Component<{}>, props: *,
-     * onChange}|*|{}|boolean|PrettyError.Callback|PrettyError.Callback[]), page: (*|number), loading: boolean,
-     * items: []}}
+
+     * @returns {{search: string, sortColumn: string, sortDirection: string, pages: number, perPage: (number|*),
+     * saved: boolean, count: number, filters: (*|{}), page: number, error: null, loading: boolean, items: *[]}}
      */
     initializeState(props: Props) {
       const session = this.restoreSession();
@@ -266,6 +264,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
      */
     onDeleteAll() {
+      if (!this.props.onDeleteAll) {
+        return Promise.resolve();
+      }
+
       return this.props
         .onDeleteAll()
         .then(this.afterDeleteAll.bind(this));
@@ -357,6 +359,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * Updates the sortColumn and sortDirection props on the state.
      *
      * @param sortColumn
+     * @param direction
+     * @param page
      */
     onSort(sortColumn: string, direction?: string, page?: number = 1) {
       let sortDirection = direction;

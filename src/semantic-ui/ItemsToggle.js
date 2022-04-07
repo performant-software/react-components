@@ -61,7 +61,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
     /**
      * Renders the sort value for the current option.
      *
-     * @returns {NodePath<Node> | void | T | T | number | undefined | *}
+     * @returns {*}
      */
     getSortValue() {
       const sort = _.find(this.props.sort, { value: this.props.sortColumn });

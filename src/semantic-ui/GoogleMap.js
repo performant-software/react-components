@@ -53,6 +53,7 @@ const GoogleMap = (props: Props) => {
   // Call the onDragEnd prop, passing the new location.
   const onDragEnd = ({ latLng }) => {
     if (props.onDragEnd) {
+      // $FlowFixMe - Not actually fixing, we're checking for presence here.
       props.onDragEnd({
         lat: latLng.lat(),
         lng: latLng.lng()

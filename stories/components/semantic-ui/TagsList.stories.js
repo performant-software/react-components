@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { withKnobs, array } from '@storybook/addon-knobs';
 import TagsList from '../../../src/semantic-ui/TagsList';

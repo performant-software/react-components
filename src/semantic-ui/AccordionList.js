@@ -331,7 +331,7 @@ class AccordionList extends Component<Props, State> {
     return (
       <Button
         basic
-        compant
+        compact
         icon='plus'
         onClick={this.onAddButton.bind(this, item)}
       />

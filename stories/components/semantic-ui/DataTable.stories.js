@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -23,19 +25,24 @@ const actions = [{
 
 const columns = [{
   name: 'last_name',
-  label: 'Last name'
+  label: 'Last name',
+  sortable: false
 }, {
   name: 'first_name',
-  label: 'First name'
+  label: 'First name',
+  sortable: false
 }, {
   name: 'email',
-  label: 'Email'
+  label: 'Email',
+  sortable: false
 }, {
   name: 'ip_address',
-  label: 'IP address'
+  label: 'IP address',
+  sortable: false
 }, {
   name: 'country',
-  label: 'Country'
+  label: 'Country',
+  sortable: false
 }];
 
 const items = [{

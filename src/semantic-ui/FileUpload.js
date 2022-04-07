@@ -17,6 +17,12 @@ type State = {
   errors: ?Array<string>
 };
 
+type FileEvent = {
+  dataTransfer: HTMLInputElement,
+  preventDefault: () => void,
+  target: HTMLInputElement
+};
+
 class FileUpload extends Component<Props, State> {
   fileInput: any;
   filePattern: any;
@@ -26,7 +32,7 @@ class FileUpload extends Component<Props, State> {
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -49,7 +55,7 @@ class FileUpload extends Component<Props, State> {
    *
    * @param e
    */
-  onDropFiles(e) {
+  onDropFiles(e: FileEvent) {
     e.preventDefault();
     const files = this.toArray(e.dataTransfer.files);
     const validFiles = this.validate(files);
@@ -63,7 +69,7 @@ class FileUpload extends Component<Props, State> {
    *
    * @param e
    */
-  onFilesAdded(e) {
+  onFilesAdded(e: FileEvent) {
     e.preventDefault();
     const files = this.toArray(e.target.files);
     const validFiles = this.validate(files);
@@ -128,7 +134,7 @@ class FileUpload extends Component<Props, State> {
    *
    * @returns {[]}
    */
-  toArray(fileList) {
+  toArray(fileList: any) {
     const array = [];
 
     for (let i = 0; i < fileList.length; i += 1) {
@@ -145,7 +151,7 @@ class FileUpload extends Component<Props, State> {
    *
    * @returns {[]|*}
    */
-  validate(files) {
+  validate(files: Array<File>) {
     if (!this.props.maxSize && !this.props.fileTypes) {
       return files;
     }

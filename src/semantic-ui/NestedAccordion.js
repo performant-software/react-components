@@ -53,15 +53,14 @@ class NestedAccordion extends Component<Props, State> {
     if (prevProps.defaultActive !== this.props.defaultActive
       && this.props.defaultActive
       && this.props.defaultActive.length) {
-        if (this.props.multipleItemTypes 
-          && !this.props.defaultActive.some(active =>
-            typeof active !== 'object' || !_.has(active, 'id') || !_.has(active, 'type')
-          )
-        ) {
-          this.setState({ activeItems: this.props.defaultActive });
-        } else {
-          this.setState({ activeItems: _.map(this.props.defaultActive, (id) => ({ id })) });
-        }
+      const isActive = this.props.defaultActive.some(
+        (active) => typeof active !== 'object' || !_.has(active, 'id') || !_.has(active, 'type')
+      );
+      if (this.props.multipleItemTypes && !isActive) {
+        this.setState({ activeItems: this.props.defaultActive });
+      } else {
+        this.setState({ activeItems: _.map(this.props.defaultActive, (id) => ({ id })) });
+      }
     }
   }
 
@@ -253,11 +252,11 @@ class NestedAccordion extends Component<Props, State> {
     this.setState((state) => ({
       activeItems: this.isActive(item)
         ? _.filter(state.activeItems, (i) => {
-            if (this.props.multipleItemTypes && _.has(item, 'type') && _.has(i, 'type')) {
-              return i.id !== item.id || i.type !== item.type;
-            }
-            return i.id !== item.id;
-          })
+          if (this.props.multipleItemTypes && _.has(item, 'type') && _.has(i, 'type')) {
+            return i.id !== item.id || i.type !== item.type;
+          }
+          return i.id !== item.id;
+        })
         : [...state.activeItems, item]
     }));
   }

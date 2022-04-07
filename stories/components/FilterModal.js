@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Form, Modal } from 'semantic-ui-react';
+import useEditContainer from '../../src/common/EditContainer';
 import type { EditContainerProps } from '../../src';
 
 type Props = EditContainerProps & {
@@ -27,4 +28,4 @@ const FilterModal = (props: Props) => (
   </Modal>
 );
 
-export default FilterModal;
+export default useEditContainer(FilterModal);

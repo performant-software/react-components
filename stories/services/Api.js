@@ -2,6 +2,22 @@
 
 import _ from 'underscore';
 
+type OnLoadType = {
+  items: Array<any>,
+  page?: number,
+  per_page?: number,
+  search?: string,
+  sort_by?: string,
+  sort_direction?: string
+};
+
+type OnNestedLoadType = {
+  items: Array<any>,
+  parentId: number,
+  parentKey: string,
+  search: string
+};
+
 const SORT_DESCENDING = 'descending';
 
 /**
@@ -9,14 +25,21 @@ const SORT_DESCENDING = 'descending';
  *
  * @param items
  * @param page
+ * @param per_page
  * @param search
- * @param sort_by
- * @param sort_direction
- * @param perPage
+ * @param sortBy
+ * @param sortDirection
  *
  * @returns {Promise<unknown>}
  */
-const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction }) => {
+const onLoad = ({
+  items,
+  page,
+  per_page: perPage = 10,
+  search,
+  sort_by: sortBy,
+  sort_direction: sortDirection
+}: OnLoadType) => {
   let payload = [...items];
 
   // Apply search filter
@@ -35,10 +58,10 @@ const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction })
   }
 
   // Apply sort
-  if (sort_by && sort_by.length) {
-    payload = _.sortBy(payload, (item) => item[sort_by]);
+  if (sortBy && sortBy.length) {
+    payload = _.sortBy(payload, (item) => item[sortBy]);
 
-    if (sort_direction && sort_direction === SORT_DESCENDING) {
+    if (sortDirection && sortDirection === SORT_DESCENDING) {
       payload = payload.reverse();
     }
   }
@@ -46,11 +69,11 @@ const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction })
   // Apply pagination
   let pages = 0;
 
-  if (page && per_page) {
-    pages = Math.floor((payload.length / per_page) || 1);
+  if (page && perPage) {
+    pages = Math.floor((payload.length / perPage) || 1);
 
-    const startIndex = (page - 1) * per_page;
-    const endIndex = startIndex + (per_page - 1);
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + (perPage - 1);
 
     payload = payload.slice(startIndex, endIndex);
   }
@@ -65,7 +88,7 @@ const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction })
     }
   };
 
-  return new Promise((resolve) => resolve(response));
+  return new Promise<any>((resolve) => resolve(response));
 };
 
 /**
@@ -75,7 +98,7 @@ const onLoad = ({ items, page, per_page = 10, search, sort_by, sort_direction })
  */
 const onLoadEmpty = () => {
   const response = { data: { items: [], list: { pages: 1 } } };
-  return new Promise((resolve) => resolve(response));
+  return new Promise<any>((resolve) => resolve(response));
 };
 
 /**
@@ -88,7 +111,12 @@ const onLoadEmpty = () => {
  *
  * @returns {Promise<unknown>}
  */
-const onNestedLoad = ({ items, parentId, parentKey, search }) => {
+const onNestedLoad = ({
+  items,
+  parentId,
+  parentKey,
+  search
+}: OnNestedLoadType) => {
   let payload = [...items];
 
   if (parentId) {
@@ -119,10 +147,10 @@ const onNestedLoad = ({ items, parentId, parentKey, search }) => {
     }
   };
 
-  return new Promise((resolve) => resolve(response));
+  return new Promise<any>((resolve) => resolve(response));
 };
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise<any>((resolve) => setTimeout(resolve, ms));
 
 export default {
   onLoad,

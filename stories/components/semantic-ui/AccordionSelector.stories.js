@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
 import AccordionSelector from '../../../src/semantic-ui/AccordionSelector';
-import { Button } from 'semantic-ui-react';
 
 export default {
   title: 'Components/Semantic UI/AccordionSelector',

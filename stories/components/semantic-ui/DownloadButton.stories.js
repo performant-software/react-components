@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import DownloadButton from '../../../src/semantic-ui/DownloadButton';

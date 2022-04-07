@@ -179,8 +179,6 @@ export const Selectable = () => (
 export const SelectableControlled = () => {
   const [selected, setSelected] = useState([]);
 
-  console.log(selected);
-
   return (
     <AccordionDataList
       actions={[{

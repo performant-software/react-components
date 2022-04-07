@@ -17,9 +17,9 @@ type Props = {
 
 const DatePicker = (props: Props) => {
   const [calendar, setCalendar] = useState(false);
-  const calendarWrapper = useRef(null);
+  const calendarWrapper = useRef<any>(null);
 
-  const onDocumentClick = (event) => {
+  const onDocumentClick = (event: Event) => {
     const calendarInstance = calendarWrapper.current;
 
     if (calendarInstance && !calendarInstance.contains(event.target)) {

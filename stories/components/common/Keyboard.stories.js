@@ -21,6 +21,7 @@ export const English = () => (
   <Keyboard
     layout={EnglishLayout}
     onChange={action('change')}
+    value=''
   />
 );
 
@@ -28,6 +29,7 @@ export const Arabic = () => (
   <Keyboard
     layout={ArabicLayout}
     onChange={action('change')}
+    value=''
   />
 );
 
@@ -35,6 +37,7 @@ export const Chinese = () => (
   <Keyboard
     layout={ChineseLayout}
     onChange={action('change')}
+    value=''
   />
 );
 
@@ -42,5 +45,6 @@ export const Japanese = () => (
   <Keyboard
     layout={JapaneseLayout}
     onChange={action('change')}
+    value=''
   />
 );

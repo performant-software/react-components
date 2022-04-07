@@ -119,7 +119,7 @@ class Calendar {
    *
    * @returns {*}
    */
-  format(date: moment, format: number) {
+  format(date: moment, format: number = Calendar.DateFormats.gregorian) {
     return this.moment(date).format(Calendar.DateFormats[this.name][format]);
   }
 
@@ -177,7 +177,6 @@ class Calendar {
   moment(date: ?any = null) {
     const m = date ? moment(date) : moment();
     m.locale(this.locale);
-    
     return m;
   }
 

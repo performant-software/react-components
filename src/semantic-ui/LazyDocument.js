@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useState, type Node } from 'react';
 import {
   Dimmer,
   Icon,
@@ -15,6 +15,7 @@ import DownloadButton from './DownloadButton';
 import './LazyDocument.css';
 
 type Props = {
+  children?: Node,
   dimmable?: boolean,
   duration?: number,
   image?: any,
@@ -88,7 +89,7 @@ const LazyDocument = (props: Props) => {
                     content={i18n.t('LazyDocument.buttons.download')}
                     icon='cloud download'
                     primary
-                    url={props.src}
+                    url={props.src || ''}
                   />
                 )}
                 { props.children }

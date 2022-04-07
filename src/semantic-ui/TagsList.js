@@ -12,7 +12,7 @@ type Props = {
       color: string
     }
   },
-  onDelete: (tag: string) => void,
+  onDelete?: (tag: string) => void,
   tags: Array<string>
 };
 
