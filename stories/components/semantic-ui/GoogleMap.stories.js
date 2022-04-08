@@ -10,21 +10,14 @@ export default {
   decorators: [withA11y]
 };
 
-const containerStyle = {
-  height: '600px',
-  width: '600px'
-};
-
 export const Default = () => (
   <GoogleMap
-    containerStyle={containerStyle}
     googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
   />
 );
 
 export const DefaultCenter = () => (
   <GoogleMap
-    containerStyle={containerStyle}
     defaultCenter={{
       lat: 42.3601,
       lng: -71.0589
@@ -35,7 +28,6 @@ export const DefaultCenter = () => (
 
 export const DefaultZoom = () => (
   <GoogleMap
-    containerStyle={containerStyle}
     defaultCenter={{
       lat: 42.3601,
       lng: -71.0589
@@ -53,7 +45,6 @@ export const WithMapMarker = () => {
   return (
     <>
       <GoogleMap
-        containerStyle={containerStyle}
         defaultCenter={DEFAULT_POSITION}
         defaultPosition={DEFAULT_POSITION}
         defaultZoom={DEFAULT_ZOOM}
@@ -79,7 +70,6 @@ export const EditableCooridnates = () => {
   return (
     <Form>
       <GoogleMap
-        containerStyle={containerStyle}
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
         onDragEnd={(p) => setPosition(p)}
         position={position}
@@ -104,7 +94,6 @@ export const EditableCoordinatesWithDefaults = () => {
   return (
     <Form>
       <GoogleMap
-        containerStyle={containerStyle}
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
         onDragEnd={(p) => setPosition(p)}
         position={position}

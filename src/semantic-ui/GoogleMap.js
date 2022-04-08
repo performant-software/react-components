@@ -99,6 +99,9 @@ const GoogleMap = (props: Props) => {
 };
 
 GoogleMap.defaultProps = {
+  containerStyle: {
+    height: '400px'
+  },
   defaultCenter: {
     lat: 0,
     lng: 0
