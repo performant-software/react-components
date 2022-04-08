@@ -16,8 +16,11 @@ if (mode === 'development') {
 module.exports = {
   mode,
   devtool,
+  target: 'node',
   entry: './src/index.js',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: ['react-syntax-highlighter']
+  })],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
@@ -30,7 +33,10 @@ module.exports = {
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
-      include: path.resolve(__dirname, './src'),
+      include: [
+        path.resolve(__dirname, './src'),
+        path.resolve(__dirname, './node_modules/react-syntax-highlighter')
+      ],
       use: ['babel-loader']
     }, {
       test: /\.css$/,
