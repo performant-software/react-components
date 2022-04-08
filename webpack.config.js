@@ -17,7 +17,10 @@ module.exports = {
   mode,
   devtool,
   entry: './src/index.js',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: ['react-syntax-highlighter']
+  })],
+  externalsPresets: { node: true },
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
