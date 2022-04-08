@@ -2,7 +2,6 @@
 
 import {
   GoogleMap as MapComponent,
-  LoadScript,
   Marker
 } from '@react-google-maps/api';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -21,7 +20,6 @@ type Props = {
     lng: number
   },
   defaultZoom?: number,
-  googleMapsApiKey: string,
   onDragEnd?: (latLng: LatLng) => void,
   position?: {
     lat: number,
@@ -74,27 +72,23 @@ const GoogleMap = (props: Props) => {
   }, [props.position]);
 
   return (
-    <LoadScript
-      googleMapsApiKey={props.googleMapsApiKey}
+    <MapComponent
+      center={center}
+      mapContainerClassName={props.className}
+      mapContainerStyle={props.containerStyle}
+      onClick={onDragEnd}
+      onLoad={onLoad}
+      zoom={defaultZoom}
     >
-      <MapComponent
-        center={center}
-        mapContainerClassName={props.className}
-        mapContainerStyle={props.containerStyle}
-        onClick={onDragEnd}
-        onLoad={onLoad}
-        zoom={defaultZoom}
-      >
-        { position && (
-          <Marker
-            draggable={!!props.onDragEnd}
-            onDragEnd={onDragEnd}
-            position={position}
-            visible
-          />
-        )}
-      </MapComponent>
-    </LoadScript>
+      { position && (
+        <Marker
+          draggable={!!props.onDragEnd}
+          onDragEnd={onDragEnd}
+          position={position}
+          visible
+        />
+      )}
+    </MapComponent>
   );
 };
 

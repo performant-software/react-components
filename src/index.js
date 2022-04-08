@@ -3,6 +3,7 @@
 // Common
 export { default as useEditContainer } from './common/EditContainer';
 export { default as withGoogleAnalytics } from './common/GoogleAnalytics';
+export { default as GoogleScript } from './common/GoogleScript';
 export { default as InfiniteScroll } from './common/InfiniteScroll';
 export { default as Keyboard } from './common/Keyboard';
 

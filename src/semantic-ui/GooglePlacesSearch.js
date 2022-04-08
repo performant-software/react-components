@@ -1,12 +1,11 @@
 // @flow
 
-import { LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
+import { StandaloneSearchBox } from '@react-google-maps/api';
 import React, { useCallback, useState, type Element } from 'react';
 import _ from 'underscore';
 
 type Props = {
   children: Element<any>,
-  googleMapsApiKey: string,
   onLocationSelection: ({ lat: number, lng: number }) => void
 }
 
@@ -32,17 +31,12 @@ const GooglePlacesSearch = (props: Props) => {
   }, [searchBox, props.onLocationSelection]);
 
   return (
-    <LoadScript
-      googleMapsApiKey={props.googleMapsApiKey}
-      libraries={['places']}
+    <StandaloneSearchBox
+      onLoad={(s) => setSearchBox(s)}
+      onPlacesChanged={onPlacesChanged}
     >
-      <StandaloneSearchBox
-        onLoad={(s) => setSearchBox(s)}
-        onPlacesChanged={onPlacesChanged}
-      >
-        { props.children }
-      </StandaloneSearchBox>
-    </LoadScript>
+      { props.children }
+    </StandaloneSearchBox>
   );
 };
 
