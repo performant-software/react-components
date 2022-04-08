@@ -2,7 +2,7 @@
 
 import React, { type ComponentType, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import * as styles from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import * as styles from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { Button, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 
