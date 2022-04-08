@@ -17,7 +17,9 @@ module.exports = {
   mode,
   devtool,
   entry: './src/index.js',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: ['react-syntax-highlighter']
+  })],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
@@ -30,7 +32,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
+      exclude: /node_modules\/(?!(react-syntax-highlighter)\/).*/,
       use: ['babel-loader']
     }, {
       test: /\.css$/,
