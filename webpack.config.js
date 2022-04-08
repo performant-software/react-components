@@ -17,13 +17,11 @@ module.exports = {
   mode,
   devtool,
   entry: './src/index.js',
-  externals: [nodeExternals({
-    allowlist: ['react-syntax-highlighter']
-  })],
+  externals: [nodeExternals()],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'umd'
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -32,7 +30,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
-      exclude: /node_modules\/(?!(react-syntax-highlighter)\/).*/,
+      include: path.resolve(__dirname, './src'),
       use: ['babel-loader']
     }, {
       test: /\.css$/,
