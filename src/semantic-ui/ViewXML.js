@@ -2,12 +2,11 @@
 
 import React, { type ComponentType, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import * as styles from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { Button, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 
 type Props = {
-  highlighter?: string,
+  highlighter?: any,
   opener: {
     component: ComponentType<any>,
     props: any
@@ -20,7 +19,6 @@ const ViewXML = (props: Props) => {
   const [showModal, setShowModal] = useState(false);
   const OpenerComponent = props.opener.component;
   const openerProps = props.opener.props;
-  const highlighter = styles[props.highlighter || 'atomOneLight'];
 
   return (
     <>
@@ -41,7 +39,7 @@ const ViewXML = (props: Props) => {
         <Modal.Content>
           <SyntaxHighlighter
             language='xml'
-            style={highlighter}
+            style={props.highlighter}
           >
             { props.xml }
           </SyntaxHighlighter>
