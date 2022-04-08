@@ -14,7 +14,7 @@ export default {
   decorators: [withA11y, withKnobs]
 };
 
-const PER_PAGE = 11;
+const PER_PAGE = 10;
 
 export const Default = useDragDrop(() => {
   const [items, setItems] = useState([]);
