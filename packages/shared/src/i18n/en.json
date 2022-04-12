@@ -1,0 +1,204 @@
+{
+  "AccordionList": {
+    "deleteContent": "Are you sure you want to remove this record?",
+    "deleteHeader": "Confirm Remove",
+    "record": "Record",
+    "record_plural": "Records"
+  },
+  "AccordionSelector": {
+    "title": "Select Items"
+  },
+  "Common": {
+    "buttons": {
+      "add": "Add",
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "edit": "Edit",
+      "ok": "OK",
+      "save": "Save"
+    },
+    "errors": {
+      "title": "Oops!"
+    },
+    "messages": {
+      "error": {
+        "header": "Oops!"
+      },
+      "loading": "Loading",
+      "save": {
+        "content": "Your changes have been saved.",
+        "header": "Success!"
+      }
+    }
+  },
+  "EditContainer": {
+    "errors": {
+      "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
+      "required": "The {{key}} field is required.",
+      "system": "A system error occurred while saving the record. Please contact your system administrator.",
+      "unique": "A record with the {{key}} \"{{value}}\" already exists."
+    }
+  },
+  "DataTable": {
+    "actions": {
+      "copy": {
+        "content": "Creates an editable copy to be saved as a new record",
+        "title": "Copy"
+      },
+      "delete": {
+        "content": "Removes the record, permanently",
+        "title": "Remove"
+      },
+      "edit": {
+        "content": "Opens the modal to edit the record",
+        "title": "Edit"
+      }
+    },
+    "columns": {
+      "actions": "Actions",
+      "select": "Select"
+    },
+    "loading": "Loading"
+  },
+  "EditProvider": {
+    "errors": {
+      "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
+      "required": "The {{key}} field is required.",
+      "unique": "A record with the {{key}} \"{{value}}\" already exists."
+    }
+  },
+  "FileUpload": {
+    "add": "<0>Add files</0> or drop files here",
+    "errors": {
+      "fileType": "Unable to upload {{name}} because {{type}} files are not allowed.",
+      "maxSize": "Unable to upload {{name}} because it exceeds 10 MB."
+    }
+  },
+  "FileUploadModal": {
+    "errors": {
+      "required": "{{filename}} - The following fields are required: {{fields}}"
+    },
+    "loader": "Uploading files...",
+    "title": "Upload Files"
+  },
+  "FuzzyDate": {
+    "accuracy": {
+      "date": "Date",
+      "month": "Month",
+      "year": "Year"
+    },
+    "buttons": {
+      "addRange": "Add Range",
+      "removeRange": "Remove Range"
+    },
+    "labels": {
+      "accuracy": "Accuracy",
+      "date": "Date",
+      "description": "Description",
+      "month": "Month",
+      "year": "Year"
+    },
+    "title": "Fuzzy Date"
+  },
+  "ItemList": {
+    "actions": {
+      "copy": "Copy",
+      "delete": "Remove",
+      "edit": "Edit"
+    },
+    "buttons": {
+      "clear": "Clear selected",
+      "deselectAll": "Deselect all",
+      "selectAll": "Select all"
+    }
+  },
+  "KeyboardField": {
+    "labels": {
+      "hideKeyboard": "Hide Keyboard",
+      "showKeyboard": "Show Keyboard"
+    }
+  },
+  "LazyDocument": {
+    "buttons": {
+      "download": "Download"
+    }
+  },
+  "LazyImage": {
+    "buttons": {
+      "view": "View image"
+    }
+  },
+  "LazyVideo": {
+    "buttons": {
+      "play": "Play video"
+    }
+  },
+  "List": {
+    "buttons": {
+      "add": "Add",
+      "deleteAll": "Delete all"
+    },
+    "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
+    "deleteAllHeader": "Confirm Remove All",
+    "deleteContent": "Are you sure you want to remove this record?",
+    "deleteHeader": "Confirm Remove",
+    "emptyList": "No matching records found.",
+    "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
+    "labels": {
+      "perPage": "Show {{perPage}}"
+    },
+    "record": "Record",
+    "record_plural": "Records"
+  },
+  "ListFilters": {
+    "buttons": {
+      "add": "Add",
+      "reset": "Reset filters"
+    },
+    "operators": {
+      "contain": "Contains",
+      "empty": "Is empty",
+      "equal": "Equals",
+      "greaterThan": "Is greater than",
+      "lessThan": "Is less than",
+      "notContain": "Does not contain",
+      "notEmpty": "Is not empty",
+      "notEqual": "Does not equal"
+    },
+    "title": "Filters"
+  },
+  "LoginModal": {
+    "buttonCancel": "Cancel",
+    "buttonLogin": "Login",
+    "email": "Email",
+    "header": "Login",
+    "loginErrorContent": "The username and/or password you entered is invalid. Please double check and try again.",
+    "loginErrorHeader": "Invalid Credentials",
+    "password": "Password"
+  },
+  "RemoteDropdown": {
+    "labels": {
+      "add": "Add",
+      "loadMore": "Load more"
+    }
+  },
+  "Selectize": {
+    "noRecords": "No matching records."
+  },
+  "VideoFrameSelector": {
+    "buttons": {
+      "select": "Select frame"
+    },
+    "labels": {
+      "interval": "Interval: {{count}} second",
+      "interval_plural": "Interval: {{count}} seconds"
+    },
+    "title": "Select Frame"
+  },
+  "ViewXML": {
+    "buttons": {
+      "view": "View XML"
+    },
+    "title": "XML"
+  }
+}

@@ -3,3 +3,5 @@ node_modules/
 .env
 .vscode/launch.json
 types/
+
+storybook-static/
