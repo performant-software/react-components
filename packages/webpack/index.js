@@ -23,7 +23,11 @@ module.exports = {
       externals: [
         'react',
         'react-dom',
-        nodeExternals()
+        nodeExternals({
+          additionalModuleDirs: [
+            path.resolve(directory, '../../node_modules')
+          ],
+        })
       ],
       plugins: [
         new MiniCssExtractPlugin()
