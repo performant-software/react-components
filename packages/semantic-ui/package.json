@@ -3,6 +3,7 @@
   "repository": {
     "url": "https://gitpkg.now.sh/performant-software/react-components/packages/semantic-ui?feature/rc122_monorepo"
   },
+  "version": "0.1.0",
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "ISC",
   "files": [
