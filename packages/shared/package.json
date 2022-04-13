@@ -8,6 +8,9 @@
   "license": "MIT",
   "main": "build/index.js",
   "style": "build/styles.css",
+  "files": [
+    "build/index.js"
+  ],
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types",
     "prepare": "yarn build"
