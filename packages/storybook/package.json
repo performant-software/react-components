@@ -1,8 +1,7 @@
 {
   "name": "@react-components/stories",
-  "version": "0.1.0",
   "description": "A package of stories to display components in this library.",
-  "license": "ISC",
+  "private": true,
   "scripts": {
     "build": "build-storybook",
     "storybook": "start-storybook -p 6006"

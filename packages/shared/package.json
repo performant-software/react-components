@@ -2,7 +2,7 @@
   "name": "@react-components/shared",
   "version": "0.1.0",
   "description": "A package of shared, framework agnostic, components.",
-  "license": "ISC",
+  "license": "MIT",
   "files": [
     "build",
     "types",

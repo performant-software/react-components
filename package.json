@@ -1,6 +1,5 @@
 {
   "name": "@performant-software/react-components",
-  "version": "0.4.2",
   "description": "A library of shared React components",
   "private": true,
   "workspaces": [
@@ -12,7 +11,6 @@
     "storybook": "yarn --cwd packages/storybook storybook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC",
   "devDependencies": {
     "eslint": "^7.1.0",
     "eslint-config-airbnb": "^18.1.0",
