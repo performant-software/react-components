@@ -15,7 +15,7 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "@react-components/shared": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo",
+    "@react-components/shared": "*",
     "@react-google-maps/api": "^2.8.1",
     "flow-copy-source": "^2.0.9",
     "i18next": "^19.4.4",
@@ -35,7 +35,7 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@react-components/webpack": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo",
+    "@react-components/webpack": "^0.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
