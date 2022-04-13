@@ -1835,9 +1835,9 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001317:
-  version "1.0.30001328"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001328.tgz#0ed7a2ca65ec45872c613630201644237ba1e329"
-  integrity sha512-Ue55jHkR/s4r00FLNiX+hGMMuwml/QGqqzVeMQ5thUewznU2EdULFvI3JR7JJid6OrjJNfFvHY2G2dIjmRaDDQ==
+  version "1.0.30001331"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001331.tgz#41048f2a5cf0c3c6198f40207cd323388b3d4399"
+  integrity sha512-Y1xk6paHpUXKP/P6YjQv1xqyTbgAP05ycHBcRdQjTcyXlWol868sJJPlmk5ylOekw2BrucWes5jk+LvVd7WZ5Q==
 
 chai@^1.8.1:
   version "1.10.0"
@@ -2170,9 +2170,9 @@ emojis-list@^3.0.0:
   integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
 
 enhanced-resolve@^5.9.2:
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.9.2.tgz#0224dcd6a43389ebfb2d55efee517e5466772dd9"
-  integrity sha512-GIm3fQfwLJ8YZx2smuHpBKkXC1yOk+OBEmKckVyL0i/ea8mqDEykK3ld5dgH1QYPNyT/lIllxV2LULnxCHaHkA==
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.9.3.tgz#44a342c012cbc473254af5cc6ae20ebd0aae5d88"
+  integrity sha512-Bq9VSor+kjvW3f9/MiiR4eE3XYgOl7/rS8lnSxbRbF3kS0B2r+Y9w5krBWxZgDxASVZbdYrn5wT4j/Wb0J9qow==
   dependencies:
     graceful-fs "^4.2.4"
     tapable "^2.2.0"
@@ -4000,9 +4000,9 @@ regenerator-transform@^0.15.0:
     "@babel/runtime" "^7.8.4"
 
 regexp.prototype.flags@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.1.tgz#b3f4c0059af9e47eca9f3f660e51d81307e72307"
-  integrity sha512-pMR7hBVUUGI7PMA37m2ofIdQCsomVnas+Jn5UPGAHQ+/LlwKm/aTLJHdasmHRzlfeZwHiAOaRSo2rbBDm3nNUQ==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.2.tgz#bf635117a2f4b755595ebb0c0ee2d2a49b2084db"
+  integrity sha512-Ynz8fTQW5/1elh+jWU2EDDzeoNbD0OQ0R+D1VJU5ATOkUaro4A9YEkdN2ODQl/8UQFPPpZNw91fOcLFamM7Pww==
   dependencies:
     call-bind "^1.0.2"
     define-properties "^1.1.3"
@@ -4269,14 +4269,14 @@ signal-exit@^3.0.3:
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
 simple-keyboard-layouts@^3.0.0:
-  version "3.1.88"
-  resolved "https://registry.yarnpkg.com/simple-keyboard-layouts/-/simple-keyboard-layouts-3.1.88.tgz#d1a6efd8cf0b0a31e9180e8b67ecd1c03e6ae05c"
-  integrity sha512-BPgDRhAJDLvuvUWRxBNkl5pTIqLkqnmZ0+VUafYErKOIkruDY4eUSOdwB+x1Utj4KkSdTjk9V3w2OIvkn8tRCw==
+  version "3.1.89"
+  resolved "https://registry.yarnpkg.com/simple-keyboard-layouts/-/simple-keyboard-layouts-3.1.89.tgz#1c5764830b529eae2f8ecff1657cb3eee2ba33fa"
+  integrity sha512-56ViCD3slYIizcGZZx7fpWM6WWUIxZdBnwhdqVV2aUUqqQKUsIjyqt08kxo9DTzQ6j3LsDHmZdJAZVky8ed9NQ==
 
 simple-keyboard@^3.0.0:
-  version "3.4.80"
-  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.4.80.tgz#1418fbdc8f8afa291fbd616e60692b2af69865e1"
-  integrity sha512-xHQfmGhZ+AEbTvvDdL5id7XzwJA24nSvTycPnsSwgZZmlKFlmWG5olL/xUneg/2gHK7iessyNPeMZ+Ox+dWd/A==
+  version "3.4.81"
+  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.4.81.tgz#6d65bbeb2e2a83b129e82e4c99a3292df656603e"
+  integrity sha512-+5d7n5sgAdcJ8oLHfS/xfTNW5cNlgbpvb7WrzbDOhXSLu8pbzJFwMKhbEPX6/rGg0wz4T+VTqgisQf3z0c4+aw==
 
 slash@^2.0.0:
   version "2.0.0"
