@@ -3,7 +3,6 @@
   "repository": {
     "url": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo"
   },
-  "version": "0.1.0",
   "description": "A shareable and customizable Webpack configuration.",
   "private": true,
   "dependencies": {

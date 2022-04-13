@@ -1,6 +1,8 @@
 {
   "name": "@react-components/semantic-ui",
-  "version": "0.1.0",
+  "repository": {
+    "url": "https://gitpkg.now.sh/performant-software/react-components/packages/semantic-ui?feature/rc122_monorepo"
+  },
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "ISC",
   "files": [
@@ -15,7 +17,7 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "@react-components/shared": "*",
+    "@react-components/shared": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo",
     "@react-google-maps/api": "^2.8.1",
     "flow-copy-source": "^2.0.9",
     "i18next": "^19.4.4",
@@ -35,7 +37,7 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@react-components/webpack": "^0.1.0",
+    "@react-components/webpack": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
