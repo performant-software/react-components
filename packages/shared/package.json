@@ -16,7 +16,6 @@
   "style": "build/styles.css",
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types",
-    "install": "yarn build",
     "prepare": "yarn build",
     "postinstall": "yarn build"
   },
