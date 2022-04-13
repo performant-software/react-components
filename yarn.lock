@@ -67,7 +67,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@^7.12.10", "@babel/core@^7.7.5", "@babel/core@^7.9.6":
+"@babel/core@^7.12.10", "@babel/core@^7.17.9", "@babel/core@^7.7.5", "@babel/core@^7.9.6":
   version "7.17.9"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.17.9.tgz#6bae81a06d95f4d0dec5bb9d74bbc1f58babdcfe"
   integrity sha512-5ug+SfZCpDAkVp9SFIZAzlW18rlzsOcJGaetCjkySnrXXDUw9AR8cDUm1iByTmdWM6yxX6/zycaV76w3YTF2gw==
@@ -1584,7 +1584,7 @@
     global "^4.4.0"
     regenerator-runtime "^0.13.7"
 
-"@storybook/api@6.4.21":
+"@storybook/api@6.4.21", "@storybook/api@^6.4.21":
   version "6.4.21"
   resolved "https://registry.yarnpkg.com/@storybook/api/-/api-6.4.21.tgz#efee41ae7bde37f6fe43ee960fef1a261b1b1dd6"
   integrity sha512-AULsLd7ew11IRCpzffyLFGl5cwt9BLMok33DcIlCyvXsiqLm4/OsbgM4sj6QqWVuxcFlWMQJHoRJyeFlULFvZA==
@@ -1812,7 +1812,7 @@
     core-js "^3.8.2"
     global "^4.4.0"
 
-"@storybook/components@6.4.21":
+"@storybook/components@6.4.21", "@storybook/components@^6.4.21":
   version "6.4.21"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-6.4.21.tgz#77483ef429f96d94cf7d2d8c1af8441ef855a77d"
   integrity sha512-OnuAS/bMdLKdmkWtDNUxM9qSFCU3pcGWqXzasU3sjvibIcz3472xTFiwjW9UiHR7ipu/YQKALnIbyyjznGY4Kg==
@@ -1923,7 +1923,7 @@
     util-deprecate "^1.0.2"
     webpack "4"
 
-"@storybook/core-events@6.4.21":
+"@storybook/core-events@6.4.21", "@storybook/core-events@^6.4.21":
   version "6.4.21"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-6.4.21.tgz#28fff8b10c0d564259edf4439ff8677615ce59c0"
   integrity sha512-K6b9M1zYvW/Kfb1cnH6JDfmFvTYDMx/ot9zdl9O5SPH9glUwzOXSk8qKu6GmZTiW2YnC2nKbjaN20mfMsCBPGw==
@@ -2226,7 +2226,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/theming@6.4.21":
+"@storybook/theming@6.4.21", "@storybook/theming@^6.4.21":
   version "6.4.21"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-6.4.21.tgz#ea1a33be70c654cb31e5b38fae93f72171e88ef8"
   integrity sha512-7pLNwmqbyqCeHXzjsacI69IdJcAZr6zoZA84iGqx+Na32OI8wtIpFczbwuYpVPN2jzgRYp23CgIv1Gz27yk/zw==
@@ -10115,6 +10115,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^4.6.3:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
 uglify-js@^3.1.4:
   version "3.15.4"
