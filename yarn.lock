@@ -1123,7 +1123,7 @@
 
 "@react-components/webpack@https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo":
   version "0.1.0"
-  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo#1fb716908995135c4e3da8556bf2c3a24570f3f6"
+  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo#4caaba3d42b14ca1281846de244b1ba774367b22"
   dependencies:
     "@babel/cli" "^7.8.4"
     "@babel/core" "^7.9.6"
