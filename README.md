@@ -1,80 +1,107 @@
 # react-components
-A library of shared React components
+A library of shared React components.
 
 ## Requirements
-Node (14.5)
+Node (16.14.x)
 
 ## Development
 
+### Installation
+```
+yarn install
+```
+
 ### Building
 ```
-npm run build
+cd packages/<package-name> && yarn build
 ```
 
-#### Storybook
+### Storybook
+Running storybook
 ```
-npm run storybook
-```
-
-## Usage
-
-### SSH Configuration
-Update your SSH config to use your SSH key to access the react-components repository:
-
-```
-# ~/.ssh/config
-
-Host react-components
-  HostName github.com
-  IdentityFile ~/.ssh/id_rsa
+yarn storybook
 ```
 
-### Install
+Building the static site
 ```
-npm install git+ssh://git@react-components:performant-software/react-components.git --save
+yarn build-storybook
 ```
+## Production
 
-### Heroku
-When deploying to a staging server on Heroku, we'll need to allow Heroku access to the react-components repository in order to install dependencies. This section will describe how to do that.
-
-#### Copy preinstall and postinstall scripts
-Copy the `preinstall.sh` and `postinstall.sh` scripts from this repository into your project. It doesn't matter where, but a directory named `scripts` is usually a good idea.
-
-#### Update package.json
-In your root level `package.json`, add or append the following to the `scripts` object:
-```
-"heroku-prebuild": "bash ./scripts/preinstall.sh"
-"heroku-postbuild": "bash ./scripts/postinstall.sh"
-```
-These two scripts will install your SSH key prebuild, then after the dependencies are installed, remove it.
-
-Note: The heroku-prebuild and heroku-postbuild scripts require the NodeJS buildpack. 
-
-You'll want to use the following syntax for defining the `react-components` dependency:
-
-```
-"react-components": "github:performant-software/react-components"
+package.json
+```json
+{
+  "name": "my-awesome-project",
+  "dependencies": {
+    "@performant-software/semantic-components": "^1.0.0"
+  }
+}
 ```
 
-Note: `yarn` does not seem to work with the above syntax. It is recommended to use `npm`.
+MyComponent.js
+```javascript
+import { ListTable } from '@performant-software/semantic-components';
 
-#### Generate a deploy key
-From your computer, generate a new public/private SSH key pair using the following command and save the key pair somewhere secure.
-```
-ssh-keygen -t rsa
-```
-
-Copy the public key using:
-```
-pbcopy < my-awesome-project-staging-deploy-key.pub
+const MyComponent = (props) => (
+  <ListTable
+    columns={[]}
+  />
+);
 ```
 
-Within the react-components repository on GitHub, go to Settings > Deploy Keys. Add the copied public key for your project. Name it something obvious like "My Awesome Project Staging" so that others will know what it is used for.
+### GitPkg
+There may be some scenarios where we want to test out new components within the project that will actually consume it prior to releasing a new version on NPM.
 
-#### Add your deploy key to Heroku
-Convert the private key from PEM to base64 using the following command and copy the value.
-```
-cat my-awesome-project-staging-deploy-key | base64
+For this we can use [gitpkg](https://gitpkg.vercel.app/) as a proxy to point to our dev branch:
+
+#### Step 1: Update react-components package.json
+Update all package.json file to use gitpkg instead of NPM version:
+
+Before:
+```json
+{
+  "dependencies": {
+    "@performant-software/shared-components": "^1.0.0"
+  }
+}
 ```
 
-In the Heroku dashboard for your app, navigate to the Settings tab. Add a config var with key `REACT_COMPONENTS_SSH_KEY` and paste the value copied from the private deploy key.
+After:
+```json
+{
+  "dependencies": {
+    "@performant-software/shared-components": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?<branch-name>&scripts.prepare=%26%26%20yarn%20build"
+  }
+}
+```
+
+Run `yarn install` and commit the changes to your branch.
+
+❗Make sure to include the `scripts` parameter in order to build the dependency in your consuming project.
+
+❗Make sure to revert these changes prior to creating an NPM release.
+
+#### Step 2: Update your projects package.json
+Update your projects package.json file to use gitpkg instead of the NPM version. You'll also want to add the package's dependencies as dependencies in your project. For example: If your project uses `@performant-software/semantic-components`, you'll also want to add `@performant-software/shared` and `@performant-software/webpack-config` as dependencies to your project temporarily.
+
+Before:
+```json
+{
+  "dependencies": {
+    "@performant-software/semantic-components": "^1.0.0"
+  }
+}
+```
+
+After:
+```json
+{
+  "dependencies": {
+    "@performant-software/semantic-components": "https://gitpkg.now.sh/performant-software/react-components/packages/semantic-ui?<branch_name>&scripts.prepare=%26%26%20yarn%20build",
+    "@performant-software/shared-components": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?<branch_name>&scripts.prepare=%26%26%20yarn%20build",
+    "@performant-software/webpack-config": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?<branch_name>&scripts.prepare=%26%26%20yarn%20build"
+  }
+}
+```
+
+Notice that the gitpkg URLs contain the name of the directory in the GitHub repository, rather than the name of the published NPM package.
