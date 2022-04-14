@@ -1123,7 +1123,7 @@
 
 "@react-components/shared@https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo&scripts.prepare=%26%26%20yarn%20build":
   version "0.1.0"
-  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo&scripts.prepare=%26%26%20yarn%20build#53a9548dfd42984720e401108bd2f6a926df7ccd"
+  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo&scripts.prepare=%26%26%20yarn%20build#5b476533f1a12ac67d8e6b15075628fc0a0ae88c"
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     i18next "^19.4.4"
@@ -1140,7 +1140,8 @@
 
 "@react-components/webpack@https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo":
   version "0.1.0"
-  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo#cea148c7746e18a29e7f7eb332477b0bb114a2d5"
+  uid "460b0f818e76b38feb6e9b463726ac617e43756c"
+  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo#460b0f818e76b38feb6e9b463726ac617e43756c"
   dependencies:
     "@babel/cli" "^7.8.4"
     "@babel/core" "^7.9.6"
