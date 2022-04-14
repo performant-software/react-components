@@ -1,7 +1,13 @@
-import React from 'react';
+// @flow
+
+import React, { type Node } from 'react';
 import { Modal } from 'semantic-ui-react';
 
-const AddModal = (props) => (
+type Props = {
+  children: Node
+};
+
+const AddModal = (props: Props) => (
   <Modal
     open
   >

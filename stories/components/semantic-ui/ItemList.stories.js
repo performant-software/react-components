@@ -511,10 +511,7 @@ export const WithFilters = useDragDrop(() => (
     actions={actions}
     collectionName='items'
     filters={{
-      component: FilterModal,
-      props: {
-        test: ''
-      }
+      component: FilterModal
     }}
     modal={{
       component: AddModal

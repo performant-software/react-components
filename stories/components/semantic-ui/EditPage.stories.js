@@ -6,14 +6,23 @@ import { withA11y } from '@storybook/addon-a11y';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
-import EditPage from '../../../src/semantic-ui/EditPage';
 import AssociatedDropdown from '../../../src/semantic-ui/AssociatedDropdown';
 import AddModal from '../AddModal';
 import Api from '../../services/Api';
+import EditPage from '../../../src/semantic-ui/EditPage';
+
+import type { EditContainerProps } from '../../../src/common/EditContainer';
 
 export default {
   title: 'Components/Semantic UI/EditPage',
   decorators: [withA11y, withKnobs]
+};
+
+const onClose = action('close');
+
+const onSave = () => {
+  action('save')();
+  return Promise.resolve();
 };
 
 const TestForm = () => (
@@ -33,8 +42,8 @@ const TestForm = () => (
 export const Default = () => (
   <EditPage
     component={TestForm}
-    onClose={action('close')}
-    onSave={action('save')}
+    onClose={onClose}
+    onSave={onSave}
   />
 );
 
@@ -53,35 +62,35 @@ export const WithMenu = () => (
         key: 'other'
       }]
     }}
-    onClose={action('close')}
-    onSave={action('save')}
+    onClose={onClose}
+    onSave={onSave}
   />
 );
 
 const items = [{
-  "id": 1,
-  "company": "Bradtke LLC",
-  "email": "smccunn0@symantec.com",
-  "card": "4913389273457809",
-  "country": "China"
+  id: 1,
+  company: 'Bradtke LLC',
+  email: 'smccunn0@symantec.com',
+  card: '4913389273457809',
+  country: 'China'
 }, {
-  "id": 2,
-  "company": "Jacobi Inc",
-  "email": "rrivard1@abc.net.au",
-  "card": "30460843005398",
-  "country": "Zimbabwe"
+  id: 2,
+  company: 'Jacobi Inc',
+  email: 'rrivard1@abc.net.au',
+  card: '30460843005398',
+  country: 'Zimbabwe'
 }, {
-  "id": 3,
-  "company": "Mraz, Blanda and Hettinger",
-  "email": "rrummins2@fastcompany.com",
-  "card": "6709016072353592810",
-  "country": "Iran"
+  id: 3,
+  company: 'Mraz, Blanda and Hettinger',
+  email: 'rrummins2@fastcompany.com',
+  card: '6709016072353592810',
+  country: 'Iran'
 }, {
-  "id": 4,
-  "company": "Rutherford, King and Bergstrom",
-  "email": "dkrauss3@mit.edu",
-  "card": "374288311284433",
-  "country": "Bosnia and Herzegovina"
+  id: 4,
+  company: 'Rutherford, King and Bergstrom',
+  email: 'dkrauss3@mit.edu',
+  card: '374288311284433',
+  country: 'Bosnia and Herzegovina'
 }];
 
 const ToasterForm = () => (
@@ -137,14 +146,14 @@ export const WithToaster = () => (
         key: 'other'
       }]
     }}
-    onClose={action('close')}
-    onSave={action('save')}
+    onClose={onClose}
+    onSave={onSave}
   />
 );
 
 export const WithSaveError = () => (
   <EditPage
-    component={(props) => (
+    component={(props: EditContainerProps) => (
       <>
         <Form.Input
           required={props.isRequired('name')}
@@ -166,11 +175,8 @@ export const WithSaveError = () => (
         />
       </>
     )}
-    onClose={action('close')}
-    onSave={() => {
-      action('save')();
-      return Promise.resolve();
-    }}
+    onClose={onClose}
+    onSave={onSave}
     required={['name', 'address', 'phone']}
   />
 );
@@ -179,10 +185,10 @@ export const WithLoading = () => (
   <EditPage
     component={TestForm}
     item={{ id: 1 }}
-    onClose={action('close')}
+    onClose={onClose}
     onInitialize={() => new Promise((resolve) => {
-      _.delay(resolve.bind(this), 5000);
+      _.delay(resolve.bind(this, { id: 1 }), 5000);
     })}
-    onSave={action('save')}
+    onSave={onSave}
   />
 );

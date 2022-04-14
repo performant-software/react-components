@@ -10,8 +10,7 @@ type Props = {
   color: string,
   onClose: () => void,
   onSave: (selectedColor: string) => void,
-  open: boolean,
-  t: (key: string) => string
+  open: boolean
 };
 
 type State = {
@@ -24,7 +23,7 @@ class ColorPickerModal extends Component<Props, State> {
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {

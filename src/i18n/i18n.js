@@ -19,6 +19,6 @@ i18n
       escapeValue: false,
     },
     resources
-});
+  });
 
 export default i18n;

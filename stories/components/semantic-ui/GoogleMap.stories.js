@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { Form } from 'semantic-ui-react';
 import GoogleMap from '../../../src/semantic-ui/GoogleMap';
+import GoogleScript from '../../../src/common/GoogleScript';
 
 export default {
   title: 'Components/Semantic UI/GoogleMap',
@@ -11,47 +12,58 @@ export default {
 };
 
 export const Default = () => (
-  <GoogleMap
+  <GoogleScript
     googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-  />
+  >
+    <GoogleMap />
+  </GoogleScript>
 );
 
 export const DefaultCenter = () => (
-  <GoogleMap
-    defaultCenter={{
-      lat: 42.3601,
-      lng: -71.0589
-    }}
+  <GoogleScript
     googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-  />
+  >
+    <GoogleMap
+      defaultCenter={{
+        lat: 42.3601,
+        lng: -71.0589
+      }}
+    />
+  </GoogleScript>
 );
 
 export const DefaultZoom = () => (
-  <GoogleMap
-    defaultCenter={{
-      lat: 42.3601,
-      lng: -71.0589
-    }}
-    defaultZoom={12}
+  <GoogleScript
     googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-  />
+  >
+    <GoogleMap
+      defaultCenter={{
+        lat: 42.3601,
+        lng: -71.0589
+      }}
+      defaultZoom={12}
+    />
+  </GoogleScript>
 );
 
 export const WithMapMarker = () => {
   const DEFAULT_POSITION = { lat: 42.3601, lng: -71.0589 };
   const DEFAULT_ZOOM = 12;
-  const [position, setPosition] = useState(DEFAULT_POSITION);
+  const [position, setPosition] = useState<any>(DEFAULT_POSITION);
 
   return (
     <>
-      <GoogleMap
-        defaultCenter={DEFAULT_POSITION}
-        defaultPosition={DEFAULT_POSITION}
-        defaultZoom={DEFAULT_ZOOM}
+      <GoogleScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-        onDragEnd={(p) => setPosition(p)}
-        position={position}
-      />
+      >
+        <GoogleMap
+          defaultCenter={DEFAULT_POSITION}
+          defaultPosition={DEFAULT_POSITION}
+          defaultZoom={DEFAULT_ZOOM}
+          onDragEnd={(p) => setPosition(p)}
+          position={position}
+        />
+      </GoogleScript>
       <div>
         <strong>Latitude: </strong>
         { position.lat }
@@ -65,15 +77,18 @@ export const WithMapMarker = () => {
 };
 
 export const EditableCooridnates = () => {
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState<any>();
 
   return (
     <Form>
-      <GoogleMap
+      <GoogleScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-        onDragEnd={(p) => setPosition(p)}
-        position={position}
-      />
+      >
+        <GoogleMap
+          onDragEnd={(p) => setPosition(p)}
+          position={position}
+        />
+      </GoogleScript>
       <Form.Input
         label='Latitude'
         onChange={(e, { value }) => setPosition({ ...position, lat: value })}
@@ -89,15 +104,19 @@ export const EditableCooridnates = () => {
 };
 
 export const EditableCoordinatesWithDefaults = () => {
-  const [position, setPosition] = useState({ lat: 42.3601, lng: -71.0589 });
+  const [position, setPosition] = useState<any>({ lat: 42.3601, lng: -71.0589 });
 
   return (
     <Form>
-      <GoogleMap
+      <GoogleScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-        onDragEnd={(p) => setPosition(p)}
-        position={position}
-      />
+      >
+        <GoogleMap
+          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+          onDragEnd={(p) => setPosition(p)}
+          position={position}
+        />
+      </GoogleScript>
       <Form.Input
         label='Latitude'
         onChange={(e, { value }) => setPosition({ ...position, lat: value })}

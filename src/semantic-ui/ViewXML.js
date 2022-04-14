@@ -1,12 +1,12 @@
 // @flow
 
 import React, { type ComponentType, useState } from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { Button, Modal } from 'semantic-ui-react';
-import XMLViewer from 'react-xml-viewer';
 import i18n from '../i18n/i18n';
-import './ViewXML.css';
 
 type Props = {
+  highlighter?: any,
   opener: {
     component: ComponentType<any>,
     props: any
@@ -37,11 +37,12 @@ const ViewXML = (props: Props) => {
           content={i18n.t('ViewXML.title')}
         />
         <Modal.Content>
-          <XMLViewer
-            className='xml'
-            style={props.style}
-            xml={props.xml}
-          />
+          <SyntaxHighlighter
+            language='xml'
+            style={props.highlighter}
+          >
+            { props.xml }
+          </SyntaxHighlighter>
         </Modal.Content>
         <Modal.Actions>
           <Button

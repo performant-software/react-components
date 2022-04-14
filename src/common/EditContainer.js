@@ -55,9 +55,11 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     componentDidMount() {
       if (this.props.onInitialize && this.props.item && this.props.item.id) {
         this.setState({ loading: true }, () => {
-          this.props
-            .onInitialize(this.props.item.id)
-            .then((item) => this.setState({ item, originalItem: item, loading: false }));
+          if (this.props.onInitialize && this.props.item) {
+            this.props
+              .onInitialize(this.props.item.id)
+              .then((item) => this.setState({ item, originalItem: item, loading: false }));
+          }
         });
       }
     }
@@ -427,6 +429,7 @@ export default useEditContainer;
 
 export type EditContainerProps = {
   children: Element<any>,
+  dirty: boolean,
   errors: Array<string>,
   isError: (property: string) => boolean,
   isRequired: (property: string) => boolean,

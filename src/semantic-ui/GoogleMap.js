@@ -1,13 +1,10 @@
 // @flow
 
-import React, { useEffect, useState, type Element } from 'react';
 import {
   GoogleMap as MapComponent,
-  Marker,
-  withGoogleMap,
-  withScriptjs
-} from 'react-google-maps';
-import Google from '../utils/Google';
+  Marker
+} from '@react-google-maps/api';
+import React, { useCallback, useEffect, useState } from 'react';
 import Map from '../utils/Map';
 
 type LatLng = {
@@ -16,19 +13,21 @@ type LatLng = {
 };
 
 type Props = {
+  className?: string,
+  containerStyle?: any,
   defaultCenter?: {
     lat: number,
     lng: number
   },
   defaultZoom?: number,
-  onDragEnd: (latLng: LatLng) => ({ lat: number, lng: number }),
-  position: {
+  onDragEnd?: (latLng: LatLng) => void,
+  position?: {
     lat: number,
     lng: number
   }
 };
 
-const DEFAULT_ZOOM = 3;
+const DEFAULT_ZOOM = 1;
 const DEFAULT_ZOOM_MARKER = 12;
 
 const GoogleMap = (props: Props) => {
@@ -52,12 +51,15 @@ const GoogleMap = (props: Props) => {
   // Call the onDragEnd prop, passing the new location.
   const onDragEnd = ({ latLng }) => {
     if (props.onDragEnd) {
+      // $FlowFixMe - Not actually fixing, we're checking for presence here.
       props.onDragEnd({
         lat: latLng.lat(),
         lng: latLng.lng()
       });
     }
   };
+
+  const onLoad = useCallback((m) => setMap(m), []);
 
   // If the position is changed manually and the new location is outside of the current bounds, re-center the map.
   useEffect(() => {
@@ -71,10 +73,12 @@ const GoogleMap = (props: Props) => {
 
   return (
     <MapComponent
-      defaultZoom={defaultZoom}
       center={center}
+      mapContainerClassName={props.className}
+      mapContainerStyle={props.containerStyle}
       onClick={onDragEnd}
-      ref={(m) => setMap(m)}
+      onLoad={onLoad}
+      zoom={defaultZoom}
     >
       { position && (
         <Marker
@@ -89,42 +93,13 @@ const GoogleMap = (props: Props) => {
 };
 
 GoogleMap.defaultProps = {
+  containerStyle: {
+    height: '400px'
+  },
   defaultCenter: {
     lat: 0,
     lng: 0
   }
 };
 
-const GoogleMapElement = withScriptjs(withGoogleMap(GoogleMap));
-
-type WrapperProps = {
-  containerElement?: Element<any>,
-  googleMapsApiKey: string,
-  loadingElement?: Element<any>,
-  mapElement?: Element<any>
-};
-
-const GoogleMapWrapper = ({
-  containerElement,
-  googleMapsApiKey,
-  loadingElement,
-  mapElement,
-  ...rest
-}: WrapperProps) => (
-  <GoogleMapElement
-    {...rest}
-    containerElement={containerElement}
-    googleMapURL={Google.getGoogleMapsUrl(googleMapsApiKey)}
-    loadingElement={loadingElement}
-    mapElement={mapElement}
-  />
-);
-
-GoogleMapWrapper.defaultProps = {
-  containerElement: <div style={{ height: '400px' }} />,
-  loadingElement: <div style={{ height: '100%' }} />,
-  mapElement: <div style={{ height: '100%' }} />
-
-};
-
-export default GoogleMapWrapper;
+export default GoogleMap;

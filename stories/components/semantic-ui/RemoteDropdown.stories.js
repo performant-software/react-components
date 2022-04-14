@@ -24,7 +24,9 @@ const renderOption = (item) => ({
 
 const colors = [{
   value: 'Red',
-  description: 'Duis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officia.'
+  description: 'Duis adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis '
+    + 'adipisicing ullamco aliqua dolore officiaDuis adipisicing ullamco aliqua dolore officiaDuis adipisicing '
+    + 'ullamco aliqua dolore officia.'
 }, {
   value: 'Blue',
   description: 'Duis adipisicing ullamco aliqua dolore officia.'

@@ -18,7 +18,7 @@ type Sort = {
   key: any,
   value: any,
   text: string,
-  direction:? string
+  direction?: string
 };
 
 type Props = ListProps & {

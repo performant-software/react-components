@@ -7,6 +7,8 @@ const DEFAULT_TIMEOUT = 500;
  * keydown/keyup events when we only want to perform an action after the user has finished typing.
  */
 class Timer {
+  timeout: TimeoutID | null;
+
   constructor() {
     this.timeout = null;
   }
@@ -21,7 +23,7 @@ class Timer {
   /**
    * Sets the search timer.
    */
-  setSearchTimer(onTimeout) {
+  setSearchTimer(onTimeout: () => void) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(onTimeout, DEFAULT_TIMEOUT);
   }

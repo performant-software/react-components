@@ -16,12 +16,14 @@ if (mode === 'development') {
 module.exports = {
   mode,
   devtool,
+  target: 'node',
   entry: './src/index.js',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: ['react-syntax-highlighter']
+  })],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
-    library: '',
     libraryTarget: 'commonjs2'
   },
   plugins: [
@@ -31,7 +33,10 @@ module.exports = {
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
+      include: [
+        path.resolve(__dirname, './src'),
+        path.resolve(__dirname, './node_modules/react-syntax-highlighter')
+      ],
       use: ['babel-loader']
     }, {
       test: /\.css$/,
@@ -44,6 +49,11 @@ module.exports = {
     }, {
       test: /\.xml$/,
       use: 'raw-loader'
+    }, {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false
+      }
     }]
   }
 };

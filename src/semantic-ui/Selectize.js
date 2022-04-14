@@ -1,10 +1,11 @@
 // @flow
 
 import React, {
+  useCallback,
   useEffect,
   useState,
-  type Component,
-  type Element, useCallback
+  type ComponentType,
+  type Element
 } from 'react';
 import {
   Button,
@@ -25,10 +26,10 @@ type Props = {
   centered?: boolean,
   collectionName: string,
   filters?: {
-    component: Component<{}>,
+    component: ComponentType<any>,
     defaults: any,
     props: any,
-    onChange: (filter: any) => Promise<any>
+    onChange?: (filter: any) => Promise<any>
   },
   modal?: {
     onSave: (item: any) => Promise<any>

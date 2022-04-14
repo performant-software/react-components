@@ -35,7 +35,7 @@ type Props = {
   className: string,
   columns: Array<Column>,
   expandableRows: boolean,
-  expandPanel: () => Component<any>,
+  expandPanel: (item: any, activePanel: any) => Component<any>,
   isRowSelected: (item: any) => boolean,
   items: ?Array<any>,
   loading: boolean,
@@ -55,6 +55,7 @@ type Props = {
 };
 
 type State = {
+  activePanel: any,
   resize: ?{
     columnRef: typeof Ref,
     offset: number
@@ -457,9 +458,9 @@ class DataTable extends Component<Props, State> {
     const handleCellClick = (e) => {
       // only target table cells, not action buttons or checkboxes, etc.
       if (e.target.nodeName === 'TD') {
-        this.setState({
-          activePanel: this.state.activePanel === item.id ? '' : item.id
-        });
+        this.setState((state) => ({
+          activePanel: state.activePanel === item.id ? '' : item.id
+        }));
       }
     };
 

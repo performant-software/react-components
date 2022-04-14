@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type Node } from 'react';
 import { Form, Segment, Transition } from 'semantic-ui-react';
 import Keyboard from '../common/Keyboard';
 import i18n from '../i18n/i18n';
@@ -9,16 +9,15 @@ import './KeyboardField.css';
 
 type Props = {
   autoFocus?: boolean,
-  children: Component,
+  children: Node<any>,
   className?: string,
   error?: boolean,
   id?: string,
   label: string,
   layout: any,
   name: string,
-  onChange: (e: Event, { value: string }) => void,
+  onChange: (e: ?Event, { value: string }) => void,
   required: boolean,
-  t: (key: string) => string,
   value: string,
   visible: boolean
 };
@@ -28,12 +27,14 @@ type State = {
 };
 
 class KeyboardField extends Component<Props, State> {
+  static defaultProps: any;
+
   /**
    * Constructs a new KeyboardField component.
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -46,7 +47,7 @@ class KeyboardField extends Component<Props, State> {
    *
    * @param prevProps
    */
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.visible && !this.props.visible) {
       this.setState({ showKeyboard: false });
     }
@@ -58,7 +59,7 @@ class KeyboardField extends Component<Props, State> {
    * @param e
    * @param value
    */
-  onInputChange(e, value) {
+  onInputChange(e: Event, value: any) {
     this.props.onChange(e, value);
   }
 
@@ -67,7 +68,7 @@ class KeyboardField extends Component<Props, State> {
    *
    * @param value
    */
-  onKeyboardChange(value) {
+  onKeyboardChange(value: any) {
     this.props.onChange(null, { value });
   }
 

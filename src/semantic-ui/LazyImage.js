@@ -101,7 +101,7 @@ const LazyImage = (props: Props) => {
         </Dimmer.Dimmable>
       </Transition>
       <PhotoViewer
-        image={props.src}
+        image={props.src || ''}
         onClose={() => setModal(false)}
         open={modal}
         size='large'

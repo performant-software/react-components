@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';

@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -5,7 +7,7 @@ import { withKnobs, optionsKnob as options } from '@storybook/addon-knobs';
 import { Button, Container, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../AddModal';
-import Colors from '../../services/Colors';
+import { SemanticColors } from '../../services/Colors';
 import EmbeddedList from '../../../src/semantic-ui/EmbeddedList';
 import EditModal from '../../../src/semantic-ui/EditModal';
 import TabbedModal from '../../../src/semantic-ui/TabbedModal';
@@ -135,6 +137,7 @@ export const WithRecordCount = useDragDrop(() => (
 export const Selectable = useDragDrop(() => (
   <EmbeddedList
     selectable
+    isRowSelected={() => false}
     onRowSelect={action('row selected')}
     selectedRows={[{ id: 5 }, { id: 6 }, { id: 7 }]}
     actions={actions}
@@ -158,7 +161,7 @@ export const AddButton = useDragDrop(() => (
     actions={actions}
     addButton={{
       location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
+      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
     columns={columns}
@@ -174,7 +177,7 @@ export const EmptyAddButton = useDragDrop(() => (
     actions={actions}
     addButton={{
       location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
+      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
     }}
     onDelete={action('delete')}
     columns={columns}
@@ -217,7 +220,12 @@ export const DragAndDropRows = useDragDrop(() => {
   );
 });
 
-const EmbeddedListModal = (props) => (
+type EmbeddedListModalProps = {
+  open: boolean,
+  children: Node
+};
+
+const EmbeddedListModal = (props: EmbeddedListModalProps) => (
   <TabbedModal
     centered={false}
     header='This is a Test'
@@ -231,7 +239,7 @@ const EmbeddedListModal = (props) => (
         actions={actions}
         addButton={{
           location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-          color: options('Colors', Colors.SemanticColors, 'gray', { display: 'inline-radio' })
+          color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
         }}
         onDelete={action('delete')}
         columns={columns}
@@ -266,7 +274,7 @@ export const TabbedModalConfig = useDragDrop(() => {
       <EditModal
         component={EmbeddedListModal}
         open={showModal}
-        onClose={() => new Promise((resolve) => resolve(setShowModal(false)))}
+        onClose={() => setShowModal(false)}
         onSave={() => new Promise((resolve) => resolve(setShowModal(false)))}
       />
     </Container>
