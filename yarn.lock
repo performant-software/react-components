@@ -1121,35 +1121,6 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
 
-"@react-components/webpack@https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo":
-  version "0.1.0"
-  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo#cea148c7746e18a29e7f7eb332477b0bb114a2d5"
-  dependencies:
-    "@babel/cli" "^7.8.4"
-    "@babel/core" "^7.9.6"
-    "@babel/plugin-external-helpers" "^7.8.3"
-    "@babel/plugin-proposal-class-properties" "^7.12.1"
-    "@babel/preset-env" "^7.9.6"
-    "@babel/preset-flow" "^7.9.0"
-    "@babel/preset-react" "^7.9.4"
-    babel-eslint "^10.1.0"
-    babel-loader "^8.1.0"
-    buffer "^6.0.3"
-    clean-webpack-plugin "^4.0.0"
-    css-loader "^3.5.3"
-    dotenv "^16.0.0"
-    flow-copy-source "^2.0.9"
-    mini-css-extract-plugin "^2.6.0"
-    path "^0.12.7"
-    raw-loader "^4.0.1"
-    sass-loader "^11.0.1"
-    stream-browserify "^3.0.0"
-    style-loader "^1.2.1"
-    webpack "^5.71.0"
-    webpack-cli "^4.9.2"
-    webpack-merge "^5.8.0"
-    webpack-node-externals "^3.0.0"
-
 "@react-dnd/asap@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@react-dnd/asap/-/asap-4.0.1.tgz#5291850a6b58ce6f2da25352a64f1b0674871aab"
