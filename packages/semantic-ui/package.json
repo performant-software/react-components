@@ -10,9 +10,10 @@
   "style": "./build/styles.css",
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types",
-    "prepare": "yarn build"
+    "postinstall": "yarn build"
   },
   "dependencies": {
+    "@react-components/shared": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo&scripts.prepare=%26%26%20yarn%20build",
     "@react-google-maps/api": "^2.8.1",
     "flow-copy-source": "^2.0.9",
     "i18next": "^19.4.4",
@@ -28,12 +29,11 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@react-components/shared": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?feature/rc122_monorepo&scripts.prepare=%26%26%20yarn%20build",
-    "@react-components/webpack": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo",
     "react": ">= 16.13.1 < 18.0.0",
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
+    "@react-components/webpack": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc122_monorepo",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
