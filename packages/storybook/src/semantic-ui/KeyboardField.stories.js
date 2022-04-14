@@ -1,6 +1,6 @@
 // @flow
 
-import { KeyboardField } from '@react-components/semantic-ui';
+import { KeyboardField } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';

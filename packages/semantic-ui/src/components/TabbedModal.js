@@ -1,6 +1,6 @@
 // @flow
 
-import { Element } from '@react-components/shared';
+import { Element } from '@performant-software/shared-components';
 import React, { Component, type Node } from 'react';
 import { Header, Menu, Modal } from 'semantic-ui-react';
 import _ from 'underscore';

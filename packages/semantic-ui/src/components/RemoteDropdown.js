@@ -1,6 +1,6 @@
 // @flow
 
-import { Timer } from '@react-components/shared';
+import { Timer } from '@performant-software/shared-components';
 import React, { Component, createRef } from 'react';
 import { Dropdown, DropdownSearchInput, Icon } from 'semantic-ui-react';
 import _ from 'underscore';

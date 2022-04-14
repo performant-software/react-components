@@ -1,7 +1,7 @@
 // @flow
 
-import { AssociatedDropdown, EditPage } from '@react-components/semantic-ui';
-import { type EditContainerProps } from '@react-components/shared';
+import { AssociatedDropdown, EditPage } from '@performant-software/semantic-components';
+import { type EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';

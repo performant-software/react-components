@@ -1,6 +1,6 @@
 // @flow
 
-import { LazyImage } from '@react-components/semantic-ui';
+import { LazyImage } from '@performant-software/semantic-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';

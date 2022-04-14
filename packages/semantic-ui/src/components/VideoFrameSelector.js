@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser } from '@react-components/shared';
+import { Browser } from '@performant-software/shared-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import {

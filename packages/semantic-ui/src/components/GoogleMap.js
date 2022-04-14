@@ -1,6 +1,6 @@
 // @flow
 
-import { Map } from '@react-components/shared';
+import { Map } from '@performant-software/shared-components';
 import {
   GoogleMap as MapComponent,
   Marker

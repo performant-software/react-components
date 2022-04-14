@@ -1,6 +1,6 @@
 // @flow
 
-import { LazyVideo, VideoFrameSelector } from '@react-components/semantic-ui';
+import { LazyVideo, VideoFrameSelector } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import video from '../assets/SampleVideo.mp4';

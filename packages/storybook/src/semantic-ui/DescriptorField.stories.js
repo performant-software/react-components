@@ -1,6 +1,6 @@
 // @flow
 
-import { DescriptorField } from '@react-components/semantic-ui';
+import { DescriptorField } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, number, text } from '@storybook/addon-knobs';

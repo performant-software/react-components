@@ -1,6 +1,6 @@
 // @flow
 
-import { type EditContainerProps } from '@react-components/shared';
+import { type EditContainerProps } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,

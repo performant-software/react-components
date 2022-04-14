@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser } from '@react-components/shared';
+import { Browser } from '@performant-software/shared-components';
 import React, { Component, createRef, type Element } from 'react';
 import {
   Checkbox,

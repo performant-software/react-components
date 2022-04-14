@@ -1,6 +1,6 @@
 // @flow
 
-import { Keyboard } from '@react-components/shared';
+import { Keyboard } from '@performant-software/shared-components';
 import React, { Component, type Node } from 'react';
 import { Form, Segment, Transition } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';

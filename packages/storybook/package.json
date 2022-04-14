@@ -1,5 +1,5 @@
 {
-  "name": "@react-components/stories",
+  "name": "@performant-software/storybook",
   "version": "0.1.0",
   "description": "A package of stories to display components in this library.",
   "private": true,
@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
-    "@react-components/semantic-ui": "0.1.0",
-    "@react-components/shared": "^0.1.0",
+    "@performant-software/semantic-components": "0.1.0",
+    "@performant-software/shared-components": "^0.1.0",
     "@storybook/addon-a11y": "^6.4.21",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-knobs": "^6.4.0",
@@ -31,7 +31,6 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
     "simple-keyboard-layouts": "^3.1.87",
-    "typescript": "^4.6.3",
     "underscore": "^1.13.2"
   }
 }

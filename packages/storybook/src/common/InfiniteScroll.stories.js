@@ -1,6 +1,6 @@
 // @flow
 
-import { InfiniteScroll, useDragDrop } from '@react-components/shared';
+import { InfiniteScroll, useDragDrop } from '@performant-software/shared-components';
 import React, { useEffect, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';

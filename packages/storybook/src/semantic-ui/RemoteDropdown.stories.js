@@ -1,6 +1,6 @@
 // @flow
 
-import { RemoteDropdown } from '@react-components/semantic-ui';
+import { RemoteDropdown } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';

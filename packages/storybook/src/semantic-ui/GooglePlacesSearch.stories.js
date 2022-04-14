@@ -1,7 +1,7 @@
 // @flow
 
-import { GooglePlacesSearch } from '@react-components/semantic-ui';
-import { GoogleScript } from '@react-components/shared';
+import { GooglePlacesSearch } from '@performant-software/semantic-components';
+import { GoogleScript } from '@performant-software/shared-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';

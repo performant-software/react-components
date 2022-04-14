@@ -1,6 +1,6 @@
 // @flow
 
-import { useEditContainer, type EditContainerProps } from '@react-components/shared';
+import { useEditContainer, type EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { Form, Modal } from 'semantic-ui-react';
 

@@ -1,6 +1,6 @@
 // @flow
 
-import { Object as ObjectUtils, Timer } from '@react-components/shared';
+import { Object as ObjectUtils, Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType } from 'react';
 import _ from 'underscore';
 import { Input, Message } from 'semantic-ui-react';

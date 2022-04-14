@@ -1,6 +1,6 @@
 // @flow
 
-import { Timer, Utility } from '@react-components/shared';
+import { Timer, Utility } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import {
   Button,

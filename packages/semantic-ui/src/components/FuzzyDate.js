@@ -1,6 +1,6 @@
 // @flow
 
-import { Calendar, Browser } from '@react-components/shared';
+import { Calendar, Browser } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import {
   Button,

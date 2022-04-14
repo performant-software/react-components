@@ -1,7 +1,7 @@
 // @flow
 
-import { ArrowButtons, FuzzyDate } from '@react-components/semantic-ui';
-import { Calendar } from '@react-components/shared';
+import { ArrowButtons, FuzzyDate } from '@performant-software/semantic-components';
+import { Calendar } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';

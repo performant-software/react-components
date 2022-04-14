@@ -1,6 +1,6 @@
 // @flow
 
-import { Timer } from '@react-components/shared';
+import { Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType, type Element } from 'react';
 import { withTranslation } from 'react-i18next';
 import {

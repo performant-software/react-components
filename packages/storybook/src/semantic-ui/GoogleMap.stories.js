@@ -1,7 +1,7 @@
 // @flow
 
-import { GoogleMap } from '@react-components/semantic-ui';
-import { GoogleScript } from '@react-components/shared';
+import { GoogleMap } from '@performant-software/semantic-components';
+import { GoogleScript } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { Form } from 'semantic-ui-react';

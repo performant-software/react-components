@@ -1,6 +1,6 @@
 // @flow
 
-import { InfiniteScroll } from '@react-components/shared';
+import { InfiniteScroll } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
 import { Loader } from 'semantic-ui-react';

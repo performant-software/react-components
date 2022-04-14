@@ -1,5 +1,5 @@
 {
-  "name": "@react-components/webpack",
+  "name": "@performant-software/webpack-config",
   "version": "0.1.0",
   "description": "A shareable and customizable Webpack configuration.",
   "private": true,
