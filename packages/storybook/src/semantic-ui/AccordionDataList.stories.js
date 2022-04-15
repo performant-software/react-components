@@ -33,7 +33,7 @@ const data = [{
     name: 'Child 3',
     children: [{
       id: 6,
-      name: 'Grandchild 1',
+      name: 'Grandchild 2',
       parent_id: 5
     }]
   }]
