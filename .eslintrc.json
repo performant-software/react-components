@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": [
     "plugin:flowtype/recommended",
@@ -22,7 +23,8 @@
   },
   "plugins": [
     "flowtype",
-    "react"
+    "react",
+    "jest"
   ],
   "rules": {
     "class-methods-use-this": "off",

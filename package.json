@@ -9,18 +9,39 @@
     "build-storybook": "yarn --cwd packages/storybook build",
     "flow": "flow",
     "storybook": "yarn --cwd packages/storybook storybook",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "babel-jest": "^27.5.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "eslint": "^7.1.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-flowtype": "^5.9.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^26.1.4",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-storybook": "^0.5.7",
     "flow-bin": "^0.123.0",
+    "jest": "^27.5.1",
     "lerna": "^4.0.0"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "@performant-software/shared",
+        "testMatch": [
+          "<rootDir>/packages/**/*.spec.js"
+        ]
+      }
+    ],
+    "testRegex": ".*\\.spec\\.js$",
+    "testEnvironment": "jest-environment-node",
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "verbose": true
   }
 }
