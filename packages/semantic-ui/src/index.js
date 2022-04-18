@@ -49,6 +49,7 @@ export { default as SaveButton } from './components/SaveButton';
 export { default as Selectize } from './components/Selectize';
 export { default as SelectizeHeader } from './components/SelectizeHeader';
 export { default as TabbedModal } from './components/TabbedModal';
+export { default as TabsMenu } from './components/TabsMenu';
 export { default as TagsList } from './components/TagsList';
 export { default as Toaster } from './components/Toaster';
 export { default as VideoFrameSelector } from './components/VideoFrameSelector';
