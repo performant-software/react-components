@@ -53,6 +53,7 @@ export { default as PlayButton } from './components/PlayButton';
 export { default as PhotoViewer } from './components/PhotoViewer';
 export { default as RemoteDropdown } from './components/RemoteDropdown';
 export { default as SaveButton } from './components/SaveButton';
+export { default as Section } from './components/Section';
 export { default as Selectize } from './components/Selectize';
 export { default as SelectizeHeader } from './components/SelectizeHeader';
 export { default as TabbedModal } from './components/TabbedModal';

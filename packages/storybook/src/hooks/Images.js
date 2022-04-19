@@ -3,12 +3,7 @@
 import { faker } from '@faker-js/faker';
 import React, { useMemo, type ComponentType } from 'react';
 import _ from 'underscore';
-
-const getRandomIntInclusive = (min, max) => {
-  const minimum = Math.ceil(min);
-  const maximum = Math.floor(max);
-  return Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
-};
+import NumberUtils from '../utils/Number';
 
 const withImages = (WrappedComponent: ComponentType<any>, imageCount: number) => (props: any) => {
   /**
@@ -23,9 +18,9 @@ const withImages = (WrappedComponent: ComponentType<any>, imageCount: number) =>
       i.push({
         id: index,
         image: `https://picsum.photos/500?random=${index}`,
-        title: faker.random.words(getRandomIntInclusive(1, 3)),
+        title: faker.random.words(NumberUtils.getRandomInt(1, 3)),
         subtitle: faker.date.past().toLocaleDateString(),
-        description: faker.lorem.sentences(getRandomIntInclusive(1, 2)),
+        description: faker.lorem.sentences(NumberUtils.getRandomInt(1, 2)),
         alt: `Image ${index}`,
         type: 'image'
       });
