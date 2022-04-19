@@ -1,10 +1,10 @@
 // @flow
 
-import { GoogleMap } from '@performant-software/semantic-components';
-import { GoogleScript } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { Form } from 'semantic-ui-react';
+import GoogleMap from '../../../semantic-ui/src/components/GoogleMap';
+import GoogleScript from '../../../shared/src/components/GoogleScript';
 
 export default {
   title: 'Components/Semantic UI/GoogleMap',

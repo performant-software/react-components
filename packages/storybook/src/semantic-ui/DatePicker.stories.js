@@ -1,9 +1,9 @@
 // @flow
 
-import { DatePicker } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { Form } from 'semantic-ui-react';
+import DatePicker from '../../../semantic-ui/src/components/DatePicker';
 import 'react-calendar/dist/Calendar.css';
 
 export default {

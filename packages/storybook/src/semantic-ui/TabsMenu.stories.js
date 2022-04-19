@@ -1,8 +1,8 @@
 // @flow
 
-import { TabsMenu } from '@performant-software/semantic-components';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
+import TabsMenu from '../../../semantic-ui/src/components/TabsMenu';
 
 export default {
   title: 'Components/Semantic UI/TabsMenu'
@@ -17,10 +17,12 @@ export const Default = () => (
       label: 'Profile',
       visible: true
     }, {
+      active: false,
       key: 'preferences',
       label: 'Preferences',
       visible: true
     }, {
+      active: false,
       key: 'settings',
       label: 'Settings',
       visible: true

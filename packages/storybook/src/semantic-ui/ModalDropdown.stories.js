@@ -1,10 +1,10 @@
 // @flow
 
-import { ModalDropdown } from '@performant-software/semantic-components';
 import React from 'react';
 import { Form, Modal } from 'semantic-ui-react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
+import ModalDropdown from '../../../semantic-ui/src/components/ModalDropdown';
 
 export default {
   title: 'Components/Semantic UI/ModalDropdown',

@@ -1,12 +1,13 @@
 // @flow
 
-import { InfiniteScroll, useDragDrop } from '@performant-software/shared-components';
 import React, { useEffect, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
 import Cars from '../data/Cars.json';
+import InfiniteScroll from '../../../shared/src/components/InfiniteScroll';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Common/InfiniteScroll',

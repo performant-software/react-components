@@ -1,11 +1,11 @@
 // @flow
 
-import { GooglePlacesSearch } from '@performant-software/semantic-components';
-import { GoogleScript } from '@performant-software/shared-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { Input } from 'semantic-ui-react';
+import GooglePlacesSearch from '../../../semantic-ui/src/components/GooglePlacesSearch';
+import GoogleScript from '../../../shared/src/components/GoogleScript';
 
 export default {
   title: 'Components/Semantic UI/GooglePlacesSearch',

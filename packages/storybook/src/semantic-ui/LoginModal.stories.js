@@ -1,10 +1,10 @@
 // @flow
 
-import { LoginModal } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
+import LoginModal from '../../../semantic-ui/src/components/LoginModal';
 
 export default {
   title: 'Components/Semantic UI/LoginModal',

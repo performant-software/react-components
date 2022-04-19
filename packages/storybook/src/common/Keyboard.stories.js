@@ -1,15 +1,14 @@
 // @flow
 
-import { Keyboard } from '@performant-software/shared-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
-
 import ArabicLayout from 'simple-keyboard-layouts/build/layouts/arabic';
 import ChineseLayout from 'simple-keyboard-layouts/build/layouts/chinese';
 import EnglishLayout from 'simple-keyboard-layouts/build/layouts/english';
 import JapaneseLayout from 'simple-keyboard-layouts/build/layouts/japanese';
+import Keyboard from '../../../shared/src/components/Keyboard';
 
 export default {
   title: 'Components/Common/Keyboard',

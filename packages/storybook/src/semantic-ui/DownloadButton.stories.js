@@ -1,8 +1,8 @@
 // @flow
 
-import { DownloadButton } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
+import DownloadButton from '../../../semantic-ui/src/components/DownloadButton';
 import image from '../assets/test-image.jpg';
 
 export default {

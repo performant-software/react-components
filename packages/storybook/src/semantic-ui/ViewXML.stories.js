@@ -1,9 +1,10 @@
 // @flow
 
-import { LinkButton, ViewXML } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
+import LinkButton from '../../../semantic-ui/src/components/LinkButton';
+import ViewXML from '../../../semantic-ui/src/components/ViewXML';
 
 const xml = '<?xml version="1.0"?>\n'
   + '<catalog>\n'
