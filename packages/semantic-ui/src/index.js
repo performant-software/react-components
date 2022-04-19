@@ -59,6 +59,7 @@ export { default as SelectizeHeader } from './components/SelectizeHeader';
 export { default as TabbedModal } from './components/TabbedModal';
 export { default as TabsMenu } from './components/TabsMenu';
 export { default as TagsList } from './components/TagsList';
+export { default as Thumbnail } from './components/Thumbnail';
 export { default as Toaster } from './components/Toaster';
 export { default as VideoFrameSelector } from './components/VideoFrameSelector';
 export { default as VideoPlayer } from './components/VideoPlayer';
