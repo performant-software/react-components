@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
+    "@faker-js/faker": "^6.1.2",
     "@performant-software/semantic-components": "0.1.0",
     "@performant-software/shared-components": "^0.1.0",
     "@storybook/addon-a11y": "^6.4.21",

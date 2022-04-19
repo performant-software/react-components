@@ -1,0 +1,72 @@
+.mediaGrid {
+  position: relative;
+}
+
+.mediaGrid .grid1 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.mediaGrid .grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.mediaGrid .grid3 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 235px);
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.mediaGrid .grid3 .mediaImage:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.mediaGrid .grid3 .mediaImage {
+  grid-column: span 2;
+}
+
+.mediaGrid .grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 235px);
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.mediaGrid .grid4 .mediaImage:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.mediaGrid .grid4 .mediaImage:nth-child(4) {
+  grid-column: span 2;
+}
+
+.mediaGrid .grid5 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.mediaGrid .grid5 .mediaImage:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.mediaGrid .mediaImage {
+  position: relative;
+}
+
+.mediaGrid .mediaImage div {
+  height: 100%;
+  width: 100%;
+}

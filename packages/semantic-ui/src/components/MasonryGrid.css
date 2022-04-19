@@ -1,0 +1,48 @@
+.masonryGrid {
+  display: flex;
+}
+
+.masonryGrid > .column {
+  flex: 1
+}
+
+.masonryGrid > .column > .itemContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+}
+
+.masonryGrid .placeholderWrapper {
+  height: 100%;
+}
+
+.masonryGrid > .column > .itemContainer > .item {
+  position: relative;
+  width: 100%;
+  z-index: 500;
+}
+
+.masonryGrid > .column > .itemContainer > .item .favoriteContainer {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  z-index: 600;
+}
+
+.masonryGrid > .column > .itemContainer > .item .extraContainer {
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+}
+
+.masonryGrid > .column > .itemContainer > .item .image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.masonryGrid > .column > .itemContainer > .item .ui.transition {
+  display: flex !important;
+  z-index: 500;
+}

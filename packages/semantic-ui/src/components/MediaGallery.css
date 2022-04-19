@@ -1,0 +1,37 @@
+.mediaGallery.ui.page.dimmer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mediaGallery.ui.page.dimmer .imageContainer {
+  position: relative;
+  flex-grow: 1;
+}
+
+.mediaGallery.ui.page.dimmer .controls {
+  position: absolute;
+}
+
+.mediaGallery.ui.page.dimmer .left {
+  left: 1em;
+}
+
+.mediaGallery.ui.page.dimmer .right {
+  right: 1em;
+}
+
+.mediaGallery.ui.page.dimmer .top {
+  top: 1em;
+}
+
+.mediaGallery.ui.page.dimmer .middle {
+  top: 50%;
+}
+
+.mediaGallery.ui.page.transition > .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
