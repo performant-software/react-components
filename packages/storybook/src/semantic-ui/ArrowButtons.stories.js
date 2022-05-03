@@ -1,9 +1,9 @@
 // @flow
 
-import { ArrowButtons } from '@performant-software/semantic-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
+import ArrowButtons from '../../../semantic-ui/src/components/ArrowButtons';
 
 export default {
   title: 'Components/Semantic UI/ArrowButtons',

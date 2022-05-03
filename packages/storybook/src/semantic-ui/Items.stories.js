@@ -1,7 +1,5 @@
 // @flow
 
-import { Items } from '@performant-software/semantic-components';
-import { useDragDrop } from '@performant-software/shared-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
@@ -13,7 +11,9 @@ import {
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import Items from '../../../semantic-ui/src/components/Items';
 import image from '../assets/test-image.jpg';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/Items',

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.8.1",
+    "axios": "^0.26.1",
     "i18next": "^19.4.4",
     "moment": "^2.27.0",
     "moment-islamic-civil": "ACGC/moment-islamic-civil",

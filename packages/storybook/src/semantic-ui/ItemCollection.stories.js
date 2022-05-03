@@ -1,7 +1,5 @@
 // @flow
 
-import { EditModal, ItemCollection, TabbedModal } from '@performant-software/semantic-components';
-import { useDragDrop } from '@performant-software/shared-components';
 import React, { createRef, useEffect, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -15,6 +13,10 @@ import {
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import { SemanticColors } from '../services/Colors';
+import EditModal from '../../../semantic-ui/src/components/EditModal';
+import ItemCollection from '../../../semantic-ui/src/components/ItemCollection';
+import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/ItemCollection',

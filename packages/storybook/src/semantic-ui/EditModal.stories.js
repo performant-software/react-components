@@ -1,7 +1,5 @@
 // @flow
 
-import { AssociatedDropdown, EditModal } from '@performant-software/semantic-components';
-import { type EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
@@ -15,6 +13,10 @@ import {
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
+import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
+import EditModal from '../../../semantic-ui/src/components/EditModal';
+
+import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
 
 export default {
   title: 'Components/Semantic UI/EditModal',

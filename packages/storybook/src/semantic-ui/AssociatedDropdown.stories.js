@@ -1,6 +1,5 @@
 // @flow
 
-import { AssociatedDropdown } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -8,6 +7,7 @@ import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
+import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
 
 export default {
   title: 'Components/Semantic UI/AssociatedDropdown',

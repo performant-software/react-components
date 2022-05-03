@@ -1,12 +1,12 @@
 // @flow
 
-import { KeyboardField } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import English from 'simple-keyboard-layouts/build/layouts/english';
 import Arabic from 'simple-keyboard-layouts/build/layouts/arabic';
+import KeyboardField from '../../../semantic-ui/src/components/KeyboardField';
 
 export default {
   title: 'Components/Semantic UI/KeyboardField',

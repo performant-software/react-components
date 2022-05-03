@@ -1,10 +1,10 @@
 // @flow
 
-import { RemoteDropdown } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import Api from '../services/Api';
+import RemoteDropdown from '../../../semantic-ui/src/components/RemoteDropdown';
 
 export default {
   title: 'Components/Semantic UI/RemoteDropdown',

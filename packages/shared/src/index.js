@@ -1,5 +1,12 @@
 // @flow
 
+// API
+export { default as Attachments } from './api/Attachments';
+export { default as BaseService } from './api/BaseService';
+export { default as BaseTransform } from './api/BaseTransform';
+export { default as FormDataTransform } from './api/FormDataTransform';
+export { default as NestedAttributesTransform } from './api/NestedAttributesTransform';
+
 // Components
 export { default as useEditContainer } from './components/EditContainer';
 export { default as withGoogleAnalytics } from './components/GoogleAnalytics';

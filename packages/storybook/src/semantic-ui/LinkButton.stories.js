@@ -1,10 +1,10 @@
 // @flow
 
-import { LinkButton } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
+import LinkButton from '../../../semantic-ui/src/components/LinkButton';
 
 export default {
   title: 'Components/Semantic UI/LinkButton',

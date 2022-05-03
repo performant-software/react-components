@@ -1,10 +1,10 @@
 // @flow
 
-import { LazyDocument } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { Item } from 'semantic-ui-react';
 import image from '../assets/test-image.jpg';
+import LazyDocument from '../../../semantic-ui/src/components/LazyDocument';
 
 export default {
   title: 'Components/Semantic UI/LazyDocument',

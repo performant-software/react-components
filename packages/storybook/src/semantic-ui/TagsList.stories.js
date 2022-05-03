@@ -1,8 +1,8 @@
 // @flow
 
-import { TagsList } from '@performant-software/semantic-components';
 import React from 'react';
 import { withKnobs, array } from '@storybook/addon-knobs';
+import TagsList from '../../../semantic-ui/src/components/TagsList';
 
 export default {
   title: 'Components/Semantic UI/TagsList',

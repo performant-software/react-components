@@ -1,6 +1,5 @@
 // @flow
 
-import { LazyVideo } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
@@ -11,8 +10,9 @@ import {
   Modal
 } from 'semantic-ui-react';
 import image from '../assets/test-image.jpg';
-import video from '../assets/SampleVideo.mp4';
+import LazyVideo from '../../../semantic-ui/src/components/LazyVideo';
 import portraitImage from '../assets/portrait-test-image.jpg';
+import video from '../assets/SampleVideo.mp4';
 
 export default {
   title: 'Components/Semantic UI/LazyVideo',

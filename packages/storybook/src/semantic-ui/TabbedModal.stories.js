@@ -1,6 +1,5 @@
 // @flow
 
-import { TabbedModal } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import {
@@ -10,6 +9,7 @@ import {
   text
 } from '@storybook/addon-knobs';
 import _ from 'underscore';
+import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 
 export default {
   title: 'Components/Semantic UI/TabbedModal',

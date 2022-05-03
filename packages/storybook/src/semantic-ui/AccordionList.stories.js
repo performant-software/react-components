@@ -1,12 +1,12 @@
 // @flow
 
-import { AccordionList } from '@performant-software/semantic-components';
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import { Button } from 'semantic-ui-react';
+import AccordionList from '../../../semantic-ui/src/components/AccordionList';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 

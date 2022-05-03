@@ -1,7 +1,5 @@
 // @flow
 
-import { AssociatedDropdown, EditPage } from '@performant-software/semantic-components';
-import { type EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
@@ -10,6 +8,10 @@ import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
+import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
+import EditPage from '../../../semantic-ui/src/components/EditPage';
+
+import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
 
 export default {
   title: 'Components/Semantic UI/EditPage',

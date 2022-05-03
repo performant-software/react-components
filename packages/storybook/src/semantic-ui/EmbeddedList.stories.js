@@ -1,7 +1,5 @@
 // @flow
 
-import { EditModal, EmbeddedList, TabbedModal } from '@performant-software/semantic-components';
-import { useDragDrop } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -10,6 +8,10 @@ import { Button, Container, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import { SemanticColors } from '../services/Colors';
+import EditModal from '../../../semantic-ui/src/components/EditModal';
+import EmbeddedList from '../../../semantic-ui/src/components/EmbeddedList';
+import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/EmbeddedList',
