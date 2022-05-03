@@ -19,10 +19,10 @@ type Props = {
     props?: any,
     onChange?: (filter: any) => Promise<any>
   },
-  onDelete: (item: any) => Promise<any>,
+  onDelete?: (item: any) => Promise<any>,
   onDeleteAll?: () => Promise<any>,
   onLoad: (params: any) => Promise<any>,
-  onSave: (item: any) => Promise<any>,
+  onSave?: (item: any) => Promise<any>,
   perPageOptions?: Array<number>,
   polling?: number,
   resolveErrors?: (error: any) => Array<string>,
@@ -251,6 +251,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
      */
     onDelete(selectedItem: any) {
+      if (!this.props.onDelete) {
+        return Promise.resolve();
+      }
+
       return this.props
         .onDelete(selectedItem)
         .then(this.afterDelete.bind(this))
@@ -333,6 +337,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @returns {Q.Promise<any> | Promise<R> | Promise<any> | void | *}
      */
     onSave(item: any) {
+      if (!this.props.onSave) {
+        return Promise.resolve();
+      }
+
       return Promise.resolve(this.props.onSave(item))
         .then(() => this.setState({ saved: true }, this.fetchData.bind(this)));
     }
