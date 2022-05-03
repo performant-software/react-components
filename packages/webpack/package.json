@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/webpack-config",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A shareable and customizable Webpack configuration.",
   "private": true,
   "dependencies": {
