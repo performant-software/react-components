@@ -1,13 +1,12 @@
 {
   "name": "@performant-software/shared-components",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./build/index.js",
   "style": "./build/styles.css",
   "scripts": {
-    "build": "webpack --mode production && flow-copy-source -v src types",
-    "postinstall": "yarn build"
+    "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.8.1",
@@ -29,7 +28,7 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@performant-software/webpack-config": "^0.5.1",
+    "@performant-software/webpack-config": "^0.5.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

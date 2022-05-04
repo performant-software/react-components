@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/storybook",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A package of stories to display components in this library.",
   "private": true,
   "scripts": {
