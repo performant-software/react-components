@@ -6,7 +6,8 @@
   "main": "./build/index.js",
   "style": "./build/styles.css",
   "scripts": {
-    "build": "webpack --mode production && flow-copy-source -v src types"
+    "build": "webpack --mode production && flow-copy-source -v src types",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.8.1",
