@@ -10,6 +10,7 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
+    "@performant-software/webpack-config": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc129_customize_axios",
     "@react-google-maps/api": "^2.8.1",
     "axios": "^0.26.1",
     "i18next": "^19.4.4",
@@ -29,7 +30,6 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@performant-software/webpack-config": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc129_customize_axios",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

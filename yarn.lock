@@ -2454,6 +2454,35 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
+"@performant-software/webpack-config@https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc129_customize_axios":
+  version "0.5.2"
+  resolved "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc129_customize_axios#7d532b514f98cd3bc8f31cc1ed20f5ac51a301e2"
+  dependencies:
+    "@babel/cli" "^7.8.4"
+    "@babel/core" "^7.9.6"
+    "@babel/plugin-external-helpers" "^7.8.3"
+    "@babel/plugin-proposal-class-properties" "^7.12.1"
+    "@babel/preset-env" "^7.9.6"
+    "@babel/preset-flow" "^7.9.0"
+    "@babel/preset-react" "^7.9.4"
+    babel-eslint "^10.1.0"
+    babel-loader "^8.1.0"
+    buffer "^6.0.3"
+    clean-webpack-plugin "^4.0.0"
+    css-loader "^3.5.3"
+    dotenv "^16.0.0"
+    flow-copy-source "^2.0.9"
+    mini-css-extract-plugin "^2.6.0"
+    path "^0.12.7"
+    raw-loader "^4.0.1"
+    sass-loader "^11.0.1"
+    stream-browserify "^3.0.0"
+    style-loader "^1.2.1"
+    webpack "^5.71.0"
+    webpack-cli "^4.9.2"
+    webpack-merge "^5.8.0"
+    webpack-node-externals "^3.0.0"
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.1":
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.5.tgz#e77aac783bd079f548daa0a7f080ab5b5a9741ca"
