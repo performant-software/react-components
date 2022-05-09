@@ -1,6 +1,6 @@
 // @flow
 
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse, type AxiosStatic } from 'axios';
 
 /**
  * Base class for making API calls. This class uses Axios under the hood and a customizable transform class for
@@ -25,9 +25,7 @@ class BaseService {
    */
   create(item: any): Promise<AxiosResponse> {
     const transform = this.getTransform();
-
-    // $FlowFixMe - Flow doesn't currently support abstract classes
-    return axios.post(this.getBaseUrl(), transform.toPayload(item), this.getConfig());
+    return this.getAxios().post(this.getBaseUrl(), transform.toPayload(item), this.getConfig());
   }
 
   /**
@@ -38,7 +36,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   delete(item: any) {
-    return axios.delete(`${this.getBaseUrl()}/${item.id}`);
+    return this.getAxios().delete(`${this.getBaseUrl()}/${item.id}`);
   }
 
   /**
@@ -47,7 +45,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   fetchAll(params: any) {
-    return axios.get(this.getBaseUrl(), { params });
+    return this.getAxios().get(this.getBaseUrl(), { params });
   }
 
   /**
@@ -56,7 +54,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   fetchOne(id: number) {
-    return axios.get(`${this.getBaseUrl()}/${id}`);
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}`);
   }
 
   /**
@@ -78,7 +76,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   search(params: any) {
-    return axios.post(`${this.getBaseUrl()}/search`, params);
+    return this.getAxios().post(`${this.getBaseUrl()}/search`, params);
   }
 
   /**
@@ -90,9 +88,7 @@ class BaseService {
    */
   update(item: any) {
     const transform = this.getTransform();
-
-    // $FlowFixMe - Flow doesn't currently support abstract classes
-    return axios.put(`${this.getBaseUrl()}/${item.id}`, transform.toPayload(item), this.getConfig());
+    return this.getAxios().put(`${this.getBaseUrl()}/${item.id}`, transform.toPayload(item), this.getConfig());
   }
 
   // protected
@@ -116,11 +112,32 @@ class BaseService {
   }
 
   /**
+   * Returns the axios instance object to use for API calls.
+   *
+   * @returns {null}
+   */
+  getInstance() {
+    // Implemented in concrete classes
+    return null;
+  }
+
+  /**
    * Returns the transform object. This class will be used to generate the object sent on POST/PUT requests.
    */
   getTransform() {
     // Implemented in concrete classes.
     return {};
+  }
+
+  // private
+
+  /**
+   * Returns the axios instance to use for API calls.
+   *
+   * @returns {*|AxiosStatic}
+   */
+  getAxios(): AxiosStatic {
+    return this.getInstance() || axios;
   }
 }
 
