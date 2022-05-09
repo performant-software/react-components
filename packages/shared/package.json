@@ -6,8 +6,7 @@
   "main": "./build/index.js",
   "style": "./build/styles.css",
   "scripts": {
-    "build": "webpack --mode production && flow-copy-source -v src types",
-    "postinstall": "yarn build"
+    "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
     "@performant-software/webpack-config": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?feature/rc129_customize_axios",
