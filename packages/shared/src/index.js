@@ -20,8 +20,6 @@ export { default as Attachments } from './transforms/Attachments';
 export { default as BaseTransform } from './transforms/BaseTransform';
 export { default as FormDataTransform } from './transforms/FormDataTransform';
 export { default as NestedAttributesTransform } from './transforms/NestedAttributesTransform';
-export { default as ReferenceCodesTransform } from './transforms/ReferenceCodes';
-export { default as ReferenceTableTransform } from './transforms/ReferenceTable';
 
 // Utils
 export * as Browser from './utils/Browser';

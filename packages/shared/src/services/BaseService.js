@@ -7,24 +7,22 @@ import axios, { type AxiosResponse } from 'axios';
  * PUT/POST requests.
  */
 class BaseService {
-  axios: typeof axios;
-
   /**
    * Allows for static configuration of the axios object.
    *
    * @param callback
    */
-  static configure(callback: (axios) => void) {
+  static configure(callback: (axiosInstance: typeof axios) => void) {
     callback(axios);
   }
 
   /**
    * Constructs a new BaseService object. This constructor should never be used directly.
-   *
-   * @param axiosInstance
    */
-  constructor(axiosInstance?: typeof axios) {
-    this.axios = axiosInstance || axios;
+  constructor() {
+    if (this.constructor === BaseService) {
+      throw new TypeError('Abstract class "BaseService" cannot be instantiated directly.');
+    }
   }
 
   /**
@@ -36,7 +34,7 @@ class BaseService {
    */
   create(item: any): Promise<AxiosResponse> {
     const transform = this.getTransform();
-    return this.axios.post(this.getBaseUrl(), transform.toPayload(item), this.getConfig());
+    return axios.post(this.getBaseUrl(), transform.toPayload(item), this.getConfig());
   }
 
   /**
@@ -47,7 +45,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   delete(item: any) {
-    return this.axios.delete(`${this.getBaseUrl()}/${item.id}`);
+    return axios.delete(`${this.getBaseUrl()}/${item.id}`);
   }
 
   /**
@@ -56,7 +54,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   fetchAll(params: any) {
-    return this.axios.get(this.getBaseUrl(), { params });
+    return axios.get(this.getBaseUrl(), { params });
   }
 
   /**
@@ -65,7 +63,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   fetchOne(id: number) {
-    return this.axios.get(`${this.getBaseUrl()}/${id}`);
+    return axios.get(`${this.getBaseUrl()}/${id}`);
   }
 
   /**
@@ -87,7 +85,7 @@ class BaseService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   search(params: any) {
-    return this.axios.post(`${this.getBaseUrl()}/search`, params);
+    return axios.post(`${this.getBaseUrl()}/search`, params);
   }
 
   /**
@@ -99,7 +97,7 @@ class BaseService {
    */
   update(item: any) {
     const transform = this.getTransform();
-    return this.axios.put(`${this.getBaseUrl()}/${item.id}`, transform.toPayload(item), this.getConfig());
+    return axios.put(`${this.getBaseUrl()}/${item.id}`, transform.toPayload(item), this.getConfig());
   }
 
   // protected
