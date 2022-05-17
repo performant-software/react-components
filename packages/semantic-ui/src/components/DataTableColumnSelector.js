@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, type ComponentType } from 'react';
+import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import Draggable from './Draggable';
@@ -10,7 +10,8 @@ import type { Column } from './DataTable';
 
 type Props = {
   className: string,
-  columns: Array<Column>
+  columns: Array<Column>,
+  renderListHeader?: () => Element<any>
 };
 
 type State = {
@@ -107,37 +108,40 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      */
     renderHeader() {
       return (
-        <Dropdown
-          basic
-          button
-          icon='cog'
-          className='icon configure-button open-right'
-          simple
-        >
-          <Dropdown.Menu>
-            { this.state.columns
-              .filter((c) => c.label && c.label.length)
-              .map((c, index) => (
-                <Draggable
-                  id={c.name}
-                  index={index}
-                  key={c.name}
-                  onDrag={this.onDrag.bind(this)}
-                >
-                  <Dropdown.Item>
-                    <Icon
-                      name='bars'
-                    />
-                    <Checkbox
-                      checked={!c.hidden}
-                      label={c.label}
-                      onClick={this.onColumnCheckbox.bind(this, c)}
-                    />
-                  </Dropdown.Item>
-                </Draggable>
-              ))}
-          </Dropdown.Menu>
-        </Dropdown>
+        <>
+          { this.props.renderListHeader && this.props.renderListHeader() }
+          <Dropdown
+            basic
+            button
+            icon='cog'
+            className='icon configure-button open-right'
+            simple
+          >
+            <Dropdown.Menu>
+              { this.state.columns
+                .filter((c) => c.label && c.label.length)
+                .map((c, index) => (
+                  <Draggable
+                    id={c.name}
+                    index={index}
+                    key={c.name}
+                    onDrag={this.onDrag.bind(this)}
+                  >
+                    <Dropdown.Item>
+                      <Icon
+                        name='bars'
+                      />
+                      <Checkbox
+                        checked={!c.hidden}
+                        label={c.label}
+                        onClick={this.onColumnCheckbox.bind(this, c)}
+                      />
+                    </Dropdown.Item>
+                  </Draggable>
+                ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </>
       );
     }
   }
