@@ -10,6 +10,15 @@ class BaseService {
   axios: typeof axios;
 
   /**
+   * Allows for static configuration of the axios object.
+   *
+   * @param callback
+   */
+  static configure(callback: (axios) => void) {
+    callback(axios);
+  }
+
+  /**
    * Constructs a new BaseService object. This constructor should never be used directly.
    *
    * @param axiosInstance

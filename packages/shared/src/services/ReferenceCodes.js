@@ -25,4 +25,4 @@ class ReferenceCodes extends BaseService {
   }
 }
 
-export default ReferenceCodes;
+export default new ReferenceCodes();

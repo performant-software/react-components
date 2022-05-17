@@ -26,4 +26,4 @@ class ReferenceTables extends BaseService {
   }
 }
 
-export default ReferenceTables;
+export default new ReferenceTables();
