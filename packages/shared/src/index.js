@@ -1,12 +1,5 @@
 // @flow
 
-// API
-export { default as Attachments } from './api/Attachments';
-export { default as BaseService } from './api/BaseService';
-export { default as BaseTransform } from './api/BaseTransform';
-export { default as FormDataTransform } from './api/FormDataTransform';
-export { default as NestedAttributesTransform } from './api/NestedAttributesTransform';
-
 // Components
 export { default as useEditContainer } from './components/EditContainer';
 export { default as withGoogleAnalytics } from './components/GoogleAnalytics';
@@ -16,6 +9,19 @@ export { default as Keyboard } from './components/Keyboard';
 
 // I18n
 export { default as i18n } from './i18n/i18n';
+
+// Services
+export { default as BaseService } from './services/BaseService';
+export { default as ReferenceCodesService } from './services/ReferenceCodes';
+export { default as ReferenceTablesService } from './services/ReferenceTables';
+
+// Transforms
+export { default as Attachments } from './transforms/Attachments';
+export { default as BaseTransform } from './transforms/BaseTransform';
+export { default as FormDataTransform } from './transforms/FormDataTransform';
+export { default as NestedAttributesTransform } from './transforms/NestedAttributesTransform';
+export { default as ReferenceCodesTransform } from './transforms/ReferenceCodes';
+export { default as ReferenceTableTransform } from './transforms/ReferenceTable';
 
 // Utils
 export * as Browser from './utils/Browser';
