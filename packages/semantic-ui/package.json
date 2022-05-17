@@ -11,6 +11,7 @@
   "dependencies": {
     "@performant-software/shared-components": "^0.5.3",
     "@react-google-maps/api": "^2.8.1",
+    "axios": "^0.26.1",
     "flow-copy-source": "^2.0.9",
     "i18next": "^19.4.4",
     "react-calendar": "^3.3.0",

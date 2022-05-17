@@ -60,6 +60,13 @@
     },
     "loading": "Loading"
   },
+  "DataView": {
+    "labels": {
+      "details": "Details",
+      "noSort": "No sort",
+      "sortBy": "Sort by {{column}}"
+    }
+  },
   "EditProvider": {
     "errors": {
       "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
