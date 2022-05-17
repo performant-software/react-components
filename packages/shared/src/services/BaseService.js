@@ -8,6 +8,15 @@ import axios, { type AxiosResponse } from 'axios';
  */
 class BaseService {
   /**
+   * Allows for static configuration of the axios object.
+   *
+   * @param callback
+   */
+  static configure(callback: (axiosInstance: typeof axios) => void) {
+    callback(axios);
+  }
+
+  /**
    * Constructs a new BaseService object. This constructor should never be used directly.
    */
   constructor() {
@@ -25,8 +34,6 @@ class BaseService {
    */
   create(item: any): Promise<AxiosResponse> {
     const transform = this.getTransform();
-
-    // $FlowFixMe - Flow doesn't currently support abstract classes
     return axios.post(this.getBaseUrl(), transform.toPayload(item), this.getConfig());
   }
 
@@ -90,8 +97,6 @@ class BaseService {
    */
   update(item: any) {
     const transform = this.getTransform();
-
-    // $FlowFixMe - Flow doesn't currently support abstract classes
     return axios.put(`${this.getBaseUrl()}/${item.id}`, transform.toPayload(item), this.getConfig());
   }
 

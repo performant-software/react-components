@@ -6,7 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build-storybook": "yarn --cwd packages/storybook build",
+    "build-semantic": "yarn --cwd packages/semantic-ui build",
+    "build-shared": "yarn --cwd packages/shared build",
+    "build-storybook": "yarn build-shared && yarn build-semantic && yarn --cwd packages/storybook build",
     "flow": "flow",
     "storybook": "yarn --cwd packages/storybook storybook",
     "test": "jest"
