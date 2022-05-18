@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'underscore';
 import BaseTransform from './BaseTransform';
 import ReferenceCodes from './ReferenceCodes';
 
@@ -43,8 +44,10 @@ class ReferenceTable extends BaseTransform {
    */
   toPayload(referenceTable: ReferenceTableType) {
     return {
-      ...super.toPayload(referenceTable),
-      ...ReferenceCodes.toPayload(referenceTable)
+      reference_table: {
+        ..._.pick(referenceTable, this.getPayloadKeys()),
+        ...ReferenceCodes.toPayload(referenceTable)
+      }
     };
   }
 }
