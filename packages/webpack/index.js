@@ -74,8 +74,19 @@ module.exports = {
             }
           }
         }, {
-          test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          test: /\.(c|le)ss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'less-loader',
+              options: {
+                lessOptions: {
+                  math: 'always'
+                }
+              }
+            }
+          ],
           include: path.resolve(directory)
         }, {
           test: /\.scss$/,
@@ -89,6 +100,9 @@ module.exports = {
           resolve: {
             fullySpecified: false
           }
+        }, {
+          test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.png($|\?)/,
+          use: 'file-loader'
         }]
       }
     };
