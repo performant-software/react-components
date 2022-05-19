@@ -1,5 +1,8 @@
 // @flow
 
+// Semantic UI styles
+import './css/style.less';
+
 // Components
 export { default as AccordionDataList } from './components/AccordionDataList';
 export { default as AccordionList } from './components/AccordionList';
