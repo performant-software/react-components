@@ -116,6 +116,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
             button
             icon='cog'
             className='icon configure-button open-right'
+            closeOnBlur={false}
           >
             <Dropdown.Menu>
               { this.state.columns
@@ -129,6 +130,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
                   >
                     <Dropdown.Item
                       aria-dropeffect='move'
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Icon
                         name='bars'
