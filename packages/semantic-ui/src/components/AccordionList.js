@@ -267,6 +267,7 @@ class AccordionList extends Component<Props, State> {
           className='accordion-header'
         >
           <Input
+            aria-label='Search'
             autoFocus
             className='search'
             icon='search'
@@ -329,6 +330,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <Button
+        aria-label='Add'
         basic
         compact
         icon='plus'
@@ -349,6 +351,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <Checkbox
+        aria-label='Select All'
         onClick={(e, el) => this.props.onSelectAll(el, toBeSelected, this.state.items, e)}
         checked={!toBeSelected.length}
       />
@@ -399,6 +402,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <Button
+        aria-label='Delete'
         basic
         compact
         icon='trash'
@@ -421,6 +425,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <Button
+        aria-label='Edit'
         basic
         compact
         icon='edit'
@@ -443,6 +448,7 @@ class AccordionList extends Component<Props, State> {
 
     return (
       <Button
+        aria-label='Copy'
         basic
         compact
         icon='copy'
@@ -551,6 +557,7 @@ class AccordionList extends Component<Props, State> {
     const selected = this.props.selectedRows.find((r) => r.id === item.id);
     return (
       <Checkbox
+        aria-label='Select'
         key={`select-checkbox-${item.id}`}
         className='row-select-checkbox'
         onClick={(e, el) => this.props.onRowSelect(el, item, e)}

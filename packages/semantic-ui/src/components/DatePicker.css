@@ -36,7 +36,7 @@ div.react-calendar {
 }
 
 .react-calendar .react-calendar__month-view__days__day--neighboringMonth {
-  color: rgba(0,0,0,.4);
+  color: rgba(0,0,0,.54);
 }
 
 .react-calendar abbr[title] {
@@ -45,7 +45,7 @@ div.react-calendar {
 
 .react-calendar .react-calendar__tile--now {
   background-color: #fbbd08;
-  color: #fff;
+  color: #000000;
 }
 
 .react-calendar .react-calendar__tile--now:enabled:hover {
@@ -62,7 +62,7 @@ div.react-calendar {
 }
 
 .react-calendar .react-calendar__tile--active {
-  background-color: #2185d0;
+  background-color: #1d77bb;
   color: #fff;
 }
 

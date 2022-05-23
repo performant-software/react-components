@@ -118,12 +118,14 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
         <>
           <Button
             active={this.state.view === Views.list}
+            aria-label='List View'
             basic
             icon='list'
             onClick={() => this.setState({ view: Views.list })}
           />
           <Button
             active={this.state.view === Views.grid}
+            aria-label='Grid View'
             basic
             icon='grid layout'
             onClick={() => this.setState({ view: Views.grid })}
@@ -136,11 +138,13 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
               }}
             >
               <Button
+                aria-label='Sort by'
                 content={this.getSortValue()}
                 icon={this.props.sortDirection === SORT_ASCENDING ? 'sort alphabet up' : 'sort alphabet down'}
                 onClick={(e) => this.sortDropdown.handleClick(e)}
               />
               <Dropdown
+                aria-label='Sort'
                 className='button icon'
                 floating
                 options={_.map(this.props.sort, (sort) => ({

@@ -21,6 +21,9 @@ export default {
 
 export const Default = () => (
   <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
     preview={image}
     src={video}
   />
@@ -38,6 +41,9 @@ export const Placeholder = () => (
 
 export const ExtraButtons = () => (
   <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
     preview={image}
     src={video}
   >
@@ -68,6 +74,9 @@ export const onBlur = () => {
   return (
     <>
       <LazyVideo
+        image={{
+          alt: 'Test Image'
+        }}
         preview={image}
         src={video}
       >
@@ -100,6 +109,9 @@ export const CardContent = () => (
   <Card.Group>
     <Card>
       <LazyVideo
+        image={{
+          alt: 'First Image'
+        }}
         preview={image}
         src={video}
       />
@@ -109,6 +121,9 @@ export const CardContent = () => (
     </Card>
     <Card>
       <LazyVideo
+        image={{
+          alt: 'Portrait Image'
+        }}
         preview={portraitImage}
         src={video}
       />
@@ -118,6 +133,9 @@ export const CardContent = () => (
     </Card>
     <Card>
       <LazyVideo
+        image={{
+          alt: 'Third Image'
+        }}
         src={video}
       />
       <Card.Content
@@ -138,6 +156,9 @@ export const ListContent = () => (
     <Item>
       <Item.Image>
         <LazyVideo
+          image={{
+            alt: 'First Image'
+          }}
           preview={image}
           src={video}
         />
@@ -149,6 +170,9 @@ export const ListContent = () => (
     <Item>
       <Item.Image>
         <LazyVideo
+          image={{
+            alt: 'Portrait Image'
+          }}
           preview={portraitImage}
           src={video}
         />
@@ -160,6 +184,9 @@ export const ListContent = () => (
     <Item>
       <Item.Image>
         <LazyVideo
+          image={{
+            alt: 'Third Image'
+          }}
           src={video}
         />
       </Item.Image>
@@ -180,6 +207,9 @@ export const ListContent = () => (
 
 export const Embedded = () => (
   <LazyVideo
+    image={{
+      alt: 'YouTube Image'
+    }}
     embedded
     preview='http://img.youtube.com/vi/YXiZ8OsS3kk/0.jpg'
     src='https://www.youtube.com/embed/YXiZ8OsS3kk'

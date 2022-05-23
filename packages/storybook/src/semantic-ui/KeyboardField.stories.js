@@ -19,6 +19,7 @@ export const Default = () => {
   return (
     <Form>
       <KeyboardField
+        id='test-field'
         label={text('Field name', 'Field')}
         layout={English}
         name='test-field'
@@ -42,9 +43,10 @@ export const MultipleOnOneForm = () => {
   return (
     <Form>
       <KeyboardField
+        id='test-field-1'
         label={text('Field name', 'Field')}
         layout={English}
-        name='test-field'
+        name='test-field-1'
         onChange={(e, data) => setValue(data.value)}
         required={boolean('Required', false)}
         value={value}
@@ -55,6 +57,7 @@ export const MultipleOnOneForm = () => {
         />
       </KeyboardField>
       <KeyboardField
+        id='test-field-2'
         label={text('Field name', 'Field')}
         layout={Arabic}
         name='test-field-2'
@@ -123,6 +126,7 @@ export const WithAlternativeCharacters = () => {
   return (
     <Form>
       <KeyboardField
+        id='test-field'
         label={text('Field name', 'Field')}
         layout={exampleTransliterationLayout}
         name='test-field'

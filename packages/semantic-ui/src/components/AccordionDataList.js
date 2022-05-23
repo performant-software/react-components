@@ -61,6 +61,7 @@ const Accordion = useList((props: AccordionProps) => {
       <Button.Group>
         { _.map(actions, (action, index) => (
           <Button
+            aria-label={action.name}
             basic
             color={action.color}
             icon={action.icon}
@@ -166,11 +167,13 @@ const AccordionDataList = (props: Props) => {
         }}
       >
         <Button
+          aria-label='Sort by'
           content={sortValue}
           icon={props.sortDirection === SORT_ASCENDING ? 'sort alphabet up' : 'sort alphabet down'}
           onClick={(e) => sortDropdown.current && sortDropdown.current.handleClick(e)}
         />
         <Dropdown
+          aria-label='Sort by toggle'
           className='button icon'
           floating
           options={_.map(props.sort, (sort) => ({

@@ -170,6 +170,7 @@ const HorizontalCards = (props: Props) => {
     if (_.isString(image) || !image) {
       return (
         <Image
+          alt={item.alt}
           className='image-placeholder'
           src={image}
           style={{
@@ -201,12 +202,14 @@ const HorizontalCards = (props: Props) => {
             className='pagination'
           >
             <Button
+              aria-label='Left'
               basic
               circular
               icon='angle left'
               onClick={onPageChange.bind(this, -1)}
             />
             <Button
+              aria-label='Right'
               basic
               circular
               icon='angle right'

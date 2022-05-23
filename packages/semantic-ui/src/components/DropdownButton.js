@@ -34,12 +34,14 @@ const DropdownButton = (props: Props) => {
       color={props.color}
     >
       <Button
+        aria-label='Select'
         content={props.text}
         disabled={props.disabled}
         icon={props.icon}
         onClick={(e) => dropdownRef.current && dropdownRef.current.handleClick(e)}
       />
       <Dropdown
+        aria-label='Select'
         className='button icon'
         direction={props.direction}
         disabled={props.disabled}

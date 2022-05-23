@@ -12,6 +12,10 @@
   color: #fff;
 }
 
+.nested-accordion.ui.styled.accordion .title {
+  color: rgba(0,0,0,.6);
+}
+
 .nested-accordion .title > .container {
   display: flex;
   flex-direction: row;

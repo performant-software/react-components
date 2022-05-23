@@ -14,20 +14,20 @@ export const Default = () => {
 
   const config = {
     'Tag 1': {
-      background: '#51A3A3',
+      background: '#264653',
       color: 'white'
     },
     'Tag 2': {
-      background: '#75485E',
-      color: 'white'
+      background: '#2a9d8f',
+      color: 'black'
     },
     'Tag 3': {
-      background: '#CB904D',
-      color: 'white'
+      background: '#e9c46a',
+      color: 'black'
     },
     'Tag 4': {
-      background: '#DFCC74',
-      color: 'white'
+      background: '#f4a261',
+      color: 'black'
     }
   };
 

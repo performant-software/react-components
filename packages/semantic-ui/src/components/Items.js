@@ -168,6 +168,7 @@ class Items extends Component<Props, {}> {
           >
             { _.map(this.getActions(item), (action, actionIndex) => (
               <Button
+                aria-label={action.name}
                 basic
                 color={action.resolveColor ? action.resolveColor(item) : action.color}
                 icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
@@ -177,6 +178,7 @@ class Items extends Component<Props, {}> {
             ))}
             { this.isSelectable() && (
               <Button
+                aria-label='Select'
                 basic
                 color={this.props.isRowSelected && this.props.isRowSelected(item) ? 'green' : undefined}
                 icon='checkmark'

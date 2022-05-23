@@ -35,6 +35,7 @@ export const AsForm = () => {
   return (
     <Form>
       <Form.Input
+        id='title'
         label='Title'
       />
       <Form.Input
@@ -46,6 +47,7 @@ export const AsForm = () => {
         />
       </Form.Input>
       <Form.Input
+        aria-label='Description'
         label='Description'
       />
     </Form>

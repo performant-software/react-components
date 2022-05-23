@@ -50,6 +50,7 @@ const MenuBar = ({ header, items, ...props }: Props) => {
    */
   const renderDropdown = useCallback((item, index) => (
     <DropdownMenu
+      aria-label={item.content}
       item
       key={index}
       text={item.content}

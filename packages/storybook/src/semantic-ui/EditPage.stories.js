@@ -28,12 +28,15 @@ const onSave = () => {
 const TestForm = () => (
   <div>
     <Form.Input
+      aria-label='Name'
       label='Name'
     />
     <Form.Input
+      aria-label='Address'
       label='Address'
     />
     <Form.Input
+      aria-label='Phone'
       label='Phone'
     />
   </div>
@@ -96,12 +99,15 @@ const items = [{
 const ToasterForm = () => (
   <div>
     <Form.Input
+      id='name'
       label='Name'
     />
     <Form.Input
+      id='address'
       label='Address'
     />
     <Form.Input
+      id='phone'
       label='Phone'
     />
     <Form.Input
@@ -156,18 +162,21 @@ export const WithSaveError = () => (
     component={(props: EditContainerProps) => (
       <>
         <Form.Input
+          id='name'
           required={props.isRequired('name')}
           error={props.isError('name')}
           label='Name'
           onChange={props.onTextInputChange.bind(this, 'name')}
         />
         <Form.Input
+          id='address'
           required={props.isRequired('address')}
           error={props.isError('address')}
           label='Address'
           onChange={props.onTextInputChange.bind(this, 'address')}
         />
         <Form.Input
+          id='phone'
           required={props.isRequired('phone')}
           error={props.isError('phone')}
           onChange={props.onTextInputChange.bind(this, 'phone')}

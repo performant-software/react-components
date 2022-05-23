@@ -230,6 +230,7 @@ class NestedAccordion extends Component<Props, State> {
   renderToggle(item: any) {
     return (
       <Button
+        aria-label='Open'
         compact
         className={this.getButtonClass(item)}
         icon='dropdown'
