@@ -14,6 +14,7 @@ export default {
 
 export const Default = () => (
   <PhotoViewer
+    alt='Test Image'
     image={files('Image', '.png, .jpg, .jpeg', [image])}
     onClose={action('close')}
     open

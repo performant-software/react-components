@@ -24,6 +24,7 @@ export const Embedded = () => (
   <VideoPlayer
     embedded
     placeholder='http://img.youtube.com/vi/YXiZ8OsS3kk/0.jpg'
+    placeholderAlt='Placeholder Image'
     onClose={action('close')}
     open
     video='https://www.youtube.com/embed/YXiZ8OsS3kk'
@@ -61,6 +62,7 @@ export const CustomIcon = () => (
       </div>
     )}
     placeholder='http://img.youtube.com/vi/YXiZ8OsS3kk/0.jpg'
+    placeholderAlt='Placeholder Image'
     onClose={action('close')}
     open
     video='https://www.youtube.com/embed/YXiZ8OsS3kk'

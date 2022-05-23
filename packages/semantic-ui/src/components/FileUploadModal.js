@@ -230,9 +230,8 @@ class FileUploadModal extends Component<Props, State> {
                     onClick={this.onSave.bind(this)}
                   />
                   <Button
+                    basic
                     content={i18n.t('Common.buttons.cancel')}
-                    inverted
-                    primary
                     onClick={this.onClose.bind(this)}
                   />
                 </Modal.Actions>

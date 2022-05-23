@@ -78,6 +78,7 @@ const VideoFrameSelector = (props: Props) => {
                     />
                   </div>
                   <Input
+                    aria-label='Interval Selector'
                     min={MIN_INTERVAL}
                     max={MAX_INTERVAL}
                     name='duration'
@@ -91,12 +92,14 @@ const VideoFrameSelector = (props: Props) => {
                   textAlign='right'
                 >
                   <Button
+                    aria-label='Previous Frame'
                     basic
                     disabled={time === 0}
                     icon='arrow left'
                     onClick={() => setTime(Math.max(time - interval, 0))}
                   />
                   <Button
+                    aria-label='Next Frame'
                     basic
                     disabled={time === duration}
                     icon='arrow right'
@@ -132,10 +135,9 @@ const VideoFrameSelector = (props: Props) => {
                 }}
               />
               <Button
+                basic
                 content={i18n.t('Common.buttons.cancel')}
-                inverted
                 onClick={() => setModal(false)}
-                primary
               />
             </Modal.Actions>
           </Modal>

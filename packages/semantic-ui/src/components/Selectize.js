@@ -277,9 +277,8 @@ const Selectize = (props: Props) => {
               { i18n.t('Common.buttons.save') }
             </Button>
             <Button
-              inverted
+              basic
               onClick={props.onClose.bind(this)}
-              primary
               size='medium'
               type='button'
             >

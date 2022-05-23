@@ -354,6 +354,7 @@ class FuzzyDate extends Component<Props, State> {
                 >
                   <Checkbox
                     checked={this.state.accuracy === ACCURACY_YEAR}
+                    id='accuracy-year'
                     label={i18n.t('FuzzyDate.accuracy.year')}
                     name='accuracy'
                     onChange={this.onAccuracyChange.bind(this)}
@@ -362,6 +363,7 @@ class FuzzyDate extends Component<Props, State> {
                   />
                   <Checkbox
                     checked={this.state.accuracy === ACCURACY_MONTH}
+                    id='accuracy-month'
                     label={i18n.t('FuzzyDate.accuracy.month')}
                     name='accuracy'
                     onChange={this.onAccuracyChange.bind(this)}
@@ -370,6 +372,7 @@ class FuzzyDate extends Component<Props, State> {
                   />
                   <Checkbox
                     checked={this.state.accuracy === ACCURACY_DATE}
+                    id='accuracy-date'
                     label={i18n.t('FuzzyDate.accuracy.date')}
                     name='accuracy'
                     onChange={this.onAccuracyChange.bind(this)}
@@ -413,9 +416,11 @@ class FuzzyDate extends Component<Props, State> {
                 )}
                 { this.props.description && (
                   <Form.Input
+                    id='description'
                     label={i18n.t('FuzzyDate.labels.description')}
                   >
                     <TextArea
+                      id='description'
                       onChange={this.onDescriptionChange.bind(this)}
                       value={this.state.description}
                     />
@@ -432,9 +437,8 @@ class FuzzyDate extends Component<Props, State> {
                   { i18n.t('Common.buttons.save') }
                 </Button>
                 <Button
-                  inverted
+                  basic
                   onClick={this.onClose.bind(this)}
-                  primary
                   size='medium'
                   type='button'
                 >
@@ -465,6 +469,7 @@ class FuzzyDate extends Component<Props, State> {
 
     return (
       <Form.Input
+        id='date-dropdown'
         label={i18n.t('FuzzyDate.labels.date')}
       >
         <Dropdown
@@ -492,9 +497,11 @@ class FuzzyDate extends Component<Props, State> {
 
     return (
       <Form.Input
+        id='month-dropdown'
         label={i18n.t('FuzzyDate.labels.month')}
       >
         <Dropdown
+          id='month-dropdown'
           onChange={this.onMonthChange.bind(this, property)}
           options={_.map(this.state.calendar.listMonths(), (m, i) => ({ key: i, value: i, text: m }))}
           selection
@@ -514,9 +521,11 @@ class FuzzyDate extends Component<Props, State> {
   renderYear(property: string) {
     return (
       <Form.Input
+        id='year'
         label={i18n.t('FuzzyDate.labels.year')}
       >
         <Input
+          id='year'
           onChange={this.onYearChange.bind(this, property)}
           type='number'
           value={this.state[property].year || ''}

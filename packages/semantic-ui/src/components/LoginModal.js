@@ -88,9 +88,8 @@ const LoginModal = (props: Props) => (
             { i18n.t('LoginModal.buttonLogin') }
           </Button>
           <Button
-            inverted
+            basic
             onClick={props.onClose.bind(this)}
-            primary
             size='large'
           >
             { i18n.t('LoginModal.buttonCancel') }

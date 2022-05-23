@@ -6,6 +6,7 @@ import ModalContext from '../context/ModalContext';
 import './PhotoViewer.css';
 
 type Props = {
+  alt?: string,
   image: string,
   onClose: () => void,
   open: boolean,
@@ -26,6 +27,7 @@ const PhotoViewer = (props: Props) => (
       >
         <Modal.Content>
           <Image
+            alt={props.alt}
             fluid
             src={props.image}
           />

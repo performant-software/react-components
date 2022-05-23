@@ -40,7 +40,6 @@ type Props = {
   renderItem: (item: any) => string | Element<any>,
   selectedItems?: Array<any>,
   showToggle: (item: any) => boolean,
-  t: (key: string) => string,
   title?: string
 };
 
@@ -216,6 +215,7 @@ class AccordionSelector extends Component<Props, State> {
                   width={9}
                 >
                   <Input
+                    aria-label='Search'
                     autoFocus
                     icon='search'
                     onKeyDown={Timer.clearSearchTimer.bind(this)}
@@ -267,16 +267,15 @@ class AccordionSelector extends Component<Props, State> {
                 size='medium'
                 type='submit'
               >
-                { this.props.t('Common.buttons.save') }
+                { i18n.t('Common.buttons.save') }
               </Button>
               <Button
-                inverted
+                basic
                 onClick={this.props.onClose.bind(this)}
-                primary
                 size='medium'
                 type='button'
               >
-                { this.props.t('Common.buttons.cancel') }
+                { i18n.t('Common.buttons.cancel') }
               </Button>
             </Modal.Actions>
           </Modal>

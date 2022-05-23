@@ -64,9 +64,8 @@ class ColorPickerModal extends Component<Props, State> {
                 { i18n.t('Common.buttons.save') }
               </Button>
               <Button
-                inverted
+                basic
                 onClick={this.props.onClose.bind(this)}
-                primary
                 size='medium'
                 type='button'
               >
