@@ -1,15 +1,8 @@
 // @flow
 
 import React from 'react';
-import { addParameters } from '@storybook/react';
 import ModalContext from '../../semantic-ui/src/context/ModalContext';
 import '../../semantic-ui/build/semantic-ui.css';
-
-addParameters({
-  options: {
-    showRoots: true
-  }
-});
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.
