@@ -4,7 +4,10 @@
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "MIT",
   "main": "./build/index.js",
-  "style": "./build/styles.css",
+  "style": [
+    "./build/main.css",
+    "./build/semantic-ui.css"
+  ],
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types"
   },

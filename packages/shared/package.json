@@ -4,7 +4,7 @@
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./build/index.js",
-  "style": "./build/styles.css",
+  "style": "./build/main.css",
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types"
   },

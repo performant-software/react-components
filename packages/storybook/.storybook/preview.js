@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { addParameters } from '@storybook/react';
-import '../../semantic-ui/build/main.css';
+import '../../semantic-ui/build/semantic-ui.css';
 
 addParameters({
   options: {
