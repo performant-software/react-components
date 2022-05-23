@@ -15,6 +15,7 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
+import ModalContext from '../context/ModalContext';
 import NestedAccordion from './NestedAccordion';
 import SelectizeHeader from './SelectizeHeader';
 import Toaster from './Toaster';
@@ -187,93 +188,100 @@ class AccordionSelector extends Component<Props, State> {
    */
   render() {
     return (
-      <Modal
-        className='accordion-selector'
-        open={this.props.open}
-        size='small'
-      >
-        <Modal.Header>
-          <Grid
-            columns={2}
-            verticalAlign='middle'
+      <ModalContext.Consumer>
+        { (mountNode) => (
+          <Modal
+            className='accordion-selector'
+            mountNode={mountNode}
+            open={this.props.open}
+            size='small'
           >
-            <Grid.Column
-              textAlign='left'
-            >
-              <Header
-                content={this.props.title
-                  ? this.props.title
-                  : i18n.t('AccordionSelector.title')}
+            <Modal.Header>
+              <Grid
+                columns={2}
+                verticalAlign='middle'
+              >
+                <Grid.Column
+                  textAlign='left'
+                  width={7}
+                >
+                  <Header
+                    content={this.props.title
+                      ? this.props.title
+                      : i18n.t('AccordionSelector.title')}
+                  />
+                </Grid.Column>
+                <Grid.Column
+                  textAlign='right'
+                  width={9}
+                >
+                  <Input
+                    autoFocus
+                    icon='search'
+                    onKeyDown={Timer.clearSearchTimer.bind(this)}
+                    onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
+                    onChange={this.onSearchChange.bind(this)}
+                    size='mini'
+                    type='text'
+                    value={this.state.searchQuery}
+                  />
+                  { this.renderAddButton() }
+                </Grid.Column>
+              </Grid>
+            </Modal.Header>
+            <Modal.Content>
+              <SelectizeHeader
+                isSelected={(item) => this.state.selectedItem === item}
+                items={this.state.selectedItems}
+                onItemClick={this.onItemSelection.bind(this)}
+                renderItem={this.props.renderItem.bind(this)}
               />
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-            >
-              <Input
-                autoFocus
-                icon='search'
-                onKeyDown={Timer.clearSearchTimer.bind(this)}
-                onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
-                onChange={this.onSearchChange.bind(this)}
-                size='mini'
-                type='text'
-                value={this.state.searchQuery}
+              <NestedAccordion
+                getChildItems={this.props.getChildItems.bind(this, this.state.items)}
+                onItemClick={this.onItemClick.bind(this)}
+                onItemToggle={this.onItemToggle.bind(this)}
+                renderItem={this.props.renderItem.bind(this)}
+                renderRight={this.renderRight.bind(this)}
+                rootItems={this.props.getRootItems(this.state.items)}
+                showToggle={this.props.showToggle.bind(this)}
               />
-              { this.renderAddButton() }
-            </Grid.Column>
-          </Grid>
-        </Modal.Header>
-        <Modal.Content>
-          <SelectizeHeader
-            isSelected={(item) => this.state.selectedItem === item}
-            items={this.state.selectedItems}
-            onItemClick={this.onItemSelection.bind(this)}
-            renderItem={this.props.renderItem.bind(this)}
-          />
-          <NestedAccordion
-            getChildItems={this.props.getChildItems.bind(this, this.state.items)}
-            onItemClick={this.onItemClick.bind(this)}
-            onItemToggle={this.onItemToggle.bind(this)}
-            renderItem={this.props.renderItem.bind(this)}
-            renderRight={this.renderRight.bind(this)}
-            rootItems={this.props.getRootItems(this.state.items)}
-            showToggle={this.props.showToggle.bind(this)}
-          />
-          { this.renderAddModal() }
-          { this.state.saved && (
-            <Toaster
-              onDismiss={() => this.setState({ saved: false })}
-              type={Toaster.MessageTypes.positive}
-            >
-              <Message.Header
-                content={i18n.t('Common.messages.save.header')}
-              />
-              <Message.Content
-                content={i18n.t('Common.messages.save.content')}
-              />
-            </Toaster>
-          )}
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            onClick={this.props.onSave.bind(this, this.state.selectedItems)}
-            primary
-            size='medium'
-            type='submit'
-          >
-            { this.props.t('Common.buttons.save') }
-          </Button>
-          <Button
-            inverted
-            onClick={this.props.onClose.bind(this)}
-            primary
-            size='medium'
-            type='button'
-          >
-            { this.props.t('Common.buttons.cancel') }
-          </Button>
-        </Modal.Actions>
-      </Modal>
+              { this.renderAddModal() }
+              { this.state.saved && (
+                <Toaster
+                  onDismiss={() => this.setState({ saved: false })}
+                  type={Toaster.MessageTypes.positive}
+                >
+                  <Message.Header
+                    content={i18n.t('Common.messages.save.header')}
+                  />
+                  <Message.Content
+                    content={i18n.t('Common.messages.save.content')}
+                  />
+                </Toaster>
+              )}
+            </Modal.Content>
+            <Modal.Actions>
+              <Button
+                onClick={this.props.onSave.bind(this, this.state.selectedItems)}
+                primary
+                size='medium'
+                type='submit'
+              >
+                { this.props.t('Common.buttons.save') }
+              </Button>
+              <Button
+                inverted
+                onClick={this.props.onClose.bind(this)}
+                primary
+                size='medium'
+                type='button'
+              >
+                { this.props.t('Common.buttons.cancel') }
+              </Button>
+            </Modal.Actions>
+          </Modal>
+        )}
+      </ModalContext.Consumer>
     );
   }
 
@@ -291,7 +299,7 @@ class AccordionSelector extends Component<Props, State> {
       <Button
         basic
         className='add-button'
-        content={this.props.t('Common.buttons.add')}
+        content={i18n.t('Common.buttons.add')}
         icon='plus'
         onClick={() => this.setState({ modalAdd: true })}
       />

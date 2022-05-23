@@ -12,6 +12,7 @@ import {
   Segment
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import ModalContext from '../context/ModalContext';
 import './VideoFrameSelector.css';
 
 type Props = {
@@ -46,91 +47,100 @@ const VideoFrameSelector = (props: Props) => {
         {...props.button}
         onClick={() => setModal(true)}
       />
-      <Modal
-        centered={false}
-        className='video-frame-selector'
-        open={modal}
-        size='small'
-      >
-        <Modal.Header
-          content={props.title}
-        />
-        <Modal.Content>
-          <Segment>
-            <video
-              crossOrigin='anonymous'
-              onLoadedMetadata={() => videoRef.current && setDuration(videoRef.current.duration)}
-              ref={videoRef}
-              src={props.src}
-            />
-          </Segment>
-          <Grid
-            columns={2}
+      <ModalContext.Consumer>
+        { (mountNode) => (
+          <Modal
+            centered={false}
+            className='video-frame-selector'
+            mountNode={mountNode}
+            open={modal}
+            size='small'
           >
-            <Grid.Column>
-              <div>
-                <Label
-                  content={i18n.t('VideoFrameSelector.labels.interval', { count: interval })}
+            <Modal.Header
+              content={props.title}
+            />
+            <Modal.Content>
+              <Segment>
+                <video
+                  crossOrigin='anonymous'
+                  onLoadedMetadata={() => videoRef.current && setDuration(videoRef.current.duration)}
+                  ref={videoRef}
+                  src={props.src}
                 />
-              </div>
-              <Input
-                min={MIN_INTERVAL}
-                max={MAX_INTERVAL}
-                name='duration'
-                onChange={(e, { value }) => setInterval(Number(value))}
-                step={INTERVAL_STEP}
-                type='range'
-                value={interval}
-              />
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-            >
+              </Segment>
+              <Grid
+                columns={2}
+              >
+                <Grid.Column>
+                  <div>
+                    <Label
+                      content={i18n.t('VideoFrameSelector.labels.interval', { count: interval })}
+                    />
+                  </div>
+                  <Input
+                    min={MIN_INTERVAL}
+                    max={MAX_INTERVAL}
+                    name='duration'
+                    onChange={(e, { value }) => setInterval(Number(value))}
+                    step={INTERVAL_STEP}
+                    type='range'
+                    value={interval}
+                  />
+                </Grid.Column>
+                <Grid.Column
+                  textAlign='right'
+                >
+                  <Button
+                    basic
+                    disabled={time === 0}
+                    icon='arrow left'
+                    onClick={() => setTime(Math.max(time - interval, 0))}
+                  />
+                  <Button
+                    basic
+                    disabled={time === duration}
+                    icon='arrow right'
+                    onClick={() => setTime(Math.min(time + interval, duration))}
+                  />
+                </Grid.Column>
+              </Grid>
+            </Modal.Content>
+            <Modal.Actions>
               <Button
-                basic
-                disabled={time === 0}
-                icon='arrow left'
-                onClick={() => setTime(Math.max(time - interval, 0))}
+                content={i18n.t('Common.buttons.ok')}
+                primary
+                onClick={() => {
+                  const video = videoRef.current;
+
+                  if (video && Browser.isBrowser()) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+
+                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    canvas.toBlob((blob) => {
+                      const file = new File([blob], 'test.png', {
+                        lastModified: new Date().getTime(),
+                        type: blob.type
+                      });
+
+                      props.onSelect(file);
+                      setModal(false);
+                    });
+                  }
+                }}
               />
               <Button
-                basic
-                disabled={time === duration}
-                icon='arrow right'
-                onClick={() => setTime(Math.min(time + interval, duration))}
+                content={i18n.t('Common.buttons.cancel')}
+                inverted
+                onClick={() => setModal(false)}
+                primary
               />
-            </Grid.Column>
-          </Grid>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            content={i18n.t('Common.buttons.ok')}
-            primary
-            onClick={() => {
-              const video = videoRef.current;
-
-              if (video && Browser.isBrowser()) {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                canvas.toBlob((blob) => {
-                  const file = new File([blob], 'test.png', { lastModified: new Date().getTime(), type: blob.type });
-                  props.onSelect(file);
-                  setModal(false);
-                });
-              }
-            }}
-          />
-          <Button
-            content={i18n.t('Common.buttons.cancel')}
-            inverted
-            onClick={() => setModal(false)}
-            primary
-          />
-        </Modal.Actions>
-      </Modal>
+            </Modal.Actions>
+          </Modal>
+        )}
+      </ModalContext.Consumer>
     </>
   );
 };

@@ -18,9 +18,10 @@ import {
 import _ from 'underscore';
 import SelectizeHeader from './SelectizeHeader';
 import i18n from '../i18n/i18n';
+import ModalContext from '../context/ModalContext';
 import useDataList from './DataList';
-import './Selectize.css';
 import useList, { type Props as ListProps } from './List';
+import './Selectize.css';
 
 type Props = {
   centered?: boolean,
@@ -238,51 +239,56 @@ const Selectize = (props: Props) => {
   }, [onSelect, props.modal]);
 
   return (
-    <Modal
-      as={Form}
-      centered={props.centered}
-      className='selectize'
-      open
-      noValidate
-      size='small'
-    >
-      <Modal.Header
-        content={props.title}
-      />
-      <Modal.Content>
-        <SelectizeGrid
-          {...props}
-          actions={[]}
-          isSelected={isSelected}
-          onDelete={() => Promise.resolve()}
-          onDeleteAll={() => Promise.resolve()}
-          onItemSelection={onItemSelection}
-          onSave={onSave}
-          onSelect={onSelect}
-          selectedItem={selectedItem}
-          selectedItems={selectedItems}
-        />
-      </Modal.Content>
-      <Modal.Actions>
-        <Button
-          onClick={props.onSave.bind(this, selectedItems)}
-          primary
-          size='medium'
-          type='submit'
+    <ModalContext.Consumer>
+      { (mountNode) => (
+        <Modal
+          as={Form}
+          centered={props.centered}
+          className='selectize'
+          mountNode={mountNode}
+          noValidate
+          open
+          size='small'
         >
-          { i18n.t('Common.buttons.save') }
-        </Button>
-        <Button
-          inverted
-          onClick={props.onClose.bind(this)}
-          primary
-          size='medium'
-          type='button'
-        >
-          { i18n.t('Common.buttons.cancel') }
-        </Button>
-      </Modal.Actions>
-    </Modal>
+          <Modal.Header
+            content={props.title}
+          />
+          <Modal.Content>
+            <SelectizeGrid
+              {...props}
+              actions={[]}
+              isSelected={isSelected}
+              onDelete={() => Promise.resolve()}
+              onDeleteAll={() => Promise.resolve()}
+              onItemSelection={onItemSelection}
+              onSave={onSave}
+              onSelect={onSelect}
+              selectedItem={selectedItem}
+              selectedItems={selectedItems}
+            />
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              onClick={props.onSave.bind(this, selectedItems)}
+              primary
+              size='medium'
+              type='submit'
+            >
+              { i18n.t('Common.buttons.save') }
+            </Button>
+            <Button
+              inverted
+              onClick={props.onClose.bind(this)}
+              primary
+              size='medium'
+              type='button'
+            >
+              { i18n.t('Common.buttons.cancel') }
+            </Button>
+          </Modal.Actions>
+        </Modal>
+      )}
+    </ModalContext.Consumer>
   );
 };
 

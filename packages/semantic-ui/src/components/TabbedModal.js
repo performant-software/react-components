@@ -4,6 +4,7 @@ import { Element } from '@performant-software/shared-components';
 import React, { Component, type Node } from 'react';
 import { Header, Menu, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
+import ModalContext from '../context/ModalContext';
 import './TabbedModal.css';
 
 type Props = {
@@ -84,32 +85,37 @@ class TabbedModal extends Component<Props, State> {
     const tab = _.find(tabs, (t) => t.props.name === this.state.tab);
 
     return (
-      <Modal
-        className={this.getModalClasses()}
-        {..._.omit(this.props, 'header', 'renderHeader', 'inlineTabs', 'className')}
-      >
-        <Modal.Header
-          className={this.getHeaderClasses()}
-        >
-          { this.renderHeader() }
-          <Menu
-            float='right'
-            secondary
+      <ModalContext.Consumer>
+        { (mountNode) => (
+          <Modal
+            className={this.getModalClasses()}
+            mountNode={mountNode}
+            {..._.omit(this.props, 'header', 'renderHeader', 'inlineTabs', 'className')}
           >
-            { _.map(Element.findByType(this.props.children, TabbedModal.Tab), this.renderTab.bind(this)) }
-          </Menu>
-        </Modal.Header>
-        <Modal.Content>
-          { tab && (
-            <div
-              key={tab.props.name}
+            <Modal.Header
+              className={this.getHeaderClasses()}
             >
-              { tab.props.children }
-            </div>
-          )}
-        </Modal.Content>
-        { Element.findByType(this.props.children, Modal.Actions) }
-      </Modal>
+              { this.renderHeader() }
+              <Menu
+                float='right'
+                secondary
+              >
+                { _.map(Element.findByType(this.props.children, TabbedModal.Tab), this.renderTab.bind(this)) }
+              </Menu>
+            </Modal.Header>
+            <Modal.Content>
+              { tab && (
+                <div
+                  key={tab.props.name}
+                >
+                  { tab.props.children }
+                </div>
+              )}
+            </Modal.Content>
+            { Element.findByType(this.props.children, Modal.Actions) }
+          </Modal>
+        )}
+      </ModalContext.Consumer>
     );
   }
 

@@ -15,6 +15,7 @@ import DropdownButton from './DropdownButton';
 import i18n from '../i18n/i18n';
 import MenuBar from './MenuBar';
 import MenuSidebar from './MenuSidebar';
+import ModalContext from '../context/ModalContext';
 import useDataList, { SORT_ASCENDING, SORT_DESCENDING } from './DataList';
 import './DataView.css';
 
@@ -362,38 +363,43 @@ const DataView = (props: Props) => {
         )}
       </div>
       { selectedRecord && (
-        <Modal
-          as={Form}
-          centered={false}
-          className='data-view-modal'
-          closeIcon
-          onClose={() => setSelectedRecord(null)}
-          open
-        >
-          <Modal.Header
-            content={i18n.t('DataView.labels.details')}
-          />
-          <Modal.Content>
-            <Grid
-              columns={3}
-              doubling
+        <ModalContext.Consumer>
+          { (mountNode) => (
+            <Modal
+              as={Form}
+              centered={false}
+              className='data-view-modal'
+              closeIcon
+              mountNode={mountNode}
+              onClose={() => setSelectedRecord(null)}
+              open
             >
-              { _.map(mergeColumns([selectedRecord]), (column) => (
-                <Grid.Column
-                  as={Form.Field}
-                  key={column.name}
+              <Modal.Header
+                content={i18n.t('DataView.labels.details')}
+              />
+              <Modal.Content>
+                <Grid
+                  columns={3}
+                  doubling
                 >
-                  <span
-                    className='label'
-                  >
-                    { column.label }
-                  </span>
-                  { resolveValue(selectedRecord, column.name) }
-                </Grid.Column>
-              ))}
-            </Grid>
-          </Modal.Content>
-        </Modal>
+                  { _.map(mergeColumns([selectedRecord]), (column) => (
+                    <Grid.Column
+                      as={Form.Field}
+                      key={column.name}
+                    >
+                      <span
+                        className='label'
+                      >
+                        { column.label }
+                      </span>
+                      { resolveValue(selectedRecord, column.name) }
+                    </Grid.Column>
+                  ))}
+                </Grid>
+              </Modal.Content>
+            </Modal>
+          )}
+        </ModalContext.Consumer>
       )}
     </div>
   );

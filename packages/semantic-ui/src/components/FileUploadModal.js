@@ -13,6 +13,7 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import FileUpload from './FileUpload';
+import ModalContext from '../context/ModalContext';
 import Toaster from './Toaster';
 
 type Props = {
@@ -195,44 +196,49 @@ class FileUploadModal extends Component<Props, State> {
           />
         )}
         { this.state.modal && (
-          <Modal
-            centered={false}
-            className='file-upload-modal'
-            open
-          >
-            <Dimmer
-              active={this.state.saving}
-              inverted
-            >
-              <Loader
-                content={i18n.t('FileUploadModal.loader')}
-              />
-            </Dimmer>
-            { this.renderErrors() }
-            <Modal.Header
-              content={this.props.title || i18n.t('FileUploadModal.title')}
-            />
-            <Modal.Content>
-              <FileUpload
-                onFilesAdded={this.onAddFiles.bind(this)}
-              />
-              { this.renderItems() }
-            </Modal.Content>
-            <Modal.Actions>
-              <Button
-                content={i18n.t('Common.buttons.save')}
-                disabled={!(this.state.items && this.state.items.length)}
-                primary
-                onClick={this.onSave.bind(this)}
-              />
-              <Button
-                content={i18n.t('Common.buttons.cancel')}
-                inverted
-                primary
-                onClick={this.onClose.bind(this)}
-              />
-            </Modal.Actions>
-          </Modal>
+          <ModalContext.Consumer>
+            { (mountNode) => (
+              <Modal
+                centered={false}
+                className='file-upload-modal'
+                mountNode={mountNode}
+                open
+              >
+                <Dimmer
+                  active={this.state.saving}
+                  inverted
+                >
+                  <Loader
+                    content={i18n.t('FileUploadModal.loader')}
+                  />
+                </Dimmer>
+                { this.renderErrors() }
+                <Modal.Header
+                  content={this.props.title || i18n.t('FileUploadModal.title')}
+                />
+                <Modal.Content>
+                  <FileUpload
+                    onFilesAdded={this.onAddFiles.bind(this)}
+                  />
+                  { this.renderItems() }
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button
+                    content={i18n.t('Common.buttons.save')}
+                    disabled={!(this.state.items && this.state.items.length)}
+                    primary
+                    onClick={this.onSave.bind(this)}
+                  />
+                  <Button
+                    content={i18n.t('Common.buttons.cancel')}
+                    inverted
+                    primary
+                    onClick={this.onClose.bind(this)}
+                  />
+                </Modal.Actions>
+              </Modal>
+            )}
+          </ModalContext.Consumer>
         )}
       </>
     );

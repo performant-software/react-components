@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { addParameters } from '@storybook/react';
+import ModalContext from '../../semantic-ui/src/context/ModalContext';
 import '../../semantic-ui/build/semantic-ui.css';
 
 addParameters({
@@ -36,3 +37,13 @@ export const parameters = {
     }
   }
 };
+
+export const decorators = [
+  (Story) => (
+    <ModalContext.Provider
+      value={document.getElementById('root')}
+    >
+      <Story />
+    </ModalContext.Provider>
+  )
+];

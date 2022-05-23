@@ -23,6 +23,7 @@ import i18n from '../i18n/i18n';
 import AssociatedDropdown from './AssociatedDropdown';
 import DropdownButton from './DropdownButton';
 import FuzzyDate from './FuzzyDate';
+import ModalContext from '../context/ModalContext';
 
 type Option = {
   key: string | number,
@@ -286,118 +287,123 @@ const ListFilters = (props: Props) => {
   }, []);
 
   return (
-    <Modal
-      as={Form}
-      centered={false}
-      className='list-filters-modal'
-      noValidate
-      open
-      size='small'
-    >
-      <Modal.Header>
-        <Grid
-          columns={2}
+    <ModalContext.Consumer>
+      { (mountNode) => (
+        <Modal
+          as={Form}
+          centered={false}
+          className='list-filters-modal'
+          mountNode={mountNode}
+          noValidate
+          open
+          size='small'
         >
-          <Grid.Column
-            verticalAlign='middle'
-          >
-            <Header
-              content={i18n.t('ListFilters.title')}
-            />
-          </Grid.Column>
-          <Grid.Column
-            textAlign='right'
-          >
-            <DropdownButton
-              color='green'
-              icon='plus'
-              options={_.map(filters, (filter) => ({
-                key: filter.key,
-                value: filter.key,
-                text: filter.label
-              }))}
-              onChange={(e, { value }) => {
-                const filter = _.findWhere(props.filters, { key: value });
-                props.onSaveChildAssociation('filters', {
-                  ...filter,
-                  uid: uuid(),
-                  operator: Operators.equal
-                });
-              }}
-              scrolling
-              text={i18n.t('ListFilters.buttons.add')}
-              value=''
-            />
-            <Button
-              color='red'
-              content={i18n.t('ListFilters.buttons.reset')}
-              icon='repeat'
-              onClick={() => props.onReset()}
-              style={{
-                marginLeft: '1em'
-              }}
-            />
-          </Grid.Column>
-        </Grid>
-      </Modal.Header>
-      <Modal.Content>
-        { !_.isEmpty(props.item.filters) && (
-          <Grid>
-            { _.map(props.item.filters, (filter) => (
-              <Grid.Row
-                columns={4}
-                key={filter.key}
+          <Modal.Header>
+            <Grid
+              columns={2}
+            >
+              <Grid.Column
                 verticalAlign='middle'
               >
-                <Grid.Column>
-                  <Header
-                    content={filter.label}
-                  />
-                </Grid.Column>
-                <Grid.Column
-                  width={5}
-                >
-                  <Dropdown
-                    options={getOperatorsByType(filter.type)}
-                    onChange={(e, { value }) => props.onSaveChildAssociation('filters', {
-                      ..._.omit(filter, 'value'),
-                      operator: value,
-                    })}
-                    selection
-                    value={filter.operator}
-                  />
-                </Grid.Column>
-                <Grid.Column
-                  width={5}
-                >
-                  { renderInput(filter) }
-                </Grid.Column>
-                <Grid.Column
-                  width={1}
-                >
-                  <Button
-                    basic
-                    icon='times'
-                    onClick={() => {
-                      /*
-                       * If we're removing the last filter, call the onReset prop to ensure the UI doesn't display
-                       * as active.
-                       */
-                      if (props.item.filters && props.item.filters.length === 1) {
-                        props.onReset();
-                      } else {
-                        props.onDeleteChildAssociation('filters', filter);
-                      }
-                    }}
-                  />
-                </Grid.Column>
-              </Grid.Row>
-            ))}
-          </Grid>
-        )}
-      </Modal.Content>
-      { props.children }
-    </Modal>
+                <Header
+                  content={i18n.t('ListFilters.title')}
+                />
+              </Grid.Column>
+              <Grid.Column
+                textAlign='right'
+              >
+                <DropdownButton
+                  color='green'
+                  icon='plus'
+                  options={_.map(filters, (filter) => ({
+                    key: filter.key,
+                    value: filter.key,
+                    text: filter.label
+                  }))}
+                  onChange={(e, { value }) => {
+                    const filter = _.findWhere(props.filters, { key: value });
+                    props.onSaveChildAssociation('filters', {
+                      ...filter,
+                      uid: uuid(),
+                      operator: Operators.equal
+                    });
+                  }}
+                  scrolling
+                  text={i18n.t('ListFilters.buttons.add')}
+                  value=''
+                />
+                <Button
+                  color='red'
+                  content={i18n.t('ListFilters.buttons.reset')}
+                  icon='repeat'
+                  onClick={() => props.onReset()}
+                  style={{
+                    marginLeft: '1em'
+                  }}
+                />
+              </Grid.Column>
+            </Grid>
+          </Modal.Header>
+          <Modal.Content>
+            { !_.isEmpty(props.item.filters) && (
+              <Grid>
+                { _.map(props.item.filters, (filter) => (
+                  <Grid.Row
+                    columns={4}
+                    key={filter.key}
+                    verticalAlign='middle'
+                  >
+                    <Grid.Column>
+                      <Header
+                        content={filter.label}
+                      />
+                    </Grid.Column>
+                    <Grid.Column
+                      width={5}
+                    >
+                      <Dropdown
+                        options={getOperatorsByType(filter.type)}
+                        onChange={(e, { value }) => props.onSaveChildAssociation('filters', {
+                          ..._.omit(filter, 'value'),
+                          operator: value,
+                        })}
+                        selection
+                        value={filter.operator}
+                      />
+                    </Grid.Column>
+                    <Grid.Column
+                      width={5}
+                    >
+                      { renderInput(filter) }
+                    </Grid.Column>
+                    <Grid.Column
+                      width={1}
+                    >
+                      <Button
+                        basic
+                        icon='times'
+                        onClick={() => {
+                          /*
+                           * If we're removing the last filter, call the onReset prop to ensure the UI doesn't display
+                           * as active.
+                           */
+                          if (props.item.filters && props.item.filters.length === 1) {
+                            props.onReset();
+                          } else {
+                            props.onDeleteChildAssociation('filters', filter);
+                          }
+                        }}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                ))}
+              </Grid>
+            )}
+          </Modal.Content>
+          { props.children }
+        </Modal>
+      )}
+    </ModalContext.Consumer>
   );
 };
 
