@@ -11,7 +11,8 @@ import { Dropdown, Ref } from 'semantic-ui-react';
 
 type Props = {
   children: Node,
-  onClick?: () => void
+  onClick?: () => void,
+  role?: string
 };
 
 const DropdownMenu = (props: Props) => {
@@ -37,6 +38,15 @@ const DropdownMenu = (props: Props) => {
       }
     };
   }, [ref]);
+
+  /**
+   * Sets the "role" aria attribute on the current element if provided.
+   */
+  useEffect(() => {
+    if (ref.current && props.role) {
+      ref.current.setAttribute('role', props.role);
+    }
+  }, [ref, props.role]);
 
   return (
     <Ref

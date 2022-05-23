@@ -53,6 +53,7 @@ const MenuBar = ({ header, items, ...props }: Props) => {
       aria-label={item.content}
       item
       key={index}
+      role='group'
       text={item.content}
     >
       { _.map(item.items, (i) => (i.items ? renderDropdown(i) : renderDropdownItem(i)))}
