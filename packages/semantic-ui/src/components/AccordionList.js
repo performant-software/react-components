@@ -1,6 +1,6 @@
 // @flow
 
-import { Timer, Utility } from '@performant-software/shared-components';
+import { Object as ObjectUtils, Timer } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import {
   Button,
@@ -154,7 +154,7 @@ class AccordionList extends Component<Props, State> {
     let copy;
     if (this.props.onCopy) {
       copy = this.props.onCopy(selectedItem);
-      if (Utility.isPromise(copy)) {
+      if (ObjectUtils.isPromise(copy)) {
         copy.then((item) => {
           this.setState({ selectedItem: item, modalAdd: true });
         });
