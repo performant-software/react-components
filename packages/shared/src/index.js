@@ -22,7 +22,7 @@ export { default as FormDataTransform } from './transforms/FormDataTransform';
 export { default as NestedAttributesTransform } from './transforms/NestedAttributesTransform';
 
 // Utils
-export * as Browser from './utils/Browser';
+export { default as Browser } from './utils/Browser';
 export { default as Calendar } from './utils/Calendar';
 export { default as Date } from './utils/Date';
 export { default as useDragDrop } from './utils/DragDrop';
@@ -31,7 +31,6 @@ export { default as Map } from './utils/Map';
 export { default as Object } from './utils/Object';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
-export { default as Utility } from './utils/Utility'; // TODO: Rename me
 
 // Types
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
