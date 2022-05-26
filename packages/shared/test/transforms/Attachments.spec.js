@@ -1,4 +1,4 @@
-import Attachments from '../../src/api/Attachments';
+import Attachments from '../../src/transforms/Attachments';
 
 describe('toPayload', () => {
   test('toPayload adds the attachment, if provided', () => {
