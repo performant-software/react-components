@@ -44,6 +44,17 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Reset the columns on the state when the props change.
+     *
+     * @param prevProps
+     */
+    componentDidUpdate(prevProps: Props): * {
+      if (prevProps.columns !== this.props.columns) {
+        this.setState({ columns: this.props.columns });
+      }
+    }
+
+    /**
      * Toggles the hidden property for the passed column.
      *
      * @param column
