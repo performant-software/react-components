@@ -22,3 +22,14 @@ export const Default = () => (
     open={boolean('Open', true)}
   />
 );
+
+export const NoCloseButton = () => (
+  <LoginModal
+    disabled={boolean('Disabled', false)}
+    loginFailed={boolean('Login failed', false)}
+    onLogin={action('login')}
+    onPasswordChange={action('password-change')}
+    onUsernameChange={action('username-change')}
+    open={boolean('Open', true)}
+  />
+);

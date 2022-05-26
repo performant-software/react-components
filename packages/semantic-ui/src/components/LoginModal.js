@@ -87,13 +87,15 @@ const LoginModal = (props: Props) => (
           >
             { i18n.t('LoginModal.buttonLogin') }
           </Button>
-          <Button
-            basic
-            onClick={props.onClose.bind(this)}
-            size='large'
-          >
-            { i18n.t('LoginModal.buttonCancel') }
-          </Button>
+          { props.onClose && (
+            <Button
+              basic
+              onClick={props.onClose.bind(this)}
+              size='large'
+            >
+              { i18n.t('LoginModal.buttonCancel') }
+            </Button>
+          )}
         </Modal.Actions>
       </Modal>
     )}
