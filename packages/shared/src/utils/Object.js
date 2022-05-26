@@ -31,7 +31,7 @@ const WHITESPACE_REGEX = /\s\s+/g;
  *
  * @returns {boolean|*}
  */
-export const isEmpty = (value: any) => {
+const isEmpty = (value: any) => {
   // If the value is an object or array, use underscore's isEmpty check.
   if (_.isObject(value) || _.isArray(value)) {
     return _.isEmpty(value);
@@ -49,7 +49,7 @@ export const isEmpty = (value: any) => {
  *
  * @returns {boolean}
  */
-export const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
+const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
   const options = _.defaults(userOptions, DEFAULT_OPTIONS);
 
   // Check equality, consider empty strings and "null" values as equal
@@ -109,6 +109,10 @@ export const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
   return false;
 };
 
-export default {
+const isPromise = (value: any) => !!value && typeof value === 'object' && typeof value.then === 'function';
 
+export default {
+  isEmpty,
+  isEqual,
+  isPromise
 };
