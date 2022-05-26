@@ -105,3 +105,18 @@ After:
 ```
 
 Notice that the gitpkg URLs contain the name of the directory in the GitHub repository, rather than the name of the published NPM package.
+
+## Publishing
+
+Each of the versions of the individual packages will be kept in sync. The following steps should be taken when publishing a new version of these packages.
+
+1. Update the `version` attribute in each `package.json`. When determining how to increment the version number, use the following as a guide:
+   1. **Major:** `1.2.3 -> 2.0.0` Many breaking changes, new UI library, new package
+   2. **Minor:** `1.2.3 -> 1.3.0` API changes, many new components, large bug fixes
+   3. **Patch:** `1.2.3 -> 1.2.4` Bug fixes, new components
+2. Update the version for the `dependecies` and `devDependencies` in each `package.json`. Each dependency should reflect the newest release.
+3. Commit your changes and create a PR into the `master` branch. Wait until your PR is merged to proceed.
+4. Create a [release](https://github.com/performant-software/react-components/releases) in GitHub. Be sure to note any breaking changes, new features, and bug fixes
+5. Navigate into each package and run `npm publish`.
+6. In GitHub update the "next release" label to "<your_release_number>". This will allow us to go back and see exactly which PRs were included in each release.
+7. Create a new "next release" label in GitHub.
