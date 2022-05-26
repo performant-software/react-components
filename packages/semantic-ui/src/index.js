@@ -16,6 +16,7 @@ export { default as ColorPickerModal } from './components/ColorPickerModal';
 export { default as useDataList } from './components/DataList';
 export { default as DataTable } from './components/DataTable';
 export { default as DataView } from './components/DataView';
+export { default as DatabaseView } from './components/DatabaseView';
 export { default as DateInput } from './components/DateInput';
 export { default as DatePicker } from './components/DatePicker';
 export { default as DescriptorField } from './components/DescriptorField';
