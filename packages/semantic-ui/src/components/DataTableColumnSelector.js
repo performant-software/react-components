@@ -111,11 +111,12 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
         <>
           { this.props.renderListHeader && this.props.renderListHeader() }
           <Dropdown
+            aria-label='Select Columns'
             basic
             button
             icon='cog'
             className='icon configure-button open-right'
-            simple
+            closeOnBlur={false}
           >
             <Dropdown.Menu>
               { this.state.columns
@@ -127,11 +128,15 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
                     key={c.name}
                     onDrag={this.onDrag.bind(this)}
                   >
-                    <Dropdown.Item>
+                    <Dropdown.Item
+                      aria-dropeffect='move'
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <Icon
                         name='bars'
                       />
                       <Checkbox
+                        aria-label='Select Column'
                         checked={!c.hidden}
                         label={c.label}
                         onClick={this.onColumnCheckbox.bind(this, c)}

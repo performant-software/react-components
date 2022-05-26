@@ -31,6 +31,9 @@ export const WithPreview = () => (
     <Item>
       <Item.Image>
         <LazyDocument
+          image={{
+            alt: 'Image'
+          }}
           preview={image}
           src={image}
         />

@@ -3,13 +3,13 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Button, Dropdown } from 'semantic-ui-react';
+import i18n from '../i18n/i18n';
 import './ModalDropdown.css';
 
 type Props = {
   onClear: () => void,
   renderModal: ({ onClose: () => void, open: boolean }) => void,
-  searchQuery: ?string,
-  t: (key: string) => string
+  searchQuery: ?string
 };
 
 type State = {
@@ -51,13 +51,16 @@ class ModalDropdown extends Component<Props, State> {
           onSearchChange={() => {}}
           open={false}
           search
+          searchInput={{
+            'aria-label': 'Search'
+          }}
           selection
           searchQuery={this.props.searchQuery || ''}
         />
         <Button.Group>
           <Button
             basic
-            content={this.props.t('Common.buttons.clear')}
+            content={i18n.t('Common.buttons.clear')}
             icon='times'
             onClick={this.props.onClear.bind(this)}
             type='button'

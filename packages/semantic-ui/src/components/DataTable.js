@@ -240,6 +240,7 @@ class DataTable extends Component<Props, State> {
 
     const actionButton = (
       <Button
+        aria-label={action.name}
         basic
         compact
         color={action.color}

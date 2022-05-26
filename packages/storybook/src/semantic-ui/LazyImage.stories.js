@@ -15,6 +15,9 @@ export default {
 
 export const Default = () => (
   <LazyImage
+    image={{
+      alt: 'Image'
+    }}
     src={image}
   />
 );
@@ -25,6 +28,9 @@ export const Placeholder = () => (
 
 export const ExtraButtons = () => (
   <LazyImage
+    image={{
+      alt: 'Test Image'
+    }}
     src={image}
   >
     <Button
@@ -52,6 +58,9 @@ export const CardContent = () => (
   <Card.Group>
     <Card>
       <LazyImage
+        image={{
+          alt: 'Test Image'
+        }}
         src={image}
       />
       <Card.Content
@@ -60,6 +69,9 @@ export const CardContent = () => (
     </Card>
     <Card>
       <LazyImage
+        image={{
+          alt: 'Portrait Image'
+        }}
         src={portraitImage}
       />
       <Card.Content
@@ -67,7 +79,11 @@ export const CardContent = () => (
       />
     </Card>
     <Card>
-      <LazyImage />
+      <LazyImage
+        image={{
+          alt: 'Last Image'
+        }}
+      />
       <Card.Content
         header='Test 3'
       />
@@ -80,6 +96,9 @@ export const ListContent = () => (
     <Item>
       <Item.Image>
         <LazyImage
+          image={{
+            alt: 'First Image'
+          }}
           src={image}
         />
       </Item.Image>
@@ -90,10 +109,16 @@ export const ListContent = () => (
     <Item>
       <Item.Image>
         <LazyImage
+          image={{
+            alt: 'Portrait Image'
+          }}
           src={portraitImage}
         />
       </Item.Image>
       <Item.Content
+        image={{
+          alt: 'Last Image'
+        }}
         header='Test 2'
       />
     </Item>

@@ -62,9 +62,13 @@ const DatePicker = (props: Props) => {
                 setCalendar(false);
               }
             }}
+            next2AriaLabel='Next Year'
             next2Label={<Icon name='angle double right' />}
+            nextAriaLabel='Next Month'
             nextLabel={<Icon name='chevron right' />}
+            prev2AriaLabel='Previous Year'
             prev2Label={<Icon name='angle double left' />}
+            prevAriaLabel='Previous Month'
             prevLabel={<Icon name='chevron left' />}
             value={props.value}
           />

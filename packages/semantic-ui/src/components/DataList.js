@@ -471,6 +471,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Input
+          aria-label='Search'
           type='text'
           icon='search'
           input={{

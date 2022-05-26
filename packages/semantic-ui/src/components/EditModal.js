@@ -78,10 +78,9 @@ const EditModal = (props: Props) => {
           )}
         </Button>
         <Button
+          basic
           disabled={props.saving}
-          inverted
           onClick={props.onClose.bind(this)}
-          primary
           size='medium'
           type='button'
         >

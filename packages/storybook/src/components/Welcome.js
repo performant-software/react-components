@@ -28,6 +28,10 @@ const Welcome = () => (
         <b>Knobs: </b>
         Allows the viewer to change props on the fly to view variations of the component
       </li>
+      <li>
+        <b>A11y: </b>
+        Displays violations for accessibility standards
+      </li>
     </ul>
   </article>
 );

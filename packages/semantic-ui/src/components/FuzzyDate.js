@@ -14,6 +14,7 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import DateField from './DateInput';
+import ModalContext from '../context/ModalContext';
 import './FuzzyDate.css';
 
 type DateInput = {
@@ -334,110 +335,119 @@ class FuzzyDate extends Component<Props, State> {
           onClick={this.onEdit.bind(this)}
           onChange={this.onClear.bind(this)}
         />
-        <Modal
-          as={Form}
-          className='fuzzy-date-modal'
-          open={this.state.modal}
-          onClose={this.onClose.bind(this)}
-        >
-          <Modal.Header
-            content={this.props.title || i18n.t('FuzzyDate.title')}
-          />
-          <Modal.Content>
-            <Form.Input
-              className='accuracy-container'
-              label={i18n.t('FuzzyDate.labels.accuracy')}
+        <ModalContext.Consumer>
+          { (mountNode) => (
+            <Modal
+              as={Form}
+              className='fuzzy-date-modal'
+              mountNode={mountNode}
+              open={this.state.modal}
+              onClose={this.onClose.bind(this)}
             >
-              <Checkbox
-                checked={this.state.accuracy === ACCURACY_YEAR}
-                label={i18n.t('FuzzyDate.accuracy.year')}
-                name='accuracy'
-                onChange={this.onAccuracyChange.bind(this)}
-                radio
-                value={ACCURACY_YEAR}
+              <Modal.Header
+                content={this.props.title || i18n.t('FuzzyDate.title')}
               />
-              <Checkbox
-                checked={this.state.accuracy === ACCURACY_MONTH}
-                label={i18n.t('FuzzyDate.accuracy.month')}
-                name='accuracy'
-                onChange={this.onAccuracyChange.bind(this)}
-                radio
-                value={ACCURACY_MONTH}
-              />
-              <Checkbox
-                checked={this.state.accuracy === ACCURACY_DATE}
-                label={i18n.t('FuzzyDate.accuracy.date')}
-                name='accuracy'
-                onChange={this.onAccuracyChange.bind(this)}
-                radio
-                value={ACCURACY_DATE}
-              />
-            </Form.Input>
-            <Form.Group>
-              { this.renderYear('startDate') }
-              { this.renderMonth('startDate') }
-              { this.renderDate('startDate') }
-              { !this.state.range && (
-                <div
-                  className='button-container'
+              <Modal.Content>
+                <Form.Input
+                  className='accuracy-container'
+                  label={i18n.t('FuzzyDate.labels.accuracy')}
                 >
-                  <Button
-                    basic
-                    content={i18n.t('FuzzyDate.buttons.addRange')}
-                    icon='plus'
-                    onClick={this.onRangeChange.bind(this)}
+                  <Checkbox
+                    checked={this.state.accuracy === ACCURACY_YEAR}
+                    id='accuracy-year'
+                    label={i18n.t('FuzzyDate.accuracy.year')}
+                    name='accuracy'
+                    onChange={this.onAccuracyChange.bind(this)}
+                    radio
+                    value={ACCURACY_YEAR}
                   />
-                </div>
-              )}
-            </Form.Group>
-            { this.state.range && (
-              <Form.Group>
-                { this.renderYear('endDate') }
-                { this.renderMonth('endDate') }
-                { this.renderDate('endDate') }
-                <div
-                  className='button-container'
+                  <Checkbox
+                    checked={this.state.accuracy === ACCURACY_MONTH}
+                    id='accuracy-month'
+                    label={i18n.t('FuzzyDate.accuracy.month')}
+                    name='accuracy'
+                    onChange={this.onAccuracyChange.bind(this)}
+                    radio
+                    value={ACCURACY_MONTH}
+                  />
+                  <Checkbox
+                    checked={this.state.accuracy === ACCURACY_DATE}
+                    id='accuracy-date'
+                    label={i18n.t('FuzzyDate.accuracy.date')}
+                    name='accuracy'
+                    onChange={this.onAccuracyChange.bind(this)}
+                    radio
+                    value={ACCURACY_DATE}
+                  />
+                </Form.Input>
+                <Form.Group>
+                  { this.renderYear('startDate') }
+                  { this.renderMonth('startDate') }
+                  { this.renderDate('startDate') }
+                  { !this.state.range && (
+                    <div
+                      className='button-container'
+                    >
+                      <Button
+                        basic
+                        content={i18n.t('FuzzyDate.buttons.addRange')}
+                        icon='plus'
+                        onClick={this.onRangeChange.bind(this)}
+                      />
+                    </div>
+                  )}
+                </Form.Group>
+                { this.state.range && (
+                  <Form.Group>
+                    { this.renderYear('endDate') }
+                    { this.renderMonth('endDate') }
+                    { this.renderDate('endDate') }
+                    <div
+                      className='button-container'
+                    >
+                      <Button
+                        basic
+                        content={i18n.t('FuzzyDate.buttons.removeRange')}
+                        icon='times'
+                        onClick={this.onRangeChange.bind(this)}
+                      />
+                    </div>
+                  </Form.Group>
+                )}
+                { this.props.description && (
+                  <Form.Input
+                    id='description'
+                    label={i18n.t('FuzzyDate.labels.description')}
+                  >
+                    <TextArea
+                      id='description'
+                      onChange={this.onDescriptionChange.bind(this)}
+                      value={this.state.description}
+                    />
+                  </Form.Input>
+                )}
+              </Modal.Content>
+              <Modal.Actions>
+                <Button
+                  onClick={this.onSave.bind(this)}
+                  primary
+                  size='medium'
+                  type='submit'
                 >
-                  <Button
-                    basic
-                    content={i18n.t('FuzzyDate.buttons.removeRange')}
-                    icon='times'
-                    onClick={this.onRangeChange.bind(this)}
-                  />
-                </div>
-              </Form.Group>
-            )}
-            { this.props.description && (
-              <Form.Input
-                label={i18n.t('FuzzyDate.labels.description')}
-              >
-                <TextArea
-                  onChange={this.onDescriptionChange.bind(this)}
-                  value={this.state.description}
-                />
-              </Form.Input>
-            )}
-          </Modal.Content>
-          <Modal.Actions>
-            <Button
-              onClick={this.onSave.bind(this)}
-              primary
-              size='medium'
-              type='submit'
-            >
-              { i18n.t('Common.buttons.save') }
-            </Button>
-            <Button
-              inverted
-              onClick={this.onClose.bind(this)}
-              primary
-              size='medium'
-              type='button'
-            >
-              { i18n.t('Common.buttons.cancel') }
-            </Button>
-          </Modal.Actions>
-        </Modal>
+                  { i18n.t('Common.buttons.save') }
+                </Button>
+                <Button
+                  basic
+                  onClick={this.onClose.bind(this)}
+                  size='medium'
+                  type='button'
+                >
+                  { i18n.t('Common.buttons.cancel') }
+                </Button>
+              </Modal.Actions>
+            </Modal>
+          )}
+        </ModalContext.Consumer>
       </>
     );
   }
@@ -459,6 +469,7 @@ class FuzzyDate extends Component<Props, State> {
 
     return (
       <Form.Input
+        id='date-dropdown'
         label={i18n.t('FuzzyDate.labels.date')}
       >
         <Dropdown
@@ -486,9 +497,11 @@ class FuzzyDate extends Component<Props, State> {
 
     return (
       <Form.Input
+        id='month-dropdown'
         label={i18n.t('FuzzyDate.labels.month')}
       >
         <Dropdown
+          id='month-dropdown'
           onChange={this.onMonthChange.bind(this, property)}
           options={_.map(this.state.calendar.listMonths(), (m, i) => ({ key: i, value: i, text: m }))}
           selection
@@ -508,9 +521,11 @@ class FuzzyDate extends Component<Props, State> {
   renderYear(property: string) {
     return (
       <Form.Input
+        id='year'
         label={i18n.t('FuzzyDate.labels.year')}
       >
         <Input
+          id='year'
           onChange={this.onYearChange.bind(this, property)}
           type='number'
           value={this.state[property].year || ''}

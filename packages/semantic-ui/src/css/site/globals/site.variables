@@ -1,0 +1,11 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@blue: #1d77bb;
+@green: #178230;
+
+@primaryColor: @blue;
+
+@lightTextColor: rgba(0, 0, 0, 0.54);
+@descriptionColor: rgba(0, 0, 0, 0.73);

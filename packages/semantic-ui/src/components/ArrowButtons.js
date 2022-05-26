@@ -23,11 +23,13 @@ const ArrowButtons = (props: Props) => (
     vertical
   >
     <Button
+      aria-label='Move Right'
       basic
       icon='arrow right'
       onClick={props.onRight.bind(this)}
     />
     <Button
+      aria-label='Move Left'
       basic
       icon='arrow left'
       onClick={props.onLeft.bind(this)}

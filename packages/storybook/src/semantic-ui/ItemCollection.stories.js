@@ -468,6 +468,9 @@ export const InfiniteScrollFilter = useDragDrop(() => {
               clearable
               placeholder='Genre'
               search
+              searchInput={{
+                'aria-label': 'Search'
+              }}
               selection
               onChange={(e, { value }) => setGenre(value)}
               options={_.map(genres, (g) => ({ key: g, value: g, text: g }))}

@@ -544,6 +544,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       return (
         <Button
           active={this.props.filters.active}
+          aria-label='Filter'
           basic
           icon='filter'
           onClick={this.onFilterButton.bind(this)}

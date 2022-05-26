@@ -43,6 +43,7 @@ const MediaList = (props: Props) => (
           onClick={props.onClick.bind(this, item, i)}
         >
           <Image
+            alt={item.alt}
             src={item.image}
             style={{
               objectFit: 'cover'

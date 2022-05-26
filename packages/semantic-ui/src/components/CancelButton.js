@@ -11,10 +11,9 @@ type Props = {
 
 const CancelButton = (props: Props) => (
   <Button
+    basic
     disabled={props.disabled}
-    inverted
     onClick={props.onClick.bind(this)}
-    primary
     size='medium'
     type='button'
   >

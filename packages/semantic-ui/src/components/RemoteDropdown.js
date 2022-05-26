@@ -311,6 +311,7 @@ class RemoteDropdown extends Component<Props, State> {
         scrolling
         search={() => this.getSearchOptions()}
         searchInput={{
+          'aria-label': 'Search',
           className: 'remote-dropdown-search-input',
           onKeyDown: Timer.clearSearchTimer.bind(this),
           onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))

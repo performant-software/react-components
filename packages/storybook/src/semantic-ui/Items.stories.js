@@ -28,7 +28,12 @@ const actions = [{
   name: 'delete'
 }];
 
-const items = _.times(20, (i) => ({ id: i, header: `Test ${i}`, image }));
+const items = _.times(20, (i) => ({
+  id: i,
+  header: `Test ${i}`,
+  image,
+  image_alt: `Test ${i}`
+}));
 
 export const Default = useDragDrop(() => (
   <Items
@@ -36,7 +41,7 @@ export const Default = useDragDrop(() => (
     items={items}
     onCopy={action('copy')}
     onDelete={action('delete')}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -48,7 +53,7 @@ export const Empty = useDragDrop(() => (
     items={[]}
     onCopy={action('copy')}
     onDelete={action('delete')}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -72,7 +77,7 @@ export const AddButton = useDragDrop(() => (
     onCopy={action('copy')}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -96,7 +101,7 @@ export const EmptyAddButton = useDragDrop(() => (
     onCopy={action('copy')}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -127,7 +132,7 @@ export const CustomActions = useDragDrop(() => (
     onCopy={action('copy')}
     onDelete={action('delete')}
     onSave={action('save')}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -142,7 +147,7 @@ export const Pagination = useDragDrop(() => (
     onSave={action('save')}
     page={number('Page', 1)}
     pages={number('Pages', 10)}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
@@ -164,7 +169,7 @@ export const CustomDeleteModal = useDragDrop(() => (
         open
       />
     )}
-    renderImage={(item) => <Image src={item.image} />}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
   />
