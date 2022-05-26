@@ -5,7 +5,8 @@ module.exports = configure(__dirname, {
   resolve: {
     alias: {
       '../../theme.config$': path.join(__dirname, '/src/css/theme.config'),
-      '../src/css/site': path.join(__dirname, '/src/css/site')
+      '../src/css/site': path.join(__dirname, '/src/css/site'),
+      '../src/css/themes': path.join(__dirname, '/src/css/themes')
     }
   },
   optimization: {
