@@ -1,6 +1,6 @@
 // @flow
 
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse, type AxiosStatic } from 'axios';
 
 /**
  * Base class for making API calls. This class uses Axios under the hood and a customizable transform class for
@@ -101,6 +101,15 @@ class BaseService {
   }
 
   // protected
+
+  /**
+   * Returns the axios instance.
+   *
+   * @returns {AxiosStatic}
+   */
+  getAxios(): AxiosStatic {
+    return axios;
+  }
 
   /**
    * Returns the API base URL string.
