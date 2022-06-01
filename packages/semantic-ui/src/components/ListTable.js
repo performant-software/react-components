@@ -1,5 +1,6 @@
 // @flow
 
+import { Hooks, Object as ObjectUtils } from '@performant-software/shared-components';
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import DataTable from './DataTable';
@@ -20,6 +21,8 @@ type Props = {
 };
 
 const ListTable = (props: Props) => {
+  const prevColumns = Hooks.usePrevious(props.columns);
+
   /**
    * Sorts the list by the selected column, and/or reverse the direction.
    *
@@ -51,18 +54,24 @@ const ListTable = (props: Props) => {
    * sortable column.
    */
   useEffect(() => {
-    const { page, defaultSort, defaultSortDirection = SORT_ASCENDING } = props;
+    if (!ObjectUtils.isEqual(props.columns, prevColumns)) {
+      const {
+        page,
+        defaultSort,
+        defaultSortDirection = SORT_ASCENDING
+      } = props;
 
-    if (defaultSort) {
-      props.onSort(defaultSort, defaultSortDirection, page);
-    } else {
-      const sortableColumn = _.findWhere(props.columns, { sortable: true });
-
-      if (sortableColumn) {
-        onColumnClick(sortableColumn);
+      if (defaultSort) {
+        props.onSort(defaultSort, defaultSortDirection, page);
       } else {
-        // If no columns are sortable, load the data as is
-        props.onInit();
+        const sortableColumn = _.findWhere(props.columns, { sortable: true });
+
+        if (sortableColumn) {
+          onColumnClick(sortableColumn);
+        } else {
+          // If no columns are sortable, load the data as is
+          props.onInit();
+        }
       }
     }
   }, [props.columns]);

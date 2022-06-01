@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser } from '@performant-software/shared-components';
+import { Browser, Object as ObjectUtils } from '@performant-software/shared-components';
 import React, { Component, createRef, type Element } from 'react';
 import {
   Checkbox,
@@ -119,6 +119,17 @@ class DataTable extends Component<Props, State> {
     if (Browser.isBrowser()) {
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
+    }
+  }
+
+  /**
+   * Reinitialize the column refs if the columns change.
+   *
+   * @param prevProps
+   */
+  componentDidUpdate(prevProps: Props) {
+    if (!ObjectUtils.isEqual(prevProps.columns, this.props.columns)) {
+      this.initializeColumnRefs();
     }
   }
 

@@ -1,5 +1,6 @@
 // @flow
 
+import { Object as ObjectUtils } from '@performant-software/shared-components';
 import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -49,7 +50,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      * @param prevProps
      */
     componentDidUpdate(prevProps: Props): * {
-      if (prevProps.columns !== this.props.columns) {
+      if (!ObjectUtils.isEqual(prevProps.columns, this.props.columns)) {
         this.setState({ columns: this.props.columns });
       }
     }
