@@ -3,7 +3,7 @@
 import React, { Component, type ComponentType, type Element } from 'react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import { isEqual } from '../utils/Object';
+import ObjectUtils from '../utils/Object';
 
 type Props = {
   children?: Element<any>,
@@ -366,7 +366,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       return (
         <WrappedComponent
           {...this.props}
-          dirty={!!(this.state.item.id && !isEqual(this.state.item, this.state.originalItem))}
+          dirty={!!(this.state.item.id && !ObjectUtils.isEqual(this.state.item, this.state.originalItem))}
           errors={_.values(this.state.validationErrors)}
           isError={this.isError.bind(this)}
           isRequired={this.isRequired.bind(this)}
