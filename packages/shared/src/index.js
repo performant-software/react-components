@@ -27,6 +27,7 @@ export { default as Calendar } from './utils/Calendar';
 export { default as Date } from './utils/Date';
 export { default as useDragDrop } from './utils/DragDrop';
 export { default as Element } from './utils/Element';
+export { default as Hooks } from './utils/Hooks';
 export { default as Map } from './utils/Map';
 export { default as Object } from './utils/Object';
 export { default as String } from './utils/String';
