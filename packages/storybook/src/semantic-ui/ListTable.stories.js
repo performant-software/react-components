@@ -860,3 +860,52 @@ export const WithPerPageNoDefault = useDragDrop(() => (
     searchable={boolean('Searchable', true)}
   />
 ));
+
+export const WithCount = useDragDrop(() => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <Button
+        content={`Clicks: ${count}`}
+        primary
+        onClick={() => setCount((prevCount) => prevCount + 1)}
+      />
+      <ListTable
+        actions={actions}
+        collectionName='items'
+        columns={[{
+          name: 'make',
+          label: 'Make',
+          sortable: true
+        }, {
+          name: 'model',
+          label: 'Model',
+          sortable: true
+        }, {
+          name: 'vin',
+          label: 'Vin',
+          sortable: true
+        }, {
+          name: 'address',
+          label: 'Address',
+          sortable: true
+        }, {
+          name: 'city',
+          label: 'City',
+          sortable: true
+        }, {
+          name: 'state',
+          label: 'State',
+          sortable: true
+        }]}
+        onCopy={action('copy')}
+        onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
+        onDelete={action('delete')}
+        onSave={action('save')}
+        perPageOptions={[10, 25, 50, 100]}
+        searchable={boolean('Searchable', true)}
+      />
+    </>
+  );
+});
