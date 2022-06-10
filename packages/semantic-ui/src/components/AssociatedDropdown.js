@@ -63,6 +63,7 @@ class AssociatedDropdown extends Component<Props, State> {
       items: [],
       loading: false,
       modalAdd: false,
+      modalEdit: false,
       options: [],
       saved: false,
       searchQuery: props.searchQuery || '',
@@ -208,7 +209,7 @@ class AssociatedDropdown extends Component<Props, State> {
           { this.renderAddButton() }
           { this.renderClearButton() }
         </Button.Group>
-        { this.renderAddModal() }
+        { this.renderModal() }
         { this.state.saved && (
           <Toaster
             onDismiss={() => this.setState({ saved: false })}
@@ -248,56 +249,6 @@ class AssociatedDropdown extends Component<Props, State> {
   }
 
   /**
-   * Renders the edit button (if applicable).
-   *
-   * @returns {null|*}
-   */
-  renderEditButton() {
-    if (!this.props.modal || !this.props.modal.props || !this.props.modal.props.onInitialize || !this.state.value) {
-      return null;
-    }
-
-    return (
-      <Button
-        basic
-        content={i18n.t('Common.buttons.edit')}
-        icon='pencil'
-        onClick={() => this.setState({ modalAdd: true })}
-        type='button'
-      />
-    );
-  }
-
-  /**
-   * Renders the add association button.
-   *
-   * @returns {null|*}
-   */
-  renderAddModal() {
-    if (!(this.state.modalAdd && this.props.modal)) {
-      return null;
-    }
-
-    const {
-      component, props, onSave
-    } = this.props.modal;
-
-    return (
-      <EditModal
-        component={component}
-        item={{ id: this.state.value }}
-        onClose={() => this.setState({ modalAdd: false })}
-        onSave={(item) => onSave(item)
-          .then((record) => {
-            this.props.onSelection(record);
-            this.setState({ modalAdd: false, saved: true });
-          })}
-        {...props}
-      />
-    );
-  }
-
-  /**
    * Renders the clear button.
    *
    * @returns {*}
@@ -314,6 +265,63 @@ class AssociatedDropdown extends Component<Props, State> {
         icon='times'
         onClick={this.onClear.bind(this)}
         type='button'
+      />
+    );
+  }
+
+  /**
+   * Renders the edit button (if applicable).
+   *
+   * @returns {null|*}
+   */
+  renderEditButton() {
+    if (!this.props.modal || !this.props.modal.props || !this.props.modal.props.onInitialize || !this.state.value) {
+      return null;
+    }
+
+    return (
+      <Button
+        basic
+        content={i18n.t('Common.buttons.edit')}
+        icon='pencil'
+        onClick={() => this.setState({ modalEdit: true })}
+        type='button'
+      />
+    );
+  }
+
+  /**
+   * Renders the add association button.
+   *
+   * @returns {null|*}
+   */
+  renderModal() {
+    if (!((this.state.modalAdd || this.state.modalEdit) && this.props.modal)) {
+      return null;
+    }
+
+    const { component, props, onSave } = this.props.modal;
+
+    // If we're editing the existing record, pass the ID to the modal in order to retrieve the full record.
+    let item;
+
+    if (this.state.modalEdit) {
+      item = {
+        id: this.state.value
+      };
+    }
+
+    return (
+      <EditModal
+        component={component}
+        item={item}
+        onClose={() => this.setState({ modalAdd: false, modalEdit: false })}
+        onSave={(data) => onSave(data)
+          .then((record) => {
+            this.props.onSelection(record);
+            this.setState({ modalAdd: false, modalEdit: false, saved: true });
+          })}
+        {...props}
       />
     );
   }

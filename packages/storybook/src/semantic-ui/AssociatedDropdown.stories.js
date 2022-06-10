@@ -4,10 +4,11 @@ import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
-import { Form } from 'semantic-ui-react';
+import { Form, Modal } from 'semantic-ui-react';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
+import { type EditContainerProps } from '../../../shared/src/components/EditContainer';
 
 export default {
   title: 'Components/Semantic UI/AssociatedDropdown',
@@ -339,18 +340,48 @@ export const Default = () => (
   />
 );
 
+const TestModal = (props: EditContainerProps) => (
+  <Modal
+    as={Form}
+    centered={false}
+    open
+  >
+    <Modal.Header
+      content={props.item.id ? 'Edit' : 'Add'}
+    />
+    <Modal.Content>
+      <Form.Input
+        label='Company'
+        onChange={props.onTextInputChange.bind(this, 'company')}
+        value={props.item.company}
+      />
+      <Form.Input
+        label='Email'
+        onChange={props.onTextInputChange.bind(this, 'email')}
+        value={props.item.email}
+      />
+      <Form.Input
+        label='Card'
+        onChange={props.onTextInputChange.bind(this, 'card')}
+        value={props.item.card}
+      />
+    </Modal.Content>
+    { props.children }
+  </Modal>
+);
+
 export const WithEditButton = () => (
   <AssociatedDropdown
     collectionName='items'
     modal={{
-      component: AddModal,
+      component: TestModal,
       onSave: () => {
         action('save')();
         return Promise.resolve({});
       },
       props: {
         onInitialize: (id) => {
-          action('edit')();
+          action('initialize')();
           return Promise.resolve({ ...items.find((i) => i.id === id) });
         }
       }
