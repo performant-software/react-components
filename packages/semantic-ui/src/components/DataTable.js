@@ -437,7 +437,7 @@ class DataTable extends Component<Props, State> {
         <Table.HeaderCell
           key={column.name}
           sorted={this.props.sortColumn === column.name ? this.props.sortDirection : null}
-          onClick={this.props.onColumnClick.bind(this, column)}
+          onClick={() => this.props.onColumnClick(column)}
         >
           { column.label }
           <ColumnResize
