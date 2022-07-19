@@ -1,6 +1,7 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useState, useEffect, type Node } from 'react';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import {
   Dimmer,
   Icon,
@@ -27,6 +28,15 @@ type Props = {
 const LazyDocument = (props: Props) => {
   const [visible, setVisible] = useState(false);
   const [dimmer, setDimmer] = useState(false);
+  const [contentType, setContentType] = useState('');
+
+  useEffect(() => {
+    if (props.src && !props.preview) {
+      fetch(props.src)
+        .then((response) => response.blob())
+        .then((blob) => setContentType(blob.type));
+    }
+  }, [props.preview, props.src]);
 
   if (!visible) {
     return (
@@ -65,7 +75,21 @@ const LazyDocument = (props: Props) => {
               size={props.size}
             />
           )}
-          { !props.preview && (
+          { !props.preview && props.src && contentType === 'application/pdf' && (
+            <Image
+              {...props.image}
+              size={props.size}
+            >
+              <Document
+                file={props.src}
+              >
+                <Page
+                  pageNumber={1}
+                />
+              </Document>
+            </Image>
+          )}
+          { !props.preview && (!props.src || contentType !== 'application/pdf') && (
             <Image
               {...props.image}
               className='placeholder-image'

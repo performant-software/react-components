@@ -19,3 +19,8 @@
   padding-bottom: 20%;
   text-align: center;
 }
+
+.lazy-document .react-pdf__Page__canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
