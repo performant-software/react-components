@@ -70,7 +70,17 @@ const LazyVideo = (props: Props) => {
               size={props.size}
             />
           )}
-          { !props.preview && (
+          { !props.preview && props.src && (
+            <Image
+              {...props.image}
+              size={props.size}
+            >
+              <video
+                src={props.src}
+              />
+            </Image>
+          )}
+          { !props.preview && !props.src && (
             <Image
               {...props.image}
               className='placeholder-image'

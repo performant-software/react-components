@@ -9,7 +9,9 @@ import {
   Item,
   Modal
 } from 'semantic-ui-react';
+import _ from 'underscore';
 import image from '../assets/test-image.jpg';
+import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
 import LazyVideo from '../../../semantic-ui/src/components/LazyVideo';
 import portraitImage from '../assets/portrait-test-image.jpg';
 import video from '../assets/SampleVideo.mp4';
@@ -215,3 +217,21 @@ export const Embedded = () => (
     src='https://www.youtube.com/embed/YXiZ8OsS3kk'
   />
 );
+
+export const Upload = () => {
+  const [file, setFile] = useState();
+
+  return (
+    <>
+      <LazyVideo
+        src={file && URL.createObjectURL(file)}
+      >
+        <FileInputButton
+          content='Upload'
+          icon='file outline'
+          onSelection={(files) => setFile(_.first(files))}
+        />
+      </LazyVideo>
+    </>
+  );
+};
