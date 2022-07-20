@@ -9,7 +9,7 @@ import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import { SemanticColors } from '../services/Colors';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
-import EmbeddedList from '../../../semantic-ui/src/components/EmbeddedList';
+import EmbeddedList, { SORT_DESCENDING } from '../../../semantic-ui/src/components/EmbeddedList';
 import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
@@ -286,6 +286,17 @@ export const NoSortableColumns = useDragDrop(() => (
     actions={actions}
     onDelete={action('delete')}
     columns={_.map(columns, (c) => ({ ...c, sortable: false }))}
+    items={items}
+  />
+));
+
+export const DefaultSort = useDragDrop(() => (
+  <EmbeddedList
+    actions={actions}
+    columns={columns}
+    defaultSort='country'
+    defaultSortDirection={SORT_DESCENDING}
+    onDelete={action('delete')}
     items={items}
   />
 ));

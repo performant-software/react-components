@@ -25,6 +25,8 @@ type Props = {
   className?: string,
   columns: Array<Column>,
   configurable: boolean,
+  defaultSort?: string,
+  defaultSortDirection?: string,
   items: Array<any>,
   modal?: {
     component: ComponentType<any>,
@@ -77,10 +79,16 @@ class EmbeddedList extends Component<Props, State> {
    * Sorts the table by the first column.
    */
   componentDidMount() {
-    const column = _.find(this.props.columns, (c) => c.sortable !== false);
+    let column;
+
+    if (this.props.defaultSort) {
+      column = _.findWhere(this.props.columns, { name: this.props.defaultSort });
+    } else {
+      column = _.find(this.props.columns, (c) => c.sortable !== false);
+    }
 
     if (column) {
-      this.onColumnClick(column);
+      this.onColumnClick(column, this.props.defaultSortDirection);
     }
   }
 
@@ -101,7 +109,7 @@ class EmbeddedList extends Component<Props, State> {
    *
    * @param column
    */
-  onColumnClick(column: Column) {
+  onColumnClick(column: Column, direction: string = SORT_ASCENDING) {
     /*
      * We'll disable the column sorting if the table rows are draggable. Making the table rows draggable implies
      * that the sorting will be done manually. Allowing column click sorting could make things confusing.
@@ -119,7 +127,7 @@ class EmbeddedList extends Component<Props, State> {
     }
 
     const sortColumn = column.name;
-    let sortDirection = SORT_ASCENDING;
+    let sortDirection = direction || SORT_ASCENDING;
 
     if (column.name === this.state.sortColumn) {
       sortDirection = this.state.sortDirection === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING;
@@ -276,3 +284,8 @@ EmbeddedList.defaultProps = {
 };
 
 export default EmbeddedList;
+
+export {
+  SORT_ASCENDING,
+  SORT_DESCENDING
+};
