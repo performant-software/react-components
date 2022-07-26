@@ -38,6 +38,7 @@ export { default as ItemCollection } from './components/ItemCollection';
 export { default as ItemList } from './components/ItemList';
 export { default as Items } from './components/Items';
 export { default as KeyboardField } from './components/KeyboardField';
+export { default as KeyValuePairs } from './components/KeyValuePairs';
 export { default as LazyDocument } from './components/LazyDocument';
 export { default as LazyImage } from './components/LazyImage';
 export { default as LazyVideo } from './components/LazyVideo';
@@ -77,10 +78,14 @@ export { default as VideoPlayer } from './components/VideoPlayer';
 export { default as VideoPlayerButton } from './components/VideoPlayerButton';
 export { default as ViewXML } from './components/ViewXML';
 
+// Hooks
+export { default as BatchEdit } from './hooks/BatchEdit';
+
 // Types
 export type { EditPageProps } from './components/EditPage';
 export type { FileUploadProps } from './components/FileUploadModal';
 export type { Props as ListProps } from './components/List';
+export type { BatchEditProps } from './hooks/BatchEdit';
 
 // Constants
 export { SORT_ASCENDING, SORT_DESCENDING } from './components/DataList';

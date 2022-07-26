@@ -21,6 +21,9 @@
     "errors": {
       "title": "Oops!"
     },
+    "labels": {
+      "noRecords": "No records."
+    },
     "messages": {
       "error": {
         "header": "Oops!"
@@ -124,6 +127,12 @@
     "labels": {
       "hideKeyboard": "Hide Keyboard",
       "showKeyboard": "Show Keyboard"
+    }
+  },
+  "KeyValuePairs": {
+    "labels": {
+      "key": "Key",
+      "value": "Value"
     }
   },
   "LazyDocument": {
