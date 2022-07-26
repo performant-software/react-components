@@ -193,6 +193,9 @@
     "loginErrorHeader": "Invalid Credentials",
     "password": "Password"
   },
+  "ReferenceCodeFormLabel": {
+    "content": "The values in this list can be edited via the {{name}} reference table."
+  },
   "ReferenceCodeModal": {
     "labels": {
       "name": "Name"
