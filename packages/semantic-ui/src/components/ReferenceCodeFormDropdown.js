@@ -1,7 +1,7 @@
 // @flow
 
 import { ReferenceTablesService } from '@performant-software/shared-components';
-import React, { type ComponentType, useEffect, useState } from 'react';
+import React, { type ComponentType, useState } from 'react';
 import { Form } from 'semantic-ui-react';
 import EditModal from './EditModal';
 import ReferenceCodeDropdown from './ReferenceCodeDropdown';
@@ -20,25 +20,12 @@ const ReferenceCodeFormDropdown: ComponentType<any> = (props: Props) => {
     error,
     label,
     required,
-    referenceTable: key,
+    referenceTable,
     ...rest
   } = props;
 
   const [modal, setModal] = useState(false);
   const [dropdownKey, setDropdownKey] = useState(0);
-  const [referenceTable, setReferenceTable] = useState({ key });
-
-  /**
-   * Looks up the existing reference table base on the passed key.
-   */
-  useEffect(() => (
-    ReferenceTablesService
-      .fetchByKey(key)
-      .then(({ data }) => setReferenceTable((prevTable) => ({
-        ...prevTable,
-        ...data.reference_table
-      })))
-  ), [key]);
 
   return (
     <>
@@ -48,7 +35,7 @@ const ReferenceCodeFormDropdown: ComponentType<any> = (props: Props) => {
           <ReferenceCodeFormLabel
             label={label}
             onClick={() => setModal(true)}
-            referenceTable={referenceTable.key}
+            referenceTable={referenceTable}
           />
         )}
         required={required}
@@ -56,15 +43,20 @@ const ReferenceCodeFormDropdown: ComponentType<any> = (props: Props) => {
         <ReferenceCodeDropdown
           {...rest}
           id={referenceTable}
-          referenceTable={referenceTable.key}
+          referenceTable={referenceTable}
           key={dropdownKey}
         />
       </Form.Input>
       { modal && (
         <EditModal
           component={ReferenceTableModal}
-          item={referenceTable}
+          item={{ id: referenceTable }}
           onClose={() => setModal(false)}
+          onInitialize={(key) => (
+            ReferenceTablesService
+              .fetchByKey(key)
+              .then(({ data }) => data.reference_table)
+          )}
           onSave={(record) => (
             ReferenceTablesService
               .save(record)
