@@ -50,12 +50,15 @@ const ReferenceCodeFormDropdown: ComponentType<any> = (props: Props) => {
       { modal && (
         <EditModal
           component={ReferenceTableModal}
-          item={{ id: referenceTable }}
+          item={{ id: referenceTable, key: referenceTable }}
           onClose={() => setModal(false)}
           onInitialize={(key) => (
             ReferenceTablesService
               .fetchByKey(key)
-              .then(({ data }) => data.reference_table)
+              .then(({ data }) => ({
+                ...data.reference_table,
+                key
+              }))
           )}
           onSave={(record) => (
             ReferenceTablesService
