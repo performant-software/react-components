@@ -5,7 +5,9 @@ import NestedAttributesTransform from './NestedAttributesTransform';
 class References extends NestedAttributesTransform {
   getPayloadKeys(): Array<string> {
     return [
-      'reference_code_id'
+      'id',
+      'reference_code_id',
+      '_destroy'
     ];
   }
 }
