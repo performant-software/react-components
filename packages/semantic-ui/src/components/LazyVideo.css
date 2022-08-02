@@ -1,4 +1,6 @@
 .lazy-video.ui.segment {
+  display: inline-block !important;
+  max-width: 100%;
   padding: 0;
 }
 
@@ -18,4 +20,9 @@
   padding-top: 20%;
   padding-bottom: 20%;
   text-align: center;
+}
+
+.lazy-video.ui.segment > .image > video {
+  display: table;
+  width: 100%;
 }

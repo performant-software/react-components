@@ -31,12 +31,6 @@ export const Default = () => (
   />
 );
 
-export const NoPreview = () => (
-  <LazyVideo
-    src={video}
-  />
-);
-
 export const Placeholder = () => (
   <LazyVideo />
 );

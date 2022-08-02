@@ -60,14 +60,14 @@ const LazyImage = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { props.src && (
+          { (props.preview || props.src) && (
             <Image
               {...props.image}
               size={props.size}
               src={props.preview || props.src}
             />
           )}
-          { !props.src && (
+          { !(props.preview || props.src) && (
             <Image
               {...props.image}
               className='placeholder-image'
@@ -100,12 +100,14 @@ const LazyImage = (props: Props) => {
           )}
         </Dimmer.Dimmable>
       </Transition>
-      <PhotoViewer
-        image={props.src || ''}
-        onClose={() => setModal(false)}
-        open={modal}
-        size='large'
-      />
+      { props.src && (
+        <PhotoViewer
+          image={props.src}
+          onClose={() => setModal(false)}
+          open={modal}
+          size='large'
+        />
+      )}
     </>
   );
 };

@@ -1,4 +1,6 @@
 .lazy-image.ui.segment {
+  display: inline-block !important;
+  max-width: 100%;
   padding: 0;
 }
 
