@@ -1,0 +1,23 @@
+.lazy-audio.ui.segment {
+  display: inline-block !important;
+  max-width: 100%;
+  padding: 0;
+}
+
+.lazy-audio.ui.segment .buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.lazy-audio.ui.segment .buttons .ui.button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.lazy-audio .placeholder-image.ui.image {
+  background-color: #f9fafb;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  text-align: center;
+}

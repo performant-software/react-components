@@ -135,6 +135,11 @@
       "value": "Value"
     }
   },
+  "LazyAudio": {
+    "buttons": {
+      "play": "Play"
+    }
+  },
   "LazyDocument": {
     "buttons": {
       "download": "Download"
