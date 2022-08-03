@@ -12,6 +12,7 @@ import {
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 import PhotoViewer from './PhotoViewer';
 import './LazyImage.css';
@@ -19,8 +20,10 @@ import './LazyImage.css';
 type Props = {
   children?: Node,
   dimmable: boolean,
+  download?: string,
   duration?: number,
   image?: any,
+  name?: string,
   preview?: string,
   size?: string,
   src?: string
@@ -109,6 +112,13 @@ const LazyImage = (props: Props) => {
                     icon='photo'
                     onClick={() => setModal(true)}
                     primary
+                  />
+                )}
+                { props.download && (
+                  <DownloadButton
+                    color='green'
+                    filename={props.name}
+                    url={props.download}
                   />
                 )}
                 { props.children }

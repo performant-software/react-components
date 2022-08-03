@@ -22,6 +22,7 @@
       "cancel": "Cancel",
       "clear": "Clear",
       "close": "Close",
+      "download": "Download",
       "edit": "Edit",
       "ok": "OK",
       "save": "Save"
@@ -146,11 +147,6 @@
   "LazyAudio": {
     "buttons": {
       "play": "Play"
-    }
-  },
-  "LazyDocument": {
-    "buttons": {
-      "download": "Download"
     }
   },
   "LazyImage": {

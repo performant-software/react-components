@@ -68,3 +68,11 @@ export const ErrorPreviewAndSource = () => (
     src='/path/to/audio.mp3'
   />
 );
+
+export const Downloadable = () => (
+  <LazyAudio
+    download={audio}
+    name='Audio.mp3'
+    src={audio}
+  />
+);

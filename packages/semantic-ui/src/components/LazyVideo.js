@@ -12,6 +12,7 @@ import {
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
@@ -20,10 +21,12 @@ type Props = {
   autoPlay?: boolean,
   children?: Node,
   dimmable: boolean,
+  download?: string,
   duration?: number,
   embedded?: boolean,
   icon?: string | Element<any>,
   image?: any,
+  name?: string,
   preview?: ?string,
   size?: string,
   src?: string
@@ -130,6 +133,13 @@ const LazyVideo = (props: Props) => {
                     icon='video'
                     onClick={() => setModal(true)}
                     primary
+                  />
+                )}
+                { props.download && (
+                  <DownloadButton
+                    color='green'
+                    filename={props.name}
+                    url={props.download}
                   />
                 )}
                 { props.children }

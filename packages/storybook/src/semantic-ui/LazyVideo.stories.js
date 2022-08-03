@@ -259,3 +259,15 @@ export const ErrorPreviewAndSource = () => (
     src='/path/to/source.mp4'
   />
 );
+
+export const Downloadable = () => (
+  <LazyVideo
+    download={video}
+    image={{
+      alt: 'Test Image'
+    }}
+    name='Video.mp4'
+    preview={image}
+    src={video}
+  />
+);

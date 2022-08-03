@@ -12,8 +12,6 @@ export default {
 
 export const Default = () => (
   <DownloadButton
-    content='Download'
-    icon='cloud download'
     primary
     url={image}
   />
@@ -21,8 +19,6 @@ export const Default = () => (
 
 export const LargeFile = () => (
   <DownloadButton
-    content='Download'
-    icon='cloud download'
     primary
     url='https://speed.hetzner.de/100MB.bin'
   />
@@ -30,10 +26,45 @@ export const LargeFile = () => (
 
 export const WithFilename = () => (
   <DownloadButton
-    content='Download'
     filename='Test12345'
-    icon='cloud download'
     primary
+    url={image}
+  />
+);
+
+export const Basic = () => (
+  <DownloadButton
+    basic
+    primary
+    url={image}
+  />
+);
+
+export const Colored = () => (
+  <DownloadButton
+    color='red'
+    url={image}
+  />
+);
+
+export const Compact = () => (
+  <DownloadButton
+    compact
+    primary
+    url={image}
+  />
+);
+
+export const Secondary = () => (
+  <DownloadButton
+    secondary
+    url={image}
+  />
+);
+
+export const Large = () => (
+  <DownloadButton
+    size='large'
     url={image}
   />
 );

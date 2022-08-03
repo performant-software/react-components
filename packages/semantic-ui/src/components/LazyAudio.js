@@ -13,14 +13,17 @@ import {
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import AudioPlayer from './AudioPlayer';
+import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 import './LazyAudio.css';
 
 type Props = {
   children?: Node,
   dimmable: boolean,
+  download?: string,
   duration?: number,
   image?: any,
+  name?: string,
   preview?: string,
   size?: string,
   src?: string
@@ -109,6 +112,13 @@ const LazyAudio = (props: Props) => {
                     icon='play circle outline'
                     onClick={() => setModal(true)}
                     primary
+                  />
+                )}
+                { props.download && (
+                  <DownloadButton
+                    color='green'
+                    filename={props.name}
+                    url={props.download}
                   />
                 )}
                 { props.children }

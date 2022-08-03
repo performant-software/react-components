@@ -171,3 +171,14 @@ export const ErrorPreviewAndSource = () => (
     source='path/to/image.jpg'
   />
 );
+
+export const Downloadable = () => (
+  <LazyImage
+    downloadUrl={image}
+    name='Image.jpg'
+    image={{
+      alt: 'Image'
+    }}
+    src={image}
+  />
+);

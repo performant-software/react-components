@@ -11,7 +11,6 @@ import {
   Transition,
   Visibility
 } from 'semantic-ui-react';
-import i18n from '../i18n/i18n';
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 import './LazyDocument.css';
@@ -119,10 +118,8 @@ const LazyDocument = (props: Props) => {
               >
                 { props.src && (
                   <DownloadButton
-                    content={i18n.t('LazyDocument.buttons.download')}
-                    icon='cloud download'
                     primary
-                    url={props.src}
+                    src={props.src}
                   />
                 )}
                 { props.children }
