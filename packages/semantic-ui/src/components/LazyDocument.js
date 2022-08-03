@@ -119,7 +119,7 @@ const LazyDocument = (props: Props) => {
                 { props.src && (
                   <DownloadButton
                     primary
-                    src={props.src}
+                    url={props.src}
                   />
                 )}
                 { props.children }
