@@ -8,6 +8,14 @@
   "AccordionSelector": {
     "title": "Select Items"
   },
+  "AudioPlayer": {
+    "errors": {
+      "path": {
+        "content": "Please check the audio path: {{path}}",
+        "header": "There was a problem loading the audio"
+      }
+    }
+  },
   "Common": {
     "buttons": {
       "add": "Add",
@@ -198,6 +206,14 @@
     "loginErrorHeader": "Invalid Credentials",
     "password": "Password"
   },
+  "PhotoViewer": {
+    "errors": {
+      "path": {
+        "content": "Please check the image path: {{path}}",
+        "header": "There was a problem loading the image"
+      }
+    }
+  },
   "ReferenceCodeFormLabel": {
     "content": "The values in this list can be edited via the {{name}} reference table."
   },
@@ -244,6 +260,14 @@
       "interval_plural": "Interval: {{count}} seconds"
     },
     "title": "Select Frame"
+  },
+  "VideoPlayer": {
+    "errors": {
+      "path": {
+        "content": "Please check the video path: {{path}}",
+        "header": "There was a problem loading the video"
+      }
+    }
   },
   "ViewXML": {
     "buttons": {

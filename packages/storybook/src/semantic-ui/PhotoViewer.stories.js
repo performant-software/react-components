@@ -20,3 +20,12 @@ export const Default = () => (
     open
   />
 );
+
+export const Error = () => (
+  <PhotoViewer
+    alt='Test Image'
+    image='/path/to/image.jpg'
+    onClose={action('close')}
+    open
+  />
+);

@@ -88,3 +88,11 @@ export const EmbeddedAutoPlay = () => (
     video='https://www.youtube.com/embed/YXiZ8OsS3kk'
   />
 );
+
+export const Error = () => (
+  <VideoPlayer
+    onClose={action('close')}
+    open
+    video='/path/to/video.mp4'
+  />
+);

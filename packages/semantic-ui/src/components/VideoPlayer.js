@@ -1,9 +1,20 @@
 // @flow
 
-import React, { type Element, useEffect, useRef } from 'react';
-import { Embed, Modal, Ref } from 'semantic-ui-react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type Element
+} from 'react';
+import {
+  Embed,
+  Message,
+  Modal,
+  Ref
+} from 'semantic-ui-react';
 import ModalContext from '../context/ModalContext';
 import './VideoPlayer.css';
+import i18n from '../i18n/i18n';
 
 type Props = {
   autoPlay?: boolean,
@@ -18,6 +29,8 @@ type Props = {
 };
 
 const VideoPlayer = (props: Props) => {
+  const [error, setError] = useState(false);
+
   const embedRef = useRef();
 
   /**
@@ -46,6 +59,13 @@ const VideoPlayer = (props: Props) => {
           size={props.size}
         >
           <Modal.Content>
+            { error && (
+              <Message
+                content={i18n.t('VideoPlayer.errors.path.content', { path: props.video })}
+                header={i18n.t('VideoPlayer.errors.path.header')}
+                icon='exclamation circle'
+              />
+            )}
             { props.embedded && (
               <Ref
                 innerRef={embedRef}
@@ -63,6 +83,7 @@ const VideoPlayer = (props: Props) => {
               <video
                 autoPlay={props.autoPlay}
                 controls
+                onError={() => setError(true)}
                 src={props.video}
               />
             )}
