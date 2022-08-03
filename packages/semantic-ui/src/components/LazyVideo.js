@@ -12,6 +12,7 @@ import {
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import LazyLoader from './LazyLoader';
 import VideoPlayer from './VideoPlayer';
 import './LazyVideo.css';
 
@@ -29,9 +30,11 @@ type Props = {
 };
 
 const LazyVideo = (props: Props) => {
-  const [visible, setVisible] = useState(false);
-  const [modal, setModal] = useState(false);
   const [dimmer, setDimmer] = useState(false);
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(!(props.preview || props.src));
+  const [modal, setModal] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   if (!visible) {
     return (
@@ -63,24 +66,46 @@ const LazyVideo = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { props.preview && (
+          { !loaded && (
+            <LazyLoader
+              active
+              size={props.size}
+            />
+          )}
+          { !error && props.preview && (
             <Image
               {...props.image}
+              onError={() => {
+                setError(true);
+                setLoaded(true);
+              }}
+              onLoad={() => {
+                setError(false);
+                setLoaded(true);
+              }}
               src={props.preview}
               size={props.size}
             />
           )}
-          { !props.preview && props.src && (
+          { !error && !props.preview && props.src && (
             <Image
               {...props.image}
               size={props.size}
             >
               <video
+                onError={() => {
+                  setError(true);
+                  setLoaded(true);
+                }}
+                onLoadedData={() => {
+                  setError(false);
+                  setLoaded(true);
+                }}
                 src={props.src}
               />
             </Image>
           )}
-          { !props.preview && !props.src && (
+          { (error || (!props.preview && !props.src)) && (
             <Image
               {...props.image}
               className='placeholder-image'

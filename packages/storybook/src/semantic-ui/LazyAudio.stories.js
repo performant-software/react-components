@@ -7,6 +7,7 @@ import _ from 'underscore';
 import audio from '../assets/SampleAudio.mp3';
 import LazyAudio from '../../../semantic-ui/src/components/LazyAudio';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
+import image from '../assets/test-image.jpg';
 
 export default {
   title: 'Components/Semantic UI/LazyAudio',
@@ -39,3 +40,31 @@ export const Upload = () => {
     </LazyAudio>
   );
 };
+
+export const Preview = () => (
+  <LazyAudio
+    preview={image}
+    src={audio}
+  />
+);
+
+export const ErrorPreview = () => (
+  <LazyAudio
+    preview='/path/to/preview.jpg'
+    src={audio}
+  />
+);
+
+export const ErrorSource = () => (
+  <LazyAudio
+    preview={image}
+    src='/path/to/audio.mp3'
+  />
+);
+
+export const ErrorPreviewAndSource = () => (
+  <LazyAudio
+    preview='/path/to/preview.jpg'
+    src='/path/to/audio.mp3'
+  />
+);

@@ -229,3 +229,33 @@ export const Upload = () => {
     </>
   );
 };
+
+export const ErrorPreview = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview='/path/to/preview.jpg'
+    src={video}
+  />
+);
+
+export const ErrorSource = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview={image}
+    src='/path/to/source.mp4'
+  />
+);
+
+export const ErrorPreviewAndSource = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview='/path/to/preview.jpg'
+    src='/path/to/source.mp4'
+  />
+);

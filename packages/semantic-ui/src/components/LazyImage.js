@@ -12,6 +12,7 @@ import {
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import LazyLoader from './LazyLoader';
 import PhotoViewer from './PhotoViewer';
 import './LazyImage.css';
 
@@ -26,9 +27,11 @@ type Props = {
 };
 
 const LazyImage = (props: Props) => {
-  const [visible, setVisible] = useState(false);
-  const [modal, setModal] = useState(false);
   const [dimmer, setDimmer] = useState(false);
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(!(props.src || props.preview));
+  const [modal, setModal] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   if (!visible) {
     return (
@@ -60,14 +63,28 @@ const LazyImage = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { (props.preview || props.src) && (
+          { !loaded && (
+            <LazyLoader
+              active
+              size={props.size}
+            />
+          )}
+          { !error && (props.preview || props.src) && (
             <Image
               {...props.image}
+              onError={() => {
+                setError(true);
+                setLoaded(true);
+              }}
+              onLoad={() => {
+                setError(false);
+                setLoaded(true);
+              }}
               size={props.size}
               src={props.preview || props.src}
             />
           )}
-          { !(props.preview || props.src) && (
+          { (error || !(props.preview || props.src)) && (
             <Image
               {...props.image}
               className='placeholder-image'
@@ -79,7 +96,7 @@ const LazyImage = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { !error && (props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >

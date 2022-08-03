@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import AudioPlayer from './AudioPlayer';
+import LazyLoader from './LazyLoader';
 import './LazyAudio.css';
 
 type Props = {
@@ -26,9 +27,11 @@ type Props = {
 };
 
 const LazyAudio = (props: Props) => {
-  const [visible, setVisible] = useState(false);
-  const [modal, setModal] = useState(false);
   const [dimmer, setDimmer] = useState(false);
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(!props.preview);
+  const [modal, setModal] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   if (!visible) {
     return (
@@ -60,14 +63,28 @@ const LazyAudio = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { props.preview && (
+          { !loaded && (
+            <LazyLoader
+              active
+              size={props.size}
+            />
+          )}
+          { !error && props.preview && (
             <Image
               {...props.image}
+              onError={() => {
+                setError(true);
+                setLoaded(true);
+              }}
+              onLoad={() => {
+                setError(false);
+                setLoaded(true);
+              }}
               size={props.size}
               src={props.preview}
             />
           )}
-          { !props.preview && (
+          { (error || !props.preview) && (
             <Image
               {...props.image}
               className='placeholder-image'

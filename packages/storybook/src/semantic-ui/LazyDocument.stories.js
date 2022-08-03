@@ -130,3 +130,10 @@ export const ListContent = () => (
     </Item>
   </Item.Group>
 );
+
+export const PreviewError = () => (
+  <LazyDocument
+    preview='/path/to/doc.preview.jpg'
+    src='/path/to/doc.txt'
+  />
+);
