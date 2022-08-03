@@ -2,16 +2,18 @@
 
 import React, { useState, type Node } from 'react';
 import { Button } from 'semantic-ui-react';
+import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import IIIFModal from './IIIFModal';
 import LazyMedia from './LazyMedia';
 
 type Props = {
   children?: Node,
-  manifest?: string
+  manifest?: string,
+  options?: any
 };
 
-const LazyIIIF = (props: Props) => {
+const LazyIIIF = ({ manifest, options = {}, ...props }: Props) => {
   const [modal, setModal] = useState(false);
 
   return (
@@ -19,7 +21,7 @@ const LazyIIIF = (props: Props) => {
       <LazyMedia
         {...props}
       >
-        { props.manifest && (
+        { manifest && (
           <Button
             content={i18n.t('Common.buttons.open')}
             icon='images outline'
@@ -30,11 +32,9 @@ const LazyIIIF = (props: Props) => {
       </LazyMedia>
       { modal && (
         <IIIFModal
-          manifestId={props.manifest}
+          manifestId={manifest}
           onClose={() => setModal(false)}
-          options={{
-            showIIIFBadge: false
-          }}
+          options={_.defaults(options, { showIIIFBadge: false })}
         />
       )}
     </>

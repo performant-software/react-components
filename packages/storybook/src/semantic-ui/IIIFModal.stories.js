@@ -14,7 +14,7 @@ export default {
 
 export const Default = () => (
   <IIIFModal
-    manifest={manifest}
+    manifestId={manifest}
     onClose={action('close')}
   />
 );
