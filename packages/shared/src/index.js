@@ -4,6 +4,7 @@
 export { default as useEditContainer } from './components/EditContainer';
 export { default as withGoogleAnalytics } from './components/GoogleAnalytics';
 export { default as GoogleScript } from './components/GoogleScript';
+export { default as IIIFViewer } from './components/IIIFViewer';
 export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
 
