@@ -83,7 +83,7 @@ const LazyDocument = (props: Props) => {
               size={props.size}
             />
           )}
-          { !props.preview && props.src && props.pdf && (
+          { !error && !props.preview && props.src && props.pdf && (
             <Image
               {...props.image}
               size={props.size}
