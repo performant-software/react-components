@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/shared-components",
-  "version": "0.5.16-beta.6",
+  "version": "0.5.16-beta.7",
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -29,7 +29,7 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@performant-software/webpack-config": "^0.5.16-beta.6",
+    "@performant-software/webpack-config": "^0.5.16-beta.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

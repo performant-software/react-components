@@ -7,11 +7,15 @@
  *
  * @returns {string}
  */
-const createManifestURL = (manifest) => (
-  URL.createObjectURL(new Blob([manifest], {
+const createManifestURL = (manifest) => {
+  if (!manifest) {
+    return null;
+  }
+
+  return URL.createObjectURL(new Blob([manifest], {
     type: 'application/ld+json'
-  }))
-);
+  }));
+};
 
 export default {
   createManifestURL
