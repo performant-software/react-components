@@ -162,6 +162,7 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
     return (
       <LazyDocument
         dimmable={props.dimmable}
+        download={props.downloadUrl}
         pdf={contentType === ContentTypes.pdf}
         preview={preview}
         src={source}

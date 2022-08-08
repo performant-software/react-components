@@ -18,6 +18,7 @@ import './LazyDocument.css';
 type Props = {
   children?: Node,
   dimmable?: boolean,
+  download?: string,
   duration?: number,
   image?: any,
   pdf?: boolean,
@@ -90,6 +91,7 @@ const LazyDocument = (props: Props) => {
             >
               <Document
                 file={props.src}
+                onLoadError={(e) => console.log(e.message)}
               >
                 <Page
                   pageNumber={1}
@@ -109,17 +111,17 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { (props.download || props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                { props.src && (
+                { props.download && (
                   <DownloadButton
                     primary
-                    url={props.src}
+                    url={props.download || props.src}
                   />
                 )}
                 { props.children }
