@@ -31,12 +31,6 @@ export const Default = () => (
   />
 );
 
-export const NoPreview = () => (
-  <LazyVideo
-    src={video}
-  />
-);
-
 export const Placeholder = () => (
   <LazyVideo />
 );
@@ -235,3 +229,45 @@ export const Upload = () => {
     </>
   );
 };
+
+export const ErrorPreview = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview='/path/to/preview.jpg'
+    src={video}
+  />
+);
+
+export const ErrorSource = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview={image}
+    src='/path/to/source.mp4'
+  />
+);
+
+export const ErrorPreviewAndSource = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview='/path/to/preview.jpg'
+    src='/path/to/source.mp4'
+  />
+);
+
+export const Downloadable = () => (
+  <LazyVideo
+    download={video}
+    image={{
+      alt: 'Test Image'
+    }}
+    name='Video.mp4'
+    preview={image}
+    src={video}
+  />
+);

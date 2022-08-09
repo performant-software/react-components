@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Element, type Node } from 'react';
+import React, { useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -12,30 +12,27 @@ import {
   Visibility
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import AudioPlayer from './AudioPlayer';
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
-import VideoPlayer from './VideoPlayer';
-import './LazyVideo.css';
+import './LazyAudio.css';
 
 type Props = {
-  autoPlay?: boolean,
   children?: Node,
   dimmable: boolean,
   download?: string,
   duration?: number,
-  embedded?: boolean,
-  icon?: string | Element<any>,
   image?: any,
   name?: string,
-  preview?: ?string,
+  preview?: string,
   size?: string,
   src?: string
 };
 
-const LazyVideo = (props: Props) => {
+const LazyAudio = (props: Props) => {
   const [dimmer, setDimmer] = useState(false);
   const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(!(props.preview || props.src));
+  const [loaded, setLoaded] = useState(!props.preview);
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -63,7 +60,7 @@ const LazyVideo = (props: Props) => {
       >
         <Dimmer.Dimmable
           as={Segment}
-          className='lazy-video'
+          className='lazy-audio'
           compact
           onBlur={() => setDimmer(false)}
           onMouseEnter={() => setDimmer(true)}
@@ -86,36 +83,18 @@ const LazyVideo = (props: Props) => {
                 setError(false);
                 setLoaded(true);
               }}
-              src={props.preview}
               size={props.size}
+              src={props.preview}
             />
           )}
-          { !error && !props.preview && props.src && (
-            <Image
-              {...props.image}
-              size={props.size}
-            >
-              <video
-                onError={() => {
-                  setError(true);
-                  setLoaded(true);
-                }}
-                onLoadedData={() => {
-                  setError(false);
-                  setLoaded(true);
-                }}
-                src={props.src}
-              />
-            </Image>
-          )}
-          { (error || (!props.preview && !props.src)) && (
+          { (error || !props.preview) && (
             <Image
               {...props.image}
               className='placeholder-image'
               size={props.size}
             >
               <Icon
-                name='image'
+                name='file audio outline'
                 size='big'
               />
             </Image>
@@ -129,8 +108,8 @@ const LazyVideo = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyVideo.buttons.play')}
-                    icon='video'
+                    content={i18n.t('LazyAudio.buttons.play')}
+                    icon='play circle outline'
                     onClick={() => setModal(true)}
                     primary
                   />
@@ -149,28 +128,23 @@ const LazyVideo = (props: Props) => {
         </Dimmer.Dimmable>
       </Transition>
       { props.src && (
-        <VideoPlayer
-          autoPlay={props.autoPlay}
-          embedded={props.embedded}
-          icon={props.icon}
+        <AudioPlayer
           onClose={() => setModal(false)}
           open={modal}
-          placeholder={props.preview}
           size='large'
-          video={props.src}
+          src={props.src}
         />
       )}
     </>
   );
 };
 
-LazyVideo.defaultProps = {
-  autoPlay: false,
+LazyAudio.defaultProps = {
   dimmable: true,
   duration: 1000,
-  embedded: false,
-  icon: 'right circle arrow',
-  size: 'medium'
+  preview: undefined,
+  size: 'medium',
+  src: undefined
 };
 
-export default LazyVideo;
+export default LazyAudio;

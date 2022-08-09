@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useEffect, type Node } from 'react';
+import React, { useState, type Node } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import {
   Dimmer,
@@ -11,32 +11,27 @@ import {
   Transition,
   Visibility
 } from 'semantic-ui-react';
-import i18n from '../i18n/i18n';
 import DownloadButton from './DownloadButton';
+import LazyLoader from './LazyLoader';
 import './LazyDocument.css';
 
 type Props = {
   children?: Node,
   dimmable?: boolean,
+  download?: string,
   duration?: number,
   image?: any,
+  pdf?: boolean,
   preview?: ?string,
   size?: string,
   src?: string
 };
 
 const LazyDocument = (props: Props) => {
-  const [visible, setVisible] = useState(false);
   const [dimmer, setDimmer] = useState(false);
-  const [contentType, setContentType] = useState('');
-
-  useEffect(() => {
-    if (props.src && !props.preview) {
-      fetch(props.src)
-        .then((response) => response.blob())
-        .then((blob) => setContentType(blob.type));
-    }
-  }, [props.preview, props.src]);
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(!props.preview);
+  const [visible, setVisible] = useState(false);
 
   if (!visible) {
     return (
@@ -68,20 +63,35 @@ const LazyDocument = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { props.preview && (
+          { !loaded && (
+            <LazyLoader
+              active
+              size={props.size}
+            />
+          )}
+          { !error && props.preview && (
             <Image
               {...props.image}
+              onError={() => {
+                setError(true);
+                setLoaded(true);
+              }}
+              onLoad={() => {
+                setError(false);
+                setLoaded(true);
+              }}
               src={props.preview}
               size={props.size}
             />
           )}
-          { !props.preview && props.src && contentType === 'application/pdf' && (
+          { !error && loaded && !props.preview && props.src && props.pdf && (
             <Image
               {...props.image}
               size={props.size}
             >
               <Document
                 file={props.src}
+                onLoadError={(e) => console.log(e.message)}
               >
                 <Page
                   pageNumber={1}
@@ -89,7 +99,7 @@ const LazyDocument = (props: Props) => {
               </Document>
             </Image>
           )}
-          { !props.preview && (!props.src || contentType !== 'application/pdf') && (
+          { (error || (!props.preview && !(props.src && props.pdf))) && (
             <Image
               {...props.image}
               className='placeholder-image'
@@ -101,19 +111,17 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { (props.download || props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                { props.src && (
+                { props.download && (
                   <DownloadButton
-                    content={i18n.t('LazyDocument.buttons.download')}
-                    icon='cloud download'
                     primary
-                    url={props.src || ''}
+                    url={props.download || props.src}
                   />
                 )}
                 { props.children }
@@ -129,6 +137,7 @@ const LazyDocument = (props: Props) => {
 LazyDocument.defaultProps = {
   dimmable: true,
   duration: 1000,
+  pdf: false,
   preview: undefined,
   size: 'medium',
   src: undefined

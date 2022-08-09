@@ -132,3 +132,53 @@ export const ListContent = () => (
     </Item>
   </Item.Group>
 );
+
+export const ErrorSource = () => (
+  <LazyImage
+    image={{
+      alt: 'Image'
+    }}
+    src='path/to/image.jpg'
+  />
+);
+
+export const ErrorSourceWithPreview = () => (
+  <LazyImage
+    image={{
+      alt: 'Image'
+    }}
+    preview={image}
+    src='path/to/image.jpg'
+  />
+);
+
+export const ErrorPreview = () => (
+  <LazyImage
+    image={{
+      alt: 'Image'
+    }}
+    preview='path/to/image.jpg'
+    source={image}
+  />
+);
+
+export const ErrorPreviewAndSource = () => (
+  <LazyImage
+    image={{
+      alt: 'Image'
+    }}
+    preview='path/to/image.jpg'
+    source='path/to/image.jpg'
+  />
+);
+
+export const Downloadable = () => (
+  <LazyImage
+    downloadUrl={image}
+    name='Image.jpg'
+    image={{
+      alt: 'Image'
+    }}
+    src={image}
+  />
+);

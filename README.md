@@ -49,62 +49,29 @@ const MyComponent = (props) => (
 );
 ```
 
-### GitPkg
-There may be some scenarios where we want to test out new components within the project that will actually consume it prior to releasing a new version on NPM.
+## Beta
+Sometimes it may be necessary to test your consuming application prior to creating a release. For example, you just added a new component and want to test it out in the application to make sure everything looks and works as expected.
 
-For this we can use [gitpkg](https://gitpkg.vercel.app/) as a proxy to point to our dev branch:
+For this we can use NPM's "beta" tags. This will allow the compiled code to be added as a dependency from NPM, but will not map to the "latest" release for production.
 
-#### Step 1: Update react-components package.json
-Update all package.json file to use gitpkg instead of NPM version:
+Let's say the current version number is "0.5.15". You can update all of the versions in `package.json` to "0.5.16-beta.0" and publish the package(s) to NPM via:
 
-Before:
+```
+npm publish --tag beta
+```
+
+Then, in your consuming application, update your dependencies as follows:
+
 ```json
 {
   "dependencies": {
-    "@performant-software/shared-components": "^1.0.0"
+    "@performant-software/semantic-components": "0.5.16-beta.0",
+    "@performant-software/shared-components": "0.5.16-beta.0"
   }
 }
 ```
 
-After:
-```json
-{
-  "dependencies": {
-    "@performant-software/shared-components": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?<branch-name>&scripts.prepare=%26%26%20yarn%20build"
-  }
-}
-```
-
-Run `yarn install` and commit the changes to your branch.
-
-❗Make sure to include the `scripts` parameter in order to build the dependency in your consuming project.
-
-❗Make sure to revert these changes prior to creating an NPM release.
-
-#### Step 2: Update your projects package.json
-Update your projects package.json file to use gitpkg instead of the NPM version. You'll also want to add the package's dependencies as dependencies in your project. For example: If your project uses `@performant-software/semantic-components`, you'll also want to add `@performant-software/shared` and `@performant-software/webpack-config` as dependencies to your project temporarily.
-
-Before:
-```json
-{
-  "dependencies": {
-    "@performant-software/semantic-components": "^1.0.0"
-  }
-}
-```
-
-After:
-```json
-{
-  "dependencies": {
-    "@performant-software/semantic-components": "https://gitpkg.now.sh/performant-software/react-components/packages/semantic-ui?<branch_name>&scripts.prepare=%26%26%20yarn%20build",
-    "@performant-software/shared-components": "https://gitpkg.now.sh/performant-software/react-components/packages/shared?<branch_name>&scripts.prepare=%26%26%20yarn%20build",
-    "@performant-software/webpack-config": "https://gitpkg.now.sh/performant-software/react-components/packages/webpack?<branch_name>&scripts.prepare=%26%26%20yarn%20build"
-  }
-}
-```
-
-Notice that the gitpkg URLs contain the name of the directory in the GitHub repository, rather than the name of the published NPM package.
+After all testing has passed, create your release of `0.5.16`. See publishing below.
 
 ## Publishing
 

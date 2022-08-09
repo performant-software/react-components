@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/shared-components",
-  "version": "0.5.15",
+  "version": "0.5.16",
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.8.1",
+    "@samvera/clover-iiif": "^1.10.3",
     "axios": "^0.26.1",
     "i18next": "^19.4.4",
     "moment": "^2.27.0",
@@ -28,7 +29,7 @@
     "react-dom": ">= 16.13.1 < 18.0.0"
   },
   "devDependencies": {
-    "@performant-software/webpack-config": "^0.5.15",
+    "@performant-software/webpack-config": "^0.5.16",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
