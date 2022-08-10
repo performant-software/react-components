@@ -37,3 +37,23 @@ export const Multiple = () => {
     />
   );
 };
+
+export const ExistingValues = () => {
+  const [value, setValue] = useState([{
+    reference_code_id: 1
+  }, {
+    reference_code_id: 2
+  }]);
+
+  return (
+    <ReferenceCodeDropdown
+      fluid
+      label='Locations'
+      multiple
+      required
+      onChange={(selected) => setValue(selected)}
+      referenceTable='locations'
+      value={value}
+    />
+  );
+};
