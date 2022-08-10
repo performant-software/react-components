@@ -87,7 +87,10 @@ module.exports = {
               }
             }
           ],
-          include: path.resolve(directory)
+          include: [
+            path.resolve(directory),
+            '/node_modules/react-calendar'
+          ]
         }, {
           test: /\.scss$/,
           use: ['style-loader', 'css-loader', 'sass-loader'],
