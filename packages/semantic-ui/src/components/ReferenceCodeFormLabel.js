@@ -17,7 +17,7 @@ type Props = {
 };
 
 const ReferenceCodeFormLabel: ComponentType<any> = withTranslation()((props: Props) => (
-  <div>
+  <>
     <label
       htmlFor={props.referenceTable}
     >
@@ -45,7 +45,7 @@ const ReferenceCodeFormLabel: ComponentType<any> = withTranslation()((props: Pro
         onClick={props.onClick}
       />
     </Popup>
-  </div>
+  </>
 ));
 
 export default ReferenceCodeFormLabel;
