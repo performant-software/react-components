@@ -9,6 +9,7 @@ import {
   Popup
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import './ReferenceCodeFormLabel.css';
 
 type Props = {
   label: string,
@@ -19,6 +20,7 @@ type Props = {
 const ReferenceCodeFormLabel: ComponentType<any> = withTranslation()((props: Props) => (
   <>
     <label
+      className='reference-code-form-label'
       htmlFor={props.referenceTable}
     >
       { props.label }
