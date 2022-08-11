@@ -4,6 +4,7 @@ import { InfiniteScroll } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
 import { Loader } from 'semantic-ui-react';
+import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import Items from './Items';
 import './ItemCollection.css';
@@ -64,7 +65,8 @@ class ItemCollection extends Component<Props, State> {
    */
   getItems(): Array<any> {
     const endIndex = this.state.page * this.props.perPage;
-    return (this.props.items && this.props.items.slice(0, endIndex)) || [];
+    const items = (this.props.items && this.props.items.slice(0, endIndex)) || [];
+    return _.filter(items, (item) => !item._destroy);
   }
 
   /**
