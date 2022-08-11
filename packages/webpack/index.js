@@ -26,7 +26,7 @@ module.exports = {
         nodeExternals({
           additionalModuleDirs: [
             path.resolve(directory, '../../node_modules')
-          ],
+          ]
         })
       ],
       plugins: [
@@ -88,8 +88,7 @@ module.exports = {
             }
           ],
           include: [
-            path.resolve(directory),
-            '/node_modules/react-calendar'
+            path.resolve(directory)
           ]
         }, {
           test: /\.scss$/,
