@@ -488,3 +488,21 @@ export const InfiniteScrollFilter = useDragDrop(() => {
     </>
   );
 });
+
+export const Delete = useDragDrop(() => {
+  const [list, setList] = useState(items);
+
+  return (
+    <ItemCollection
+      actions={actions}
+      items={list}
+      onCopy={action('copy')}
+      onDelete={(item) => setList((prevList) => (
+        _.map(prevList, (i) => (i !== item ? i : ({ ...i, _destroy: true })))
+      ))}
+      onSave={action('save')}
+      renderHeader={(item) => <Header content={item.movie} />}
+      renderMeta={(item) => item.genre}
+    />
+  );
+});

@@ -26,7 +26,7 @@ module.exports = {
         nodeExternals({
           additionalModuleDirs: [
             path.resolve(directory, '../../node_modules')
-          ],
+          ]
         })
       ],
       plugins: [
@@ -87,7 +87,9 @@ module.exports = {
               }
             }
           ],
-          include: path.resolve(directory)
+          include: [
+            path.resolve(directory)
+          ]
         }, {
           test: /\.scss$/,
           use: ['style-loader', 'css-loader', 'sass-loader'],
