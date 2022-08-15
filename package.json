@@ -2,6 +2,7 @@
   "name": "@performant-software/react-components",
   "description": "A library of shared React components",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -11,7 +12,9 @@
     "build-storybook": "yarn build-shared && yarn build-semantic && yarn --cwd packages/storybook build",
     "flow": "flow",
     "storybook": "yarn --cwd packages/storybook storybook",
-    "test": "jest"
+    "test": "jest",
+    "publish-release": "node --experimental-json-modules ./scripts/publish.js",
+    "publish-beta": "node --experimental-json-modules ./scripts/publish.js --tag beta"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -28,7 +31,8 @@
     "eslint-plugin-storybook": "^0.5.7",
     "flow-bin": "^0.123.0",
     "jest": "^27.5.1",
-    "lerna": "^4.0.0"
+    "minimist": "^1.2.6",
+    "underscore": "^1.13.4"
   },
   "jest": {
     "projects": [

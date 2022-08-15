@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "packages/semantic-ui",
+    "packages/shared"
+  ],
+  "version": "0.5.17"
+}
