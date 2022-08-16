@@ -39,3 +39,4 @@ export { default as Timer } from './utils/Timer';
 // Types
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './components/EditContainer';
+export type { Referrable } from './types/Referrable';
