@@ -39,16 +39,15 @@ class ReferenceTable extends BaseTransform {
    * Converts the passed reference table object to JSON for PUT/POST requests.
    *
    * @param referenceTable
+   * @param attributes
    *
    * @returns {*}
    */
-  toPayload(referenceTable: ReferenceTableType) {
-    return {
-      reference_table: {
-        ..._.pick(referenceTable, this.getPayloadKeys()),
-        ...ReferenceCodes.toPayload(referenceTable)
-      }
-    };
+  toPayload(referenceTable: ReferenceTableType, attributes: any = {}) {
+    return super.toPayload(referenceTable, {
+      ...attributes,
+      ...ReferenceCodes.toPayload(referenceTable)
+    });
   }
 }
 

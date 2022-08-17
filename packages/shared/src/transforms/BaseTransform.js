@@ -42,12 +42,16 @@ class BaseTransform {
    * Returns the object for POST/PUT requests as a plain Javascript object.
    *
    * @param item
+   * @param attributes
    *
    * @returns any
    */
-  toPayload(item: any): any {
+  toPayload(item: any, attributes: any = {}): any {
     return {
-      [this.getParameterName()]: _.pick(item, this.getPayloadKeys())
+      [this.getParameterName()]: {
+        ..._.pick(item, this.getPayloadKeys()),
+        ...attributes
+      }
     };
   }
 }

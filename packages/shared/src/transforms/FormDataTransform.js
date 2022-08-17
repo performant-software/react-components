@@ -13,10 +13,12 @@ class FormDataTransform extends BaseTransform {
    * Converts the passed records to a formData object to be sent on PUT/POST requests.
    *
    * @param record
+   * @param attributes
    *
    * @returns {FormData}
    */
-  toPayload(record: any) {
+  // eslint-disable-next-line no-unused-vars
+  toPayload(record: any, attributes: any = {}) {
     const formData = new FormData();
 
     _.each(this.getPayloadKeys(), (key) => {
