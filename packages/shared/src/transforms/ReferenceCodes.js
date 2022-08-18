@@ -24,11 +24,12 @@ class ReferenceCodes extends NestedAttributesTransform {
    *
    * @param record
    * @param collection
+   * @param attributes
    *
    * @returns {{[p: string]: *}}
    */
-  toPayload(record: any, collection: string = 'reference_codes') {
-    return super.toPayload(record, collection);
+  toPayload(record: any, collection: string = 'reference_codes', attributes: any = {}) {
+    return super.toPayload(record, collection, attributes);
   }
 }
 
