@@ -12,7 +12,7 @@ const LIST_DELIMITER = ', ';
  * @returns {*}
  */
 const getViewValue = (references) => _.map(
-  _.filter(references, (reference) => !reference._.destroy),
+  _.filter(references, (reference) => !reference._destroy),
   (reference) => reference.reference_code?.name
 ).join(LIST_DELIMITER);
 
