@@ -29,16 +29,6 @@ class NestedAttributesTransform {
   }
 
   /**
-   *
-   * @param item
-   *
-   * @returns {{}}
-   */
-  resolveAttributes(item) {
-    return {};
-  }
-
-  /**
    * Appends the passed record's collection to the form data.
    *
    * @param formData
