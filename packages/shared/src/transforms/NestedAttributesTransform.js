@@ -29,6 +29,16 @@ class NestedAttributesTransform {
   }
 
   /**
+   *
+   * @param item
+   *
+   * @returns {{}}
+   */
+  resolveAttributes(item) {
+    return {};
+  }
+
+  /**
    * Appends the passed record's collection to the form data.
    *
    * @param formData
@@ -49,18 +59,13 @@ class NestedAttributesTransform {
    *
    * @param record
    * @param collection
-   * @param attributes
    *
    * @returns {{[p: string]: *}}
    */
-  toPayload(record: any, collection: string, attributes: any = {}) {
+  toPayload(record: any, collection: string) {
     return {
       [collection]: _.map(record[collection],
-        (item, index) => ({
-          ..._.pick(item, this.getPayloadKeys()),
-          ...attributes,
-          order: index
-        }))
+        (item, index) => ({ ..._.pick(item, this.getPayloadKeys()), order: index }))
     };
   }
 }
