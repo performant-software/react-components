@@ -41,9 +41,17 @@ const ReferenceCodeDropdown = (props: Props) => {
    *
    * @type {function(*): {reference_code_id: *}}
    */
-  const toItem = useCallback((id) => ({
-    reference_code_id: id
-  }), []);
+  const toItem = useCallback((id) => {
+    const option = _.findWhere(options, { key: id });
+
+    return {
+      reference_code_id: id,
+      reference_code: {
+        id,
+        name: option.text
+      }
+    };
+  }, [options]);
 
   /**
    * Converts the passed reference code to a dropdown option.
