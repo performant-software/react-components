@@ -96,3 +96,11 @@ export const Error = () => (
     video='/path/to/video.mp4'
   />
 );
+
+export const ErrorLongURL = () => (
+  <VideoPlayer
+    onClose={action('close')}
+    open
+    video='http://localhost:3000/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ0lEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--05fcfd55941c73ff139611bcc194a158f08fe5a5/sample_640x426.mp4'
+  />
+);

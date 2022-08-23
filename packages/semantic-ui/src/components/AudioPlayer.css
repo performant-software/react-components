@@ -1,3 +1,7 @@
 .audio-player.ui.modal > .content > audio {
   width: 100%;
 }
+
+.audio-player > .content > .ui.message > .content > p {
+  word-break: break-all;
+}
