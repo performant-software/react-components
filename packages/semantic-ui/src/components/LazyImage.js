@@ -99,7 +99,7 @@ const LazyImage = (props: Props) => {
               />
             </Image>
           )}
-          { !error && (props.src || props.children) && props.dimmable && (
+          { (props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >

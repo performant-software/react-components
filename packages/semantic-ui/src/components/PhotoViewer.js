@@ -37,12 +37,14 @@ const PhotoViewer = (props: Props) => {
                 icon='exclamation circle'
               />
             )}
-            <Image
-              alt={props.alt}
-              fluid
-              onError={() => setError(true)}
-              src={props.image}
-            />
+            { !error && (
+              <Image
+                alt={props.alt}
+                fluid
+                onError={() => setError(true)}
+                src={props.image}
+              />
+            )}
           </Modal.Content>
         </Modal>
       )}

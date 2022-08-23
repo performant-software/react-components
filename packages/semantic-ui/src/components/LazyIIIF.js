@@ -9,6 +9,8 @@ import LazyMedia from './LazyMedia';
 
 type Props = {
   children?: Node,
+  color?: string,
+  content?: string,
   manifest?: string,
   options?: any
 };
@@ -23,7 +25,8 @@ const LazyIIIF = ({ manifest, options = {}, ...props }: Props) => {
       >
         { manifest && (
           <Button
-            content={i18n.t('Common.buttons.open')}
+            color={props.color}
+            content={props.content || i18n.t('Common.buttons.iiif')}
             icon='images outline'
             onClick={() => setModal(true)}
           />

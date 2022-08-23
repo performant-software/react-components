@@ -22,6 +22,7 @@ const ReferenceCodeModal = (props: EditContainerProps) => (
         />
         <Modal.Content>
           <Form.Input
+            autoFocus
             error={props.isError('name')}
             label={i18n.t('ReferenceCodeModal.labels.name')}
             onChange={props.onTextInputChange.bind(this, 'name')}

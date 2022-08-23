@@ -29,3 +29,12 @@ export const Error = () => (
     open
   />
 );
+
+export const ErrorLongURL = () => (
+  <PhotoViewer
+    alt='Test Image'
+    image='http://localhost:3000/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ0lEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--05fcfd55941c73ff139611bcc194a158f08fe5a5/sample_640x426.tiff'
+    onClose={action('close')}
+    open
+  />
+);

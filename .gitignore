@@ -2,6 +2,6 @@ build/
 node_modules/
 .env
 .vscode/launch.json
-types/
+packages/*/types
 
 storybook-static/

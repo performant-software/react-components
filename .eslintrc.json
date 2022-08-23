@@ -33,7 +33,7 @@
     "jsx-a11y/media-has-caption": "off",
     "jsx-quotes": ["error", "prefer-single"],
     "lines-between-class-members": "off",
-    "max-len": ["error", { "code": 120 }],
+    "max-len": ["error", { "code": 120, "ignoreStrings": true }],
     "no-underscore-dangle": "off",
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",

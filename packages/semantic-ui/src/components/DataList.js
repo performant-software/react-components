@@ -3,7 +3,7 @@
 import { Object as ObjectUtils, Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType } from 'react';
 import _ from 'underscore';
-import { Input, Message } from 'semantic-ui-react';
+import { Icon, Input, Message } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 import Toaster from './Toaster';
 
@@ -244,6 +244,22 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Clears the existing search.
+     *
+     * @param e
+     */
+    onClearSearch(e) {
+      // Clear the current search
+      this.onSearchChange(e, { value: '' });
+
+      // Focus on the search input
+      this.searchRef?.inputRef?.current?.focus();
+
+      // Set the timer to execute a new search
+      this.onSearch();
+    }
+
+    /**
      * Calls the onDelete prop.
      *
      * @param selectedItem
@@ -473,9 +489,18 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         <Input
           aria-label='Search'
           type='text'
-          icon='search'
+          icon={(
+            <Icon
+              link={!_.isEmpty(this.state.search)}
+              name={_.isEmpty(this.state.search) ? 'search' : 'times'}
+              onClick={this.onClearSearch.bind(this)}
+            />
+          )}
           input={{
             'aria-label': 'search'
+          }}
+          ref={(ref) => {
+            this.searchRef = ref;
           }}
           loading={this.state.loading}
           onKeyDown={Timer.clearSearchTimer.bind(this)}
