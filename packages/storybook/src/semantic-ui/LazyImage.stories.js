@@ -158,7 +158,7 @@ export const ErrorPreview = () => (
       alt: 'Image'
     }}
     preview='path/to/image.jpg'
-    source={image}
+    src={image}
   />
 );
 
@@ -168,7 +168,7 @@ export const ErrorPreviewAndSource = () => (
       alt: 'Image'
     }}
     preview='path/to/image.jpg'
-    source='path/to/image.jpg'
+    src='path/to/image.jpg'
   />
 );
 
