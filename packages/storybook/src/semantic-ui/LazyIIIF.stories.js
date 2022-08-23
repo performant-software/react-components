@@ -41,3 +41,11 @@ export const StringManifest = () => {
     />
   );
 };
+
+export const Colored = () => (
+  <LazyIIIF
+    color='red'
+    contentType='image/jpeg'
+    manifest={manifest}
+  />
+);
