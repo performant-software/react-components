@@ -13,6 +13,7 @@ type Sort = {
 };
 
 type Props = {
+  defaultView?: number,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
@@ -54,7 +55,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
       super(props);
 
       this.state = {
-        view: Views.list
+        view: props.defaultView || Views.list
       };
     }
 
