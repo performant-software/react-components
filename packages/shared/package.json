@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/shared-components",
-  "version": "0.5.18",
+  "version": "0.5.19-beta.0",
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./build/index.js",
