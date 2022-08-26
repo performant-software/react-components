@@ -79,6 +79,11 @@ const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
     }
   }
 
+  // Test function equality using the toString method
+  if (_.isFunction(a) && _.isFunction(b) && a.toString() === b.toString()) {
+    return true;
+  }
+
   if (a !== null && typeof a === 'object' && b !== null && typeof b === 'object') {
     const aKeys = _.keys(a);
     const bKeys = _.keys(b);
