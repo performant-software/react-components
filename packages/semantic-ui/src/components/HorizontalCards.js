@@ -3,6 +3,7 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -37,6 +38,15 @@ const HorizontalCards = (props: Props) => {
   const ref = useRef();
 
   /**
+   * Sets the flex-box style based on the page width.
+   *
+   * @type {function(): {flex: string}}
+   */
+  const cardStyle = useMemo(() => ({
+    flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
+  }), [pageWidth, marginWidth, props.perPage]);
+
+  /**
    * Sets the number of pages and total page width on the state.
    */
   useEffect(() => {
@@ -57,7 +67,7 @@ const HorizontalCards = (props: Props) => {
         setMarginWidth(leftMargin + rightMargin);
       }
     }
-  }, []);
+  }, [props.items]);
 
   /**
    * Sets the total number of pages on the state.
@@ -100,15 +110,6 @@ const HorizontalCards = (props: Props) => {
   }, [scrollPage, scrollPages]);
 
   /**
-   * Returns the flex-box style based on the page width.
-   *
-   * @type {function(): {flex: string}}
-   */
-  const getCardStyle = useCallback(() => ({
-    flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
-  }), [pageWidth, marginWidth, props.perPage]);
-
-  /**
    * Renders the card component. If a "route" prop is passed, the component is wrapped in a Link.
    *
    * @param item
@@ -119,35 +120,33 @@ const HorizontalCards = (props: Props) => {
   const renderCard = (item, index) => (
     <Card
       link
-      onClick={() => {
-        if (props.onClick) {
-          props.onClick(item, index);
-        }
-      }}
-      style={getCardStyle()}
+      onClick={props.onClick && props.onClick(item, index)}
+      style={cardStyle}
     >
       { !props.inlineImage && renderImage(item) }
-      <Card.Content>
-        { props.inlineImage && renderImage(item) }
-        { props.renderHeader && (
-          <Card.Header
-            as={Header}
-            size='small'
-          >
-            { props.renderHeader(item) }
-          </Card.Header>
-        )}
-        { props.renderMeta && (
-          <Card.Meta>
-            { props.renderMeta(item) }
-          </Card.Meta>
-        )}
-        { props.renderDescription && (
-          <Card.Description>
-            { props.renderDescription(item) }
-          </Card.Description>
-        )}
-      </Card.Content>
+      { (props.renderHeader || props.renderMeta || props.renderDescription) && (
+        <Card.Content>
+          { props.inlineImage && renderImage(item) }
+          { props.renderHeader && (
+            <Card.Header
+              as={Header}
+              size='small'
+            >
+              { props.renderHeader(item) }
+            </Card.Header>
+          )}
+          { props.renderMeta && (
+            <Card.Meta>
+              { props.renderMeta(item) }
+            </Card.Meta>
+          )}
+          { props.renderDescription && (
+            <Card.Description>
+              { props.renderDescription(item) }
+            </Card.Description>
+          )}
+        </Card.Content>
+      )}
       { props.renderExtra && (
         <Card.Content
           extra
