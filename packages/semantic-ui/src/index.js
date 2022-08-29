@@ -95,5 +95,6 @@ export type { Props as ListProps } from './components/List';
 export type { BatchEditProps } from './hooks/BatchEdit';
 
 // Constants
+export { Views as ItemViews } from './components/ItemsToggle';
 export { SORT_ASCENDING, SORT_DESCENDING } from './components/DataList';
 export { FilterTypes } from './components/ListFilters';

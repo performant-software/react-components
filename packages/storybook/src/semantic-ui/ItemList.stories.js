@@ -10,6 +10,7 @@ import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import FilterModal from '../components/FilterModal';
 import ItemList from '../../../semantic-ui/src/components/ItemList';
+import { Views } from '../../../semantic-ui/src/components/ItemsToggle';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
@@ -776,3 +777,23 @@ export const Selectable = useDragDrop(() => {
     />
   );
 });
+
+export const DefaultView = useDragDrop(() => (
+  <ItemList
+    actions={actions}
+    collectionName='items'
+    defaultView={Views.grid}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 20)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderDescription={(item) => item.vin}
+    renderExtra={(item) => item.address}
+    renderHeader={(item) => <Header content={item.model} />}
+    renderMeta={(item) => item.make}
+    searchable={boolean('Searchable', true)}
+  />
+));
