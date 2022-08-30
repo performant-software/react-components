@@ -120,7 +120,7 @@ const HorizontalCards = (props: Props) => {
   const renderCard = (item, index) => (
     <Card
       link
-      onClick={props.onClick && props.onClick(item, index)}
+      onClick={props.onClick && props.onClick.bind(this, item, index)}
       style={cardStyle}
     >
       { !props.inlineImage && renderImage(item) }
