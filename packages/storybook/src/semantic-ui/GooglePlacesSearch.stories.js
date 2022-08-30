@@ -14,7 +14,7 @@ export default {
 
 export const Default = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -30,7 +30,7 @@ export const Default = () => (
 
 export const CustomInput = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -49,7 +49,7 @@ export const CustomInput = () => (
 export const FormInput = () => (
   <Form>
     <GoogleScript
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
       libraries={['places']}
     >
       <Form.Field>
