@@ -98,10 +98,13 @@ const HorizontalCards = (props: Props) => {
   useEffect(() => {
     window.addEventListener('resize', initialize);
 
-    initialize();
-
     return () => window.removeEventListener('resize', initialize);
   }, []);
+
+  /**
+   * Re-initialize the component if the items change.
+   */
+  useEffect(() => initialize(), [initialize, props.items]);
 
   /**
    * Sets the total number of pages on the state.
