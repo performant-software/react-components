@@ -47,9 +47,11 @@ const HorizontalCards = (props: Props) => {
   }), [pageWidth, marginWidth, props.perPage]);
 
   /**
-   * Sets the number of pages and total page width on the state.
+   * Initializes the page width and scroll pages on the sate.
+   *
+   * @type {(function(*=): void)|*}
    */
-  useEffect(() => {
+  const initialize = useCallback((event) => {
     const instance = ref.current;
 
     if (instance) {
@@ -57,6 +59,10 @@ const HorizontalCards = (props: Props) => {
 
       setPageWidth(clientWidth);
       setScrollPages(Math.ceil(scrollWidth / clientWidth));
+
+      if (!event) {
+        setScrollPage(0);
+      }
 
       const child = instance.firstChild;
       if (child) {
@@ -67,7 +73,35 @@ const HorizontalCards = (props: Props) => {
         setMarginWidth(leftMargin + rightMargin);
       }
     }
-  }, [props.items]);
+  }, [ref, props.items]);
+
+  /**
+   * Sets the current page number on the state.
+   *
+   * @type {function(*): void}
+   */
+  const onPageChange = useCallback((increment) => {
+    let nextPage = scrollPage + increment;
+
+    if (nextPage < 0) {
+      nextPage = scrollPages;
+    } else if (nextPage >= scrollPages) {
+      nextPage = 0;
+    }
+
+    setScrollPage(nextPage);
+  }, [scrollPage, scrollPages]);
+
+  /**
+   * Sets the window resize event listener.
+   */
+  useEffect(() => {
+    window.addEventListener('resize', initialize);
+
+    initialize();
+
+    return () => window.removeEventListener('resize', initialize);
+  }, []);
 
   /**
    * Sets the total number of pages on the state.
@@ -91,23 +125,6 @@ const HorizontalCards = (props: Props) => {
       instance.scrollTo({ left: (scrollPage * pageWidth), behavior: 'smooth' });
     }
   }, [scrollPage, pageWidth]);
-
-  /**
-   * Sets the current page number on the state.
-   *
-   * @type {function(*): void}
-   */
-  const onPageChange = useCallback((increment) => {
-    let nextPage = scrollPage + increment;
-
-    if (nextPage < 0) {
-      nextPage = scrollPages;
-    } else if (nextPage >= scrollPages) {
-      nextPage = 0;
-    }
-
-    setScrollPage(nextPage);
-  }, [scrollPage, scrollPages]);
 
   /**
    * Renders the card component. If a "route" prop is passed, the component is wrapped in a Link.
