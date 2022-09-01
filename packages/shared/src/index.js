@@ -7,6 +7,7 @@ export { default as GoogleScript } from './components/GoogleScript';
 export { default as IIIFViewer } from './components/IIIFViewer';
 export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
+export { default as RichTextArea } from './components/RichTextArea';
 
 // I18n
 export { default as i18n } from './i18n/i18n';
@@ -41,3 +42,4 @@ export { default as Timer } from './utils/Timer';
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './components/EditContainer';
 export type { Referrable } from './types/Referrable';
+export type { RichTextAreaProps } from './components/RichTextArea';

@@ -3,6 +3,7 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -37,9 +38,20 @@ const HorizontalCards = (props: Props) => {
   const ref = useRef();
 
   /**
-   * Sets the number of pages and total page width on the state.
+   * Sets the flex-box style based on the page width.
+   *
+   * @type {function(): {flex: string}}
    */
-  useEffect(() => {
+  const cardStyle = useMemo(() => ({
+    flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
+  }), [pageWidth, marginWidth, props.perPage]);
+
+  /**
+   * Initializes the page width and scroll pages on the sate.
+   *
+   * @type {(function(*=): void)|*}
+   */
+  const initialize = useCallback((event) => {
     const instance = ref.current;
 
     if (instance) {
@@ -47,6 +59,10 @@ const HorizontalCards = (props: Props) => {
 
       setPageWidth(clientWidth);
       setScrollPages(Math.ceil(scrollWidth / clientWidth));
+
+      if (!event) {
+        setScrollPage(0);
+      }
 
       const child = instance.firstChild;
       if (child) {
@@ -57,7 +73,38 @@ const HorizontalCards = (props: Props) => {
         setMarginWidth(leftMargin + rightMargin);
       }
     }
+  }, [ref, props.items]);
+
+  /**
+   * Sets the current page number on the state.
+   *
+   * @type {function(*): void}
+   */
+  const onPageChange = useCallback((increment) => {
+    let nextPage = scrollPage + increment;
+
+    if (nextPage < 0) {
+      nextPage = scrollPages;
+    } else if (nextPage >= scrollPages) {
+      nextPage = 0;
+    }
+
+    setScrollPage(nextPage);
+  }, [scrollPage, scrollPages]);
+
+  /**
+   * Sets the window resize event listener.
+   */
+  useEffect(() => {
+    window.addEventListener('resize', initialize);
+
+    return () => window.removeEventListener('resize', initialize);
   }, []);
+
+  /**
+   * Re-initialize the component if the items change.
+   */
+  useEffect(() => initialize(), [initialize, props.items]);
 
   /**
    * Sets the total number of pages on the state.
@@ -83,32 +130,6 @@ const HorizontalCards = (props: Props) => {
   }, [scrollPage, pageWidth]);
 
   /**
-   * Sets the current page number on the state.
-   *
-   * @type {function(*): void}
-   */
-  const onPageChange = useCallback((increment) => {
-    let nextPage = scrollPage + increment;
-
-    if (nextPage < 0) {
-      nextPage = scrollPages;
-    } else if (nextPage >= scrollPages) {
-      nextPage = 0;
-    }
-
-    setScrollPage(nextPage);
-  }, [scrollPage, scrollPages]);
-
-  /**
-   * Returns the flex-box style based on the page width.
-   *
-   * @type {function(): {flex: string}}
-   */
-  const getCardStyle = useCallback(() => ({
-    flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
-  }), [pageWidth, marginWidth, props.perPage]);
-
-  /**
    * Renders the card component. If a "route" prop is passed, the component is wrapped in a Link.
    *
    * @param item
@@ -119,35 +140,33 @@ const HorizontalCards = (props: Props) => {
   const renderCard = (item, index) => (
     <Card
       link
-      onClick={() => {
-        if (props.onClick) {
-          props.onClick(item, index);
-        }
-      }}
-      style={getCardStyle()}
+      onClick={props.onClick && props.onClick.bind(this, item, index)}
+      style={cardStyle}
     >
       { !props.inlineImage && renderImage(item) }
-      <Card.Content>
-        { props.inlineImage && renderImage(item) }
-        { props.renderHeader && (
-          <Card.Header
-            as={Header}
-            size='small'
-          >
-            { props.renderHeader(item) }
-          </Card.Header>
-        )}
-        { props.renderMeta && (
-          <Card.Meta>
-            { props.renderMeta(item) }
-          </Card.Meta>
-        )}
-        { props.renderDescription && (
-          <Card.Description>
-            { props.renderDescription(item) }
-          </Card.Description>
-        )}
-      </Card.Content>
+      { (props.renderHeader || props.renderMeta || props.renderDescription) && (
+        <Card.Content>
+          { props.inlineImage && renderImage(item) }
+          { props.renderHeader && (
+            <Card.Header
+              as={Header}
+              size='small'
+            >
+              { props.renderHeader(item) }
+            </Card.Header>
+          )}
+          { props.renderMeta && (
+            <Card.Meta>
+              { props.renderMeta(item) }
+            </Card.Meta>
+          )}
+          { props.renderDescription && (
+            <Card.Description>
+              { props.renderDescription(item) }
+            </Card.Description>
+          )}
+        </Card.Content>
+      )}
       { props.renderExtra && (
         <Card.Content
           extra

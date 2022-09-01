@@ -3,7 +3,7 @@
 import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
-import { Input } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
 import GooglePlacesSearch from '../../../semantic-ui/src/components/GooglePlacesSearch';
 import GoogleScript from '../../../shared/src/components/GoogleScript';
 
@@ -14,7 +14,7 @@ export default {
 
 export const Default = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -30,7 +30,7 @@ export const Default = () => (
 
 export const CustomInput = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -44,4 +44,30 @@ export const CustomInput = () => (
       />
     </GooglePlacesSearch>
   </GoogleScript>
+);
+
+export const FormInput = () => (
+  <Form>
+    <GoogleScript
+      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+      libraries={['places']}
+    >
+      <Form.Field>
+        <GooglePlacesSearch
+          onLocationSelection={action('location-selection')}
+        >
+          <Form.Input
+            aria-label='places-search'
+            label='Place'
+            type='text'
+          />
+        </GooglePlacesSearch>
+      </Form.Field>
+    </GoogleScript>
+    <Form.Input
+      aria-label='places-search'
+      label='Description'
+      type='text'
+    />
+  </Form>
 );

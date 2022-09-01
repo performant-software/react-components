@@ -5,7 +5,12 @@ import {
   GoogleMap as MapComponent,
   Marker
 } from '@react-google-maps/api';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 type LatLng = {
   lat: () => number,
@@ -37,28 +42,44 @@ const GoogleMap = (props: Props) => {
   const [center, setCenter] = useState(position || props.defaultCenter);
   const [map, setMap] = useState();
 
-  // If no default zoom is provided and a position is provided, set the default zoom to 12.
-  let { defaultZoom } = props;
+  /**
+   * Set the zoom value based on the position and defaultZoom prop.
+   *
+   * @type {*}
+   */
+  const zoom = useMemo(() => {
+    let value;
 
-  if (!defaultZoom) {
     if (position) {
-      defaultZoom = DEFAULT_ZOOM_MARKER;
+      value = DEFAULT_ZOOM_MARKER;
+    } else if (props.defaultZoom) {
+      value = props.defaultZoom;
     } else {
-      defaultZoom = DEFAULT_ZOOM;
+      value = DEFAULT_ZOOM;
     }
-  }
 
-  // Call the onDragEnd prop, passing the new location.
-  const onDragEnd = ({ latLng }) => {
+    return value;
+  }, [position, props.defaultZoom]);
+
+  /**
+   * Call the onDragEnd prop, passing the new location.
+   *
+   * @type {(function({latLng: *}): void)|*}
+   */
+  const onDragEnd = useCallback(({ latLng }) => {
     if (props.onDragEnd) {
-      // $FlowFixMe - Not actually fixing, we're checking for presence here.
       props.onDragEnd({
         lat: latLng.lat(),
         lng: latLng.lng()
       });
     }
-  };
+  }, [props.onDragEnd]);
 
+  /**
+   * Sets the map object when the component mounts.
+   *
+   * @type {function(*): void}
+   */
   const onLoad = useCallback((m) => setMap(m), []);
 
   // If the position is changed manually and the new location is outside of the current bounds, re-center the map.
@@ -78,7 +99,7 @@ const GoogleMap = (props: Props) => {
       mapContainerStyle={props.containerStyle}
       onClick={onDragEnd}
       onLoad={onLoad}
-      zoom={defaultZoom}
+      zoom={zoom}
     >
       { position && (
         <Marker

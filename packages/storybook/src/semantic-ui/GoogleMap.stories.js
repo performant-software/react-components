@@ -13,7 +13,7 @@ export default {
 
 export const Default = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
   >
     <GoogleMap />
   </GoogleScript>
@@ -21,7 +21,7 @@ export const Default = () => (
 
 export const DefaultCenter = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
   >
     <GoogleMap
       defaultCenter={{
@@ -34,7 +34,7 @@ export const DefaultCenter = () => (
 
 export const DefaultZoom = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
   >
     <GoogleMap
       defaultCenter={{
@@ -54,7 +54,7 @@ export const WithMapMarker = () => {
   return (
     <>
       <GoogleScript
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
       >
         <GoogleMap
           defaultCenter={DEFAULT_POSITION}
@@ -82,7 +82,7 @@ export const EditableCooridnates = () => {
   return (
     <Form>
       <GoogleScript
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
       >
         <GoogleMap
           onDragEnd={(p) => setPosition(p)}
@@ -109,10 +109,10 @@ export const EditableCoordinatesWithDefaults = () => {
   return (
     <Form>
       <GoogleScript
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
       >
         <GoogleMap
-          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+          googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
           onDragEnd={(p) => setPosition(p)}
           position={position}
         />
@@ -128,5 +128,32 @@ export const EditableCoordinatesWithDefaults = () => {
         value={(position && position.lng) || ''}
       />
     </Form>
+  );
+};
+
+export const DefaultZoomWithMapMarker = () => {
+  const DEFAULT_ZOOM = 3;
+  const [position, setPosition] = useState<any>({});
+
+  return (
+    <>
+      <GoogleScript
+        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+      >
+        <GoogleMap
+          defaultZoom={DEFAULT_ZOOM}
+          onDragEnd={(p) => setPosition(p)}
+          position={position}
+        />
+      </GoogleScript>
+      <div>
+        <strong>Latitude: </strong>
+        { position.lat }
+      </div>
+      <div>
+        <strong>Longitude: </strong>
+        { position.lng }
+      </div>
+    </>
   );
 };
