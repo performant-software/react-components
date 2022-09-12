@@ -16,7 +16,7 @@ const data = {
   isExpanded: true,
   children: [
     {
-      name: 'A',
+      name: 'ABCD EFGHI JKLMNO PQRS',
       children: [{
         name: 'A1'
       }, {
