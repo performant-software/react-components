@@ -1,7 +1,8 @@
 {
   "packages": [
     "packages/semantic-ui",
-    "packages/shared"
+    "packages/shared",
+    "packages/visualize"
   ],
-  "version": "0.5.20"
+  "version": "0.6.0-beta.1"
 }
