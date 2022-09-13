@@ -1,0 +1,11 @@
+{
+  "Zoom": {
+    "buttons": {
+      "center": "Center",
+      "clear": "Clear",
+      "reset": "Reset",
+      "zoomIn": "+",
+      "zoomOut": "-"
+    }
+  }
+}
