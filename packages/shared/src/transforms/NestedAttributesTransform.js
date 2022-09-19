@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'underscore';
-import StringUtils from '../utils/String';
+import FormUtils from '../utils/Form';
 
 /**
  * Class for handling transforming nested attributes of a parent object. This class will handle transforming the
@@ -39,7 +39,7 @@ class NestedAttributesTransform {
   toFormData(formData: FormData, prefix: string, record: any, collection: string) {
     _.each(record[collection], (item, index) => {
       _.each(this.getPayloadKeys(), (key) => {
-        formData.append(`${prefix}[${collection}][${index}][${key}]`, StringUtils.toString(item[key]));
+        FormUtils.setAttribute(formData, `${prefix}[${collection}][${index}]`, item, key);
       });
     });
   }
