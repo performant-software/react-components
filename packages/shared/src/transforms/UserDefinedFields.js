@@ -19,6 +19,7 @@ class UserDefinedFields extends NestedAttributesTransform {
       'data_type',
       'required',
       'allow_multiple',
+      'options',
       '_destroy'
     ];
   }
