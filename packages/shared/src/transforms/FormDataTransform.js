@@ -2,7 +2,7 @@
 
 import _ from 'underscore';
 import BaseTransform from './BaseTransform';
-import StringUtils from '../utils/String';
+import FormUtils from '../utils/Form';
 
 /**
  * Class for handling transforming records for PUT/POST requests. This class transforms objects in FormData. This
@@ -22,7 +22,7 @@ class FormDataTransform extends BaseTransform {
     const formData = new FormData();
 
     _.each(this.getPayloadKeys(), (key) => {
-      formData.append(`${this.getParameterName()}[${key}]`, StringUtils.toString(record[key]));
+      FormUtils.setAttribute(formData, `${this.getParameterName()}[${key}]`, record, key);
     });
 
     return formData;
