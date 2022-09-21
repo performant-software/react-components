@@ -83,6 +83,7 @@ export { default as Toaster } from './components/Toaster';
 export { default as UserDefinedFieldModal } from './components/UserDefinedFieldModal';
 export { default as UserDefinedFieldOptions } from './components/UserDefinedFieldOptions';
 export { default as UserDefinedFieldsEmbeddedList } from './components/UserDefinedFieldsEmbeddedList';
+export { default as UserDefinedFieldsForm } from './components/UserDefinedFieldsForm';
 export { default as UserDefinedFieldsList } from './components/UserDefinedFieldsList';
 export { default as VideoFrameSelector } from './components/VideoFrameSelector';
 export { default as VideoPlayer } from './components/VideoPlayer';

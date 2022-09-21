@@ -121,7 +121,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
      *
      * @param keys
      */
-    onClearValidationError(...keys: string) {
+    onClearValidationError(...keys: Array<string>) {
       this.setState((state) => ({ validationErrors: _.omit(state.validationErrors, keys) }));
     }
 
@@ -448,6 +448,7 @@ export type EditContainerProps = {
   loading: boolean,
   onAssociationInputChange: (idKey: string, valueKey: string, item: any) => void,
   onCheckboxInputChange: (key: string, value: any) => void,
+  onClearValidationError: (...keys: Array<string>) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,
   onMultiAddChildAssociations: (association: string, Array<any>) => void,
   onReset: () => void,

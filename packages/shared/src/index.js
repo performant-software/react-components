@@ -41,6 +41,7 @@ export { default as Object } from './utils/Object';
 export { default as Reference } from './utils/Reference';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
+export { default as UserDefinedFields } from './utils/UserDefinedFields';
 
 // Types
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
