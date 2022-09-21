@@ -341,7 +341,8 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
         item: {
           ...state.item,
           ...props
-        }
+        },
+        validationErrors: _.omit(state.validationErrors, _.keys(props))
       }));
     }
 
