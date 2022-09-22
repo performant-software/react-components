@@ -5,11 +5,11 @@ import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { Form } from 'semantic-ui-react';
-import ReferenceCodeFormDropdown from '../../../semantic-ui/src/components/ReferenceCodeFormDropdown';
+import ReferenceCodeFormDropdown from '../../../controlled-vocabulary/src/components/ReferenceCodeFormDropdown';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
-  title: 'Components/Semantic UI/ReferenceCodeFormDropdown',
+  title: 'Components/Controlled Vocabulary/ReferenceCodeFormDropdown',
   decorators: [withA11y, withKnobs]
 };
 

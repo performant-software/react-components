@@ -4,11 +4,11 @@ import React, { useCallback, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
-import UserDefinedFieldsList from '../../../semantic-ui/src/components/UserDefinedFieldsList';
+import UserDefinedFieldsList from '../../../user-defined-fields/src/components/UserDefinedFieldsList';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
-  title: 'Components/Semantic UI/UserDefinedFieldsList',
+  title: 'Components/User Defined Fields/UserDefinedFieldsList',
   decorators: [withA11y, withKnobs]
 };
 

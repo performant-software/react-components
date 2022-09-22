@@ -4,10 +4,10 @@ import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import ReferenceCodeFormLabel from '../../../semantic-ui/src/components/ReferenceCodeFormLabel';
+import ReferenceCodeFormLabel from '../../../controlled-vocabulary/src/components/ReferenceCodeFormLabel';
 
 export default {
-  title: 'Components/Semantic UI/ReferenceCodeFormLabel',
+  title: 'Components/Controlled Vocabulary/ReferenceCodeFormLabel',
   decorators: [withA11y, withKnobs]
 };
 

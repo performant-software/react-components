@@ -1,4 +1,9 @@
 {
+  "Common": {
+    "buttons": {
+      "edit": "Edit"
+    }
+  },
   "ReferenceCodeFormLabel": {
     "content": "The values in this list can be edited via the {{name}} reference table."
   },

@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
-import UserDefinedFieldsForm from '../../../semantic-ui/src/components/UserDefinedFieldsForm';
+import UserDefinedFieldsForm from '../../../user-defined-fields/src/components/UserDefinedFieldsForm';
 
 export default {
-  title: 'Components/Semantic UI/UserDefinedFieldsForm',
+  title: 'Components/User Defined Fields/UserDefinedFieldsForm',
   decorators: [withA11y, withKnobs]
 };
 

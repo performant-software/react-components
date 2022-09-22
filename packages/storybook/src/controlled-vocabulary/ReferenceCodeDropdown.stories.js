@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
-import ReferenceCodeDropdown from '../../../semantic-ui/src/components/ReferenceCodeDropdown';
+import ReferenceCodeDropdown from '../../../controlled-vocabulary/src/components/ReferenceCodeDropdown';
 
 export default {
-  title: 'Components/Semantic UI/ReferenceCodeDropdown',
+  title: 'Components/Controlled Vocabulary/ReferenceCodeDropdown',
   decorators: [withA11y, withKnobs]
 };
 
