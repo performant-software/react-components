@@ -1,6 +1,6 @@
 // @flow
 
-import BaseTransform from './BaseTransform';
+import { BaseTransform } from '@performant-software/shared-components';
 
 /**
  * Class for transforming user defined field objects for PUT/POST requests.

@@ -1,10 +1,9 @@
 // @flow
 
+import { BooleanIcon, ListTable } from '@performant-software/semantic-components';
 import { UserDefinedFieldsService } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
 import i18n from '../i18n/i18n';
-import BooleanIcon from './BooleanIcon';
-import ListTable from './ListTable';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
 
 const UserDefinedFieldsList: ComponentType<any> = () => (

@@ -1,9 +1,8 @@
 // @flow
 
+import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
 import React from 'react';
 import i18n from '../i18n/i18n';
-import BooleanIcon from './BooleanIcon';
-import EmbeddedList from './EmbeddedList';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
 
 type Props = {

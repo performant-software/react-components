@@ -1,5 +1,6 @@
 // @flow
 
+import { DatePicker } from '@performant-software/semantic-components';
 import { RichTextArea, UserDefinedFieldsService } from '@performant-software/shared-components';
 import React, {
   useCallback,
@@ -10,7 +11,6 @@ import React, {
 } from 'react';
 import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
-import DatePicker from './DatePicker';
 
 type Props = {
   defineableId?: number,
