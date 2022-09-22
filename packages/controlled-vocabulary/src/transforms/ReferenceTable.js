@@ -1,7 +1,6 @@
 // @flow
 
-import _ from 'underscore';
-import BaseTransform from './BaseTransform';
+import { BaseTransform } from '@performant-software/shared-components';
 import ReferenceCodes from './ReferenceCodes';
 
 type ReferenceTableType = {

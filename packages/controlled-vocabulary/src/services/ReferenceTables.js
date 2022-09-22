@@ -1,6 +1,6 @@
 // @flow
 
-import BaseService from './BaseService';
+import { BaseService } from '@performant-software/shared-components';
 import ReferenceTable from '../transforms/ReferenceTable';
 
 /**

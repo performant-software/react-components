@@ -1,7 +1,6 @@
 // @flow
 
 import React, { type ComponentType } from 'react';
-import { withTranslation } from 'react-i18next';
 import {
   Button,
   Header,
@@ -17,7 +16,7 @@ type Props = {
   referenceTable: string
 };
 
-const ReferenceCodeFormLabel: ComponentType<any> = withTranslation()((props: Props) => (
+const ReferenceCodeFormLabel: ComponentType<any> = (props: Props) => (
   <>
     <label
       className='reference-code-form-label'
@@ -48,6 +47,6 @@ const ReferenceCodeFormLabel: ComponentType<any> = withTranslation()((props: Pro
       />
     </Popup>
   </>
-));
+);
 
 export default ReferenceCodeFormLabel;

@@ -1,11 +1,10 @@
 // @flow
 
+import { EmbeddedList, ModalContext } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { Form, Header, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import EmbeddedList from './EmbeddedList';
-import ModalContext from '../context/ModalContext';
 import ReferenceCodeModal from './ReferenceCodeModal';
 
 const ReferenceTableModal = (props: EditContainerProps) => (

@@ -1,9 +1,9 @@
 // @flow
 
+import { EditModal } from '@performant-software/semantic-components';
 import { ReferenceTablesService } from '@performant-software/shared-components';
 import React, { type ComponentType, useState } from 'react';
 import { Form } from 'semantic-ui-react';
-import EditModal from './EditModal';
 import ReferenceCodeDropdown from './ReferenceCodeDropdown';
 import ReferenceCodeFormLabel from './ReferenceCodeFormLabel';
 import ReferenceTableModal from './ReferenceTableModal';

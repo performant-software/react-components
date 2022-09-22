@@ -1,6 +1,6 @@
 // @flow
 
-import NestedAttributesTransform from './NestedAttributesTransform';
+import { NestedAttributesTransform } from '@performant-software/shared-components';
 
 /**
  * Class for transforming reference codes nested objects for PUT/POST requests.
