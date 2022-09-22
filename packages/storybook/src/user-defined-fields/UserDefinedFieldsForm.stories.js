@@ -12,17 +12,17 @@ export default {
 };
 
 export const Default = () => {
-  const [item, setItem] = useState(JSON.stringify({
+  const [data, setData] = useState({
     'First name': 'Bob',
     'Last name': 'Smith'
-  }));
+  });
 
   return (
     <Form>
       <UserDefinedFieldsForm
+        data={data}
         isError={() => false}
-        item={{ user_defined: item }}
-        onChange={(value) => setItem(value)}
+        onChange={(value) => setData(value)}
       />
     </Form>
   );

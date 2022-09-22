@@ -5,7 +5,6 @@ import { RichTextArea } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
-  useMemo,
   useState,
   type ComponentType
 } from 'react';
@@ -14,10 +13,10 @@ import _ from 'underscore';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
 
 type Props = {
+  data: any,
   defineableId?: number,
   defineableType?: string,
   isError: (key: string) => boolean,
-  item: any,
   onChange: (obj: any) => void,
   onClearValidationError: (...keys: Array<string>) => void
 };
@@ -34,21 +33,6 @@ const DataTypes = {
 
 const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
   const [fields, setFields] = useState([]);
-
-  /**
-   * Sets the parsed value by parsing the JSON stored in the "user_defined" prop of the item.
-   *
-   * @type {unknown}
-   */
-  const parsedValue = useMemo(() => {
-    let value = {};
-
-    if (_.isString(props.item.user_defined)) {
-      value = JSON.parse(props.item.user_defined);
-    }
-
-    return value;
-  }, [props.item.user_defined]);
 
   /**
    * Returns the key for the passed field.
@@ -70,13 +54,13 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    * @type {(function(*, *): void)|*}
    */
   const onChange = useCallback((field, value) => {
-    props.onChange(JSON.stringify({ ...parsedValue, [field.column_name]: value }));
+    props.onChange({ ...props.data, [field.column_name]: value });
 
     // Clear the validation error if one exists
     if (props.onClearValidationError) {
       props.onClearValidationError(getFieldKey(field));
     }
-  }, [getFieldKey, parsedValue, props.onChange, props.onClearValidationError]);
+  }, [getFieldKey, props.data, props.onChange, props.onClearValidationError]);
 
   /**
    * Renders the passed item.
@@ -86,7 +70,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
   const renderItem = useCallback((field) => {
     let rendered;
 
-    const fieldValue = parsedValue && parsedValue[field.column_name];
+    const fieldValue = props.data && props.data[field.column_name];
 
     if (field.data_type === DataTypes.string) {
       rendered = (
@@ -184,7 +168,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
     }
 
     return rendered;
-  }, [parsedValue, isError, onChange]);
+  }, [props.data, isError, onChange]);
 
   /**
    * Fetches the user defined fields when the component mounts.
