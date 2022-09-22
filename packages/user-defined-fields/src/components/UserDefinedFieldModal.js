@@ -1,6 +1,5 @@
 // @flow
 
-import { UserDefinedFieldsService } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -11,6 +10,7 @@ import { Form, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import UserDefinedFieldOptions from './UserDefinedFieldOptions';
+import UserDefinedFieldsService from '../services/UserDefinedFields';
 
 const DataTypes = {
   select: 'Select'

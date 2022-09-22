@@ -1,9 +1,9 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import { ReferenceTablesService } from '@performant-software/shared-components';
 import React from 'react';
 import ReferenceTableModal from './ReferenceTableModal';
+import ReferenceTablesService from '../services/ReferenceTables';
 
 const ReferenceTablesList = () => (
   <ListTable

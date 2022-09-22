@@ -1,6 +1,5 @@
 // @flow
 
-import { ReferenceCodesService } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -9,6 +8,7 @@ import React, {
 } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
+import ReferenceCodesService from '../services/ReferenceCodes';
 
 type Item = {
   reference_table_id: number,
