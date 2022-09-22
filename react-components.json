@@ -1,8 +1,10 @@
 {
   "packages": [
+    "packages/controlled-vocabulary",
     "packages/semantic-ui",
     "packages/shared",
+    "packages/user-defined-fields",
     "packages/visualize"
   ],
-  "version": "0.6.2-beta.2"
+  "version": "0.6.2-beta.3"
 }
