@@ -37,25 +37,6 @@ const resolveError = ({ key, error }: ErrorProps): ErrorReturn => {
   };
 };
 
-/**
- * Returns the value for the user defined field at the passed key for the passed item.
- *
- * @param item
- * @param key
- *
- * @returns {*}
- */
-const resolveValue = (item: Item, key: string): string => {
-  let userDefined = {};
-
-  if (_.isString(item.user_defined)) {
-    userDefined = JSON.parse(item.user_defined || '{}');
-  }
-
-  return userDefined[key];
-};
-
 export default {
-  resolveError,
-  resolveValue
+  resolveError
 };
