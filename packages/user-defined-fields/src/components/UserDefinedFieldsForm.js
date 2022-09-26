@@ -134,7 +134,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           required={field.required}
         >
           <DatePicker
-            onChange={(date) => onChange(field, date && date.toString())}
+            onChange={(date) => onChange(field, date && date.toISOString())}
             value={fieldValue && new Date(fieldValue)}
           />
         </Form.Input>
