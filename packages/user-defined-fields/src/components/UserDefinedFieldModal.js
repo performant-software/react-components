@@ -90,6 +90,12 @@ const UserDefinedFieldModal: ComponentType<any> = (props) => {
             label={i18n.t('UserDefinedFieldModal.labels.required')}
             onChange={props.onCheckboxInputChange.bind(this, 'required')}
           />
+          <Form.Checkbox
+            error={props.isError('searchable')}
+            checked={props.item.searchable}
+            label={i18n.t('UserDefinedFieldModal.labels.searchable')}
+            onChange={props.onCheckboxInputChange.bind(this, 'searchable')}
+          />
           { props.item.data_type === DataTypes.select && (
             <Form.Checkbox
               error={props.isError('allow_multiple')}

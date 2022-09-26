@@ -11,6 +11,7 @@ export { default as UserDefinedFieldsList } from './components/UserDefinedFields
 export { default as UserDefinedFieldsService } from './services/UserDefinedFields';
 
 // Transforms
+export { default as FieldableTransform } from './transforms/Fieldable';
 export { default as UserDefinedFieldTransform } from './transforms/UserDefinedField';
 export { default as UserDefinedFieldsTransform } from './transforms/UserDefinedFields';
 

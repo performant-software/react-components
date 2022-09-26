@@ -5,6 +5,7 @@
       "dataType": "Data type",
       "name": "Name",
       "required": "Required",
+      "searchable": "Searchable",
       "table": "Table"
     },
     "title": {
