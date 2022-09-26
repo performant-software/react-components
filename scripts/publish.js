@@ -130,9 +130,9 @@ const publish = (directory, runPublish) => {
 
   if (runPublish) {
     if (beta) {
-      commands.push('yarn publish --tag beta');
+      commands.push('yarn publish --access public --tag beta');
     } else {
-      commands.push('yarn publish');
+      commands.push('yarn publish --access public');
     }
   }
 

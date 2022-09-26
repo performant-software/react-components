@@ -1,0 +1,35 @@
+{
+  "Common": {
+    "buttons": {
+      "edit": "Edit"
+    }
+  },
+  "ReferenceCodeFormLabel": {
+    "content": "The values in this list can be edited via the {{name}} reference table."
+  },
+  "ReferenceCodeModal": {
+    "labels": {
+      "name": "Name"
+    },
+    "title": {
+      "add": "Add Reference Code",
+      "edit": "Edit Reference Code"
+    }
+  },
+  "ReferenceTableModal": {
+    "labels": {
+      "key": "Key",
+      "name": "Name",
+      "referenceCodes": "Reference Codes"
+    },
+    "referenceCodes": {
+      "columns": {
+        "name": "Name"
+      }
+    },
+    "title": {
+      "add": "Add Reference Table",
+      "edit": "Edit Reference Table"
+    }
+  }
+}

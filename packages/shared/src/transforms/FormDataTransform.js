@@ -22,7 +22,7 @@ class FormDataTransform extends BaseTransform {
     const formData = new FormData();
 
     _.each(this.getPayloadKeys(), (key) => {
-      FormUtils.setAttribute(formData, `${this.getParameterName()}[${key}]`, record, key);
+      FormUtils.setAttribute(formData, this.getParameterName(), record, key);
     });
 
     return formData;

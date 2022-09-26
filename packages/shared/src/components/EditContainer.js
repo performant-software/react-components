@@ -117,6 +117,15 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Clears the validation errors for the passed keys.
+     *
+     * @param keys
+     */
+    onClearValidationError(...keys: Array<string>) {
+      this.setState((state) => ({ validationErrors: _.omit(state.validationErrors, keys) }));
+    }
+
+    /**
      * Closes the provider.
      */
     onClose() {
@@ -341,7 +350,8 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
         item: {
           ...state.item,
           ...props
-        }
+        },
+        validationErrors: _.omit(state.validationErrors, _.keys(props))
       }));
     }
 
@@ -374,6 +384,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           loading={this.state.loading}
           onAssociationInputChange={this.onAssociationInputChange.bind(this)}
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
+          onClearValidationError={this.onClearValidationError.bind(this)}
           onDeleteChildAssociation={this.onDeleteChildAssociation.bind(this)}
           onMultiAddChildAssociations={this.onMultiAddChildAssociations.bind(this)}
           onReset={this.onReset.bind(this)}
@@ -437,6 +448,7 @@ export type EditContainerProps = {
   loading: boolean,
   onAssociationInputChange: (idKey: string, valueKey: string, item: any) => void,
   onCheckboxInputChange: (key: string, value: any) => void,
+  onClearValidationError: (...keys: Array<string>) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,
   onMultiAddChildAssociations: (association: string, Array<any>) => void,
   onReset: () => void,

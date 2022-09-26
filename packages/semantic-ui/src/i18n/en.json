@@ -218,34 +218,6 @@
       }
     }
   },
-  "ReferenceCodeFormLabel": {
-    "content": "The values in this list can be edited via the {{name}} reference table."
-  },
-  "ReferenceCodeModal": {
-    "labels": {
-      "name": "Name"
-    },
-    "title": {
-      "add": "Add Reference Code",
-      "edit": "Edit Reference Code"
-    }
-  },
-  "ReferenceTableModal": {
-    "labels": {
-      "key": "Key",
-      "name": "Name",
-      "referenceCodes": "Reference Codes"
-    },
-    "referenceCodes": {
-      "columns": {
-        "name": "Name"
-      }
-    },
-    "title": {
-      "add": "Add Reference Table",
-      "edit": "Edit Reference Table"
-    }
-  },
   "RemoteDropdown": {
     "labels": {
       "add": "Add",
@@ -254,35 +226,6 @@
   },
   "Selectize": {
     "noRecords": "No matching records."
-  },
-  "UserDefinedFieldModal": {
-    "labels": {
-      "allowMultiple": "Allow multiple",
-      "dataType": "Data type",
-      "name": "Name",
-      "required": "Required",
-      "table": "Table"
-    },
-    "title": {
-      "add": "Add User Defined Field",
-      "edit": "Edit User Defined Field"
-    }
-  },
-  "UserDefinedFieldsEmbeddedList": {
-    "columns": {
-      "dataType": "Data type",
-      "name": "Name",
-      "required": "Required",
-      "table": "Table"
-    }
-  },
-  "UserDefinedFieldsList": {
-    "columns": {
-      "dataType": "Data type",
-      "name": "Name",
-      "required": "Required",
-      "table": "Table"
-    }
   },
   "VideoFrameSelector": {
     "buttons": {

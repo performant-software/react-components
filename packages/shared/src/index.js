@@ -14,18 +14,12 @@ export { default as i18n } from './i18n/i18n';
 
 // Services
 export { default as BaseService } from './services/BaseService';
-export { default as ReferenceCodesService } from './services/ReferenceCodes';
-export { default as ReferenceTablesService } from './services/ReferenceTables';
-export { default as UserDefinedFieldsService } from './services/UserDefinedFields';
 
 // Transforms
 export { default as Attachments } from './transforms/Attachments';
 export { default as BaseTransform } from './transforms/BaseTransform';
 export { default as FormDataTransform } from './transforms/FormDataTransform';
 export { default as NestedAttributesTransform } from './transforms/NestedAttributesTransform';
-export { default as References } from './transforms/References';
-export { default as UserDefinedFieldTransform } from './transforms/UserDefinedField';
-export { default as UserDefinedFieldsTransform } from './transforms/UserDefinedFields';
 
 // Utils
 export { default as Browser } from './utils/Browser';
@@ -38,12 +32,10 @@ export { default as Hooks } from './utils/Hooks';
 export { default as IIIF } from './utils/IIIF';
 export { default as Map } from './utils/Map';
 export { default as Object } from './utils/Object';
-export { default as Reference } from './utils/Reference';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
 
 // Types
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './components/EditContainer';
-export type { Referrable } from './types/Referrable';
 export type { RichTextAreaProps } from './components/RichTextArea';

@@ -1,22 +1,21 @@
 {
-  "name": "@performant-software/visualize",
+  "name": "@performant-software/controlled-vocabulary",
   "version": "0.6.2-beta.5",
-  "description": "A package of components used for data visualization",
+  "description": "A package of components to allow user to configure dropdown elements. Use with the \"controlled_vocabulary\" gem.",
   "license": "MIT",
   "main": "./build/index.js",
-  "style": "./build/main.css",
+  "style": [
+    "./build/main.css",
+    "./build/semantic-ui.css"
+  ],
   "scripts": {
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@visx/event": "^2.6.0",
-    "@visx/group": "^2.10.0",
-    "@visx/hierarchy": "^2.10.0",
-    "@visx/responsive": "^2.10.0",
-    "@visx/shape": "^2.12.2",
-    "@visx/zoom": "^2.10.0",
-    "d3-shape": "^3.1.0",
-    "i18next": "^21.9.1",
+    "@performant-software/semantic-components": "^0.6.2-beta.5",
+    "@performant-software/shared-components": "^0.6.2-beta.5",
+    "i18next": "^21.9.2",
+    "semantic-ui-react": "^2.1.2",
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
