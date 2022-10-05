@@ -41,8 +41,11 @@ type Props = {
   addButton: {
     basic: boolean,
     color: string,
+    content?: string,
+    inverted?: boolean,
     location: string,
-    onClick?: () => void
+    onClick?: () => void,
+    secondary?: boolean
   },
   buttons: Array<ListButton>,
   count: number,
@@ -378,10 +381,12 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           basic={this.props.addButton.basic !== false}
           color={this.props.addButton.color}
           key={BUTTON_KEY_ADD}
+          inverted={this.props.addButton.inverted}
           onClick={this.onAddButton.bind(this)}
+          secondary={this.props.addButton.secondary}
         >
           <Icon name='plus' />
-          { i18n.t('List.buttons.add') }
+          { this.props.addButton.content || i18n.t('List.buttons.add') }
         </Button>
       );
     }

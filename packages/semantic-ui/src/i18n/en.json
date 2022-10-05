@@ -16,6 +16,21 @@
       }
     }
   },
+  "BibliographyList": {
+    "sort": {
+      "author": "Author",
+      "date": "Date",
+      "title": "Title"
+    }
+  },
+  "BibliographyModal": {
+    "title": "Add Entry"
+  },
+  "Citation": {
+    "labels": {
+      "untitled": "Untitled"
+    }
+  },
   "Common": {
     "buttons": {
       "add": "Add",
@@ -45,6 +60,13 @@
         "content": "Your changes have been saved.",
         "header": "Success!"
       }
+    }
+  },
+  "CreatorField": {
+    "labels": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "name": "Name"
     }
   },
   "EditContainer": {

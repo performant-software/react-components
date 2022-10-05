@@ -15,6 +15,7 @@
     "@performant-software/shared-components": "^1.0.0",
     "@react-google-maps/api": "^2.8.1",
     "axios": "^0.26.1",
+    "citeproc": "^2.4.62",
     "i18next": "^19.4.4",
     "react-calendar": "^3.3.0",
     "react-color": "^2.18.1",
@@ -26,7 +27,9 @@
     "react-uuid": "^1.0.2",
     "semantic-ui-less": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
-    "underscore": "^1.13.2"
+    "underscore": "^1.13.2",
+    "zotero-api-client": "^0.40.0",
+    "zotero-translation-client": "^5.0.1"
   },
   "peerDependencies": {
     "react": ">= 16.13.1 < 18.0.0",
