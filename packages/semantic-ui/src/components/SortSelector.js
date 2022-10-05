@@ -61,6 +61,7 @@ const SortSelector = (props: Props) => {
   return (
     <Button.Group
       basic
+      className='sort-selector'
       style={{
         fontSize: 'inherit'
       }}

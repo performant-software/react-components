@@ -21,6 +21,7 @@ import SortSelector from './SortSelector';
 import { SORT_DESCENDING } from '../constants/Sort';
 import StyleSelector from './StyleSelector';
 import useList from './List';
+import './BibliographyList.css';
 
 type Item = {
   id?: number,
@@ -233,6 +234,7 @@ const BibliographyList = (props: Props) => {
       }, {
         name: 'delete'
       }]}
+      className='bibliography-list'
       items={items}
       locale={locale}
       modal={{
