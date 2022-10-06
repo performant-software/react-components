@@ -18,7 +18,8 @@ type Props = {
   defineableType?: string,
   isError: (key: string) => boolean,
   onChange: (obj: any) => void,
-  onClearValidationError: (...keys: Array<string>) => void
+  onClearValidationError: (...keys: Array<string>) => void,
+  tableName?: string
 };
 
 const DataTypes = {
@@ -176,7 +177,8 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
   useEffect(() => {
     const params = {
       defineable_id: props.defineableId,
-      defineable_type: props.defineableType
+      defineable_type: props.defineableType,
+      table_name: props.tableName
     };
 
     UserDefinedFieldsService
