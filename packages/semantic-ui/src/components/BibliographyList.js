@@ -11,16 +11,20 @@ import uuid from 'react-uuid';
 import {
   Button,
   Grid,
-  List
+  List,
+  Message
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import BibliographyModal from './BibliographyModal';
+import BibliographySearchInput from './BibliographySearchInput';
 import Citation from './Citation';
 import i18n from '../i18n/i18n';
 import SortSelector from './SortSelector';
 import { SORT_DESCENDING } from '../constants/Sort';
 import StyleSelector from './StyleSelector';
+import Toaster from './Toaster';
 import useList from './List';
+import ZoteroTranslateContext from '../context/ZoteroTranslateContext';
 import './BibliographyList.css';
 
 type Item = {
@@ -71,6 +75,7 @@ const BibliographyListComponent: ComponentType<any> = useList((props: ComponentP
         as={Grid}
         columns={2}
         key={index}
+        padded
       >
         <List.Content
           as={Grid.Column}
@@ -90,10 +95,12 @@ const BibliographyListComponent: ComponentType<any> = useList((props: ComponentP
           verticalAlign='middle'
           width={2}
         >
-          { _.map(props.actions, (action) => (
+          { _.map(props.actions, (action, actionIndex) => (
             <Button
+              aria-label={action.name}
               basic
               icon={action.icon}
+              key={actionIndex}
               onClick={action.onClick.bind(this, item)}
             />
           ))}
@@ -106,11 +113,13 @@ const BibliographyListComponent: ComponentType<any> = useList((props: ComponentP
 type Props = {
   items: Array<Item>,
   onDelete: (item: Item) => Promise<any>,
-  onSave: (item: Item) => Promise<any>
+  onSave: (item: Item) => Promise<any>,
+  translateUrl: string
 };
 
 const BibliographyList = (props: Props) => {
   const [locale, setLocale] = useState();
+  const [showToaster, setShowToaster] = useState(false);
   const [style, setStyle] = useState();
   const [sort, setSort] = useState({});
 
@@ -164,7 +173,7 @@ const BibliographyList = (props: Props) => {
     // Filter the list to exclude items marked for removal and transform the items
     let newItems = _.chain(props.items)
       .filter((item) => !item._destroy)
-      .map((item) => ({ ...item, ...item.data }))
+      .map((item) => ({ ..._.omit(item, 'data'), ...item.data }))
       .value();
 
     // Sort the list according to the selected sort property
@@ -227,29 +236,50 @@ const BibliographyList = (props: Props) => {
   }, []);
 
   return (
-    <BibliographyListComponent
-      {...props}
-      actions={[{
-        name: 'edit'
-      }, {
-        name: 'delete'
-      }]}
-      className='bibliography-list'
-      items={items}
-      locale={locale}
-      modal={{
-        component: BibliographyModal,
-        props: {
-          defaults: {
-            itemType: DEFAULT_ITEM_TYPE
-          }
-        }
-      }}
-      onDelete={onDelete}
-      onSave={onSave}
-      renderListHeader={renderListHeader}
-      style={style}
-    />
+    <ZoteroTranslateContext.Provider
+      value={{ translateUrl: props.translateUrl }}
+    >
+      <div>
+        <BibliographySearchInput
+          onError={() => setShowToaster(true)}
+          onFind={(results) => _.map(results, onSave)}
+        />
+        <BibliographyListComponent
+          {...props}
+          actions={[{
+            name: 'edit'
+          }, {
+            name: 'delete'
+          }]}
+          className='bibliography-list'
+          items={items}
+          locale={locale}
+          modal={{
+            component: BibliographyModal,
+            props: {
+              defaults: {
+                itemType: DEFAULT_ITEM_TYPE
+              }
+            }
+          }}
+          onDelete={onDelete}
+          onSave={onSave}
+          renderListHeader={renderListHeader}
+          style={style}
+        />
+        { showToaster && (
+          <Toaster
+            onDismiss={() => setShowToaster(false)}
+            timeout={2500}
+            type={Toaster.MessageTypes.warning}
+          >
+            <Message.Header
+              content={i18n.t('Common.messages.noResults')}
+            />
+          </Toaster>
+        )}
+      </div>
+    </ZoteroTranslateContext.Provider>
   );
 };
 

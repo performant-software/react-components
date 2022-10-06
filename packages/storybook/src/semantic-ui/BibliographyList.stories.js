@@ -60,6 +60,7 @@ export const Default = () => {
       items={items}
       onDelete={onDelete}
       onSave={onSave}
+      translateUrl='/translate'
     />
   );
 };

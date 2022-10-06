@@ -39,13 +39,14 @@ const CreatorField = (props: Props) => {
     props.onUpdate({ ...props.creator || {}, ...attributes })
   ), [props.creator, props.onUpdate]);
 
+  /**
+   * Sets the label attribute as a dropdown of the passed creatorTypes prop.
+   *
+   * @type {unknown}
+   */
   const label = useMemo(() => (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label
-      style={{
-        display: 'block'
-      }}
-    >
+    <label>
       <Dropdown
         onChange={onUpdate.bind(this, 'creatorType')}
         options={_.map(props.creatorTypes, (ct) => ({
@@ -65,13 +66,19 @@ const CreatorField = (props: Props) => {
     if (!_.has(props.creator, 'nameType')) {
       onUpdateAttributes({ nameType: NameTypes.full });
     }
-  }, [props.creator]);
+  }, [props.creator, onUpdateAttributes]);
 
   /**
-   * Clear out all name fields when the name type is changed.
+   * Convert between firstName/lastName and name attributes depending on the name type.
    */
   useEffect(() => {
-    onUpdateAttributes({ name: null, firstName: null, lastName: null });
+    if (props.creator.name && props.creator.nameType === NameTypes.full) {
+      const [firstName, lastName] = props.creator.name.split(' ');
+      onUpdateAttributes({ name: null, firstName, lastName });
+    } else if ((props.creator.firstName || props.creator.lastName) && props.creator.nameType === NameTypes.single) {
+      const name = _.compact([props.creator.firstName, props.creator.lastName]).join(' ');
+      onUpdateAttributes({ firstName: null, lastName: null, name });
+    }
   }, [props.creator.nameType]);
 
   return (

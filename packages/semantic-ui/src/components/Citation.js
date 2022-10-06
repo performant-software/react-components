@@ -42,13 +42,10 @@ const Citation = (props: Props) => {
   useEffect(() => {
     if (props.locale && props.style && props.item) {
       // Translate from Zotero JSON to CSL
-      const {
-        uid,
-        data
-      } = props.item;
+      const { uid, ...rest } = props.item;
 
       const translator = new ZoteroTranslationClient({
-        initialItems: [{ key: uid, ...validateItem(data) }],
+        initialItems: [{ key: uid, ...validateItem(rest) }],
         persist: false
       });
 

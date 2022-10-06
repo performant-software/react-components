@@ -61,6 +61,9 @@ const StyleSelector = (props: Props) => {
         text: style.title
       }))}
       search
+      searchInput={{
+        'aria-label': 'Search styles',
+      }}
       selectOnBlur={false}
       selection
       text={_.findWhere(styles, { name: props.value })?.title}

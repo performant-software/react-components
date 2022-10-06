@@ -175,7 +175,17 @@ const getItemTypeMeta = async (itemType: string, retryOnFailure: boolean = true)
   };
 };
 
+/**
+ * Returns true if the passed identifier matches a URL pattern.
+ *
+ * @param id
+ *
+ * @returns {boolean}
+ */
+const isUrl = (id) => !!id.match(/^(https?:\/\/)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b(\S*)$/i);
+
 export default {
   getFieldsAndItem,
-  getItemTypeMeta
+  getItemTypeMeta,
+  isUrl
 };

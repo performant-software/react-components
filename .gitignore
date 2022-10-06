@@ -5,3 +5,4 @@ node_modules/
 packages/*/types
 
 storybook-static/
+yarn.error.log

@@ -42,7 +42,7 @@ const BibliographyModal = (props: Props) => {
           }))}
           selectOnBlur={false}
           selection
-          value={props.item[field.key]}
+          value={props.item[field.key] || ''}
         />
       );
     }
@@ -53,7 +53,7 @@ const BibliographyModal = (props: Props) => {
           creatorTypes={creators}
           key={field.key}
           onChange={(value) => props.onSetState({ [field.key]: value })}
-          value={props.item[field.key]}
+          value={props.item[field.key] || []}
         />
       );
     }
@@ -65,7 +65,7 @@ const BibliographyModal = (props: Props) => {
           key={field.key}
           label={field.label}
           onChange={props.onTextInputChange.bind(this, field.key)}
-          value={props.item[field.key]}
+          value={props.item[field.key] || ''}
         />
       );
     }
@@ -76,7 +76,7 @@ const BibliographyModal = (props: Props) => {
         key={field.key}
         label={field.label}
         onChange={props.onTextInputChange.bind(this, field.key)}
-        value={props.item[field.key]}
+        value={props.item[field.key] || ''}
       />
     );
   }, [creators, props.item]);
