@@ -16,7 +16,7 @@ const setAttribute = (formData, prefix, item, attribute) => {
   const value = item[attribute];
 
   if (_.isArray(value)) {
-    _.each(value, (val, index) => formData.append(`${prefix}[${attribute}][${index}]`, StringUtils.toString(val)));
+    _.each(value, (val, index) => setAttribute(formData, `${prefix}[${attribute}]`, value, index));
   } else if (_.isObject(value) && !_.isFunction(value)) {
     _.each(_.keys(value), (key) => setAttribute(formData, `${prefix}[${attribute}]`, value, key));
   } else {
