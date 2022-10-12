@@ -120,9 +120,10 @@ const updateVersion = (directory, version) => {
  * Publishes a package for the passed directory.
  *
  * @param directory
+ * @param version
  * @param runPublish
  */
-const publish = (directory, runPublish) => {
+const publish = (directory, version, runPublish) => {
   const commands = [
     `cd ${directory}`,
     'yarn build'
@@ -130,15 +131,19 @@ const publish = (directory, runPublish) => {
 
   if (runPublish) {
     if (beta) {
-      commands.push('yarn publish --access public --tag beta');
+      commands.push(`yarn publish --access public --tag beta --new-version ${version}`);
     } else {
-      commands.push('yarn publish --access public');
+      commands.push(`yarn publish --access public --new-version ${version}`);
     }
   }
 
   if (runPublish) {
+    console.log('');
+    console.log('');
     console.log(`Publishing ${directory}...`);
   } else {
+    console.log('');
+    console.log('');
     console.log(`Building ${directory}...`);
   }
 
@@ -165,7 +170,7 @@ const run = async () => {
     updateVersion(directory, version);
 
     // Build and publish the package
-    publish(directory, runPublish);
+    publish(directory, version, runPublish);
   });
 };
 

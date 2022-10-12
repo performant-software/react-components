@@ -1,0 +1,117 @@
+{
+  "artwork": {
+    "medium": "artworkMedium"
+  },
+  "audioRecording": {
+    "medium": "audioRecordingFormat",
+    "publisher": "label"
+  },
+  "bill": {
+    "number": "billNumber",
+    "volume": "codeVolume",
+    "pages": "codePages"
+  },
+  "blogPost": {
+    "publicationTitle": "blogTitle",
+    "type": "websiteType"
+  },
+  "bookSection": {
+    "publicationTitle": "bookTitle"
+  },
+  "case": {
+    "title": "caseName",
+    "date": "dateDecided",
+    "number": "docketNumber",
+    "volume": "reporterVolume",
+    "pages": "firstPage"
+  },
+  "computerProgram": {
+    "publisher": "company"
+  },
+  "conferencePaper": {
+    "publicationTitle": "proceedingsTitle"
+  },
+  "dictionaryEntry": {
+    "publicationTitle": "dictionaryTitle"
+  },
+  "email": {
+    "title": "subject"
+  },
+  "encyclopediaArticle": {
+    "publicationTitle": "encyclopediaTitle"
+  },
+  "film": {
+    "publisher": "distributor",
+    "type": "genre",
+    "medium": "videoRecordingFormat"
+  },
+  "forumPost": {
+    "publicationTitle": "forumTitle",
+    "type": "postType"
+  },
+  "hearing": {
+    "number": "documentNumber"
+  },
+  "interview": {
+    "medium": "interviewMedium"
+  },
+  "letter": {
+    "type": "letterType"
+  },
+  "manuscript": {
+    "type": "manuscriptType"
+  },
+  "map": {
+    "type": "mapType"
+  },
+  "patent": {
+    "number": "patentNumber",
+    "date": "issueDate"
+  },
+  "podcast": {
+    "number": "episodeNumber",
+    "medium": "audioFileType"
+  },
+  "preprint": {
+    "type": "genre",
+    "publisher": "repository",
+    "number": "archiveID"
+  },
+  "presentation": {
+    "type": "presentationType"
+  },
+  "radioBroadcast": {
+    "publicationTitle": "programTitle",
+    "number": "episodeNumber",
+    "medium": "audioRecordingFormat",
+    "publisher": "network"
+  },
+  "report": {
+    "number": "reportNumber",
+    "type": "reportType",
+    "publisher": "institution"
+  },
+  "statute": {
+    "title": "nameOfAct",
+    "number": "publicLawNumber",
+    "date": "dateEnacted"
+  },
+  "thesis": {
+    "type": "thesisType",
+    "publisher": "university"
+  },
+  "tvBroadcast": {
+    "publicationTitle": "programTitle",
+    "number": "episodeNumber",
+    "medium": "videoRecordingFormat",
+    "publisher": "network"
+  },
+  "videoRecording": {
+    "medium": "videoRecordingFormat",
+    "publisher": "studio"
+  },
+  "webpage": {
+    "publicationTitle": "websiteTitle",
+    "type": "websiteType"
+  }
+}

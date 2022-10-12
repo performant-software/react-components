@@ -236,7 +236,8 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
 
     /**
      * Removes the passed child record from the passed association. This function is called if the child record does
-     * not have an ID value.
+     * not have an ID value. If both objects have a "uid" property or "id" property, those attributes will be used
+     * to compare. Otherwise, the isEqual function from ObjectUtils will be used to compare.
      *
      * @param association
      * @param child
@@ -246,7 +247,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
         item: {
           ...state.item,
           [association]: _.filter(state.item[association] || [],
-            (c) => c !== child)
+            (c) => !(this.isChild(c, child) || ObjectUtils.isEqual(c, child)))
         }
       }));
     }

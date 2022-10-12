@@ -10,6 +10,7 @@ export { default as AccordionSelector } from './components/AccordionSelector';
 export { default as ArrowButtons } from './components/ArrowButtons';
 export { default as AssociatedDropdown } from './components/AssociatedDropdown';
 export { default as AudioPlayer } from './components/AudioPlayer';
+export { default as BibliographyList } from './components/BibliographyList';
 export { default as BooleanIcon } from './components/BooleanIcon';
 export { default as CancelButton } from './components/CancelButton';
 export { default as ColorButton } from './components/ColorButton';

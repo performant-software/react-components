@@ -16,6 +16,26 @@
       }
     }
   },
+  "BibliographyList": {
+    "sort": {
+      "author": "Author",
+      "date": "Date",
+      "title": "Title"
+    }
+  },
+  "BibliographyModal": {
+    "title": "Add Entry"
+  },
+  "BibliographySearchInput": {
+    "labels": {
+      "placeholder": "Enter a URL, ISBN, DOI, PMID, arXiv ID"
+    }
+  },
+  "Citation": {
+    "labels": {
+      "untitled": "Untitled"
+    }
+  },
   "Common": {
     "buttons": {
       "add": "Add",
@@ -28,6 +48,7 @@
       "ok": "OK",
       "open": "Open",
       "save": "Save",
+      "search": "Search",
       "upload": "Upload"
     },
     "errors": {
@@ -41,10 +62,18 @@
         "header": "Oops!"
       },
       "loading": "Loading",
+      "noResults": "No results found.",
       "save": {
         "content": "Your changes have been saved.",
         "header": "Success!"
       }
+    }
+  },
+  "CreatorField": {
+    "labels": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "name": "Name"
     }
   },
   "EditContainer": {
