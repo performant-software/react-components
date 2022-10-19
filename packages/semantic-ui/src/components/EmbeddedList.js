@@ -9,7 +9,7 @@ import Draggable from './Draggable';
 import './EmbeddedList.css';
 
 import type { Action } from './List';
-import type { Column } from './DataTable';
+import type { Column } from './DataTableColumnSelector';
 
 type ListButton = {
   render: () => ComponentType<any>

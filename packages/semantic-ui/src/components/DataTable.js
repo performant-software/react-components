@@ -13,45 +13,98 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
-import useColumnSelector from './DataTableColumnSelector';
-import useList from './List';
+import useColumnSelector, { Props as ColumnSelectorProps } from './DataTableColumnSelector';
+import useList, { Props as ListProps } from './List';
 import './DataTable.css';
 
 import type { Action } from './List';
 
-type Column = {
-  className?: string,
-  hidden?: boolean,
-  label?: string,
-  name: string,
-  render?: (item: any) => void,
-  renderHeader?: (item: any) => void,
-  resolve?: (item: any) => void,
-  sortable: boolean
-};
+type Props = ListProps & ColumnSelectorProps & {
+  /**
+   * If <code>true</code>, the rows of the table can be expanded and collapsed.
+   */
+  expandableRows?: boolean,
 
-type Props = {
-  actions: Array<Action>,
-  className: string,
-  columns: Array<Column>,
-  expandableRows: boolean,
-  expandPanel: (item: any, activePanel: any) => Component<any>,
-  isRowSelected: (item: any) => boolean,
+  /**
+   * Function that returns JSX to render when the row for the passed item is expanded.
+   */
+  expandPanel?: (item: any, activePanel: any) => Element<any>,
+
+  /**
+   * Callback returning <code>true</code> if the row for the passed item is selected.
+   */
+  isRowSelected?: (item: any) => boolean,
+
+  /**
+   * An array of objects to render as rows in the list.
+   */
   items: ?Array<any>,
-  loading: boolean,
-  onClearSelected: () => void,
-  onColumnClick: (column: Column) => void,
-  onRowSelect?: (item: any)=>void,
-  onSelectAll: (items: Array<any>)=>void,
-  renderEmptyMessage: () => Element<any>,
+
+  /**
+   * Set to <code>true</code> if the list is currently loading data. If true, a loading indicator will display.
+   */
+  loading?: boolean,
+
+  /**
+   * Callback to clear the selected set of records.
+   */
+  onClearSelected?: () => void,
+
+  /**
+   * Callback fired when the passed column is clicked.
+   */
+  onColumnClick?: (column: Column) => void,
+
+  /**
+   * Callback fired when the passed item is selected. This callback is <i>only</i> fired if the <code>selectable</code>
+   * prop is passed as <code>true</code>.
+   */
+  onRowSelect?: (item: any)=> void,
+
+  /**
+   * Callback fired when the select all checkbox in the table header is clicked.
+   */
+  onSelectAll?: (items: Array<any>) => void,
+
+  /**
+   * A function that returns a JSX element to render when the list is empty.
+   */
+  renderEmptyMessage?: () => Element<any>,
+
+  /**
+   * A function that returns a custom JSX element to render when the list is empty. This element will replace the
+   * entire single row of the table.
+   */
   renderEmptyRow?: () => void,
+
+  /**
+   * A function that returns a custom JSX element to render for the passed item. This element will replace the entire
+   * table row.
+   */
   renderItem?: (item: any, index: number, children?: any) => Element<any>,
-  sortColumn?: string,
-  sortDirection?: string,
-  t: (key: string) => string,
-  tableProps: any,
+
+  /**
+   * If set to <code>true</code>, checkboxes will render as the first table column, allowing each row to be selectable.
+   * The consuming component is responsible for tracking the selected items.
+   */
   selectable?: boolean,
-  selectedRows: Array<{id: number}>,
+
+  /**
+   * Name of the current sort column.
+   */
+  sortColumn?: string,
+
+  /**
+   * Current sort direction (ascending or descending).
+   */
+  sortDirection?: string,
+
+  /**
+   * Customization props for the
+   * <a target="_blank" href="https://react.semantic-ui.com/collections/table/"><code>Table</code></a>
+   * component.
+   */
+  tableProps?: any
 };
 
 type State = {
@@ -596,7 +649,6 @@ DataTable.defaultProps = {
   renderSearch: undefined,
   renderItem: undefined,
   showRecordCount: false,
-  selectedRows: [],
   sortColumn: undefined,
   sortDirection: undefined,
 };
@@ -604,5 +656,5 @@ DataTable.defaultProps = {
 export default useColumnSelector(useList(DataTable));
 
 export type {
-  Column
+  Props
 };

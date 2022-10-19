@@ -4,19 +4,21 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import './ArrowButtons.css';
 
-type Date = {
-  accuracy: number,
-  description: string,
-  endDate?: Date,
-  range: boolean,
-  startDate?: Date
-};
-
 type Props = {
-  onLeft: (data: Date) => void,
-  onRight: (data: Date) => void
+  /**
+   * Callback for left arrow click
+   */
+  onLeft: () => void,
+
+  /**
+   * Callback for right arrow click
+   */
+  onRight: () => void,
 };
 
+/**
+ * A component used to move items from left to right or right to left.
+ */
 const ArrowButtons = (props: Props) => (
   <Button.Group
     className='arrow-buttons'

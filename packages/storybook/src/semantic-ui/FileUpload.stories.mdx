@@ -1,0 +1,54 @@
+import { action } from '@storybook/addon-actions';
+import { Canvas, Meta, Preview, Story } from '@storybook/addon-docs';
+import DocHeader from '../components/DocHeader';
+import FileUpload from '../../../semantic-ui/src/components/FileUpload';
+import PropsTable from '../components/PropsTable';
+
+<Meta
+  title='Components/Semantic UI/FileUpload'
+  component={FileUpload}
+/>
+
+<DocHeader
+  item={FileUpload}
+/>
+
+<Canvas>
+  <Story name='Default'>
+    <FileUpload
+      onFilesAdded={action('files-added')}
+    />
+  </Story>
+</Canvas>
+
+<PropsTable
+  item={FileUpload}
+/>
+
+### Size
+Using the `maxSize` prop, file sizes and be limited to exclude files exceeding a certain size.
+
+<Preview>
+  <Story name='Size'>
+    <FileUpload
+      maxSize={10485760}
+      onFilesAdded={action('files-added')}
+    />
+  </Story>
+</Preview>
+
+### Type
+Using the `filesTypes` prop, files can be limited to a specific set of file extensions.
+
+<Preview>
+  <Story name='Types'>
+    <FileUpload
+      fileTypes={[
+        'jpg',
+        'jpeg',
+        'png'
+      ]}
+      onFilesAdded={action('files-added')}
+    />
+  </Story>
+</Preview>

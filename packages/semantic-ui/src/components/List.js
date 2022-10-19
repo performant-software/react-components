@@ -37,8 +37,17 @@ type ListButton = {
 };
 
 type Props = {
-  actions: Array<Action>,
-  addButton: {
+  /**
+   * A list of actions to render for each element in the row. Actions with the names "edit" and "delete" will be
+   * handled specially by the <code>List</code> higher-order component.
+   */
+  actions?: Array<Action>,
+
+  /**
+   * If provided, a button will display in the list header allowing the addition of items to the list. When clicked,
+   * the <code>modal</code> prop will be rendered.
+   */
+  addButton?: {
     basic: boolean,
     color: string,
     content?: string,
@@ -47,15 +56,50 @@ type Props = {
     onClick?: () => void,
     secondary?: boolean
   },
-  buttons: Array<ListButton>,
-  count: number,
-  className: string,
-  configurable: boolean,
+
+  /**
+   * A list of arbitrary buttons to the display in the list header. All actions will be handled by the consuming
+   * component.
+   * <br />
+   * <br />
+   *
+   * In addition to the props listed here for each button, buttons will also accept any of the Semantic UI
+   * <a href="https://react.semantic-ui.com/elements/button/" target="_blank">Button</a> props.
+   */
+  buttons?: Array<ListButton>,
+
+  /**
+   * The number of total records in the list (not just the current page).
+   */
+  count?: number,
+
+  /**
+   * CSS class name to append to the <code>div</code> container.
+   */
+  className?: string,
+
+  /**
+   * If provided, a "delete all" button will be rendered in the list header.
+   */
   deleteButton?: {
     color: string,
     location: string,
     onClick?: () => void
   },
+
+  /**
+   * If provided, the passed <code>component</code> will be rendered when the filter button is clicked.
+   * <br />
+   * <br />
+   *
+   * Values passed in the <code>defaults</code> and <code>props</code> properties will be made available in the
+   * passed component.
+   * <br />
+   * <br />
+   *
+   * The <code>onChange</code> callback will fire when the filters are modified. This action will also reload the list,
+   * passing the new filters the <code>onLoad</code> callback.
+   */
   filters?: {
     active: boolean,
     component: Component<{}>,
@@ -63,32 +107,94 @@ type Props = {
     state?: any,
     onChange: (params: any) => Promise<any>
   },
-  items: ?Array<any>,
-  loading?: boolean,
+
+  /**
+   * If provided, the passed modal will be rendered when the "add" button is clicked.
+   */
   modal?: {
-    component: Element<any>,
+    component: ComponentType<any>,
     props: any,
     state: any
   },
-  page: number,
-  pages: number,
+
+  /**
+   * If provided, this callback is fired when the "copy" action is clicked for an item. The consuming component
+   * should generate a copy of the selected item and return that value. The return value is then set at the
+   * current item in the edit modal.
+   */
   onCopy?: (item: any) => any,
-  onDelete: (item: any) => void,
+
+  /**
+   * Callback fired when the "delete" action is clicked for an item.
+   */
+  onDelete?: (item: any) => void,
+
+  /**
+   * Callback fired when the delete all button is clicked. This prop expects a Promise as the return value.
+   */
   onDeleteAll?: () => Promise<any>,
-  onPageChange: () => void,
-  onPerPageChange: () => void,
-  onSave: (item: any) => Promise<any>,
-  onSelectAll?: (items: Array<any>) => void,
-  perPage: number,
-  perPageOptions: Array<number>,
+
+  /**
+   * Callback fired when the page is changed via the pagination component.
+   */
+  onPageChange?: () => void,
+
+  /**
+   * Callback fired when the per page value is changed.
+   */
+  onPerPageChange?: () => void,
+
+  /**
+   * Callback fired when the save button is clicked in the add/edit modal. This function expects a Promise as the
+   * return value.
+   */
+  onSave?: (item: any) => Promise<any>,
+
+  /**
+   * Current page number.
+   */
+  page?: number,
+
+  /**
+   * Number of pages in the list.
+   */
+  pages?: number,
+
+  /**
+   * The number of records to display per page.
+   */
+  perPage?: number,
+
+  /**
+   * The options to display in the dropdown for the per page selector.
+   */
+  perPageOptions?: Array<number>,
+
+  /**
+   * Custom render function for the modal that appears on the "delete" action.
+   */
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
-  renderEmptyRow?: () => void,
-  renderItem?: (item: any, index: number, children?: any) => Element<any>,
+
+  /**
+   * If provided, this function will return a JSX element that will prepend to the list header.
+   */
   renderListHeader?: () => ?Element<any>,
+
+  /**
+   * If provided, this function will return a JSX element that will replace the default search input.
+   */
   renderSearch?: () => Element<any>,
+
+  /**
+   * If set to <code>true</code>, checkboxes will render as the first table column, allowing each row to be selectable.
+   * The consuming component is responsible for tracking the selected items.
+   */
   selectable?: boolean,
-  showRecordCount: boolean,
-  t: (key: string) => string
+
+  /**
+   * If <code>true</code>, the total number of records will display in the list header.
+   */
+  showRecordCount?: boolean
 };
 
 type State = {
@@ -122,8 +228,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       buttons: [],
       className: '',
       filters: undefined,
-      items: [],
-      loading: false,
       modal: undefined,
       page: 1,
       pages: 1,
@@ -131,9 +235,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       onCopy: undefined,
       onPageChange: () => {},
       renderDeleteModal: undefined,
-      renderEmptyRow: undefined,
       renderSearch: undefined,
-      renderItem: undefined,
       sortColumn: undefined,
       sortDirection: undefined
     };

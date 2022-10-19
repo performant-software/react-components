@@ -8,10 +8,10 @@
     "storybook": "start-storybook -p 6006"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.9",
     "@faker-js/faker": "^6.1.2",
     "@storybook/addon-a11y": "^6.5.12",
     "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-docs": "^6.5.12",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.5.12",
     "@storybook/addons": "^6.5.12",
@@ -25,9 +25,11 @@
     "@storybook/theming": "^6.5.12",
     "dotenv": "^16.0.3",
     "http-proxy-middleware": "^2.0.6",
+    "i18next": "^22.0.1",
     "moment": "^2.29.2",
     "react": "^17.0.2",
     "react-calendar": "^3.7.0",
+    "react-docgen": "^6.0.0-alpha.3",
     "react-dom": "^17.0.2",
     "semantic-ui-react": "^2.1.2",
     "simple-keyboard-layouts": "^3.1.87",

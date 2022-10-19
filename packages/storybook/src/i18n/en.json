@@ -1,0 +1,14 @@
+{
+  "PropsTable": {
+    "columns": {
+      "default": "Default",
+      "description": "Description",
+      "name": "Name",
+      "type": "Type"
+    },
+    "labels": {
+      "signature": "Signature:",
+      "type": "Type:"
+    }
+  }
+}

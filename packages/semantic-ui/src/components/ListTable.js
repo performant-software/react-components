@@ -4,23 +4,61 @@ import { Hooks, Object as ObjectUtils } from '@performant-software/shared-compon
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import DataTable from './DataTable';
-import useDataList, { SORT_ASCENDING, SORT_DESCENDING } from './DataList';
+import type { Props as DataTableProps } from './DataTable';
+import useDataList, { SORT_ASCENDING, SORT_DESCENDING, type Props as DataListProps } from './DataList';
 import './ListTable.css';
 
-import type { Column } from './DataTable';
+type Props = DataListProps & DataTableProps & {
+  /**
+   * If true, columns can be shown/hidden by the user
+   */
+  configurable?: boolean,
 
-type Props = {
-  columns: Array<Column>,
+  /**
+   * The name of the default sort column
+   */
   defaultSort?: string,
+
+  /**
+   * The default direction to sort the list (ascending vs. descending)
+   */
   defaultSortDirection?: string,
-  page: number,
-  onSort: (sortColumn: string, sortDirection: string, page?: number) => void,
-  onInit: (page?: number) => void,
-  sortColumn: string,
-  sortDirection: string
+
+  /**
+   * Callback supplied by the <code>DataList</code> higher-order component which can be used to initialize the list
+   */
+  onInit?: (page?: number) => void,
+
+  /**
+   * Callback supplied by the <code>DataList</code> higher-order component which can be used to sort the list
+   */
+  onSort?: (sortColumn: string, sortDirection: string, page?: number) => void,
+
+  /**
+   * Current sort column supplied by the <code>DataList</code> higher-order component
+   */
+  sortColumn?: string,
+
+  /**
+   * Current sort direction supplied by the <code>DataList</code> higher-order component
+   */
+  sortDirection?: string,
+
+  /**
+   * Customization props for the
+   * <a target="_blank" href="https://react.semantic-ui.com/collections/table/"><code>Table</code></a>
+   * component.
+   */
+  tableProps?: any
 };
 
-const ListTable = (props: Props) => {
+/**
+ * The <code>ListTable</code> component renders a list which has the ability to load, save, and delete records from
+ * an API (via the <code>DataList</code> higher-order component). This component will integrate seamlessly with a
+ * back-end implementing the <code>resource-api</code>. See the
+ * <a href="https://github.com/performant-software/resource-api">GitHub page</a> for more details.
+ */
+const ListTable = useDataList((props: Props) => {
   const prevColumns = Hooks.usePrevious(props.columns);
 
   /**
@@ -82,17 +120,15 @@ const ListTable = (props: Props) => {
       onColumnClick={onColumnClick.bind(this)}
     />
   );
-};
+});
 
 ListTable.defaultProps = {
+  ...DataTable.defaultProps,
   configurable: true,
-  onCopy: undefined,
-  renderDeleteModal: undefined,
-  renderEmptyRow: undefined,
   tableProps: {
     celled: true,
     sortable: true
   }
 };
 
-export default useDataList(ListTable);
+export default ListTable;
