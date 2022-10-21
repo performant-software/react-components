@@ -10,37 +10,37 @@ import './ListTable.css';
 
 type Props = DataListProps & DataTableProps & {
   /**
-   * If true, columns can be shown/hidden by the user
+   * If true, columns can be shown/hidden by the user.
    */
   configurable?: boolean,
 
   /**
-   * The name of the default sort column
+   * The name of the default sort column.
    */
   defaultSort?: string,
 
   /**
-   * The default direction to sort the list (ascending vs. descending)
+   * The default direction to sort the list (ascending vs. descending).
    */
   defaultSortDirection?: string,
 
   /**
-   * Callback supplied by the <code>DataList</code> higher-order component which can be used to initialize the list
+   * Callback supplied by the <code>DataList</code> higher-order component which can be used to initialize the list.
    */
   onInit?: (page?: number) => void,
 
   /**
-   * Callback supplied by the <code>DataList</code> higher-order component which can be used to sort the list
+   * Callback supplied by the <code>DataList</code> higher-order component which can be used to sort the list.
    */
   onSort?: (sortColumn: string, sortDirection: string, page?: number) => void,
 
   /**
-   * Current sort column supplied by the <code>DataList</code> higher-order component
+   * Current sort column supplied by the <code>DataList</code> higher-order component.
    */
   sortColumn?: string,
 
   /**
-   * Current sort direction supplied by the <code>DataList</code> higher-order component
+   * Current sort direction supplied by the <code>DataList</code> higher-order component.
    */
   sortDirection?: string,
 
@@ -123,7 +123,6 @@ const ListTable = useDataList((props: Props) => {
 });
 
 ListTable.defaultProps = {
-  ...DataTable.defaultProps,
   configurable: true,
   tableProps: {
     celled: true,

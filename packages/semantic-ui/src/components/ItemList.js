@@ -1,16 +1,11 @@
 // @flow
 
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Button, Dimmer, Loader } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import Items from './Items';
-import useDataList, { SORT_ASCENDING } from './DataList';
-
-type ListButton = {
-  ...typeof Button,
-  accept: () => boolean
-};
+import Items, { type ItemsProps } from './Items';
+import useDataList, { SORT_ASCENDING, type Props as DataListProps } from './DataList';
 
 type Sort = {
   key: any,
@@ -19,30 +14,36 @@ type Sort = {
   direction: ?string
 };
 
-type Props = {
-  buttons: Array<ListButton>,
-  isRowSelected: (item: any) => boolean,
-  items: Array<any>,
-  loading?: boolean,
-  page: number,
-  onRowSelect: (item: any) => void,
+type Props = DataListProps & ItemsProps & {
+  /**
+   * Callback fired when the sort dropdown is changed. This prop is provided by the <code>DataList</code>
+   * higher-order component.
+   */
   onSort: (column: string, direction: ?string, page?: number) => void,
-  selectable?: boolean,
+
+  /**
+   * An array of sort attributes to apply to the list. The values provided will display in a dropdown in the
+   * list header.
+   */
   sort?: Array<Sort>,
+
+  /**
+   * Name of the current sort column.
+   */
   sortColumn?: string,
+
+  /**
+   * Current sort direction (ascending or descending).
+   */
   sortDirection?: string
 };
 
 /**
- * An ItemList component can be used to render a list of records returned from an API. Under the hood, the DataList
- * component handles calling the API, storing the records, filters, etc, and the Items component handles the
- * presentation.
- *
- * @param props
- *
- * @returns {*}
+ * An <code>ItemList</code> component can be used to render a list of records returned from an API. Under the
+ * hood, the <code>DataList</code> component handles calling the API, storing the records, filters, etc, and
+ * the <code>Items</code> component handles the presentation.
  */
-const ItemList = (props: Props) => {
+const ItemList = useDataList((props: Props) => {
   useEffect(() => {
     const { page } = props;
 
@@ -112,15 +113,11 @@ const ItemList = (props: Props) => {
       />
     </>
   );
-};
+});
 
 ItemList.defaultProps = {
   filters: {},
-  onCopy: undefined,
-  onSort: () => {},
-  renderDeleteModal: undefined,
-  renderEmptyRow: undefined,
   searchable: true,
 };
 
-export default useDataList(ItemList);
+export default ItemList;

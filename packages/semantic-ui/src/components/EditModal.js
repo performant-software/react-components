@@ -14,13 +14,33 @@ import i18n from '../i18n/i18n';
 import './EditModal.css';
 
 type Props = EditContainerProps & {
+  /**
+   * The form component to render.
+   */
   component: ComponentType<any>,
+
+  /**
+   * Callback fired when the close button is clicked.
+   */
   onClose: () => void,
+
+  /**
+   * Callback fired when the save button is clicked.
+   */
   onSave: () => Promise<any>,
+
+  /**
+   * If <code>true</code>, a loading indicator will display.
+   */
   showLoading: boolean
 };
 
-const EditModal = (props: Props) => {
+/**
+ * The <code>EditModal</code> component can be used to edit the details of a single record within a modal view. This
+ * component uses the <code>EditContainer</code> higher-order component to facilitate all of the editing functionality.
+ * This component is responsible for rendering the container in which the editable form is rendered.
+ */
+const EditModal = useEditContainer((props: Props) => {
   const OuterComponent = props.component;
 
   const [showToaster, setShowToaster] = useState(false);
@@ -89,10 +109,10 @@ const EditModal = (props: Props) => {
       </Modal.Actions>
     </OuterComponent>
   );
-};
+});
 
 EditModal.defaultProps = {
   showLoading: true
 };
 
-export default useEditContainer(EditModal);
+export default EditModal;

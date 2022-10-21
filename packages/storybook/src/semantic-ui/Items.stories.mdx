@@ -1,0 +1,95 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import DocHeader from '../components/DocHeader';
+import PropsTable from '../components/PropsTable';
+import Items from '../../../semantic-ui/src/components/Items';
+import {
+  Default,
+  AddButton,
+  CustomActions,
+  CustomDeleteModal,
+  Empty,
+  EmptyAddButton,
+  Pagination
+} from './Items.modules';
+
+<Meta
+  title='Components/Semantic UI/Items'
+  component={Items}
+/>
+
+<DocHeader
+  item={Items}
+/>
+
+<Canvas
+  withSource={false}
+>
+  <Story
+    name='Default'
+  >
+    <Default />
+  </Story>
+</Canvas>
+
+# Props
+
+<PropsTable
+  item={Items}
+/>
+
+# Examples
+#
+
+## Add Button
+The `Items` component an render and add button for easily adding new records to the list.
+
+<Story
+  name='Add Button'
+>
+  <AddButton />
+</Story>
+
+## Custom Actions
+Actions handled outside of the `Items` component can be provided as custom buttons.
+
+<Story
+  name='Custom Actions'
+>
+  <CustomActions />
+</Story>
+
+## Custom Delete Modal
+The `renderDeleteModal` prop can be provided to customize the delete confirmation modal.
+
+<Story
+  name='Custom Delete Modal'
+>
+  <CustomDeleteModal />
+</Story>
+
+## Empty
+An empty `Items` list will render with a simple message.
+
+<Story
+  name='Empty'
+>
+  <Empty />
+</Story>
+
+## Empty Add Button
+If the add button is visible, it will display as part of the empty list message.
+
+<Story
+  name='Empty Add Button'
+>
+  <EmptyAddButton />
+</Story>
+
+## Pagination
+By providing the `page` and `pages` props, the `Items` list can paginate records.
+
+<Story
+  name='pagination'
+>
+  <Pagination />
+</Story>

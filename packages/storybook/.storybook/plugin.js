@@ -1,9 +1,76 @@
+const { namedTypes } = require('ast-types');
 const path = require('path');
 const docgen = require('react-docgen');
 const _ = require('underscore');
 
+const {
+  getNameOrValue,
+  resolveFunctionDefinitionToReturnValue
+} = docgen.utils;
+
+const defaultHandlers = Object.values(docgen.handlers).map(handler => handler);
+
 const parser = (_ref) => {
   const { types } = _ref;
+
+  const actualNameHandler = (program, documentation, path) => {
+    /**
+     * First we'll attempt to get the name of the component from the export declaration:
+     * <br />
+     *
+     * <code>export default MyComponent;</code>
+     *
+     * If that returns nothing, we'll use the logic in the babel-plugin-react-docgen plugin.
+     */
+    const exportNode = program.get('body').find((n) => types.isExportDefaultDeclaration(n));
+    let actualName = getIdentifier(exportNode, types);
+
+    if (!actualName) {
+      // Function and class declarations need special treatment. The name of the
+      // function / class is the displayName
+      if (
+        namedTypes.ClassDeclaration.check(path.node) ||
+        namedTypes.FunctionDeclaration.check(path.node)
+      ) {
+        actualName = getNameOrValue(path.get('id'));
+      } else if (
+        namedTypes.ArrowFunctionExpression.check(path.node) ||
+        namedTypes.FunctionExpression.check(path.node) ||
+        // React.forwardRef
+        namedTypes.CallExpression.check(path.node)
+      ) {
+        if (namedTypes.VariableDeclarator.check(path.parentPath.node)) {
+          actualName = getNameOrValue(path.parentPath.get('id'));
+        } else if (namedTypes.AssignmentExpression.check(path.parentPath.node)) {
+          actualName = getNameOrValue(path.parentPath.get('left'));
+        }
+      } else if (
+        // React.createClass() or createReactClass()
+        namedTypes.CallExpression.check(path.parentPath.node) &&
+        namedTypes.VariableDeclarator.check(path.parentPath.parentPath.parentPath.node)
+      ) {
+        actualName = getNameOrValue(path.parentPath.parentPath.parentPath.get('id'));
+      }
+    }
+
+    documentation.set('actualName', actualName);
+
+    return;
+
+    let displayNamePath;
+
+    // If display name is defined as a getter we get a function expression as
+    // value. In that case we try to determine the value from the return
+    // statement.
+    if (namedTypes.FunctionExpression.check(displayNamePath?.node)) {
+      displayNamePath = resolveFunctionDefinitionToReturnValue(displayNamePath);
+    }
+    if (!displayNamePath || !namedTypes.Literal.check(displayNamePath.node)) {
+      return;
+    }
+    documentation.set('actualName', displayNamePath.node.value);
+  }
+
   return {
     visitor: {
       Program: {
@@ -15,7 +82,10 @@ const parser = (_ref) => {
             let results;
 
             try {
-              results = docgen.parse(code, null, null, {
+              const program = path.scope.getProgramParent().path;
+              const handlers = [...defaultHandlers, actualNameHandler.bind(this, program)];
+
+              results = docgen.parse(code, null, handlers, {
                 importer: docgen.importers.makeFsImporter(),
                 filename
               });
@@ -28,9 +98,9 @@ const parser = (_ref) => {
             }
 
             _.each(results, (result) => {
-              const { displayName } = result;
+              const { actualName } = result;
 
-              if (!displayName) {
+              if (!actualName) {
                 return;
               }
 
@@ -40,14 +110,14 @@ const parser = (_ref) => {
                 types.assignmentExpression(
                   '=',
                   types.memberExpression(
-                    types.identifier(displayName), types.identifier('__documentation')
+                    types.identifier(actualName), types.identifier('__documentation')
                   ),
                   node
                 )
               );
 
               const program = path.scope.getProgramParent().path;
-              const exportPath = program.get('body').find((n) => isExportCurrent(n, displayName, types));
+              const exportPath = program.get('body').find((n) => isExportCurrent(n, actualName, types, filename));
 
               if (exportPath) {
                 exportPath.insertBefore(info);
@@ -55,7 +125,7 @@ const parser = (_ref) => {
                 program.pushContainer('body', info);
               }
 
-              injectGlobal(displayName, path, state, types);
+              injectGlobal(actualName, path, state, types);
             });
           }
         }
@@ -92,20 +162,31 @@ const buildObjectExpression = (obj, t) => {
   }
 };
 
-const getComponentFromHoC = (path, exportName) => {
+const getIdentifier = (path, t) => {
+  let identifier;
+
+  if (t.isExportDeclaration(path)) {
+    const decl = path.get('declaration');
+    identifier = decl.isIdentifier() ? decl.node.name : getComponentFromHoC(decl);
+  }
+
+  return identifier;
+};
+
+const getComponentFromHoC = (path) => {
   if (path.isCallExpression()) {
-    return getComponentFromHoC(path.get('arguments.0'), exportName);
+    return getComponentFromHoC(path.get('arguments.0'));
   }
 
   return path.isIdentifier() ? path.node.name : null;
 };
 
-const isExportCurrent = (path, exportName, t) => {
+const isExportCurrent = (path, exportName, t, filename) => {
   if (t.isExportDefaultDeclaration(path)) {
     const decl = path.get('declaration');
     const identifier = decl.isIdentifier()
       ? decl.node.name
-      : getComponentFromHoC(decl, exportName);
+      : getComponentFromHoC(decl, filename);
 
     if (identifier === exportName) {
       return true;

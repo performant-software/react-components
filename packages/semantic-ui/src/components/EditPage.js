@@ -18,11 +18,34 @@ import i18n from '../i18n/i18n';
 import './EditPage.css';
 
 type Props = EditContainerProps & {
+  /**
+   * CSS class name to append to the container <code>div</code> element.
+   */
   className?: string,
+
+  /**
+   * The form component to render.
+   */
   component: ComponentType<any>,
+
+  /**
+   * If provided, the passed menu will render as tabs at the top of the page.
+   */
   menu?: MenuProps,
+
+  /**
+   * Callback fired when the close button is clicked.
+   */
   onClose: () => void,
+
+  /**
+   * Callback fired when the save button is clicked.
+   */
   onSave: () => Promise<any>,
+
+  /**
+   * If <code>true</code>, a loading indicator will display.
+   */
   showLoading: boolean
 };
 
@@ -31,7 +54,12 @@ type State = {
   showToaster: boolean
 };
 
-class EditPage extends Component<Props, State> {
+/**
+ * The <code>EditPage</code> component can be used to edit the details of a single record within a page view. This
+ * component uses the <code>EditContainer</code> higher-order component to facilitate all of the editing functionality.
+ * This component is responsible for rendering the container in which the editable form is rendered.
+ */
+class EditPageClass extends Component<Props, State> {
   static defaultProps: any;
 
   /**
@@ -238,11 +266,12 @@ class EditPage extends Component<Props, State> {
   }
 }
 
-EditPage.defaultProps = {
+EditPageClass.defaultProps = {
   showLoading: true
 };
 
-export default useEditContainer(EditPage);
+const EditPage = useEditContainer(EditPageClass);
+export default EditPage;
 
 export type EditPageProps = EditContainerProps & {
   currentTab: string

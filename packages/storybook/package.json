@@ -23,6 +23,7 @@
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/react": "^6.5.12",
     "@storybook/theming": "^6.5.12",
+    "ast-types": "^0.14.2",
     "dotenv": "^16.0.3",
     "http-proxy-middleware": "^2.0.6",
     "i18next": "^22.0.1",

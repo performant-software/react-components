@@ -1,0 +1,75 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import DocHeader from '../components/DocHeader';
+import EditPage  from '../../../semantic-ui/src/components/EditPage';
+import PropsTable from '../components/PropsTable';
+import {
+  Default,
+  Loading,
+  Menu,
+  SaveError,
+  Toaster
+} from './EditPage.modules';
+
+<Meta
+  title='Components/Semantic UI/EditPage'
+  component={EditPage}
+/>
+
+<DocHeader
+  item={EditPage}
+/>
+
+<Canvas
+  withSource={false}
+>
+  <Story
+    name='Default'
+  >
+    <Default />
+  </Story>
+</Canvas>
+
+# Props
+
+<PropsTable
+  item={EditPage}
+/>
+
+# Examples
+#
+
+## Loading
+The `EditPage` component can be configured to display a loading indicator when fetching data from a remote source.
+
+<Story
+  name='Loading'
+>
+  <Loading />
+</Story>
+
+## Menu
+If the `menu` prop is provided, menu items will display as tabs at the top of the component.
+
+<Story
+  name='Menu'
+>
+  <Menu />
+</Story>
+
+## Save Error
+If the `required` prop is provided, the `EditPage` will display field validation errors when left empty.
+
+<Story
+  name='Save Error'
+>
+  <SaveError />
+</Story>
+
+## Toaster
+Use the add button on the `AssociatedDropdown` component to view the save toaster within the modal.
+
+<Story
+  name='Toaster'
+>
+  <Toaster />
+</Story>

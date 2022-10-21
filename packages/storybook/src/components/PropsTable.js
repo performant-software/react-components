@@ -134,7 +134,13 @@ const PropsTable = (props: Props) => {
    * @returns {string}
    */
   const resolveArgument = (arg) => {
-    let value = `${arg.name}: ${arg.type.name}`;
+    let value;
+
+    if (arg.type.type === 'object') {
+      value = JSON.stringify(resolveValue(arg.type), null, 2);
+    } else if (arg.name) {
+      value = `${arg.name}: ${arg.type.name}`;
+    }
 
     if (arg.type.elements) {
       value += resolveElements(arg.type.elements);

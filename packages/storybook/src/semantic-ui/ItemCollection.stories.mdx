@@ -1,0 +1,127 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import ItemCollection from '../../../semantic-ui/src/components/ItemCollection';
+import DocHeader from '../components/DocHeader';
+import PropsTable from '../components/PropsTable';
+import {
+  Default,
+  AddButton,
+  Delete,
+  DragAndDropRows,
+  Empty,
+  EmptyAddButton,
+  InfiniteScroll,
+  InfiniteScrollDiv,
+  InfiniteScrollFilter,
+  Loading,
+  TabbedModalConfig
+} from './ItemCollection.modules';
+
+<Meta
+  title='Components/Semantic UI/ItemCollection'
+  component={ItemCollection}
+/>
+
+<DocHeader
+  item={ItemCollection}
+/>
+
+<Canvas
+  withSource={false}
+>
+  <Story
+    name='Default'
+  >
+    <Default />
+  </Story>
+</Canvas>
+
+# Props
+
+<PropsTable
+  item={ItemCollection}
+/>
+
+# Examples
+#
+
+## Add Button
+A `ItemCollection` component and render an add button for easily adding new records to the list.
+
+<Story
+  name='Add Button'
+>
+  <AddButton />
+</Story>
+
+## Delete
+This example displays how the `onDelete` prop will function.
+
+<Story
+  name='Delete'
+>
+  <Delete />
+</Story>
+
+## Drag and Drop Rows
+When a `onDrag` callback is provided, rows of the table can be draggable.
+
+<Story
+  name='Drag and Drop'
+>
+  <DragAndDropRows />
+</Story>
+
+
+## Empty
+Without an add button, an empty list displays just a message.
+
+<Story
+  name='Empty'
+>
+  <Empty />
+</Story>
+
+## Empty Add Button
+If the add button is visible, it will display as part of the empty list message.
+
+<Story
+  name='Empty Add Button'
+>
+  <EmptyAddButton />
+</Story>
+
+## Infinite Scroll
+When the `perPage` prop is provided, the list will display `x` records per page and load more when the scroll container reaches the bottom.
+
+<Story
+  name='Infinite Scroll'
+>
+  <InfiniteScroll />
+</Story>
+
+## Infinite Scroll Div
+When infinite scroll functionality can also bind to a DOM container other than the `body`.
+
+<Story
+  name='Infinite Scroll Div'
+>
+  <InfiniteScrollDiv />
+</Story>
+
+## Infinite Scroll Filter
+Infinite scroll functionality can also be used in combination with filters.
+
+<Story
+  name='Infinite Scroll Filter'
+>
+  <InfiniteScrollFilter />
+</Story>
+
+## Tabbed Modal
+This example tests using an `ItemCollection` component within a `TabbedModal`.
+
+<Story
+  name='Tabbed Modal'
+>
+  <TabbedModalConfig />
+</Story>

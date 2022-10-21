@@ -6,27 +6,64 @@ import uuid from 'react-uuid';
 import { Loader } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
-import Items from './Items';
+import Items, { type Props as ItemsProps } from './Items';
 import './ItemCollection.css';
 
-type Props = {
+type Props = ItemsProps & {
+  /**
+   * Appends the passed <code>className</code> and passes it to the <code>Items</code> component.
+   */
   className?: string,
+
+  /**
+   * The DOM element responsible for infinite scrolling. If no context is provided, the document <code>body</code>
+   * will be assumed.
+   */
   context: {
     current: HTMLElement
   },
-  items: Array<any>,
+
+  /**
+   * If <code>true</code>, the list will display a loading indicator.
+   */
   loading?: boolean,
+
+  /**
+   * Callback fired when the bottom of the scroll container is reached.
+   */
   onBottomReached?: (page: number) => void,
-  onDelete: (item: any) => void,
+
+  /**
+   * Callback fired when the delete action is clicked.
+   */
+  onDelete?: (item: any) => void,
+
+  /**
+   * Callback fired when a new record is added to the list.
+   */
   onSave?: (item: any) => void,
-  perPage: number,
-  scrollOffset: number
+
+  /**
+   * The number of records to display on a single page.
+   */
+  perPage?: number,
+
+  /**
+   * The number of pixels from the bottom of the scroll container the <code>onBottomReached</code> callback
+   * should fire.
+   */
+  scrollOffset?: number
 };
 
 type State = {
   page: number
 };
 
+/**
+ * An <code>ItemCollection</code> component can be used to render a list of records stored on an object in memory. This
+ * component is responsible for handling infinite scroll and rendering the <code>Items</code> component, which handles
+ * the presentation.
+ */
 class ItemCollection extends Component<Props, State> {
   static defaultProps: any;
 

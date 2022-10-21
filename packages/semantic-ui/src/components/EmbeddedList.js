@@ -4,45 +4,27 @@ import React, { Component, type ComponentType } from 'react';
 import { Table } from 'semantic-ui-react';
 import uuid from 'react-uuid';
 import _ from 'underscore';
-import DataTable from './DataTable';
+import DataTable, { type Props as DataTableProps } from './DataTable';
 import Draggable from './Draggable';
 import './EmbeddedList.css';
 
-import type { Action } from './List';
-import type { Column } from './DataTableColumnSelector';
+import type { Column, Props as ColumnSelectorProps } from './DataTableColumnSelector';
 
-type ListButton = {
-  render: () => ComponentType<any>
-};
-
-type Props = {
-  actions: Array<Action>,
-  addButton?: {
-    location: string,
-    color: string
-  },
-  buttons?: Array<ListButton>,
-  className?: string,
-  columns: Array<Column>,
-  configurable: boolean,
+type Props = DataTableProps & ColumnSelectorProps & {
+  /**
+   * The name of the default sort column.
+   */
   defaultSort?: string,
+
+  /**
+   * The default direction to sort the list (ascending vs. descending).
+   */
   defaultSortDirection?: string,
-  items: Array<any>,
-  modal?: {
-    component: ComponentType<any>,
-    props: any,
-    state: any
-  },
-  onCopy?: (item: any) => any,
-  onDelete: (item: any) => void,
-  onDrag?: (dragIndex: number, hoverIndex: number) => void,
-  onSave?: (item: any) => void,
-  renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => void,
-  renderEmptyRow?: () => void,
-  selectable: boolean,
-  onRowSelect: (Array<{id: number}>),
-  selectedRows: Array<{id: number}>,
-  showRecordCount: boolean,
+
+  /**
+   * Callback fired when a table row is dragged.
+   */
+  onDrag?: (dragIndex: number, hoverIndex: number) => void
 };
 
 type State = {
@@ -55,8 +37,8 @@ const SORT_ASCENDING = 'ascending';
 const SORT_DESCENDING = 'descending';
 
 /**
- * The EmbeddedList component can be used to display a collection of records that live within a parent object. This is
- * especially useful when the collection is to be saved at the same time as the parent.
+ * The <code>EmbeddedList</code> component can be used to display a collection of records that live within a parent
+ * object. This is especially useful when the collection is to be saved at the same time as the parent.
  */
 class EmbeddedList extends Component<Props, State> {
   static defaultProps: any;

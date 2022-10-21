@@ -20,30 +20,95 @@ import './Items.css';
 import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
-  children: Element<any>,
-  className: string,
+  /**
+   * Child elements to append below the list content.
+   */
+  children?: Element<any>,
+
+  /**
+   * Callback returning <code>true</code> if the row for the passed item is selected.
+   */
   isRowSelected?: (item: any) => boolean,
+
+  /**
+   * An array of objects to render as rows in the list.
+   */
   items: Array<any>,
-  loading: boolean,
+
+  /**
+   * Callback fired when a table row is dragged
+   */
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
+
+  /**
+   * Callback fired when the passed item is selected. This callback is <i>only</i> fired if the <code>selectable</code>
+   * prop is passed as <code>true</code>.
+   */
   onRowSelect?: (item: any) => void,
+
+  /**
+   * Callback fired when the select all checkbox is checked.
+   */
   onSelectAllRows?: (items: Array<any>) => void,
+
+  /**
+   * A function that returns a JSX element to render as additional card content.
+   */
   renderAdditionalContent?: (item: any) => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render as the card description.
+   * See Semantic UI <a href="https://react.semantic-ui.com/views/card/">Card</a>.
+   */
   renderDescription?: (item: any) => Element<any>,
-  renderEmptyList: () => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render when the list has no items.
+   */
+  renderEmptyList?: () => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render as the card extra content.
+   * See Semantic UI <a href="https://react.semantic-ui.com/views/card/">Card</a>.
+   */
   renderExtra?: (item: any) => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render as the card header.
+   * See Semantic UI <a href="https://react.semantic-ui.com/views/card/">Card</a>.
+   */
   renderHeader?: (item: any) => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render as the card image.
+   * See Semantic UI <a href="https://react.semantic-ui.com/views/card/">Card</a>.
+   */
   renderImage?: (item: any) => Element<any>,
+
+  /**
+   * A function that returns a JSX element to render as the card meta.
+   * See Semantic UI <a href="https://react.semantic-ui.com/views/card/">Card</a>.
+   */
   renderMeta?: (item: any) => Element<any>,
+
+  /**
+   * If <code>true</code>, a selection box will display for each row.
+   */
   selectable?: boolean,
+
+  /**
+   * Toggles between list view and grid view. This prop is provided by the <code>ItemsToggle</code> higher-order
+   * component.
+   */
   view: number
 };
 
 /**
- * The Items component is used as the presentation for a list of records. The component renders both a list
- * (see Semantic-UI List) and grid (see Semantic-UI Card) views.
+ * The <code>Items</code> component is used as the presentation for a list of records. The component renders
+ * both a <a href="https://react.semantic-ui.com/elements/list/" target="_blank">List</a> and
+ * <a href="https://react.semantic-ui.com/views/card/" target="_blank">Card</a> views.
  */
-class Items extends Component<Props, {}> {
+class ItemsClass extends Component<Props, {}> {
   static defaultProps: any;
 
   /**
@@ -360,8 +425,13 @@ class Items extends Component<Props, {}> {
   }
 }
 
-Items.defaultProps = {
+ItemsClass.defaultProps = {
   actions: []
 };
 
-export default useItemsToggle(useList(Items));
+const Items = useItemsToggle(useList(ItemsClass));
+export default Items;
+
+export type {
+  Props
+};
