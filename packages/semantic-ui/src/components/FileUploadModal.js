@@ -66,6 +66,10 @@ type State = {
 
 const LIST_DELIMITER = ', ';
 
+/**
+ * The <code>FileUploadModal</code> is a convenience wrapper for the <code>FileUpload</code> component, allowing
+ * it to render in a modal.
+ */
 class FileUploadModal extends Component<Props, State> {
   /**
    * Constructs a new FileUploadModal component.
