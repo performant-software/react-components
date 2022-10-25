@@ -8,26 +8,106 @@ import i18n from '../i18n/i18n';
 import Toaster from './Toaster';
 
 type Props = {
+  /**
+   * Name of the collection to retrieve from the API response.
+   */
   collectionName: string,
+
+  /**
+   * The default number of records to display on a single page.
+   */
   defaultPerPage?: number,
+
+  /**
+   * The default value for the search input element.
+   */
   defaultSearch?: string,
+
+  /**
+   * The default value to use for sorting the list.
+   */
   defaultSort?: string,
+
+  /**
+   * The default direction in which to sort the list.
+   */
   defaultSortDirection?: string,
+
+  /**
+   * If provided, the passed <code>component</code> will be rendered when the filter button is clicked.
+   * <br />
+   * <br />
+   *
+   * Values passed in the <code>defaults</code> and <code>props</code> properties will be made available in the
+   * passed component.
+   * <br />
+   * <br />
+   *
+   * The <code>onChange</code> callback will fire when the filters are modified. This action will also reload the list,
+   * passing the new filters the <code>onLoad</code> callback.
+   */
   filters?: {
     component: ComponentType<any>,
     defaults?: any,
     props?: any,
     onChange?: (filter: any) => Promise<any>
   },
+
+  /**
+   * Callback fired when the "delete" action is clicked.
+   * @param item
+   */
   onDelete?: (item: any) => Promise<any>,
+
+  /**
+   * Callback fired when the "delete all" action is clicked. This action is typically renedered in the header and will
+   * apply to every item in the list.
+   */
   onDeleteAll?: () => Promise<any>,
+
+  /**
+   * Callback fired when loading the list of items from an API. This callback is fired any time the list changes.
+   */
   onLoad: (params: any) => Promise<any>,
+
+  /**
+   * Callback fired when an item is saved via the add/edit modal.
+   */
   onSave?: (item: any) => Promise<any>,
+
+  /**
+   * The numeric list of options to allow the user to select for the number of records to display per page.
+   */
   perPageOptions?: Array<number>,
+
+  /**
+   * If provided, the <code>onLoad</code> callback will fire after a timeout of the passed number of milliseconds. This
+   * can be useful in order to show progress (file upload, download, etc) that must be retrieved from the server.
+   */
   polling?: number,
+
+  /**
+   * Callback fired when an error occurs. The passed error can take any form and is up to the consuming component to
+   * interpret. The return value should be an array of user-friendly error messages.
+   */
   resolveErrors?: (error: any) => Array<string>,
+
+  /**
+   * Used to inform the list that an external save has taken place. When set to <code>true</code>, a success toaster
+   * will display.
+   */
   saved?: boolean,
-  searchable: boolean,
+
+  /**
+   * If <code>true</code>, this component will render a search input element in the list header.
+   */
+  searchable?: boolean,
+
+  /**
+   * If provided, list properties (page number, columns, filters, etc) will be stored in the passed storage element
+   * and rehydrated each time the component is mounted. This is useful in order to persist filters, searches, and
+   * other properties when a user navigates away from the list.
+   */
   session?: {
     key: string,
     storage: typeof sessionStorage
@@ -444,7 +524,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             sortColumn={this.state.sortColumn}
             sortDirection={this.state.sortDirection}
           />
-          { this.state.saved && (
+          {this.state.saved && (
             <Toaster
               onDismiss={() => this.setState({ saved: false })}
               type={Toaster.MessageTypes.positive}
@@ -457,7 +537,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               />
             </Toaster>
           )}
-          { this.state.error && (
+          {this.state.error && (
             <Toaster
               onDismiss={() => this.setState({ error: false })}
               timeout={0}
@@ -562,4 +642,8 @@ export default useDataList;
 export {
   SORT_ASCENDING,
   SORT_DESCENDING
+};
+
+export type {
+  Props
 };

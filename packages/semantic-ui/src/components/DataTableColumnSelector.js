@@ -5,14 +5,45 @@ import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import Draggable from './Draggable';
+import type { Props as ListProps } from './List';
 import './DataTableColumnSelector.css';
 
-import type { Column } from './DataTable';
+type Column = {
+  className?: string,
+  hidden?: boolean,
+  label?: string,
+  name: string,
+  render?: (item: any) => Element<any>,
+  renderHeader?: (item: any) => Element<any>,
+  resolve?: (item: any) => any,
+  sortable: boolean
+};
 
-type Props = {
-  className: string,
-  columns: Array<Column>,
-  renderListHeader?: () => Element<any>
+type Props = ListProps & {
+  /**
+   * CSS class name to append to the wrapped component.
+   */
+  className?: string,
+
+  /**
+   * An array of columns to display within the <code>Table</code>.
+   * <br />
+   * <br />
+   *
+   * If only a <code>name</code> attribute is provided, the value for each record will be pulled from the item property
+   * matching that name.
+   * <br />
+   * <br />
+   *
+   * If a <code>resolve</code> callback is provided, the item will be passed to the function and the return value will
+   * display as the property value.
+   * <br />
+   * <br />
+   *
+   * If a <code>render</code> callback is provided, the item will be passed to the function and the return JSX
+   * will display as the property value.
+   */
+  columns: Array<Column>
 };
 
 type State = {
@@ -165,3 +196,8 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
 );
 
 export default useColumnSelector;
+
+export type {
+  Column,
+  Props
+};

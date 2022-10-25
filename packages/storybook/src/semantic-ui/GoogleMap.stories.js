@@ -49,7 +49,7 @@ export const DefaultZoom = () => (
 export const WithMapMarker = () => {
   const DEFAULT_POSITION = { lat: 42.3601, lng: -71.0589 };
   const DEFAULT_ZOOM = 12;
-  const [position, setPosition] = useState<any>(DEFAULT_POSITION);
+  const [position, setPosition] = useState(DEFAULT_POSITION);
 
   return (
     <>
@@ -77,7 +77,7 @@ export const WithMapMarker = () => {
 };
 
 export const EditableCooridnates = () => {
-  const [position, setPosition] = useState<any>();
+  const [position, setPosition] = useState();
 
   return (
     <Form>
@@ -104,7 +104,7 @@ export const EditableCooridnates = () => {
 };
 
 export const EditableCoordinatesWithDefaults = () => {
-  const [position, setPosition] = useState<any>({ lat: 42.3601, lng: -71.0589 });
+  const [position, setPosition] = useState({ lat: 42.3601, lng: -71.0589 });
 
   return (
     <Form>
@@ -133,7 +133,7 @@ export const EditableCoordinatesWithDefaults = () => {
 
 export const DefaultZoomWithMapMarker = () => {
   const DEFAULT_ZOOM = 3;
-  const [position, setPosition] = useState<any>({});
+  const [position, setPosition] = useState({});
 
   return (
     <>

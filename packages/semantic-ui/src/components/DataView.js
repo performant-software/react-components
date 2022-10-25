@@ -19,7 +19,7 @@ import ModalContext from '../context/ModalContext';
 import useDataList, { SORT_ASCENDING, SORT_DESCENDING } from './DataList';
 import './DataView.css';
 
-import type { Column } from './DataTable';
+import type { Column } from './DataTableColumnSelector';
 
 type Sort = {
   label: string,

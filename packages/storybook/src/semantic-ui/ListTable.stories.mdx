@@ -1,0 +1,205 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import DocHeader from '../components/DocHeader';
+import PropsTable from '../components/PropsTable';
+import ListTable from '../../../semantic-ui/src/components/ListTable';
+import {
+  Default,
+  AddButton,
+  AddButtonEmpty,
+  Count,
+  CustomizableColumns,
+  DeleteAllButton,
+  Empty,
+  ExtraButtons,
+  Filters,
+  ListFiltersModal,
+  Loading,
+  PerPage,
+  PerPageNoDefault,
+  Polling,
+  RecordCount,
+  Selectable,
+  SortDescending,
+  Unsortable
+} from './ListTable.modules';
+
+<Meta
+  title='Components/Semantic UI/ListTable'
+  component={ListTable}
+/>
+
+<DocHeader
+  item={ListTable}
+/>
+
+<Canvas
+  withSource={false}
+>
+  <Story
+    name='Default'
+  >
+    <Default />
+  </Story>
+</Canvas>
+
+# Props
+
+<PropsTable
+  item={ListTable}
+/>
+
+# Examples
+#
+
+## Add Button
+The `ListTable` can render an add button for easily creating new records.
+
+<Story
+  name='Add Button'
+>
+  <AddButton />
+</Story>
+
+## Add Button Empty
+When the list is empty, by default the add button will also display in the empty list message.
+
+<Story
+  name='Add Button Empty'
+>
+  <AddButtonEmpty />
+</Story>
+
+## Count
+This example was used as a proof-of concept for making sure the `ListTable` component does not re-render when the state of the consuming component changes.
+
+<Story
+  name='Count'
+>
+  <Count />
+</Story>
+
+## Customizable Columns
+The `ListTable` columns can be shown/hidden and the position can be re-ordered.
+
+<Story
+  name='Customizable Columns'
+>
+  <CustomizableColumns />
+</Story>
+
+## Delete All Button
+A delete all button can be rendered as part of the list header. It is up to the consuming component to determine the functionality of the delete all button using the `onDeleteAll` prop. This is usually used in combination with the selection props.
+
+<Story
+  name='Delete All Button'
+>
+  <DeleteAllButton />
+</Story>
+
+## Empty
+Without an add button, an empty list displays just a message.
+
+<Story
+  name='Empty'
+>
+  <Empty />
+</Story>
+
+## Extra Buttons
+The `ListTable` can render extra buttons as part of the list header. It is up to the consuming component to determine the actions of the buttons.
+
+<Story
+  name='Extra Buttons'
+>
+  <ExtraButtons />
+</Story>
+
+## Filters
+The `ListTable` can configure a custom filter modal tailored to the data being displayed.
+
+<Story
+  name='Filters'
+>
+  <Filters />
+</Story>
+
+## List Filters Modal
+
+<Story
+  name='List Filters Modal'
+>
+  <ListFiltersModal />
+</Story>
+
+## Loading
+The `ListTable` component will display a loading indicator to notify the user it is fetching data.
+
+<Story
+  name='Loading'
+>
+  <Loading />
+</Story>
+
+## Per Page
+The `defaultPerPage` and `perPageOptions` props can be provided to allow the user to customize the number of records displayed on each page.
+
+<Story
+  name='Per Page'
+>
+  <PerPage />
+</Story>
+
+## Per Page (no default)
+If no `defaultPerPage` option is provided, the first item in the `perPageOptions` prop will be used.
+
+<Story
+  name='PerPageNoDefault'
+>
+  <PerPageNoDefault />
+</Story>
+
+## Polling
+The `ListTable` component can poll the server every `x` milliseconds to automatically refresh the list contents.
+
+<Story
+  name='Polling'
+>
+  <Polling />
+</Story>
+
+## Record Count
+The total number of records in the list can be configured to display.
+
+<Story
+  name='Record Count'
+>
+  <RecordCount />
+</Story>
+
+## Selectable
+The `ListTable` component can display with checkboxes for each row. The consuming component is responsible for tracking the selected rows and determining what to do with them.
+
+<Story
+  name='Selectable'
+>
+  <Selectable />
+</Story>
+
+## Sort Descending
+By default, columns can be configured to sort in descending order. For example, click on the VIN column.
+
+<Story
+  name='Sort Descending'
+>
+  <SortDescending />
+</Story>
+
+
+## Unsortable
+Sorting on column click can be disabled.
+
+<Story
+  name='Unsortable'
+>
+  <Unsortable />
+</Story>

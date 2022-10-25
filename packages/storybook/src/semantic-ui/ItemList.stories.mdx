@@ -1,0 +1,155 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import DocHeader from '../components/DocHeader';
+import ItemList from '../../../semantic-ui/src/components/ItemList';
+import PropsTable from '../components/PropsTable';
+import {
+  Default,
+  AddButton,
+  DefaultView,
+  DeleteAllButton,
+  Empty,
+  EmptyAddButton,
+  ExtraButtons,
+  Filters,
+  Loading,
+  Polling,
+  Selectable,
+  Sortable,
+  SortDescending
+} from './ItemList.modules';
+
+<Meta
+  title='Components/Semantic UI/ItemList'
+  component={ItemList}
+/>
+
+<DocHeader
+  item={ItemList}
+/>
+
+<Canvas
+  withSource={false}
+>
+  <Story
+    name='Default'
+  >
+    <Default />
+  </Story>
+</Canvas>
+
+# Props
+
+<PropsTable
+  item={ItemList}
+/>
+
+# Examples
+#
+
+## Add Button
+A `ItemList` component and render an add button for easily adding new records to the list.
+
+<Story
+  name='Add Button'
+>
+  <AddButton />
+</Story>
+
+## Default View
+The `ItemList` component can be defaulted to either the list view or the grid view. By default, the list view is shown.
+
+<Story
+  name='Default View'
+>
+  <DefaultView />
+</Story>
+
+## Delete All Button
+A delete all button can be rendered as part of the list header. It is up to the consuming component to determine the functionality of the delete all button using the `onDeleteAll` prop. This is usually used in combination with the selection props.
+
+<Story
+  name='Delete All Button'
+>
+  <DeleteAllButton />
+</Story>
+
+## Empty
+Without an add button, an empty list displays just a message.
+
+<Story
+  name='Empty'
+>
+  <Empty />
+</Story>
+
+## Empty Add Button
+If the add button is visible, it will display as part of the empty list message.
+
+<Story
+  name='Empty Add Button'
+>
+  <EmptyAddButton />
+</Story>
+
+## Extra Buttons
+The `ItemList` can render extra buttons as part of the list header. It is up to the consuming component to determine the actions of the buttons.
+
+<Story
+  name='Extra Buttons'
+>
+  <ExtraButtons />
+</Story>
+
+## Filters
+The `ItemList` can configure a custom filter modal tailored to the data being displayed.
+
+<Story
+  name='Filters'
+>
+  <Filters />
+</Story>
+
+## Loading
+The `ItemList` component will display a loading indicator to notify the user it is fetching data.
+
+<Story
+  name='Loading'
+>
+  <Loading />
+</Story>
+
+## Polling
+The `ItemList` component can poll the server every `x` milliseconds to automatically refresh the list contents.
+
+<Story
+  name='Polling'
+>
+  <Polling />
+</Story>
+
+## Selectable
+The `ItemList` component can display with checkboxes for each item. The consuming component is responsible for tracking the selected rows and determining what to do with them.
+
+<Story
+  name='Selectable'
+>
+  <Selectable />
+</Story>
+
+## Sortable
+If the `sort` prop is provided, a dropdown of sort options will display in the list header.
+
+<Story
+  name='Sortable'
+>
+  <Sortable />
+</Story>
+
+## Sort Descending
+By default, columns can be configured to sort in descending order. For example, click on the VIN column.
+
+<Story
+  name='Sort Descending'
+>
+  <SortDescending />
+</Story>

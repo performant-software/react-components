@@ -17,13 +17,44 @@ import ModalContext from '../context/ModalContext';
 import Toaster from './Toaster';
 
 type Props = {
+  /**
+   * Content to display on the button used to open the modal
+   */
   button: string,
+
+  /**
+   * Determines if the component should render a button as a trigger for the modal
+   */
   includeButton?: boolean,
+
+  /**
+   * Component to render within the modal
+   */
   itemComponent: ComponentType<any>,
-  onAddFile: (file: File) => any,
+
+  /**
+   * Callback fired when a file is added
+   */
+  onAddFile: (file: File) => void,
+
+  /**
+   * Callback fired when the close button is clicked
+   */
   onClose?: () => void,
+
+  /**
+   * Callback fired when the save button is clicked
+   */
   onSave: (items: Array<any>) => Promise<any>,
+
+  /**
+   * An object with keys containing the names of properties that are required
+   */
   required: { [string]: string },
+
+  /**
+   * Title value to display in the modal header
+   */
   title?: string
 };
 
@@ -35,9 +66,11 @@ type State = {
 
 const LIST_DELIMITER = ', ';
 
+/**
+ * The <code>FileUploadModal</code> is a convenience wrapper for the <code>FileUpload</code> component, allowing
+ * it to render in a modal.
+ */
 class FileUploadModal extends Component<Props, State> {
-  static defaultProps: any;
-
   /**
    * Constructs a new FileUploadModal component.
    *

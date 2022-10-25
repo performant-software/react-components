@@ -8,8 +8,19 @@ import i18n from '../i18n/i18n';
 import './FileUpload.css';
 
 type Props = {
+  /**
+   * A list of file types to include
+   */
   fileTypes?: Array<string>,
+
+  /**
+   * The maximum size for a single file
+   */
   maxSize?: number,
+
+  /**
+   * Call back for when files are added
+   */
   onFilesAdded: (files: Array<File>) => void,
 };
 
@@ -23,6 +34,10 @@ type FileEvent = {
   target: HTMLInputElement
 };
 
+/**
+ * The <code>FileUpload</code> component renders a dropzone and allows a user to drop or select one or more files
+ * from their local file system. Optionally, the files can be limited by size or type.
+ */
 class FileUpload extends Component<Props, State> {
   fileInput: any;
   filePattern: any;

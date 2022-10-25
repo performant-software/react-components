@@ -1,6 +1,7 @@
 // @flow
 
-import React from 'react';
+import { DocsContainer } from '@storybook/addon-docs';
+import React, { useRef } from 'react';
 import ModalContext from '../../semantic-ui/src/context/ModalContext';
 import '../../semantic-ui/build/semantic-ui.css';
 
@@ -24,19 +25,30 @@ if (process.env.A11Y_TAGS) {
 
 export const parameters = {
   a11y,
+  docs: {
+    container: ({ children, context }) => {
+      const root = useRef();
+
+      return (
+        <ModalContext.Provider
+          value={root?.current}
+        >
+          <DocsContainer
+            context={context}
+          >
+            <div
+              ref={root}
+            >
+              { children }
+            </div>
+          </DocsContainer>
+        </ModalContext.Provider>
+      )
+    }
+  },
   options: {
     storySort: {
       order: ['Overview', 'Components']
     }
   }
 };
-
-export const decorators = [
-  (Story) => (
-    <ModalContext.Provider
-      value={document.getElementById('root')}
-    >
-      <Story />
-    </ModalContext.Provider>
-  )
-];

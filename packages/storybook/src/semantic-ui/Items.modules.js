@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withA11y } from '@storybook/addon-a11y';
-import { number, withKnobs } from '@storybook/addon-knobs';
+import { number } from '@storybook/addon-knobs';
 import {
   Confirm,
   Header,
@@ -15,11 +14,6 @@ import Items from '../../../semantic-ui/src/components/Items';
 import image from '../assets/test-image.jpg';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
-export default {
-  title: 'Components/Semantic UI/Items',
-  decorators: [withA11y, withKnobs]
-};
-
 const actions = [{
   name: 'edit'
 }, {
@@ -28,7 +22,7 @@ const actions = [{
   name: 'delete'
 }];
 
-const items = _.times(20, (i) => ({
+const items = _.times(5, (i) => ({
   id: i,
   header: `Test ${i}`,
   image,
@@ -47,46 +41,10 @@ export const Default = useDragDrop(() => (
   />
 ));
 
-export const Empty = useDragDrop(() => (
-  <Items
-    actions={actions}
-    items={[]}
-    onCopy={action('copy')}
-    onDelete={action('delete')}
-    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
-    renderHeader={(item) => <Header content={item.header} />}
-    renderMeta={(item) => item.id}
-  />
-));
-
 export const AddButton = useDragDrop(() => (
   <Items
     actions={actions}
     items={items}
-    modal={{
-      component: (props: any) => (
-        <Modal
-          open
-        >
-          <Modal.Header>Add</Modal.Header>
-          <Modal.Content>Add some stuff here</Modal.Content>
-          { props.children }
-        </Modal>
-      )
-    }}
-    onCopy={action('copy')}
-    onDelete={action('delete')}
-    onSave={() => Promise.resolve()}
-    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
-    renderHeader={(item) => <Header content={item.header} />}
-    renderMeta={(item) => item.id}
-  />
-));
-
-export const EmptyAddButton = useDragDrop(() => (
-  <Items
-    actions={actions}
-    items={[]}
     modal={{
       component: (props: any) => (
         <Modal
@@ -138,21 +96,6 @@ export const CustomActions = useDragDrop(() => (
   />
 ));
 
-export const Pagination = useDragDrop(() => (
-  <Items
-    actions={actions}
-    items={items}
-    onCopy={action('copy')}
-    onDelete={action('delete')}
-    onSave={action('save')}
-    page={number('Page', 1)}
-    pages={number('Pages', 10)}
-    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
-    renderHeader={(item) => <Header content={item.header} />}
-    renderMeta={(item) => item.id}
-  />
-));
-
 export const CustomDeleteModal = useDragDrop(() => (
   <Items
     actions={actions}
@@ -169,6 +112,57 @@ export const CustomDeleteModal = useDragDrop(() => (
         open
       />
     )}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
+    renderHeader={(item) => <Header content={item.header} />}
+    renderMeta={(item) => item.id}
+  />
+));
+
+export const Empty = useDragDrop(() => (
+  <Items
+    actions={actions}
+    items={[]}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
+    renderHeader={(item) => <Header content={item.header} />}
+    renderMeta={(item) => item.id}
+  />
+));
+
+export const EmptyAddButton = useDragDrop(() => (
+  <Items
+    actions={actions}
+    items={[]}
+    modal={{
+      component: (props: any) => (
+        <Modal
+          open
+        >
+          <Modal.Header>Add</Modal.Header>
+          <Modal.Content>Add some stuff here</Modal.Content>
+          { props.children }
+        </Modal>
+      )
+    }}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
+    renderHeader={(item) => <Header content={item.header} />}
+    renderMeta={(item) => item.id}
+  />
+));
+
+export const Pagination = useDragDrop(() => (
+  <Items
+    actions={actions}
+    items={items}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    page={number('Page', 1)}
+    pages={number('Pages', 10)}
     renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}
