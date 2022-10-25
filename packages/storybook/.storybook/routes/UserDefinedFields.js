@@ -35,29 +35,35 @@ const addRoutes = (router) => {
       table_name: 'People',
       column_name: 'First name',
       data_type: 'String',
-      required: true
+      required: true,
+      order: 10
     }, {
       table_name: 'People',
       column_name: 'Last name',
       data_type: 'String',
-      required: true
+      required: true,
+      order: 20
     }, {
       table_name: 'People',
       column_name: 'Date of birth',
-      data_type: 'Date'
+      data_type: 'Date',
+      order: 30
     }, {
       table_name: 'People',
       column_name: 'Biography',
-      data_type: 'RichText'
+      data_type: 'RichText',
+      order: 40
     }, {
       table_name: 'People',
       column_name: 'Favorite color',
       data_type: 'Select',
+      order: 50,
       options: ['Red', 'Blue', 'Green', 'Orange', 'Yellow']
     }, {
       table_name: 'People',
       column_name: 'Year of service',
-      data_type: 'Number'
+      data_type: 'Number',
+      order: 60
     }];
 
     response.send({

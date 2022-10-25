@@ -31,6 +31,9 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => (
       name: 'required',
       label: i18n.t('UserDefinedFieldsEmbeddedList.columns.required'),
       render: (udf) => <BooleanIcon value={udf.required} />
+    }, {
+      name: 'order',
+      label: i18n.t('UserDefinedFieldsEmbeddedList.columns.order')
     }]}
     items={props.items}
     modal={{

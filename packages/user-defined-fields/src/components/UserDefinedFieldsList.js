@@ -26,6 +26,9 @@ const UserDefinedFieldsList: ComponentType<any> = () => (
       name: 'required',
       label: i18n.t('UserDefinedFieldsList.columns.required'),
       render: (udf) => <BooleanIcon value={udf.required} />
+    }, {
+      name: 'order',
+      label: i18n.t('UserDefinedFieldsList.columns.order')
     }]}
     collectionName='user_defined_fields'
     modal={{
