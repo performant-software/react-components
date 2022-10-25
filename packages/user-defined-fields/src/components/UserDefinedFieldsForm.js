@@ -178,8 +178,9 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
     const params = {
       defineable_id: props.defineableId,
       defineable_type: props.defineableType,
-      table_name: props.tableName,
-      sort_by: 'order'
+      per_page: 0,
+      sort_by: 'order',
+      table_name: props.tableName
     };
 
     UserDefinedFieldsService
