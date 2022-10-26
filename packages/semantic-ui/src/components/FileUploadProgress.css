@@ -1,0 +1,24 @@
+.file-upload-progress {
+  display: flex;
+  align-items: center;
+}
+
+.file-upload-progress > .progress-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.file-upload-progress > .progress-container > .ui.header {
+  display: flex;
+  align-items: flex-end;
+}
+
+.file-upload-progress > .progress-container > .ui.header > .content {
+  margin-right: 40px;
+}
+
+.file-upload-progress > .progress-container > .progress {
+  margin-bottom: 0;
+}
