@@ -4,6 +4,7 @@
       "allowMultiple": "Allow multiple",
       "dataType": "Data type",
       "name": "Name",
+      "order": "Order",
       "required": "Required",
       "searchable": "Searchable",
       "table": "Table"
@@ -17,6 +18,7 @@
     "columns": {
       "dataType": "Data type",
       "name": "Name",
+      "order": "Order",
       "required": "Required",
       "table": "Table"
     }
@@ -25,6 +27,7 @@
     "columns": {
       "dataType": "Data type",
       "name": "Name",
+      "order": "Order",
       "required": "Required",
       "table": "Table"
     }

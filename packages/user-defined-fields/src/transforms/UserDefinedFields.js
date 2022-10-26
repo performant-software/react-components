@@ -21,6 +21,7 @@ class UserDefinedFields extends NestedAttributesTransform {
       'searchable',
       'allow_multiple',
       'options',
+      'order',
       '_destroy'
     ];
   }

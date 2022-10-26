@@ -19,7 +19,8 @@ class UserDefinedField extends BaseTransform {
       'required',
       'searchable',
       'allow_multiple',
-      'options'
+      'options',
+      'order'
     ];
   }
 

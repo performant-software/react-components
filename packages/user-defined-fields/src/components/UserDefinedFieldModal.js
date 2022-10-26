@@ -83,6 +83,14 @@ const UserDefinedFieldModal: ComponentType<any> = (props) => {
           selectOnBlur={false}
           value={props.item.data_type || ''}
         />
+        <Form.Input
+          error={props.isError('order')}
+          label={i18n.t('UserDefinedFieldModal.labels.order')}
+          onChange={props.onTextInputChange.bind(this, 'order')}
+          required={props.isRequired('oder')}
+          value={props.item.order || 0}
+          type='number'
+        />
         <Form.Group>
           <Form.Checkbox
             error={props.isError('required')}
