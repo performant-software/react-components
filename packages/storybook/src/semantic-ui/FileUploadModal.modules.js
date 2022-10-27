@@ -125,7 +125,12 @@ export const Images = withWrapper((props) => (
 export const SingleUpload = withWrapper((props) => (
   <FileUploadModal
     closeOnComplete={false}
-    itemComponent={({ item, onTextInputChange }) => (
+    itemComponent={({
+      item,
+      onDelete,
+      onTextInputChange,
+      renderStatus
+    }) => (
       <Item>
         <Item.Image
           src={URL.createObjectURL(item.content)}
@@ -136,6 +141,13 @@ export const SingleUpload = withWrapper((props) => (
             onChange={onTextInputChange.bind(this, 'name')}
             value={item.name}
           />
+          <Button
+            basic
+            color='red'
+            icon='trash'
+            onClick={onDelete}
+          />
+          { renderStatus() }
         </Item.Content>
       </Item>
     )}

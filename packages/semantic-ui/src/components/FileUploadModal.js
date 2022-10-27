@@ -327,6 +327,23 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   }, []);
 
   /**
+   * Renders the status component for the passed index.
+   *
+   * @type {(function(*): (null|*))|*}
+   */
+  const renderStatus = useCallback((index) => {
+    if (props.strategy !== Strategy.single) {
+      return null;
+    }
+
+    return (
+      <FileUploadStatus
+        status={statuses[index]}
+      />
+    );
+  }, [statuses, props.strategy]);
+
+  /**
    * Memoization and case correction for the <code>itemComponent</code> prop.
    *
    * @type {React$AbstractComponent<*, *>}
@@ -403,13 +420,8 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                   onDelete={onDelete.bind(this, item)}
                   onTextInputChange={onTextInputChange.bind(this, item)}
                   onUpdate={onUpdate.bind(this, item)}
-                >
-                  { props.strategy === Strategy.single && (
-                    <FileUploadStatus
-                      status={statuses[index]}
-                    />
-                  )}
-                </UploadItem>
+                  renderStatus={renderStatus.bind(this, index)}
+                />
               ))}
             </Item.Group>
           </Modal.Content>
