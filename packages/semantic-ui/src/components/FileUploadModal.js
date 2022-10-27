@@ -85,7 +85,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   const [items, setItems] = useState([]);
   const [uploadCount, setUploadCount] = useState(0);
   const [uploading, setUploading] = useState(false);
-  const [statuses, setStatuses] = useState({});
+  // const [statuses, setStatuses] = useState({});
 
   /**
    * Sets the <code>hasErrors</code> value to <code>true</code> if at least one item on the state contains errors.
@@ -157,9 +157,13 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    *
    * @type {function(*, *): void}
    */
-  const setStatus = useCallback((index, status) => (
-    setStatuses((prevStatuses) => ({ ...prevStatuses, [index]: status }))
-  ));
+  // const setStatus = useCallback((index, status, message = null) => (
+  //   setStatuses((prevStatuses) => ({ ...prevStatuses, [index]: { status, message } }))
+  // ));
+
+  const setStatus = useCallback((item, status, message = null) => (
+    setItems(_.map(items, (i) => (i !== item ? i : { ...i, status, errors: [message] })))
+  ), [items]);
 
   /**
    * Iterates of the list of items and sequentially calls the <code>onSave</code> prop for each.
@@ -173,19 +177,19 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       // Update the status for the item
       setStatus(i, Status.processing);
 
-      let error = false;
+      let error;
 
       // Do the upload
       try {
         // eslint-disable-next-line no-await-in-loop
         await props.onSave(item);
       } catch (e) {
-        error = true;
+        error = e;
       }
 
       // Update the status for the item
       if (error) {
-        setStatus(i, Status.error);
+        setStatus(i, Status.error, error.message);
       } else {
         setStatus(i, Status.complete);
       }
@@ -391,7 +395,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 >
                   { props.strategy === Strategy.single && (
                     <FileUploadStatus
-                      status={statuses[index]}
+                      status={item.status}
                     />
                   )}
                 </UploadItem>
