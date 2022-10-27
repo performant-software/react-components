@@ -96,7 +96,9 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    * Sets the <code>hasUploadErrors</code> value to <code>true</code> if at least one file uploaded with
    * an error status.
    */
-  const hasUploaderErrors = useMemo(() => _.find(_.values(statuses), (status) => status === Status.error), [statuses]);
+  const hasUploadErrors = useMemo(() => (
+    !!_.find(_.values(statuses), (status) => status === Status.error)
+  ), [statuses]);
 
   /**
    * Calls the <code>onAddFile</code> prop for each item in the passed collection of files and adds them
@@ -375,7 +377,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 </Message.List>
               </Message>
             )}
-            { hasUploaderErrors && (
+            { hasUploadErrors && (
               <Message
                 content={i18n.t('FileUploadModal.errors.upload.content')}
                 header={i18n.t('FileUploadModal.errors.upload.header')}
@@ -404,7 +406,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 >
                   { props.strategy === Strategy.single && (
                     <FileUploadStatus
-                      status={item.status}
+                      status={statuses[index]}
                     />
                   )}
                 </UploadItem>
