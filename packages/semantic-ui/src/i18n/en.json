@@ -128,7 +128,8 @@
   },
   "FileUploadModal": {
     "errors": {
-      "required": "{{filename}} - The following fields are required: {{fields}}"
+      "header": "There was an error processing your files",
+      "required": "File {{filename}} - The following fields are required: {{fields}}"
     },
     "loader": "Uploading files...",
     "title": "Upload Files"

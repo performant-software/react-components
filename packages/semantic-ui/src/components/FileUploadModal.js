@@ -11,7 +11,8 @@ import {
   Dimmer,
   Form,
   Item,
-  Loader, Message,
+  Loader,
+  Message,
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -219,67 +220,6 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   ), []);
 
   /**
-   * Updates the passed item with the passed props.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onUpload = useCallback(() => {
-    // Set the uploading indicator
-    setUploading(true);
-
-    // Upload the files
-    onValidate()
-      .then(() => (
-        props.strategy === Strategy.batch
-          ? onBatchUpload()
-          : onSingleUpload()
-      ))
-      .finally(onComplete);
-  }, [onBatchUpload, onComplete, onSingleUpload, props.strategy]);
-
-  /**
-   * Validates the items on the state.
-   *
-   * @type {function(): Promise<void>}
-   */
-  const onValidate = useCallback(() => {
-    let error = false;
-
-    setItems((prevItems) => _.map(prevItems, (item) => {
-      const valid = validateItem(item);
-
-      if (!_.isEmpty(item.errors)) {
-        error = true;
-      }
-
-      return valid;
-    }));
-
-    return error ? Promise.reject() : Promise.resolve();
-  }, [items]);
-
-  /**
-   * Renders the error message for the passed item.
-   *
-   * @type {(function(*, *): (null|*))|*}
-   */
-  const renderMessageItem = useCallback((item, index) => {
-    if (_.isEmpty(item.errors)) {
-      return null;
-    }
-
-    const filename = !_.isEmpty(item.name) ? item.name : `File ${index}`;
-    const fields = _.map(item.errors, (e) => props.required[e]).join(', ');
-
-    return (
-      <Message.Item
-        content={i18n.t('FileUploadModal.errors.required', { filename, fields })}
-        key={index}
-      />
-    );
-  }, []);
-
-  /**
    * Validates the passed item.
    *
    * @type {function(*): *&{errors: []}}
@@ -307,6 +247,67 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       errors
     };
   }, [props.required]);
+
+  /**
+   * Validates the items on the state.
+   *
+   * @type {function(): Promise<void>}
+   */
+  const onValidate = useCallback(() => {
+    let error = false;
+
+    setItems((prevItems) => _.map(prevItems, (item) => {
+      const valid = validateItem(item);
+
+      if (!_.isEmpty(item.errors)) {
+        error = true;
+      }
+
+      return valid;
+    }));
+
+    return error ? Promise.reject() : Promise.resolve();
+  }, [validateItem]);
+
+  /**
+   * Updates the passed item with the passed props.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onUpload = useCallback(() => {
+    // Set the uploading indicator
+    setUploading(true);
+
+    // Upload the files
+    onValidate()
+      .then(() => (
+        props.strategy === Strategy.batch
+          ? onBatchUpload()
+          : onSingleUpload()
+      ))
+      .finally(onComplete);
+  }, [onBatchUpload, onComplete, onSingleUpload, onValidate, props.strategy]);
+
+  /**
+   * Renders the error message for the passed item.
+   *
+   * @type {(function(*, *): (null|*))|*}
+   */
+  const renderMessageItem = useCallback((item, index) => {
+    if (_.isEmpty(item.errors)) {
+      return null;
+    }
+
+    const filename = !_.isEmpty(item.name) ? item.name : index;
+    const fields = _.map(item.errors, (e) => props.required[e]).join(', ');
+
+    return (
+      <Message.Item
+        content={i18n.t('FileUploadModal.errors.required', { filename, fields })}
+        key={index}
+      />
+    );
+  }, []);
 
   /**
    * Memoization and case correction for the <code>itemComponent</code> prop.
@@ -352,7 +353,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 error
               >
                 <Message.Header
-                  content={'An error occurred'}
+                  content={i18n.t('FileUploadModal.errors.header')}
                 />
                 <Message.List>
                   { _.map(items, renderMessageItem) }
@@ -391,7 +392,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
           <Modal.Actions>
             <Button
               content={i18n.t('Common.buttons.upload')}
-              disabled={uploading || uploadCount > 0}
+              disabled={uploading || uploadCount > 0 || _.isEmpty(items)}
               icon='cloud upload'
               loading={uploading && !props.showPageLoader}
               onClick={onUpload}
