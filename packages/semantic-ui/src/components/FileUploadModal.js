@@ -85,12 +85,18 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   const [items, setItems] = useState([]);
   const [uploadCount, setUploadCount] = useState(0);
   const [uploading, setUploading] = useState(false);
-  // const [statuses, setStatuses] = useState({});
+  const [statuses, setStatuses] = useState({});
 
   /**
    * Sets the <code>hasErrors</code> value to <code>true</code> if at least one item on the state contains errors.
    */
   const hasErrors = useMemo(() => !!_.find(items, (item) => !_.isEmpty(item.errors)), [items]);
+
+  /**
+   * Sets the <code>hasUploadErrors</code> value to <code>true</code> if at least one file uploaded with
+   * an error status.
+   */
+  const hasUploaderErrors = useMemo(() => _.find(_.values(statuses), (status) => status === Status.error), [statuses]);
 
   /**
    * Calls the <code>onAddFile</code> prop for each item in the passed collection of files and adds them
@@ -157,13 +163,9 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    *
    * @type {function(*, *): void}
    */
-  // const setStatus = useCallback((index, status, message = null) => (
-  //   setStatuses((prevStatuses) => ({ ...prevStatuses, [index]: { status, message } }))
-  // ));
-
-  const setStatus = useCallback((item, status, message = null) => (
-    setItems(_.map(items, (i) => (i !== item ? i : { ...i, status, errors: [message] })))
-  ), [items]);
+  const setStatus = useCallback((index, status) => (
+    setStatuses((prevStatuses) => ({ ...prevStatuses, [index]: status }))
+  ));
 
   /**
    * Iterates of the list of items and sequentially calls the <code>onSave</code> prop for each.
@@ -189,7 +191,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
 
       // Update the status for the item
       if (error) {
-        setStatus(item, Status.error, error.message);
+        setStatus(item, Status.error);
       } else {
         setStatus(item, Status.complete);
       }
@@ -372,6 +374,13 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                   { _.map(items, renderMessageItem) }
                 </Message.List>
               </Message>
+            )}
+            { hasUploaderErrors && (
+              <Message
+                content={i18n.t('FileUploadModal.errors.upload.content')}
+                header={i18n.t('FileUploadModal.errors.upload.header')}
+                error
+              />
             )}
             <FileUpload
               onFilesAdded={onAddFiles}
