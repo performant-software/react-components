@@ -253,7 +253,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    *
    * @type {function(): Promise<void>}
    */
-  const onValidate = useCallback(() => {
+  const onValidate = useCallback(() => new Promise((resolve, reject) => {
     let error = false;
 
     setItems((prevItems) => _.map(prevItems, (item) => {
@@ -266,8 +266,12 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       return valid;
     }));
 
-    return error ? Promise.reject() : Promise.resolve();
-  }, [validateItem]);
+    if (error) {
+      reject();
+    } else {
+      resolve();
+    }
+  }), []);
 
   /**
    * Updates the passed item with the passed props.

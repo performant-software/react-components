@@ -33,7 +33,11 @@ export const Default = withWrapper((props) => (
         value={item.name || ''}
       />
     )}
-    onAddFile={(file) => file}
+    onAddFile={(file) => ({
+      name: file.name,
+      content: file,
+      type: file.type
+    })}
     onClose={props.onClose}
     onSave={() => {
       action('save')();
@@ -94,7 +98,7 @@ export const Images = withWrapper((props) => (
     itemComponent={({ item, onTextInputChange }) => (
       <Item>
         <Item.Image
-          src={URL.createObjectURL(item)}
+          src={URL.createObjectURL(item.content)}
         />
         <Item.Content>
           <Form.Input
@@ -105,7 +109,11 @@ export const Images = withWrapper((props) => (
         </Item.Content>
       </Item>
     )}
-    onAddFile={(file) => file}
+    onAddFile={(file) => ({
+      name: file.name,
+      content: file,
+      type: file.type
+    })}
     onClose={props.onClose}
     onSave={() => {
       action('save')();
@@ -120,7 +128,7 @@ export const SingleUpload = withWrapper((props) => (
     itemComponent={({ item, onTextInputChange }) => (
       <Item>
         <Item.Image
-          src={URL.createObjectURL(item)}
+          src={URL.createObjectURL(item.content)}
         />
         <Item.Content>
           <Form.Input
@@ -131,7 +139,11 @@ export const SingleUpload = withWrapper((props) => (
         </Item.Content>
       </Item>
     )}
-    onAddFile={(file) => file}
+    onAddFile={(file) => ({
+      name: file.name,
+      content: file,
+      type: file.type
+    })}
     onClose={props.onClose}
     onSave={() => {
       action('save')();
