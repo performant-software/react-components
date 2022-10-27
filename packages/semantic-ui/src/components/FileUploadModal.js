@@ -175,7 +175,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       const item = items[i];
 
       // Update the status for the item
-      setStatus(i, Status.processing);
+      setStatus(item, Status.processing);
 
       let error;
 
@@ -189,9 +189,9 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
 
       // Update the status for the item
       if (error) {
-        setStatus(i, Status.error, error.message);
+        setStatus(item, Status.error, error.message);
       } else {
-        setStatus(i, Status.complete);
+        setStatus(item, Status.complete);
       }
 
       // Update the upload count
