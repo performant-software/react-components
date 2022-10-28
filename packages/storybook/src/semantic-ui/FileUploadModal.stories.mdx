@@ -1,9 +1,13 @@
-import { action } from '@storybook/addon-actions';
 import { Canvas, Meta, Story } from '@storybook/addon-docs';
-import { Form } from 'semantic-ui-react';
 import DocHeader from '../components/DocHeader';
 import FileUploadModal from '../../../semantic-ui/src/components/FileUploadModal';
 import PropsTable from '../components/PropsTable';
+import {
+  Default,
+  Errors,
+  Images,
+  SingleUpload
+} from './FileUploadModal.modules';
 
 <Meta
   title='Components/Semantic UI/FileUploadModal'
@@ -18,23 +22,39 @@ import PropsTable from '../components/PropsTable';
   <Story
     name='Default'
   >
-    <FileUploadModal
-      button='Upload files'
-      itemComponent={({ item }) => (
-        <Form.Input
-          label='Name'
-          value={item.name || ''}
-        />
-      )}
-      onAddFile={(file) => file}
-      onSave={() => {
-        action('save')();
-        return Promise.resolve();
-      }}
-    />
+    <Default />
   </Story>
 </Canvas>
 
 <PropsTable
   item={FileUploadModal}
 />
+
+## Errors
+The `FileUploadModal` can be configured to display error messages for required fields that are not provided.
+
+<Story
+  name='Errors'
+>
+  <Errors />
+</Story>
+
+## Images
+The component that renders each item can be customized to display images and more.
+
+<Story
+  name='Images'
+>
+  <Images />
+</Story>
+
+## Single Upload
+The `FileUploadModal` component to be configured to use one of two upload strategies:
+- **Batch**: The component will call the `onSave` prop passing all of the uploaded items, assuming the end point will process them in batch
+- **Single**: The component will call the `onSave` prop once per uploaded item, assuming the end point will process a single item
+
+<Story
+  name='Single Upload'
+>
+  <SingleUpload />
+</Story>

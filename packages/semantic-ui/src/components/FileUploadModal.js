@@ -1,6 +1,11 @@
 // @flow
 
-import React, { Component, type ComponentType } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  type ComponentType
+} from 'react';
 import {
   Button,
   Dimmer,
@@ -11,406 +16,226 @@ import {
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
-import i18n from '../i18n/i18n';
 import FileUpload from './FileUpload';
+import FileUploadStatus from './FileUploadStatus';
+import FileUploadProgress from './FileUploadProgress';
+import i18n from '../i18n/i18n';
 import ModalContext from '../context/ModalContext';
-import Toaster from './Toaster';
 
 type Props = {
   /**
-   * Content to display on the button used to open the modal
+   * If <code>true</code>, the modal will close once the upload has completed.
    */
-  button: string,
+  closeOnComplete?: boolean,
 
   /**
-   * Determines if the component should render a button as a trigger for the modal
-   */
-  includeButton?: boolean,
-
-  /**
-   * Component to render within the modal
+   * Component to render within the modal.
    */
   itemComponent: ComponentType<any>,
 
   /**
-   * Callback fired when a file is added
+   * Callback fired when a file is added.
    */
-  onAddFile: (file: File) => void,
+  onAddFile: (file: File) => any,
 
   /**
-   * Callback fired when the close button is clicked
+   * Callback fired when the close button is clicked.
    */
-  onClose?: () => void,
+  onClose: () => void,
 
   /**
-   * Callback fired when the save button is clicked
+   * Callback fired when the save button is clicked. See <code>strategy</code> prop.
    */
   onSave: (items: Array<any>) => Promise<any>,
 
   /**
-   * An object with keys containing the names of properties that are required
+   * An object with keys containing the names of properties that are required.
    */
-  required: { [string]: string },
+  required?: { [key: string]: string },
 
   /**
-   * Title value to display in the modal header
+   * If <code>true</code>, a full page loader will display while uploading is in progress.
    */
-  title?: string
+  showPageLoader?: boolean,
+
+  /**
+   * The upload strategy to use. If <code>batch</code>, we'll execute one <code>onSave</code> request with each item
+   * as an array in the body. If <code>single</code>, we'll execute an <code>onSave</code> request for each item.
+   */
+  strategy?: string
 };
 
-type State = {
-  items: Array<any>,
-  modal: boolean,
-  saving: boolean
+const Strategy = {
+  batch: 'batch',
+  single: 'single'
 };
 
-const LIST_DELIMITER = ', ';
+const Status = {
+  pending: 'pending',
+  processing: 'processing',
+  complete: 'complete',
+  error: 'error'
+};
 
 /**
  * The <code>FileUploadModal</code> is a convenience wrapper for the <code>FileUpload</code> component, allowing
  * it to render in a modal.
  */
-class FileUploadModal extends Component<Props, State> {
-  /**
-   * Constructs a new FileUploadModal component.
-   *
-   * @param props
-   */
-  constructor(props: Props) {
-    super(props);
-
-    this.state = this.getInitialState();
-  }
+const FileUploadModal: ComponentType<any> = (props: Props) => {
+  const [items, setItems] = useState([]);
+  const [uploadCount, setUploadCount] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [statuses, setStatuses] = useState({});
 
   /**
-   * Returns the initial component state.
-   *
-   * @returns {{saving: boolean, items: [], modal: boolean}}
+   * Sets the <code>hasErrors</code> value to <code>true</code> if at least one item on the state contains errors.
    */
-  getInitialState() {
-    return {
-      items: [],
-      modal: !this.props.includeButton,
-      saving: false
-    };
-  }
+  const hasErrors = useMemo(() => !!_.find(items, (item) => !_.isEmpty(item.errors)), [items]);
 
   /**
-   * Returns true if any of the items contain errors.
-   *
-   * @returns {boolean}
+   * Sets the <code>hasUploadErrors</code> value to <code>true</code> if at least one file uploaded with
+   * an error status.
    */
-  hasErrors() {
-    return !!_.find(this.state.items, (item) => !_.isEmpty(item.errors));
-  }
+  const hasUploadErrors = useMemo(() => (
+    !!_.find(_.values(statuses), (status) => status === Status.error)
+  ), [statuses]);
 
   /**
-   * Adds the passed collection of files to the state. Typically files will be added as a property of another model.
-   * This component calls the onAddFiles prop to transform the items stored in the state.
+   * Calls the <code>onAddFile</code> prop for each item in the passed collection of files and adds them
+   * to the items on the state.
    *
-   * @param files
+   * @type {function(*): void}
    */
-  onAddFiles(files: Array<File>) {
-    this.setState((state) => ({
-      items: [
-        ...state.items,
-        ..._.map(files, this.props.onAddFile.bind(this))
-      ]
-    }));
-  }
+  const onAddFiles = useCallback((files) => (
+    setItems((prevItems) => [
+      ...prevItems,
+      ..._.map(files, props.onAddFile)
+    ])
+  ), []);
 
   /**
    * Updates the passed association for the passed item.
    *
-   * @param item
-   * @param idAttribute
-   * @param attribute
-   * @param value
+   * @type {function(*, string, string, *): void}
    */
-  onAssociationInputChange(item: any, idAttribute: string, attribute: string, value: any) {
-    this.setState((state) => ({
-      items: _.map(state.items, (i) => (i !== item ? i : ({
-        ...i,
-        [idAttribute]: value.id,
-        [attribute]: value,
-        errors: _.without(item.errors, idAttribute)
-      })))
-    }));
-  }
+  const onAssociationInputChange = useCallback((item: any, idAttribute: string, attribute: string, value: any) => (
+    setItems((prevItems) => _.map(prevItems, (i) => (i !== item ? i : {
+      ...i,
+      [idAttribute]: value.id,
+      [attribute]: value,
+      errors: _.without(item.errors, idAttribute)
+    })))
+  ), []);
 
   /**
-   * Resets the state or calls the onClose prop.
+   * Calls the <code>onSave</code> prop with the current list of items.
+   *
+   * @type {function(): *}
    */
-  onClose() {
-    if (this.props.onClose) {
-      this.props.onClose();
-    } else {
-      this.setState(this.getInitialState());
+  const onBatchUpload = useCallback(() => (
+    props
+      .onSave(items)
+      .then(() => setUploadCount(1))
+  ), [items]);
+
+  /**
+   * Sets the uploading state <code>false</code> and calls the <code>onClose</code> prop if necessary.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onComplete = useCallback(() => {
+    setUploading(false);
+
+    if (props.closeOnComplete) {
+      props.onClose();
     }
-  }
+  }, [props.closeOnComplete, props.onClose]);
 
   /**
    * Deletes the passed item from the state.
    *
-   * @param item
+   * @type {function(*): void}
    */
-  onDelete(item: any) {
-    this.setState((state) => ({
-      items: _.filter(state.items, (i) => i !== item)
-    }));
-  }
+  const onDelete = useCallback((item) => (
+    setItems((prevItems) => _.filter(prevItems, (i) => i !== item))
+  ), []);
 
   /**
-   * Clears the errors for all items in the state.
+   * Sets the status for the item at the passed index.
+   *
+   * @type {function(*, *): void}
    */
-  onDismissErrors() {
-    this.setState((state) => ({
-      items: _.map(state.items, (item) => _.omit(item, 'errors'))
-    }));
-  }
+  const setStatus = useCallback((index, status) => (
+    setStatuses((prevStatuses) => ({ ...prevStatuses, [index]: status }))
+  ));
 
   /**
-   * Validates the items and saves.
+   * Iterates of the list of items and sequentially calls the <code>onSave</code> prop for each.
+   *
+   * @type {function(): Promise<unknown>}
    */
-  onSave() {
-    this.setState((state) => ({
-      items: _.map(state.items, this.validateItem.bind(this))
-    }), this.save.bind(this));
-  }
+  const onSingleUpload = useCallback(async () => {
+    for (let i = 0; i < items.length; i += 1) {
+      const item = items[i];
+
+      // Update the status for the item
+      setStatus(i, Status.processing);
+
+      let error;
+
+      // Do the upload
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        await props.onSave(item);
+      } catch (e) {
+        error = e;
+      }
+
+      // Update the status for the item
+      if (error) {
+        setStatus(i, Status.error);
+      } else {
+        setStatus(i, Status.complete);
+      }
+
+      // Update the upload count
+      setUploadCount((prevCount) => prevCount + 1);
+    }
+
+    return Promise.resolve();
+  }, [items, props.onSave]);
 
   /**
    * Updates the text value for the passed item.
    *
-   * @param item
-   * @param attribute
-   * @param e
-   * @param value
+   * @type {function(*, string, Event, {value: *}): void}
    */
-  onTextInputChange(item: any, attribute: string, e: Event, { value }: { value: any }) {
-    this.setState((state) => ({
-      items: _.map(state.items, (i) => (i !== item ? i : ({
-        ...i,
-        [attribute]: value,
-        errors: _.without(item.errors, attribute)
-      })))
-    }));
-  }
+  const onTextInputChange = useCallback((item: any, attribute: string, e: Event, { value }: { value: any }) => (
+    setItems((prevItems) => _.map(prevItems, (i) => (i !== item ? i : {
+      ...i,
+      [attribute]: value,
+      errors: _.without(item.errors, attribute)
+    })))
+  ), []);
 
   /**
-   * Updates the passed item with the passed props.
+   * Updates the passed item with the passed object of attributes.
    *
-   * @param item
-   * @param props
+   * @type {function(*, *): void}
    */
-  onUpdate(item: any, props: any) {
-    this.setState((state) => ({
-      items: _.map(state.items, (i) => (i !== item ? i : ({
-        ...i,
-        ...props,
-        errors: _.without(item.errors, _.keys(props))
-      })))
-    }));
-  }
-
-  /**
-   * Renders the FileUploadModal component.
-   *
-   * @returns {*}
-   */
-  render() {
-    return (
-      <>
-        { this.props.includeButton && (
-          <Button
-            content={this.props.button}
-            icon='cloud upload'
-            onClick={() => this.setState({ modal: true })}
-            primary
-          />
-        )}
-        { this.state.modal && (
-          <ModalContext.Consumer>
-            { (mountNode) => (
-              <Modal
-                centered={false}
-                className='file-upload-modal'
-                mountNode={mountNode}
-                open
-              >
-                <Dimmer
-                  active={this.state.saving}
-                  inverted
-                >
-                  <Loader
-                    content={i18n.t('FileUploadModal.loader')}
-                  />
-                </Dimmer>
-                { this.renderErrors() }
-                <Modal.Header
-                  content={this.props.title || i18n.t('FileUploadModal.title')}
-                />
-                <Modal.Content>
-                  <FileUpload
-                    onFilesAdded={this.onAddFiles.bind(this)}
-                  />
-                  { this.renderItems() }
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button
-                    content={i18n.t('Common.buttons.save')}
-                    disabled={!(this.state.items && this.state.items.length)}
-                    primary
-                    onClick={this.onSave.bind(this)}
-                  />
-                  <Button
-                    basic
-                    content={i18n.t('Common.buttons.cancel')}
-                    onClick={this.onClose.bind(this)}
-                  />
-                </Modal.Actions>
-              </Modal>
-            )}
-          </ModalContext.Consumer>
-        )}
-      </>
-    );
-  }
-
-  /**
-   * Renders the error modal.
-   *
-   * @returns {null|*}
-   */
-  renderErrors() {
-    if (!this.hasErrors()) {
-      return null;
-    }
-
-    return (
-      <Toaster
-        onDismiss={this.onDismissErrors.bind(this)}
-        timeout={0}
-        type={Toaster.MessageTypes.negative}
-      >
-        <Message.Header
-          content={i18n.t('Common.messages.error.header')}
-        />
-        <Message.List>
-          { _.map(this.state.items, this.renderMessageItem.bind(this)) }
-        </Message.List>
-      </Toaster>
-    );
-  }
-
-  /**
-   * Renders the passed item.
-   *
-   * @param item
-   *
-   * @returns {*}
-   */
-  renderItem(item: any) {
-    const FileItem = this.props.itemComponent;
-
-    return (
-      <FileItem
-        isError={(key) => _.contains(item.errors, key)}
-        isRequired={(key) => !!this.props.required[key]}
-        item={item}
-        onAssociationInputChange={this.onAssociationInputChange.bind(this, item)}
-        onDelete={this.onDelete.bind(this, item)}
-        onTextInputChange={this.onTextInputChange.bind(this, item)}
-        onUpdate={this.onUpdate.bind(this, item)}
-      />
-    );
-  }
-
-  /**
-   * Renders the list of items.
-   *
-   * @returns {null|*}
-   */
-  renderItems() {
-    if (!(this.state.items && this.state.items.length)) {
-      return null;
-    }
-
-    return (
-      <Item.Group
-        as={Form}
-        divided
-        noValidate
-        relaxed='very'
-      >
-        { _.map(this.state.items, this.renderItem.bind(this)) }
-      </Item.Group>
-    );
-  }
-
-  /**
-   * Renders the errors message for the passed item.
-   *
-   * @param item
-   * @param index
-   *
-   * @returns {null|*}
-   */
-  renderMessageItem(item: any, index: number) {
-    if (_.isEmpty(item.errors)) {
-      return null;
-    }
-
-    const filename = !_.isEmpty(item.name) ? item.name : `File ${index}`;
-    const fields = _.map(item.errors, (e) => this.props.required[e]).join(LIST_DELIMITER);
-
-    return (
-      <Message.Item
-        content={i18n.t('FileUploadModal.errors.required', { filename, fields })}
-        key={index}
-      />
-    );
-  }
-
-  /**
-   * Saves the uploaded items.
-   */
-  save() {
-    if (this.hasErrors()) {
-      return;
-    }
-
-    this.setState({ saving: true }, () => {
-      this.props
-        .onSave(this.state.items)
-        .then(this.onClose.bind(this));
-    });
-  }
-
-  /**
-   * Validates the list of items.
-   */
-  validate() {
-    this.setState((state) => {
-      const items = _.map(state.items, this.validateItem.bind(this));
-
-      return {
-        items,
-        saving: !_.find(items, (item) => !_.isEmpty(item.errors))
-      };
-    }, this.save.bind(this));
-  }
+  const onUpdate = useCallback((item, attributes) => (
+    setItems((prevItems) => _.map(prevItems, (i) => (i !== item ? i : { ...i, ...attributes })))
+  ), []);
 
   /**
    * Validates the passed item.
    *
-   * @param item
-   *
-   * @returns {{errors: []}}
+   * @type {function(*): *&{errors: []}}
    */
-  validateItem(item: any) {
+  const validateItem = useCallback((item) => {
     const errors = [];
 
-    _.each(_.keys(this.props.required), (key) => {
+    _.each(_.keys(props.required), (key) => {
       const value = item[key];
       let invalid;
 
@@ -425,22 +250,208 @@ class FileUploadModal extends Component<Props, State> {
       }
     });
 
-    return { ...item, errors };
-  }
-}
+    return {
+      ...item,
+      errors
+    };
+  }, [props.required]);
 
-FileUploadModal.defaultProps = {
-  includeButton: true
+  /**
+   * Validates the items on the state.
+   *
+   * @type {function(): Promise<void>}
+   */
+  const onValidate = useCallback(() => new Promise((resolve, reject) => {
+    let error = false;
+
+    // Validate each item
+    const newItems = _.map(items, (item) => {
+      const newItem = validateItem(item);
+
+      if (!_.isEmpty(newItem.errors)) {
+        error = true;
+      }
+
+      return newItem;
+    });
+
+    // Set the new items on the state
+    setItems(newItems);
+
+    // Reject or resolve the promise
+    if (error) {
+      reject();
+    } else {
+      resolve();
+    }
+  }), [items]);
+
+  /**
+   * Updates the passed item with the passed props.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onUpload = useCallback(() => {
+    // Set the uploading indicator
+    setUploading(true);
+
+    // Upload the files
+    onValidate()
+      .then(() => (
+        props.strategy === Strategy.batch
+          ? onBatchUpload()
+          : onSingleUpload()
+      ))
+      .finally(onComplete);
+  }, [onBatchUpload, onComplete, onSingleUpload, onValidate, props.strategy]);
+
+  /**
+   * Renders the error message for the passed item.
+   *
+   * @type {(function(*, *): (null|*))|*}
+   */
+  const renderMessageItem = useCallback((item, index) => {
+    if (_.isEmpty(item.errors)) {
+      return null;
+    }
+
+    const filename = !_.isEmpty(item.name) ? item.name : index;
+    const fields = _.map(item.errors, (e) => props.required[e]).join(', ');
+
+    return (
+      <Message.Item
+        content={i18n.t('FileUploadModal.errors.required', { filename, fields })}
+        key={index}
+      />
+    );
+  }, []);
+
+  /**
+   * Renders the status component for the passed index.
+   *
+   * @type {(function(*): (null|*))|*}
+   */
+  const renderStatus = useCallback((index) => {
+    if (props.strategy !== Strategy.single) {
+      return null;
+    }
+
+    return (
+      <FileUploadStatus
+        status={statuses[index]}
+      />
+    );
+  }, [statuses, props.strategy]);
+
+  /**
+   * Memoization and case correction for the <code>itemComponent</code> prop.
+   *
+   * @type {React$AbstractComponent<*, *>}
+   */
+  const UploadItem = useMemo(() => props.itemComponent, [props.itemComponent]);
+
+  return (
+    <ModalContext.Consumer>
+      { (mountNode) => (
+        <Modal
+          centered={false}
+          className='serial-upload-modal'
+          mountNode={mountNode}
+          open
+        >
+          { props.showPageLoader && (
+            <Dimmer
+              active={uploading}
+              inverted
+            >
+              <Loader
+                content={i18n.t('FileUploadModal.loader')}
+              />
+            </Dimmer>
+          )}
+          <Modal.Header>
+            { props.strategy === Strategy.batch && i18n.t('FileUploadModal.title') }
+            { props.strategy === Strategy.single && (
+              <FileUploadProgress
+                completed={uploadCount}
+                total={items.length}
+                uploading={uploading}
+              />
+            )}
+          </Modal.Header>
+          <Modal.Content
+            scrolling
+          >
+            { hasErrors && (
+              <Message
+                error
+              >
+                <Message.Header
+                  content={i18n.t('FileUploadModal.errors.header')}
+                />
+                <Message.List>
+                  { _.map(items, renderMessageItem) }
+                </Message.List>
+              </Message>
+            )}
+            { hasUploadErrors && (
+              <Message
+                content={i18n.t('FileUploadModal.errors.upload.content')}
+                header={i18n.t('FileUploadModal.errors.upload.header')}
+                error
+              />
+            )}
+            <FileUpload
+              onFilesAdded={onAddFiles}
+            />
+            <Item.Group
+              as={Form}
+              divided
+              noValidate
+              relaxed='very'
+            >
+              { _.map(items, (item, index) => (
+                <UploadItem
+                  isError={(key) => _.contains(item.errors, key)}
+                  isRequired={(key) => !!(props.required && props.required[key])}
+                  item={item}
+                  key={index}
+                  onAssociationInputChange={onAssociationInputChange.bind(this, item)}
+                  onDelete={onDelete.bind(this, item)}
+                  onTextInputChange={onTextInputChange.bind(this, item)}
+                  onUpdate={onUpdate.bind(this, item)}
+                  renderStatus={renderStatus.bind(this, index)}
+                />
+              ))}
+            </Item.Group>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content={i18n.t('Common.buttons.upload')}
+              disabled={uploading || uploadCount > 0 || _.isEmpty(items)}
+              icon='cloud upload'
+              loading={uploading && !props.showPageLoader}
+              onClick={onUpload}
+              primary
+            />
+            <Button
+              content={uploadCount > 0
+                ? i18n.t('Common.buttons.close')
+                : i18n.t('Common.buttons.cancel')}
+              disabled={uploading}
+              onClick={props.onClose}
+            />
+          </Modal.Actions>
+        </Modal>
+      )}
+    </ModalContext.Consumer>
+  );
 };
 
-export type FileUploadProps = {
-  isError: (key: string) => boolean,
-  isRequired: (key: string) => boolean,
-  item: any,
-  onAssociationInputChange: (idKey: string, valueKey: string, item: any) => void,
-  onDelete: (item: any) => void,
-  onTextInputChange: (item: any, value: any) => void,
-  onUpdate: (item: any, props: any) => void
+FileUploadModal.defaultProps = {
+  closeOnComplete: true,
+  strategy: Strategy.batch,
+  showPageLoader: true
 };
 
 export default FileUploadModal;
