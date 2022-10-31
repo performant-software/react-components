@@ -1,22 +1,16 @@
 // @flow
 
-import React, { lazy, Suspense } from 'react';
-import i18n from '../i18n/i18n';
+import React, { lazy } from 'react';
+import withSuspense from '../hooks/Suspense';
 
-const IIIFViewer = (props) => {
+const IIIFViewer = withSuspense((props) => {
   const CloverIIIF = lazy(() => import('@samvera/clover-iiif'));
 
   return (
-    <Suspense
-      fallback={(
-        <div>{ i18n.t('Common.messages.loading') }</div>
-      )}
-    >
-      <CloverIIIF
-        {...props}
-      />
-    </Suspense>
+    <CloverIIIF
+      {...props}
+    />
   );
-};
+});
 
 export default IIIFViewer;

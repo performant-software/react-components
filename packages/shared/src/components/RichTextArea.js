@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import ReactQuill from 'react-quill';
+import React, { lazy } from 'react';
+import withSuspense from '../hooks/Suspense';
 import './RichTextArea.css';
 import 'react-quill/dist/quill.snow.css';
 
@@ -16,25 +16,29 @@ type Props = {
 const SEARCH_EMPTY = '<p><br></p>';
 const REPLACE_EMPTY = '';
 
-const RichTextArea = (props: Props) => (
-  <ReactQuill
-    className='rich-text-area'
-    formats={props.formats}
-    modules={props.modules}
-    onChange={(value) => {
-      let newValue = value;
+const RichTextArea = withSuspense((props: Props) => {
+  const ReactQuill = lazy(() => import('react-quill'));
 
-      if (value === SEARCH_EMPTY) {
-        newValue = REPLACE_EMPTY;
-      }
+  return (
+    <ReactQuill
+      className='rich-text-area'
+      formats={props.formats}
+      modules={props.modules}
+      onChange={(value) => {
+        let newValue = value;
 
-      props.onChange(newValue);
-    }}
-    placeholder={props.placeholder}
-    theme='snow'
-    value={props.value}
-  />
-);
+        if (value === SEARCH_EMPTY) {
+          newValue = REPLACE_EMPTY;
+        }
+
+        props.onChange(newValue);
+      }}
+      placeholder={props.placeholder}
+      theme='snow'
+      value={props.value}
+    />
+  );
+});
 
 RichTextArea.defaultProps = {
   formats: [
