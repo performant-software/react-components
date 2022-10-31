@@ -1,19 +1,17 @@
 // @flow
 
-import React from 'react';
-import CloverIIIF from '@samvera/clover-iiif';
-import Browser from '../utils/Browser';
+import React, { lazy, Suspense } from 'react';
 
-const IIIFViewer = (props) => {
-  if (!Browser.isBrowser()) {
-    return null;
-  }
+const CloverIIIF = lazy(() => import('@samvera/clover-iiif'));
 
-  return (
+const IIIFViewer = (props) => (
+  <Suspense
+    fallback={<div>Loading...</div>}
+  >
     <CloverIIIF
       {...props}
     />
-  );
-};
+  </Suspense>
+);
 
 export default IIIFViewer;
