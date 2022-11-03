@@ -1,12 +1,16 @@
 // @flow
 
-import React from 'react';
-import CloverIIIF from '@samvera/clover-iiif';
+import React, { lazy } from 'react';
+import withSuspense from '../hooks/Suspense';
 
-const IIIFViewer = (props) => (
-  <CloverIIIF
-    {...props}
-  />
-);
+const IIIFViewer = withSuspense((props) => {
+  const CloverIIIF = lazy(() => import('@samvera/clover-iiif'));
+
+  return (
+    <CloverIIIF
+      {...props}
+    />
+  );
+});
 
 export default IIIFViewer;
