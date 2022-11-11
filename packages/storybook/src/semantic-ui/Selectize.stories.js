@@ -485,3 +485,25 @@ export const CustomRender = () => (
     title={text('Title', 'Select some')}
   />
 );
+
+export const MaxSelection = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    multiple={3}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={action('save')}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);

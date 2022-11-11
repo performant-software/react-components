@@ -259,7 +259,13 @@
     }
   },
   "Selectize": {
-    "noRecords": "No matching records."
+    "messages": {
+      "maxSelected": {
+        "content": "You have already selected the maximum number of items allowed.",
+        "header": "Maximum items selected"
+      },
+      "noRecords": "No matching records."
+    }
   },
   "VideoFrameSelector": {
     "buttons": {

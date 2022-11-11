@@ -3,6 +3,7 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useState,
   type ComponentType,
   type Element
@@ -12,6 +13,7 @@ import {
   Form,
   Grid,
   Icon,
+  Message,
   Modal,
   Table
 } from 'semantic-ui-react';
@@ -35,7 +37,7 @@ type Props = {
   modal?: {
     onSave: (item: any) => Promise<any>
   },
-  multiple?: boolean,
+  multiple?: boolean | number,
   onClose: () => void,
   onLoad: (params: any) => Promise<any>,
   onSave: (items: any) => void,
@@ -174,7 +176,7 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
             />
           </Grid.Row>
           <Grid.Row>
-            { i18n.t('Selectize.noRecords') }
+            { i18n.t('Selectize.messages.noRecords') }
           </Grid.Row>
         </Grid.Column>
       </Grid>
@@ -195,8 +197,26 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
 }));
 
 const Selectize = (props: Props) => {
+  const [error, setError] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
   const [selectedItems, setSelectedItems] = useState(props.selectedItems || []);
+
+  /**
+   * Sets the allowMultiple prop to "true" if the multiple prop is a boolean or non-zero integer.
+   *
+   * @type {boolean}
+   */
+  const allowMultiple = useMemo(() => !!props.multiple, [props.multiple]);
+
+  /**
+   * Sets the allowed number of items that can be selected. If the multiple prop is a boolean, this will be
+   * and unlimited amount.
+   *
+   * @type {boolean|number}
+   */
+  const allowedCount = useMemo(() => (
+    _.isNumber(props.multiple) ? props.multiple : Number.MAX_SAFE_INTEGER
+  ), [props.multiple]);
 
   /**
    * Returns true if the passed item is selected.
@@ -209,13 +229,17 @@ const Selectize = (props: Props) => {
    * If the passed item is selected, deselect the item. If we're not allowing multiple select, replace the selected
    * items with the passed item. Otherwise, append the passed item to the list of selected items.
    *
+   * If the user has already selected the maximum number allowed, display an error message.
+   *
    * @type {(function(*=): void)|*}
    */
   const onSelect = useCallback((item) => {
     if (isSelected(item)) {
       setSelectedItems((prevItems) => _.filter(prevItems, (i) => i.id !== item.id));
-    } else if (!props.multiple) {
+    } else if (!allowMultiple) {
       setSelectedItems([item]);
+    } else if (selectedItems.length >= allowedCount) {
+      setError(true);
     } else {
       setSelectedItems((prevItems) => [
         ...prevItems,
@@ -267,6 +291,13 @@ const Selectize = (props: Props) => {
             content={props.title}
           />
           <Modal.Content>
+            <Message
+              content={i18n.t('Selectize.messages.maxSelected.content')}
+              error
+              header={i18n.t('Selectize.messages.maxSelected.header')}
+              onDismiss={() => setError(false)}
+              visible={error}
+            />
             <SelectizeGrid
               {...props}
               actions={[]}
