@@ -70,6 +70,7 @@ export { default as SaveButton } from './components/SaveButton';
 export { default as Section } from './components/Section';
 export { default as Selectize } from './components/Selectize';
 export { default as SelectizeHeader } from './components/SelectizeHeader';
+export { default as SelectizeImageHeader } from './components/SelectizeImageHeader';
 export { default as TabbedModal } from './components/TabbedModal';
 export { default as TabsMenu } from './components/TabsMenu';
 export { default as TagsList } from './components/TagsList';

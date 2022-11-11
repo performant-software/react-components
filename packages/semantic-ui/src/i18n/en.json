@@ -44,11 +44,13 @@
       "close": "Close",
       "download": "Download",
       "edit": "Edit",
+      "hide": "Hide",
       "iiif": "View IIIF",
       "ok": "OK",
       "open": "Open",
       "save": "Save",
       "search": "Search",
+      "show": "Show",
       "upload": "Upload"
     },
     "errors": {
