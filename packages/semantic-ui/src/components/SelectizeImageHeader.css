@@ -25,6 +25,10 @@
   -webkit-box-shadow: 0 0;
 }
 
+.selectize-image-header.ui.segment .container > .ui.cards > .ui.card > .content {
+  word-break: break-word;
+}
+
 .selectize-image-header.ui.segment .container > .ui.cards > .ui.card > .content > .meta {
   font-size: 0.7em;
 }
