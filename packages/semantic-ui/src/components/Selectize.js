@@ -48,8 +48,13 @@ type GridProps = ListProps & {
   onInit: () => void,
   onItemSelection: (item: any) => void,
   onSelect: (item: any) => void,
-  renderHeader: (params: any) => Element<any>,
-  renderItem: (item: any) => Element<any>,
+  renderHeader?: (params: any) => Element<any>,
+  renderItem?: (item: any) => Element<any>,
+  renderItems?: ({
+    isSelected: (item: any) => boolean,
+    items: any,
+    onSelect: () => void
+  }) => Element<any>,
   selectedItem: any,
   selectedItems: Array<any>
 };
@@ -111,6 +116,14 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
   const renderItems = useCallback(() => {
     if (_.isEmpty(props.items)) {
       return null;
+    }
+
+    if (props.renderItems) {
+      return props.renderItems({
+        isSelected: props.isSelected,
+        items: props.items,
+        onSelect: props.onSelect
+      });
     }
 
     return (

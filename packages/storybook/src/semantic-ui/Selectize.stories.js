@@ -4,7 +4,7 @@ import React from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
-import { Card } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
@@ -445,6 +445,41 @@ export const CustomHeader = () => (
           </Card>
         )}
       />
+    )}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);
+
+export const CustomRender = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={action('save')}
+    renderItems={({ isSelected, items: innerItems, onSelect }) => (
+      <Card.Group>
+        { _.map(innerItems, (item) => (
+          <Card
+            color={isSelected(item) ? 'green' : 'undefined'}
+            description={item.ip_address}
+            header={`${item.first_name} ${item.last_name}`}
+            link
+            meta={item.email}
+            onClick={onSelect.bind(this, item)}
+          />
+        ))}
+      </Card.Group>
     )}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
     title={text('Title', 'Select some')}
