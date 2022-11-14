@@ -15,12 +15,14 @@ import {
   Image,
   Ref
 } from 'semantic-ui-react';
+import Draggable from './Draggable';
 import './HorizontalCards.css';
 
 type Props = {
   inlineImage?: boolean,
   items: Array<any>,
   onClick?: (item: any, index: number) => void,
+  onDrag?: (dragIndex: number, hoverIndex: number) => void,
   perPage: number,
   renderDescription?: (item: any) => Element<any> | string,
   renderExtra?: (item: any) => Element<any> | string,
@@ -137,45 +139,68 @@ const HorizontalCards = (props: Props) => {
    *
    * @returns {JSX.Element}
    */
-  const renderCard = (item, index) => (
-    <Card
-      link
-      onClick={props.onClick && props.onClick.bind(this, item, index)}
-      style={cardStyle}
-    >
-      { !props.inlineImage && renderImage(item) }
-      { (props.renderHeader || props.renderMeta || props.renderDescription) && (
-        <Card.Content>
-          { props.inlineImage && renderImage(item) }
-          { props.renderHeader && (
-            <Card.Header
-              as={Header}
-              size='small'
-            >
-              { props.renderHeader(item) }
-            </Card.Header>
-          )}
-          { props.renderMeta && (
-            <Card.Meta>
-              { props.renderMeta(item) }
-            </Card.Meta>
-          )}
-          { props.renderDescription && (
-            <Card.Description>
-              { props.renderDescription(item) }
-            </Card.Description>
-          )}
-        </Card.Content>
-      )}
-      { props.renderExtra && (
-        <Card.Content
-          extra
+  const renderCard = (item, index) => {
+    let card = (
+      <Card
+        link
+        onClick={props.onClick && props.onClick.bind(this, item, index)}
+        style={cardStyle}
+      >
+        { !props.inlineImage && renderImage(item) }
+        { (props.renderHeader || props.renderMeta || props.renderDescription) && (
+          <Card.Content>
+            { props.inlineImage && renderImage(item) }
+            { props.renderHeader && (
+              <Card.Header
+                as={Header}
+                size='small'
+              >
+                { props.renderHeader(item) }
+              </Card.Header>
+            )}
+            { props.renderMeta && (
+              <Card.Meta>
+                { props.renderMeta(item) }
+              </Card.Meta>
+            )}
+            { props.renderDescription && (
+              <Card.Description>
+                { props.renderDescription(item) }
+              </Card.Description>
+            )}
+          </Card.Content>
+        )}
+        { props.renderExtra && (
+          <Card.Content
+            extra
+          >
+            { props.renderExtra(item) }
+          </Card.Content>
+        )}
+      </Card>
+    );
+
+    if (props.onDrag) {
+      // Since the item may not be saved yet, we'll look for the ID or UID columns as the key. This is necessary to
+      // maintain the correct element when dragging.
+      const key = item.id || item.uid;
+
+      card = (
+        <Draggable
+          direction='horizontal'
+          id={key}
+          index={index}
+          item={item}
+          key={key}
+          onDrag={props.onDrag}
         >
-          { props.renderExtra(item) }
-        </Card.Content>
-      )}
-    </Card>
-  );
+          { card }
+        </Draggable>
+      );
+    }
+
+    return card;
+  };
 
   /**
    * Renders the image based on the return type of the renderImage prop. String values returned will be assumed to be

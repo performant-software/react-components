@@ -1,17 +1,19 @@
 // @flow
 
 import { faker } from '@faker-js/faker';
-import React, { useMemo, type ComponentType } from 'react';
+import React, { useEffect, useState, type ComponentType } from 'react';
 import _ from 'underscore';
 import NumberUtils from '../utils/Number';
 
 const withImages = (WrappedComponent: ComponentType<any>, imageCount: number) => (props: any) => {
+  const [images, setImages] = useState([]);
+
   /**
    * Sets the images to pass to the wrapped component.
    *
    * @type {[]}
    */
-  const images = useMemo(() => {
+  useEffect(() => {
     const i = [];
 
     _.times(imageCount, (index) => {
@@ -26,13 +28,14 @@ const withImages = (WrappedComponent: ComponentType<any>, imageCount: number) =>
       });
     });
 
-    return i;
+    setImages(i);
   }, []);
 
   return (
     <WrappedComponent
       {...props}
       images={images}
+      setImages={setImages}
     />
   );
 };
