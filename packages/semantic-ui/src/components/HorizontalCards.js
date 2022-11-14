@@ -19,6 +19,9 @@ import Draggable from './Draggable';
 import './HorizontalCards.css';
 
 type Props = {
+  cardClassName?: string,
+  cardsClassName?: string,
+  className?: string,
   inlineImage?: boolean,
   items: Array<any>,
   onClick?: (item: any, index: number) => void,
@@ -47,6 +50,25 @@ const HorizontalCards = (props: Props) => {
   const cardStyle = useMemo(() => ({
     flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
   }), [pageWidth, marginWidth, props.perPage]);
+
+  /**
+   * Helper function to concatenate class names.
+   *
+   * @type {function(*, *=): string}
+   */
+  const getClassName = useCallback((className, defaultClassName = null) => {
+    const classNames = [];
+
+    if (defaultClassName) {
+      classNames.push(defaultClassName);
+    }
+
+    if (className) {
+      classNames.push(className);
+    }
+
+    return classNames.join(' ');
+  }, []);
 
   /**
    * Initializes the page width and scroll pages on the sate.
@@ -142,6 +164,7 @@ const HorizontalCards = (props: Props) => {
   const renderCard = (item, index) => {
     let card = (
       <Card
+        className={getClassName(props.cardClassName)}
         link
         onClick={props.onClick && props.onClick.bind(this, item, index)}
         style={cardStyle}
@@ -229,12 +252,14 @@ const HorizontalCards = (props: Props) => {
 
   return (
     <div
-      className='horizontal-cards'
+      className={getClassName(props.className, 'horizontal-cards')}
     >
       <Ref
         innerRef={ref}
       >
-        <Card.Group>
+        <Card.Group
+          className={getClassName(props.cardsClassName)}
+        >
           { _.map(props.items, renderCard.bind(this)) }
         </Card.Group>
       </Ref>
