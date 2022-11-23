@@ -296,66 +296,68 @@ const TreeGraph = (props: Props) => {
       _.each(groups, (group) => {
         const circle = _.first(group.getElementsByTagName('circle'));
         const rect = _.first(group.getElementsByTagName('rect'));
-
         const text = _.first(group.getElementsByTagName('text'));
-        const { height } = text.getBBox();
 
-        if (!text.getElementsByTagName('tspan').length) {
-          const words = text.innerHTML.split(/\s+/);
+        if (text) {
+          const { height } = text.getBBox();
 
-          const lines = [];
-          let lineIndex = 0;
+          if (!text.getElementsByTagName('tspan').length) {
+            const words = text.innerHTML.split(/\s+/);
 
-          for (let i = 0; i < words.length; i += 1) {
-            // Initialize the line array for the current line
-            if (!lines[lineIndex]) {
-              lines[lineIndex] = [];
-            }
+            const lines = [];
+            let lineIndex = 0;
 
-            // Add the current word to the current line
-            lines[lineIndex].push(words[i]);
-
-            // Look ahead to the next word and increment the line index if necessary
-            if (i < words.length - 1) {
-              const testElement = text.cloneNode();
-              testElement.innerHTML = [...lines[lineIndex], words[i + 1]].join(' ');
-              group.append(testElement);
-
-              if (testElement.getBBox().width > props.nodeWidth) {
-                lineIndex += 1;
+            for (let i = 0; i < words.length; i += 1) {
+              // Initialize the line array for the current line
+              if (!lines[lineIndex]) {
+                lines[lineIndex] = [];
               }
 
-              testElement.remove();
-            }
-          }
+              // Add the current word to the current line
+              lines[lineIndex].push(words[i]);
 
-          // Append the lines to the text element
-          _.each(lines, (line, index) => {
-            const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-            tspan.setAttribute('x', '0');
-            if (index > 0) {
-              tspan.setAttribute('dy', `${height}px`);
-            }
-            tspan.appendChild(document.createTextNode(line.join(' ')));
+              // Look ahead to the next word and increment the line index if necessary
+              if (i < words.length - 1) {
+                const testElement = text.cloneNode();
+                testElement.innerHTML = [...lines[lineIndex], words[i + 1]].join(' ');
+                group.append(testElement);
 
-            if (index === 0) {
-              text.replaceChildren(tspan);
-            } else {
-              text.appendChild(tspan);
-            }
-          });
+                if (testElement.getBBox().width > props.nodeWidth) {
+                  lineIndex += 1;
+                }
 
-          // Set the shape attributes based on the text size
-          const bbox = text.getBBox();
-          if (circle && text) {
-            circle.setAttribute('x', bbox.x - padding);
-            circle.setAttribute('y', bbox.y - padding);
-            circle.setAttribute('r', (bbox.width / 2) + padding);
-          } else if (rect && text) {
-            rect.setAttribute('x', bbox.x - padding);
-            rect.setAttribute('y', bbox.y - padding);
-            rect.setAttribute('width', bbox.width + 2 * padding);
-            rect.setAttribute('height', bbox.height + 2 * padding);
+                testElement.remove();
+              }
+            }
+
+            // Append the lines to the text element
+            _.each(lines, (line, index) => {
+              const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+              tspan.setAttribute('x', '0');
+              if (index > 0) {
+                tspan.setAttribute('dy', `${height}px`);
+              }
+              tspan.appendChild(document.createTextNode(line.join(' ')));
+
+              if (index === 0) {
+                text.replaceChildren(tspan);
+              } else {
+                text.appendChild(tspan);
+              }
+            });
+
+            // Set the shape attributes based on the text size
+            const bbox = text.getBBox();
+            if (circle && text) {
+              circle.setAttribute('x', bbox.x - padding);
+              circle.setAttribute('y', bbox.y - padding);
+              circle.setAttribute('r', (bbox.width / 2) + padding);
+            } else if (rect && text) {
+              rect.setAttribute('x', bbox.x - padding);
+              rect.setAttribute('y', bbox.y - padding);
+              rect.setAttribute('width', bbox.width + 2 * padding);
+              rect.setAttribute('height', bbox.height + 2 * padding);
+            }
           }
         }
       });
