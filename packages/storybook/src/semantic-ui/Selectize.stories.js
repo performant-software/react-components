@@ -10,6 +10,8 @@ import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import Selectize from '../../../semantic-ui/src/components/Selectize';
 import SelectizeHeader from '../../../semantic-ui/src/components/SelectizeHeader';
+import SelectizeImageHeader from '../../../semantic-ui/src/components/SelectizeImageHeader';
+import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/Selectize',
@@ -450,3 +452,108 @@ export const CustomHeader = () => (
     title={text('Title', 'Select some')}
   />
 );
+
+export const CustomRender = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={action('save')}
+    renderItems={({ isSelected, items: innerItems, onSelect }) => (
+      <Card.Group>
+        { _.map(innerItems, (item) => (
+          <Card
+            color={isSelected(item) ? 'green' : undefined}
+            description={item.ip_address}
+            header={`${item.first_name} ${item.last_name}`}
+            link
+            meta={item.email}
+            onClick={onSelect.bind(this, item)}
+          />
+        ))}
+      </Card.Group>
+    )}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);
+
+export const MaxSelection = () => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    multiple={3}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={action('save')}
+    renderItem={(item) => `${item.first_name} ${item.last_name}`}
+    title={text('Title', 'Select some')}
+  />
+);
+
+export const Images = withImages((props) => (
+  <Selectize
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      onSave: () => {
+        action('add save')();
+        return Promise.resolve();
+      }
+    }}
+    onClose={action('close')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items: props.images,
+      perPage: number('Per page', 10)
+    }))}
+    onSave={action('save')}
+    renderHeader={({ onItemClick, selectedItem, selectedItems }) => (
+      <SelectizeImageHeader
+        isSelected={(item) => item === selectedItem}
+        items={selectedItems}
+        onItemClick={onItemClick}
+        renderImage={(item) => item.image}
+        renderHeader={(item) => item.title}
+        renderMeta={(item) => item.subtitle}
+        selectedItem={selectedItem}
+        selectedItems={selectedItems}
+      />
+    )}
+    renderItems={({ isSelected, items: innerItems, onSelect }) => (
+      <Card.Group
+        itemsPerRow={5}
+        link
+      >
+        { _.map(innerItems, (item) => (
+          <Card
+            color={isSelected(item) ? 'green' : undefined}
+            image={item.image}
+            header={item.title}
+            meta={item.subtitle}
+            onClick={() => onSelect(item)}
+          />
+        ))}
+      </Card.Group>
+    )}
+    title={text('Title', 'Select some')}
+  />
+), 50);

@@ -6,15 +6,20 @@ import { useDrag, useDrop } from 'react-dnd';
 
 type Props = {
   children: Element<any>,
+  direction: 'horizontal' | 'vertical',
   id: any,
   index: number,
-  onDrag: (dragIndex: number, hoverIndex: number) => void
+  onDrag: (dragIndex: number, hoverIndex: number) => void,
+  onDragEnd?: () => void,
+  onDragStart?: () => void
 };
+
+const DIRECTION_VERTICAL = 'vertical';
 
 const TYPE_ANY = 'any';
 
 const Draggable = (props: Props) => {
-  const { index, id } = props;
+  const { index, id, direction = DIRECTION_VERTICAL } = props;
 
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -35,25 +40,36 @@ const Draggable = (props: Props) => {
       // Determine rectangle on screen
       const hoverBoundingRect = ref.current.getBoundingClientRect();
 
-      // Get vertical middle
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
 
-      // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      let hoverMiddle;
+      let hoverClient;
+
+      // Get middle
+      if (direction === DIRECTION_VERTICAL) {
+        hoverMiddle = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      } else {
+        hoverMiddle = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+      }
+
+      // Get pixels to the top/left
+      if (direction === DIRECTION_VERTICAL) {
+        hoverClient = clientOffset.y - hoverBoundingRect.top;
+      } else {
+        hoverClient = clientOffset.x - hoverBoundingRect.left;
+      }
 
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
       // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      if (dragIndex < hoverIndex && hoverClient < hoverMiddle) {
         return;
       }
 
       // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      if (dragIndex > hoverIndex && hoverClient > hoverMiddle) {
         return;
       }
 
@@ -71,6 +87,8 @@ const Draggable = (props: Props) => {
 
   const [{ isDragging }, drag] = useDrag({
     item: { type: TYPE_ANY, id, index },
+    begin: () => props.onDragStart && props.onDragStart(),
+    end: () => props.onDragEnd && props.onDragEnd(),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

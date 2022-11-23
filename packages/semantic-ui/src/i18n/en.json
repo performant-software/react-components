@@ -44,11 +44,13 @@
       "close": "Close",
       "download": "Download",
       "edit": "Edit",
+      "hide": "Hide",
       "iiif": "View IIIF",
       "ok": "OK",
       "open": "Open",
       "save": "Save",
       "search": "Search",
+      "show": "Show",
       "upload": "Upload"
     },
     "errors": {
@@ -259,7 +261,13 @@
     }
   },
   "Selectize": {
-    "noRecords": "No matching records."
+    "messages": {
+      "maxSelected": {
+        "content": "You have already selected the maximum number of items allowed.",
+        "header": "Maximum items selected"
+      },
+      "noRecords": "No matching records."
+    }
   },
   "VideoFrameSelector": {
     "buttons": {

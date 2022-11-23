@@ -5,6 +5,7 @@ import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import HorizontalCards from '../../../semantic-ui/src/components/HorizontalCards';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
 import withImages from '../hooks/Images';
 
 export default {
@@ -21,6 +22,25 @@ export const Default = withImages((props) => (
     renderMeta={(item) => item.subtitle}
   />
 ), 50);
+
+export const DragAndDrop = useDragDrop(withImages((props) => (
+  <HorizontalCards
+    items={props.images}
+    onDrag={(dragIndex, hoverIndex) => {
+      const temp = [...props.images];
+      const item = temp[dragIndex];
+
+      temp.splice(dragIndex, 1);
+      temp.splice(hoverIndex, 0, item);
+
+      props.setImages(temp);
+    }}
+    renderDescription={(item) => item.description}
+    renderHeader={(item) => item.title}
+    renderImage={(item) => item.image}
+    renderMeta={(item) => item.subtitle}
+  />
+), 10));
 
 export const InlineImages = withImages((props) => (
   <HorizontalCards
