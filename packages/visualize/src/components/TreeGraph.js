@@ -32,7 +32,6 @@ import './TreeGraph.css';
 
 type Props = ZoomProps & {
   data: any,
-  fontSize: number,
   layout: string,
   linkType: string,
   offset: number,
@@ -47,12 +46,8 @@ type Props = ZoomProps & {
     bottom: number,
     left: number
   },
-  nodeWidth: number,
-  onClick?: (data: any) => void,
   renderNode?: (data: any) => Element<any>,
-  renderText?: (data: any) => Element<any>,
   stepPercent: number,
-  textColor: string
 };
 
 const Layout = {
@@ -198,10 +193,7 @@ const TreeGraph = (props: Props) => {
   }, [getMaxDepth, innerHeight, innerWidth, props.data, props.layout, props.orientation]);
 
   const renderNode = useCallback((node) => (
-    <foreignObject
-      width='100%'
-      height='100%'
-    >
+    <foreignObject>
       { props.renderNode(node.data) }
     </foreignObject>
   ), [props.renderNode]);
@@ -216,6 +208,8 @@ const TreeGraph = (props: Props) => {
 
     return (
       <Group
+        nodeleft={left}
+        nodetop={top}
         top={top}
         left={left}
         key={key}
@@ -235,14 +229,20 @@ const TreeGraph = (props: Props) => {
       const groups = current.getElementsByTagName('g');
       _.each(groups, (group) => {
         const object = _.first(group.getElementsByTagName('foreignObject'));
-        const { offsetWidth: width, offsetHeight: height } = object.firstChild;
+        if (object && object.firstChild) {
+          const { offsetWidth: width, offsetHeight: height } = object.firstChild;
 
-        const style = window.getComputedStyle(group);
-        const matrix = new DOMMatrixReadOnly(style.transform);
-        const { m41: translateX, m42: translateY } = matrix;
+          // Set the width and height of the foreignObject element
+          object.setAttribute('width', width);
+          object.setAttribute('height', height);
 
-        const transform = `translate(${translateX - (width / 2.0)}, ${translateY - (height / 2.0)})`;
-        group.setAttribute('transform', transform);
+          // Transform the position of the group element based on the width and height of the contents
+          const leftPosition = parseFloat(group.getAttribute('nodeleft'));
+          const topPosition = parseFloat(group.getAttribute('nodetop'));
+
+          const transform = `translate(${leftPosition - (width / 2.0)}, ${topPosition - (height / 2.0)})`;
+          group.setAttribute('transform', transform);
+        }
       });
     }
   }, [props.data, props.layout, props.orientation, props.linkType]);
@@ -250,7 +250,6 @@ const TreeGraph = (props: Props) => {
   return (
     <div
       className='tree-graph'
-      ref={ref}
       style={{
         display: 'flex',
         flexGrow: '1'
@@ -274,6 +273,7 @@ const TreeGraph = (props: Props) => {
           >
             { (tree) => (
               <Group
+                innerRef={ref}
                 left={root.origin.x}
                 top={root.origin.y}
               >
@@ -298,7 +298,6 @@ const TreeGraph = (props: Props) => {
 };
 
 TreeGraph.defaultProps = {
-  fontSize: 12,
   layout: Layout.cartesian,
   linkColor: '#B2B09B',
   linkType: LinkType.line,
@@ -309,11 +308,9 @@ TreeGraph.defaultProps = {
     right: 30,
     bottom: 70
   },
-  nodeWidth: 75,
   offset: 0,
   orientation: Orientation.horizontal,
-  stepPercent: 0.5,
-  textColor: '#FFFFFF'
+  stepPercent: 0.5
 };
 
 const TreeGraphComponent: ComponentType<any> = withParentSize(withZoom(TreeGraph));
