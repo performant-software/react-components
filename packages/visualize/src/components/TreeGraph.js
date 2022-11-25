@@ -240,7 +240,7 @@ const TreeGraph = (props: Props) => {
           const leftPosition = parseFloat(group.getAttribute('nodeleft'));
           const topPosition = parseFloat(group.getAttribute('nodetop'));
 
-          if (_.isNumber(leftPosition) && _.isNumber(topPosition)) {
+          if (!_.isNaN(leftPosition) && !_.isNaN(topPosition)) {
             const transform = `translate(${leftPosition - (width / 2.0)}, ${topPosition - (height / 2.0)})`;
             group.setAttribute('transform', transform);
           }
