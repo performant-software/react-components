@@ -12,7 +12,7 @@ export default {
 };
 
 const data = {
-  name: 'Byker',
+  name: 'A',
   isExpanded: true,
   children: [
     {
