@@ -91,18 +91,19 @@ export const Default = () => {
         linkType={select('Link Type', ['curve', 'line', 'step'])}
         orientation={select('Orientation', ['horizontal', 'vertical'])}
         renderNode={(node) => (
-          <div
-            role='button'
+          <button
             onClick={() => setItems(updateNode(node, items))}
             style={{
               backgroundColor: '#FFF',
               border: '1px solid black',
+              cursor: 'pointer',
               padding: '10px',
               width: 'fit-content'
             }}
+            type='button'
           >
             { node.name }
-          </div>
+          </button>
         )}
       />
     </div>
