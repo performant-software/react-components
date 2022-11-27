@@ -47,7 +47,7 @@ type Props = ZoomProps & {
     left: number
   },
   renderNode?: (data: any) => Element<any>,
-  stepPercent: number,
+  stepPercent: number
 };
 
 const Layout = {
