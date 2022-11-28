@@ -12,7 +12,7 @@ export default {
 };
 
 const data = {
-  name: 'T',
+  name: 'A',
   isExpanded: true,
   children: [
     {
@@ -89,8 +89,22 @@ export const Default = () => {
         data={items}
         layout={select('Layout', ['cartesian', 'polar'])}
         linkType={select('Link Type', ['curve', 'line', 'step'])}
-        onClick={(node) => setItems(updateNode(node, items))}
         orientation={select('Orientation', ['horizontal', 'vertical'])}
+        renderNode={(node) => (
+          <button
+            onClick={() => setItems(updateNode(node, items))}
+            style={{
+              backgroundColor: '#FFF',
+              border: '1px solid black',
+              cursor: 'pointer',
+              padding: '10px',
+              width: 'fit-content'
+            }}
+            type='button'
+          >
+            { node.name }
+          </button>
+        )}
       />
     </div>
   );

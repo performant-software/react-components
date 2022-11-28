@@ -32,7 +32,6 @@ import './TreeGraph.css';
 
 type Props = ZoomProps & {
   data: any,
-  fontSize: number,
   layout: string,
   linkType: string,
   offset: number,
@@ -47,12 +46,8 @@ type Props = ZoomProps & {
     bottom: number,
     left: number
   },
-  nodeWidth: number,
-  onClick?: (data: any) => void,
   renderNode?: (data: any) => Element<any>,
-  renderText?: (data: any) => Element<any>,
-  stepPercent: number,
-  textColor: string
+  stepPercent: number
 };
 
 const Layout = {
@@ -70,19 +65,6 @@ const Orientation = {
   horizontal: 'horizontal',
   vertical: 'vertical'
 };
-
-const Circle: ComponentType<any> = (props: any) => (
-  <circle
-    r={props.radius}
-    {...props}
-  />
-);
-
-const Rectangle: ComponentType<any> = (props: any) => (
-  <rect
-    {...props}
-  />
-);
 
 const TreeGraph = (props: Props) => {
   const ref = useRef();
@@ -210,59 +192,11 @@ const TreeGraph = (props: Props) => {
     };
   }, [getMaxDepth, innerHeight, innerWidth, props.data, props.layout, props.orientation]);
 
-  /**
-   * Renders the passed node. If provided, only the "renderNode" prop is called.
-   *
-   * @type {(function(*): (*))|*}
-   */
-  const renderNode = useCallback((node) => {
-    if (props.renderNode) {
-      return props.renderNode(node.data);
-    }
-
-    if (node.depth === 0) {
-      return (
-        <Circle
-          fill='#FF4A4A'
-          onClick={props.onClick && props.onClick.bind(this, node.data)}
-        />
-      );
-    }
-
-    return (
-      <Rectangle
-        fill='#272b4d'
-        stroke={node.data.children ? '#03c0dc' : '#26deb0'}
-        strokeWidth={1}
-        strokeDasharray={node.data.children ? '0' : '2,2'}
-        strokeOpacity={node.data.children ? 1 : 0.6}
-        rx={node.data.children ? 0 : 10}
-        onClick={props.onClick && props.onClick.bind(this, node.data)}
-      />
-    );
-  }, [props.onClick, props.renderNode]);
-
-  /**
-   * Renders the text for the passed node.
-   *
-   * @type {(function(*): (*))|*}
-   */
-  const renderText = useCallback((node) => {
-    if (props.renderText) {
-      return props.renderText(node.data);
-    }
-
-    return (
-      <text
-        dy='0.33em'
-        fontSize={props.fontSize}
-        textAnchor='middle'
-        fill={props.textColor}
-      >
-        { node.data.name }
-      </text>
-    );
-  }, [props.renderText]);
+  const renderNode = useCallback((node) => (
+    <foreignObject>
+      { props.renderNode(node.data) }
+    </foreignObject>
+  ), [props.renderNode]);
 
   /**
    * Renders the group element for the passed node.
@@ -274,15 +208,16 @@ const TreeGraph = (props: Props) => {
 
     return (
       <Group
+        nodeleft={left}
+        nodetop={top}
         top={top}
         left={left}
         key={key}
       >
         { renderNode(node) }
-        { renderText(node) }
       </Group>
     );
-  }, [renderNode, renderText, props.layout, props.orientation]);
+  }, [renderNode, props.layout, props.orientation, props.linkType]);
 
   /**
    * Resizes the "circle" and "rect" elements based on the text contained in the group. This effect will also
@@ -291,81 +226,32 @@ const TreeGraph = (props: Props) => {
   useEffect(() => {
     const { current } = ref;
     if (current) {
-      const padding = 15;
       const groups = current.getElementsByTagName('g');
       _.each(groups, (group) => {
-        const circle = _.first(group.getElementsByTagName('circle'));
-        const rect = _.first(group.getElementsByTagName('rect'));
+        const object = _.first(group.getElementsByTagName('foreignObject'));
+        if (object && object.firstChild) {
+          const { offsetWidth: width, offsetHeight: height } = object.firstChild;
 
-        const text = _.first(group.getElementsByTagName('text'));
-        const { height } = text.getBBox();
+          // Set the width and height of the foreignObject element
+          object.setAttribute('width', width);
+          object.setAttribute('height', height);
 
-        if (!text.getElementsByTagName('tspan').length) {
-          const words = text.innerHTML.split(/\s+/);
+          // Transform the position of the group element based on the width and height of the contents
+          const leftPosition = parseFloat(group.getAttribute('nodeleft'));
+          const topPosition = parseFloat(group.getAttribute('nodetop'));
 
-          const lines = [];
-          let lineIndex = 0;
-
-          for (let i = 0; i < words.length; i += 1) {
-            // Initialize the line array for the current line
-            if (!lines[lineIndex]) {
-              lines[lineIndex] = [];
-            }
-
-            // Add the current word to the current line
-            lines[lineIndex].push(words[i]);
-
-            // Look ahead to the next word and increment the line index if necessary
-            if (i < words.length - 1) {
-              const testElement = text.cloneNode();
-              testElement.innerHTML = [...lines[lineIndex], words[i + 1]].join(' ');
-              group.append(testElement);
-
-              if (testElement.getBBox().width > props.nodeWidth) {
-                lineIndex += 1;
-              }
-
-              testElement.remove();
-            }
-          }
-
-          // Append the lines to the text element
-          _.each(lines, (line, index) => {
-            const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-            tspan.setAttribute('x', '0');
-            if (index > 0) {
-              tspan.setAttribute('dy', `${height}px`);
-            }
-            tspan.appendChild(document.createTextNode(line.join(' ')));
-
-            if (index === 0) {
-              text.replaceChildren(tspan);
-            } else {
-              text.appendChild(tspan);
-            }
-          });
-
-          // Set the shape attributes based on the text size
-          const bbox = text.getBBox();
-          if (circle && text) {
-            circle.setAttribute('x', bbox.x - padding);
-            circle.setAttribute('y', bbox.y - padding);
-            circle.setAttribute('r', (bbox.width / 2) + padding);
-          } else if (rect && text) {
-            rect.setAttribute('x', bbox.x - padding);
-            rect.setAttribute('y', bbox.y - padding);
-            rect.setAttribute('width', bbox.width + 2 * padding);
-            rect.setAttribute('height', bbox.height + 2 * padding);
+          if (!_.isNaN(leftPosition) && !_.isNaN(topPosition)) {
+            const transform = `translate(${leftPosition - (width / 2.0)}, ${topPosition - (height / 2.0)})`;
+            group.setAttribute('transform', transform);
           }
         }
       });
     }
-  }, [props.data]);
+  }, [props.data, props.layout, props.orientation, props.linkType]);
 
   return (
     <div
       className='tree-graph'
-      ref={ref}
       style={{
         display: 'flex',
         flexGrow: '1'
@@ -389,8 +275,9 @@ const TreeGraph = (props: Props) => {
           >
             { (tree) => (
               <Group
-                top={root.origin.y}
+                innerRef={ref}
                 left={root.origin.x}
+                top={root.origin.y}
               >
                 { tree.links().map((link, i) => (
                   <LinkComponent
@@ -413,7 +300,6 @@ const TreeGraph = (props: Props) => {
 };
 
 TreeGraph.defaultProps = {
-  fontSize: 12,
   layout: Layout.cartesian,
   linkColor: '#B2B09B',
   linkType: LinkType.line,
@@ -424,20 +310,10 @@ TreeGraph.defaultProps = {
     right: 30,
     bottom: 70
   },
-  nodeWidth: 75,
   offset: 0,
   orientation: Orientation.horizontal,
-  stepPercent: 0.5,
-  textColor: '#FFFFFF'
+  stepPercent: 0.5
 };
 
-type TreeGraphType = ComponentType<any> & {
-  Circle: typeof Circle,
-  Rectangle: typeof Rectangle
-};
-
-const TreeGraphComponent: TreeGraphType = withParentSize(withZoom(TreeGraph));
-TreeGraphComponent.Circle = Circle;
-TreeGraphComponent.Rectangle = Rectangle;
-
+const TreeGraphComponent: ComponentType<any> = withParentSize(withZoom(TreeGraph));
 export default TreeGraphComponent;
