@@ -13,32 +13,30 @@ type Props = {
   value: ?string
 };
 
+const ReactQuill = lazy(() => import('react-quill'));
+
 const SEARCH_EMPTY = '<p><br></p>';
 const REPLACE_EMPTY = '';
 
-const RichTextArea = withSuspense((props: Props) => {
-  const ReactQuill = lazy(() => import('react-quill'));
+const RichTextArea = withSuspense((props: Props) => (
+  <ReactQuill
+    className='rich-text-area'
+    formats={props.formats}
+    modules={props.modules}
+    onChange={(value) => {
+      let newValue = value;
 
-  return (
-    <ReactQuill
-      className='rich-text-area'
-      formats={props.formats}
-      modules={props.modules}
-      onChange={(value) => {
-        let newValue = value;
+      if (value === SEARCH_EMPTY) {
+        newValue = REPLACE_EMPTY;
+      }
 
-        if (value === SEARCH_EMPTY) {
-          newValue = REPLACE_EMPTY;
-        }
-
-        props.onChange(newValue);
-      }}
-      placeholder={props.placeholder}
-      theme='snow'
-      value={props.value}
-    />
-  );
-});
+      props.onChange(newValue);
+    }}
+    placeholder={props.placeholder}
+    theme='snow'
+    value={props.value}
+  />
+));
 
 RichTextArea.defaultProps = {
   formats: [
