@@ -2,6 +2,7 @@
 
 import React, { lazy } from 'react';
 import withSuspense from '../hooks/Suspense';
+import 'react-quill/dist/quill.snow.css';
 import './RichTextArea.css';
 
 type Props = {
@@ -17,7 +18,6 @@ const REPLACE_EMPTY = '';
 
 const RichTextArea = withSuspense((props: Props) => {
   const ReactQuill = lazy(() => import('react-quill'));
-  lazy(() => import('react-quill/dist/quill.snow.css'));
 
   return (
     <ReactQuill
