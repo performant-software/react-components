@@ -2,7 +2,6 @@
 
 import React, { lazy } from 'react';
 import withSuspense from '../hooks/Suspense';
-import 'react-quill/dist/quill.snow.css';
 import './RichTextArea.css';
 
 type Props = {
