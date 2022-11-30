@@ -11,7 +11,7 @@ export { default as Keyboard } from './components/Keyboard';
 export { default as RichTextArea } from './components/RichTextArea';
 
 // Hooks
-export { default as withCitationStyles } from './hooks/CitationStyles';
+export { default as useCitationStyles } from './hooks/CitationStyles';
 
 // I18n
 export { default as i18n } from './i18n/i18n';

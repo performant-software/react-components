@@ -1,6 +1,6 @@
 // @flow
 
-import useCitationStyles from '@performant-software/shared-components';
+import { useCitationStyles } from '@performant-software/shared-components';
 import React, { useEffect } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
