@@ -1,3 +1,5 @@
+@import 'react-quill/dist/quill.snow.css';
+
 .rich-text-area.quill {
   width: 100%;
 }
