@@ -1,0 +1,25 @@
+{
+  "coreCitationStyles": [
+    {
+      "isDefault": false,
+      "name": "apa",
+      "title": "American Psychological Association 7th edition"
+    },
+    {
+      "isDefault": false,
+      "name": "chicago-note-bibliography",
+      "title": "Chicago Manual of Style 17th edition (note)"
+    },
+    {
+      "isDefault": true,
+      "name": "modern-language-association",
+      "title": "Modern Language Association 9th edition"
+    },
+    {
+      "isDefault": false,
+      "name": "turabian-fullnote-bibliography",
+      "title": "Turabian 8th edition (full note)"
+    }
+  ],
+  "citationStylesCount": 10349
+}

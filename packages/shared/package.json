@@ -12,6 +12,7 @@
     "@react-google-maps/api": "^2.8.1",
     "@samvera/clover-iiif": "^1.10.3",
     "axios": "^0.26.1",
+    "citeproc": "^2.4.62",
     "i18next": "^19.4.4",
     "moment": "^2.27.0",
     "moment-islamic-civil": "ACGC/moment-islamic-civil",
@@ -23,7 +24,8 @@
     "react-quill": "^2.0.0",
     "simple-keyboard": "^3.0.0",
     "simple-keyboard-layouts": "^3.0.0",
-    "underscore": "^1.13.2"
+    "underscore": "^1.13.2",
+    "zotero-translation-client": "^5.0.1"
   },
   "peerDependencies": {
     "react": ">= 16.13.1 < 18.0.0",
