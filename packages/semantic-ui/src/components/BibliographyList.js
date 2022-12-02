@@ -1,5 +1,6 @@
 // @flow
 
+import { Citation } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -17,7 +18,6 @@ import {
 import _ from 'underscore';
 import BibliographyModal from './BibliographyModal';
 import BibliographySearchInput from './BibliographySearchInput';
-import Citation from './Citation';
 import i18n from '../i18n/i18n';
 import SortSelector from './SortSelector';
 import { SORT_DESCENDING } from '../constants/Sort';
@@ -196,7 +196,6 @@ const BibliographyList = (props: Props) => {
     <>
       <StyleSelector
         onChange={(name, xml) => setStyle({ name, xml })}
-        value={style && style.name}
       />
       <SortSelector
         direction={sort.direction}

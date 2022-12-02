@@ -1,6 +1,7 @@
 // @flow
 
 // Components
+export { default as Citation } from './components/Citation';
 export { default as useEditContainer } from './components/EditContainer';
 export { default as withGoogleAnalytics } from './components/GoogleAnalytics';
 export { default as GoogleScript } from './components/GoogleScript';
@@ -8,6 +9,9 @@ export { default as IIIFViewer } from './components/IIIFViewer';
 export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
 export { default as RichTextArea } from './components/RichTextArea';
+
+// Hooks
+export { default as useCitationStyles } from './hooks/CitationStyles';
 
 // I18n
 export { default as i18n } from './i18n/i18n';
@@ -36,6 +40,7 @@ export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
 
 // Types
+export type { CitationsStyleProps } from './hooks/CitationStyles';
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './components/EditContainer';
 export type { RichTextAreaProps } from './components/RichTextArea';

@@ -1,14 +1,9 @@
 // @flow
 
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import { useCitationStyles } from '@performant-software/shared-components';
+import React, { useEffect } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
-import CitationStyles from '../resources/CitationStyles.json';
 
 type Props = {
   onChange: (name: string, xml: string) => void,
@@ -16,49 +11,24 @@ type Props = {
 };
 
 const StyleSelector = (props: Props) => {
-  const [stylesCache, setStylesCache] = useState({});
+  const { onStyleChange, style, styles } = useCitationStyles(props.value);
 
   /**
-   * Build the list of available style options.
-   *
-   * @type {{}}
-   */
-  const styles = useMemo(() => CitationStyles.coreCitationStyles, []);
-
-  /**
-   * Sets the style to the selected value. Styles are cached on the state so they do not need to be fetched
-   * more than once per render.
-   *
-   * @type {(function(*, {value: *}): void)|*}
-   */
-  const onChange = useCallback((e, { value }) => {
-    if (_.has(stylesCache, value)) {
-      props.onChange(value, stylesCache[value]);
-    } else {
-      fetch(`https://www.zotero.org/styles/${value}`)
-        .then((response) => response.text())
-        .then((xml) => {
-          props.onChange(value, xml);
-          setStylesCache((prevCache) => ({ ...prevCache, [value]: xml }));
-        });
-    }
-  }, [stylesCache]);
-
-  /**
-   * Default the selected style on component mount.
+   * Call the onChange prop when the style changes.
    */
   useEffect(() => {
-    const { name } = _.findWhere(styles, { isDefault: true });
-    onChange(null, { value: name });
-  }, []);
+    if (style?.name && style?.xml) {
+      props.onChange(style.name, style.xml);
+    }
+  }, [style]);
 
   return (
     <Dropdown
-      onChange={onChange}
-      options={_.map(styles, (style) => ({
-        key: style.name,
-        value: style.name,
-        text: style.title
+      onChange={(e, { value }) => onStyleChange(value)}
+      options={_.map(styles, ({ name, title }) => ({
+        key: name,
+        value: name,
+        text: title
       }))}
       search
       searchInput={{
@@ -66,8 +36,8 @@ const StyleSelector = (props: Props) => {
       }}
       selectOnBlur={false}
       selection
-      text={_.findWhere(styles, { name: props.value })?.title}
-      value={props.value}
+      text={style?.title}
+      value={style?.name || ''}
     />
   );
 };

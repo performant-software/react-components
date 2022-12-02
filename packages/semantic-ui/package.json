@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/semantic-components",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -12,10 +12,9 @@
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@performant-software/shared-components": "^1.0.8",
+    "@performant-software/shared-components": "^1.0.9",
     "@react-google-maps/api": "^2.8.1",
     "axios": "^0.26.1",
-    "citeproc": "^2.4.62",
     "i18next": "^19.4.4",
     "react-calendar": "^3.3.0",
     "react-color": "^2.18.1",
