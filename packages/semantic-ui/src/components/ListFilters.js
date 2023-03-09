@@ -75,6 +75,40 @@ const FilterOperators = {
   lessThan: 'less_than'
 };
 
+const FilterOperatorOptions = [{
+  key: FilterOperators.equal,
+  value: FilterOperators.equal,
+  text: i18n.t('ListFilters.operators.equal')
+}, {
+  key: FilterOperators.notEqual,
+  value: FilterOperators.notEqual,
+  text: i18n.t('ListFilters.operators.notEqual')
+}, {
+  key: FilterOperators.contain,
+  value: FilterOperators.contain,
+  text: i18n.t('ListFilters.operators.contain')
+}, {
+  key: FilterOperators.notContain,
+  value: FilterOperators.notContain,
+  text: i18n.t('ListFilters.operators.notContain')
+}, {
+  key: FilterOperators.empty,
+  value: FilterOperators.empty,
+  text: i18n.t('ListFilters.operators.empty')
+}, {
+  key: FilterOperators.notEmpty,
+  value: FilterOperators.notEmpty,
+  text: i18n.t('ListFilters.operators.notEmpty')
+}, {
+  key: FilterOperators.greaterThan,
+  value: FilterOperators.greaterThan,
+  text: i18n.t('ListFilters.operators.greaterThan')
+}, {
+  key: FilterOperators.lessThan,
+  value: FilterOperators.lessThan,
+  text: i18n.t('ListFilters.operators.lessThan')
+}];
+
 const OperatorsByType = {
   [FilterTypes.boolean]: [
     FilterOperators.equal
@@ -110,40 +144,6 @@ const OperatorsByType = {
   ]
 };
 
-const OperatorOptions = [{
-  key: FilterOperators.equal,
-  value: FilterOperators.equal,
-  text: i18n.t('ListFilters.operators.equal')
-}, {
-  key: FilterOperators.notEqual,
-  value: FilterOperators.notEqual,
-  text: i18n.t('ListFilters.operators.notEqual')
-}, {
-  key: FilterOperators.contain,
-  value: FilterOperators.contain,
-  text: i18n.t('ListFilters.operators.contain')
-}, {
-  key: FilterOperators.notContain,
-  value: FilterOperators.notContain,
-  text: i18n.t('ListFilters.operators.notContain')
-}, {
-  key: FilterOperators.empty,
-  value: FilterOperators.empty,
-  text: i18n.t('ListFilters.operators.empty')
-}, {
-  key: FilterOperators.notEmpty,
-  value: FilterOperators.notEmpty,
-  text: i18n.t('ListFilters.operators.notEmpty')
-}, {
-  key: FilterOperators.greaterThan,
-  value: FilterOperators.greaterThan,
-  text: i18n.t('ListFilters.operators.greaterThan')
-}, {
-  key: FilterOperators.lessThan,
-  value: FilterOperators.lessThan,
-  text: i18n.t('ListFilters.operators.lessThan')
-}];
-
 const ListFilters = (props: Props) => {
   /**
    * Returns the available operators for the passed filter type.
@@ -152,7 +152,7 @@ const ListFilters = (props: Props) => {
    */
   const getOperatorsByType = useCallback((type: string) => {
     const operators = OperatorsByType[type];
-    return _.filter(OperatorOptions, (option) => !operators || _.contains(operators, option.key));
+    return _.filter(FilterOperatorOptions, (option) => !operators || _.contains(operators, option.key));
   }, []);
 
   /**
@@ -400,5 +400,10 @@ export default ListFilters;
 
 export {
   FilterTypes,
-  FilterOperators
+  FilterOperators,
+  FilterOperatorOptions
+};
+
+export type {
+  Filter
 };

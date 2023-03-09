@@ -140,6 +140,11 @@
     "loader": "Uploading files...",
     "title": "Upload Files"
   },
+  "FilterLabels": {
+    "buttons": {
+      "clear": "Clear all"
+    }
+  },
   "FuzzyDate": {
     "accuracy": {
       "date": "Date",

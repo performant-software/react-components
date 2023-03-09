@@ -51,7 +51,8 @@ type Props = {
     component: ComponentType<any>,
     defaults?: any,
     props?: any,
-    onChange?: (filter: any) => Promise<any>
+    onChange?: (filter: any) => Promise<any>,
+    showLabels?: boolean
   },
 
   /**
@@ -530,7 +531,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       const { filters = {} } = this.props;
-      const { component, props } = filters;
+      const { component, props, showLabels } = filters;
 
       return (
         <>
@@ -541,6 +542,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               active: this.isFilterActive(),
               component,
               onChange: this.onFilterChange.bind(this),
+              showLabels,
               props: {
                 ...props,
                 onCreateFilter: this.onCreateFilter.bind(this),

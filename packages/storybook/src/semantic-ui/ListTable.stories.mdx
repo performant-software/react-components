@@ -21,7 +21,7 @@ import {
   RecordCount,
   Selectable,
   SortDescending,
-  Unsortable
+  Unsortable, ListFiltersModalWithLabels
 } from './ListTable.modules';
 
 <Meta
@@ -132,12 +132,20 @@ The `ListTable` can configure a custom filter modal tailored to the data being d
   <ListFiltersModal />
 </Story>
 
-## List Filters Modal (Default Filters)
+## List Filters Modal Default Filters
 
 <Story
-  name='List Filters Modal (Default Filters'
+  name='List Filters Modal Default Filters'
 >
   <ListFiltersModalDefaults />
+</Story>
+
+## List Filters Modal With Labels
+
+<Story
+  name='List Filters Modal With Labels'
+>
+  <ListFiltersModalWithLabels />
 </Story>
 
 ## Loading

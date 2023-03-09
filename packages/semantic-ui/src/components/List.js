@@ -15,6 +15,7 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import DropdownButton from './DropdownButton';
 import EditModal from './EditModal';
+import FilterLabels from './FilterLabels';
 import './List.css';
 
 type Action = {
@@ -105,7 +106,8 @@ type Props = {
     component: Component<{}>,
     props?: any,
     state?: any,
-    onChange: (params: any) => Promise<any>
+    onChange: (params: any) => Promise<any>,
+    showLabels?: boolean
   },
 
   /**
@@ -381,6 +383,18 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      */
     onFilterButton() {
       this.setState({ modalFilter: true });
+    }
+
+    /**
+     * Calls the filter onChange function with the passed filter removed.
+     *
+     * @param filter
+     *
+     * @returns {*}
+     */
+    onRemoveFilter(filter) {
+      const { onChange, props: { item } } = this.props.filters;
+      return onChange({ filters: _.filter(item.filters, (f) => f.uid !== filter.uid) });
     }
 
     /**
@@ -754,6 +768,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         renderHeader = true;
       }
 
+      const hasLabels = filters && filters.showLabels && !_.isEmpty(filters.props.item.filters);
+
       if (!renderHeader) {
         return null;
       }
@@ -763,41 +779,58 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           className='header'
         >
           <Grid
-            columns={2}
-            verticalAlign='bottom'
+            className={hasLabels ? 'filter-labels' : undefined}
+            verticalAlign='top'
           >
-            <Grid.Column
-              textAlign='left'
+            <Grid.Row
+              columns={2}
             >
-              { _.map(buttons, this.renderButton.bind(this)) }
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-            >
-              <Menu
-                compact
-                borderless
-                secondary
-                className='flex-end-menu'
+              <Grid.Column
+                textAlign='left'
               >
-                { renderListHeader && (
-                  <Menu.Menu className='list-header-menu'>
-                    { renderListHeader() }
+                { _.map(buttons, this.renderButton.bind(this)) }
+              </Grid.Column>
+              <Grid.Column
+                textAlign='right'
+              >
+                <Menu
+                  compact
+                  borderless
+                  secondary
+                  className='flex-end-menu'
+                >
+                  { renderListHeader && (
+                    <Menu.Menu className='list-header-menu'>
+                      { renderListHeader() }
+                    </Menu.Menu>
+                  )}
+                  <Menu.Menu>
+                    { filters && this.renderFilterButton() }
                   </Menu.Menu>
-                )}
-                <Menu.Menu>
-                  { filters && this.renderFilterButton() }
-                </Menu.Menu>
-                { perPageOptions && (
-                  <Menu.Menu className='per-page-menu'>
-                    { this.renderPerPage() }
+                  { perPageOptions && (
+                    <Menu.Menu className='per-page-menu'>
+                      { this.renderPerPage() }
+                    </Menu.Menu>
+                  )}
+                  <Menu.Menu>
+                    { renderSearch && renderSearch() }
                   </Menu.Menu>
-                )}
-                <Menu.Menu>
-                  { renderSearch && renderSearch() }
-                </Menu.Menu>
-              </Menu>
-            </Grid.Column>
+                </Menu>
+              </Grid.Column>
+            </Grid.Row>
+            { hasLabels && (
+              <Grid.Row
+                columns={1}
+              >
+                <Grid.Column>
+                  <FilterLabels
+                    filters={filters.props.item.filters}
+                    onClear={() => filters.onChange({ filters: [] })}
+                    onClick={(filter) => this.onRemoveFilter(filter)}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            )}
           </Grid>
         </div>
       );

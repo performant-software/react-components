@@ -378,6 +378,37 @@ export const ListFiltersModalDefaults = useDragDrop(() => (
   />
 ));
 
+export const ListFiltersModalWithLabels = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    filters={{
+      component: ListFilters,
+      props: {
+        filters: [{
+          attributeName: 'test',
+          label: 'Test',
+          key: 'test',
+          type: FilterTypes.string
+        }]
+      },
+      showLabels: true
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
 export const Loading = useDragDrop(() => (
   <ListTable
     actions={actions}
