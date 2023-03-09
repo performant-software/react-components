@@ -7,7 +7,6 @@ import React, {
   useMemo,
   type Element
 } from 'react';
-import uuid from 'react-uuid';
 import {
   Button,
   Checkbox,
@@ -51,7 +50,8 @@ type Props = EditContainerProps & {
   item: {
     filters: Array<Filter>,
     onSort: (filter: Filter) => any
-  }
+  },
+  onCreateFilter: (filter: Filter) => any
 };
 
 const FilterTypes = {
@@ -64,7 +64,7 @@ const FilterTypes = {
   text: 'text'
 };
 
-const Operators = {
+const FilterOperators = {
   equal: 'equal',
   notEqual: 'not_equal',
   contain: 'contain',
@@ -77,70 +77,70 @@ const Operators = {
 
 const OperatorsByType = {
   [FilterTypes.boolean]: [
-    Operators.equal
+    FilterOperators.equal
   ],
   [FilterTypes.date]: [
-    Operators.equal
+    FilterOperators.equal
   ],
   [FilterTypes.relationship]: [
-    Operators.equal,
-    Operators.notEqual,
-    Operators.empty,
-    Operators.notEmpty
+    FilterOperators.equal,
+    FilterOperators.notEqual,
+    FilterOperators.empty,
+    FilterOperators.notEmpty
   ],
   [FilterTypes.select]: [
-    Operators.equal,
-    Operators.notEqual,
-    Operators.empty,
-    Operators.notEmpty
+    FilterOperators.equal,
+    FilterOperators.notEqual,
+    FilterOperators.empty,
+    FilterOperators.notEmpty
   ],
   [FilterTypes.string]: [
-    Operators.equal,
-    Operators.notEqual,
-    Operators.contain,
-    Operators.notContain,
-    Operators.empty,
-    Operators.notEmpty
+    FilterOperators.equal,
+    FilterOperators.notEqual,
+    FilterOperators.contain,
+    FilterOperators.notContain,
+    FilterOperators.empty,
+    FilterOperators.notEmpty
   ],
   [FilterTypes.text]: [
-    Operators.contain,
-    Operators.notContain,
-    Operators.empty,
-    Operators.notEmpty
+    FilterOperators.contain,
+    FilterOperators.notContain,
+    FilterOperators.empty,
+    FilterOperators.notEmpty
   ]
 };
 
 const OperatorOptions = [{
-  key: Operators.equal,
-  value: Operators.equal,
+  key: FilterOperators.equal,
+  value: FilterOperators.equal,
   text: i18n.t('ListFilters.operators.equal')
 }, {
-  key: Operators.notEqual,
-  value: Operators.notEqual,
+  key: FilterOperators.notEqual,
+  value: FilterOperators.notEqual,
   text: i18n.t('ListFilters.operators.notEqual')
 }, {
-  key: Operators.contain,
-  value: Operators.contain,
+  key: FilterOperators.contain,
+  value: FilterOperators.contain,
   text: i18n.t('ListFilters.operators.contain')
 }, {
-  key: Operators.notContain,
-  value: Operators.notContain,
+  key: FilterOperators.notContain,
+  value: FilterOperators.notContain,
   text: i18n.t('ListFilters.operators.notContain')
 }, {
-  key: Operators.empty,
-  value: Operators.empty,
+  key: FilterOperators.empty,
+  value: FilterOperators.empty,
   text: i18n.t('ListFilters.operators.empty')
 }, {
-  key: Operators.notEmpty,
-  value: Operators.notEmpty,
+  key: FilterOperators.notEmpty,
+  value: FilterOperators.notEmpty,
   text: i18n.t('ListFilters.operators.notEmpty')
 }, {
-  key: Operators.greaterThan,
-  value: Operators.greaterThan,
+  key: FilterOperators.greaterThan,
+  value: FilterOperators.greaterThan,
   text: i18n.t('ListFilters.operators.greaterThan')
 }, {
-  key: Operators.lessThan,
-  value: Operators.lessThan,
+  key: FilterOperators.lessThan,
+  value: FilterOperators.lessThan,
   text: i18n.t('ListFilters.operators.lessThan')
 }];
 
@@ -169,7 +169,7 @@ const ListFilters = (props: Props) => {
    */
   const renderInput = useCallback((filter: Filter) => {
     // No need to render an input for "empty" or "not empty" operators
-    if (filter.operator === Operators.empty || filter.operator === Operators.notEmpty) {
+    if (filter.operator === FilterOperators.empty || filter.operator === FilterOperators.notEmpty) {
       return null;
     }
 
@@ -322,11 +322,10 @@ const ListFilters = (props: Props) => {
                   }))}
                   onChange={(e, { value }) => {
                     const filter = _.findWhere(props.filters, { key: value });
-                    props.onSaveChildAssociation('filters', {
+                    props.onSaveChildAssociation('filters', props.onCreateFilter({
                       ...filter,
-                      uid: uuid(),
-                      operator: Operators.equal
-                    });
+                      operator: FilterOperators.equal
+                    }));
                   }}
                   scrolling
                   text={i18n.t('ListFilters.buttons.add')}
@@ -382,17 +381,7 @@ const ListFilters = (props: Props) => {
                       <Button
                         basic
                         icon='times'
-                        onClick={() => {
-                          /*
-                           * If we're removing the last filter, call the onReset prop to ensure the UI doesn't display
-                           * as active.
-                           */
-                          if (props.item.filters && props.item.filters.length === 1) {
-                            props.onReset();
-                          } else {
-                            props.onDeleteChildAssociation('filters', filter);
-                          }
-                        }}
+                        onClick={() => props.onDeleteChildAssociation('filters', filter)}
                       />
                     </Grid.Column>
                   </Grid.Row>
@@ -410,5 +399,6 @@ const ListFilters = (props: Props) => {
 export default ListFilters;
 
 export {
-  FilterTypes
+  FilterTypes,
+  FilterOperators
 };

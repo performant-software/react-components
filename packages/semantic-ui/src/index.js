@@ -96,4 +96,4 @@ export type { BatchEditProps } from './hooks/BatchEdit';
 // Constants
 export { Views as ItemViews } from './components/ItemsToggle';
 export { SORT_ASCENDING, SORT_DESCENDING } from './components/DataList';
-export { FilterTypes } from './components/ListFilters';
+export { FilterTypes, FilterOperators } from './components/ListFilters';
