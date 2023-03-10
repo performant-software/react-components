@@ -16,6 +16,7 @@ type Item = {
 };
 
 type Props = {
+  disabled?: boolean,
   fluid?: boolean,
   multiple?: boolean,
   onChange: (item: Item) => void,
@@ -122,7 +123,7 @@ const ReferenceCodeDropdown = (props: Props) => {
   return (
     <Dropdown
       clearable
-      disabled={loading}
+      disabled={loading || props.disabled}
       fluid={props.fluid}
       loading={loading}
       multiple={props.multiple}
@@ -138,6 +139,7 @@ const ReferenceCodeDropdown = (props: Props) => {
 };
 
 ReferenceCodeDropdown.defaultProps = {
+  disabled: false,
   fluid: true,
   multiple: false,
   placeholder: undefined
