@@ -29,6 +29,11 @@ type Props = {
   closeOnComplete?: boolean,
 
   /**
+   * Component to render at top of modal.
+   */
+  headerComponent?: ComponentType<any>,
+
+  /**
    * Component to render within the modal.
    */
   itemComponent: ComponentType<any>,
@@ -344,6 +349,13 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   }, [statuses, props.strategy]);
 
   /**
+   * Memoization and case correction for the <code>headerComponent</code> prop.
+   *
+   * @type {React$AbstractComponent<*, *>}
+   */
+  const HeaderComponent = useMemo(() => props.headerComponent, [props.headerComponent]);
+
+  /**
    * Memoization and case correction for the <code>itemComponent</code> prop.
    *
    * @type {React$AbstractComponent<*, *>}
@@ -404,6 +416,13 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
             <FileUpload
               onFilesAdded={onAddFiles}
             />
+            { HeaderComponent && (
+              <HeaderComponent
+                items={items}
+                onSetItems={setItems}
+                uploading={uploading}
+              />
+            )}
             <Item.Group
               as={Form}
               divided
