@@ -9,7 +9,7 @@ import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import FilterModal from '../components/FilterModal';
 import items from '../data/Cars.json';
-import ListFilters from '../../../semantic-ui/src/components/ListFilters';
+import ListFilters, { FilterTypes, FilterOperators } from '../../../semantic-ui/src/components/ListFilters';
 import ListTable from '../../../semantic-ui/src/components/ListTable';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
@@ -323,9 +323,77 @@ export const ListFiltersModal = useDragDrop(() => (
           attributeName: 'test',
           label: 'Test',
           key: 'test',
-          type: 'string'
+          type: FilterTypes.string
         }]
       }
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const ListFiltersModalDefaults = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    filters={{
+      component: ListFilters,
+      defaults: {
+        filters: [{
+          key: 'test',
+          operator: FilterOperators.equal,
+          value: 'xyz'
+        }]
+      },
+      props: {
+        filters: [{
+          attributeName: 'test',
+          label: 'Test',
+          key: 'test',
+          type: FilterTypes.string
+        }]
+      }
+    }}
+    modal={{
+      component: AddModal
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={() => Promise.resolve()}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const ListFiltersModalWithLabels = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    filters={{
+      component: ListFilters,
+      props: {
+        filters: [{
+          attributeName: 'test',
+          label: 'Test',
+          key: 'test',
+          type: FilterTypes.string
+        }]
+      },
+      showLabels: true
     }}
     modal={{
       component: AddModal

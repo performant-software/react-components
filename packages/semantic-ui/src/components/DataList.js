@@ -2,6 +2,7 @@
 
 import { Object as ObjectUtils, Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType } from 'react';
+import uuid from 'react-uuid';
 import _ from 'underscore';
 import { Icon, Input, Message } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
@@ -50,7 +51,8 @@ type Props = {
     component: ComponentType<any>,
     defaults?: any,
     props?: any,
-    onChange?: (filter: any) => Promise<any>
+    onChange?: (filter: any) => Promise<any>,
+    showLabels?: boolean
   },
 
   /**
@@ -260,6 +262,30 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Returns the default filters from the "filter" prop. This method will merge the default filter with the actual
+     * filter and assign a UID value.
+     *
+     * @param props
+     *
+     * @returns {{filters: []}}
+     */
+    getDefaultFilters(props) {
+      const filters = [];
+
+      if (props.filters && props.filters.defaults) {
+        _.each(props.filters.defaults.filters, (f) => {
+          const filter = _.findWhere(props.filters.props.filters, { key: f.key });
+
+          if (filter) {
+            filters.push(this.onCreateFilter({ ...filter, ...f }));
+          }
+        });
+      }
+
+      return { filters };
+    }
+
+    /**
      * Returns the session storage key for the current list.
      *
      * @returns {string|null}
@@ -283,7 +309,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     initializeState(props: Props) {
       const session = this.restoreSession();
 
-      const filters = session.filters || (props.filters && props.filters.defaults) || {};
+      const filters = session.filters || this.getDefaultFilters(props);
       const page = session.page || 1;
       const perPage = session.perPage || props.defaultPerPage || _.first(props.perPageOptions);
       const search = session.search || props.defaultSearch || null;
@@ -337,6 +363,20 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       // Set the timer to execute a new search
       this.onSearch();
+    }
+
+    /**
+     * Returns the passed filter with a "uid" property assigned.
+     *
+     * @param filter
+     *
+     * @returns {*&{uid: string}}
+     */
+    onCreateFilter(filter) {
+      return {
+        ...filter,
+        uid: uuid()
+      };
     }
 
     /**
@@ -491,7 +531,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     render() {
       const { filters = {} } = this.props;
-      const { component, defaults, props } = filters;
+      const { component, props, showLabels } = filters;
 
       return (
         <>
@@ -502,9 +542,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               active: this.isFilterActive(),
               component,
               onChange: this.onFilterChange.bind(this),
+              showLabels,
               props: {
                 ...props,
-                defaults,
+                onCreateFilter: this.onCreateFilter.bind(this),
                 item: this.state.filters
               }
             }}

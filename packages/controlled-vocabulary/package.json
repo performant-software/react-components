@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/controlled-vocabulary",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A package of components to allow user to configure dropdown elements. Use with the \"controlled_vocabulary\" gem.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -12,8 +12,8 @@
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@performant-software/semantic-components": "^1.0.9",
-    "@performant-software/shared-components": "^1.0.9",
+    "@performant-software/semantic-components": "^1.0.10",
+    "@performant-software/shared-components": "^1.0.10",
     "i18next": "^21.9.2",
     "semantic-ui-react": "^2.1.2",
     "underscore": "^1.13.2"
