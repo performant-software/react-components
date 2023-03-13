@@ -211,6 +211,19 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   }, [items, props.onSave]);
 
   /**
+   * Sets the passed item onto the state.
+   *
+   * @type {function(*): void}
+   */
+  const onSetState = useCallback((item: any) => (
+    setItems((prevItems) => _.map(prevItems, (i) => (i !== item ? i : {
+      ...i,
+      ...item,
+      errors: []
+    })))
+  ), []);
+
+  /**
    * Updates the text value for the passed item.
    *
    * @type {function(*, string, Event, {value: *}): void}
@@ -437,6 +450,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                   key={index}
                   onAssociationInputChange={onAssociationInputChange.bind(this, item)}
                   onDelete={onDelete.bind(this, item)}
+                  onSetState={onSetState.bind(this, item)}
                   onTextInputChange={onTextInputChange.bind(this, item)}
                   onUpdate={onUpdate.bind(this, item)}
                   renderStatus={renderStatus.bind(this, index)}
