@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/visualize",
-  "version": "1.0.10-beta.4",
+  "version": "1.0.10",
   "description": "A package of components used for data visualization",
   "license": "MIT",
   "main": "./build/index.js",
