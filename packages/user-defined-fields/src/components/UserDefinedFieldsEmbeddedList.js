@@ -4,6 +4,7 @@ import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-compone
 import React from 'react';
 import i18n from '../i18n/i18n';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
+import UserDefinedFields from '../utils/UserDefinedFields';
 
 type Props = {
   items: Array<any>,
@@ -43,7 +44,8 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => (
       props: {
         defaults: {
           order: DEFAULT_ORDER
-        }
+        },
+        validate: UserDefinedFields.validateUserDefinedField.bind(this)
       }
     }}
     onDelete={props.onDelete}

@@ -14,6 +14,11 @@
       "edit": "Edit User Defined Field"
     }
   },
+  "UserDefinedFields": {
+    "errors": {
+      "numeric": "{{name}} must be numeric"
+    }
+  },
   "UserDefinedFieldsEmbeddedList": {
     "columns": {
       "dataType": "Data type",

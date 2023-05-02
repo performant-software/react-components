@@ -1,6 +1,7 @@
 // @flow
 
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 
 type ErrorProps = {
   key: string,
@@ -45,6 +46,24 @@ const resolveError = ({ key, error }: ErrorProps): ErrorReturn => {
   return errors;
 };
 
+/**
+ * Validates the passed user defined field.
+ *
+ * @param item
+ *
+ * @returns {{}}
+ */
+const validateUserDefinedField = (item) => {
+  const errors = {};
+
+  if (!item.order) {
+    _.extend(errors, { order: i18n.t('UserDefinedFields.errors.numeric', { name: 'order' }) });
+  }
+
+  return errors;
+};
+
 export default {
-  resolveError
+  resolveError,
+  validateUserDefinedField
 };
