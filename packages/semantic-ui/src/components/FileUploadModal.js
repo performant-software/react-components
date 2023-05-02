@@ -213,12 +213,12 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
   /**
    * Sets the passed item onto the state.
    *
-   * @type {function(*): void}
+   * @type {function(*, *): void}
    */
-  const onSetState = useCallback((item: any) => (
+  const onSetState = useCallback((item: any, attributes: string) => (
     setItems((prevItems) => _.map(prevItems, (i) => (i !== item ? i : {
       ...i,
-      ...item,
+      ...attributes,
       errors: []
     })))
   ), []);
