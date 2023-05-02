@@ -31,7 +31,7 @@ const resolveError = ({ key, error }: ErrorProps): ErrorReturn => {
    */
   if (key && key.startsWith(KEY_USER_DEFINED) && _.contains(key, FIELD_DELIMITER)) {
     const [, field] = key.split(FIELD_DELIMITER);
-    _.extend(errors, { [`${KEY_USER_DEFINED}[${field}]`]: error });
+    _.extend(errors, { [`${KEY_USER_DEFINED}[${field}]`]: `${field} ${error}` });
   }
 
   /**
