@@ -6,6 +6,8 @@ import i18n from '../i18n/i18n';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
 
+const DEFAULT_ORDER = 0;
+
 const UserDefinedFieldsList: ComponentType<any> = () => (
   <ListTable
     actions={[{
@@ -32,7 +34,12 @@ const UserDefinedFieldsList: ComponentType<any> = () => (
     }]}
     collectionName='user_defined_fields'
     modal={{
-      component: UserDefinedFieldModal
+      component: UserDefinedFieldModal,
+      props: {
+        defaults: {
+          order: DEFAULT_ORDER
+        }
+      }
     }}
     onLoad={(params) => UserDefinedFieldsService.fetchAll(params)}
     onSave={(udf) => UserDefinedFieldsService.save(udf)}
