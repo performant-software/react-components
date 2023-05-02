@@ -11,6 +11,8 @@ type Props = {
   onSave: (item: any) => Promise<any>
 };
 
+const DEFAULT_ORDER = 0;
+
 const UserDefinedFieldsEmbeddedList = (props: Props) => (
   <EmbeddedList
     actions={[{
@@ -37,7 +39,12 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => (
     }]}
     items={props.items}
     modal={{
-      component: UserDefinedFieldModal
+      component: UserDefinedFieldModal,
+      props: {
+        defaults: {
+          order: DEFAULT_ORDER
+        }
+      }
     }}
     onDelete={props.onDelete}
     onSave={props.onSave}
