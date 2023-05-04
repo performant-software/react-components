@@ -4,12 +4,15 @@ import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-compone
 import React from 'react';
 import i18n from '../i18n/i18n';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
+import UserDefinedFields from '../utils/UserDefinedFields';
 
 type Props = {
   items: Array<any>,
   onDelete: (item: any) => Promise<any>,
   onSave: (item: any) => Promise<any>
 };
+
+const DEFAULT_ORDER = 0;
 
 const UserDefinedFieldsEmbeddedList = (props: Props) => (
   <EmbeddedList
@@ -37,7 +40,13 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => (
     }]}
     items={props.items}
     modal={{
-      component: UserDefinedFieldModal
+      component: UserDefinedFieldModal,
+      props: {
+        defaults: {
+          order: DEFAULT_ORDER
+        },
+        validate: UserDefinedFields.validateUserDefinedField.bind(this)
+      }
     }}
     onDelete={props.onDelete}
     onSave={props.onSave}
