@@ -36,6 +36,11 @@ type Props = ListProps & {
   items: Array<any>,
 
   /**
+   * If true, the list items will be formatted as a link.
+   */
+  link?: boolean,
+
+  /**
    * Callback fired when a table row is dragged
    */
   onDrag?: (dragIndex: number, hoverIndex: number) => void,
@@ -55,6 +60,11 @@ type Props = ListProps & {
    * A function that returns a JSX element to render as additional card content.
    */
   renderAdditionalContent?: (item: any) => Element<any>,
+
+  /**
+   * Renders the container element for passed item.
+   */
+  renderContainer?: (item: any, children: Element<any>) => ComponentType<any>,
 
   /**
    * A function that returns a JSX element to render as the card description.
@@ -197,9 +207,10 @@ class ItemsClass extends Component<Props, {}> {
    * @returns {*}
    */
   renderCard(item, index) {
-    const card = (
+    let card = (
       <Card
         key={item.id || index}
+        link={this.props.link}
       >
         { this.props.renderImage && this.props.renderImage(item) }
         <Card.Content>
@@ -255,21 +266,25 @@ class ItemsClass extends Component<Props, {}> {
       </Card>
     );
 
-    if (!this.props.onDrag) {
-      return card;
+    if (this.props.onDrag) {
+      card = (
+        <Draggable
+          id={item.id || item.uid}
+          index={index}
+          item={item}
+          key={item.id || item.uid}
+          onDrag={this.props.onDrag.bind(this)}
+        >
+          { card }
+        </Draggable>
+      );
     }
 
-    return (
-      <Draggable
-        id={item.id || item.uid}
-        index={index}
-        item={item}
-        key={item.id || item.uid}
-        onDrag={this.props.onDrag.bind(this)}
-      >
-        { card }
-      </Draggable>
-    );
+    if (this.props.renderContainer) {
+      card = this.props.renderContainer(item, card);
+    }
+
+    return card;
   }
 
   /**
@@ -330,7 +345,7 @@ class ItemsClass extends Component<Props, {}> {
    * @returns {*}
    */
   renderItem(item, index) {
-    const listItem = (
+    let listItem = (
       <Item
         key={item.id || index}
       >
@@ -387,21 +402,25 @@ class ItemsClass extends Component<Props, {}> {
       </Item>
     );
 
-    if (!this.props.onDrag) {
-      return listItem;
+    if (this.props.onDrag) {
+      listItem = (
+        <Draggable
+          id={item.id || item.uid}
+          index={index}
+          item={item}
+          key={item.id || item.uid}
+          onDrag={this.props.onDrag.bind(this)}
+        >
+          { listItem }
+        </Draggable>
+      );
     }
 
-    return (
-      <Draggable
-        id={item.id || item.uid}
-        index={index}
-        item={item}
-        key={item.id || item.uid}
-        onDrag={this.props.onDrag.bind(this)}
-      >
-        { listItem }
-      </Draggable>
-    );
+    if (this.props.renderContainer) {
+      listItem = this.props.renderContainer(item, listItem);
+    }
+
+    return listItem;
   }
 
   /**
@@ -417,6 +436,7 @@ class ItemsClass extends Component<Props, {}> {
     return (
       <Item.Group
         divided
+        link={this.props.link}
         relaxed='very'
       >
         { _.map(this.props.items, this.renderItem.bind(this)) }
