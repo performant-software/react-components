@@ -21,6 +21,16 @@ import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
   /**
+   * Renders the Card/Item component as the passed component.
+   */
+  as?: Element<any>,
+
+  /**
+   * Props to supply to the Card/Item component.
+   */
+  asProps?: any,
+
+  /**
    * Child elements to append below the list content.
    */
   children?: Element<any>,
@@ -60,11 +70,6 @@ type Props = ListProps & {
    * A function that returns a JSX element to render as additional card content.
    */
   renderAdditionalContent?: (item: any) => Element<any>,
-
-  /**
-   * Renders the container element for passed item.
-   */
-  renderContainer?: (item: any, children: Element<any>) => ComponentType<any>,
 
   /**
    * A function that returns a JSX element to render as the card description.
@@ -172,6 +177,17 @@ class ItemsClass extends Component<Props, {}> {
   }
 
   /**
+   * Returns as asProps function value for the passed item, if provided.
+   *
+   * @param item
+   *
+   * @returns {*|{}}
+   */
+  getItemProps(item) {
+    return (this.props.asProps && this.props.asProps(item)) || {};
+  }
+
+  /**
    * Returns true if the component has the necessary props to render itself in the "selectable" state.
    *
    * @returns {boolean}
@@ -209,8 +225,10 @@ class ItemsClass extends Component<Props, {}> {
   renderCard(item, index) {
     let card = (
       <Card
+        as={this.props.as}
         key={item.id || index}
         link={this.props.link}
+        {...this.getItemProps(item)}
       >
         { this.props.renderImage && this.props.renderImage(item) }
         <Card.Content>
@@ -280,10 +298,6 @@ class ItemsClass extends Component<Props, {}> {
       );
     }
 
-    if (this.props.renderContainer) {
-      card = this.props.renderContainer(item, card);
-    }
-
     return card;
   }
 
@@ -347,7 +361,9 @@ class ItemsClass extends Component<Props, {}> {
   renderItem(item, index) {
     let listItem = (
       <Item
+        as={this.props.as}
         key={item.id || index}
+        {...this.getItemProps(item)}
       >
         { this.props.renderImage && (
           <Item.Image>
@@ -414,10 +430,6 @@ class ItemsClass extends Component<Props, {}> {
           { listItem }
         </Draggable>
       );
-    }
-
-    if (this.props.renderContainer) {
-      listItem = this.props.renderContainer(item, listItem);
     }
 
     return listItem;
