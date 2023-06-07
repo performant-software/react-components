@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState, type Node } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { pdfjs, Document, Page } from 'react-pdf';
 import {
   Dimmer,
   Icon,
@@ -13,6 +13,9 @@ import {
 } from 'semantic-ui-react';
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
+
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 import './LazyDocument.css';
 
 type Props = {
@@ -26,6 +29,8 @@ type Props = {
   size?: string,
   src?: string
 };
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const LazyDocument = (props: Props) => {
   const [dimmer, setDimmer] = useState(false);
