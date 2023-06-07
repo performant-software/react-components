@@ -98,10 +98,14 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
+      const renderListHeader = this.props.hideToggle
+        ? undefined
+        : this.renderHeader.bind(this);
+
       return (
         <WrappedComponent
           {...this.props}
-          renderListHeader={this.renderHeader.bind(this)}
+          renderListHeader={renderListHeader}
           view={this.state.view}
         />
       );
