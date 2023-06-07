@@ -14,6 +14,7 @@ type Sort = {
 
 type Props = {
   defaultView?: number,
+  hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   sort?: Array<Sort>,
   sortColumn?: string,
@@ -40,6 +41,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
     // Default props
     static defaultProps = {
+      hideToggle: false,
       sort: []
     };
 
@@ -115,6 +117,10 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     renderHeader() {
+      if (this.props.hideToggle) {
+        return null;
+      }
+
       return (
         <>
           <Button
