@@ -223,6 +223,8 @@ class ItemsClass extends Component<Props, {}> {
    * @returns {*}
    */
   renderCard(item, index) {
+    const actions = this.getActions(item);
+
     let card = (
       <Card
         as={this.props.as}
@@ -255,12 +257,12 @@ class ItemsClass extends Component<Props, {}> {
             { this.props.renderExtra(item) }
           </Card.Content>
         )}
-        { this.props.actions && this.props.actions.length && (
+        { !_.isEmpty(actions) && (
           <Card.Content
             extra
             textAlign='center'
           >
-            { _.map(this.getActions(item), (action, actionIndex) => (
+            { _.map(actions, (action, actionIndex) => (
               <Button
                 aria-label={action.name}
                 basic
