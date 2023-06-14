@@ -1,16 +1,16 @@
 // @flow
 
 import React, { useMemo, useState } from 'react';
-import { useCurrentRefinements } from 'react-instantsearch-hooks-web';
 import _ from 'underscore';
 import CurrentFacetLabels from './CurrentFacetLabels';
 import CurrentFacetsModal from './CurrentFacetsModal';
+import { type CurrentRefinementsProps } from '../hooks/InstantSearch';
 
-type Props = {
+type Props = CurrentRefinementsProps & {
   limit?: number
 };
 
-const CurrentFacets = (props: Props) => {
+const CurrentFacets = ({ useCurrentRefinements, ...props }: Props) => {
   const [modal, setModal] = useState(false);
   const { items } = useCurrentRefinements(props);
 

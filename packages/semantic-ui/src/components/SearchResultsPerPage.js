@@ -1,16 +1,16 @@
 // @flow
 
 import React from 'react';
-import { useHitsPerPage } from 'react-instantsearch-hooks-web';
 import _ from 'underscore';
 import DropdownButton from './DropdownButton';
 import i18n from '../i18n/i18n';
+import { type HitsPerPageProps } from '../hooks/InstantSearch';
 
-type Props = {
+type Props = HitsPerPageProps & {
   options: Array<number>
 };
 
-const SearchResultsPerPage = ({ options }: Props) => {
+const SearchResultsPerPage = ({ useHitsPerPage, options }: Props) => {
   const { items, refine } = useHitsPerPage({
     items: _.map(options, (option, index) => ({
       label: option,

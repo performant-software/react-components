@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react';
-import { useClearRefinements } from 'react-instantsearch-hooks-web';
 import { Button, ButtonProps } from 'semantic-ui-react';
+import { type ClearRefinementsProps } from '../hooks/InstantSearch';
 
-type Props = typeof ButtonProps;
+type Props = typeof ButtonProps & ClearRefinementsProps;
 
-const FacetClearButton = (props: Props) => {
+const FacetClearButton = ({ useClearRefinements, ...props }: Props) => {
   const { refine, canRefine } = useClearRefinements(props);
 
   return (

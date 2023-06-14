@@ -1,14 +1,14 @@
 // @flow
 
 import React, { useCallback, useEffect } from 'react';
-import { usePagination } from 'react-instantsearch-hooks-web';
 import { Pagination } from 'semantic-ui-react';
+import { type PaginationProps } from '../hooks/InstantSearch';
 
-type Props = {
+type Props = PaginationProps & {
   scrollToTop?: boolean
 };
 
-const SearchPagination = (props: Props) => {
+const SearchPagination = ({ usePagination, ...props }: Props) => {
   const { currentRefinement, nbPages: pages, refine } = usePagination(props);
   const onPageChange = useCallback((e, { activePage }) => refine(activePage - 1), [refine]);
 

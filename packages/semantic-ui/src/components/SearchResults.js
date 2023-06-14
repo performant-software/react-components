@@ -1,10 +1,10 @@
 // @flow
 
 import React, { type Element, type Node } from 'react';
-import { useHits } from 'react-instantsearch-hooks-web';
 import ItemCollection from './ItemCollection';
+import { type HitsProps } from '../hooks/InstantSearch';
 
-type Props = {
+type Props = HitsProps & {
   as?: Element<any>,
   asProps?: any,
   link?: boolean,
@@ -16,7 +16,7 @@ type Props = {
   renderMeta?: (item: any) => Node
 };
 
-const SearchResults = (props: Props) => {
+const SearchResults = ({ useHits, ...props }: Props) => {
   const { hits } = useHits(props);
 
   const {

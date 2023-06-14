@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react';
-import { useToggleRefinement } from 'react-instantsearch-hooks-web';
 import { Checkbox, Label } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
+import { type ToggleRefinementProps } from '../hooks/InstantSearch';
 
-const FacetToggle = (props: FacetProps) => {
+type Props = FacetProps & ToggleRefinementProps;
+
+const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
   const {
     value: {
       isRefined,
