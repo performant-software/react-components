@@ -42,6 +42,7 @@
       "cancel": "Cancel",
       "clear": "Clear",
       "close": "Close",
+      "done": "Done",
       "download": "Download",
       "edit": "Edit",
       "hide": "Hide",
@@ -77,6 +78,9 @@
       "lastName": "Last name",
       "name": "Name"
     }
+  },
+  "CurrentFacetsModal": {
+    "title": "Current Facets"
   },
   "EditContainer": {
     "errors": {
@@ -119,6 +123,12 @@
       "general": "Something went wrong while saving the record. Please make sure all required fields are filled out.",
       "required": "The {{key}} field is required.",
       "unique": "A record with the {{key}} \"{{value}}\" already exists."
+    }
+  },
+  "FacetList": {
+    "buttons": {
+      "showLess": "Show Less",
+      "showMore": "Show More"
     }
   },
   "FileUpload": {
@@ -263,6 +273,16 @@
     "labels": {
       "add": "Add",
       "loadMore": "Load more"
+    }
+  },
+  "SearchResultsPerPage": {
+    "labels": {
+      "show": "Show {{value}}"
+    }
+  },
+  "SearchStats": {
+    "labels": {
+      "results": "{{count}} results in {{seconds}} seconds"
     }
   },
   "Selectize": {
