@@ -2,7 +2,6 @@
 
 import { Timer } from '@performant-software/shared-components';
 import React, { useCallback, useRef, useState } from 'react';
-import { useSearchBox } from 'react-instantsearch-hooks-web';
 import { Icon, Input, InputProps } from 'semantic-ui-react';
 import _ from 'underscore';
 
@@ -12,7 +11,7 @@ const SearchBox = (props: typeof InputProps) => {
     refine,
     clear,
     isSearchStalled
-  } = useSearchBox(props);
+  } = props.useSearchBox(props);
 
   const [search, setSearch] = useState(query);
   const ref = useRef();
