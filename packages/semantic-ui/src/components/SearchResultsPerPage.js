@@ -4,7 +4,7 @@ import React from 'react';
 import _ from 'underscore';
 import DropdownButton from './DropdownButton';
 import i18n from '../i18n/i18n';
-import { type HitsPerPageProps } from '../hooks/InstantSearch';
+import { type HitsPerPageProps } from '../types/InstantSearch';
 
 type Props = HitsPerPageProps & {
   options: Array<number>

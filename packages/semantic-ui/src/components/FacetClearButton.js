@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button, ButtonProps } from 'semantic-ui-react';
-import { type ClearRefinementsProps } from '../hooks/InstantSearch';
+import { type ClearRefinementsProps } from '../types/InstantSearch';
 
 type Props = typeof ButtonProps & ClearRefinementsProps;
 

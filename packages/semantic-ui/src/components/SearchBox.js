@@ -4,7 +4,7 @@ import { Timer } from '@performant-software/shared-components';
 import React, { useCallback, useRef, useState } from 'react';
 import { Icon, Input, InputProps } from 'semantic-ui-react';
 import _ from 'underscore';
-import { type SearchBoxProps } from '../hooks/InstantSearch';
+import { type SearchBoxProps } from '../types/InstantSearch';
 
 type Props = typeof InputProps & SearchBoxProps;
 

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect } from 'react';
 import { Pagination } from 'semantic-ui-react';
-import { type PaginationProps } from '../hooks/InstantSearch';
+import { type PaginationProps } from '../types/InstantSearch';
 
 type Props = PaginationProps & {
   scrollToTop?: boolean

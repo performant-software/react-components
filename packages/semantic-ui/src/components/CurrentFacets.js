@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react';
 import _ from 'underscore';
 import CurrentFacetLabels from './CurrentFacetLabels';
 import CurrentFacetsModal from './CurrentFacetsModal';
-import { type CurrentRefinementsProps } from '../hooks/InstantSearch';
+import { type CurrentRefinementsProps } from '../types/InstantSearch';
 
 type Props = CurrentRefinementsProps & {
   limit?: number

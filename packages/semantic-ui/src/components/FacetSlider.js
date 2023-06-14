@@ -4,7 +4,7 @@ import Slider from 'rc-slider';
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
-import { type RangerSliderType } from '../hooks/InstantSearch';
+import { type RangerSliderProps } from '../types/InstantSearch';
 import './FacetSlider.css';
 
 type Props = FacetProps & RangerSliderProps;

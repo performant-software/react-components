@@ -2,7 +2,7 @@
 
 import React, { type Element, type Node } from 'react';
 import ItemCollection from './ItemCollection';
-import { type HitsProps } from '../hooks/InstantSearch';
+import { type HitsProps } from '../types/InstantSearch';
 
 type Props = HitsProps & {
   as?: Element<any>,

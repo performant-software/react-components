@@ -2,7 +2,7 @@
 
 import React from 'react';
 import i18n from '../i18n/i18n';
-import type { StatsProps } from '../hooks/InstantSearch';
+import type { StatsProps } from '../types/InstantSearch';
 
 const MsToS = 1000.0;
 const DECIMAL_PLACES = 2;

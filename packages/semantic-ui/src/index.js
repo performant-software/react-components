@@ -99,7 +99,6 @@ export { default as ModalContext } from './context/ModalContext';
 
 // Hooks
 export { default as BatchEdit } from './hooks/BatchEdit';
-export { useRangeSlider, useStats } from './hooks/InstantSearch';
 
 // Types
 export type { EditPageProps } from './components/EditPage';

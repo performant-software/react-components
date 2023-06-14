@@ -11,7 +11,7 @@ import _ from 'underscore';
 import Facet, { type Props as FacetProps } from './Facet';
 import i18n from '../i18n/i18n';
 import LinkButton from './LinkButton';
-import { type RefinementListProps } from '../hooks/InstantSearch';
+import { type RefinementListProps } from '../types/InstantSearch';
 
 type Props = FacetProps & RefinementListProps & {
   defaultValue?: string
