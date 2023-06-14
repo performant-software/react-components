@@ -45,7 +45,6 @@ export { default as GoogleMap } from './components/GoogleMap';
 export { default as GooglePlacesSearch } from './components/GooglePlacesSearch';
 export { default as HorizontalCards } from './components/HorizontalCards';
 export { default as IIIFModal } from './components/IIIFModal';
-export { default as InstantSearch } from './components/InstantSearch';
 export { default as ItemCollection } from './components/ItemCollection';
 export { default as ItemList } from './components/ItemList';
 export { default as Items } from './components/Items';
