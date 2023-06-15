@@ -1,0 +1,20 @@
+.facet.ui.accordion {
+  padding-bottom: 1em;
+}
+
+.facet.ui.accordion > .title > .facet-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.facet.ui.accordion > .title > .facet-title .header {
+  margin-bottom: 0;
+}
+
+.facet.ui.accordion > .title:not(.ui) {
+  padding-top: 0;
+}
+
+.facet.ui.accordion .content {
+  margin-bottom: 1em;
+}

@@ -21,6 +21,16 @@ import type { Props as ListProps } from './List';
 
 type Props = ListProps & {
   /**
+   * Renders the Card/Item component as the passed component.
+   */
+  as?: Element<any>,
+
+  /**
+   * Props to supply to the Card/Item component.
+   */
+  asProps?: any,
+
+  /**
    * Child elements to append below the list content.
    */
   children?: Element<any>,
@@ -34,6 +44,11 @@ type Props = ListProps & {
    * An array of objects to render as rows in the list.
    */
   items: Array<any>,
+
+  /**
+   * If true, the list items will be formatted as a link.
+   */
+  link?: boolean,
 
   /**
    * Callback fired when a table row is dragged
@@ -162,6 +177,17 @@ class ItemsClass extends Component<Props, {}> {
   }
 
   /**
+   * Returns as asProps function value for the passed item, if provided.
+   *
+   * @param item
+   *
+   * @returns {*|{}}
+   */
+  getItemProps(item) {
+    return (this.props.asProps && this.props.asProps(item)) || {};
+  }
+
+  /**
    * Returns true if the component has the necessary props to render itself in the "selectable" state.
    *
    * @returns {boolean}
@@ -197,9 +223,14 @@ class ItemsClass extends Component<Props, {}> {
    * @returns {*}
    */
   renderCard(item, index) {
-    const card = (
+    const actions = this.getActions(item);
+
+    let card = (
       <Card
+        as={this.props.as}
         key={item.id || index}
+        link={this.props.link}
+        {...this.getItemProps(item)}
       >
         { this.props.renderImage && this.props.renderImage(item) }
         <Card.Content>
@@ -226,12 +257,12 @@ class ItemsClass extends Component<Props, {}> {
             { this.props.renderExtra(item) }
           </Card.Content>
         )}
-        { this.props.actions && this.props.actions.length && (
+        { !_.isEmpty(actions) && (
           <Card.Content
             extra
             textAlign='center'
           >
-            { _.map(this.getActions(item), (action, actionIndex) => (
+            { _.map(actions, (action, actionIndex) => (
               <Button
                 aria-label={action.name}
                 basic
@@ -255,21 +286,21 @@ class ItemsClass extends Component<Props, {}> {
       </Card>
     );
 
-    if (!this.props.onDrag) {
-      return card;
+    if (this.props.onDrag) {
+      card = (
+        <Draggable
+          id={item.id || item.uid}
+          index={index}
+          item={item}
+          key={item.id || item.uid}
+          onDrag={this.props.onDrag.bind(this)}
+        >
+          { card }
+        </Draggable>
+      );
     }
 
-    return (
-      <Draggable
-        id={item.id || item.uid}
-        index={index}
-        item={item}
-        key={item.id || item.uid}
-        onDrag={this.props.onDrag.bind(this)}
-      >
-        { card }
-      </Draggable>
-    );
+    return card;
   }
 
   /**
@@ -330,9 +361,11 @@ class ItemsClass extends Component<Props, {}> {
    * @returns {*}
    */
   renderItem(item, index) {
-    const listItem = (
+    let listItem = (
       <Item
+        as={this.props.as}
         key={item.id || index}
+        {...this.getItemProps(item)}
       >
         { this.props.renderImage && (
           <Item.Image>
@@ -387,21 +420,21 @@ class ItemsClass extends Component<Props, {}> {
       </Item>
     );
 
-    if (!this.props.onDrag) {
-      return listItem;
+    if (this.props.onDrag) {
+      listItem = (
+        <Draggable
+          id={item.id || item.uid}
+          index={index}
+          item={item}
+          key={item.id || item.uid}
+          onDrag={this.props.onDrag.bind(this)}
+        >
+          { listItem }
+        </Draggable>
+      );
     }
 
-    return (
-      <Draggable
-        id={item.id || item.uid}
-        index={index}
-        item={item}
-        key={item.id || item.uid}
-        onDrag={this.props.onDrag.bind(this)}
-      >
-        { listItem }
-      </Draggable>
-    );
+    return listItem;
   }
 
   /**
@@ -417,6 +450,7 @@ class ItemsClass extends Component<Props, {}> {
     return (
       <Item.Group
         divided
+        link={this.props.link}
         relaxed='very'
       >
         { _.map(this.props.items, this.renderItem.bind(this)) }

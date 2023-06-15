@@ -1,0 +1,12 @@
+.facet-slider > .ui.grid {
+  margin-top: 0em;
+}
+
+.facet-slider .granularity-dropdown {
+  margin-bottom: 16px;
+}
+
+.facet-slider > .range-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
