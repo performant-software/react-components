@@ -62,7 +62,7 @@ const SearchBox = ({ useSearchBox, ...props }: typeof Props) => {
       loading={isSearchStalled}
       onChange={(e, { value }) => setSearch(value)}
       onKeyDown={() => Timer.clearSearchTimer()}
-      onKeyUp={Timer.setSearchTimer(onSearch)}
+      onKeyUp={() => Timer.setSearchTimer(onSearch)}
       ref={ref}
       type='text'
       value={search}
