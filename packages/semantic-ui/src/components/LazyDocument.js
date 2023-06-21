@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useCallback, useState, type Node } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import {
   Dimmer,
@@ -37,6 +37,25 @@ const LazyDocument = (props: Props) => {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(!props.preview);
   const [visible, setVisible] = useState(false);
+
+  /**
+   * Returns the list of class names for the image component.
+   *
+   * @type {function(*=): []}
+   */
+  const getClassNames = useCallback((defaultClass = null) => {
+    const classNames = [];
+
+    if (defaultClass) {
+      classNames.push(defaultClass);
+    }
+
+    if (!loaded) {
+      classNames.push('hidden');
+    }
+
+    return classNames;
+  }, [loaded]);
 
   if (!visible) {
     return (
@@ -77,6 +96,7 @@ const LazyDocument = (props: Props) => {
           { !error && props.preview && (
             <Image
               {...props.image}
+              className={getClassNames()}
               onError={() => {
                 setError(true);
                 setLoaded(true);
@@ -92,6 +112,7 @@ const LazyDocument = (props: Props) => {
           { !error && loaded && !props.preview && props.src && props.pdf && (
             <Image
               {...props.image}
+              className={getClassNames()}
               size={props.size}
             >
               <Document
@@ -107,7 +128,7 @@ const LazyDocument = (props: Props) => {
           { (error || (!props.preview && !(props.src && props.pdf))) && (
             <Image
               {...props.image}
-              className='placeholder-image'
+              className={getClassNames('placeholder-image')}
               size={props.size}
             >
               <Icon

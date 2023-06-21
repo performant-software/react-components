@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node, useCallback } from 'react';
+import React, { useCallback, useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -36,6 +36,11 @@ const LazyImage = (props: Props) => {
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
 
+  /**
+   * Returns the list of class names for the image component.
+   *
+   * @type {function(*=): []}
+   */
   const getClassNames = useCallback((defaultClass = null) => {
     const classNames = [];
 
