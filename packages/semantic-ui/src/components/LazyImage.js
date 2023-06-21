@@ -52,7 +52,7 @@ const LazyImage = (props: Props) => {
       classNames.push('hidden');
     }
 
-    return classNames;
+    return classNames.join(' ');
   }, [loaded]);
 
   if (!visible) {
