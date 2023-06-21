@@ -1,9 +1,16 @@
 // @flow
 
-import React, { useEffect } from 'react';
+import { Timer } from '@performant-software/shared-components';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import {
   Checkbox,
   Icon,
+  Input,
   Label,
   List
 } from 'semantic-ui-react';
@@ -14,7 +21,8 @@ import LinkButton from './LinkButton';
 import { type RefinementListProps } from '../types/InstantSearch';
 
 type Props = FacetProps & RefinementListProps & {
-  defaultValue?: string
+  defaultValue?: string,
+  searchable?: boolean
 };
 
 const FacetList = ({ useRefinementList, ...props }: Props) => {
@@ -23,8 +31,38 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     refine,
     canToggleShowMore,
     isShowingMore,
+    searchForItems,
     toggleShowMore,
   } = useRefinementList(props);
+
+  const ref = useRef();
+  const [query, setQuery] = useState('');
+
+  /**
+   * Clears the current search state.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onClear = useCallback(() => {
+    // Reset the query view
+    setQuery('');
+
+    // Reset the list of refinements
+    searchForItems();
+
+    // Refocus the input element
+    const { current: instance } = ref;
+    if (instance) {
+      instance.focus();
+    }
+  }, []);
+
+  /**
+   * Executes the search within the list of facet values.
+   *
+   * @type {function(): *}
+   */
+  const onSearch = useCallback(() => searchForItems(query), [query, searchForItems]);
 
   /**
    * Sets the default value if provided.
@@ -36,9 +74,18 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   }, [props.defaultValue]);
 
   /**
-   * Do not render the component if no items are present.
+   * Persist the facet search when a user selects or deselects items.
    */
-  if (_.isEmpty(items)) {
+  useEffect(() => {
+    if (query) {
+      searchForItems(query);
+    }
+  }, [items]);
+
+  /**
+   * Do not render the component if no items are present and no query has been entered.
+   */
+  if (_.isEmpty(items) && _.isEmpty(query)) {
     return null;
   }
 
@@ -48,6 +95,24 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
       divided={props.divided}
       title={props.title}
     >
+      { props.searchable && (
+        <Input
+          icon={query && (
+            <Icon
+              link
+              name='times'
+              onClick={onClear}
+            />
+          )}
+          fluid
+          onChange={(e, { value }) => setQuery(value)}
+          onKeyDown={() => Timer.clearSearchTimer()}
+          onKeyUp={() => Timer.setSearchTimer(onSearch)}
+          placeholder={i18n.t('FacetList.labels.search')}
+          ref={ref}
+          value={query}
+        />
+      )}
       <List
         className='facet-list'
       >

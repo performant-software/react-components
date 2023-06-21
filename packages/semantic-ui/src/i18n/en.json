@@ -129,6 +129,9 @@
     "buttons": {
       "showLess": "Show Less",
       "showMore": "Show More"
+    },
+    "labels": {
+      "search": "Search"
     }
   },
   "FileUpload": {
