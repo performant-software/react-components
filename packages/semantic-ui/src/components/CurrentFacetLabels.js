@@ -17,9 +17,10 @@ type Props = {
 
 const CurrentFacetLabels = (props: Props) => (
   <Label.Group>
-    { _.map(props.items, (item) => (
+    { _.map(props.items, (item, index) => (
       <Label
         content={item.label}
+        key={index}
         onRemove={item.onClick}
       />
     ))}
