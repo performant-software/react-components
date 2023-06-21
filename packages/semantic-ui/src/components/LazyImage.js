@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useState, type Node, useCallback } from 'react';
 import {
   Button,
   Dimmer,
@@ -35,6 +35,20 @@ const LazyImage = (props: Props) => {
   const [loaded, setLoaded] = useState(!(props.src || props.preview));
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const getClassNames = useCallback((defaultClass = null) => {
+    const classNames = [];
+
+    if (defaultClass) {
+      classNames.push(defaultClass);
+    }
+
+    if (!loaded) {
+      classNames.push('hidden');
+    }
+
+    return classNames;
+  }, [loaded]);
 
   if (!visible) {
     return (
@@ -75,6 +89,7 @@ const LazyImage = (props: Props) => {
           { !error && (props.preview || props.src) && (
             <Image
               {...props.image}
+              className={getClassNames()}
               onError={() => {
                 setError(true);
                 setLoaded(true);
@@ -90,7 +105,7 @@ const LazyImage = (props: Props) => {
           { (error || !(props.preview || props.src)) && (
             <Image
               {...props.image}
-              className='placeholder-image'
+              className={getClassNames('placeholder-image')}
               size={props.size}
             >
               <Icon
