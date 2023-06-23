@@ -1,6 +1,11 @@
 // @flow
 
-import React, { useState, type Element, type Node } from 'react';
+import React, {
+  useCallback,
+  useState,
+  type Element,
+  type Node
+} from 'react';
 import {
   Button,
   Dimmer,
@@ -38,6 +43,25 @@ const LazyVideo = (props: Props) => {
   const [loaded, setLoaded] = useState(!(props.preview || props.src));
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  /**
+   * Returns the list of class names for the image component.
+   *
+   * @type {function(*=): []}
+   */
+  const getClassNames = useCallback((defaultClass = null) => {
+    const classNames = [];
+
+    if (defaultClass) {
+      classNames.push(defaultClass);
+    }
+
+    if (!loaded) {
+      classNames.push('hidden');
+    }
+
+    return classNames.join(' ');
+  }, [loaded]);
 
   if (!visible) {
     return (
@@ -78,6 +102,7 @@ const LazyVideo = (props: Props) => {
           { !error && props.preview && (
             <Image
               {...props.image}
+              className={getClassNames()}
               onError={() => {
                 setError(true);
                 setLoaded(true);
@@ -93,6 +118,7 @@ const LazyVideo = (props: Props) => {
           { !error && !props.preview && props.src && (
             <Image
               {...props.image}
+              className={getClassNames()}
               size={props.size}
             >
               <video
@@ -111,7 +137,7 @@ const LazyVideo = (props: Props) => {
           { (error || (!props.preview && !props.src)) && (
             <Image
               {...props.image}
-              className='placeholder-image'
+              className={getClassNames('placeholder-image')}
               size={props.size}
             >
               <Icon

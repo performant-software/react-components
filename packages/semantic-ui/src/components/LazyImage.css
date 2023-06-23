@@ -21,3 +21,7 @@
   padding-bottom: 20%;
   text-align: center;
 }
+
+.lazy-image > .image.hidden {
+  display: none;
+}
