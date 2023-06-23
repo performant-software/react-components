@@ -1,0 +1,36 @@
+.image-carousel > .content {
+  height: 100%;
+  width: 100%;
+}
+
+.image-carousel > .content > .ui.grid {
+  height: 100%;
+}
+
+.image-carousel > .content > .ui.grid > .row.image-content {
+  flex-grow: 1;
+}
+
+.image-carousel > .content > .ui.grid > .row.image-content > .column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-carousel > .content > .ui.grid > .row.image-content > .column.image-container {
+  flex-grow: 1;
+}
+
+.image-carousel > .content > .ui.grid > .row.image-content > .column.image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.image-carousel .ui.button,
+.image-carousel .ui.button:hover {
+  border: none;
+  background: none;
+  color: #FFFFFF;
+}
