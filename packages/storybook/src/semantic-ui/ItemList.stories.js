@@ -1,17 +1,22 @@
 // @flow
 
-import React, { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, number } from '@storybook/addon-knobs';
+import React, { useCallback, useState } from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
-import FilterModal from '../components/FilterModal';
 import ItemList from '../../../semantic-ui/src/components/ItemList';
-import { Views } from '../../../semantic-ui/src/components/ItemsToggle';
-import useDragDrop from '../../../shared/src/utils/DragDrop';
 import items from '../data/Cars.json';
+import FilterModal from '../components/FilterModal';
+import useDragDrop from '../../../shared/src/utils/DragDrop';
+import { Views } from '../../../semantic-ui/src/components/ItemsToggle';
+
+export default {
+  title: 'Components/Semantic UI/ItemList',
+  component: ItemList
+};
 
 const actions = [{
   name: 'edit'

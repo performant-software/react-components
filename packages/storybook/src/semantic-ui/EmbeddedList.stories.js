@@ -1,17 +1,22 @@
 // @flow
 
-import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { optionsKnob as options } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
 import { Button, Container, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
-import { SemanticColors } from '../services/Colors';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
 import EmbeddedList, { SORT_DESCENDING } from '../../../semantic-ui/src/components/EmbeddedList';
+import items from '../data/Movies.json';
+import { SemanticColors } from '../services/Colors';
 import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
-import items from '../data/Movies.json';
+
+export default {
+  title: 'Components/Semantic UI/EmbeddedList',
+  component: EmbeddedList
+};
 
 const actions = [{
   name: 'edit'

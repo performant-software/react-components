@@ -1,17 +1,21 @@
 // @flow
 
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
+import React from 'react';
 import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
 import EditPage from '../../../semantic-ui/src/components/EditPage';
+import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
 import items from '../data/Companies.json';
 
-import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
+export default {
+  title: 'Components/Semantic UI/EditPage',
+  component: EditPage
+};
 
 const onClose = action('close');
 
