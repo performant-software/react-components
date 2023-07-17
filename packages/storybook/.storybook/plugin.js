@@ -1,14 +1,24 @@
-const { namedTypes } = require('ast-types');
-const path = require('path');
-const docgen = require('react-docgen');
-const _ = require('underscore');
+// @flow
+
+import { namedTypes } from 'ast-types';
+import path from 'path';
+import {
+  builtinResolvers as resolvers,
+  defaultHandlers as handlers,
+  makeFsImporter,
+  parse,
+  utils
+} from 'react-docgen';
+import _ from 'underscore';
 
 const {
   getNameOrValue,
   resolveFunctionDefinitionToReturnValue
-} = docgen.utils;
+} = utils;
 
-const defaultHandlers = Object.values(docgen.handlers).map(handler => handler);
+const defaultHandlers = Object.values(handlers).map(handler => handler);
+const importer = makeFsImporter();
+const resolver = new resolvers.FindAllDefinitionsResolver();
 
 const parser = (_ref) => {
   const { types } = _ref;
@@ -77,7 +87,11 @@ const parser = (_ref) => {
         enter: (path, state) => {
           const { filename } = state;
 
-          if (filename.endsWith('.js') && !filename.endsWith('.stories.js') && !filename.endsWith('.stories.mdx')) {
+          if (filename.endsWith('.js')
+            && !filename.endsWith('.stories.js')
+            && !filename.endsWith('.stories.mdx')
+            && !filename.endsWith('.modules.js')
+            && !filename.endsWith('.flow.js')) {
             const { code } = state.file;
             let results;
 
@@ -85,10 +99,7 @@ const parser = (_ref) => {
               const program = path.scope.getProgramParent().path;
               const handlers = [...defaultHandlers, actualNameHandler.bind(this, program)];
 
-              results = docgen.parse(code, null, handlers, {
-                importer: docgen.importers.makeFsImporter(),
-                filename
-              });
+              results = parse(code, { handlers, importer, filename, resolver });
             } catch (e) {
               return;
             }
@@ -110,14 +121,15 @@ const parser = (_ref) => {
                 types.assignmentExpression(
                   '=',
                   types.memberExpression(
-                    types.identifier(actualName), types.identifier('__documentation')
+                    types.identifier(actualName), types.identifier('__docgenInfo')
                   ),
                   node
                 )
               );
 
               const program = path.scope.getProgramParent().path;
-              const exportPath = program.get('body').find((n) => isExportCurrent(n, actualName, types, filename));
+              const exportPath = program.get('body')
+                .find((n) => isExportCurrent(n, actualName, types, filename));
 
               if (exportPath) {
                 exportPath.insertBefore(info);
@@ -135,17 +147,7 @@ const parser = (_ref) => {
 };
 
 const buildObjectExpression = (obj, t) => {
-  if (_.isObject(obj)) {
-    const children = [];
-
-    for (const key in obj) {
-      if (key === 'actualName') continue;
-      if (!obj.hasOwnProperty(key) || _.isUndefined(obj[key])) continue;
-      children.push(t.objectProperty(t.stringLiteral(key), buildObjectExpression(obj[key], t)));
-    }
-
-    return t.objectExpression(children);
-  } else if (_.isString(obj)) {
+  if (_.isString(obj)) {
     return t.stringLiteral(obj);
   } else if (_.isBoolean(obj)) {
     return t.booleanLiteral(obj);
@@ -159,7 +161,19 @@ const buildObjectExpression = (obj, t) => {
     return t.ArrayExpression(_children);
   } else if (_.isNull(obj)) {
     return t.nullLiteral();
+  } else if (_.isObject(obj)) {
+    const children = [];
+
+    for (const key in obj) {
+      if (key === 'actualName') continue;
+      if (!obj.hasOwnProperty(key) || _.isUndefined(obj[key])) continue;
+      children.push(t.objectProperty(t.stringLiteral(key), buildObjectExpression(obj[key], t)));
+    }
+
+    return t.objectExpression(children);
   }
+
+  return t.nullLiteral();
 };
 
 const getIdentifier = (path, t) => {
@@ -246,6 +260,4 @@ const relativePath = (filename) => {
   return path.relative('./', path.resolve('./', filename));
 };
 
-module.exports = {
-  parser
-};
+export default parser;
