@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import ArabicLayout from 'simple-keyboard-layouts/build/layouts/arabic';
@@ -12,7 +11,7 @@ import Keyboard from '../../../shared/src/components/Keyboard';
 
 export default {
   title: 'Components/Common/Keyboard',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const English = () => (

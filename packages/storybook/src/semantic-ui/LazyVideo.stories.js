@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withA11y } from '@storybook/addon-a11y';
 import {
   Button,
   Card,
@@ -17,8 +16,7 @@ import portraitImage from '../assets/portrait-test-image.jpg';
 import video from '../assets/SampleVideo.mp4';
 
 export default {
-  title: 'Components/Semantic UI/LazyVideo',
-  decorators: [withA11y]
+  title: 'Components/Semantic UI/LazyVideo'
 };
 
 export const Default = () => (

@@ -1,13 +1,12 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
 import DescriptorField from '../../../semantic-ui/src/components/DescriptorField';
 
 export default {
   title: 'Components/Semantic UI/DescriptorField',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (

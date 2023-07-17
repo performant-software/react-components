@@ -1,6 +1,5 @@
 // @flow
 
-import { withA11y } from '@storybook/addon-a11y';
 import { select, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import _ from 'underscore';
@@ -9,7 +8,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/DataView',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = useDragDrop(() => (

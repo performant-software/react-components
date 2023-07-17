@@ -2,7 +2,6 @@
 
 import { faker } from '@faker-js/faker';
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import NumberUtils from '../utils/Number';
@@ -10,7 +9,7 @@ import Section from '../../../semantic-ui/src/components/Section';
 
 export default {
   title: 'Components/Semantic UI/Section',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const sections = [];

@@ -1,14 +1,13 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, color, number } from '@storybook/addon-knobs';
 import ColorButton from '../../../semantic-ui/src/components/ColorButton';
 
 export default {
   title: 'Components/Semantic UI/ColorButton',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (

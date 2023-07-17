@@ -1,14 +1,13 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import BibliographyList from '../../../semantic-ui/src/components/BibliographyList';
 
 export default {
   title: 'Components/Semantic UI/BibliographyList',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => {

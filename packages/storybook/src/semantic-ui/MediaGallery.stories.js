@@ -2,7 +2,6 @@
 
 import React, { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import MediaGallery from '../../../semantic-ui/src/components/MediaGallery';
 import video from '../assets/SampleVideo.mp4';
@@ -10,7 +9,7 @@ import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/MediaGallery',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const IMAGE_COUNT = 50;

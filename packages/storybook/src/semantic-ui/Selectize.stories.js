@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
 import { Card } from 'semantic-ui-react';
@@ -15,7 +14,7 @@ import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/Selectize',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const items = [{

@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import {
@@ -15,7 +14,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/DataTable',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const actions = [{

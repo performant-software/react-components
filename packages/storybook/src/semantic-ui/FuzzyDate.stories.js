@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
@@ -16,7 +15,7 @@ import 'moment/locale/fr';
 
 export default {
   title: 'Components/Semantic UI/FuzzyDate',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (
