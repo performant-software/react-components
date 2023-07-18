@@ -10,12 +10,30 @@ import {
 import './Facet.css';
 
 type Props = {
-  children?: Node,
+  /**
+   * Facet content to display inside the accordion menu.
+   */
+  children: Node,
+
+  /**
+   * If `true`, the facet will be expanded by default.
+   */
   defaultActive?: boolean,
+
+  /**
+   * If `true`, a divider will be rendered between each facet in the list.
+   */
   divided?: boolean,
+
+  /**
+   * Facet title to display at the top.
+   */
   title: string
 };
 
+/**
+ * This component can be used as a wrapper to display various types of facets (list, toggle, etc).
+ */
 const Facet = (props: Props) => {
   const [active, setActive] = useState(props.defaultActive);
 

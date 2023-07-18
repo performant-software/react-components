@@ -6,11 +6,25 @@ import CurrentFacetLabels, { type Item } from './CurrentFacetLabels';
 import i18n from '../i18n/i18n';
 
 type Props = {
+  /**
+   * An array of facet values.
+   */
   items: Array<Item>,
+
+  /**
+   * Callback fired when the "Done" button is clicked.
+   */
   onClose: () => void,
+
+  /**
+   * If `true` the modal will be visible.
+   */
   open?: boolean
 };
 
+/**
+ * This component displays all of the facets currently applied, without any limit.
+ */
 const CurrentFacetsModal = (props: Props) => (
   <Modal
     centered={false}

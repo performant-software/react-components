@@ -25,6 +25,10 @@ type Props = FacetProps & RefinementListProps & {
   searchable?: boolean
 };
 
+/**
+ * This component is used with the `useRefinementList` hook from Instant Search Hooks. If the `searchable` prop
+ * is "true", the component will also render a search box used to filter the list of facet values.
+ */
 const FacetList = ({ useRefinementList, ...props }: Props) => {
   const {
     items,
@@ -155,5 +159,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     </Facet>
   );
 };
+
+FacetList.defaultProps = Facet.defaultProps;
 
 export default FacetList;

@@ -15,6 +15,10 @@ type Props = {
   onShowMore?: () => void
 };
 
+/**
+ * This component displays the passed items as labels. If a <code>count</code> prop is provided, the component
+ * will display a "+" button.
+ */
 const CurrentFacetLabels = (props: Props) => (
   <Label.Group>
     { _.map(props.items, (item, index) => (
