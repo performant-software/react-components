@@ -12,7 +12,7 @@ type Props = InputProps & SearchBoxProps;
  * This component is used with the `useSearchBox` function from Instant Search Hooks and renders an input element that
  * when changed will execute a new query.
  */
-const SearchBox = ({ useSearchBox, ...props }: typeof Props) => {
+const SearchBox = ({ useSearchBox, ...props }: Props) => {
   const {
     query,
     refine,
