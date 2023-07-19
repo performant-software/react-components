@@ -6,10 +6,21 @@ import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 
 type Props = {
+  /**
+   * Callback fired when the style selector is changed.
+   */
   onChange: (name: string, xml: string) => void,
-  value: ?string
+
+  /**
+   * Default style value.
+   */
+  value?: string
 };
 
+/**
+ * This component can be used, along with the `useCitationStyles` hook, to display a list of bibliographic styles
+ * supported by Zotero.
+ */
 const StyleSelector = (props: Props) => {
   const { onStyleChange, style, styles } = useCitationStyles(props.value);
 

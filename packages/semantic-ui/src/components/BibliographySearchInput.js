@@ -9,10 +9,22 @@ import ZoteroTranslateContext from '../context/ZoteroTranslateContext';
 import './BibliographySearchInput.css';
 
 type Props = {
+  /**
+   * Callback fired when the translator encounters an error.
+   */
   onError: () => void,
+
+  /**
+   * Callback fired when the translator is successful.
+   * @param items
+   */
   onFind: (items: array<any>) => void
 };
 
+/**
+ * This component renders a search input and can be used within a `ZoteroTranslateContext` to lookup sources by URL,
+ * ISBN, DOI, and more identifiers.
+ */
 const BibliographySearchInput = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
