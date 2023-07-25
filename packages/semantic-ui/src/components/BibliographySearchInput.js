@@ -23,7 +23,8 @@ type Props = {
 
 /**
  * This component renders a search input and can be used within a `ZoteroTranslateContext` to lookup sources by URL,
- * ISBN, DOI, and more identifiers.
+ * ISBN, DOI, and more identifiers. The `ZoteroTranslateContext` requires a running
+ * [Zotero Translation Server](https://github.com/zotero/translation-server) to be passed as the `translateUrl` key.
  */
 const BibliographySearchInput = (props: Props) => {
   const [loading, setLoading] = useState(false);

@@ -133,8 +133,8 @@ type Props = ListProps & {
 };
 
 /**
- * This component renders a list of bibliography items in Zbib format. A Zotero translation server is required in
- * order to format the data and display the conditional form.
+ * This component renders a list of bibliography items in Zbib format. This component requires the URL of a running
+ * [Zotero Translation Server](https://github.com/zotero/translation-server) to be passed as the `translateUrl` prop.
  */
 const BibliographyList = (props: Props) => {
   const [locale, setLocale] = useState();
