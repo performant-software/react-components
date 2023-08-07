@@ -91,6 +91,15 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   const onSearch = useCallback(() => searchForItems(query), [query, searchForItems]);
 
   /**
+   * Toggles the "and" / "or" list operator.
+   *
+   * @type {function(): void}
+   */
+  const onToggleOperator = useCallback(() => (
+    setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR))
+  ), []);
+
+  /**
    * Sets the default value if provided.
    */
   useEffect(() => {
@@ -184,7 +193,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
           label={operator === OPERATOR_OR
             ? i18n.t('FacetList.labels.matchAny')
             : i18n.t('FacetList.labels.matchAll')}
-          onChange={() => setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR))}
+          onChange={onToggleOperator}
           toggle
         />
       )}
