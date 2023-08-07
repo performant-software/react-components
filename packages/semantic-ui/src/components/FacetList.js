@@ -184,7 +184,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
           label={operator === OPERATOR_OR
             ? i18n.t('FacetList.labels.matchAny')
             : i18n.t('FacetList.labels.matchAll')}
-          onClick={() => setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR))}
+          onChange={() => setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR))}
           toggle
         />
       )}

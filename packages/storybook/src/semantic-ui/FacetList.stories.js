@@ -110,7 +110,6 @@ export const Searchable = () => (
 
 export const Toggleable = () => (
   <FacetList
-    searchable
     toggleable
     title='States'
     useRefinementList={() => ({
