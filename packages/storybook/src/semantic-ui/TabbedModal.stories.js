@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import {
   withKnobs,
   boolean,
@@ -13,7 +12,7 @@ import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 
 export default {
   title: 'Components/Semantic UI/TabbedModal',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (

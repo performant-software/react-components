@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useEffect, useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -11,7 +10,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Common/InfiniteScroll',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const PER_PAGE = 10;

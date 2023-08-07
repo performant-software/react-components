@@ -1,14 +1,13 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { select, withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import TreeGraph from '../../../visualize/src/components/TreeGraph';
 
 export default {
   title: 'Components/Visualize/TreeGraph',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const data = {

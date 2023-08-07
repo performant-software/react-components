@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { Card, Item } from 'semantic-ui-react';
 import _ from 'underscore';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
@@ -10,8 +9,7 @@ import LazyDocument from '../../../semantic-ui/src/components/LazyDocument';
 import portraitImage from '../assets/portrait-test-image.jpg';
 
 export default {
-  title: 'Components/Semantic UI/LazyDocument',
-  decorators: [withA11y]
+  title: 'Components/Semantic UI/LazyDocument'
 };
 
 export const Default = () => (

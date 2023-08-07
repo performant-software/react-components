@@ -1,13 +1,13 @@
 // @flow
 
+import { action } from '@storybook/addon-actions';
+import { optionsKnob as options } from '@storybook/addon-knobs';
 import React, {
   createRef,
   useEffect,
   useMemo,
   useState
 } from 'react';
-import { action } from '@storybook/addon-actions';
-import { optionsKnob as options } from '@storybook/addon-knobs';
 import {
   Button,
   Container,
@@ -16,12 +16,17 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
-import { SemanticColors } from '../services/Colors';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
 import ItemCollection from '../../../semantic-ui/src/components/ItemCollection';
+import items from '../data/Movies.json';
+import { SemanticColors } from '../services/Colors';
 import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
-import items from '../data/Movies.json';
+
+export default {
+  title: 'Components/Semantic UI/ItemCollection',
+  component: ItemCollection
+};
 
 const actions = [{
   name: 'edit'

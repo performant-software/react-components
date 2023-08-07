@@ -1,14 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import LazyVideo from '../../../semantic-ui/src/components/LazyVideo';
 import VideoFrameSelector from '../../../semantic-ui/src/components/VideoFrameSelector';
 import video from '../assets/SampleVideo.mp4';
 
 export default {
-  title: 'Components/Semantic UI/VideoFrameSelector',
-  decorators: [withA11y]
+  title: 'Components/Semantic UI/VideoFrameSelector'
 };
 
 export const Default = () => {

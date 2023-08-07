@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import { Button, Form, Item } from 'semantic-ui-react';
 import FileUploadModal from '../../../semantic-ui/src/components/FileUploadModal';
 
+export default {
+  title: 'Components/Semantic UI/FileUploadModal',
+  component: FileUploadModal
+};
+
 const withWrapper = (WrappedComponent) => (props) => {
   const [modal, setModal] = useState(false);
 

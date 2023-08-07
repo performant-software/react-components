@@ -1,13 +1,11 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import _ from 'underscore';
 import DropdownButton from '../../../semantic-ui/src/components/DropdownButton';
 
 export default {
-  title: 'Components/Semantic UI/DropdownButton',
-  decorators: [withA11y]
+  title: 'Components/Semantic UI/DropdownButton'
 };
 
 export const Default = () => {

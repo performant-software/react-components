@@ -1,8 +1,8 @@
 // @flow
 
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { number } from '@storybook/addon-knobs';
+import React from 'react';
 import {
   Confirm,
   Header,
@@ -13,6 +13,11 @@ import _ from 'underscore';
 import Items from '../../../semantic-ui/src/components/Items';
 import image from '../assets/test-image.jpg';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
+
+export default {
+  title: 'Components/Semantic UI/Items',
+  component: Items
+};
 
 const actions = [{
   name: 'edit'

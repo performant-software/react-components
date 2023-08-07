@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import LazyMedia from '../../../semantic-ui/src/components/LazyMedia';
 import audio from '../assets/SampleAudio.mp3';
@@ -10,7 +9,7 @@ import document from '../assets/sample2.pdf';
 
 export default {
   title: 'Components/Semantic UI/LazyMedia',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (

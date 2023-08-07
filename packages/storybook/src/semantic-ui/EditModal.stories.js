@@ -1,8 +1,8 @@
 // @flow
 
-import React, { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
+import React, { useCallback, useState } from 'react';
 import {
   Button,
   Form,
@@ -14,10 +14,14 @@ import _ from 'underscore';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
 import AssociatedDropdown from '../../../semantic-ui/src/components/AssociatedDropdown';
+import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
 import items from '../data/Companies.json';
 
-import type { EditContainerProps } from '../../../shared/src/components/EditContainer';
+export default {
+  title: 'Components/Semantic UI/EditModal',
+  component: EditModal
+};
 
 const withWrapper = (WrappedComponent) => (props) => {
   const [modal, setModal] = useState(false);

@@ -2,15 +2,13 @@
 
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withA11y } from '@storybook/addon-a11y';
 import { Button, Card, Item } from 'semantic-ui-react';
 import image from '../assets/test-image.jpg';
 import LazyImage from '../../../semantic-ui/src/components/LazyImage';
 import portraitImage from '../assets/portrait-test-image.jpg';
 
 export default {
-  title: 'Components/Semantic UI/LazyImage',
-  decorators: [withA11y]
+  title: 'Components/Semantic UI/LazyImage'
 };
 
 export const Default = () => (

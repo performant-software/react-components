@@ -5,13 +5,18 @@ import { boolean, number } from '@storybook/addon-knobs';
 import React, { useCallback, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
-import AddModal from '../components/AddModal';
+import ListTable from '../../../semantic-ui/src/components/ListTable';
 import Api from '../services/Api';
+import AddModal from '../components/AddModal';
 import FilterModal from '../components/FilterModal';
 import items from '../data/Cars.json';
-import ListFilters, { FilterTypes, FilterOperators } from '../../../semantic-ui/src/components/ListFilters';
-import ListTable from '../../../semantic-ui/src/components/ListTable';
+import ListFilters, { FilterOperators, FilterTypes } from '../../../semantic-ui/src/components/ListFilters';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
+
+export default {
+  title: 'Components/Semantic UI/ListTable',
+  component: ListTable
+};
 
 const actions = [{
   name: 'edit'

@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import HorizontalCards from '../../../semantic-ui/src/components/HorizontalCards';
@@ -10,7 +9,7 @@ import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/HorizontalCards',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = withImages((props) => (
