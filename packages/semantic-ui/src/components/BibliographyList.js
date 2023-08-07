@@ -23,7 +23,7 @@ import SortSelector from './SortSelector';
 import { SORT_DESCENDING } from '../constants/Sort';
 import StyleSelector from './StyleSelector';
 import Toaster from './Toaster';
-import useList from './List';
+import useList, { Props as ListProps } from './List';
 import ZoteroTranslateContext from '../context/ZoteroTranslateContext';
 import './BibliographyList.css';
 
@@ -110,13 +110,32 @@ const BibliographyListComponent: ComponentType<any> = useList((props: ComponentP
   </List>
 ));
 
-type Props = {
+type Props = ListProps & {
+  /**
+   * The array of bibliography items.
+   */
   items: Array<Item>,
+
+  /**
+   * Callback fired when the passed item is deleted. This function should return a Promise.
+   */
   onDelete: (item: Item) => Promise<any>,
+
+  /**
+   * Callback fired when the passed item is saved. This function should return a Promise.
+   */
   onSave: (item: Item) => Promise<any>,
+
+  /**
+   * URL of the Zotero translation server.
+   */
   translateUrl: string
 };
 
+/**
+ * This component renders a list of bibliography items in Zbib format. This component requires the URL of a running
+ * [Zotero Translation Server](https://github.com/zotero/translation-server) to be passed as the `translateUrl` prop.
+ */
 const BibliographyList = (props: Props) => {
   const [locale, setLocale] = useState();
   const [showToaster, setShowToaster] = useState(false);

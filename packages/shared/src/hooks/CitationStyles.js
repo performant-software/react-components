@@ -22,12 +22,26 @@ const useCitationStyles = (defaultValue) => {
    */
   const styles = useMemo(() => CitationStyles.coreCitationStyles, []);
 
+  /**
+   * Callback fired when the style changes.
+   *
+   * @type {(function(string): void)|*}
+   */
   const onStyleChange = useCallback((value: string) => {
     const style = _.findWhere(styles, { name: value });
     setName(value);
     setTitle(style?.title);
   }, [styles]);
 
+  /**
+   * Memoize the style for use in consuming components.
+   * @type {{xml: unknown, name: unknown, title: unknown}}
+   */
+  const style = useMemo(() => ({ name, title, xml }), [name, title, xml]);
+
+  /**
+   * Set the default value on the state.
+   */
   useEffect(() => {
     if (!name) {
       let defaultStyle;
@@ -42,6 +56,9 @@ const useCitationStyles = (defaultValue) => {
     }
   }, [styles, defaultValue]);
 
+  /**
+   * When the style changes, attempt to get the XML from the cache. If not present, fetch it from Zotero.
+   */
   useEffect(() => {
     if (name) {
       if (_.has(stylesCache, name)) {
@@ -62,11 +79,7 @@ const useCitationStyles = (defaultValue) => {
 
   return {
     onStyleChange,
-    style: {
-      name,
-      title,
-      xml
-    },
+    style,
     styles
   };
 };
