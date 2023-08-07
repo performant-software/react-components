@@ -7,6 +7,9 @@ import { type ToggleRefinementProps } from '../types/InstantSearch';
 
 type Props = FacetProps & ToggleRefinementProps;
 
+/**
+ * This component is used with the `useToggleRefinement` hook from Instant Search Hooks.
+ */
 const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
   const {
     value: {
@@ -43,5 +46,7 @@ const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
     </Facet>
   );
 };
+
+FacetToggle.defaultProps = Facet.defaultProps;
 
 export default FacetToggle;

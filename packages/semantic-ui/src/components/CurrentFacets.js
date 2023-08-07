@@ -7,9 +7,15 @@ import CurrentFacetsModal from './CurrentFacetsModal';
 import { type CurrentRefinementsProps } from '../types/InstantSearch';
 
 type Props = CurrentRefinementsProps & {
+  /**
+   * The maximum number of facets to display. If more facets are added, they will be accessible via modal.
+   */
   limit?: number
 };
 
+/**
+ * This component can be used to display the facets/refinements currently applied to an InstantSearch index.
+ */
 const CurrentFacets = ({ useCurrentRefinements, ...props }: Props) => {
   const [modal, setModal] = useState(false);
   const { items } = useCurrentRefinements(props);

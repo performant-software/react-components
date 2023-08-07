@@ -4,11 +4,15 @@ import Slider from 'rc-slider';
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
-import { type RangerSliderProps } from '../types/InstantSearch';
+import { type RangeSliderProps } from '../types/InstantSearch';
+import 'rc-slider/assets/index.css';
 import './FacetSlider.css';
 
-type Props = FacetProps & RangerSliderProps;
+type Props = FacetProps & RangeSliderProps;
 
+/**
+ * This component can be used with the `useRange` hook from Instant Search Hooks.
+ */
 const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
   const {
     start,
@@ -74,8 +78,6 @@ const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
   );
 };
 
-FacetSlider.defaultProps = {
-  defaultValue: undefined
-};
+FacetSlider.defaultProps = Facet.defaultProps;
 
 export default FacetSlider;

@@ -2,13 +2,17 @@
 
 import { Timer } from '@performant-software/shared-components';
 import React, { useCallback, useRef, useState } from 'react';
-import { Icon, Input, InputProps } from 'semantic-ui-react';
+import { Icon, Input, type InputProps } from 'semantic-ui-react';
 import _ from 'underscore';
 import { type SearchBoxProps } from '../types/InstantSearch';
 
-type Props = typeof InputProps & SearchBoxProps;
+type Props = InputProps & SearchBoxProps;
 
-const SearchBox = ({ useSearchBox, ...props }: typeof Props) => {
+/**
+ * This component is used with the `useSearchBox` function from Instant Search Hooks and renders an input element that
+ * when changed will execute a new query.
+ */
+const SearchBox = ({ useSearchBox, ...props }: Props) => {
   const {
     query,
     refine,
