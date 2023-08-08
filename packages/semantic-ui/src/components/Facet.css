@@ -2,6 +2,10 @@
   padding-bottom: 1em;
 }
 
+.facet.ui.accordion.hidden {
+  display: none;
+}
+
 .facet.ui.accordion > .title > .facet-title {
   display: flex;
   justify-content: space-between;

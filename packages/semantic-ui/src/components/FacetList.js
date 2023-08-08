@@ -3,7 +3,7 @@
 import { Timer } from '@performant-software/shared-components';
 import React, {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useRef,
   useState
 } from 'react';
@@ -100,6 +100,11 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   }, []);
 
   /**
+   * Sets the visibility variable based on the items and query.
+   */
+  const visible = useMemo(() => !(_.isEmpty(items) && _.isEmpty(query)), [items, query]);
+
+  /**
    * Sets the default value if provided.
    */
   useEffect(() => {
@@ -117,18 +122,12 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     }
   }, [items]);
 
-  /**
-   * Do not render the component if no items are present and no query has been entered.
-   */
-  if (_.isEmpty(items) && _.isEmpty(query)) {
-    return null;
-  }
-
   return (
     <Facet
       defaultActive={props.defaultActive}
       divided={props.divided}
       title={props.title}
+      visible={visible}
     >
       { props.searchable && (
         <Input

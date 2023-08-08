@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Checkbox, Label } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type ToggleRefinementProps } from '../types/InstantSearch';
@@ -19,15 +19,19 @@ const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
     refine
   } = useToggleRefinement(props);
 
-  if (!count) {
-    return null;
-  }
+  /**
+   * Sets the visibility variable based on the count.
+   *
+   * @type {boolean}
+   */
+  const visible = useMemo(() => !!count, [count]);
 
   return (
     <Facet
       defaultActive={props.defaultActive}
       divided={props.divided}
       title={props.title}
+      visible={visible}
     >
       <Checkbox
         checked={isRefined}
