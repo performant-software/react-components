@@ -19,6 +19,7 @@ import Facet, { type Props as FacetProps } from './Facet';
 import i18n from '../i18n/i18n';
 import LinkButton from './LinkButton';
 import { type RefinementListProps } from '../types/InstantSearch';
+import './FacetList.css';
 
 type Props = FacetProps & RefinementListProps & {
   /**
@@ -125,6 +126,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
 
   return (
     <Facet
+      className='facet-list'
       defaultActive={props.defaultActive}
       divided={props.divided}
       title={props.title}
@@ -189,6 +191,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
       )}
       { props.toggleable && (
         <Checkbox
+          className='toggleable'
           checked={operator === OPERATOR_AND}
           label={operator === OPERATOR_OR
             ? i18n.t('FacetList.labels.matchAny')

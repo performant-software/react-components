@@ -16,6 +16,11 @@ type Props = {
   children: Node,
 
   /**
+   * Classname to apply to the root element.
+   */
+  className?: string,
+
+  /**
    * If `true`, the facet will be expanded by default.
    */
   defaultActive?: boolean,
@@ -54,8 +59,12 @@ const Facet = (props: Props) => {
       classNames.push('hidden');
     }
 
+    if (props.className) {
+      classNames.push(props.className);
+    }
+
     return classNames.join(' ');
-  }, [props.visible]);
+  }, [props.className, props.visible]);
 
   return (
     <>

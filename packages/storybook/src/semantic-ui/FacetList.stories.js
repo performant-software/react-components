@@ -139,7 +139,7 @@ export const Toggleable = () => (
         value: 'colorado'
       }],
       refine: action('refine'),
-      canToggleShowMore: false,
+      canToggleShowMore: true,
       isShowingMore: false,
       searchForItems: action('search'),
       toggleShowMore: action('show more')
