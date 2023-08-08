@@ -96,10 +96,6 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
    * @type {function(): void}
    */
   const onToggleOperator = useCallback(() => {
-    // Reset the list of refinements
-    searchForItems();
-
-    // Toggle the operator
     setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR));
   }, []);
 
