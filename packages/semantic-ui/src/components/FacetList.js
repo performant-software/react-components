@@ -53,10 +53,11 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   const [operator, setOperator] = useState(props.defaultOperator || OPERATOR_OR);
 
   const {
-    items,
-    refine,
+    canRefine,
     canToggleShowMore,
     isShowingMore,
+    items,
+    refine,
     searchForItems,
     toggleShowMore,
   } = useRefinementList({ ...props, operator });
@@ -102,7 +103,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   /**
    * Sets the visibility variable based on the items and query.
    */
-  const visible = useMemo(() => !(_.isEmpty(items) && _.isEmpty(query)), [items, query]);
+  const visible = useMemo(() => !(canRefine && _.isEmpty(items) && _.isEmpty(query)), [items, query]);
 
   /**
    * Sets the default value if provided.
