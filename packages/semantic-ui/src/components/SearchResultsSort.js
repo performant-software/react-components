@@ -9,7 +9,14 @@ const ICON_SORT_ASCENDING = 'sort alphabet up';
 const ICON_SORT_DESCENDING = 'sort alphabet down';
 const SORT_DIRECTION_DESCENDING = 'desc';
 
-const SearchSort = ({ useSortBy, ...props }: SortByProps) => {
+type Props = SortByProps & {
+  /**
+   * A list of label/value objects to use as the dropdown options.
+   */
+  items: Array<{ label: string, value: string }>
+};
+
+const SearchResultsSort = ({ useSortBy, ...props }: Props) => {
   const { currentRefinement, options, refine } = useSortBy(props);
   const { label, value } = _.findWhere(options, { value: currentRefinement }) || _.first(options);
 
@@ -40,4 +47,4 @@ const SearchSort = ({ useSortBy, ...props }: SortByProps) => {
   );
 };
 
-export default SearchSort;
+export default SearchResultsSort;
