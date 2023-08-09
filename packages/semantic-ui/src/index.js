@@ -82,6 +82,7 @@ export { default as SearchBox } from './components/SearchBox';
 export { default as SearchPagination } from './components/SearchPagination';
 export { default as SearchResults } from './components/SearchResults';
 export { default as SearchResultsPerPage } from './components/SearchResultsPerPage';
+export { default as SearchResultsSort } from './components/SearchResultsSort';
 export { default as SearchStats } from './components/SearchStats';
 export { default as Section } from './components/Section';
 export { default as Selectize } from './components/Selectize';

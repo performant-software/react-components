@@ -83,6 +83,17 @@ export type SearchBoxProps = {
   })
 };
 
+export type SortByProps = {
+  /**
+   * Instant-Search hook to provide sort by values.
+   */
+  useSortBy: (props: any) => ({
+    currentRefinement: string,
+    options: Array<{ label: string, value: string}>,
+    refine: (value: string) => void
+  })
+};
+
 export type StatsProps = {
   /**
    * Instant-Search hook to provide search statistic values.
