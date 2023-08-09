@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { Checkbox, Label } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type ToggleRefinementProps } from '../types/InstantSearch';
@@ -10,7 +10,7 @@ type Props = FacetProps & ToggleRefinementProps;
 /**
  * This component is used with the `useToggleRefinement` hook from Instant Search Hooks.
  */
-const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
+const FacetToggle = forwardRef(({ useToggleRefinement, ...props }: Props, ref: HTMLElement) => {
   const {
     value: {
       isRefined,
@@ -30,6 +30,7 @@ const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
     <Facet
       defaultActive={props.defaultActive}
       divided={props.divided}
+      innerRef={ref}
       title={props.title}
       visible={visible}
     >
@@ -49,7 +50,7 @@ const FacetToggle = ({ useToggleRefinement, ...props }: Props) => {
       />
     </Facet>
   );
-};
+});
 
 FacetToggle.defaultProps = Facet.defaultProps;
 
