@@ -1,6 +1,11 @@
 // @flow
 
-import React, { useState, type Node, useMemo } from 'react';
+import React, {
+  useImperativeHandle,
+  useMemo,
+  useState,
+  type Node
+} from 'react';
 import {
   Accordion,
   Divider,
@@ -29,6 +34,13 @@ type Props = {
    * If `true`, a divider will be rendered between each facet in the list.
    */
   divided?: boolean,
+
+  /**
+   * React ref element to apply to the expand/collapse functions.
+   */
+  innerRef?: {
+    current: ?HTMLElement
+  },
 
   /**
    * Facet title to display at the top.
@@ -65,6 +77,14 @@ const Facet = (props: Props) => {
 
     return classNames.join(' ');
   }, [props.className, props.visible]);
+
+  /**
+   * Expose collapse/expand functions on the ref object to allow parent components to imperatively open/close.
+   */
+  useImperativeHandle(props.innerRef, () => ({
+    collapse: () => setActive(false),
+    expand: () => setActive(true)
+  }));
 
   return (
     <>

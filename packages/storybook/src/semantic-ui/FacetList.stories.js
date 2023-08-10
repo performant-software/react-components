@@ -1,7 +1,8 @@
 // @flow
 
 import { action } from '@storybook/addon-actions';
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
+import { Button } from 'semantic-ui-react';
 import FacetList from '../../../semantic-ui/src/components/FacetList';
 
 export default {
@@ -146,3 +147,83 @@ export const Toggleable = () => (
     })}
   />
 );
+
+export const ExpandCollapse = () => {
+  const ref = useRef();
+
+  /**
+   * Collapses the facet via the imperative function.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onCollapse = useCallback(() => {
+    const { current: instance } = ref;
+
+    if (instance) {
+      instance.collapse();
+    }
+  }, [ref.current]);
+
+  /**
+   * Expands the facet via the imperative function.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onExpand = useCallback(() => {
+    const { current: instance } = ref;
+
+    if (instance) {
+      instance.expand();
+    }
+  }, [ref.current]);
+
+  return (
+    <>
+      <FacetList
+        ref={ref}
+        toggleable
+        title='States'
+        useRefinementList={() => ({
+          items: [{
+            label: 'Alabama',
+            count: 55,
+            value: 'alabama'
+          }, {
+            label: 'Alaska',
+            count: 3,
+            value: 'alaska'
+          }, {
+            label: 'Arizona',
+            count: 70,
+            value: 'arizona'
+          }, {
+            label: 'Arkansas',
+            count: 12,
+            value: 'arkansas'
+          }, {
+            label: 'California',
+            count: 269,
+            value: 'california'
+          }, {
+            label: 'Colorado',
+            count: 100,
+            value: 'colorado'
+          }],
+          refine: action('refine'),
+          canToggleShowMore: true,
+          isShowingMore: false,
+          searchForItems: action('search'),
+          toggleShowMore: action('show more')
+        })}
+      />
+      <Button
+        content='Expand'
+        onClick={onExpand}
+      />
+      <Button
+        content='Collapse'
+        onClick={onCollapse}
+      />
+    </>
+  );
+};

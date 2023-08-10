@@ -2,8 +2,10 @@
 
 import { Timer } from '@performant-software/shared-components';
 import React, {
+  forwardRef,
   useCallback,
-  useEffect, useMemo,
+  useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -50,7 +52,7 @@ const OPERATOR_AND = 'and';
  * This component is used with the `useRefinementList` hook from Instant Search Hooks. If the `searchable` prop
  * is "true", the component will also render a search box used to filter the list of facet values.
  */
-const FacetList = ({ useRefinementList, ...props }: Props) => {
+const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLElement) => {
   const [operator, setOperator] = useState(props.defaultOperator || OPERATOR_OR);
 
   const {
@@ -63,7 +65,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     toggleShowMore,
   } = useRefinementList({ ...props, operator });
 
-  const ref = useRef();
+  const searchRef = useRef();
   const [query, setQuery] = useState('');
 
   /**
@@ -79,7 +81,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     searchForItems();
 
     // Refocus the input element
-    const { current: instance } = ref;
+    const { current: instance } = searchRef;
     if (instance) {
       instance.focus();
     }
@@ -129,6 +131,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
       className='facet-list'
       defaultActive={props.defaultActive}
       divided={props.divided}
+      innerRef={ref}
       title={props.title}
       visible={visible}
     >
@@ -146,7 +149,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
           onKeyDown={() => Timer.clearSearchTimer()}
           onKeyUp={() => Timer.setSearchTimer(onSearch)}
           placeholder={i18n.t('FacetList.labels.search')}
-          ref={ref}
+          ref={searchRef}
           value={query}
         />
       )}
@@ -202,7 +205,7 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
       )}
     </Facet>
   );
-};
+});
 
 FacetList.defaultProps = {
   ...Facet.defaultProps,

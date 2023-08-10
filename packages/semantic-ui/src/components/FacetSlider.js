@@ -1,7 +1,12 @@
 // @flow
 
 import Slider from 'rc-slider';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
@@ -13,7 +18,7 @@ type Props = FacetProps & RangeSliderProps;
 /**
  * This component can be used with the `useRange` hook from Instant Search Hooks.
  */
-const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
+const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLElement) => {
   const {
     start,
     range,
@@ -42,6 +47,7 @@ const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
     <Facet
       defaultActive={props.defaultActive}
       divided={props.divided}
+      innerRef={ref}
       title={props.title}
       visible={visible}
     >
@@ -77,7 +83,7 @@ const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
       </div>
     </Facet>
   );
-};
+});
 
 FacetSlider.defaultProps = Facet.defaultProps;
 
