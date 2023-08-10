@@ -107,3 +107,42 @@ export const Searchable = () => (
     })}
   />
 );
+
+export const Toggleable = () => (
+  <FacetList
+    toggleable
+    title='States'
+    useRefinementList={() => ({
+      items: [{
+        label: 'Alabama',
+        count: 55,
+        value: 'alabama'
+      }, {
+        label: 'Alaska',
+        count: 3,
+        value: 'alaska'
+      }, {
+        label: 'Arizona',
+        count: 70,
+        value: 'arizona'
+      }, {
+        label: 'Arkansas',
+        count: 12,
+        value: 'arkansas'
+      }, {
+        label: 'California',
+        count: 269,
+        value: 'california'
+      }, {
+        label: 'Colorado',
+        count: 100,
+        value: 'colorado'
+      }],
+      refine: action('refine'),
+      canToggleShowMore: true,
+      isShowingMore: false,
+      searchForItems: action('search'),
+      toggleShowMore: action('show more')
+    })}
+  />
+);

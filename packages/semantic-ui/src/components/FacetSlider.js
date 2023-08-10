@@ -1,7 +1,7 @@
 // @flow
 
 import Slider from 'rc-slider';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
@@ -23,6 +23,13 @@ const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
   const [valueView, setValueView] = useState<Array<number>>([range.min, range.max]);
 
   /**
+   * Sets the visibility variable based on the range min and max.
+   *
+   * @type {unknown}
+   */
+  const visible = useMemo(() => range.min === 0 && range.max === 0, [range.min, range.max]);
+
+  /**
    * Resets the value and valueView when the current refinement is cleared.
    */
   useEffect(() => {
@@ -31,18 +38,12 @@ const FacetSlider = ({ useRangeSlider, ...props }: Props) => {
     }
   }, [range, start]);
 
-  /**
-   * Don't render the component if nothing matches the range.
-   */
-  if (range.min === 0 && range.max === 0) {
-    return null;
-  }
-
   return (
     <Facet
       defaultActive={props.defaultActive}
       divided={props.divided}
       title={props.title}
+      visible={visible}
     >
       <div
         className='facet-slider'

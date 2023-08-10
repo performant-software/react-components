@@ -3,7 +3,7 @@
 import { Timer } from '@performant-software/shared-components';
 import React, {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useRef,
   useState
 } from 'react';
@@ -19,25 +19,49 @@ import Facet, { type Props as FacetProps } from './Facet';
 import i18n from '../i18n/i18n';
 import LinkButton from './LinkButton';
 import { type RefinementListProps } from '../types/InstantSearch';
+import './FacetList.css';
 
 type Props = FacetProps & RefinementListProps & {
+  /**
+   * The default value for the `operator` prop. If not provided, this will default to `or`.
+   */
+  defaultOperator?: string,
+
+  /**
+   * Default value of the facet list.
+   */
   defaultValue?: string,
-  searchable?: boolean
+
+  /**
+   * If "true", the component will render a search box for searching individual facet values.
+   */
+  searchable?: boolean,
+
+  /**
+   * If "true", the component will render a toggle to change the behavior of the list from "or" to "and" logic.
+   */
+  toggleable?: boolean
 };
+
+const OPERATOR_OR = 'or';
+const OPERATOR_AND = 'and';
 
 /**
  * This component is used with the `useRefinementList` hook from Instant Search Hooks. If the `searchable` prop
  * is "true", the component will also render a search box used to filter the list of facet values.
  */
 const FacetList = ({ useRefinementList, ...props }: Props) => {
+  const [operator, setOperator] = useState(props.defaultOperator || OPERATOR_OR);
+
   const {
-    items,
-    refine,
+    canRefine,
     canToggleShowMore,
     isShowingMore,
+    items,
+    refine,
     searchForItems,
     toggleShowMore,
-  } = useRefinementList(props);
+  } = useRefinementList({ ...props, operator });
 
   const ref = useRef();
   const [query, setQuery] = useState('');
@@ -69,6 +93,20 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
   const onSearch = useCallback(() => searchForItems(query), [query, searchForItems]);
 
   /**
+   * Toggles the "and" / "or" list operator.
+   *
+   * @type {function(): void}
+   */
+  const onToggleOperator = useCallback(() => {
+    setOperator((prevOperator) => (prevOperator === OPERATOR_OR ? OPERATOR_AND : OPERATOR_OR));
+  }, []);
+
+  /**
+   * Sets the visibility variable based on the items and query.
+   */
+  const visible = useMemo(() => !(canRefine && _.isEmpty(items) && _.isEmpty(query)), [items, query]);
+
+  /**
    * Sets the default value if provided.
    */
   useEffect(() => {
@@ -86,18 +124,13 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
     }
   }, [items]);
 
-  /**
-   * Do not render the component if no items are present and no query has been entered.
-   */
-  if (_.isEmpty(items) && _.isEmpty(query)) {
-    return null;
-  }
-
   return (
     <Facet
+      className='facet-list'
       defaultActive={props.defaultActive}
       divided={props.divided}
       title={props.title}
+      visible={visible}
     >
       { props.searchable && (
         <Input
@@ -156,10 +189,24 @@ const FacetList = ({ useRefinementList, ...props }: Props) => {
           />
         </>
       )}
+      { props.toggleable && (
+        <Checkbox
+          className='toggleable'
+          checked={operator === OPERATOR_AND}
+          label={operator === OPERATOR_OR
+            ? i18n.t('FacetList.labels.matchAny')
+            : i18n.t('FacetList.labels.matchAll')}
+          onChange={onToggleOperator}
+          toggle
+        />
+      )}
     </Facet>
   );
 };
 
-FacetList.defaultProps = Facet.defaultProps;
+FacetList.defaultProps = {
+  ...Facet.defaultProps,
+  defaultOperator: OPERATOR_OR
+};
 
 export default FacetList;

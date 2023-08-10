@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useState, type Node, useMemo } from 'react';
 import {
   Accordion,
   Divider,
@@ -16,6 +16,11 @@ type Props = {
   children: Node,
 
   /**
+   * Classname to apply to the root element.
+   */
+  className?: string,
+
+  /**
    * If `true`, the facet will be expanded by default.
    */
   defaultActive?: boolean,
@@ -28,7 +33,12 @@ type Props = {
   /**
    * Facet title to display at the top.
    */
-  title: string
+  title: string,
+
+  /**
+   * If `true`, the facet will be visible in the DOM.
+   */
+  visible?: boolean
 };
 
 /**
@@ -37,10 +47,29 @@ type Props = {
 const Facet = (props: Props) => {
   const [active, setActive] = useState(props.defaultActive);
 
+  /**
+   * Sets the class name variable for the Accordion component.
+   *
+   * @type {string}
+   */
+  const className = useMemo(() => {
+    const classNames = ['facet'];
+
+    if (!props.visible) {
+      classNames.push('hidden');
+    }
+
+    if (props.className) {
+      classNames.push(props.className);
+    }
+
+    return classNames.join(' ');
+  }, [props.className, props.visible]);
+
   return (
     <>
       <Accordion
-        className='facet'
+        className={className}
       >
         <Accordion.Title
           active={active}
@@ -75,7 +104,8 @@ const Facet = (props: Props) => {
 Facet.defaultProps = {
   children: undefined,
   defaultActive: true,
-  divided: false
+  divided: false,
+  visible: true
 };
 
 export type {
