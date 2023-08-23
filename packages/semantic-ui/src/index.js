@@ -88,6 +88,7 @@ export { default as Section } from './components/Section';
 export { default as Selectize } from './components/Selectize';
 export { default as SelectizeHeader } from './components/SelectizeHeader';
 export { default as SelectizeImageHeader } from './components/SelectizeImageHeader';
+export { default as SimpleEditPage } from './components/SimpleEditPage';
 export { default as StyleSelector } from './components/StyleSelector';
 export { default as TabbedModal } from './components/TabbedModal';
 export { default as TabsMenu } from './components/TabsMenu';

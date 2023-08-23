@@ -55,7 +55,9 @@
       "upload": "Upload"
     },
     "errors": {
-      "title": "Oops!"
+      "save": "There was an error saving the record.",
+      "title": "Oops!",
+      "unauthorized": "You do not have permission to access this record."
     },
     "labels": {
       "noRecords": "No records."
