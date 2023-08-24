@@ -14,6 +14,7 @@ export { default as BibliographyForm } from './components/BibliographyForm';
 export { default as BibliographyList } from './components/BibliographyList';
 export { default as BibliographySearchInput } from './components/BibliographySearchInput';
 export { default as BooleanIcon } from './components/BooleanIcon';
+export { default as Breadcrumbs } from './components/Breadcrumbs';
 export { default as CancelButton } from './components/CancelButton';
 export { default as ColorButton } from './components/ColorButton';
 export { default as ColorPickerModal } from './components/ColorPickerModal';
