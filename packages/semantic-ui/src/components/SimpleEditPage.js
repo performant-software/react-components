@@ -36,6 +36,11 @@ type Props = EditContainerProps & {
   defaultTab?: string,
 
   /**
+   * If `false`, the save button will be hidden.
+   */
+  editable?: boolean,
+
+  /**
    * Props to provide to the Semantic UI `Menu` component.
    */
   menuProps?: typeof MenuProps,
@@ -131,12 +136,14 @@ const SimpleEditPage: any = (props: Props) => {
           <Menu.Item
             className='button-container'
           >
-            <Button
-              content={i18n.t('Common.buttons.save')}
-              disabled={props.loading || props.saving}
-              onClick={props.onSave}
-              primary
-            />
+            { props.editable && (
+              <Button
+                content={i18n.t('Common.buttons.save')}
+                disabled={props.loading || props.saving}
+                onClick={props.onSave}
+                primary
+              />
+            )}
             <Button
               basic
               content={i18n.t('Common.buttons.cancel')}
@@ -231,6 +238,7 @@ const SimpleEditPage: any = (props: Props) => {
 };
 
 SimpleEditPage.defaultProps = {
+  editable: true,
   menuProps: {
     pointing: true,
     secondary: true
