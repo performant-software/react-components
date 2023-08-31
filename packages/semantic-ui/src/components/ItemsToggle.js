@@ -72,6 +72,15 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Returns true if the component should be hidden.
+     *
+     * @returns {boolean|*}
+     */
+    isHidden() {
+      return this.props.hideToggle && _.isEmpty(this.props.sort);
+    }
+
+    /**
      * Calls the onSort prop.
      *
      * @param sort
@@ -98,7 +107,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
-      const renderListHeader = this.props.hideToggle
+      const renderListHeader = this.isHidden()
         ? undefined
         : this.renderHeader.bind(this);
 
@@ -121,27 +130,31 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     renderHeader() {
-      if (this.props.hideToggle) {
+      if (this.isHidden()) {
         return null;
       }
 
       return (
         <>
-          <Button
-            active={this.state.view === Views.list}
-            aria-label='List View'
-            basic
-            icon='list'
-            onClick={() => this.setState({ view: Views.list })}
-          />
-          <Button
-            active={this.state.view === Views.grid}
-            aria-label='Grid View'
-            basic
-            icon='grid layout'
-            onClick={() => this.setState({ view: Views.grid })}
-          />
-          { this.props.sort && this.props.sort.length > 1 && this.props.onSort && (
+          { !this.props.hideToggle && (
+            <>
+              <Button
+                active={this.state.view === Views.list}
+                aria-label='List View'
+                basic
+                icon='list'
+                onClick={() => this.setState({ view: Views.list })}
+              />
+              <Button
+                active={this.state.view === Views.grid}
+                aria-label='Grid View'
+                basic
+                icon='grid layout'
+                onClick={() => this.setState({ view: Views.grid })}
+              />
+            </>
+          )}
+          { !_.isEmpty(this.props.sort) && this.props.onSort && (
             <Button.Group
               basic
               style={{

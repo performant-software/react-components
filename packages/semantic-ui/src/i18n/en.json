@@ -31,6 +31,11 @@
       "placeholder": "Enter a URL, ISBN, DOI, PMID, arXiv ID"
     }
   },
+  "BreadcrumbItem": {
+    "labels": {
+      "new": "New"
+    }
+  },
   "Citation": {
     "labels": {
       "untitled": "Untitled"
@@ -55,7 +60,9 @@
       "upload": "Upload"
     },
     "errors": {
-      "title": "Oops!"
+      "save": "There was an error saving the record.",
+      "title": "Oops!",
+      "unauthorized": "You do not have permission to access this record."
     },
     "labels": {
       "noRecords": "No records."

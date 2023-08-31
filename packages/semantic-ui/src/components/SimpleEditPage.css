@@ -1,0 +1,7 @@
+.simple-edit-page.ui.grid {
+  padding-bottom: 2.5em;
+}
+
+.simple-edit-page .menu .item.button-container > .button {
+  margin-right: 0.25em;
+}

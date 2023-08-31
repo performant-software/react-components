@@ -12,6 +12,7 @@ export { default as RichTextArea } from './components/RichTextArea';
 
 // Hooks
 export { default as useCitationStyles } from './hooks/CitationStyles';
+export { default as withEditPage } from './hooks/EditPage';
 
 // I18n
 export { default as i18n } from './i18n/i18n';
@@ -41,6 +42,7 @@ export { default as Timer } from './utils/Timer';
 
 // Types
 export type { CitationsStyleProps } from './hooks/CitationStyles';
+export type { Config as EditPageConfig } from './hooks/EditPage';
 export type { EditContainerProps as EditModalProps } from './components/EditContainer'; // Backwards compatability
 export type { EditContainerProps } from './components/EditContainer';
 export type { RichTextAreaProps } from './components/RichTextArea';
