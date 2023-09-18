@@ -1,15 +1,12 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { withA11y } from '@storybook/addon-a11y';
-import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import UserDefinedFieldsEmbeddedList from '../../../user-defined-fields/src/components/UserDefinedFieldsEmbeddedList';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
-  title: 'Components/User Defined Fields/UserDefinedFieldsEmbeddedList',
-  decorators: [withA11y, withKnobs]
+  title: 'Components/User Defined Fields/UserDefinedFieldsEmbeddedList'
 };
 
 export const Default = useDragDrop(() => {
@@ -32,6 +29,40 @@ export const Default = useDragDrop(() => {
   return (
     <UserDefinedFieldsEmbeddedList
       items={items}
+      onDelete={onDelete}
+      onSave={onSave}
+    />
+  );
+});
+
+export const HiddenTableSelector = useDragDrop(() => {
+  const [items, setItems] = useState([]);
+
+  /**
+   * Removes the passed item from the list.
+   *
+   * @type {function(*): void}
+   */
+  const onDelete = useCallback((item) => setItems((prevItems) => _.filter(prevItems, (i) => i !== item)), []);
+
+  /**
+   * Adds the passed item to the list.
+   *
+   * @type {function(*): void}
+   */
+  const onSave = useCallback((item) => setItems((prevItems) => [...prevItems, item]), []);
+
+  return (
+    <UserDefinedFieldsEmbeddedList
+      items={items}
+      modal={{
+        defaults: {
+          table_name: 'people'
+        },
+        props: {
+          hideTable: true
+        }
+      }}
       onDelete={onDelete}
       onSave={onSave}
     />

@@ -1,5 +1,6 @@
 // @flow
 
+import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, {
   useCallback,
   useEffect,
@@ -12,11 +13,15 @@ import i18n from '../i18n/i18n';
 import UserDefinedFieldOptions from './UserDefinedFieldOptions';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
 
+type Props = EditContainerProps & {
+  hideTable?: boolean
+};
+
 const DataTypes = {
   select: 'Select'
 };
 
-const UserDefinedFieldModal: ComponentType<any> = (props) => {
+const UserDefinedFieldModal: ComponentType<any> = (props: Props) => {
   const [dataTypeOptions, setDataTypeOptions] = useState([]);
   const [tableOptions, setTableOptions] = useState([]);
 
@@ -33,9 +38,11 @@ const UserDefinedFieldModal: ComponentType<any> = (props) => {
    * Fetch the available tables and data types.
    */
   useEffect(() => {
-    UserDefinedFieldsService
-      .fetchTables()
-      .then(({ data }) => setTableOptions(transformOptions(data.tables)));
+    if (!props.hideTable) {
+      UserDefinedFieldsService
+        .fetchTables()
+        .then(({ data }) => setTableOptions(transformOptions(data.tables)));
+    }
 
     UserDefinedFieldsService
       .fetchDataTypes()
@@ -54,17 +61,19 @@ const UserDefinedFieldModal: ComponentType<any> = (props) => {
           : i18n.t('UserDefinedFieldModal.title.add')}
       />
       <Modal.Content>
-        <Form.Dropdown
-          clearable
-          error={props.isError('table_name')}
-          label={i18n.t('UserDefinedFieldModal.labels.table')}
-          onChange={props.onTextInputChange.bind(this, 'table_name')}
-          options={tableOptions}
-          required={props.isRequired('table_name')}
-          selection
-          selectOnBlur={false}
-          value={props.item.table_name || ''}
-        />
+        { !props.hideTable && (
+          <Form.Dropdown
+            clearable
+            error={props.isError('table_name')}
+            label={i18n.t('UserDefinedFieldModal.labels.table')}
+            onChange={props.onTextInputChange.bind(this, 'table_name')}
+            options={tableOptions}
+            required={props.isRequired('table_name')}
+            selection
+            selectOnBlur={false}
+            value={props.item.table_name || ''}
+          />
+        )}
         <Form.Input
           error={props.isError('column_name')}
           label={i18n.t('UserDefinedFieldModal.labels.name')}
