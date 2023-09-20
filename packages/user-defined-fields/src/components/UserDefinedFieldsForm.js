@@ -40,7 +40,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    *
    * @type {function(*): string}
    */
-  const getFieldKey = useCallback((field) => `user_defined[${field.column_name}]`, []);
+  const getFieldKey = useCallback((field) => `user_defined[${field.uuid}]`, []);
 
   /**
    * Returns true if an error exists on the state for the passed field.
@@ -55,7 +55,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    * @type {(function(*, *): void)|*}
    */
   const onChange = useCallback((field, value) => {
-    props.onChange({ ...props.data, [field.column_name]: value });
+    props.onChange({ ...props.data, [field.uuid]: value });
 
     // Clear the validation error if one exists
     if (props.onClearValidationError) {
@@ -71,7 +71,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
   const renderItem = useCallback((field) => {
     let rendered;
 
-    const fieldValue = props.data && props.data[field.column_name];
+    const fieldValue = props.data && props.data[field.uuid];
 
     if (field.data_type === DataTypes.string) {
       rendered = (
