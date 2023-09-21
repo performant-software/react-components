@@ -1,4 +1,4 @@
-#UserDefinedFields
+# UserDefinedFields
 This package is designed to be used with the [user_defined_fields](https://github.com/performant-software/user-defined-fields) Rails gem. The idea is to allow users to define what type of metadata they want to collection about specific models and use these components to add, remove, and modify the configuration of the fields.
 
 ## Installation
