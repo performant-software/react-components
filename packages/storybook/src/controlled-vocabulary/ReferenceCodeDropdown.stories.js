@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import ReferenceCodeDropdown from '../../../controlled-vocabulary/src/components/ReferenceCodeDropdown';
 
 export default {
   title: 'Components/Controlled Vocabulary/ReferenceCodeDropdown',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 export const Default = () => (
