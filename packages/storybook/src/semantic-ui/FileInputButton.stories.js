@@ -1,8 +1,8 @@
 // @flow
 
+import React, { useCallback } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import React, { useCallback, useState } from 'react';
-import _ from 'underscore';
+import { Button } from 'semantic-ui-react';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
 
 export default {
@@ -12,7 +12,6 @@ export default {
 };
 export const Default = () => {
   /**
-   * Allows the user to select files from their file system.
    *
    * @type {}
    */
