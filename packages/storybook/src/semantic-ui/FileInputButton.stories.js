@@ -17,8 +17,8 @@ export const Default = () => {
   return (
     <FileInputButton
       content='Select a file to upload'
-      icon='times'
       multiple={false}
+      icon='file'
       onSelection={onSelection}
     />
   );
