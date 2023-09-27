@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { Form, Modal } from 'semantic-ui-react';
@@ -12,7 +11,7 @@ import { type EditContainerProps } from '../../../shared/src/components/EditCont
 
 export default {
   title: 'Components/Semantic UI/AssociatedDropdown',
-  decorators: [withA11y, withKnobs]
+  decorators: [withKnobs]
 };
 
 const items = [{
