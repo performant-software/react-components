@@ -22,7 +22,8 @@ type Props = {
    */
   onChange: (date: ?Date) => void,
   /**
-   * Callback fired when the date input field is clicked.
+   * Callback fired when the date input field is clicked, typically opening the actual method of
+   * input (such as the <code>DatePicker</code> component).
    */
   onClick: () => void,
   /**
@@ -31,6 +32,10 @@ type Props = {
   value?: ?Date
 }
 
+/**
+ * This input component is used to display and clear a date. It must be used with an additional
+ * component, such as `DatePicker`, to actually input the date.
+ */
 const DateInput = (props: Props) => {
   const formatDate = () => {
     let date = '';
