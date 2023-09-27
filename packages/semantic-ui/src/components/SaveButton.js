@@ -10,7 +10,7 @@ type Props = {
    * @param item
    */
   onClick: (item: any) => Promise<any>,
-    /**
+  /**
    * When `true`, displays a small loading icon within the button
    */
   saving?: boolean
