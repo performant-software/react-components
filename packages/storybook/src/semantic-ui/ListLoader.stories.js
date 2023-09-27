@@ -12,6 +12,6 @@ export default {
 
 export const Default = () => (
   <ListLoader
-    active={boolean('Value', true)}
+    active
   />
 );

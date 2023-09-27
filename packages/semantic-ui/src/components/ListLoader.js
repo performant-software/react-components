@@ -7,13 +7,13 @@ import './ListLoader.css';
 
 type Props = {
   /**
-   * Loaders are hidden unless has prop active or inside an Dimmer active.
+   * If true, the list loader spinner will display.
    */
   active: boolean
 };
 
 /**
- * A loader alerts a user to wait for an activity to complete.
+ * A loader displays a spinner when active.
  */
 const ListLoader = (props: Props) => (
   <Dimmer.Dimmable
