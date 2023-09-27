@@ -4,3 +4,6 @@
   left: auto;
   right: 1px;
 }
+.date-input.ui.icon.input > input {
+  padding-right: calc(22px + 1.1em) !important;
+}
