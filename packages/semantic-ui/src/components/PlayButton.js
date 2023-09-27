@@ -19,6 +19,9 @@ type Props = {
   style?: any
 };
 
+/**
+ * This component can be used as a toggle for playing media.
+ */
 const PlayButton = (props: Props) => (
   <Button
     className='play-button'
