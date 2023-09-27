@@ -6,9 +6,15 @@ import i18n from '../i18n/i18n';
 import './ListLoader.css';
 
 type Props = {
+  /**
+   * Loaders are hidden unless has prop active or inside an Dimmer active.
+   */
   active: boolean
 };
 
+/**
+ * A loader alerts a user to wait for an activity to complete.
+ */
 const ListLoader = (props: Props) => (
   <Dimmer.Dimmable
     as={Segment}
