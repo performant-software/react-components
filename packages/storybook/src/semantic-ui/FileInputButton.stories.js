@@ -12,15 +12,19 @@ export default {
 };
 export const Default = () => {
   /**
-   * Saves the passed item. If the item already exists in the list, the item is updated.
+   * Allows the user to select files from their file system.
    *
    * @type {}
    */
   const onSelection = useCallback((item) => {
+    // Question: how does one get the file name from the item?
+    // Question: once the file is selected, how to we start the upload?
   });
 
   return (
     <FileInputButton
+      content='Select a file to upload'
+      icon='times'
       multiple={false}
       onSelection={onSelection}
     />
