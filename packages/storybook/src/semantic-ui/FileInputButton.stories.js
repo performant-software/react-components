@@ -1,5 +1,6 @@
 // @flow
 
+import { action } from '@storybook/addon-actions';
 import React, { useCallback } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
@@ -11,7 +12,7 @@ export default {
 };
 export const Default = () => {
   const onSelection = useCallback((item) => {
-    console.log(item);  
+    action('files-added');   
   });
 
   return (
@@ -19,7 +20,7 @@ export const Default = () => {
       content='Select a file to upload'
       multiple={false}
       icon='file'
-      onSelection={onSelection}
+      onSelection={action('files-added')}
     />
   );
 };
