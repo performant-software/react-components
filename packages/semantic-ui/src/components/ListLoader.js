@@ -6,9 +6,15 @@ import i18n from '../i18n/i18n';
 import './ListLoader.css';
 
 type Props = {
+  /**
+   * If present, the list loader spinner will display.
+   */
   active: boolean
 };
 
+/**
+ * A loader displays a spinner when active.
+ */
 const ListLoader = (props: Props) => (
   <Dimmer.Dimmable
     as={Segment}
