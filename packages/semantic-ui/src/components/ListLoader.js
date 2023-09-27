@@ -7,7 +7,7 @@ import './ListLoader.css';
 
 type Props = {
   /**
-   * If true, the list loader spinner will display.
+   * If present, the list loader spinner will display.
    */
   active: boolean
 };
