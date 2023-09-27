@@ -5,8 +5,17 @@ import { Button } from 'semantic-ui-react';
 import './PlayButton.css';
 
 type Props = {
+  /**
+   * What to do when the button is clicked.
+   */
   onClick?: () => void,
-  size?: string,
+    /**
+   * Size of the button.
+   */
+  size?: 'mini' | 'tiny' | 'small' | 'medium' | 'large' | 'big' | 'huge' | 'massive',
+    /**
+   * Custom styling object.
+   */
   style?: any
 };
 
