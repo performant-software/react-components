@@ -6,8 +6,12 @@ import i18n from '../i18n/i18n';
 
 type Props = {
   disabled: boolean,
-  onClick: () => void
+  onClick: () => void,
 };
+
+/**
+ * A simple Cancel button component that accepts an onClick method.
+ */
 
 const CancelButton = (props: Props) => (
   <Button
