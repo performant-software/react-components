@@ -2,6 +2,9 @@
 
 import React from 'react';
 import PlayButton from '../../../semantic-ui/src/components/PlayButton';
+import { action } from '@storybook/addon-actions';
+
+const onClick = action('play');
 
 export default {
   title: 'Components/Semantic UI/PlayButton',
@@ -10,20 +13,20 @@ export default {
 
 export const Default = () => (
   <PlayButton
-    onClick={() => console.log('click!')}
+    onClick={onClick}
   />
 );
 
 export const Mini = () => (
   <PlayButton
-    onClick={() => console.log('click!')}
+    onClick={onClick}
     size='mini'
   />
 );
 
 export const Purple = () => (
   <PlayButton
-    onClick={() => console.log('click!')}
+    onClick={onClick}
     style={{ color: 'purple' }}
   />
 );
