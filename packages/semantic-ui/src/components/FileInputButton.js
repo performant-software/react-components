@@ -3,12 +3,15 @@
 import React, { useRef } from 'react';
 import { Button } from 'semantic-ui-react';
 
-/**
- * multiple?: boolean,
- * onSelection: (files: Array<File>) => void
- */
 type Props = {
+  /**
+   * Whether to allow the user to select multiple files.
+   */
   multiple?: boolean,
+
+  /**
+   * What to do when the users selects a file or files.
+   */ 
   onSelection: (files: Array<File>) => void
 };
 

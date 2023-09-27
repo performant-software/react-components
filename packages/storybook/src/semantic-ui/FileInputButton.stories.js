@@ -2,7 +2,6 @@
 
 import React, { useCallback } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { Button } from 'semantic-ui-react';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
 
 export default {
@@ -11,13 +10,8 @@ export default {
   decorators: [withKnobs]
 };
 export const Default = () => {
-  /**
-   *
-   * @type {}
-   */
   const onSelection = useCallback((item) => {
-    // Question: how does one get the file name from the item?
-    // Question: once the file is selected, how to we start the upload?
+    console.log(item);  
   });
 
   return (
