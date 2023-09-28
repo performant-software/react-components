@@ -11,9 +11,6 @@ export default {
   decorators: [withKnobs]
 };
 export const Default = () => {
-  const onSelection = useCallback((item) => {
-    action('files-added');   
-  });
 
   return (
     <FileInputButton
