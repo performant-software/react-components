@@ -13,10 +13,12 @@ type Sort = {
 };
 
 type Props = {
+  basic?: boolean,
   defaultView?: number,
   hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   sort?: Array<Sort>,
+  sortColor?: string,
   sortColumn?: string,
   sortDirection?: string
 };
@@ -41,6 +43,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
   class extends Component<Props, State> {
     // Default props
     static defaultProps = {
+      basic: true,
       hideToggle: false,
       sort: []
     };
@@ -141,14 +144,14 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
               <Button
                 active={this.state.view === Views.list}
                 aria-label='List View'
-                basic
+                basic={this.props.basic}
                 icon='list'
                 onClick={() => this.setState({ view: Views.list })}
               />
               <Button
                 active={this.state.view === Views.grid}
                 aria-label='Grid View'
-                basic
+                basic={this.props.basic}
                 icon='grid layout'
                 onClick={() => this.setState({ view: Views.grid })}
               />
@@ -156,7 +159,8 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
           )}
           { !_.isEmpty(this.props.sort) && this.props.onSort && (
             <Button.Group
-              basic
+              basic={this.props.basic}
+              color={this.props.sortColor}
               style={{
                 fontSize: 'inherit'
               }}
