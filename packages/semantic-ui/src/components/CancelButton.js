@@ -9,6 +9,10 @@ type Props = {
   onClick: () => void
 };
 
+/**
+ * A simple Cancel button component that accepts an onClick method.
+ */
+
 const CancelButton = (props: Props) => (
   <Button
     basic
