@@ -5,9 +5,20 @@ import { Button, Loader } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
 
 type Props = {
+  /**
+   * Callback fired when the save button is clicked
+   * @param item
+   */
   onClick: (item: any) => Promise<any>,
-  saving: boolean
+  /**
+   * When `true`, displays a small loading icon within the button
+   */
+  saving?: boolean
 };
+
+/**
+ * A simple Save button component that accepts an onClick method and handles Saving state
+ */
 
 const SaveButton = (props: Props) => (
   <Button
