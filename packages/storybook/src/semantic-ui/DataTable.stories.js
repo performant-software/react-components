@@ -242,6 +242,10 @@ export const CsvExport = useDragDrop(() => (
       },
     ]}
     columns={columns}
+    csvExportButton={{
+      color: 'blue',
+      location: 'bottom'
+    }}
     items={items}
     onColumnClick={action('column-click')}
     onCopy={action('copy')}

@@ -239,7 +239,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       },
       buttons: [],
       className: '',
-      csvExport: false,
+      csvExportButton: undefined,
       filters: undefined,
       modal: undefined,
       page: 1,
@@ -348,6 +348,34 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         : _.omit(selectedItem, 'id', 'uid');
 
       this.setState({ selectedItem: copy, modalEdit: true });
+    }
+
+    /**
+     * Generates and downloads a CSV file containing all
+     * the data in the table.
+     *
+     * @param items
+     */
+    onCsvExportButton() {
+      const keys = Object.keys(this.props.items[0]);
+      let csv = `${keys.map((k) => `"${k}"`).join(',')}\n`;
+
+      this.props.items.forEach((item) => {
+        csv = csv.concat(`${keys.map((k) => `"${item[k]}"`).join(',')}\n`);
+      });
+
+      const element = document.createElement('a');
+      element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(csv)}`);
+      element.setAttribute('download', 'table.csv');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+
+      return csv;
     }
 
     /**

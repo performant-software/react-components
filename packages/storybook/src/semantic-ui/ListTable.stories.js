@@ -152,6 +152,26 @@ export const Count = useDragDrop(() => {
   );
 });
 
+export const CsvExport = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    csvExportButton={{
+      color: 'blue',
+      location: 'bottom'
+    }}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
 export const CustomizableColumns = useDragDrop(() => (
   <ListTable
     actions={actions}

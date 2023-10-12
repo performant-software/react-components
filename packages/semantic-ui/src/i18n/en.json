@@ -233,6 +233,7 @@
   "List": {
     "buttons": {
       "add": "Add",
+      "csvExport": "CSV Export",
       "deleteAll": "Delete all"
     },
     "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
