@@ -80,6 +80,15 @@ type Props = {
   className?: string,
 
   /**
+   * If provided, a CSV export button will be rendered in the list header.
+   */
+  csvExportButton?: {
+    color: string,
+    location: string,
+    onClick?: () => void
+  },
+
+  /**
    * If provided, a "delete all" button will be rendered in the list header.
    */
   deleteButton?: {
@@ -208,6 +217,7 @@ type State = {
 };
 
 const BUTTON_KEY_ADD = 'add';
+const BUTTON_KEY_CSV_EXPORT = 'csv-export';
 const BUTTON_KEY_DELETE_ALL = 'delete-all';
 
 /**
@@ -229,6 +239,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       },
       buttons: [],
       className: '',
+      csvExport: false,
       filters: undefined,
       modal: undefined,
       page: 1,
@@ -269,6 +280,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       const {
         addButton = {},
+        csvExportButton = {},
         deleteButton = {},
         modal,
         selectable
@@ -285,6 +297,13 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       if (deleteButton.location === location && this.props.onDeleteAll && !selectable) {
         buttons.push({
           render: this.renderDeleteAllButton.bind(this)
+        });
+      }
+
+      // Add the CSV export button to the list if the csvExport prop is passed
+      if (csvExportButton.location === location && !selectable) {
+        buttons.push({
+          render: this.renderCsvExportButton.bind(this)
         });
       }
 
@@ -530,6 +549,29 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           key={index}
           {...button}
         />
+      );
+    }
+
+    /**
+   * Renders the CSV export button.
+   *
+   * @returns {null|*}
+   */
+    renderCsvExportButton() {
+      if (!this.props.csvExportButton) {
+        return null;
+      }
+
+      return (
+        <Button
+          basic
+          color={this.props.csvExportButton.color}
+          key={BUTTON_KEY_CSV_EXPORT}
+          onClick={this.onCsvExportButton.bind(this)}
+        >
+          <Icon name='shopping basket' />
+          { i18n.t('List.buttons.csvExport') }
+        </Button>
       );
     }
 
