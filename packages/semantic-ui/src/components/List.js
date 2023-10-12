@@ -374,8 +374,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       element.click();
 
       document.body.removeChild(element);
-
-      return csv;
     }
 
     /**
