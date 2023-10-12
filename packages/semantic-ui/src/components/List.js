@@ -357,7 +357,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      * @param items
      */
     onCsvExportButton() {
-      const keys = Object.keys(this.props.items[0]);
+      const keys = this.props.columns.map((col) => col.name);
       let csv = `${keys.map((k) => `"${k}"`).join(',')}\n`;
 
       this.props.items.forEach((item) => {
@@ -366,7 +366,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       const element = document.createElement('a');
       element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(csv)}`);
-      element.setAttribute('download', 'table.csv');
+      element.setAttribute('download', `${this.props.collectionName}.csv`);
 
       element.style.display = 'none';
       document.body.appendChild(element);
@@ -503,6 +503,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     getActions() {
+      console.log(this.props);
       return _.map(this.props.actions, (action) => {
         let defaults = {};
 
