@@ -362,7 +362,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       this.props.items.forEach((item) => {
         csv = csv.concat(`${this.props.columns.map((col) => {
           if (col.resolve) {
-            return col.resolve(item);
+            return `"${col.resolve(item)}"`;
           }
           return `"${item[col.name]}"`;
         }).join(',')}\n`);
