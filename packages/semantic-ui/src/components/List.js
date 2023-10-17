@@ -358,10 +358,12 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      * @param items
      */
     onCsvExportButton() {
-      let csv = `${this.props.columns.map((col) => `"${col.label}"`).join(',')}\n`;
+      const visibleColumns = _.filter(this.props.columns, (col) => !col.hidden);
+
+      let csv = `${_.map(visibleColumns, (col) => `"${col.label}"`).join(',')}\n`;
 
       this.props.items.forEach((item) => {
-        csv = csv.concat(`${this.props.columns.map((col) => {
+        csv = csv.concat(`${visibleColumns.map((col) => {
           if (col.resolve) {
             return `"${col.resolve(item)}"`;
           }
