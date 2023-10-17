@@ -49,6 +49,11 @@ type Props = {
   onClose: () => void,
 
   /**
+   * Callback fired when the upload has completed.
+   */
+  onComplete: () => void,
+
+  /**
    * Callback fired when the save button is clicked. See <code>strategy</code> prop.
    */
   onSave: (items: Array<any>) => Promise<any>,
@@ -150,6 +155,10 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    */
   const onComplete = useCallback(() => {
     setUploading(false);
+
+    if (props.onComplete) {
+      props.onComplete();
+    }
 
     if (props.closeOnComplete) {
       props.onClose();
