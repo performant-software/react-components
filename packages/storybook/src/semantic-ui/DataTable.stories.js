@@ -45,11 +45,6 @@ const columns = [{
   name: 'country',
   label: 'Country',
   sortable: false
-}, {
-  name: 'Test UDF',
-  label: 'test',
-  sortable: false,
-  resolve: (item) => item.user_defined?.test
 }];
 
 const items = [{
@@ -58,20 +53,14 @@ const items = [{
   email: 'kskittle0@gmpg.org',
   gender: 'Male',
   ip_address: '51.229.4.38',
-  country: 'Macedonia',
-  user_defined: {
-    test: 'hello'
-  }
+  country: 'Macedonia'
 }, {
   last_name: 'Brood',
   first_name: 'Edik',
   email: 'ebrood1@latimes.com',
   gender: 'Male',
   ip_address: '66.239.219.247',
-  country: 'Macedonia',
-  user_defined: {
-    test: 'hello 2'
-  }
+  country: 'Macedonia'
 }, {
   last_name: 'Noli',
   first_name: 'Dewie',

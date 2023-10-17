@@ -83,7 +83,6 @@ type Props = {
    * If provided, a CSV export button will be rendered in the list header.
    */
   csvExportButton?: {
-    basic: boolean,
     color: string,
     location: string,
     onClick?: () => void
@@ -595,12 +594,12 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Button
-          basic={this.props.csvExportButton.basic}
+          basic
           color={this.props.csvExportButton.color}
           key={BUTTON_KEY_CSV_EXPORT}
           onClick={this.onCsvExportButton.bind(this)}
         >
-          <Icon name='download' />
+          <Icon name='shopping basket' />
           { i18n.t('List.buttons.csvExport') }
         </Button>
       );

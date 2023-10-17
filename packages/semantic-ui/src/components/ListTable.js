@@ -15,6 +15,15 @@ type Props = DataListProps & DataTableProps & {
   configurable?: boolean,
 
   /**
+   * If provided, a CSV export button will be rendered in the list header.
+   */
+  csvExportButton?: {
+    color: string,
+    location: string,
+    onClick?: () => void
+  },
+
+  /**
    * The name of the default sort column.
    */
   defaultSort?: string,
