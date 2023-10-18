@@ -271,3 +271,7 @@ export {
   SORT_ASCENDING,
   SORT_DESCENDING
 };
+
+export type {
+  Props
+};

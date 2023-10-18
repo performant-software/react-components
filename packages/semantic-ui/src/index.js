@@ -109,8 +109,10 @@ export { default as BatchEdit } from './hooks/BatchEdit';
 
 // Types
 export type { EditPageProps } from './components/EditPage';
+export type { Props as EmbeddedListProps } from './components/EmbeddedList';
 export type { FileUploadProps } from './components/FileUploadModal';
 export type { Props as ListProps } from './components/List';
+export type { Props as ListTableProps } from './components/ListTable';
 export type { BatchEditProps } from './hooks/BatchEdit';
 
 // Constants

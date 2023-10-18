@@ -131,3 +131,7 @@ ListTable.defaultProps = {
 };
 
 export default ListTable;
+
+export type {
+  Props
+};
