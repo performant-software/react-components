@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/user-defined-fields",
-  "version": "1.0.23",
+  "version": "1.0.25-beta.0",
   "description": "A package of components used for allowing end users to define fields on models. Use with the \"user_defined_fields\" gem.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -9,8 +9,8 @@
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@performant-software/semantic-components": "^1.0.23",
-    "@performant-software/shared-components": "^1.0.23",
+    "@performant-software/semantic-components": "^1.0.25-beta.0",
+    "@performant-software/shared-components": "^1.0.25-beta.0",
     "i18next": "^21.9.1",
     "semantic-ui-react": "^2.1.2",
     "underscore": "^1.13.2"
