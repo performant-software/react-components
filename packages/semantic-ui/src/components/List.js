@@ -80,6 +80,16 @@ type Props = {
   className?: string,
 
   /**
+   * If provided, a CSV export button will be rendered in the list header.
+   */
+  csvExportButton?: {
+    basic: boolean,
+    color: string,
+    location: string,
+    onClick?: () => void
+  },
+
+  /**
    * If provided, a "delete all" button will be rendered in the list header.
    */
   deleteButton?: {
@@ -208,6 +218,7 @@ type State = {
 };
 
 const BUTTON_KEY_ADD = 'add';
+const BUTTON_KEY_CSV_EXPORT = 'csv-export';
 const BUTTON_KEY_DELETE_ALL = 'delete-all';
 
 /**
@@ -229,6 +240,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       },
       buttons: [],
       className: '',
+      csvExportButton: undefined,
       filters: undefined,
       modal: undefined,
       page: 1,
@@ -269,6 +281,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
 
       const {
         addButton = {},
+        csvExportButton = {},
         deleteButton = {},
         modal,
         selectable
@@ -285,6 +298,13 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       if (deleteButton.location === location && this.props.onDeleteAll && !selectable) {
         buttons.push({
           render: this.renderDeleteAllButton.bind(this)
+        });
+      }
+
+      // Add the CSV export button to the list if the csvExport prop is passed
+      if (csvExportButton.location === location && !selectable) {
+        buttons.push({
+          render: this.renderCsvExportButton.bind(this)
         });
       }
 
@@ -329,6 +349,43 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         : _.omit(selectedItem, 'id', 'uid');
 
       this.setState({ selectedItem: copy, modalEdit: true });
+    }
+
+    /**
+     * Generates and downloads a CSV file containing all
+     * the data in the table.
+     *
+     * @param items
+     */
+    onCsvExportButton() {
+      const visibleColumns = _.filter(this.props.columns, (col) => !col.hidden);
+
+      let csv = `${_.map(visibleColumns, (col) => `"${col.label}"`).join(',')}\n`;
+
+      _.each(this.props.items, (item) => {
+        csv = csv.concat(`${visibleColumns.map((col) => {
+          if (col.resolve) {
+            return `"${col.resolve(item)}"`;
+          }
+
+          if (item[col.name]) {
+            return `"${item[col.name]}"`;
+          }
+
+          return '';
+        }).join(',')}\n`);
+      });
+
+      const element = document.createElement('a');
+      element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(csv)}`);
+      element.setAttribute('download', `${this.props.collectionName || 'table'}.csv`);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
 
     /**
@@ -530,6 +587,29 @@ const useList = (WrappedComponent: ComponentType<any>) => (
           key={index}
           {...button}
         />
+      );
+    }
+
+    /**
+   * Renders the CSV export button.
+   *
+   * @returns {null|*}
+   */
+    renderCsvExportButton() {
+      if (!this.props.csvExportButton) {
+        return null;
+      }
+
+      return (
+        <Button
+          basic={this.props.csvExportButton.basic}
+          color={this.props.csvExportButton.color}
+          key={BUTTON_KEY_CSV_EXPORT}
+          onClick={this.onCsvExportButton.bind(this)}
+        >
+          <Icon name='download' />
+          { i18n.t('List.buttons.csvExport') }
+        </Button>
       );
     }
 

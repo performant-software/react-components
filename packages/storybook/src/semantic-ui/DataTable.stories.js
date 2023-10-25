@@ -233,6 +233,27 @@ export const Pagination = useDragDrop(() => (
   />
 ));
 
+export const CsvExport = useDragDrop(() => (
+  <DataTable
+    actions={actions}
+    buttons={[
+      {
+        render: () => <Button key='1'>Test</Button>
+      },
+    ]}
+    columns={columns}
+    csvExportButton={{
+      color: 'blue',
+      location: 'bottom'
+    }}
+    items={items}
+    onColumnClick={action('column-click')}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    onSave={action('save')}
+  />
+));
+
 export const CustomDeleteModal = useDragDrop(() => (
   <DataTable
     actions={actions}

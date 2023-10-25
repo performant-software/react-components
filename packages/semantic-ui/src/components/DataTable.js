@@ -633,6 +633,7 @@ DataTable.defaultProps = {
   buttons: [],
   count: 0,
   className: '',
+  csvExportButton: undefined,
   expandableRows: false,
   expandPanel: undefined,
   filters: undefined,
