@@ -13,6 +13,11 @@ import StringUtils from './String';
  * @param attribute
  */
 const setAttribute = (formData, prefix, item, attribute) => {
+  // Return if the attribute doesn't exist on the passed item
+  if (!_.has(item, attribute)) {
+    return;
+  }
+
   const value = item[attribute];
 
   if (_.isArray(value)) {

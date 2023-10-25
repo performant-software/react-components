@@ -68,3 +68,33 @@ export const HiddenTableSelector = useDragDrop(() => {
     />
   );
 });
+
+export const CustomAddButton = useDragDrop(() => {
+  const [items, setItems] = useState([]);
+
+  /**
+   * Removes the passed item from the list.
+   *
+   * @type {function(*): void}
+   */
+  const onDelete = useCallback((item) => setItems((prevItems) => _.filter(prevItems, (i) => i !== item)), []);
+
+  /**
+   * Adds the passed item to the list.
+   *
+   * @type {function(*): void}
+   */
+  const onSave = useCallback((item) => setItems((prevItems) => [...prevItems, item]), []);
+
+  return (
+    <UserDefinedFieldsEmbeddedList
+      addButton={{
+        color: 'purple',
+        location: 'top'
+      }}
+      items={items}
+      onDelete={onDelete}
+      onSave={onSave}
+    />
+  );
+});
