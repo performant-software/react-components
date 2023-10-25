@@ -1,19 +1,25 @@
 // @flow
 
 import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
+import type { EmbeddedListProps } from '@performant-software/semantic-components/types';
 import React, { useCallback } from 'react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import UserDefinedFieldModal from './UserDefinedFieldModal';
 import UserDefinedFields from '../utils/UserDefinedFields';
 
-type Props = {
+type Props = EmbeddedListProps & {
   defaults: any,
-  excludeColumns?: Array<string>,
-  items: Array<any>,
-  onDelete: (item: any) => Promise<any>,
-  onSave: (item: any) => Promise<any>
+  excludeColumns?: Array<string>
 };
+
+const OMIT_PROPS = [
+  'actions',
+  'columns',
+  'defaults',
+  'excludeColumns',
+  'modal'
+];
 
 const DEFAULT_ORDER = 0;
 
@@ -27,6 +33,7 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
 
   return (
     <EmbeddedList
+      {..._.omit(props, OMIT_PROPS)}
       actions={[{
         name: 'edit'
       }, {
@@ -54,7 +61,6 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
         label: i18n.t('UserDefinedFieldsEmbeddedList.columns.order'),
         hidden: isHidden('order')
       }]}
-      items={props.items}
       modal={{
         component: UserDefinedFieldModal,
         props: {
@@ -66,8 +72,6 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
           validate: UserDefinedFields.validateUserDefinedField.bind(this)
         }
       }}
-      onDelete={props.onDelete}
-      onSave={props.onSave}
     />
   );
 };

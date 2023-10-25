@@ -1,6 +1,7 @@
 // @flow
 
 import { BooleanIcon, ListTable } from '@performant-software/semantic-components';
+import type { ListTableProps } from '@performant-software/semantic-components/types';
 import React, { type ComponentType, useCallback } from 'react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
@@ -8,10 +9,22 @@ import UserDefinedFieldModal from './UserDefinedFieldModal';
 import UserDefinedFields from '../utils/UserDefinedFields';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
 
-type Props = {
+type Props = ListTableProps & {
   defaults?: any,
   excludeColumns?: Array<string>
 };
+
+const OMIT_PROPS = [
+  'actions',
+  'collectionName',
+  'columns',
+  'defaults',
+  'excludeColumns',
+  'modal',
+  'onDelete',
+  'onLoad',
+  'onSave'
+];
 
 const DEFAULT_ORDER = 0;
 
@@ -25,6 +38,7 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
 
   return (
     <ListTable
+      {..._.omit(props, OMIT_PROPS)}
       actions={[{
         name: 'edit'
       }, {
@@ -64,9 +78,9 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
           validate: UserDefinedFields.validateUserDefinedField.bind(this)
         }
       }}
+      onDelete={(udf) => UserDefinedFieldsService.delete(udf)}
       onLoad={(params) => UserDefinedFieldsService.fetchAll(params)}
       onSave={(udf) => UserDefinedFieldsService.save(udf)}
-      onDelete={(udf) => UserDefinedFieldsService.delete(udf)}
     />
   );
 };
