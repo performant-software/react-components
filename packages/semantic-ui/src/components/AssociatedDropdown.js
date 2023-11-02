@@ -84,6 +84,10 @@ class AssociatedDropdown extends Component<Props, State> {
       const { searchQuery, value } = this.props;
       this.setState({ searchQuery, value });
     }
+
+    if (prevProps.onSearch !== this.props.onSearch) {
+      this.onSearch();
+    }
   }
 
   /**
