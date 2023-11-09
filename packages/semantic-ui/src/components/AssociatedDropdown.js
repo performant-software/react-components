@@ -1,7 +1,7 @@
 // @flow
 
 import { Timer } from '@performant-software/shared-components';
-import React, { Component } from 'react';
+import React, { Component, type ComponentType } from 'react';
 import { Button, Dropdown, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import EditModal from './EditModal';
@@ -18,8 +18,9 @@ type Option = {
 type Props = {
   className?: string,
   collectionName: string,
+  header?: ComponentType<any>,
   modal?: {
-    component: Component<{}>,
+    component: ComponentType<any>,
     props: any,
     onSave: (item: any) => Promise<any>,
     state: any
@@ -82,6 +83,10 @@ class AssociatedDropdown extends Component<Props, State> {
     if (prevProps.value !== this.props.value) {
       const { searchQuery, value } = this.props;
       this.setState({ searchQuery, value });
+    }
+
+    if (prevProps.onSearch !== this.props.onSearch) {
+      this.onSearch();
     }
   }
 
@@ -181,6 +186,7 @@ class AssociatedDropdown extends Component<Props, State> {
           <Dropdown
             className={`inline-dropdown ${this.props.className || ''}`}
             disabled={this.state.loading}
+            header={this.props.header}
             loading={this.state.loading}
             onBlur={this.onBlur.bind(this)}
             onChange={this.onOptionSelection.bind(this)}
