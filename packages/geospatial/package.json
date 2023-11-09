@@ -1,0 +1,27 @@
+{
+  "name": "@performant-software/geospatial",
+  "version": "1.0.26",
+  "description": "TODO: ADD",
+  "license": "MIT",
+  "main": "./build/index.js",
+  "style": "./build/main.css",
+  "scripts": {
+    "build": "webpack --mode production && flow-copy-source -v src types"
+  },
+  "dependencies": {
+    "@mapbox/mapbox-gl-draw": "^1.4.3",
+    "@turf/turf": "^6.5.0",
+    "maplibre-gl": "^3.5.2",
+    "react-map-gl": "^7.1.6",
+    "underscore": "^1.13.6"
+  },
+  "peerDependencies": {
+    "react": ">= 16.13.1 < 19.0.0",
+    "react-dom": ">= 16.13.1 < 19.0.0"
+  },
+  "devDependencies": {
+    "@performant-software/webpack-config": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

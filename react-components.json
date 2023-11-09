@@ -1,6 +1,7 @@
 {
   "packages": [
     "packages/controlled-vocabulary",
+    "packages/geospatial",
     "packages/semantic-ui",
     "packages/shared",
     "packages/user-defined-fields",
