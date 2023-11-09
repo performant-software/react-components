@@ -13,5 +13,8 @@ export const Default = () => (
   <MapDraw
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
+    style={{
+      marginBottom: '2em'
+    }}
   />
 );

@@ -20,12 +20,33 @@ import DrawControl from './DrawControl';
 import './MapDraw.css';
 
 type Props = {
+  /**
+   * GeoJSON structured data to be displayed on the map.
+   */
   data: GeometryCollection | FeatureCollection,
+
+  /**
+   * URL of the map style to render. This URL should contain any necessary API keys.
+   */
   mapStyle: string,
+
+  /**
+   * Callback fired when the map geometries are changed.
+   *
+   * @param features
+   */
   onChange: (features: Array<any>) => void,
+
+  /**
+   * Map style object.
+   */
   style?: any
 };
 
+/**
+ * This component renders a map with controls for drawing one or more geometries. Geometries can be a point (lat/long),
+ * a line, or a polygon.
+ */
 const MapDraw = (props: Props) => {
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
