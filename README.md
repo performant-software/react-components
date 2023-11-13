@@ -17,6 +17,8 @@ cd packages/<package-name> && yarn build
 ```
 
 ### Storybook
+Set environment variables in `./packages/storybook/.env`. **Note:** the `TRANSLATE_URL` environment variable is required to build/start Storybook.
+
 Running storybook
 ```
 yarn storybook

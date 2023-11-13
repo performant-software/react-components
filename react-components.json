@@ -1,10 +1,11 @@
 {
   "packages": [
     "packages/controlled-vocabulary",
+    "packages/geospatial",
     "packages/semantic-ui",
     "packages/shared",
     "packages/user-defined-fields",
     "packages/visualize"
   ],
-  "version": "1.0.26"
+  "version": "1.1.0"
 }
