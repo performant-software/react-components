@@ -3,11 +3,7 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import {
   bbox,
-  destination,
   feature,
-  featureCollection,
-  getCoord,
-  point,
   type FeatureCollection,
   type GeometryCollection
 } from '@turf/turf';
@@ -23,11 +19,6 @@ import Map, { MapRef } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import './MapDraw.css';
-
-const BEARING_SW = 225;
-const BEARING_NE = 45;
-
-const POINT_DISTANCE = 10;
 
 type Props = {
   /**
@@ -69,30 +60,6 @@ const MapDraw = (props: Props) => {
   const mapRef = useRef<MapRef>();
 
   /**
-   * Returns the bounding box for the current data set. Points are handled differently so that the bounding box
-   * does not zoom too much and shows relevant information close to the point.
-   *
-   * @type {function(): *}
-   */
-  const getBoundingBox = useCallback(() => {
-    let boundingBox;
-
-    if (props.data.type === GeometryTypes.point) {
-      const coordinates = getCoord(props.data);
-      const p = point(coordinates);
-
-      const sw = destination(p, POINT_DISTANCE, BEARING_SW);
-      const ne = destination(p, POINT_DISTANCE, BEARING_NE);
-
-      boundingBox = bbox(featureCollection([sw, ne]));
-    } else {
-      boundingBox = bbox(props.data);
-    }
-
-    return boundingBox;
-  }, [props.data]);
-
-  /**
    * Calls the onChange prop with all of the geometries in the current drawer.
    *
    * @type {(function(): void)|*}
@@ -114,7 +81,7 @@ const MapDraw = (props: Props) => {
   useEffect(() => {
     if (loaded && props.data) {
       // Sets the bounding box for the current geometry.
-      const boundingBox = getBoundingBox();
+      const boundingBox = bbox(props.data);
 
       if (_.every(boundingBox, _.isFinite)) {
         const [minLng, minLat, maxLng, maxLat] = boundingBox;
