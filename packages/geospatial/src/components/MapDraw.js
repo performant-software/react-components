@@ -3,7 +3,11 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import {
   bbox,
+  destination,
   feature,
+  featureCollection,
+  getCoord,
+  point,
   type FeatureCollection,
   type GeometryCollection
 } from '@turf/turf';
@@ -13,11 +17,17 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState
 } from 'react';
 import Map, { MapRef } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import './MapDraw.css';
+
+const BEARING_SW = 225;
+const BEARING_NE = 45;
+
+const POINT_DISTANCE = 10;
 
 type Props = {
   /**
@@ -43,13 +53,44 @@ type Props = {
   style?: any
 };
 
+const GeometryTypes = {
+  geometryCollection: 'GeometryCollection',
+  point: 'Point'
+};
+
 /**
  * This component renders a map with controls for drawing one or more geometries. Geometries can be a point (lat/long),
  * a line, or a polygon.
  */
 const MapDraw = (props: Props) => {
+  const [loaded, setLoaded] = useState(false);
+
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
+
+  /**
+   * Returns the bounding box for the current data set. Points are handled differently so that the bounding box
+   * does not zoom too much and shows relevant information close to the point.
+   *
+   * @type {function(): *}
+   */
+  const getBoundingBox = useCallback(() => {
+    let boundingBox;
+
+    if (props.data.type === GeometryTypes.point) {
+      const coordinates = getCoord(props.data);
+      const p = point(coordinates);
+
+      const sw = destination(p, POINT_DISTANCE, BEARING_SW);
+      const ne = destination(p, POINT_DISTANCE, BEARING_NE);
+
+      boundingBox = bbox(featureCollection([sw, ne]));
+    } else {
+      boundingBox = bbox(props.data);
+    }
+
+    return boundingBox;
+  }, [props.data]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
@@ -71,9 +112,9 @@ const MapDraw = (props: Props) => {
    * Updates the map bounding box and drawer when the geometry is changed.
    */
   useEffect(() => {
-    if (props.data) {
+    if (loaded && props.data) {
       // Sets the bounding box for the current geometry.
-      const boundingBox = bbox(props.data);
+      const boundingBox = getBoundingBox();
 
       if (_.every(boundingBox, _.isFinite)) {
         const [minLng, minLat, maxLng, maxLat] = boundingBox;
@@ -82,8 +123,8 @@ const MapDraw = (props: Props) => {
         mapRef.current.fitBounds(bounds, { padding: 40, duration: 1000 });
       }
 
-      // Handle special case for geometry collection (not supported by mabox-gl-draw)
-      if (props.data.type === 'GeometryCollection') {
+      // Handle special cases for geometry collection (not supported by mabox-gl-draw) and point
+      if (props.data.type === GeometryTypes.geometryCollection) {
         _.each(props.data.geometries, (geometry) => {
           drawRef.current.add(feature(geometry));
         });
@@ -91,11 +132,12 @@ const MapDraw = (props: Props) => {
         drawRef.current.add(props.data);
       }
     }
-  }, [props.data]);
+  }, [loaded, props.data]);
 
   return (
     <Map
       attributionControl={false}
+      onLoad={() => setLoaded(true)}
       mapLib={maplibregl}
       ref={mapRef}
       style={style}
