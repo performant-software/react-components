@@ -46,7 +46,7 @@ type Props = ListProps & {
   columns: Array<Column>,
 
   /**
-   * If <code>false</code>, the column selector will not be rendered.
+   * If <code>true</code>, columns can be shown/hidden by the user.
    */
   configurable?: boolean
 };

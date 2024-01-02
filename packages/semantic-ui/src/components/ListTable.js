@@ -10,11 +10,6 @@ import './ListTable.css';
 
 type Props = DataListProps & DataTableProps & {
   /**
-   * If true, columns can be shown/hidden by the user.
-   */
-  configurable?: boolean,
-
-  /**
    * The name of the default sort column.
    */
   defaultSort?: string,
