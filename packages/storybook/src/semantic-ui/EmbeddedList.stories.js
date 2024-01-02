@@ -228,3 +228,14 @@ export const TabbedModalConfig = useDragDrop(() => {
     </Container>
   );
 });
+
+export const NoColumnSelector = useDragDrop(() => (
+  <EmbeddedList
+    actions={actions}
+    configurable={false}
+    onDelete={action('delete')}
+    columns={columns}
+    items={items}
+    showRecordCount
+  />
+));
