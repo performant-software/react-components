@@ -2,7 +2,12 @@
 
 import { Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType } from 'react';
-import { Button, Dropdown, Message } from 'semantic-ui-react';
+import {
+  Button,
+  Dropdown,
+  Message,
+  type ButtonProps
+} from 'semantic-ui-react';
 import _ from 'underscore';
 import EditModal from './EditModal';
 import i18n from '../i18n/i18n';
@@ -16,6 +21,7 @@ type Option = {
 };
 
 type Props = {
+  buttons?: Array<ButtonProps>,
   className?: string,
   collectionName: string,
   header?: ComponentType<any>,
@@ -44,6 +50,10 @@ type State = {
   searchQuery: string,
   value: ?number | ?string
 };
+
+const BUTTON_ADD = 'add';
+const BUTTON_CLEAR = 'clear';
+const BUTTON_EDIT = 'edit';
 
 const TIMEOUT = 500;
 
@@ -243,13 +253,33 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
+    return this.renderButton(BUTTON_ADD, {
+      basic: true,
+      content: i18n.t('Common.buttons.add'),
+      icon: 'plus',
+      onClick: () => this.setState({ modalAdd: true }),
+      type: 'button'
+    });
+  }
+
+  /**
+   * Renders the button with the passed name using the provided props.
+   *
+   * @param name
+   * @param defaults
+   *
+   * @returns {JSX.Element|null}
+   */
+  renderButton(name, defaults) {
+    const button = _.findWhere(this.props.buttons, { name }) || {};
+
+    if (button.accept && !button.accept()) {
+      return null;
+    }
+
     return (
       <Button
-        basic
-        content={i18n.t('Common.buttons.add')}
-        icon='plus'
-        onClick={() => this.setState({ modalAdd: true })}
-        type='button'
+        {..._.defaults(button, defaults)}
       />
     );
   }
@@ -264,15 +294,13 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
-    return (
-      <Button
-        basic
-        content={i18n.t('Common.buttons.clear')}
-        icon='times'
-        onClick={this.onClear.bind(this)}
-        type='button'
-      />
-    );
+    return this.renderButton(BUTTON_CLEAR, {
+      basic: true,
+      content: i18n.t('Common.buttons.clear'),
+      icon: 'times',
+      onClick: this.onClear.bind(this),
+      type: 'button'
+    });
   }
 
   /**
@@ -285,15 +313,13 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
-    return (
-      <Button
-        basic
-        content={i18n.t('Common.buttons.edit')}
-        icon='pencil'
-        onClick={() => this.setState({ modalEdit: true })}
-        type='button'
-      />
-    );
+    return this.renderButton(BUTTON_EDIT, {
+      basic: true,
+      content: i18n.t('Common.buttons.edit'),
+      icon: 'pencil',
+      onClick: () => this.setState({ modalEdit: true }),
+      type: 'button'
+    });
   }
 
   /**
