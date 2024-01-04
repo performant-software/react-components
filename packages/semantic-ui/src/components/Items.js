@@ -46,6 +46,11 @@ type Props = ListProps & {
   items: Array<any>,
 
   /**
+   * The number of cards to display per row in the grid view.
+   */
+  itemsPerRow?: number,
+
+  /**
    * If true, the list items will be formatted as a link.
    */
   link?: boolean,
@@ -346,7 +351,9 @@ class ItemsClass extends Component<Props, {}> {
     }
 
     return (
-      <Card.Group>
+      <Card.Group
+        itemsPerRow={this.props.itemsPerRow}
+      >
         { _.map(this.props.items, this.renderCard.bind(this)) }
       </Card.Group>
     );
