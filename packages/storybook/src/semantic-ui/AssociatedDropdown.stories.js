@@ -427,3 +427,41 @@ export const FormField = () => (
     </Form.Input>
   </Form>
 );
+
+export const CustomButtons = () => (
+  <AssociatedDropdown
+    buttons={[{
+      name: 'edit',
+      icon: 'edit'
+    }, {
+      basic: false,
+      color: 'orange',
+      name: 'add',
+      icon: 'coffee'
+    }, {
+      name: 'clear',
+      content: 'Clear Value!'
+    }]}
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      props: {
+        onInitialize: () => Promise.resolve({ })
+      },
+      onSave: () => {
+        action('save')();
+        return Promise.resolve({});
+      }
+    }}
+    onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
+    onSelection={action('selection')}
+    placeholder={text('Placeholder', 'Search')}
+    renderOption={(item) => ({
+      key: item.id,
+      value: item.id,
+      text: item.company,
+      description: item.country
+    })}
+    upward={boolean('Open upward', false)}
+  />
+);

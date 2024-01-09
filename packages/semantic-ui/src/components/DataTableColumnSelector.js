@@ -43,7 +43,12 @@ type Props = ListProps & {
    * If a <code>render</code> callback is provided, the item will be passed to the function and the return JSX
    * will display as the property value.
    */
-  columns: Array<Column>
+  columns: Array<Column>,
+
+  /**
+   * If <code>true</code>, columns can be shown/hidden by the user.
+   */
+  configurable?: boolean
 };
 
 type State = {
@@ -139,7 +144,9 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
           {...this.props}
           className={`data-table-column-selector ${this.props.className}`}
           columns={this.state.columns}
-          renderListHeader={this.renderHeader.bind(this)}
+          renderListHeader={this.props.configurable
+            ? this.renderHeader.bind(this)
+            : undefined}
         />
       );
     }

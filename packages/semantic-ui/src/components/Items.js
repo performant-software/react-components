@@ -46,6 +46,11 @@ type Props = ListProps & {
   items: Array<any>,
 
   /**
+   * The number of cards to display per row in the grid view.
+   */
+  itemsPerRow?: number,
+
+  /**
    * If true, the list items will be formatted as a link.
    */
   link?: boolean,
@@ -270,6 +275,7 @@ class ItemsClass extends Component<Props, {}> {
                 icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
                 key={actionIndex}
                 onClick={action.onClick.bind(this, item)}
+                size={action.size}
               />
             ))}
             { this.isSelectable() && (
@@ -346,7 +352,9 @@ class ItemsClass extends Component<Props, {}> {
     }
 
     return (
-      <Card.Group>
+      <Card.Group
+        itemsPerRow={this.props.itemsPerRow}
+      >
         { _.map(this.props.items, this.renderCard.bind(this)) }
       </Card.Group>
     );
@@ -403,6 +411,7 @@ class ItemsClass extends Component<Props, {}> {
               key={actionIndex}
               icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
               onClick={action.onClick.bind(this, item)}
+              size={action.size}
             />
           ))}
         </Item.Content>
