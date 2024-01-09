@@ -275,6 +275,7 @@ class ItemsClass extends Component<Props, {}> {
                 icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
                 key={actionIndex}
                 onClick={action.onClick.bind(this, item)}
+                size={action.size}
               />
             ))}
             { this.isSelectable() && (
@@ -410,6 +411,7 @@ class ItemsClass extends Component<Props, {}> {
               key={actionIndex}
               icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
               onClick={action.onClick.bind(this, item)}
+              size={action.size}
             />
           ))}
         </Item.Content>

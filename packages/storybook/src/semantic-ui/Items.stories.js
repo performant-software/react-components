@@ -186,3 +186,15 @@ export const ItemsPerRow = useDragDrop(() => (
     renderMeta={(item) => item.id}
   />
 ));
+
+export const ButtonSize = useDragDrop(() => (
+  <Items
+    actions={_.map(actions, (a) => ({ ...a, size: 'mini' }))}
+    items={items}
+    onCopy={action('copy')}
+    onDelete={action('delete')}
+    renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
+    renderHeader={(item) => <Header content={item.header} />}
+    renderMeta={(item) => item.id}
+  />
+));
