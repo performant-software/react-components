@@ -13,7 +13,8 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState
+  useState,
+  type Node
 } from 'react';
 import Map, { MapRef } from 'react-map-gl';
 import _ from 'underscore';
@@ -21,6 +22,11 @@ import DrawControl from './DrawControl';
 import './MapDraw.css';
 
 type Props = {
+  /**
+   * Additional child nodes to render.
+   */
+  children?: Node,
+
   /**
    * GeoJSON structured data to be displayed on the map.
    */
@@ -123,6 +129,7 @@ const MapDraw = (props: Props) => {
         onUpdate={onChange}
         onDelete={onChange}
       />
+      { ...props.children }
     </Map>
   );
 };
