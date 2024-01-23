@@ -16,10 +16,16 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { MapRef } from 'react-map-gl';
+import Map, { Layer, MapRef, Source } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import './MapDraw.css';
+
+type LayerType = {
+  id?: string | number,
+  type: string,
+  data: any
+};
 
 type Props = {
   /**
@@ -31,6 +37,8 @@ type Props = {
    * GeoJSON structured data to be displayed on the map.
    */
   data: GeometryCollection | FeatureCollection,
+
+  layers: Array<LayerType>,
 
   /**
    * URL of the map style to render. This URL should contain any necessary API keys.
@@ -55,6 +63,10 @@ const GeometryTypes = {
   point: 'Point'
 };
 
+const LayerTypes = {
+  geojson: 'geojson'
+};
+
 /**
  * This component renders a map with controls for drawing one or more geometries. Geometries can be a point (lat/long),
  * a line, or a polygon.
@@ -64,6 +76,8 @@ const MapDraw = (props: Props) => {
 
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
+
+  const geojsonLayers = useMemo(() => _.where(props.layers, { type: LayerTypes.geojson }), [props.layers]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
@@ -129,7 +143,18 @@ const MapDraw = (props: Props) => {
         onUpdate={onChange}
         onDelete={onChange}
       />
-      { ...props.children }
+      { _.map(geojsonLayers, (layer) => (
+        <Source
+          type='geojson'
+          data={layer.data}
+        >
+          <Layer
+            {..._.omit(layer, 'data', 'type')}
+            type={layer.type}
+          />
+        </Source>
+      ))}
+      { props.children }
     </Map>
   );
 };
