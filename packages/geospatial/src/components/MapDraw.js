@@ -73,7 +73,7 @@ const MapDraw = (props: Props) => {
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
 
-  const geojsonLayers = useMemo(() => _.find(props.layers, (layer) => !!layer.data), [props.layers]);
+  const geojsonLayers = useMemo(() => _.filter(props.layers, (layer) => !!layer.data), [props.layers]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
