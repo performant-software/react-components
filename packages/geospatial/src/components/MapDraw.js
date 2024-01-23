@@ -63,10 +63,6 @@ const GeometryTypes = {
   point: 'Point'
 };
 
-const LayerTypes = {
-  geojson: 'geojson'
-};
-
 /**
  * This component renders a map with controls for drawing one or more geometries. Geometries can be a point (lat/long),
  * a line, or a polygon.
@@ -77,7 +73,7 @@ const MapDraw = (props: Props) => {
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
 
-  const geojsonLayers = useMemo(() => _.where(props.layers, { type: LayerTypes.geojson }), [props.layers]);
+  const geojsonLayers = useMemo(() => _.find(props.layers, (layer) => !!layer.data), [props.layers]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
@@ -149,8 +145,7 @@ const MapDraw = (props: Props) => {
           data={layer.data}
         >
           <Layer
-            {..._.omit(layer, 'data', 'type')}
-            type={layer.type}
+            {..._.omit(layer, 'data')}
           />
         </Source>
       ))}
