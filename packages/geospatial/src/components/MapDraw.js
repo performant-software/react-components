@@ -3,6 +3,8 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import {
   bbox,
+  bboxPolygon,
+  buffer,
   feature,
   type FeatureCollection,
   type GeometryCollection
@@ -28,6 +30,11 @@ type LayerType = {
 };
 
 type Props = {
+  /**
+   * The number of miles to buffer the GeoJSON data.
+   */
+  buffer?: number,
+
   /**
    * Additional child nodes to render.
    */
@@ -55,8 +62,16 @@ type Props = {
   /**
    * Map style object.
    */
-  style?: any
+  style?: any,
+
+  /**
+   * The time in milliseconds to zoom into the location.
+   */
+  zoomDuration?: number
 };
+
+const DEFAULT_BUFFER = 2;
+const DEFAULT_ZOOM_DELAY = 1000;
 
 const GeometryTypes = {
   geometryCollection: 'GeometryCollection',
@@ -96,14 +111,24 @@ const MapDraw = (props: Props) => {
    */
   useEffect(() => {
     if (loaded && props.data) {
-      // Sets the bounding box for the current geometry.
-      const boundingBox = bbox(props.data);
+      // Convert the GeoJSON into a bounding box
+      const box = bbox(props.data);
 
+      // Convert the bounding box to a polygon
+      const polygon = bboxPolygon(box);
+
+      // Create a buffer around the polygon
+      const polygonBuffer = buffer(polygon, props.buffer, { units: 'miles' });
+
+      // Convert the buffer to a bounding box
+      const boundingBox = bbox(polygonBuffer);
+
+      // Sets the bounding box for the current geometry.
       if (_.every(boundingBox, _.isFinite)) {
         const [minLng, minLat, maxLng, maxLat] = boundingBox;
         const bounds = [[minLng, minLat], [maxLng, maxLat]];
 
-        mapRef.current.fitBounds(bounds, { padding: 40, duration: 1000 });
+        mapRef.current.fitBounds(bounds, { duration: props.zoomDuration });
       }
 
       // Handle special cases for geometry collection (not supported by mabox-gl-draw) and point
@@ -152,6 +177,11 @@ const MapDraw = (props: Props) => {
       { props.children }
     </Map>
   );
+};
+
+MapDraw.defaultProps = {
+  buffer: DEFAULT_BUFFER,
+  zoomDuration: DEFAULT_ZOOM_DELAY
 };
 
 export default MapDraw;
