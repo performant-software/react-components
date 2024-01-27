@@ -17,7 +17,7 @@ interface CoreDataPlaceProps {
 
 }
 
-export const CoreDataPlace = (props: CoreDataPlaceProps) => {
+const CoreDataPlace = (props: CoreDataPlaceProps) => {
 
   return (
     <Peripleo>
@@ -88,3 +88,5 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
   )
 
 }
+
+export default CoreDataPlace;
