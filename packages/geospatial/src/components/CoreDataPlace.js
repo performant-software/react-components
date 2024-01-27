@@ -51,7 +51,7 @@ interface CoreDataPlaceLayerProps {
 
 export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
 
-  const [place, setPlace] = useState<FeatureCollection | undefined>();
+  const [place, setPlace] = useState<FeatureCollection | undefined>(undefined);
 
   useEffect(() => {
     fetch(props.uri)
