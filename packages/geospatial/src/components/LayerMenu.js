@@ -92,6 +92,10 @@ const LayerMenu = (props: Props) => {
     }
   }, [mapRef.current]);
 
+  if (_.isEmpty(children)) {
+    return null;
+  }
+
   return (
     <>
       <LayerMenuContainer
