@@ -18,16 +18,15 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { Layer, MapRef, Source } from 'react-map-gl';
+import Map, { MapRef } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import './MapDraw.css';
 
-type LayerType = {
-  id?: string | number,
-  type: string,
-  data: any
-};
+// Override the MapboxDraw components to use MapLibre styles
+MapboxDraw.constants.classes.CONTROL_BASE = 'maplibregl-ctrl';
+MapboxDraw.constants.classes.CONTROL_PREFIX = 'maplibregl-ctrl-';
+MapboxDraw.constants.classes.CONTROL_GROUP = 'maplibregl-ctrl-group';
 
 type Props = {
   /**
@@ -44,8 +43,6 @@ type Props = {
    * GeoJSON structured data to be displayed on the map.
    */
   data: GeometryCollection | FeatureCollection,
-
-  layers: Array<LayerType>,
 
   /**
    * URL of the map style to render. This URL should contain any necessary API keys.
@@ -87,8 +84,6 @@ const MapDraw = (props: Props) => {
 
   const drawRef = useRef<MapboxDraw>();
   const mapRef = useRef<MapRef>();
-
-  const geojsonLayers = useMemo(() => _.filter(props.layers, (layer) => !!layer.data), [props.layers]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
@@ -163,17 +158,8 @@ const MapDraw = (props: Props) => {
         onCreate={onChange}
         onUpdate={onChange}
         onDelete={onChange}
+        position='bottom-left'
       />
-      { _.map(geojsonLayers, (layer) => (
-        <Source
-          type='geojson'
-          data={layer.data}
-        >
-          <Layer
-            {..._.omit(layer, 'data')}
-          />
-        </Source>
-      ))}
       { props.children }
     </Map>
   );
