@@ -29,6 +29,8 @@ const RasterLayer = (props: Props) => (
 );
 
 RasterLayer.defaultProps = {
+  maxzoom: 22,
+  minzoom: 0,
   opacity: 0.7,
   tileSize: 256
 };
