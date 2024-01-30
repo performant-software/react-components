@@ -10,7 +10,7 @@ import React, {
 import { BsStack } from 'react-icons/bs';
 import { IoCheckmarkOutline } from 'react-icons/io5';
 import _ from 'underscore';
-import LayerMenuContainer from './LayerMenuContainer';
+import MapControl from './MapControl';
 import './LayerMenu.css';
 
 type Props = {
@@ -98,7 +98,7 @@ const LayerMenu = (props: Props) => {
 
   return (
     <>
-      <LayerMenuContainer
+      <MapControl
         mapRef={mapRef}
         position={props.position}
       >
@@ -145,7 +145,7 @@ const LayerMenu = (props: Props) => {
             </div>
           </div>
         )}
-      </LayerMenuContainer>
+      </MapControl>
       { visibleChildren }
     </>
   );

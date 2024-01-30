@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import React from 'react';
 import GeoJsonLayer from '../../../geospatial/src/components/GeoJsonLayer';
 import LayerMenu from '../../../geospatial/src/components/LayerMenu';
+import MapControl from '../../../geospatial/src/components/MapControl';
 import MapDraw from '../../../geospatial/src/components/MapDraw';
 import RasterLayerComp from '../../../geospatial/src/components/RasterLayer';
 
@@ -19,9 +20,6 @@ export const Default = () => (
   <MapDraw
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   />
 );
 
@@ -30,9 +28,6 @@ export const GeoJSON = () => (
     data={bostonBoundaryData}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   />
 );
 
@@ -47,9 +42,6 @@ export const Point = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   />
 );
 
@@ -69,9 +61,6 @@ export const GeoJSONFillLayer = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   >
     <LayerMenu
       names={[
@@ -101,9 +90,6 @@ export const GeoJSONCircleLayer = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   >
     <LayerMenu
       names={[
@@ -133,9 +119,6 @@ export const GeoJSONLayerStyles = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   >
     <LayerMenu
       names={[
@@ -170,9 +153,6 @@ export const RasterLayer = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   >
     <LayerMenu
       names={[
@@ -202,10 +182,26 @@ export const EmptyLayerMenu = () => (
     }}
     mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
     onChange={action('onChange')}
-    style={{
-      marginBottom: '2em'
-    }}
   >
     <LayerMenu names={[]} />
+  </MapDraw>
+);
+
+export const CustomControl = () => (
+  <MapDraw
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    onChange={action('onChange')}
+  >
+    <MapControl
+      position='top-right'
+    >
+      <button
+        className='mapbox-gl-draw_ctrl-draw-btn layer-button'
+        onClick={action('click')}
+        type='button'
+      >
+        Click me!
+      </button>
+    </MapControl>
   </MapDraw>
 );
