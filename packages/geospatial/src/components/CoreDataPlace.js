@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Feature, FeatureCollection, Peripleo, Controls } from '@peripleo/peripleo';
+import type { FeatureCollection } from '@peripleo/peripleo';
+import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom } from '@peripleo/maplibre';
 import { DEFAULT_FILL_STYLE, DEFAULT_POINT_STYLE, DEFAULT_STROKE_STYLE } from './CoreDataPlaceStyles';
 

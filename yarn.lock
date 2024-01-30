@@ -1983,10 +1983,10 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@peripleo/maplibre@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@peripleo/maplibre/-/maplibre-0.3.1.tgz#9d94bfa1dafd8fb4cd4f2e38b1ab9f9cf5ba2947"
-  integrity sha512-OaQPF7Knyqx5ztLSJaZxxokQWcqqTU7CYahM+YHURgawkSkYodQWnZHHGB9BQLMV3tyBOfuZTJrIrNt/obLdFw==
+"@peripleo/maplibre@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@peripleo/maplibre/-/maplibre-0.3.2.tgz#889f85bd12c771618179471748ca7c290ea584ea"
+  integrity sha512-/Y28C5OZAJ2MA8LixydxBwAHwCubtKsr2T5caDxPr7IhcoEjhgXkUzRXiH9OPkM/ZEalQnhXdi2xvrKLLY7aDA==
   dependencies:
     "@phosphor-icons/react" "^2.0.15"
     "@radix-ui/react-dropdown-menu" "^2.0.6"
@@ -1998,10 +1998,10 @@
     react-draggable "^4.4.6"
     react-resizable "^3.0.5"
 
-"@peripleo/peripleo@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@peripleo/peripleo/-/peripleo-0.3.1.tgz#65bca13fd436ddaebdf1ff291454c3b2ea7f9239"
-  integrity sha512-k8QxQFvA+XCvz4pHAQOit8JnGaN66kePDTRxpsMAn3NK2HhxpSJpi8quUvAATrV4BXQLsSXp1lLt/MWfKyz0zg==
+"@peripleo/peripleo@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@peripleo/peripleo/-/peripleo-0.3.2.tgz#6279f3e313269011895b060597892c306b937bf8"
+  integrity sha512-LpzUn/XeymA6ZLL2VMep6toGmgp2FvZUUnUETuBht7CDJihR828rLLXVPSAY+Tt7S1el6jl1exZ+whCDeBrm0A==
   dependencies:
     "@phosphor-icons/react" "^2.0.15"
     "@radix-ui/react-dropdown-menu" "^2.0.6"
