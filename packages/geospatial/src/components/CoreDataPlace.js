@@ -3,21 +3,15 @@ import { Feature, FeatureCollection, Peripleo, Controls } from '@peripleo/peripl
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom } from '@peripleo/maplibre';
 import { DEFAULT_FILL_STYLE, DEFAULT_POINT_STYLE, DEFAULT_STROKE_STYLE } from './CoreDataPlaceStyles';
 
-interface CoreDataPlaceProps {
-
+type CoreDataPlaceProps = {
   mapStyle: string | object;
-
   placeURI: string;
-
   fillStyle?: object;
-
   pointStyle?: object;
-
   strokeStyle?: object;
+};
 
-}
-
-const CoreDataPlace = (props: CoreDataPlaceProps) => {
+export const CoreDataPlace = (props: CoreDataPlaceProps) => {
 
   return (
     <Peripleo>
@@ -35,19 +29,14 @@ const CoreDataPlace = (props: CoreDataPlaceProps) => {
     </Peripleo>
   )
 
-}
+};
 
-interface CoreDataPlaceLayerProps {
-
+type CoreDataPlaceLayerProps = {
   uri: string;
-
   fillStyle?: object;
-
   pointStyle?: object;
-
   strokeStyle?: object;
-
-}
+};
 
 export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
 
@@ -63,7 +52,7 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
             ...data.properties,
             record_id: data.record_id
           }
-        } as Feature;
+        };
 
         setPlace({
           type: 'FeatureCollection',
@@ -87,6 +76,4 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
     </>
   )
 
-}
-
-export default CoreDataPlace;
+};
