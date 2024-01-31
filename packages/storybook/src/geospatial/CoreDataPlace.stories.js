@@ -1,7 +1,5 @@
 import { CoreDataPlace } from '../../../geospatial/src/components/CoreDataPlace';
 
-import './CoreDataPlace.css';
-
 export default {
   title: 'Components/Geospatial/CoreDataPlace',
   component: CoreDataPlace
