@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useEffect, useState } from 'react';
 import type { FeatureCollection } from '@peripleo/peripleo';
 import { Peripleo, Controls } from '@peripleo/peripleo';
@@ -26,7 +28,7 @@ export const CoreDataPlace = (props: CoreDataPlaceProps) => {
           fillStyle={props.fillStyle}
           pointStyle={props.pointStyle}
           strokeStyle={props.strokeStyle} />
-      </Map>
+      </Map>x
     </Peripleo>
   )
 

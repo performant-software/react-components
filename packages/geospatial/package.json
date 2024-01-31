@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
+    "@peripleo/maplibre": "^0.3.2",
+    "@peripleo/peripleo": "^0.3.2",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^3.5.2",
@@ -22,8 +24,6 @@
   },
   "devDependencies": {
     "@performant-software/webpack-config": "^1.0.0",
-    "@peripleo/maplibre": "^0.3.2",
-    "@peripleo/peripleo": "^0.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
