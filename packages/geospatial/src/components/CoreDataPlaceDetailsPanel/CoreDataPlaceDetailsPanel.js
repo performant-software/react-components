@@ -2,8 +2,8 @@
 
 import React, { useMemo, useRef } from 'react';
 import { Image, X } from 'lucide-react';
-import { CoreDataRelatedMedia, UserDefinedField, CoreDataPlace, RelatedItemsData } from '../CoreDataTypes';
-// import { RelatedItemsList } from './RelatedItemsList';
+import { UserDefinedField, CoreDataPlace, RelatedItemsData } from '../CoreDataTypes';
+import { RelatedItemsList } from './RelatedItemsList';
 
 import './CoreDataPlaceDetailsPanel.css';
 
@@ -70,7 +70,7 @@ export const CoreDataPlaceDetailsPanel = (props: CoreDataPlaceDetailsPanelProps)
             </ol>
           </div>
 
-          {/* <RelatedItemsList items={props.related} /> */}
+          <RelatedItemsList items={props.related} />
         </>
       )}
     </aside>
