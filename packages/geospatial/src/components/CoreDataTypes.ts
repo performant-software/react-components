@@ -2,6 +2,30 @@
 
 import { Annotation, AnnotationPage, FeatureGeometry, Place, PlaceFeatureProperties } from '@peripleo/peripleo';
 
+export interface TypeSenseSearchResult {
+
+  uuid: string;
+
+  record_id: string;
+
+  type: string;
+
+  name: string;
+
+  names: string[];
+
+  coordinates: number[];
+
+  geometry: {
+
+    type: 'Point' | 'GeometryCollection',
+
+    coordinates: [ number, number ];
+
+  }
+
+}
+
 export interface CoreDataProperties extends PlaceFeatureProperties {
 
   record_id: string;

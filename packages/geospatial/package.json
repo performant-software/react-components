@@ -19,7 +19,10 @@
     "lucide-react": "^0.320.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^3.5.2",
+    "react-instantsearch": "^7.5.4",
     "react-map-gl": "^7.1.6",
+    "react-virtualized-auto-sizer": "^1.0.21",
+    "react-window": "^1.8.10",
     "underscore": "^1.13.6"
   },
   "peerDependencies": {
