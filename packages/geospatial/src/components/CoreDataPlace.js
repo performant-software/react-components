@@ -6,6 +6,9 @@ import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom } from '@peripleo/maplibre';
 import { DEFAULT_FILL_STYLE, DEFAULT_POINT_STYLE, DEFAULT_STROKE_STYLE } from './CoreDataPlaceStyles';
 
+import '@peripleo/maplibre/peripleo-maplibre.css';
+import '@peripleo/peripleo/default-theme';
+
 type CoreDataPlaceProps = {
   mapStyle: string | object;
   placeURI: string;
@@ -28,7 +31,7 @@ export const CoreDataPlace = (props: CoreDataPlaceProps) => {
           fillStyle={props.fillStyle}
           pointStyle={props.pointStyle}
           strokeStyle={props.strokeStyle} />
-      </Map>x
+      </Map>
     </Peripleo>
   )
 
