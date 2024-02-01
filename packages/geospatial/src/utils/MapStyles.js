@@ -1,11 +1,11 @@
 export const DEFAULT_POINT_STYLE = {
-  'type': 'circle',
-  'paint': {
+  type: 'circle',
+  paint: {
     'circle-radius': [
-      'interpolate', 
+      'interpolate',
       ['linear'],
-      ['number', ['get','point_count'], 1 ],
-      0, 4, 
+      ['number', ['get', 'point_count'], 1],
+      0, 4,
       10, 14
     ],
     'circle-stroke-width': 1,
@@ -20,17 +20,17 @@ export const DEFAULT_POINT_STYLE = {
 };
 
 export const DEFAULT_FILL_STYLE = {
-  'type': 'fill',
-  'paint': {
+  type: 'fill',
+  paint: {
     'fill-color': '#ff623b',
     'fill-opacity': 0.2
   }
-}
+};
 
 export const DEFAULT_STROKE_STYLE = {
-  'type': 'line',
-  'paint': {
+  type: 'line',
+  paint: {
     'line-color': '#ff623b',
     'line-opacity': 0.6
   }
-}
+};

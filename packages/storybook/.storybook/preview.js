@@ -1,19 +1,11 @@
 // @flow
 
-import {
-  ArgsTable,
-  Description,
-  DocsContainer,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-  DocsContext
-} from '@storybook/addon-docs';
-import React, { useContext, useRef } from 'react';
+import { DocsContainer } from '@storybook/addon-docs';
+import React, { useRef } from 'react';
 import ModalContext from '../../semantic-ui/src/context/ModalContext';
+import '@peripleo/maplibre/peripleo-maplibre.css';
+import '@peripleo/peripleo/default-theme';
 import '../../semantic-ui/build/semantic-ui.css';
-import PropsTable from '../src/components/PropsTable';
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.
