@@ -304,6 +304,8 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
       console.log('onUpdateChildAssociation: ');
       console.log('    association: ', association);
       console.log('    child: ', child);
+
+
       this.setState((state) => ({
         item: {
           ...state.item,
