@@ -7,6 +7,10 @@ module.exports = configure(__dirname, {
       './@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css$': path.resolve(
         __dirname,
         '../../node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+      ),
+      './maplibre-gl/dist/maplibre-gl.css$': path.resolve(
+        __dirname,
+        '../../node_modules/maplibre-gl/dist/maplibre-gl.css'
       )
     }
   }

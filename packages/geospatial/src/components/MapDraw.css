@@ -1,5 +1,2 @@
 @import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-
-div[mapboxgl-children] {
-  height: unset !important;
-}
+@import 'maplibre-gl/dist/maplibre-gl.css';

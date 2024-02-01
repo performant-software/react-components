@@ -1,0 +1,38 @@
+.maplibregl-ctrl-group.maplibregl-ctrl button.layer-button.mapbox-gl-draw_ctrl-draw-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl .layer-menu {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 2px;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  position: absolute;
+  top: 0px;
+  left: 40px;
+  overflow: auto;
+  width: max-content;
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl .layer-menu > .menu > .option {
+  cursor: pointer;
+  padding: 0.7em 2em 0.7em 2em;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl .layer-menu > .menu > .option:hover {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl .layer-menu > .menu > .option > .checkmark-container {
+  color: #009E60;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 20px;
+}
