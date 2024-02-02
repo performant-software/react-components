@@ -1,3 +1,5 @@
+// @flow
+
 export const DEFAULT_POINT_STYLE = {
   type: 'circle',
   paint: {

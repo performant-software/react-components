@@ -1,14 +1,7 @@
 // @flow
 
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import {
-  bbox,
-  bboxPolygon,
-  buffer,
-  feature,
-  type FeatureCollection,
-  type GeometryCollection
-} from '@turf/turf';
+import { feature, type FeatureCollection, type GeometryCollection } from '@turf/turf';
 import maplibregl from 'maplibre-gl';
 import React, {
   useCallback,
@@ -21,6 +14,7 @@ import React, {
 import Map, { MapRef } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
+import MapUtils from '../utils/Map';
 import './MapDraw.css';
 
 // Override the MapboxDraw components to use MapLibre styles
@@ -106,19 +100,10 @@ const MapDraw = (props: Props) => {
    */
   useEffect(() => {
     if (loaded && props.data) {
-      // Convert the GeoJSON into a bounding box
-      const box = bbox(props.data);
+      // Get the bounding box for the passed data
+      const boundingBox = MapUtils.getBoundingBox(props.data, props.buffer);
 
-      // Convert the bounding box to a polygon
-      const polygon = bboxPolygon(box);
-
-      // Create a buffer around the polygon
-      const polygonBuffer = buffer(polygon, props.buffer, { units: 'miles' });
-
-      // Convert the buffer to a bounding box
-      const boundingBox = bbox(polygonBuffer);
-
-      // Sets the bounding box for the current geometry.
+      // Sets the bounding box for the current geometry
       if (_.every(boundingBox, _.isFinite)) {
         const [minLng, minLat, maxLng, maxLat] = boundingBox;
         const bounds = [[minLng, minLat], [maxLng, maxLat]];
