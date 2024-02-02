@@ -1,0 +1,33 @@
+{
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87/taxonomies?project_ids=10",
+  "type": "AnnotationPage",
+  "partOf": {
+    "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87/taxonomies?project_ids=10",
+    "label": "Related Taxonomies: Hog Hammock Public Library (Sapelo Island School)",
+    "total": 1
+  },
+  "items": [
+    {
+      "type": "Annotation",
+      "id": 0,
+      "created": "2024-02-02T16:59:02+00:00",
+      "motivation": "linking",
+      "target": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "record_id": 4639,
+        "name": "Hog Hammock Public Library (Sapelo Island School)",
+        "type": "Place",
+        "uuid": "3aaf97a4-7052-4e2c-9056-4f4146ef0c87"
+      },
+      "body": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/taxonomies/ec79302a-0590-4ba5-b9bd-fbf86c4bb3b3",
+        "record_id": 1,
+        "title": "Doboy Sound",
+        "type": "Taxonomy",
+        "uuid": "ec79302a-0590-4ba5-b9bd-fbf86c4bb3b3",
+        "user_defined": {}
+      }
+    }
+  ]
+}

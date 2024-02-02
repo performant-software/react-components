@@ -7757,7 +7757,7 @@ eslint-plugin-flowtype@^5.9.0:
     lodash "^4.17.15"
     string-natural-compare "^3.0.1"
 
-eslint-plugin-import@^2.20.2:
+eslint-plugin-import@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.29.1.tgz#d45b37b5ef5901d639c15270d74d46d161150643"
   integrity sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==
@@ -10441,6 +10441,11 @@ lucide-react@^0.320.0:
   version "0.320.0"
   resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.320.0.tgz#c0be9134bd01619bdbea7d426e4312cc7187aefb"
   integrity sha512-HuMmfmFiWwctDkN27wklKVZr8UpwP2TTekLZ3xiLCEjx/STG1k0KLWMbBfIJ/lnNJQDfSjztDZSVU316xA+AQg==
+
+lucide-react@^0.321.0:
+  version "0.321.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.321.0.tgz#05a2600e0a6551c117fb4e7b2676b1286389d949"
+  integrity sha512-Fi9VahIna6642U+2nAGSjnXwUBV3WyfFFPQq4yi3w30jtqxDLfSyiYCtCYCYQZ2KWNZc1MDI+rcsa0t+ChdYpw==
 
 magic-string@^0.30.5:
   version "0.30.5"

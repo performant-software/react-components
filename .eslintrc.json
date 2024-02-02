@@ -6,6 +6,7 @@
   },
   "extends": [
     "plugin:flowtype/recommended",
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "airbnb"
   ],
@@ -36,6 +37,7 @@
     "max-len": ["error", { "code": 120, "ignoreStrings": true }],
     "no-underscore-dangle": "off",
     "no-use-before-define": "off",
+    "import/no-unresolved": ["error", { "ignore": ["@samvera/clover-iiif.*"] }],
     "import/prefer-default-export": "off",
     "react/no-array-index-key": "off",
     "react/default-props-match-prop-types": "off",

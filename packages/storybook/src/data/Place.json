@@ -1,0 +1,21 @@
+{
+  "@id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/ad02a467-5852-4b64-a778-5fa57e1c354c",
+  "type": "Place",
+  "properties": {
+    "ccode": [],
+    "title": "Sapelo Island",
+    "record_id": 4478,
+    "uuid": "ad02a467-5852-4b64-a778-5fa57e1c354c"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [-81.2417611, 31.4774455]
+  },
+  "names": [{ "toponym": "Sapelo Island" }],
+  "user_defined": {
+    "c01171e1-cafd-4111-a47a-a93a0b1151d1": { "label": "Description", "value": "Sapelo Island is home to the Gullah/Geechee people, many of whom reside at Hog Hammock on the southern half of the island. The rest of Sapelo is state-owned and managed. Its ecosystem and long history of occupation make Sapelo a site of great ecological, archaeological, cultural, and historical significance." },
+    "09027d53-6ccc-4110-a507-750e2062b994": { "label": "Type", "value": "Island" },
+    "dfbd85e9-726b-448b-a77c-d4bafb8199e5": { "label": "Creator", "value": "Emory ECDS" },
+    "8611d261-8826-4948-a8c8-85bf695de9cc": { "label": "Subject", "value": "Environmental Research" }
+  }
+}

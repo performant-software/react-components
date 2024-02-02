@@ -1,0 +1,65 @@
+{
+  "@context":"http://www.w3.org/ns/anno.jsonld",
+  "id":"https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/ad02a467-5852-4b64-a778-5fa57e1c354c/places?project_ids=10",
+  "type":"AnnotationPage",
+  "partOf":{
+    "id":"https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/ad02a467-5852-4b64-a778-5fa57e1c354c/places?project_ids=10",
+    "label":"Related Places: Sapelo Island",
+    "total":1
+  },
+  "items":[
+    {
+      "type":"Annotation",
+      "id":0,
+      "created":"2024-01-31T10:00:31+00:00",
+      "motivation":"linking",
+      "target":{
+        "id":"https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/ad02a467-5852-4b64-a778-5fa57e1c354c",
+        "record_id":4478,
+        "name":"Sapelo Island",
+        "type":"Place",
+        "uuid":"ad02a467-5852-4b64-a778-5fa57e1c354c"
+      },
+      "body":{
+        "id":"https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "record_id":4639,
+        "uuid":"3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "title":"Hog Hammock Public Library (Sapelo Island School)",
+        "type":"Place",
+        "geometry":{
+          "type":"Point",
+          "coordinates":[
+            -81.2653727,
+            31.4252249
+          ]
+        },
+        "user_defined":{
+          "c01171e1-cafd-4111-a47a-a93a0b1151d1":{
+            "label":"Description",
+            "value":"This library was founded in 2022 by Sapelo Island Cultural and Revitalization Society Inc. (SICARS).  The library's location is Sapelo Island's former two-room schoolhouse in the Hog Hammock Community. It is one of the last intact island-based Gullah-Geechee communities in America."
+          },
+          "09027d53-6ccc-4110-a507-750e2062b994":{
+            "label":"Type",
+            "value":"Building"
+          },
+          "dfbd85e9-726b-448b-a77c-d4bafb8199e5":{
+            "label":"Creator",
+            "value":"Emory ECDS"
+          },
+          "8611d261-8826-4948-a8c8-85bf695de9cc":{
+            "label":"Subject",
+            "value":"Environmental Research"
+          },
+          "802b7c68-4f2f-46cf-b71f-1bbb5eca9d14":{
+            "label":"Item URI",
+            "value":"https://dvl.ecdsdev.org/items/show/11612"
+          },
+          "d09140c8-d876-4e8e-8615-0fc551f6ed63":{
+            "label":"Item ID",
+            "value":"11612"
+          }
+        }
+      }
+    }
+  ]
+}

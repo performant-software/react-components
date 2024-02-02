@@ -1,14 +1,14 @@
 // @flow
 
-import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, Zoom } from '@peripleo/maplibre';
+import { Controls, Peripleo } from '@peripleo/peripleo';
 import React from 'react';
-import CoreDataPlace from '../../../geospatial/src/components/CoreDataPlace';
 import mapStyle from '../data/MapStyles.json';
+import PlaceMarker from '../../../core-data/src/components/PlaceMarker';
 
 export default {
-  title: 'Components/Geospatial/CoreDataPlace',
-  component: CoreDataPlace
+  title: 'Components/Core Data/PlaceMarker',
+  component: PlaceMarker
 };
 
 const PLACE_URL = 'https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87?project_ids=10';
@@ -29,7 +29,7 @@ export const Default = () => (
           height: '300px'
         }}
       >
-        <CoreDataPlace
+        <PlaceMarker
           url={PLACE_URL}
         />
       </div>

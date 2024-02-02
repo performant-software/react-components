@@ -1,0 +1,78 @@
+{
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87/organizations?project_ids=10",
+  "type": "AnnotationPage",
+  "partOf": {
+    "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87/organizations?project_ids=10",
+    "label": "Related Organizations: Hog Hammock Public Library (Sapelo Island School)",
+    "total": 3
+  },
+  "items": [
+    {
+      "type": "Annotation",
+      "id": 0,
+      "created": "2024-02-02T16:57:05+00:00",
+      "motivation": "linking",
+      "target": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "record_id": 4639,
+        "name": "Hog Hammock Public Library (Sapelo Island School)",
+        "type": "Place",
+        "uuid": "3aaf97a4-7052-4e2c-9056-4f4146ef0c87"
+      },
+      "body": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/organizations/9dbbf99c-1090-4212-ba1d-e6c4155f0ec0",
+        "record_id": 4,
+        "title": "Bins and Sons",
+        "type": "Organization",
+        "uuid": "9dbbf99c-1090-4212-ba1d-e6c4155f0ec0",
+        "description": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n",
+        "user_defined": {}
+      }
+    },
+    {
+      "type": "Annotation",
+      "id": 1,
+      "created": "2024-02-02T16:57:05+00:00",
+      "motivation": "linking",
+      "target": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "record_id": 4639,
+        "name": "Hog Hammock Public Library (Sapelo Island School)",
+        "type": "Place",
+        "uuid": "3aaf97a4-7052-4e2c-9056-4f4146ef0c87"
+      },
+      "body": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/organizations/38ca082b-96fd-4ef2-b107-f827f6c1005a",
+        "record_id": 5,
+        "title": "Hayes LLC",
+        "type": "Organization",
+        "uuid": "38ca082b-96fd-4ef2-b107-f827f6c1005a",
+        "description": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n",
+        "user_defined": {}
+      }
+    },
+    {
+      "type": "Annotation",
+      "id": 2,
+      "created": "2024-02-02T16:57:05+00:00",
+      "motivation": "linking",
+      "target": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87",
+        "record_id": 4639,
+        "name": "Hog Hammock Public Library (Sapelo Island School)",
+        "type": "Place",
+        "uuid": "3aaf97a4-7052-4e2c-9056-4f4146ef0c87"
+      },
+      "body": {
+        "id": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/organizations/c7d26821-2cf3-41e6-8fea-a7d298e7e62e",
+        "record_id": 6,
+        "title": "Little Group",
+        "type": "Organization",
+        "uuid": "c7d26821-2cf3-41e6-8fea-a7d298e7e62e",
+        "description": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus.\n",
+        "user_defined": {}
+      }
+    }
+  ]
+}
