@@ -11,7 +11,6 @@
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
     "@peripleo/maplibre": "^0.3.2",
-    "@peripleo/peripleo": "^0.3.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@samvera/clover-iiif": "^2.3.2",
