@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "1.2.0-beta.4",
+  "version": "1.2.0-beta.5",
   "description": "TODO: ADD",
   "license": "MIT",
   "main": "./build/index.js",
