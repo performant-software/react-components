@@ -1,9 +1,9 @@
 // @flow
 
-import { AnnotationPage } from '@peripleo/peripleo';
 import { Thumbnail } from '@samvera/clover-iiif/primitives';
 import React, { useState } from 'react';
 import _ from 'underscore';
+import type { AnnotationPage } from '../types/AnnotationPage';
 import type { MediaContent } from '../types/MediaContent';
 import MediaGallery from './MediaGallery';
 

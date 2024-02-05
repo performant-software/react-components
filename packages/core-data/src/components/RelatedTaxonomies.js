@@ -1,8 +1,8 @@
 // @flow
 
-import { AnnotationPage } from '@peripleo/peripleo';
 import { ListTree } from 'lucide-react';
 import React from 'react';
+import type { AnnotationPage } from '../types/AnnotationPage';
 import RelatedList from './RelatedList';
 import type { Taxonomy } from '../types/Taxonomy';
 

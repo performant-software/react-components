@@ -1,8 +1,8 @@
 // @flow
 
-import { AnnotationPage } from '@peripleo/peripleo';
 import React from 'react';
 import _ from 'underscore';
+import type { AnnotationPage } from '../types/AnnotationPage';
 
 type Item = {
   id: string

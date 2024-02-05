@@ -1,7 +1,7 @@
 // @flow
 
-import { AnnotationPage } from '@peripleo/peripleo';
 import type { Annotation } from './Annotation';
+import type { AnnotationPage } from './AnnotationPage';
 
 export type RelatedItems = {
   endpoint: string,

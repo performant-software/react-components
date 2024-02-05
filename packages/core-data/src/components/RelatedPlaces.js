@@ -1,8 +1,8 @@
 // @flow
 
-import { AnnotationPage } from '@peripleo/peripleo';
 import { MapPin } from 'lucide-react';
 import React from 'react';
+import type { AnnotationPage } from '../types/AnnotationPage';
 import type { Place } from '../types/Place';
 import RelatedList from './RelatedList';
 
