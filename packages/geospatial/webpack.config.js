@@ -12,7 +12,6 @@ module.exports = configure(__dirname, {
         __dirname,
         '../../node_modules/maplibre-gl/dist/maplibre-gl.css'
       )
-    },
-    conditionNames: ['import', 'node', 'default']
+    }
   }
 });

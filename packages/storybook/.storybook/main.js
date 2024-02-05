@@ -16,6 +16,14 @@ const config = {
     name: '@storybook/react-webpack5',
     options: {}
   },
+  async webpackFinal(config) {
+    config.resolve = {
+      ...config.resolve,
+      conditionNames: ['import', 'browser', 'default']
+    };
+
+    return config;
+  },
   babel: (options) => {
     // Remove the override applied from @storybook/react
     _.each(options.overrides, (o) => {
