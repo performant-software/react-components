@@ -14,6 +14,9 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@samvera/clover-iiif": "^2.3.2",
     "lucide-react": "^0.321.0",
+    "react-instantsearch": "^7.5.4",
+    "react-virtualized-auto-sizer": "^1.0.22",
+    "react-window": "^1.8.10",
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
