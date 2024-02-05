@@ -106,9 +106,6 @@ module.exports = {
           test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.png($|\?)/,
           use: 'file-loader'
         }]
-      },
-      resolve: {
-        conditionNames: ['import', 'node', 'default']
       }
     };
 
