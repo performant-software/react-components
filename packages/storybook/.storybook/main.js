@@ -17,12 +17,12 @@ const config = {
     options: {}
   },
   async webpackFinal(config) {
-    config.resolve = {
+    const resolve = {
       ...config.resolve,
       conditionNames: ['import', 'browser', 'default']
-    };
+    }
 
-    return config;
+    return _.extend(config, { resolve });
   },
   babel: (options) => {
     // Remove the override applied from @storybook/react
