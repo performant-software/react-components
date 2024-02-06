@@ -1,0 +1,16 @@
+/*!
+ * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+//! Built on 2020-03-05
+
+//! Git commit: v2.4.2-0-c450749
+
+//! License: http://openseadragon.github.io/license/
+
+//! http://openseadragon.github.io
+
+//! openseadragon 2.4.2
