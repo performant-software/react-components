@@ -34,6 +34,9 @@ type Props = {
 
 const DEFAULT_BUFFER = 2;
 
+/**
+ * This component renders a location marker to be used in a Peripleo context.
+ */
 const LocationMarker = (props: Props) => {
   const map = useMap();
 

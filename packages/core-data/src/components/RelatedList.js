@@ -9,11 +9,25 @@ type Item = {
 };
 
 type Props = {
+  /**
+   * An annotation page containing the list of records to render.
+   */
   data: AnnotationPage<Item>,
-  emptyMessage?: string,
+
+  /**
+   * A message to display when the list is empty.
+   */
+  emptyMessage: string,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
   renderItem: (item: Item) => JSX.Element
 };
 
+/**
+ * This component is a helper component used to structure the lists for the other `Related*` comnponents.
+ */
 const RelatedList = (props: Props) => {
   const { items } = props.data;
 

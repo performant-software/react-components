@@ -9,11 +9,25 @@ import RelatedItemsList from './RelatedItemsList';
 import './PlaceDetailsPanel.css';
 
 type Props = {
+  /**
+   * The place record to render.
+   */
   place?: Place,
+
+  /**
+   * A list of items related to the place.
+   */
   related: Array<RelatedItems>,
+
+  /**
+   * Callback fired when the panel is closed.
+   */
   onClose: () => void
 };
 
+/**
+ * This component renders a side panel for the passed Core Data place record.
+ */
 const PlaceDetailsPanel = (props: Props) => {
   const el = useRef<HTMLElement>(null);
 

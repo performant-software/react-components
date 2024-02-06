@@ -14,3 +14,9 @@ export const Default = () => (
     data={relatedOrganizations}
   />
 );
+
+export const EmptyList = () => (
+  <RelatedOrganizations
+    data={[]}
+  />
+);

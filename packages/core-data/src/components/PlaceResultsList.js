@@ -7,7 +7,7 @@ import { FixedSizeList } from 'react-window';
 import _ from 'underscore';
 import type { Feature } from '../types/Feature';
 import type { Place } from '../types/typesense/Place';
-import './SearchResultsList.css';
+import './PlaceResultsList.css';
 
 /**
  * Converts the passed place result to a feature.
@@ -103,9 +103,24 @@ const HitComponent = (props: HitComponentProps) => {
 };
 
 type Props = {
+  /**
+   * An array of search results representing `/typesense/Place` objects.
+   */
   hits: Array<Place>,
+
+  /**
+   * The object that is currently occupying the hover state.
+   */
   hover?: Feature<{ id: string }>,
+
+  /**
+   * Callback fired when the hover item is changed.
+   */
   onHoverChange: (hover?: Feature<{ id: string }>) => void,
+
+  /**
+   * Callback fired when a search result is clicked.
+   */
   onClick: (result: Place) => void
 };
 
@@ -114,7 +129,10 @@ type RowProps = {
   style: any
 };
 
-const SearchResultsList = (props: Props) => {
+/**
+ * This component renders a list of search results returned from a Core Data Typesense index.
+ */
+const PlaceResultsList = (props: Props) => {
   const {
     hits,
     hover,
@@ -150,11 +168,11 @@ const SearchResultsList = (props: Props) => {
           width={width}
           itemSize={88}
         >
-          {Row}
+          { Row }
         </FixedSizeList>
       )}
     </AutoSizer>
   );
 };
 
-export default SearchResultsList;
+export default PlaceResultsList;

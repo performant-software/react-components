@@ -5,17 +5,23 @@ import { AlertCircle, ChevronDown } from 'lucide-react';
 import React from 'react';
 import _ from 'underscore';
 import LoadAnimation from './LoadAnimation';
+import type { RelatedItems } from '../types/RelatedItems';
 import RelatedMedia from './RelatedMedia';
 import RelatedOrganizations from './RelatedOrganizations';
 import RelatedPeople from './RelatedPeople';
 import RelatedPlaces from './RelatedPlaces';
 import RelatedTaxonomies from './RelatedTaxonomies';
-import type { RelatedItems } from '../types/RelatedItems';
 
 type Props = {
+  /**
+   * A list of related items.
+   */
   items: Array<RelatedItems>
 };
 
+/**
+ * This component renders the passed list of related items in an accordion fashion.
+ */
 const RelatedItemsList = (props: Props) => {
   if (_.isEmpty(props.items)) {
     return null;
