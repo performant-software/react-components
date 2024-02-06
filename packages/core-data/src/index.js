@@ -1,5 +1,8 @@
 // @flow
 
+// CSS
+import './index.css';
+
 // Components
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
