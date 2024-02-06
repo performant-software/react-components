@@ -30,6 +30,7 @@ type Props = {
  */
 const MediaGallery = (props: Props) => (
   <Dialog.Root
+    className='media-gallery'
     onOpenChange={props.onClose}
     open={Boolean(props.defaultItem)}
   >

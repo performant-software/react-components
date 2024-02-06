@@ -1,4 +1,4 @@
-.dialog-overlay {
+.media-gallery .dialog-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   inset: 0;
   position: fixed;
@@ -6,7 +6,7 @@
   z-index: 98;
 }
 
-.dialog-content {
+.media-gallery .dialog-content {
   background-color: #fff;
   border-radius: 6px;
   box-shadow: rgba(14, 18, 22, 0.35) 0px 10px 38px -10px, rgba(14, 18, 22, 0.2) 0px 10px 20px -15px;
@@ -22,11 +22,11 @@
   z-index: 99;
 }
 
-.dialog-content:focus {
+.media-gallery .dialog-content:focus {
   outline: none;
 }
 
-.dialog-close {
+.media-gallery .dialog-close {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -52,12 +52,12 @@
   }
 }
 
-.clover-viewer-header  {
+.media-gallery .clover-viewer-header  {
   font-weight: 500;
   align-items: center !important;
 }
 
-.clover-viewer-header > span {
+.media-gallery .clover-viewer-header > span {
   font-size: 1rem !important;
   padding-top: 1.3rem;
   padding-left: 0 !important;

@@ -4,6 +4,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { AlertCircle, ChevronDown } from 'lucide-react';
 import React from 'react';
 import _ from 'underscore';
+import i18n from '../i18n/i18n';
 import LoadAnimation from './LoadAnimation';
 import type { RelatedItems } from '../types/RelatedItems';
 import RelatedMedia from './RelatedMedia';
@@ -11,6 +12,7 @@ import RelatedOrganizations from './RelatedOrganizations';
 import RelatedPeople from './RelatedPeople';
 import RelatedPlaces from './RelatedPlaces';
 import RelatedTaxonomies from './RelatedTaxonomies';
+import './RelatedItemsList.css';
 
 type Props = {
   /**
@@ -28,7 +30,10 @@ const RelatedItemsList = (props: Props) => {
   }
 
   return (
-    <Accordion.Root type='multiple'>
+    <Accordion.Root
+      className='related-items-list'
+      type='multiple'
+    >
       { _.map(props.items, ({ data, error, ...conf }) => (
         <Accordion.Item
           key={conf.endpoint}
@@ -43,7 +48,7 @@ const RelatedItemsList = (props: Props) => {
                 { conf.ui_label }
                 { data && (
                   <span className='ml-1'>
-                    ({ data.items.length })
+                    { i18n.t('RelatedItemsList.labels.count', { count: data.items?.length })}
                   </span>
                 )}
                 { error && (

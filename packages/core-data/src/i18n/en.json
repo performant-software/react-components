@@ -1,4 +1,9 @@
 {
+  "RelatedItemsList": {
+    "labels": {
+      "count": "({{count}})"
+    }
+  },
   "RelatedOrganizations": {
     "labels": {
       "empty": "No related organizations"

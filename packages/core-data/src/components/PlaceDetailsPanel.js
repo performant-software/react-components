@@ -6,7 +6,6 @@ import _ from 'underscore';
 import type { Place } from '../types/Place';
 import type { RelatedItems } from '../types/RelatedItems';
 import RelatedItemsList from './RelatedItemsList';
-import './PlaceDetailsPanel.css';
 
 type Props = {
   /**
