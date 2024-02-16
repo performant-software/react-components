@@ -1,5 +1,6 @@
 // @flow
 
+import { useMap } from '@peripleo/maplibre';
 import { LocationMarker } from '@performant-software/geospatial';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -52,6 +53,7 @@ const PlaceMarker = (props: Props) => {
   return (
     <LocationMarker
       data={place}
+      useMap={useMap}
     />
   );
 };
