@@ -16,24 +16,6 @@ const config = {
     name: '@storybook/react-webpack5',
     options: {}
   },
-  async webpackFinal(config) {
-    /**
-     * This is a work-around for an issue with the @peripleo/maplibre and @peripleo/peripleo packages. Neither exports
-     * a CommonJS package, which is what this library uses. So any of the following statements will fail:
-     *
-     * const L = require('@peripleo/*')
-     *
-     * We could either:
-     * A. Update this library to export EMS
-     * B. See if the Peripleo libraries can export CommonJS
-     */
-    const resolve = {
-      ...config.resolve,
-      conditionNames: ['import', 'browser', 'default']
-    }
-
-    return _.extend(config, { resolve });
-  },
   babel: (options) => {
     // Remove the override applied from @storybook/react
     _.each(options.overrides, (o) => {
