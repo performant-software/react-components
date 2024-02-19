@@ -144,9 +144,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
           {...this.props}
           className={`data-table-column-selector ${this.props.className}`}
           columns={this.state.columns}
-          renderListHeader={this.props.configurable
-            ? this.renderHeader.bind(this)
-            : undefined}
+          renderListHeader={this.renderHeader.bind(this)}
         />
       );
     }
@@ -157,45 +155,51 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     renderHeader() {
+      if (!(this.props.configurable || this.props.renderListHeader)) {
+        return null;
+      }
+
       return (
         <>
           { this.props.renderListHeader && this.props.renderListHeader() }
-          <Dropdown
-            aria-label='Select Columns'
-            basic
-            button
-            icon='cog'
-            className='icon configure-button open-right'
-            closeOnBlur={false}
-          >
-            <Dropdown.Menu>
-              { this.state.columns
-                .filter((c) => c.label && c.label.length)
-                .map((c, index) => (
-                  <Draggable
-                    id={c.name}
-                    index={index}
-                    key={c.name}
-                    onDrag={this.onDrag.bind(this)}
-                  >
-                    <Dropdown.Item
-                      aria-dropeffect='move'
-                      onClick={(e) => e.stopPropagation()}
+          { this.props.configurable && (
+            <Dropdown
+              aria-label='Select Columns'
+              basic
+              button
+              icon='cog'
+              className='icon configure-button open-right'
+              closeOnBlur={false}
+            >
+              <Dropdown.Menu>
+                { this.state.columns
+                  .filter((c) => c.label && c.label.length)
+                  .map((c, index) => (
+                    <Draggable
+                      id={c.name}
+                      index={index}
+                      key={c.name}
+                      onDrag={this.onDrag.bind(this)}
                     >
-                      <Icon
-                        name='bars'
-                      />
-                      <Checkbox
-                        aria-label='Select Column'
-                        checked={!c.hidden}
-                        label={c.label}
-                        onClick={this.onColumnCheckbox.bind(this, c)}
-                      />
-                    </Dropdown.Item>
-                  </Draggable>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
+                      <Dropdown.Item
+                        aria-dropeffect='move'
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Icon
+                          name='bars'
+                        />
+                        <Checkbox
+                          aria-label='Select Column'
+                          checked={!c.hidden}
+                          label={c.label}
+                          onClick={this.onColumnCheckbox.bind(this, c)}
+                        />
+                      </Dropdown.Item>
+                    </Draggable>
+                  ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </>
       );
     }
