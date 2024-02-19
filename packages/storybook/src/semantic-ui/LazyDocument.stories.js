@@ -7,6 +7,7 @@ import FileInputButton from '../../../semantic-ui/src/components/FileInputButton
 import image from '../assets/test-image.jpg';
 import LazyDocument from '../../../semantic-ui/src/components/LazyDocument';
 import portraitImage from '../assets/portrait-test-image.jpg';
+import pdf from '../assets/test.pdf';
 
 export default {
   title: 'Components/Semantic UI/LazyDocument'
@@ -84,6 +85,16 @@ export const CardContent = () => (
     </Card>
   </Card.Group>
 );
+
+export const ViewContent = () => (
+  <LazyDocument
+    pdf
+    preview={portraitImage}
+    view
+    view_url={pdf}
+  />
+);
+
 
 export const ListContent = () => (
   <Item.Group>

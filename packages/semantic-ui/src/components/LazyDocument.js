@@ -3,6 +3,7 @@
 import React, { useCallback, useState, type Node } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import {
+  Button,
   Dimmer,
   Icon,
   Image,
@@ -14,9 +15,13 @@ import {
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+// These are copied from the react-pdt node_module.  This is for NextJS builds
+// see https://nextjs.org/docs/messages/css-npm
+import './AnnotationLayer.css';
+import './TextLayer.css';
+
 import './LazyDocument.css';
+import ViewPDFButton from './ViewPDFButton';
 
 type Props = {
   children?: Node,
@@ -26,6 +31,8 @@ type Props = {
   image?: any,
   pdf?: boolean,
   preview?: ?string,
+  view?: Boolean,
+  view_url?: String,
   size?: string,
   src?: string
 };
@@ -87,13 +94,13 @@ const LazyDocument = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { !loaded && (
+          {!loaded && (
             <LazyLoader
               active
               size={props.size}
             />
           )}
-          { !error && props.preview && (
+          {!error && props.preview && (
             <Image
               {...props.image}
               className={getClassNames()}
@@ -109,7 +116,7 @@ const LazyDocument = (props: Props) => {
               size={props.size}
             />
           )}
-          { !error && loaded && !props.preview && props.src && props.pdf && (
+          {!error && loaded && !props.preview && props.src && props.pdf && (
             <Image
               {...props.image}
               className={getClassNames()}
@@ -125,7 +132,18 @@ const LazyDocument = (props: Props) => {
               </Document>
             </Image>
           )}
-          { (error || (!props.preview && !(props.src && props.pdf))) && (
+          {!error && loaded && props.view && props.view_url && props.pdf && dimmer && (
+            <Dimmer
+              active={dimmer}
+            >
+              <div
+                className='buttons'
+              >
+                <ViewPDFButton url={props.view_url} primary />
+              </div>
+            </Dimmer>
+          )}
+          {(error || (!props.preview && !(props.src && props.pdf))) && (
             <Image
               {...props.image}
               className={getClassNames('placeholder-image')}
@@ -137,20 +155,20 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          { (props.download || props.src || props.children) && props.dimmable && (
+          {(props.download || props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                { props.download && (
+                {props.download && (
                   <DownloadButton
                     primary
                     url={props.download || props.src}
                   />
                 )}
-                { props.children }
+                {props.children}
               </div>
             </Dimmer>
           )}
