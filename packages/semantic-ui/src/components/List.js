@@ -198,6 +198,11 @@ type Props = {
   renderSearch?: () => Element<any>,
 
   /**
+   * Returns true if the renderSearch prop should be used to render a search input element.
+   */
+  searchable?: boolean,
+
+  /**
    * If set to <code>true</code>, checkboxes will render as the first table column, allowing each row to be selectable.
    * The consuming component is responsible for tracking the selected items.
    */
@@ -841,10 +846,15 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         filters,
         perPageOptions,
         renderListHeader,
-        renderSearch
+        renderSearch,
+        searchable
       } = this.props;
 
-      if (filters || perPageOptions || renderListHeader || renderSearch) {
+      const hasFilters = filters && filters.component;
+      const hasSearch = searchable && renderSearch;
+      const headerContent = renderListHeader && renderListHeader();
+
+      if (hasFilters || perPageOptions || headerContent || hasSearch) {
         renderHeader = true;
       }
 
@@ -879,9 +889,9 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                   secondary
                   className='flex-end-menu'
                 >
-                  { renderListHeader && (
+                  { headerContent && (
                     <Menu.Menu className='list-header-menu'>
-                      { renderListHeader() }
+                      { headerContent }
                     </Menu.Menu>
                   )}
                   <Menu.Menu>
