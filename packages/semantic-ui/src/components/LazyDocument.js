@@ -3,7 +3,6 @@
 import React, { useCallback, useState, type Node } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import {
-  Button,
   Dimmer,
   Icon,
   Image,
@@ -32,7 +31,7 @@ type Props = {
   pdf?: boolean,
   preview?: ?string,
   view?: Boolean,
-  view_url?: String,
+  viewUrl?: String,
   size?: string,
   src?: string
 };
@@ -132,14 +131,14 @@ const LazyDocument = (props: Props) => {
               </Document>
             </Image>
           )}
-          {!error && loaded && props.view && props.view_url && props.pdf && dimmer && (
+          {!error && loaded && props.view && props.viewUrl && props.pdf && dimmer && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                <ViewPDFButton url={props.view_url} primary />
+                <ViewPDFButton url={props.viewUrl} primary />
               </div>
             </Dimmer>
           )}
