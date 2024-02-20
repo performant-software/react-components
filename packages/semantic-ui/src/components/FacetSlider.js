@@ -11,10 +11,6 @@ import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
 
-// This is copied from the rc-slider node_module.  SO update if updating versions
-// See https://nextjs.org/docs/messages/css-npm
-import './rc-slider.css';
-
 import './FacetSlider.css';
 
 type Props = FacetProps & RangeSliderProps;

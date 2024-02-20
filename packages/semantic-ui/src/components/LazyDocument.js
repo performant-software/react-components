@@ -14,11 +14,6 @@ import {
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 
-// These are copied from the react-pdt node_module.  This is for NextJS builds
-// see https://nextjs.org/docs/messages/css-npm
-import './AnnotationLayer.css';
-import './TextLayer.css';
-
 import './LazyDocument.css';
 import ViewPDFButton from './ViewPDFButton';
 
