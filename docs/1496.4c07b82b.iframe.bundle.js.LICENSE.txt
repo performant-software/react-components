@@ -5,6 +5,13 @@
  * Released under the MIT License.
  */
 
+/**
+ * @license lucide-react v0.321.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
 //! Built on 2020-03-05
 
 //! Git commit: v2.4.2-0-c450749
