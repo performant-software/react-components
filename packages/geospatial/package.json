@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
-    "@peripleo/maplibre": "^0.3.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@samvera/clover-iiif": "^2.3.2",
@@ -23,10 +22,12 @@
     "underscore": "^1.13.6"
   },
   "peerDependencies": {
+    "@peripleo/maplibre": "^0.3.3",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
   "devDependencies": {
+    "@peripleo/maplibre": "^0.3.3",
     "@performant-software/webpack-config": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

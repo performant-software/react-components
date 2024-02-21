@@ -1,7 +1,7 @@
 // @flow
 
 import { Peripleo, Controls } from '@peripleo/peripleo';
-import { Map, Zoom, useMap } from '@peripleo/maplibre';
+import { Map, Zoom } from '@peripleo/maplibre';
 import React from 'react';
 import LocationMarker from '../../../geospatial/src/components/LocationMarker';
 import mapStyle from '../data/MapStyles.json';
@@ -35,7 +35,6 @@ export const Default = () => (
               31.4252249
             ]
           }}
-          useMap={useMap}
         />
       </div>
     </Map>

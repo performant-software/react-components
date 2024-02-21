@@ -1,7 +1,7 @@
 // @flow
 
-import React, { useEffect, useMemo } from 'react';
-import { MixedGeoJSONLayer, PulsingMarkerLayer, type Map } from '@peripleo/maplibre';
+import React, { useEffect } from 'react';
+import { MixedGeoJSONLayer, PulsingMarkerLayer, useMap } from '@peripleo/maplibre';
 import { DEFAULT_FILL_STYLE, DEFAULT_POINT_STYLE, DEFAULT_STROKE_STYLE } from '../utils/MapStyles';
 import MapUtils from '../utils/Map';
 
@@ -29,12 +29,7 @@ type Props = {
   /**
    * GeoJSON layer stroke style
    */
-  strokeStyle?: { [key: string]: any },
-
-  /**
-   * Hook used to retrieve the map instance.
-   */
-  useMap?: () => Map
+  strokeStyle?: { [key: string]: any }
 };
 
 const DEFAULT_BUFFER = 2;
@@ -43,7 +38,7 @@ const DEFAULT_BUFFER = 2;
  * This component renders a location marker to be used in a Peripleo context.
  */
 const LocationMarker = (props: Props) => {
-  const map = useMemo(() => props.useMap(), [props.useMap]);
+  const map = useMap();
 
   /**
    * Sets the bounding box on the map.
