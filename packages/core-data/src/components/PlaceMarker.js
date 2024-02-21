@@ -1,6 +1,6 @@
 // @flow
 
-import LocationMarker from '@performant-software/geospatial';
+import { LocationMarker } from '@performant-software/geospatial';
 import { type Map } from '@peripleo/maplibre';
 import React, { useCallback, useEffect, useState } from 'react';
 
