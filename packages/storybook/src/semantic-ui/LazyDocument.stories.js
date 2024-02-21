@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, Item } from 'semantic-ui-react';
 import _ from 'underscore';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
+import ViewPDFButton from '../../../semantic-ui/src/components/ViewPDFButton';
 import image from '../assets/test-image.jpg';
 import LazyDocument from '../../../semantic-ui/src/components/LazyDocument';
 import portraitImage from '../assets/portrait-test-image.jpg';
@@ -89,12 +90,19 @@ export const CardContent = () => (
 export const ViewContent = () => (
   <LazyDocument
     pdf
-    preview={portraitImage}
+    src={pdf}
     view
-    view_url={pdf}
-  />
+    viewUrl={pdf}
+  >
+    <ViewPDFButton url={pdf} primary />
+  </LazyDocument>
 );
 
+export const DownloadContent = () => (
+  <LazyDocument
+    download={pdf}
+  />
+);
 
 export const ListContent = () => (
   <Item.Group>

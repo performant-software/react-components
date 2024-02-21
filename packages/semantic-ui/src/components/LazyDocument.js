@@ -15,7 +15,6 @@ import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 
 import './LazyDocument.css';
-import ViewPDFButton from './ViewPDFButton';
 
 type Props = {
   children?: Node,
@@ -25,8 +24,6 @@ type Props = {
   image?: any,
   pdf?: boolean,
   preview?: ?string,
-  view?: Boolean,
-  viewUrl?: String,
   size?: string,
   src?: string
 };
@@ -122,20 +119,11 @@ const LazyDocument = (props: Props) => {
               >
                 <Page
                   pageNumber={1}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
                 />
               </Document>
             </Image>
-          )}
-          {!error && loaded && props.view && props.viewUrl && props.pdf && dimmer && (
-            <Dimmer
-              active={dimmer}
-            >
-              <div
-                className='buttons'
-              >
-                <ViewPDFButton url={props.viewUrl} primary />
-              </div>
-            </Dimmer>
           )}
           {(error || (!props.preview && !(props.src && props.pdf))) && (
             <Image
