@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
+    "@peripleo/maplibre": "^0.3.3",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^3.6.2",
@@ -18,7 +19,6 @@
     "underscore": "^1.13.6"
   },
   "peerDependencies": {
-    "@peripleo/maplibre": "^0.3.3",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },

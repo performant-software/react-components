@@ -11,3 +11,6 @@ export { default as RasterLayer } from './components/RasterLayer';
 
 // Utils
 export { default as Map } from './utils/Map';
+
+// Test
+export * from '@peripleo/maplibre';
