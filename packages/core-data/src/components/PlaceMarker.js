@@ -1,7 +1,7 @@
 // @flow
 
 import { Map as MapUtils } from '@performant-software/geospatial';
-import { MixedGeoJSONLayer, PulsingMarkerLayer, useMap } from '@peripleo/maplibre';
+import { MixedGeoJSONLayer, PulsingMarkerLayer, type Map } from '@peripleo/maplibre';
 import React, { useCallback, useEffect, useState } from 'react';
 
 type Props = {
@@ -14,6 +14,8 @@ type Props = {
    * GeoJSON layer fill style.
    */
   fillStyle?: { [key: string]: any },
+
+  map?: () => Map,
 
   /**
    * GeoJSON layer point style.
@@ -36,8 +38,6 @@ type Props = {
  */
 const PlaceMarker = (props: Props) => {
   const [place, setPlace] = useState();
-
-  const map = useMap();
 
   /**
    * Converts the passed data to a feature collection and sets it on the state.
@@ -72,11 +72,11 @@ const PlaceMarker = (props: Props) => {
    * Sets the bounding box on the map.
    */
   useEffect(() => {
-    if (map && place) {
+    if (props.map && place) {
       const boundingBox = MapUtils.getBoundingBox(place, props.buffer);
-      map.fitBounds(boundingBox);
+      props.map.fitBounds(boundingBox);
     }
-  }, [map, place, props.buffer]);
+  }, [place, props.buffer, props.map]);
 
   if (!place) {
     return null;
