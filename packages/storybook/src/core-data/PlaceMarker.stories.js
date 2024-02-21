@@ -30,6 +30,7 @@ export const Default = () => (
         }}
       >
         <PlaceMarker
+          buffer={2}
           url={PLACE_URL}
         />
       </div>
