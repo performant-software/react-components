@@ -10,7 +10,7 @@ import React, {
 import { Grid } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
-import 'rc-slider/assets/index.css';
+
 import './FacetSlider.css';
 
 type Props = FacetProps & RangeSliderProps;
@@ -25,7 +25,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     refine,
   } = useRangeSlider(props);
 
-  const [valueView, setValueView] = useState<Array<number>>([range.min, range.max]);
+  const [valueView, setValueView] = useState < Array < number >> ([range.min, range.max]);
 
   /**
    * Sets the visibility variable based on the range min and max.
@@ -72,12 +72,12 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
           columns={2}
         >
           <Grid.Column>
-            { valueView[0] }
+            {valueView[0]}
           </Grid.Column>
           <Grid.Column
             textAlign='right'
           >
-            { valueView[1] }
+            {valueView[1]}
           </Grid.Column>
         </Grid>
       </div>

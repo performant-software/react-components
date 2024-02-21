@@ -99,6 +99,7 @@ export { default as Toaster } from './components/Toaster';
 export { default as VideoFrameSelector } from './components/VideoFrameSelector';
 export { default as VideoPlayer } from './components/VideoPlayer';
 export { default as VideoPlayerButton } from './components/VideoPlayerButton';
+export { default as ViewPDFButton } from './components/ViewPDFButton';
 export { default as ViewXML } from './components/ViewXML';
 
 // Context

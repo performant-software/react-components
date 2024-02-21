@@ -14,8 +14,6 @@ import {
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
 
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
 import './LazyDocument.css';
 
 type Props = {
@@ -87,13 +85,13 @@ const LazyDocument = (props: Props) => {
           onMouseEnter={() => setDimmer(true)}
           onMouseLeave={() => setDimmer(false)}
         >
-          { !loaded && (
+          {!loaded && (
             <LazyLoader
               active
               size={props.size}
             />
           )}
-          { !error && props.preview && (
+          {!error && props.preview && (
             <Image
               {...props.image}
               className={getClassNames()}
@@ -109,7 +107,7 @@ const LazyDocument = (props: Props) => {
               size={props.size}
             />
           )}
-          { !error && loaded && !props.preview && props.src && props.pdf && (
+          {!error && loaded && !props.preview && props.src && props.pdf && (
             <Image
               {...props.image}
               className={getClassNames()}
@@ -121,11 +119,13 @@ const LazyDocument = (props: Props) => {
               >
                 <Page
                   pageNumber={1}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
                 />
               </Document>
             </Image>
           )}
-          { (error || (!props.preview && !(props.src && props.pdf))) && (
+          {(error || (!props.preview && !(props.src && props.pdf))) && (
             <Image
               {...props.image}
               className={getClassNames('placeholder-image')}
@@ -137,20 +137,20 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          { (props.download || props.src || props.children) && props.dimmable && (
+          {(props.download || props.src || props.children) && props.dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                { props.download && (
+                {props.download && (
                   <DownloadButton
                     primary
                     url={props.download || props.src}
                   />
                 )}
-                { props.children }
+                {props.children}
               </div>
             </Dimmer>
           )}
