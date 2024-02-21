@@ -23,17 +23,10 @@ export const Default = () => (
       >
         <Zoom />
       </Controls>
-      <div
-        style={{
-          width: '100%',
-          height: '300px'
-        }}
-      >
-        <PlaceMarker
-          buffer={2}
-          url={PLACE_URL}
-        />
-      </div>
+      <PlaceMarker
+        url={PLACE_URL}
+        // map={map}
+      />
     </Map>
   </Peripleo>
 );

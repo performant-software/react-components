@@ -1,31 +1,14 @@
 // @flow
 
-import { Map as MapUtils } from '@performant-software/geospatial';
-import { MixedGeoJSONLayer, PulsingMarkerLayer, type Map } from '@peripleo/maplibre';
+import LocationMarker from '@performant-software/geospatial';
+import { type Map } from '@peripleo/maplibre';
 import React, { useCallback, useEffect, useState } from 'react';
 
 type Props = {
   /**
-   * The number of miles to buffer the GeoJSON data.
+   * TODO: Comment me.
    */
-  buffer: number,
-
-  /**
-   * GeoJSON layer fill style.
-   */
-  fillStyle?: { [key: string]: any },
-
-  map?: () => Map,
-
-  /**
-   * GeoJSON layer point style.
-   */
-  pointStyle?: { [key: string]: any },
-
-  /**
-   * GeoJSON layer stroke style
-   */
-  strokeStyle?: { [key: string]: any },
+  map?: Map,
 
   /**
    * The URL of the Core Data place record.
@@ -68,34 +51,15 @@ const PlaceMarker = (props: Props) => {
       .then(onLoad);
   }, [props.url]);
 
-  /**
-   * Sets the bounding box on the map.
-   */
-  useEffect(() => {
-    if (props.map && place) {
-      const boundingBox = MapUtils.getBoundingBox(place, props.buffer);
-      props.map.fitBounds(boundingBox);
-    }
-  }, [place, props.buffer, props.map]);
-
   if (!place) {
     return null;
   }
 
   return (
-    <>
-      <PulsingMarkerLayer
-        id='current'
-        data={place}
-      />
-      <MixedGeoJSONLayer
-        id='current'
-        data={place}
-        fillStyle={props.fillStyle}
-        strokeStyle={props.strokeStyle}
-        pointStyle={props.pointStyle}
-      />
-    </>
+    <LocationMarker
+      data={place}
+      map={props.map}
+    />
   );
 };
 

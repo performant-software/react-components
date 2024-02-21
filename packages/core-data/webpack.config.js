@@ -3,9 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 const options = {
-  externals: [
-    '@peripleo/maplibre'
-  ],
   module: {
     rules: [{
       test: /\.(c|le)ss$/,
