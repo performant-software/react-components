@@ -27,7 +27,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@performant-software/webpack-config": "^1.0.0",
-    "@peripleo/maplibre": "^0.3.3",
     "autoprefixer": "^10.4.17",
     "mini-css-extract-plugin": "^2.8.0",
     "postcss": "^8.4.34",

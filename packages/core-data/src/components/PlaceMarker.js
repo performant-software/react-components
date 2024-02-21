@@ -1,14 +1,13 @@
 // @flow
 
 import { LocationMarker } from '@performant-software/geospatial';
-import { type Map } from '@peripleo/maplibre';
 import React, { useCallback, useEffect, useState } from 'react';
 
 type Props = {
   /**
    * TODO: Comment me.
    */
-  map?: Map,
+  map?: any,
 
   /**
    * The URL of the Core Data place record.
