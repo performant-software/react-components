@@ -1,10 +1,11 @@
 const { configure } = require('@performant-software/webpack-config');
 const path = require('path');
 
-module.exports = configure(__dirname, {
-  externals: [
-    '@peripleo/maplibre'
-  ],
+// Common config
+const config = {
+  externals: {
+    '@peripleo/maplibre': '@peripleo/maplibre'
+  },
   resolve: {
     alias: {
       './@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css$': path.resolve(
@@ -17,4 +18,36 @@ module.exports = configure(__dirname, {
       )
     }
   }
+};
+
+// CJS config
+const cjs = configure(__dirname, {
+  ...config,
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'build/cjs'),
+    library: {
+      type: 'commonjs2'
+    }
+  },
 });
+
+// ESM config
+const es = configure(__dirname, {
+  ...config,
+  experiments: {
+    outputModule: true
+  },
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'build/es'),
+    library: {
+      type: 'module'
+    }
+  },
+});
+
+module.exports = [
+  es,
+  cjs
+];

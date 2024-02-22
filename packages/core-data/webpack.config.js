@@ -2,7 +2,7 @@ const { configure } = require('@performant-software/webpack-config');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
-const options = {
+const config = {
   module: {
     rules: [{
       test: /\.(c|le)ss$/,
@@ -30,4 +30,32 @@ const mergeOptions = {
   },
 };
 
-module.exports = configure(__dirname, options, mergeOptions);
+const cjs = configure(__dirname, {
+  ...config,
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'build/cjs'),
+    library: {
+      type: 'commonjs2'
+    }
+  },
+}, mergeOptions);
+
+const es = configure(__dirname, {
+  ...config,
+  experiments: {
+    outputModule: true
+  },
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'build/es'),
+    library: {
+      type: 'module'
+    }
+  },
+}, mergeOptions);
+
+module.exports = [
+  cjs,
+  es
+];
