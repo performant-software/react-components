@@ -2,9 +2,13 @@
 
 import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, Zoom } from '@peripleo/maplibre';
+// const { Map, Zoom } = require('@peripleo/maplibre');
 import React from 'react';
-import LocationMarker from '../../../geospatial/src/components/LocationMarker';
+// import LocationMarker from '../../../geospatial/src/components/LocationMarker';
+import { LocationMarker } from '@performant-software/geospatial';
 import mapStyle from '../data/MapStyles.json';
+
+// const { Map, Zoom } = require('@peripleo/maplibre');
 
 export default {
   title: 'Components/Geospatial/LocationMarker',

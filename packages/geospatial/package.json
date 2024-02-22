@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "1.2.0-beta.24",
+  "version": "1.2.0-beta.25",
   "description": "TODO: ADD",
   "license": "MIT",
   "main": "./build/cjs/index.js",
@@ -10,6 +10,10 @@
     ".": {
       "require": "./build/cjs/index.js",
       "import": "./build/es/index.js"
+    },
+    "./build/main.css": {
+      "import": "./build/main.css",
+      "require": "./build/main.css"
     }
   },
   "scripts": {

@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import ModalContext from '../../semantic-ui/src/context/ModalContext';
 import '@peripleo/maplibre/peripleo-maplibre.css';
 import '@peripleo/peripleo/default-theme';
-import '../../core-data/build/main.css';
+import '../../core-data/build/cjs/main.css';
 import '../../semantic-ui/build/semantic-ui.css';
 
 /**

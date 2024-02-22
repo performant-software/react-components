@@ -5,6 +5,7 @@ import { Controls, Peripleo } from '@peripleo/peripleo';
 import React from 'react';
 import mapStyle from '../data/MapStyles.json';
 import PlaceMarker from '../../../core-data/src/components/PlaceMarker';
+// import { PlaceMarker } from '@performant-software/core-data';
 
 export default {
   title: 'Components/Core Data/PlaceMarker',
