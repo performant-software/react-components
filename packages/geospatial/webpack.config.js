@@ -3,9 +3,9 @@ const path = require('path');
 
 // Common config
 const config = {
-  externals: {
-    '@peripleo/maplibre': '@peripleo/maplibre'
-  },
+  externals: [
+    '@peripleo/maplibre'
+  ],
   resolve: {
     alias: {
       './@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css$': path.resolve(
@@ -26,7 +26,6 @@ const cjs = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/cjs'),
-    publicPath: 'auto',
     libraryTarget: 'commonjs2'
   },
 });
@@ -40,7 +39,6 @@ const es = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/es'),
-    publicPath: 'auto',
     libraryTarget: 'module'
   },
 });
