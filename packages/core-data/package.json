@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/core-data",
-  "version": "1.2.0-beta.25",
+  "version": "1.2.0-beta.26",
   "description": "A package of components used for Core Data",
   "license": "MIT",
   "main": "./build/cjs/index.js",
@@ -20,7 +20,7 @@
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@performant-software/geospatial": "^1.2.0-beta.25",
+    "@performant-software/geospatial": "^1.2.0-beta.26",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@samvera/clover-iiif": "^2.3.2",
