@@ -8,12 +8,12 @@
   "style": "./build/cjs/main.css",
   "exports": {
     ".": {
-      "require": "./build/cjs/index.js",
-      "import": "./build/es/index.js"
+      "import": "./build/es/index.js",
+      "require": "./build/cjs/index.js"
     },
     "./build/main.css": {
-      "import": "./build/main.css",
-      "require": "./build/main.css"
+      "import": "./build/es/main.css",
+      "require": "./build/cjs/main.css"
     }
   },
   "scripts": {
