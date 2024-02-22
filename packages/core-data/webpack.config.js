@@ -35,9 +35,7 @@ const cjs = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/cjs'),
-    library: {
-      type: 'commonjs2'
-    }
+    libraryTarget: 'commonjs2'
   },
 }, mergeOptions);
 
@@ -49,9 +47,7 @@ const es = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/es'),
-    library: {
-      type: 'module'
-    }
+    libraryTarget: 'module'
   },
 }, mergeOptions);
 
