@@ -11,6 +11,3 @@ export { default as RasterLayer } from './components/RasterLayer';
 
 // Utils
 export { default as Map } from './utils/Map';
-
-// Test
-export { Map as PeripleoMap, Zoom } from '@peripleo/maplibre';
