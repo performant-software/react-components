@@ -26,6 +26,7 @@ const cjs = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/cjs'),
+    publicPath: 'auto',
     libraryTarget: 'commonjs2'
   },
 });
@@ -39,6 +40,7 @@ const es = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/es'),
+    publicPath: 'auto',
     libraryTarget: 'module'
   },
 });
