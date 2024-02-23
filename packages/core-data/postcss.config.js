@@ -1,4 +1,6 @@
-module.exports = {
+// @flow
+
+export default {
   plugins: {
     tailwindcss: {},
     autoprefixer: {}

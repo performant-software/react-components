@@ -177,6 +177,7 @@ class Calendar {
   moment(date: ?any = null) {
     const m = date ? moment(date) : moment();
     m.locale(this.locale);
+    console.log(m);
     return m;
   }
 

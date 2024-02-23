@@ -6,7 +6,6 @@ import React from 'react';
 import mapStyle from '../data/MapStyles.json';
 import PlaceMarker from '../../../core-data/src/components/PlaceMarker';
 // import { PlaceMarker } from '@performant-software/core-data';
-
 export default {
   title: 'Components/Core Data/PlaceMarker',
   component: PlaceMarker
@@ -24,10 +23,17 @@ export const Default = () => (
       >
         <Zoom />
       </Controls>
-      <PlaceMarker
-        url={PLACE_URL}
-        // map={map}
-      />
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <PlaceMarker
+          url={PLACE_URL}
+          // map={map}
+        />
+      </div>
     </Map>
   </Peripleo>
 );

@@ -1,22 +1,21 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "1.2.0-beta.26",
+  "version": "1.2.0-beta.27",
   "description": "TODO: ADD",
   "license": "MIT",
-  "main": "./build/cjs/index.js",
-  "module": "./build/es/index.js",
-  "style": "./build/main.css",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "style": "./dist/style.css",
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./build/es/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
     },
-    "./build/main.css": {
-      "import": "./build/es/main.css",
-      "require": "./build/cjs/main.css"
-    }
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
+    "build-vite": "vite build && flow-copy-source -v src types",
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
@@ -34,8 +33,12 @@
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
   "devDependencies": {
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "@performant-software/webpack-config": "^1.0.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "vite": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }

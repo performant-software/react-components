@@ -5,7 +5,8 @@ import React, { useRef } from 'react';
 import ModalContext from '../../semantic-ui/src/context/ModalContext';
 import '@peripleo/maplibre/peripleo-maplibre.css';
 import '@peripleo/peripleo/default-theme';
-import '../../core-data/build/cjs/main.css';
+import '../../core-data/dist/style.css';
+import '../../geospatial/dist/style.css';
 import '../../semantic-ui/build/semantic-ui.css';
 
 /**
@@ -15,12 +16,12 @@ import '../../semantic-ui/build/semantic-ui.css';
  */
 let a11y;
 
-if (process.env.A11Y_TAGS) {
+if (import.meta.env.A11Y_TAGS) {
   a11y = {
     config: {
       runOnly: {
         type: 'tag',
-        values: process.env.A11Y_TAGS.split(',')
+        values: import.meta.env.A11Y_TAGS.split(',')
       }
     }
   }

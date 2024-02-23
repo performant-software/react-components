@@ -1,10 +1,26 @@
-const { configure } = require('@performant-software/webpack-config');
-const path = require('path');
+import webpack from '@performant-software/webpack-config';
+import path from 'path';
+import * as url from 'url';
+import nodeExternals from 'webpack-node-externals';
+
+const { configure } = webpack;
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+// const { configure } = require('@performant-software/webpack-config');
+// const path = require('path');
 
 // Common config
 const config = {
   externals: [
-    '@peripleo/maplibre'
+    '@peripleo/maplibre',
+    'react',
+    'react-dom',
+    nodeExternals({
+      additionalModuleDirs: [
+        path.resolve(__dirname, '../../node_modules')
+      ],
+      importType: 'module'
+    })
   ],
   resolve: {
     alias: {
@@ -26,7 +42,9 @@ const cjs = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/cjs'),
-    libraryTarget: 'commonjs2'
+    library: {
+      type: 'commonjs2'
+    }
   },
 });
 
@@ -39,11 +57,18 @@ const es = configure(__dirname, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build/es'),
-    libraryTarget: 'module'
+    library: {
+      type: 'module'
+    },
+    chunkFormat: 'module',
   },
 });
 
-module.exports = [
-  es,
-  cjs
-];
+const ex = [es, cjs];
+
+export default ex;
+
+// module.exports = [
+//   es,
+//   cjs
+// ];
