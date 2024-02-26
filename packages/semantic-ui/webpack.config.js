@@ -10,6 +10,10 @@ module.exports = configure(__dirname, {
       './react-calendar/dist/Calendar.css$': path.resolve(
         __dirname,
         '../../node_modules/react-calendar/dist/Calendar.css'
+      ),
+      './rc-slider/assets/index.css$': path.resolve(
+        __dirname,
+        '../../node_modules/rc-slider/assets/index.css'
       )
     }
   },

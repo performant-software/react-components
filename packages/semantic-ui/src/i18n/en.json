@@ -57,7 +57,8 @@
       "save": "Save",
       "search": "Search",
       "show": "Show",
-      "upload": "Upload"
+      "upload": "Upload",
+      "pdf": "View PDF"
     },
     "errors": {
       "save": "There was an error saving the record.",
