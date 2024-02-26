@@ -395,3 +395,49 @@ export const SortDescending = useDragDrop(() => (
     }]}
   />
 ));
+
+export const CustomListHeader = useDragDrop(() => (
+  <ItemList
+    actions={actions}
+    collectionName='items'
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    hideToggle
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderDescription={(item) => item.vin}
+    renderExtra={(item) => item.address}
+    renderHeader={(item) => <Header content={item.model} />}
+    renderListHeader={() => (
+      <Button
+        icon='world'
+        onClick={action('custom-list-header')}
+      />
+    )}
+    renderMeta={(item) => item.make}
+    searchable={boolean('Searchable', true)}
+  />
+));
+
+export const NoListHeader = useDragDrop(() => (
+  <ItemList
+    actions={actions}
+    collectionName='items'
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, {
+      items,
+      perPage: number('Per page', 10)
+    }))}
+    hideToggle
+    onDelete={action('delete')}
+    onSave={action('save')}
+    renderDescription={(item) => item.vin}
+    renderExtra={(item) => item.address}
+    renderHeader={(item) => <Header content={item.model} />}
+    renderMeta={(item) => item.make}
+    searchable={false}
+  />
+));
