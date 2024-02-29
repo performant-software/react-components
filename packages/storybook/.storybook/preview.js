@@ -7,7 +7,9 @@ import '@peripleo/maplibre/peripleo-maplibre.css';
 import '@peripleo/peripleo/default-theme';
 import '../../core-data/dist/style.css';
 import '../../geospatial/dist/style.css';
+import '../../semantic-ui/build/main.css';
 import '../../semantic-ui/build/semantic-ui.css';
+import '../../shared/build/main.css';
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.
