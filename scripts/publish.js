@@ -110,6 +110,7 @@ const updateVersion = (directory, version) => {
   // Update the version and dependency versions.
   packageJson.version = version;
   packageJson.dependencies = updateDependencies(packageJson.dependencies, version);
+  packageJson.peerDependencies = updateDependencies(packageJson.peerDependencies, version);
   packageJson.devDependencies = updateDependencies(packageJson.devDependencies, version);
 
   // Write the file back to disk
