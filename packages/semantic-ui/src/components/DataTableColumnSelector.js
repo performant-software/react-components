@@ -1,6 +1,6 @@
 // @flow
 
-import { Object as ObjectUtils } from '@performant-software/shared-components';
+import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';

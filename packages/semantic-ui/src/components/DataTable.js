@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser, Object as ObjectUtils } from '@performant-software/shared-components';
+import { Browser, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import React, { Component, createRef, type Element } from 'react';
 import {
   Checkbox,
