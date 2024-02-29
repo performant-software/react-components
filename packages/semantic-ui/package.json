@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/semantic-components",
-  "version": "1.2.0-beta.27",
+  "version": "1.2.0-beta.28",
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "MIT",
   "main": "./build/index.js",
@@ -12,7 +12,7 @@
     "build": "webpack --mode production && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@performant-software/shared-components": "^1.2.0-beta.27",
+    "@performant-software/shared-components": "^1.2.0-beta.28",
     "@react-google-maps/api": "^2.8.1",
     "@samvera/clover-iiif": "^2.3.2",
     "axios": "^0.26.1",
