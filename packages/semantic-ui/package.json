@@ -44,12 +44,9 @@
   },
   "devDependencies": {
     "@bunchtogether/vite-plugin-flow": "^1.0.2",
-    "@performant-software/webpack-config": "^1.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "flow-copy-source": "^2.0.9",
     "less": "^4.1.2",
-    "less-loader": "^11.0.0",
-    "mini-css-extract-plugin": "^2.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vite": "^5.1.4"
