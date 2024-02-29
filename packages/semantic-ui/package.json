@@ -14,6 +14,7 @@
   "dependencies": {
     "@performant-software/shared-components": "^1.2.0-beta.27",
     "@react-google-maps/api": "^2.8.1",
+    "@samvera/clover-iiif": "^2.3.2",
     "axios": "^0.26.1",
     "i18next": "^19.4.4",
     "rc-slider": "^10.2.0",

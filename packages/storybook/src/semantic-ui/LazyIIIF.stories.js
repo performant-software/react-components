@@ -27,19 +27,12 @@ export const Preview = () => (
   />
 );
 
-export const StringManifest = () => {
-  const testManifest = '{"@context":["http://www.w3.org/ns/anno.jsonld","http://iiif.io/api/presentation/3/context.json"],"id":"https://3f377a8a-9bf1-4ead-9b13-61a6fb15636e","type":"Manifest","items":[{"id":"https://3f377a8a-9bf1-4ead-9b13-61a6fb15636e/canvas/1","type":"Canvas","items":[{"id":"https://3f377a8a-9bf1-4ead-9b13-61a6fb15636e/canvas/1/annotation_page/1","type":"AnnotationPage","items":[{"id":"https://3f377a8a-9bf1-4ead-9b13-61a6fb15636e/canvas/1/annotation_page/1/annotation/1","type":"Annotation","motivation":"painting","body":{"id":"https://iiif.archivengine.com/iiif/3/if0uzaqf5xele57e6narij053kfe;1/full/max/0/default.jpg","type":"Image","format":"image/tiff","service":[{"id":"https://iiif.archivengine.com/iiif/3/if0uzaqf5xele57e6narij053kfe;1","type":"ImageService3","profile":"http://iiif.io/api/image/3/level2.json"}]},"target":"https://3f377a8a-9bf1-4ead-9b13-61a6fb15636e/canvas/1"}]}]}],"label":{"en":["sample_640×426 (1).jpeg"]}}';
-  const url = URL.createObjectURL(new Blob([testManifest], {
-    type: 'application/ld+json'
-  }));
-
-  return (
-    <LazyIIIF
-      contentType='image/jpeg'
-      manifest={url}
-    />
-  );
-};
+export const StringManifest = () => (
+  <LazyIIIF
+    contentType='image/jpeg'
+    manifest='https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json'
+  />
+);
 
 export const Colored = () => (
   <LazyIIIF
