@@ -2,6 +2,9 @@ const { configure } = require('@performant-software/webpack-config');
 const path = require('path');
 
 module.exports = configure(__dirname, {
+  externals: [
+    '@samvera/clover-iiif'
+  ],
   resolve: {
     alias: {
       '../../theme.config$': path.join(__dirname, '/src/css/theme.config'),
