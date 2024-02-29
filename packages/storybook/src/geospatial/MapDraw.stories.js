@@ -2,6 +2,7 @@
 
 import { action } from '@storybook/addon-actions';
 import React from 'react';
+import Env from '../utils/Environment';
 import GeoJsonLayer from '../../../geospatial/src/components/GeoJsonLayer';
 import LayerMenu from '../../../geospatial/src/components/LayerMenu';
 import MapControl from '../../../geospatial/src/components/MapControl';
@@ -11,6 +12,8 @@ import RasterLayerComp from '../../../geospatial/src/components/RasterLayer';
 import bostonBoundaryData from '../data/Boston.json';
 import mbtaStops from '../data/MbtaStops.json';
 
+const mapTilerKey = Env.getMapTilerKey();
+
 export default {
   title: 'Components/Geospatial/MapDraw',
   component: MapDraw
@@ -18,7 +21,7 @@ export default {
 
 export const Default = () => (
   <MapDraw
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   />
 );
@@ -26,7 +29,7 @@ export const Default = () => (
 export const GeoJSON = () => (
   <MapDraw
     data={bostonBoundaryData}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   />
 );
@@ -40,7 +43,7 @@ export const Point = () => (
         31.4252249
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   />
 );
@@ -59,7 +62,7 @@ export const GeoJSONFillLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -88,7 +91,7 @@ export const GeoJSONCircleLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -117,7 +120,7 @@ export const GeoJSONLayerStyles = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -151,7 +154,7 @@ export const RasterLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -164,7 +167,7 @@ export const RasterLayer = () => (
         minzoom={0}
         tileSize={512}
         url={(
-          `https://api.maptiler.com/tiles/uk-baire250k1940/{z}/{x}/{y}.png?key=${process.env.REACT_APP_MAP_TILER_KEY}`
+          `https://api.maptiler.com/tiles/uk-baire250k1940/{z}/{x}/{y}.png?key=${mapTilerKey}`
         )}
       />
     </LayerMenu>
@@ -180,7 +183,7 @@ export const EmptyLayerMenu = () => (
         31.4252249
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <LayerMenu names={[]} />
@@ -189,7 +192,7 @@ export const EmptyLayerMenu = () => (
 
 export const CustomControl = () => (
   <MapDraw
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
+    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
     onChange={action('onChange')}
   >
     <MapControl

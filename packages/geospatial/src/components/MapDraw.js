@@ -11,7 +11,7 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { MapRef } from 'react-map-gl';
+import Map, { type MapboxMap } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import MapUtils from '../utils/Map';
@@ -77,7 +77,7 @@ const MapDraw = (props: Props) => {
   const [loaded, setLoaded] = useState(false);
 
   const drawRef = useRef<MapboxDraw>();
-  const mapRef = useRef<MapRef>();
+  const mapRef = useRef<MapboxMap>();
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.

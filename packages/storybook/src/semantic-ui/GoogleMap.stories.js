@@ -2,8 +2,11 @@
 
 import React, { useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import Env from '../utils/Environment';
 import GoogleMap from '../../../semantic-ui/src/components/GoogleMap';
 import GoogleScript from '../../../shared/src/components/GoogleScript';
+
+const googleMapsApiKey = Env.getGoogleMapsApiKey() || '';
 
 export default {
   title: 'Components/Semantic UI/GoogleMap'
@@ -11,7 +14,7 @@ export default {
 
 export const Default = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={googleMapsApiKey}
   >
     <GoogleMap />
   </GoogleScript>
@@ -19,7 +22,7 @@ export const Default = () => (
 
 export const DefaultCenter = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={googleMapsApiKey}
   >
     <GoogleMap
       defaultCenter={{
@@ -32,7 +35,7 @@ export const DefaultCenter = () => (
 
 export const DefaultZoom = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={googleMapsApiKey}
   >
     <GoogleMap
       defaultCenter={{
@@ -52,7 +55,7 @@ export const WithMapMarker = () => {
   return (
     <>
       <GoogleScript
-        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={googleMapsApiKey}
       >
         <GoogleMap
           defaultCenter={DEFAULT_POSITION}
@@ -80,7 +83,7 @@ export const EditableCooridnates = () => {
   return (
     <Form>
       <GoogleScript
-        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={googleMapsApiKey}
       >
         <GoogleMap
           onDragEnd={(p) => setPosition(p)}
@@ -107,10 +110,9 @@ export const EditableCoordinatesWithDefaults = () => {
   return (
     <Form>
       <GoogleScript
-        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={googleMapsApiKey}
       >
         <GoogleMap
-          googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
           onDragEnd={(p) => setPosition(p)}
           position={position}
         />
@@ -136,7 +138,7 @@ export const DefaultZoomWithMapMarker = () => {
   return (
     <>
       <GoogleScript
-        googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+        googleMapsApiKey={googleMapsApiKey}
       >
         <GoogleMap
           defaultZoom={DEFAULT_ZOOM}
