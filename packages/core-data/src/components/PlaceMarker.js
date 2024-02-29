@@ -5,11 +5,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 type Props = {
   /**
-   * TODO: Comment me.
-   */
-  map?: any,
-
-  /**
    * The URL of the Core Data place record.
    */
   url: string
@@ -57,7 +52,6 @@ const PlaceMarker = (props: Props) => {
   return (
     <LocationMarker
       data={place}
-      map={props.map}
     />
   );
 };
