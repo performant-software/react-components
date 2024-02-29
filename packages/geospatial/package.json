@@ -15,8 +15,7 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build-vite": "vite build && flow-copy-source -v src types",
-    "build": "webpack --mode production && flow-copy-source -v src types"
+    "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
@@ -34,7 +33,6 @@
   },
   "devDependencies": {
     "@bunchtogether/vite-plugin-flow": "^1.0.2",
-    "@performant-software/webpack-config": "^1.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
