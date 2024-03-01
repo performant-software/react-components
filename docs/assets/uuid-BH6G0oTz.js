@@ -1,1 +1,0 @@
-import{g as e}from"./_commonjsHelpers-BosuxZz1.js";function r(){const u=["a","b","c","d","e","f","0","1","2","3","4","5","6","7","8","9"];let o=[];for(let t=0;t<35;t++)t===7||t===12||t===17||t===22?o[t]="-":o[t]=u[Math.floor(Math.random()*u.length-1)];return o.join("")}var a=r;const n=e(a);export{n as u};

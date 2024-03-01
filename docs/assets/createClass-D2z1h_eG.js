@@ -1,1 +1,0 @@
-import{t}from"./toPropertyKey-hKuLU48H.js";function n(a,l){for(var f=0;f<l.length;f++){var e=l[f];e.enumerable=e.enumerable||!1,e.configurable=!0,"value"in e&&(e.writable=!0),Object.defineProperty(a,t(e.key),e)}}function y(a,l,f){return l&&n(a.prototype,l),f&&n(a,f),Object.defineProperty(a,"prototype",{writable:!1}),a}export{y as _};
