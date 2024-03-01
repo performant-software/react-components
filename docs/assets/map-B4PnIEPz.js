@@ -1,0 +1,1 @@
+import{i,v as f,w as p,a as m,x as y}from"./getElementType-CckcRzoH.js";function b(a,r){var s=-1,e=i(a)?Array(a.length):[];return f(a,function(n,t,u){e[++s]=r(n,t,u)}),e}function x(a,r){var s=m(a)?y:b;return s(a,p(r))}export{x as m};
