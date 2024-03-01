@@ -17,6 +17,7 @@ type Props = {
   defaultView?: number,
   hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
+  renderListHeader?: () => JSX.Element,
   sort?: Array<Sort>,
   sortColor?: string,
   sortColumn?: string,
@@ -80,7 +81,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {boolean|*}
      */
     isHidden() {
-      return this.props.hideToggle && _.isEmpty(this.props.sort);
+      return this.props.hideToggle && _.isEmpty(this.props.sort) && !this.props.renderListHeader;
     }
 
     /**
@@ -110,14 +111,10 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
      * @returns {*}
      */
     render() {
-      const renderListHeader = this.isHidden()
-        ? undefined
-        : this.renderHeader.bind(this);
-
       return (
         <WrappedComponent
           {...this.props}
-          renderListHeader={renderListHeader}
+          renderListHeader={this.renderHeader.bind(this)}
           view={this.state.view}
         />
       );
@@ -139,6 +136,7 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <>
+          { this.props.renderListHeader && this.props.renderListHeader() }
           { !this.props.hideToggle && (
             <>
               <Button

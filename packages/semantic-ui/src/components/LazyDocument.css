@@ -7,6 +7,7 @@
 .lazy-document.ui.segment .buttons {
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 }
 
 .lazy-document.ui.segment .buttons .ui.button {
@@ -29,4 +30,9 @@
 
 .lazy-document > .image.hidden {
   display: none;
+}
+
+.pdf-container {
+  width: 200px;
+  height: 300px;
 }
