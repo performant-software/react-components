@@ -65,6 +65,10 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
         name: 'order',
         label: i18n.t('UserDefinedFieldsList.columns.order'),
         hidden: isHidden('order')
+      }, {
+        name: 'uuid',
+        label: i18n.t('UserDefinedFieldsList.columns.uuid'),
+        hidden: isHidden('uuid')
       }]}
       collectionName='user_defined_fields'
       modal={{
