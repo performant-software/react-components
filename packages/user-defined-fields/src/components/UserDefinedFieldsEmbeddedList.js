@@ -60,6 +60,10 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
         name: 'order',
         label: i18n.t('UserDefinedFieldsEmbeddedList.columns.order'),
         hidden: isHidden('order')
+      }, {
+        name: 'uuid',
+        label: i18n.t('UserDefinedFieldsEmbeddedList.columns.uuid'),
+        hidden: isHidden('uuid')
       }]}
       modal={{
         component: UserDefinedFieldModal,

@@ -25,7 +25,8 @@
       "name": "Name",
       "order": "Order",
       "required": "Required",
-      "table": "Table"
+      "table": "Table",
+      "uuid": "Identifier"
     }
   },
   "UserDefinedFieldsList": {
@@ -34,7 +35,8 @@
       "name": "Name",
       "order": "Order",
       "required": "Required",
-      "table": "Table"
+      "table": "Table",
+      "uuid": "Identifier"
     }
   }
 }
