@@ -1,1 +1,0 @@
-(self.webpackChunk_performant_software_storybook=self.webpackChunk_performant_software_storybook||[]).push([[1876],{"../../node_modules/mapbox-gl/index.js":(__unused_webpack_module,exports)=>{exports.printMsg=function(){console.log("This is a message from the demo package")}}}]);
