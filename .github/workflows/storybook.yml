@@ -1,8 +1,10 @@
 name: Build and Deploy GitHub pages
+
 on:
-  pull_request:
+  push:
     branches:
       - master # Trigger the action only on PR merges into master
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
