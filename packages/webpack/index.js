@@ -1,6 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const dotenv = require('dotenv');
-const { merge } = require('webpack-merge');
+const { merge, mergeWithRules } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
@@ -15,7 +15,7 @@ if (mode === 'development') {
 }
 
 module.exports = {
-  configure: (directory, options = {}) => () => {
+  configure: (directory, options = {}, mergeOptions = null) => () => {
     const baseConfig = {
       mode,
       devtool,
@@ -110,7 +110,13 @@ module.exports = {
     };
 
     // Merge our base config, environment overrides
-    const config = merge(baseConfig, options);
+    let config;
+
+    if (mergeOptions && options?.module?.rules) {
+      config = mergeWithRules(mergeOptions)(baseConfig, options);
+    } else {
+      config = merge(baseConfig, options);
+    }
 
     const extraConfig = {
       plugins: [

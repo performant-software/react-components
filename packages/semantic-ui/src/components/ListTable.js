@@ -1,6 +1,6 @@
 // @flow
 
-import { Hooks, Object as ObjectUtils } from '@performant-software/shared-components';
+import { Hooks, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import DataTable from './DataTable';

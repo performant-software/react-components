@@ -23,7 +23,7 @@ import SortSelector from './SortSelector';
 import { SORT_DESCENDING } from '../constants/Sort';
 import StyleSelector from './StyleSelector';
 import Toaster from './Toaster';
-import useList, { Props as ListProps } from './List';
+import useList, { type Props as ListProps } from './List';
 import ZoteroTranslateContext from '../context/ZoteroTranslateContext';
 import './BibliographyList.css';
 

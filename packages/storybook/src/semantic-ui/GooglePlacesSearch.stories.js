@@ -3,8 +3,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Form, Input } from 'semantic-ui-react';
+import Env from '../utils/Environment';
 import GooglePlacesSearch from '../../../semantic-ui/src/components/GooglePlacesSearch';
 import GoogleScript from '../../../shared/src/components/GoogleScript';
+
+const googleMapsApiKey = Env.getGoogleMapsApiKey() || '';
 
 export default {
   title: 'Components/Semantic UI/GooglePlacesSearch'
@@ -12,7 +15,7 @@ export default {
 
 export const Default = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={googleMapsApiKey}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -28,7 +31,7 @@ export const Default = () => (
 
 export const CustomInput = () => (
   <GoogleScript
-    googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+    googleMapsApiKey={googleMapsApiKey}
     libraries={['places']}
   >
     <GooglePlacesSearch
@@ -47,7 +50,7 @@ export const CustomInput = () => (
 export const FormInput = () => (
   <Form>
     <GoogleScript
-      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}
+      googleMapsApiKey={googleMapsApiKey}
       libraries={['places']}
     >
       <Form.Field>

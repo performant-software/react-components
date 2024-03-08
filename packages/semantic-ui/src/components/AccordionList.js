@@ -1,6 +1,6 @@
 // @flow
 
-import { Object as ObjectUtils, Timer } from '@performant-software/shared-components';
+import { ObjectJs as ObjectUtils, Timer } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import {
   Button,

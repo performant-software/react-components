@@ -14,10 +14,10 @@ import {
   Form,
   Grid,
   Menu,
-  MenuProps,
   Message,
   Ref,
-  Sticky
+  Sticky,
+  type MenuProps
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import i18n from '../i18n/i18n';

@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser, Object as ObjectUtils } from '@performant-software/shared-components';
+import { Browser, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import React, { Component, createRef, type Element } from 'react';
 import {
   Checkbox,
@@ -13,8 +13,8 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
-import useColumnSelector, { Props as ColumnSelectorProps } from './DataTableColumnSelector';
-import useList, { Props as ListProps } from './List';
+import useColumnSelector, { type Props as ColumnSelectorProps } from './DataTableColumnSelector';
+import useList, { type Props as ListProps } from './List';
 import './DataTable.css';
 
 import type { Action } from './List';

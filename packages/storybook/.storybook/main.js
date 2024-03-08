@@ -4,7 +4,7 @@ import path from 'path';
 import _ from 'underscore';
 
 const config = {
-  stories: ['../src/**/*.stories.(js|mdx)'],
+  stories: ['../src/**/*.stories.js'],
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-actions',
@@ -12,8 +12,16 @@ const config = {
     '@storybook/addon-knobs',
     '@storybook/addon-links'
   ],
+  core: {
+    builder: {
+      name: '@storybook/builder-vite',
+      options: {
+        viteConfigPath: './vite.config.js',
+      },
+    }
+  },
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {}
   },
   babel: (options) => {

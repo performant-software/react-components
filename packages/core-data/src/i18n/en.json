@@ -1,0 +1,27 @@
+{
+  "RelatedItemsList": {
+    "labels": {
+      "count": "({{count}})"
+    }
+  },
+  "RelatedOrganizations": {
+    "labels": {
+      "empty": "No related organizations"
+    }
+  },
+  "RelatedPeople": {
+    "labels": {
+      "empty": "No related people"
+    }
+  },
+  "RelatedPlaces": {
+    "labels": {
+      "empty": "No related places"
+    }
+  },
+  "RelatedTaxonomies": {
+    "labels": {
+      "empty": "No related taxonomies"
+    }
+  }
+}

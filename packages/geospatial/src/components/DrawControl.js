@@ -2,7 +2,7 @@
 
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { forwardRef, useImperativeHandle } from 'react';
-import { useControl, type ControlPosition, type MapRef } from 'react-map-gl';
+import { useControl, type ControlPosition, type MapboxMap } from 'react-map-gl';
 
 type Props = {
   position?: ControlPosition;
@@ -17,12 +17,12 @@ const DrawControl = forwardRef((props: Props, ref) => {
    */
   const drawRef = useControl(
     () => new MapboxDraw(props),
-    ({ map }: { map: MapRef }) => {
+    ({ map }: { map: MapboxMap }) => {
       map.on('draw.create', props.onCreate);
       map.on('draw.update', props.onUpdate);
       map.on('draw.delete', props.onDelete);
     },
-    ({ map }: { map: MapRef }) => {
+    ({ map }: { map: MapboxMap }) => {
       map.off('draw.create', props.onCreate);
       map.off('draw.update', props.onUpdate);
       map.off('draw.delete', props.onDelete);

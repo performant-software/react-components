@@ -1,12 +1,21 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "1.1.6",
-  "description": "TODO: ADD",
+  "version": "2.0.0",
+  "description": "A package of components for all things map-related.",
   "license": "MIT",
-  "main": "./build/index.js",
-  "style": "./build/main.css",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "style": "./dist/style.css",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "scripts": {
-    "build": "webpack --mode production && flow-copy-source -v src types"
+    "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.4.3",
@@ -18,12 +27,15 @@
     "underscore": "^1.13.6"
   },
   "peerDependencies": {
+    "@peripleo/maplibre": "^0.3.3",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
   "devDependencies": {
-    "@performant-software/webpack-config": "^1.0.0",
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
+    "@vitejs/plugin-react": "^4.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "vite": "^5.1.4"
   }
 }

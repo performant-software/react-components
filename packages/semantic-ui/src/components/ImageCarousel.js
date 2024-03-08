@@ -22,10 +22,20 @@ type ImageType = {
 };
 
 type Props = {
+  /**
+   * The array of images to display.
+   */
   images: Array<ImageType>,
+
+  /**
+   * Callback fired when the close icon is clicked.
+   */
   onClose: () => void
 };
 
+/**
+ * This component renders a full screen image carousel component used to scroll through the passed array of images.
+ */
 const ImageCarousel = (props: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visible, setVisible] = useState(true);
