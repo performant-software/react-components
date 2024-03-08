@@ -7,7 +7,12 @@ type Props = {
   /**
    * The URL of the Core Data place record.
    */
-  url: string
+  url: string,
+
+  /**
+   * The number of miles to buffer the GeoJSON data. (Defaults to 2.)
+   */
+  buffer?: number
 };
 
 /**
@@ -52,6 +57,7 @@ const PlaceMarker = (props: Props) => {
   return (
     <LocationMarker
       data={place}
+      buffer={props.buffer}
     />
   );
 };
