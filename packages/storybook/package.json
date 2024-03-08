@@ -37,7 +37,7 @@
     "dotenv": "^16.0.3",
     "http-proxy-middleware": "^2.0.6",
     "i18next": "^22.0.1",
-    "moment": "2.18.1",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-calendar": "^3.7.0",
     "react-docgen": "^6.0.1",
@@ -49,8 +49,5 @@
     "storybook": "^7.0.26",
     "underscore": "^1.13.2",
     "vite": "^5.1.4"
-  },
-  "resolutions": {
-    "moment": "2.18.1"
   }
 }
