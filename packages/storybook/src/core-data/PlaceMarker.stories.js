@@ -12,6 +12,7 @@ export default {
 };
 
 const PLACE_URL = 'https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/3aaf97a4-7052-4e2c-9056-4f4146ef0c87?project_ids=10';
+const PLACE_URL_2 = 'https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/4a683ef2-4a82-497f-a135-7ef10d8a77da?project_ids=16';
 
 export const Default = () => (
   <Peripleo>
@@ -36,3 +37,27 @@ export const Default = () => (
     </Map>
   </Peripleo>
 );
+
+export const NullGeometry = () => (
+  <Peripleo>
+    <Map
+      style={mapStyle}
+    >
+      <Controls
+        position='topright'
+      >
+        <Zoom />
+      </Controls>
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <PlaceMarker
+          url={PLACE_URL_2}
+        />
+      </div>
+    </Map>
+  </Peripleo>
+)

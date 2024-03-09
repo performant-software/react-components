@@ -45,7 +45,7 @@ const PlaceMarker = (props: Props) => {
       .then(onLoad);
   }, [props.url]);
 
-  if (!place) {
+  if (!place || !place.features || !place.features[0].geometry) {
     return null;
   }
 
