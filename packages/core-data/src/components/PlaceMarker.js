@@ -5,9 +5,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 type Props = {
   /**
-   * The URL of the Core Data place record.
+   * The number of miles to buffer the GeoJSON data. (Defaults to 2.)
    */
-  url: string
+  url: string,
+
+  /**
+   * The number of miles to buffer the GeoJSON data. (Defaults to 2.)
+   */
+  buffer?: number
 };
 
 /**
