@@ -7,7 +7,7 @@ import './index.css';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
 export { default as PlaceDetailsPanel } from './components/PlaceDetailsPanel';
-export { default as PlaceMarker } from './components/PlaceMarker';
+export { default as PlaceMarkers } from './components/PlaceMarkers';
 export { default as PlaceResultsList } from './components/PlaceResultsList';
 export { default as RelatedItemsList } from './components/RelatedItemsList';
 export { default as RelatedList } from './components/RelatedList';
