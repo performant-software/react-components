@@ -14,6 +14,11 @@ type Props = {
   animate?: boolean,
 
   /**
+   * The number of miles to buffer the GeoJSON data. (Defaults to two.)
+   */
+  buffer?: number,
+
+  /**
    * The URL of the Core Data place record.
    */
   urls: Array<string>
@@ -69,6 +74,7 @@ const PlaceMarkers = (props: Props) => {
   return (
     <LocationMarkers
       animate={props.animate}
+      buffer={props.buffer}
       data={data}
     />
   );
