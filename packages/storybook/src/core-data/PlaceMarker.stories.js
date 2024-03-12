@@ -81,7 +81,7 @@ export const NullGeometry = () => (
           height: '300px'
         }}
       >
-        <PlaceMarker
+        <PlaceMarkers
           url={PLACE_URL_2}
         />
       </div>
