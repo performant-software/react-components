@@ -30,7 +30,7 @@ export const Default = () => (
       >
         <PlaceMarkers
           urls={[
-            '/core_data/places/1'
+            '/core_data/places/2'
           ]}
         />
       </div>
@@ -79,7 +79,9 @@ export const LargerBuffer = () => (
         }}
       >
         <PlaceMarkers
-          url={PLACE_URL}
+          urls={[
+            '/core_data/places/2'
+          ]}
           buffer={20}
         />
       </div>
