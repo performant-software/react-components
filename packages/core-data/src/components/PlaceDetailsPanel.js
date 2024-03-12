@@ -49,7 +49,7 @@ const PlaceDetailsPanel = (props: Props) => {
 
   return (
     <aside
-      className='flex flex-col relative z-10 h-full min-w-[280px] bg-white/80 backdrop-blur shadow overflow-y-auto'
+      className='flex flex-col relative z-10 h-full min-w-[260px] bg-white/80 backdrop-blur shadow overflow-y-auto'
       ref={el}
     >
       <button
