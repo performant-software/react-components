@@ -78,7 +78,7 @@ export const LargerBuffer = () => (
           height: '300px'
         }}
       >
-        <PlaceMarker
+        <PlaceMarkers
           url={PLACE_URL}
           buffer={20}
         />
@@ -87,27 +87,3 @@ export const LargerBuffer = () => (
   </Peripleo>
 );
 
-export const LargerBuffer = () => (
-  <Peripleo>
-    <Map
-      style={mapStyle}
-    >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
-      <div
-        style={{
-          width: '100%',
-          height: '300px'
-        }}
-      >
-        <PlaceMarker
-          url={PLACE_URL}
-          buffer={20}
-        />
-      </div>
-    </Map>
-  </Peripleo>
-);
