@@ -1,10 +1,11 @@
 // @flow
 
-const bodyParser = require('body-parser');
-const ControlledVocabulary = require('./routes/ControlledVocabulary');
-const dotenv = require('dotenv');
-const UserDefinedFields = require('./routes/UserDefinedFields');
-const ZoteroTranslate = require('./routes/ZoteroTranslate');
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import ControlledVocabulary from './routes/ControlledVocabulary';
+import CoreData from './routes/CoreData';
+import UserDefinedFields from './routes/UserDefinedFields';
+import ZoteroTranslate from './routes/ZoteroTranslate';
 
 // Configure environment variables
 dotenv.config();
@@ -14,8 +15,9 @@ const expressMiddleWare = (router) => {
   router.use(bodyParser.json());
 
   ControlledVocabulary.addRoutes(router);
+  CoreData.addRoutes(router);
   UserDefinedFields.addRoutes(router);
   ZoteroTranslate.addRoutes(router);
 };
 
-module.exports = expressMiddleWare;
+export default expressMiddleWare;

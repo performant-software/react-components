@@ -7,6 +7,11 @@ import MapUtils from '../utils/Map';
 
 type Props = {
   /**
+   * If `true`, the point marker will display with a pulsing animation.
+   */
+  animate?: boolean,
+
+  /**
    * The number of miles to buffer the GeoJSON data.
    */
   buffer: number,
@@ -37,7 +42,7 @@ const DEFAULT_BUFFER = 2;
 /**
  * This component renders a location marker to be used in a Peripleo context.
  */
-const LocationMarker = (props: Props) => {
+const LocationMarkers = (props: Props) => {
   const map = useMap();
 
   /**
@@ -52,12 +57,12 @@ const LocationMarker = (props: Props) => {
 
   return (
     <>
-      <PulsingMarkerLayer
-        id='current'
-        data={props.data}
-      />
+      { props.animate && (
+        <PulsingMarkerLayer
+          data={props.data}
+        />
+      )}
       <MixedGeoJSONLayer
-        id='current'
         data={props.data}
         fillStyle={props.fillStyle}
         strokeStyle={props.strokeStyle}
@@ -67,11 +72,11 @@ const LocationMarker = (props: Props) => {
   );
 };
 
-LocationMarker.defaultProps = {
+LocationMarkers.defaultProps = {
   buffer: DEFAULT_BUFFER,
   fillStyle: DEFAULT_FILL_STYLE,
   pointStyle: DEFAULT_POINT_STYLE,
   strokeStyle: DEFAULT_STROKE_STYLE
 };
 
-export default LocationMarker;
+export default LocationMarkers;
