@@ -30,7 +30,7 @@ export const Default = () => (
       >
         <PlaceMarkers
           urls={[
-            '/core_data/places/1'
+            '/core_data/places/2'
           ]}
         />
       </div>
@@ -61,3 +61,31 @@ export const MultiplePlaces = () => (
     </Map>
   </Peripleo>
 );
+
+export const LargerBuffer = () => (
+  <Peripleo>
+    <Map
+      style={mapStyle}
+    >
+      <Controls
+        position='topright'
+      >
+        <Zoom />
+      </Controls>
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <PlaceMarkers
+          urls={[
+            '/core_data/places/2'
+          ]}
+          buffer={20}
+        />
+      </div>
+    </Map>
+  </Peripleo>
+);
+
