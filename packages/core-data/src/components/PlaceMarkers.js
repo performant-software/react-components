@@ -52,10 +52,12 @@ const PlaceMarkers = (props: Props) => {
    * @type {function(*): *}
    */
   const onLoad = useCallback((records) => (
-    _.map(records, (record) => setPlaces((prevPlaces) => [
-      ...prevPlaces,
-      feature(record.geometry, record.properties)
-    ]))
+    _.map(records, (record) => setPlaces((prevPlaces) => record.geometry
+      ? [
+        ...prevPlaces,
+        feature(record.geometry, record.properties)
+      ] 
+      : prevPlaces))
   ), []);
 
   /**
@@ -70,6 +72,8 @@ const PlaceMarkers = (props: Props) => {
   if (_.isEmpty(data?.features)) {
     return null;
   }
+
+  console.log('data', data);
 
   return (
     <LocationMarkers
