@@ -73,8 +73,6 @@ const PlaceMarkers = (props: Props) => {
     return null;
   }
 
-  console.log('data', data);
-
   return (
     <LocationMarkers
       animate={props.animate}
