@@ -11,7 +11,7 @@ import type { Layer as LayerType, RuntimeConfig } from '../types/RuntimeConfig';
  * @returns *
  */
 const filterLayers = (config: RuntimeConfig) => {
-  const baseLayers = _.filter(config.layers, (l) => !l.loverlay);
+  const baseLayers = _.filter(config.layers, (l) => !l.overlay);
   const dataLayers = _.filter(config.layers, (l) => l.overlay);
 
   return { ...config, baseLayers, dataLayers };
