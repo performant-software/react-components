@@ -2,7 +2,7 @@
 
 import { MixedGeoJSONLayer, PulsingMarkerLayer, useMap } from '@peripleo/maplibre';
 import React, { useEffect } from 'react';
-import { DEFAULT_FILL_STYLE, DEFAULT_POINT_STYLE, DEFAULT_STROKE_STYLE } from '../utils/MapStyles';
+import MapStyles from '../utils/MapStyles';
 import MapUtils from '../utils/Map';
 
 type Props = {
@@ -80,9 +80,9 @@ const LocationMarkers = (props: Props) => {
 
 LocationMarkers.defaultProps = {
   buffer: DEFAULT_BUFFER,
-  fillStyle: DEFAULT_FILL_STYLE,
-  pointStyle: DEFAULT_POINT_STYLE,
-  strokeStyle: DEFAULT_STROKE_STYLE
+  fillStyle: MapStyles.fill,
+  pointStyle: MapStyles.point,
+  strokeStyle: MapStyles.stroke
 };
 
 export default LocationMarkers;
