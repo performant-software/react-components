@@ -52,10 +52,12 @@ const PlaceMarkers = (props: Props) => {
    * @type {function(*): *}
    */
   const onLoad = useCallback((records) => (
-    _.map(records, (record) => setPlaces((prevPlaces) => [
-      ...prevPlaces,
-      feature(record.geometry, record.properties)
-    ]))
+    _.map(records, (record) => setPlaces((prevPlaces) => record.geometry
+      ? [
+        ...prevPlaces,
+        feature(record.geometry, record.properties)
+      ] 
+      : prevPlaces))
   ), []);
 
   /**
