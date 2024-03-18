@@ -90,14 +90,15 @@ const createTypesenseAdapter = (config: RuntimeConfig, options = {}) => (
  */
 const normalizeResults = (results: Array<TypesenseSearchResult>) => results.filter((h) => h.coordinates);
 
+/**
+ * Returns the passed Typesense search result as a GeoJSON feature.
+ *
+ * @param result
+ *
+ * @returns {*}
+ */
 const toFeature = (result: TypesenseSearchResult) => {
-  let geometry;
-
-  if (result.coordinates) {
-    geometry = point(result.coordinates.slice().reverse());
-  } else {
-    geometry = result.geometry;
-  }
+  let value;
 
   const properties = {
     id: result.record_id,
@@ -112,9 +113,23 @@ const toFeature = (result: TypesenseSearchResult) => {
 
   const id = parseInt(result.record_id, 10);
 
-  return feature(geometry, properties, { id });
+  if (result.coordinates) {
+    const coordinates = result.coordinates.slice().reverse();
+    value = point(coordinates, properties, { id });
+  } else {
+    value = feature(result.geometry, properties, { id });
+  }
+
+  return value;
 };
 
+/**
+ * Returns the passed array of Typesense search results as a GeoJSON feature collection.
+ *
+ * @param results
+ *
+ * @returns {FeatureCollection<Geometry, Properties>}
+ */
 const toFeatureCollection = (results: Array<TypesenseSearchResult>) => (
   featureCollection(_.map(results, toFeature))
 );
