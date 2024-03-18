@@ -94,7 +94,7 @@ const toFeature = (result: TypesenseSearchResult) => {
   let geometry;
 
   if (result.coordinates) {
-    geometry = point(result.coordinates);
+    geometry = point(result.coordinates.slice().reverse());
   } else {
     geometry = result.geometry;
   }
