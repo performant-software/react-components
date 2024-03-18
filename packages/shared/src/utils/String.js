@@ -14,7 +14,20 @@ const toString = (value: any) => {
   return value || '';
 };
 
+const truncate = (str: string, length: number) => {
+  if (!str) {
+    return null;
+  }
+
+  if (!length || length > str.length) {
+    return str;
+  }
+
+  return str.substring(0, length).trim();
+};
+
 export default {
   includes,
-  toString
+  toString,
+  truncate
 };
