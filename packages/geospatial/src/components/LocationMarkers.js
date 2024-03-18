@@ -27,6 +27,11 @@ type Props = {
   fillStyle?: { [key: string]: any },
 
   /**
+   * An ID value to apply to the layer.
+   */
+  layerId?: string,
+
+  /**
    * GeoJSON layer point style.
    */
   pointStyle?: { [key: string]: any },
@@ -65,6 +70,7 @@ const LocationMarkers = (props: Props) => {
       <MixedGeoJSONLayer
         data={props.data}
         fillStyle={props.fillStyle}
+        id={props.layerId}
         strokeStyle={props.strokeStyle}
         pointStyle={props.pointStyle}
       />
