@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'underscore';
-import type { RuntimeConfig } from '../types/RuntimeConfig';
+import type { Layer as LayerType, RuntimeConfig } from '../types/RuntimeConfig';
 
 /**
  * Moves the layers into separate base layers and data layers.
@@ -46,7 +46,45 @@ const normalize = (config: RuntimeConfig) => ({
   }
 });
 
+/**
+ * Exports the passed layer as a MaxBox layer style.
+ *
+ * @param config
+ * @param id
+ *
+ * @returns *
+ */
+const toLayerStyle = (config: LayerType, id: string) => {
+  if (config.layer_type === 'vector') {
+    // Assumes MapBox-compatible style URL
+    return config.url;
+  }
+
+  if (config.layer_type === 'raster') {
+    return {
+      version: 8,
+      sources: {
+        [id]: {
+          type: 'raster',
+          tiles: [config.url],
+          tileSize: config.tilesize || 256
+        }
+      },
+      layers: [{
+        id,
+        type: 'raster',
+        source: id,
+        minzoom: config.minzoom || 0,
+        maxzoom: config.maxzoom || 22
+      }]
+    };
+  }
+
+  throw new Error(`Unsupported baselayer type: ${config.layer_type}`);
+};
+
 export default {
   filterLayers,
-  normalize
+  normalize,
+  toLayerStyle
 };

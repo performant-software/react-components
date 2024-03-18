@@ -4,8 +4,10 @@
 import './index.css';
 
 // Components
+export { default as LayerMenu } from './components/LayerMenu';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
+export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
 export { default as PlaceDetailsPanel } from './components/PlaceDetailsPanel';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
@@ -18,6 +20,7 @@ export { default as RelatedOrganization } from './components/RelatedOrganization
 export { default as RelatedPeople } from './components/RelatedPeople';
 export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
+export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
 // Hooks
 export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';

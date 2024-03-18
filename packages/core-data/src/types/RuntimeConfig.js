@@ -1,5 +1,17 @@
 // @flow
 
+export type Layer = {
+  name: string,
+  layer_type: 'raster' | 'vector' | 'geojson',
+  overlay?: boolean,
+  url: string,
+  description?: string,
+  tilesize?: number,
+  attribution?: string,
+  minzoom?: number,
+  maxzoom?: number
+};
+
 export type RuntimeConfig = {
   branding: {
     title?: string,
@@ -10,17 +22,7 @@ export type RuntimeConfig = {
       default_open?: boolean
     }>
   },
-  layers: Array<{
-    name: string,
-    layer_type: 'raster' | 'vector' | 'geojson',
-    overlay?: boolean,
-    url: string,
-    description?: string,
-    tilesize?: number,
-    attribution?: string,
-    minzoom?: number,
-    maxzoom?: number
-  }>,
+  layers: Array<Layer>,
   typesense: {
     host: string,
     port?: number,
