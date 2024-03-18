@@ -22,6 +22,9 @@ export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
+// Contexts
+export { default as I18nContext } from './context/I18n';
+
 // Hooks
 export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';
 export * from './hooks/Typesense';
