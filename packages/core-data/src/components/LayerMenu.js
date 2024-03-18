@@ -2,7 +2,13 @@
 
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import { Check, Dot, Layers } from 'lucide-react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
+import _ from 'underscore';
 import I18nContext from '../context/I18n';
 import type { Layer } from '../types/RuntimeConfig';
 
@@ -22,22 +28,37 @@ const LayerMenu = (props: Props) => {
   const {
     baseLayer,
     baseLayers,
-    dataLayers,
-    onChangeBaseLayer,
-    onChangeOverlays
+    dataLayers
   } = props;
 
-  const onToggleOverlay = (name: string) => (
-    (checked: boolean) => setSelectedOverlays((state) => ({ ...state, [name]: checked }))
-  );
+  /**
+   * Changes the base layer to the layer with the passed name.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onChangeBaseLayer = useCallback((name) => {
+    props.onChangeBaseLayer(_.findWhere(baseLayers, { name }));
+  }, [baseLayers, props.onChangeBaseLayer]);
 
+  /**
+   * Toggles visibility for the overlay with the passed name.
+   *
+   * @type {function(string): function(boolean): void}
+   */
+  const onToggleOverlay = useCallback((name: string) => (
+    (checked: boolean) => setSelectedOverlays((state) => ({ ...state, [name]: checked }))
+  ), []);
+
+  /**
+   * Calls the onChangeOverlays prop when the selected overlays are changed.
+   */
   useEffect(() => {
     const visible = Object.entries(selectedOverlays)
       .filter(([, v]) => v)
       .map(([name]) => dataLayers.find((l) => l.name === name))
       .filter(Boolean);
 
-    onChangeOverlays(visible);
+    props.onChangeOverlays(visible);
   }, [selectedOverlays]);
 
   return (
