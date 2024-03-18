@@ -2,21 +2,22 @@
 
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import { Check, Dot, Layers } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import I18nContext from '../context/I18n';
 import type { Layer } from '../types/RuntimeConfig';
-import type { Translations } from '../types/Translations';
 
 type Props = {
   baseLayer: Layer,
   baseLayers: Array<Layer>,
   dataLayers: Array<Layer>,
   onChangeBaseLayer: (config: Layer) => void,
-  onChangeOverlays: (visible: Array<string>) => void,
-  translations: Translations
+  onChangeOverlays: (visible: Array<string>) => void
 };
 
 const LayerMenu = (props: Props) => {
   const [selectedOverlays, setSelectedOverlays] = useState({});
+
+  const { translations } = useContext(I18nContext);
 
   const {
     baseLayer,
@@ -47,7 +48,7 @@ const LayerMenu = (props: Props) => {
         >
           <button
             className='p6o-control p6o-control-btn'
-            aria-label={props.translations.selectMapLayers}
+            aria-label={translations.t_selectMapLayers()}
             type='button'
           >
             <Layers
@@ -65,7 +66,7 @@ const LayerMenu = (props: Props) => {
             <Dropdown.Label
               className='w-full font-medium text-sm text-muted'
             >
-              { props.translations.baseLayers }
+              { translations.t_baseLayers() }
             </Dropdown.Label>
             <Dropdown.RadioGroup
               className='py-1.5'
@@ -97,7 +98,7 @@ const LayerMenu = (props: Props) => {
                 <Dropdown.Label
                   className='w-full font-medium text-sm text-muted'
                 >
-                  { props.translations.overlays }
+                  { translations.t_overlays() }
                 </Dropdown.Label>
                 <div
                   className='pt-1.5'

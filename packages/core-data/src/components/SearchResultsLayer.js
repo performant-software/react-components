@@ -18,8 +18,10 @@ const SearchResultsLayer = (props: Props) => {
   const map = useMap();
 
   const data = useMemo(() => TypesenseUtils.toFeatureCollection(hits), [hits]);
-  // const { visible = true } = props;
 
+  /**
+   * Sets the mapLoaded state to true.
+   */
   useEffect(() => {
     if (map.loaded()) {
       setMapLoaded(true);
@@ -33,6 +35,9 @@ const SearchResultsLayer = (props: Props) => {
     };
   }, [map]);
 
+  /**
+   * Sets the visible state to true.
+   */
   useSearchCompleted(() => setVisible(true));
 
   if (!(mapLoaded && visible)) {
