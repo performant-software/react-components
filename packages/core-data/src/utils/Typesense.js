@@ -1,7 +1,9 @@
 // @flow
 
+import { feature, featureCollection, point } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
+import _ from 'underscore';
 import type { RuntimeConfig } from '../types/RuntimeConfig';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
@@ -88,10 +90,16 @@ const createTypesenseAdapter = (config: RuntimeConfig, options = {}) => (
  */
 const normalizeResults = (results: Array<TypesenseSearchResult>) => results.filter((h) => h.coordinates);
 
-const toFeature = (result: TypesenseSearchResult) => ({
-  id: parseInt(result.record_id, 10),
-  type: 'Feature',
-  properties: {
+const toFeature = (result: TypesenseSearchResult) => {
+  let geometry;
+
+  if (result.coordinates) {
+    geometry = point(result.coordinates);
+  } else {
+    geometry = result.geometry;
+  }
+
+  const properties = {
     id: result.record_id,
     ccode: [],
     title: result.name,
@@ -100,17 +108,22 @@ const toFeature = (result: TypesenseSearchResult) => ({
     name: result.name,
     names: result.names.map((toponym: string) => ({ toponym })),
     type: result.type
-  },
-  geometry: {
-    type: 'Point',
-    coordinates: result.coordinates.slice().reverse()
-  }
-});
+  };
+
+  const id = parseInt(result.record_id, 10);
+
+  return feature(geometry, properties, { id });
+};
+
+const toFeatureCollection = (results: Array<TypesenseSearchResult>) => (
+  featureCollection(_.map(results, toFeature))
+);
 
 export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
   normalizeResults,
-  toFeature
+  toFeature,
+  toFeatureCollection
 };
