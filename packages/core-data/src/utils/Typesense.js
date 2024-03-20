@@ -7,6 +7,9 @@ import _ from 'underscore';
 import type { RuntimeConfig } from '../types/RuntimeConfig';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
+const ATTRIBUTE_DELIMITER = '.';
+const SUFFIX_FACET = '_facet';
+
 const createCachedHits = (hits: TypesenseSearchResult[]) => {
   const ids = new Set(hits.map((h) => h.uuid));
 
@@ -83,6 +86,39 @@ const createTypesenseAdapter = (config: RuntimeConfig, options = {}) => (
 );
 
 /**
+ * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed field UUID.
+ *
+ * @param attribute
+ */
+const getFieldId = (attribute: string) => {
+  if (!attribute) {
+    return '';
+  }
+
+  let value = attribute.replaceAll(SUFFIX_FACET, '');
+  if (value.includes(ATTRIBUTE_DELIMITER)) {
+    value = value.substring(value.indexOf(ATTRIBUTE_DELIMITER) + 1, value.length - 1);
+  }
+
+  return value;
+};
+
+/**
+ * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
+ *
+ * @param attribute
+ */
+const getRelationshipId = (attribute: string) => {
+  if (!(attribute && attribute.includes(ATTRIBUTE_DELIMITER))) {
+    return '';
+  }
+
+  return attribute
+    .replace(SUFFIX_FACET, '')
+    .substring(0, attribute.indexOf(ATTRIBUTE_DELIMITER));
+};
+
+/**
  * Necessary normalization steps to make the TypeSense result work
  * for visualization. Currently, these include:
  *
@@ -138,6 +174,8 @@ export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
+  getFieldId,
+  getRelationshipId,
   normalizeResults,
   toFeature,
   toFeatureCollection

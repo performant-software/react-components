@@ -2162,6 +2162,21 @@
     react-draggable "^4.4.6"
     react-resizable "^3.0.5"
 
+"@peripleo/peripleo@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@peripleo/peripleo/-/peripleo-0.4.1.tgz#46e849bd8cc712c0c2af3c10c5459f7dc837d434"
+  integrity sha512-unyrDHp+e62d6UKV3C754tUyCS+uHSIWWtKXIDDu+dS5S58cTdYZGgC6JFPahr4mlFychOnzDfuXKefkTs5T8w==
+  dependencies:
+    "@phosphor-icons/react" "^2.0.15"
+    "@radix-ui/react-dropdown-menu" "^2.0.6"
+    "@radix-ui/react-popover" "^1.0.7"
+    "@turf/bbox" "^6.5.0"
+    chroma-js "^2.4.2"
+    maplibre-gl "^3.6.2"
+    nanoid "^5.0.4"
+    react-draggable "^4.4.6"
+    react-resizable "^3.0.5"
+
 "@phosphor-icons/react@^2.0.15":
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/@phosphor-icons/react/-/react-2.0.15.tgz#4d8e28484d45649f53a6cd75db161cf8b8379e1d"

@@ -4,6 +4,10 @@
 import './index.css';
 
 // Components
+export { default as FacetList } from './components/FacetList';
+export { default as FacetLists } from './components/FacetLists';
+export { default as FacetListsGrouped } from './components/FacetListsGrouped';
+export { default as FacetStateContextProvider } from './components/FacetStateContextProvider';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
@@ -23,6 +27,7 @@ export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
 // Contexts
+export { default as FacetStateContext } from './context/FacetStateContext';
 export { default as I18nContext } from './context/I18n';
 
 // Hooks
