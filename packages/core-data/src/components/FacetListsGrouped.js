@@ -53,7 +53,7 @@ const FacetListsGrouped = (props: Props) => {
         resolveLabel={props.resolveLabel}
       />
     </div>
-  ), [props.resolveLabel]);
+  ), [props.renderList, props.resolveLabel]);
 
   return _.map(groupedAttributes, renderSection);
 };
