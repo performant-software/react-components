@@ -1,12 +1,13 @@
 // @flow
 
-import React, { useCallback } from 'react';
+import React, { useCallback, type Node } from 'react';
 import _ from 'underscore';
 import FacetList from './FacetList';
 import TypesenseUtils from '../utils/Typesense';
 
 type Props = {
   attributes: Array<string>,
+  renderList: (attribute: string) => Node,
   resolveLabel: (uuid: string) => string
 };
 
@@ -21,11 +22,12 @@ const FacetLists = (props: Props) => {
 
     return (
       <FacetList
+        renderList={() => props.renderList(attribute)}
         label={props.resolveLabel(uuid)}
         value={attribute}
       />
     );
-  }, [props.resolveLabel]);
+  }, [props.renderList, props.resolveLabel]);
 
   return _.map(props.attributes, renderList);
 };

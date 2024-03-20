@@ -7,24 +7,25 @@ import React, {
   useState,
   type ReactNode
 } from 'react';
-import { useRefinementList } from 'react-instantsearch';
 import _ from 'underscore';
 import FacetStateContext from '../context/FacetStateContext';
 
-interface RefinementListProxyProps {
-  attribute: string;
-}
+type RefinementListProxyProps = {
+  attribute: string,
+  useRefinementList: (props: RefinementListProxyProps) => void
+};
 
-const RefinementListProxy = (props: RefinementListProxyProps) => {
+const RefinementListProxy = ({ attribute, useRefinementList }: RefinementListProxyProps) => {
   // Just a trick to have an empty component that keeps this
   // facet mounted, while the GUI element mounts and unmounts
-  useRefinementList(props);
+  useRefinementList({ attribute });
 
   return null;
 };
 
 type Props = {
-  children: ReactNode
+  children: ReactNode,
+  useRefinementList: (props: RefinementListProxyProps) => void
 };
 
 const TYPE_AUTO = 'auto';
@@ -81,8 +82,9 @@ const FacetStateContextProvider = (props: Props) => {
         <RefinementListProxy
           attribute={attribute}
           key={attribute}
+          useRefinementList={props.useRefinementList}
         />
-      )) }
+      ))}
       { props.children }
     </FacetStateContext.Provider>
   );

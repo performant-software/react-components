@@ -1,12 +1,13 @@
 // @flow
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, type Node } from 'react';
 import _ from 'underscore';
 import FacetLists from './FacetLists';
 import TypesenseUtils from '../utils/Typesense';
 
 type Props = {
   attributes: Array<string>,
+  renderList: (attribute: string) => Node,
   resolveLabel: (uuid: string) => string
 };
 
@@ -48,6 +49,7 @@ const FacetListsGrouped = (props: Props) => {
       <h1>{ item.label }</h1>
       <FacetLists
         attributes={item.items}
+        renderList={props.renderList}
         resolveLabel={props.resolveLabel}
       />
     </div>

@@ -1,11 +1,11 @@
 // @flow
 
-import React from 'react';
-import { RefinementList } from 'react-instantsearch';
+import React, { type Node } from 'react';
 import './FacetList.css';
 
 type Props = {
   label: string,
+  renderList: (attribute: string) => Node,
   value: string
 };
 
@@ -23,9 +23,7 @@ const FacetList = (props: Props) => (
         { props.label }
       </span>
     </h3>
-    <RefinementList
-      attribute={props.value}
-    />
+    { props.renderList() }
   </div>
 );
 
