@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/core-data",
-  "version": "2.1.0-beta.26",
+  "version": "2.1.0-beta.27",
   "description": "A package of components used with the Core Data platform.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -35,7 +35,7 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/geospatial": "^2.1.0-beta.26",
+    "@performant-software/geospatial": "^2.1.0-beta.27",
     "@peripleo/maplibre": "^0.4.2",
     "@peripleo/peripleo": "^0.4.2",
     "react": ">= 16.13.1 < 19.0.0",
