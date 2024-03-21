@@ -35,5 +35,6 @@ export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';
 export * from './hooks/Typesense';
 
 // Utilities
+export { default as CoreData } from './utils/CoreData';
 export { default as Peripleo } from './utils/Peripleo';
 export { default as Typesense } from './utils/Typesense';
