@@ -38,16 +38,16 @@ const SearchResultsLayer = (props: Props) => {
     };
   }, [map]);
 
-  /**
-   * Sets the visible state to true.
-   */
-  useSearchCompleted(() => setVisible(true), []);
-
-  /**
-   * Here we'll implement our own fitting of the bounding box, rather than using
-   * the default implementation in LocationMarker that will change when the "data" prop changes.
-   */
   useSearchCompleted(() => {
+    /**
+     * Sets the visible state to true.
+     */
+    setVisible(true);
+
+    /**
+     * Here we'll implement our own fitting of the bounding box, rather than using
+     * the default implementation in LocationMarker that will change when the "data" prop changes.
+     */
     if (props.fitBoundingBox && map && data) {
       const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
       map.fitBounds(boundingBox, props.boundingBoxOptions);
