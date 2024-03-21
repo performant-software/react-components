@@ -38,21 +38,22 @@ const SearchResultsLayer = (props: Props) => {
     };
   }, [map]);
 
-  useSearchCompleted(() => {
-    /**
-     * Sets the visible state to true.
-     */
-    setVisible(true);
+  /**
+   * Sets the visible state to true.
+   */
+  useSearchCompleted(() => setVisible(true), []);
 
-    /**
-     * Here we'll implement our own fitting of the bounding box, rather than using
-     * the default implementation in LocationMarker that will change when the "data" prop changes.
-     */
-    if (props.fitBoundingBox && map && data) {
-      const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
+  /**
+   * Here we'll implement our own fitting of the bounding box, rather than using
+   * the default implementation in LocationMarker that will change when the "data" prop changes.
+   */
+  useSearchCompleted((h) => {
+    if (props.fitBoundingBox && map && h) {
+      const geometry = TypesenseUtils.toFeatureCollection(h);
+      const boundingBox = MapUtils.getBoundingBox(geometry, props.buffer);
       map.fitBounds(boundingBox, props.boundingBoxOptions);
     }
-  }, [map, data, props.buffer, props.fitBoundingBox, props.boundingBoxOptions]);
+  }, [map, props.buffer, props.fitBoundingBox, props.boundingBoxOptions]);
 
   if (!(mapLoaded && visible)) {
     return null;
