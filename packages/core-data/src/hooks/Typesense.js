@@ -62,7 +62,7 @@ export const useGeoSearchToggle = () => {
 
   useEffect(() => {
     if (!map) {
-      return null;
+      return undefined;
     }
 
     if (filterByMapBounds) {
@@ -78,7 +78,7 @@ export const useGeoSearchToggle = () => {
     }
 
     clearMapRefinement();
-    return null;
+    return undefined;
   }, [map, onChangeViewport, filterByMapBounds]);
 
   return {
