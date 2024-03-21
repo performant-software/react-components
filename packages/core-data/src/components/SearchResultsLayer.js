@@ -46,8 +46,8 @@ const SearchResultsLayer = (props: Props) => {
 
   return (
     <LocationMarkers
+      {...props}
       data={data}
-      layerId={props.layerId}
     />
   );
 };
