@@ -1,12 +1,15 @@
 // @flow
 
-import { LocationMarkers } from '@performant-software/geospatial';
+import { LocationMarkers, Map as MapUtils } from '@performant-software/geospatial';
 import { useMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo, useState } from 'react';
 import TypesenseUtils from '../utils/Typesense';
 import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
 
 type Props = {
+  boundingBoxOptions?: any,
+  buffer?: number,
+  fitBoundingBox?: boolean,
   layerId: string
 };
 
@@ -38,9 +41,18 @@ const SearchResultsLayer = (props: Props) => {
   /**
    * Sets the visible state to true.
    */
+  useSearchCompleted(() => setVisible(true), []);
+
+  /**
+   * Here we'll implement our own fitting of the bounding box, rather than using
+   * the default implementation in LocationMarker that will change when the "data" prop changes.
+   */
   useSearchCompleted(() => {
-    setVisible(true);
-  }, []);
+    if (props.fitBoundingBox && map && data) {
+      const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
+      map.fitBounds(boundingBox, props.boundingBoxOptions);
+    }
+  }, [map, data, props.buffer, props.fitBoundingBox, props.boundingBoxOptions]);
 
   if (!(mapLoaded && visible)) {
     return null;
@@ -50,6 +62,7 @@ const SearchResultsLayer = (props: Props) => {
     <LocationMarkers
       {...props}
       data={data}
+      fitBoundingBox={false}
     />
   );
 };
