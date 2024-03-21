@@ -11,6 +11,7 @@ type Props = {
 };
 
 const SearchResultsLayer = (props: Props) => {
+  const [fitBoundingBox, setFitBoundingBox] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +39,16 @@ const SearchResultsLayer = (props: Props) => {
   /**
    * Sets the visible state to true.
    */
-  useSearchCompleted(() => setVisible(true));
+  useSearchCompleted(() => {
+    setVisible(true);
+    setFitBoundingBox(true);
+  }, []);
+
+  useEffect(() => {
+    if (fitBoundingBox) {
+      setFitBoundingBox(false);
+    }
+  }, [fitBoundingBox]);
 
   if (!(mapLoaded && visible)) {
     return null;
@@ -48,6 +58,7 @@ const SearchResultsLayer = (props: Props) => {
     <LocationMarkers
       {...props}
       data={data}
+      fitBoundingBox={fitBoundingBox}
     />
   );
 };
