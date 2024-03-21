@@ -8,7 +8,7 @@ import mapStyle from '../data/MapStyles.json';
 import PlaceMarkers from '../../../core-data/src/components/PlaceMarkers';
 
 export default {
-  title: 'Components/Core Data/PlaceMarker',
+  title: 'Components/Core Data/PlaceMarkers',
   component: PlaceMarkers
 };
 
@@ -88,4 +88,3 @@ export const LargerBuffer = () => (
     </Map>
   </Peripleo>
 );
-

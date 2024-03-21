@@ -8,7 +8,7 @@ import LocationMarkers from '../../../geospatial/src/components/LocationMarkers'
 import mapStyle from '../data/MapStyles.json';
 
 export default {
-  title: 'Components/Geospatial/LocationMarker',
+  title: 'Components/Geospatial/LocationMarkers',
   component: LocationMarkers
 };
 

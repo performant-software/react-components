@@ -1,7 +1,7 @@
 // @flow
 
 import { MapStyles } from '@performant-software/geospatial';
-import { MixedGeoJSONLayer, RasterOverlayLayer } from '@peripleo/maplibre';
+import { GeoJSONLayer, RasterLayer } from '@peripleo/maplibre';
 import React from 'react';
 import _ from 'underscore';
 import type { Layer as LayerType } from '../types/RuntimeConfig';
@@ -15,7 +15,7 @@ const OverlayLayer = (props: OverlayLayerProps) => {
 
   if (overlay.layer_type === 'geojson') {
     return (
-      <MixedGeoJSONLayer
+      <GeoJSONLayer
         id={overlay.name}
         data={overlay.url}
         fillStyle={MapStyles.fill}
@@ -27,7 +27,7 @@ const OverlayLayer = (props: OverlayLayerProps) => {
 
   if (overlay.layer_type === 'raster') {
     return (
-      <RasterOverlayLayer
+      <RasterLayer
         id={overlay.name}
         url={overlay.url}
       />
