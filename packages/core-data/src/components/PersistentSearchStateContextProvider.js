@@ -15,15 +15,28 @@ const PersistentSearchStateContextProvider = (props: Props) => {
   const { geoSearch, infiniteHits, searchBox } = props;
   const { cachedHits, observe, unobserve } = useProgressiveSearch(infiniteHits);
 
+  /**
+   * Memoizes the context value.
+   *
+   * @type {{
+   *   unobserve: function(OnCompleteCallback): void,
+   *   geoSearch: *,
+   *   cachedHits: TypesenseSearchResult[],
+   *   observe: function(OnCompleteCallback): void,
+   *   searchBox: *
+   * }}
+   */
+  const value = useMemo(() => ({
+    cachedHits,
+    geoSearch,
+    searchBox,
+    observe,
+    unobserve
+  }), [cachedHits, geoSearch, searchBox, observe, unobserve]);
+
   return (
     <PersistentSearchStateContext.Provider
-      value={{
-        cachedHits,
-        geoSearch,
-        searchBox,
-        observe,
-        unobserve
-      }}
+      value={value}
     >
       { props.children }
     </PersistentSearchStateContext.Provider>

@@ -10,11 +10,11 @@ import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 const ATTRIBUTE_DELIMITER = '.';
 const SUFFIX_FACET = '_facet';
 
-const createCachedHits = (hits: TypesenseSearchResult[]) => {
+const createCachedHits = (hits: Array<TypesenseSearchResult>) => {
   const ids = new Set(hits.map((h) => h.uuid));
 
   // De-duplication: drop all hits that are already in the list, append the rest
-  const merge = (toMerge: TypesenseSearchResult[]) => {
+  const merge = (toMerge: Array<TypesenseSearchResult>) => {
     const toAppend = toMerge.filter((h) => !ids.has(h.uuid));
     return createCachedHits([...hits, ...toAppend]);
   };

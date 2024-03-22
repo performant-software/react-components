@@ -63,8 +63,6 @@ const useProgressiveSearch = (infiniteHits) => {
     const { results } = infiniteHits;
 
     const isFirstPage = results.page === 0;
-    const isLastPage = results.page + 1 >= results.nbPages;
-
     const hits = TypesenseUtils.normalizeResults(results.hits);
 
     // Add to cache and load next page
@@ -73,6 +71,13 @@ const useProgressiveSearch = (infiniteHits) => {
     } else {
       setCachedHits(({ merge }) => merge(hits));
     }
+  }, [infiniteHits.results]);
+
+  useEffect(() => {
+    const { results } = infiniteHits;
+
+    const hits = TypesenseUtils.normalizeResults(results.hits);
+    const isLastPage = results.page + 1 >= results.nbPages;
 
     if (!isLastPage && infiniteHits.showMore) {
       setTimeout(() => infiniteHits.showMore(), 25);
@@ -84,7 +89,7 @@ const useProgressiveSearch = (infiniteHits) => {
     }
 
     lastSearchState.current = results._state;
-  }, [infiniteHits.results]);
+  }, [cachedHits]);
 
   return { cachedHits: cachedHits.hits, observe, unobserve };
 };
