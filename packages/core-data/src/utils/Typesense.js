@@ -5,12 +5,12 @@ import { feature, featureCollection, point } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
-import type { RuntimeConfig } from '../types/RuntimeConfig';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
 type TypesenseConfig = {
   api_key: string,
   host: string,
+  index_name: string,
   limit: number,
   port: number,
   protocol: string,
@@ -32,13 +32,13 @@ const createCachedHits = (hits: Array<TypesenseSearchResult>) => {
   return { hits, merge };
 };
 
-const createRouting = (config: RuntimeConfig) => ({
+const createRouting = (config: TypesenseConfig) => ({
   router: history({
     cleanUrlOnDispose: false
   }),
   stateMapping: {
     stateToRoute: (state: any) => {
-      const uiState = state[config.typesense.index_name];
+      const uiState = state[config.index_name];
       const { refinementList } = uiState;
 
       let route = {
@@ -59,13 +59,13 @@ const createRouting = (config: RuntimeConfig) => ({
       const { q, ...facets } = state;
 
       const uiState = {
-        [config.typesense.index_name]: {
+        [config.index_name]: {
           query: q,
         }
       };
 
       if (Object.keys(facets).length > 0) {
-        uiState[config.typesense.index_name].refinementList = facets;
+        uiState[config.index_name].refinementList = facets;
       }
 
       return uiState;
