@@ -38,7 +38,7 @@ const createRouting = (config: TypesenseConfig) => ({
   }),
   stateMapping: {
     stateToRoute: (state: any) => {
-      const uiState = state[config.index_name];
+      const uiState = state[config.index_name] || {};
       const { refinementList } = uiState;
 
       let route = {

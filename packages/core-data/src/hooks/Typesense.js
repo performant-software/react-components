@@ -45,7 +45,6 @@ export const useGeoSearchToggle = () => {
 
   const onChangeViewport = useCallback(() => {
     const bounds = map.getBounds();
-
     const northEast = bounds.getNorthEast();
     const southWest = bounds.getSouthWest();
 
@@ -54,11 +53,13 @@ export const useGeoSearchToggle = () => {
     // seem to be the problem!)
     const extent = northEast.lng - southWest.lng;
     if (extent > 200) {
-      clearMapRefinement();
+      if (isRefinedWithMap()) {
+        clearMapRefinement();
+      }
     } else {
       refine({ northEast, southWest });
     }
-  }, [map]);
+  }, [map, isRefinedWithMap()]);
 
   useEffect(() => {
     if (!map) {
