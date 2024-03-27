@@ -1,11 +1,21 @@
 // @flow
 
+import booleanValid from '@turf/boolean-valid';
 import { feature, featureCollection, point } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
 import type { RuntimeConfig } from '../types/RuntimeConfig';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
+
+type TypesenseConfig = {
+  api_key: string,
+  host: string,
+  limit: number,
+  port: number,
+  protocol: string,
+  query_by: string
+};
 
 const ATTRIBUTE_DELIMITER = '.';
 const SUFFIX_FACET = '_facet';
@@ -63,23 +73,23 @@ const createRouting = (config: RuntimeConfig) => ({
   }
 });
 
-const createTypesenseAdapter = (config: RuntimeConfig, options = {}) => (
+const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
   new TypesenseInstantsearchAdapter({
     server: {
-      apiKey: config.typesense.api_key,
+      apiKey: config.api_key,
       nodes: [
         {
-          host: config.typesense.host,
-          port: config.typesense.port || 443,
-          protocol: config.typesense.protocol || 'https'
+          host: config.host,
+          port: config.port || 443,
+          protocol: config.protocol || 'https'
         }
       ],
       cacheSearchResultsForSeconds: 120
     },
     geoLocationField: 'coordinates',
     additionalSearchParameters: {
-      query_by: config.typesense.query_by,
-      limit: config.typesense.limit || 250
+      query_by: config.query_by,
+      limit: config.limit || 250
     },
     ...options
   })
@@ -124,7 +134,9 @@ const getRelationshipId = (attribute: string) => {
  *
  * - Removing places without coordinates
  */
-const normalizeResults = (results: Array<TypesenseSearchResult>) => results.filter((h) => h.coordinates);
+const normalizeResults = (results: Array<TypesenseSearchResult>) => (
+  results.filter((h) => h.coordinates && booleanValid(point(h.coordinates)))
+);
 
 /**
  * Returns the passed Typesense search result as a GeoJSON feature.
