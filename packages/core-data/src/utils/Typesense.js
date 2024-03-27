@@ -1,6 +1,6 @@
 // @flow
 
-import booleanValid from '@turf/boolean-valid';
+import { Map as MapUtils } from '@performant-software/geospatial';
 import { feature, featureCollection, point } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
@@ -135,7 +135,7 @@ const getRelationshipId = (attribute: string) => {
  * - Removing places without coordinates
  */
 const normalizeResults = (results: Array<TypesenseSearchResult>) => (
-  results.filter((h) => h.coordinates && booleanValid(point(h.coordinates)))
+  results.filter((h) => MapUtils.validateCoordinates(h.coordinates))
 );
 
 /**

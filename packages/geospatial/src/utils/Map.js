@@ -2,6 +2,11 @@
 
 import { bbox, bboxPolygon, buffer } from '@turf/turf';
 
+const MIN_LATITUDE = -90;
+const MAX_LATITUDE = 90;
+const MIN_LONGITUDE = -180;
+const MAX_LONGITUDE = 180;
+
 /**
  * Returns a bounding box for the passed geometry (with optional buffer).
  *
@@ -30,6 +35,29 @@ const getBoundingBox = (geometry, bufferDistance = null) => {
   return bbox(polygonBuffer);
 };
 
+/**
+ * Returns true if the passed coordinates are valid.
+ *
+ * @param coordinates
+ *
+ * @returns {boolean}
+ */
+const validateCoordinates = (coordinates) => {
+  let valid = false;
+
+  if (coordinates) {
+    const [latitude, longitude] = coordinates;
+
+    valid = latitude >= MIN_LATITUDE
+      && latitude <= MAX_LATITUDE
+      && longitude >= MIN_LONGITUDE
+      && longitude <= MAX_LONGITUDE;
+  }
+
+  return valid;
+};
+
 export default {
-  getBoundingBox
+  getBoundingBox,
+  validateCoordinates
 };
