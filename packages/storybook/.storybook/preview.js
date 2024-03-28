@@ -9,6 +9,8 @@ import '../../core-data/dist/style.css';
 import '../../geospatial/dist/style.css';
 import '../../semantic-ui/dist/style.css';
 import '../../shared/dist/style.css';
+import './styles/index.css';
+import '../src/index.css';
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.

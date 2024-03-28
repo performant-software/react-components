@@ -3,15 +3,13 @@
 import { UserCircle } from 'lucide-react';
 import React from 'react';
 import i18n from '../i18n/i18n';
-import type { AnnotationPage } from '../types/AnnotationPage';
-import type { Person } from '../types/Person';
 import RelatedList from './RelatedList';
 
 type Props = {
   /**
-   * The annotation page containing the Core Data people to render.
+   * Callback fired when the component is mounted to fetch the data.
    */
-  data: AnnotationPage<Person>
+  onLoad: () => any
 };
 
 /**
@@ -19,8 +17,8 @@ type Props = {
  */
 const RelatedPeople = (props: Props) => (
   <RelatedList
-    data={props.data}
     emptyMessage={i18n.t('RelatedPeople.labels.empty')}
+    onLoad={props.onLoad}
     renderItem={(person) => (
       <>
         <UserCircle

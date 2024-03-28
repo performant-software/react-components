@@ -1,0 +1,4 @@
+.related-item .accordion-content[data-state="closed"] {
+  visibility: hidden;
+  height: 0;
+}

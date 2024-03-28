@@ -4,6 +4,7 @@
 import './index.css';
 
 // Components
+export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
 export { default as FacetList } from './components/FacetList';
 export { default as FacetLists } from './components/FacetLists';
 export { default as FacetListsGrouped } from './components/FacetListsGrouped';
@@ -13,7 +14,7 @@ export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
 export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
-export { default as PlaceDetailsPanel } from './components/PlaceDetailsPanel';
+export { default as PlaceDetails } from './components/PlaceDetails';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
 export { default as PlaceResultsList } from './components/PlaceResultsList';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
@@ -27,14 +28,25 @@ export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
 // Contexts
+export { default as CoreDataContext } from './context/CoreData';
 export { default as FacetStateContext } from './context/FacetStateContext';
 export { default as I18nContext } from './context/I18n';
 
 // Hooks
+export { useLoader } from './hooks/CoreData';
 export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';
-export * from './hooks/Typesense';
+export {
+  useCachedHits,
+  useGeoSearch,
+  useGeoSearchToggle,
+  useSearchBox,
+  useSearchCompleted
+} from './hooks/Typesense';
+
+// Services
+export { default as PlacesService } from './services/Places';
 
 // Utilities
-export { default as CoreData } from './utils/CoreData';
+export { default as Api } from './utils/Api';
 export { default as Peripleo } from './utils/Peripleo';
 export { default as Typesense } from './utils/Typesense';

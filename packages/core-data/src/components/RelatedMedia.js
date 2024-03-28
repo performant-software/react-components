@@ -3,15 +3,15 @@
 import { Thumbnail } from '@samvera/clover-iiif/primitives';
 import React, { useState } from 'react';
 import _ from 'underscore';
-import type { AnnotationPage } from '../types/AnnotationPage';
 import type { MediaContent } from '../types/MediaContent';
 import MediaGallery from './MediaGallery';
+import { useLoader } from '../hooks/CoreData';
 
 type Props = {
   /**
-   * The annotation page containing the media content to render.
+   * Callback fired when the component is mounted to fetch the data.
    */
-  data: AnnotationPage<MediaContent>,
+  onLoad: () => any,
 
   /**
    * Media thumbnail height.
@@ -33,11 +33,13 @@ const DEFAULT_THUMBNAIL_WIDTH = 80;
 const RelatedMedia = (props: Props) => {
   const [showGallery, setShowGallery] = useState<MediaContent>();
 
+  const { data } = useLoader(props.onLoad);
+
   return (
     <div
       className='p-3 pb-4 grid grid-cols-3 gap-1'
     >
-      { _.map(props.data?.items, (item) => (
+      { _.map(data?.items, (item) => (
         <Thumbnail
           key={item.body.id}
           className='rounded shadow cursor-pointer'

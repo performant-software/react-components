@@ -3,15 +3,13 @@
 import { MapPin } from 'lucide-react';
 import React from 'react';
 import i18n from '../i18n/i18n';
-import type { AnnotationPage } from '../types/AnnotationPage';
-import type { Place } from '../types/Place';
 import RelatedList from './RelatedList';
 
 type Props = {
   /**
-   * The annotation page containing the Core Data places to render.
+   * Callback fired when the component is mounted to fetch the data.
    */
-  data: AnnotationPage<Place>
+  onLoad: () => any,
 };
 
 /**
@@ -19,8 +17,8 @@ type Props = {
  */
 const RelatedPlaces = (props: Props) => (
   <RelatedList
-    data={props.data}
     emptyMessage={i18n.t('RelatedPlaces.labels.empty')}
+    onLoad={props.onLoad}
     renderItem={(place) => (
       <>
         <MapPin

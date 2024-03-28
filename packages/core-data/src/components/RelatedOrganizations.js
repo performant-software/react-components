@@ -3,15 +3,13 @@
 import { Building2 } from 'lucide-react';
 import React from 'react';
 import i18n from '../i18n/i18n';
-import type { AnnotationPage } from '../types/AnnotationPage';
-import type { Organization } from '../types/Organization';
 import RelatedList from './RelatedList';
 
 type Props = {
   /**
-   * The annotation page containing the Core Data organizations to render.
+   * Callback fired when the component is mounted to fetch the data.
    */
-  data: AnnotationPage<Organization>
+  onLoad: () => any
 };
 
 /**
@@ -19,8 +17,8 @@ type Props = {
  */
 const RelatedOrganizations = (props: Props) => (
   <RelatedList
-    data={props.data}
     emptyMessage={i18n.t('RelatedOrganizations.labels.empty')}
+    onLoad={props.onLoad}
     renderItem={(organization) => (
       <>
         <Building2
