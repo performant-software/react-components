@@ -1,13 +1,23 @@
 // @flow
 
 import { Image } from 'lucide-react';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import _ from 'underscore';
 import PlacesService from '../services/Places';
 import { useLoader } from '../hooks/CoreData';
 
 type Props = {
-  id: string
+  /**
+   * The Core Data identifier of the place record.
+   */
+  id: string,
+
+  /**
+   * (Optional) Callback fired when the place record is loaded.
+   *
+   * @param
+   */
+  onLoad: (data) => any
 };
 
 /**
@@ -51,6 +61,15 @@ const PlaceDetails = (props: Props) => {
   const userDefined = useMemo(() => (
     place?.user_defined ? Object.values(place.user_defined) : []
   ), [place]);
+
+  /**
+   * Call the onLoad prop if provided when the place changes.
+   */
+  useEffect(() => {
+    if (props.onLoad && place) {
+      props.onLoad(place);
+    }
+  }, [place]);
 
   return (
     <>
