@@ -5,7 +5,6 @@ import { AlertCircle, ChevronDown } from 'lucide-react';
 import React, { type Node } from 'react';
 import i18n from '../i18n/i18n';
 import LoadAnimation from './LoadAnimation';
-import './RelatedItem.css';
 
 type Props = {
   children: Node,
@@ -54,7 +53,7 @@ const RelatedItemsList = (props: Props) => (
       </Accordion.Trigger>
     </Accordion.Header>
     <Accordion.Content
-      className='accordion-content text-sm leading-6'
+      className='accordion-content text-sm leading-6 data-[state=closed]:h-0'
       forceMount
     >
       { props.children }
