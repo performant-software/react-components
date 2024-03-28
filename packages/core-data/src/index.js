@@ -48,5 +48,6 @@ export { default as PlacesService } from './services/Places';
 
 // Utilities
 export { default as Api } from './utils/Api';
+export { default as CoreData } from './utils/CoreData';
 export { default as Peripleo } from './utils/Peripleo';
 export { default as Typesense } from './utils/Typesense';
