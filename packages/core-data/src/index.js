@@ -22,7 +22,7 @@ export { default as RelatedItem } from './components/RelatedItem';
 export { default as RelatedItemsList } from './components/RelatedItemsList';
 export { default as RelatedList } from './components/RelatedList';
 export { default as RelatedMedia } from './components/RelatedMedia';
-export { default as RelatedOrganization } from './components/RelatedOrganizations';
+export { default as RelatedOrganizations } from './components/RelatedOrganizations';
 export { default as RelatedPeople } from './components/RelatedPeople';
 export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
