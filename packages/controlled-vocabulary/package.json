@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/controlled-vocabulary",
-  "version": "2.1.0-beta.39",
+  "version": "2.1.0-beta.40",
   "description": "A package of components to allow user to configure dropdown elements. Use with the \"controlled_vocabulary\" gem.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -23,8 +23,8 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/semantic-components": "^2.1.0-beta.39",
-    "@performant-software/shared-components": "^2.1.0-beta.39",
+    "@performant-software/semantic-components": "^2.1.0-beta.40",
+    "@performant-software/shared-components": "^2.1.0-beta.40",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
