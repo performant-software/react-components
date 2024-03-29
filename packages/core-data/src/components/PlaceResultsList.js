@@ -7,7 +7,6 @@ import { FixedSizeList } from 'react-window';
 import _ from 'underscore';
 import type { Feature } from '../types/Feature';
 import type { Place } from '../types/typesense/Place';
-import './PlaceResultsList.css';
 
 /**
  * Converts the passed place result to a feature.

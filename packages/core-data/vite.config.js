@@ -29,9 +29,13 @@ export default defineConfig(() => ({
     })
   ],
   build: {
+    cssCodeSplit: true,
     sourcemap: true,
     lib: {
-      entry: './src/index.js',
+      entry: [
+        './src/index.js',
+        './src/tailwind.js'
+      ],
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`
     },

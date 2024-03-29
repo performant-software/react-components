@@ -5,7 +5,6 @@ import { AlertCircle, ChevronDown } from 'lucide-react';
 import React, { type Node } from 'react';
 import i18n from '../i18n/i18n';
 import LoadAnimation from './LoadAnimation';
-import './RelatedItem.css';
 
 type Props = {
   children: Node,

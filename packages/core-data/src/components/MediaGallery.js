@@ -5,7 +5,6 @@ import Viewer from '@samvera/clover-iiif/viewer';
 import { Image, X } from 'lucide-react';
 import React from 'react';
 import type { MediaContent } from '../types/MediaContent';
-import './MediaGallery.css';
 
 type Props = {
   /**

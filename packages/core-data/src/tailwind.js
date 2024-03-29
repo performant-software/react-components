@@ -1,0 +1,3 @@
+// @flow
+
+import './tailwind.css';

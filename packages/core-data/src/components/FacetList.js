@@ -1,7 +1,6 @@
 // @flow
 
 import React, { type Node } from 'react';
-import './FacetList.css';
 
 type Props = {
   label: string,

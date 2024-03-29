@@ -10,6 +10,11 @@
   overflow: hidden;
 }
 
+.related-items-list .accordion-content[data-state="closed"] {
+  visibility: hidden;
+  height: 0;
+}
+
 .related-items-list .accordion-content[data-state='open'] {
   animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }

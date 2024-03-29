@@ -2,7 +2,6 @@
 
 import * as Accordion from '@radix-ui/react-accordion';
 import React, { type Node } from 'react';
-import './RelatedItemsList.css';
 
 type Props = {
   children: Node

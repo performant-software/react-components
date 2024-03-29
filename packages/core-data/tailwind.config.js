@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    './src/index.css',
     './src/**/*.js'
   ],
   theme: {
@@ -10,10 +9,16 @@ module.exports = {
         muted: '#0005119e'
       },
       fontFamily: {
-        sans: ['-apple-system', 'Roboto', 'sans-serif'],
-        'dm-display': ['DM Serif Display'],
-      },
-    },
+        sans: [
+          '-apple-system',
+          'Roboto',
+          'sans-serif'
+        ],
+        'dm-display': [
+          'DM Serif Display'
+        ]
+      }
+    }
   },
   plugins: []
 };
