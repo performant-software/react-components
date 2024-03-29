@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/core-data",
-  "version": "2.1.0-beta.38",
+  "version": "2.1.0-beta.39",
   "description": "A package of components used with the Core Data platform.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -28,6 +28,7 @@
     "i18next": "^23.8.2",
     "instantsearch.js": "^4.66.0",
     "lucide-react": "^0.321.0",
+    "postcss-import": "^16.1.0",
     "react-instantsearch": "^7.5.4",
     "react-virtualized-auto-sizer": "^1.0.22",
     "react-window": "^1.8.10",
@@ -35,7 +36,7 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/geospatial": "^2.1.0-beta.38",
+    "@performant-software/geospatial": "^2.1.0-beta.39",
     "@peripleo/maplibre": "^0.4.2",
     "@peripleo/peripleo": "^0.4.2",
     "react": ">= 16.13.1 < 19.0.0",
