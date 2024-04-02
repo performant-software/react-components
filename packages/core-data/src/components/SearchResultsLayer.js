@@ -7,6 +7,7 @@ import TypesenseUtils from '../utils/Typesense';
 import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
 
 type Props = {
+  boundingBoxData?: any,
   boundingBoxOptions?: any,
   buffer?: number,
   fitBoundingBox?: boolean,
@@ -44,9 +45,9 @@ const SearchResultsLayer = (props: Props) => {
   useSearchCompleted(() => {
     if (props.fitBoundingBox && mapLoaded && data) {
       const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
-      map.fitBounds(boundingBox, props.boundingBoxOptions);
+      map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
     }
-  }, [data, map, mapLoaded, props.boundingBoxOptions, props.buffer, props.fitBoundingBox]);
+  }, [data, map, mapLoaded, props.boundingBoxData, props.boundingBoxOptions, props.buffer, props.fitBoundingBox]);
 
   return (
     <LocationMarkers

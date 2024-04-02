@@ -12,6 +12,17 @@ type Props = {
   animate?: boolean,
 
   /**
+   * (Optional) data to pass to the fitToBounds function.
+   */
+  boundingBoxData?: any,
+
+  /**
+   * (Optional) options to pass to the fitToBounds function.
+   * See [spec](https://maplibre.org/maplibre-gl-js/docs/API/types/FitBoundsOptions/).
+   */
+  boundingBoxOptions?: any,
+
+  /**
    * The number of miles to buffer the GeoJSON data.
    */
   buffer: number,
@@ -86,9 +97,9 @@ const LocationMarkers = (props: Props) => {
   useEffect(() => {
     if (map && props.data && props.fitBoundingBox) {
       const boundingBox = MapUtils.getBoundingBox(props.data, props.buffer);
-      map.fitBounds(boundingBox);
+      map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
     }
-  }, [map, props.buffer, props.data, props.fitBoundingBox]);
+  }, [map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
 
   return (
     <>
