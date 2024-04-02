@@ -83,7 +83,7 @@ const PlaceLayersSelector = (props: Props) => {
               </Checkbox.Root>
               <label
                 className='cursor-pointer grow'
-                htmlFor={layer.url}
+                htmlFor={layer.name}
               >
                 { layer.name }
               </label>
