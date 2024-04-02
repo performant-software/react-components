@@ -1,6 +1,7 @@
 // @flow
 
 import * as Checkbox from '@radix-ui/react-checkbox';
+import clsx from 'clsx';
 import { CheckSquare2, Square } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
 import _ from 'underscore';
@@ -8,6 +9,7 @@ import OverlayLayers from './OverlayLayers';
 import type { Layer as LayerType } from '../types/RuntimeConfig';
 
 type Props = {
+  className?: string | Array<string>,
   label: string,
   layers: Array<LayerType>
 };
@@ -41,7 +43,7 @@ const PlaceLayersSelector = (props: Props) => {
 
   return (
     <div
-      className='px-3 pb-2 pt-4 text-sm border-t'
+      className={clsx('px-3', 'pb-2', 'pt-4', 'text-sm', 'border-t', props.className)}
     >
       <OverlayLayers
         overlays={selectedLayers}
@@ -52,7 +54,7 @@ const PlaceLayersSelector = (props: Props) => {
         { props.label }
       </h2>
       <ul
-        className='py-3 leading-relaxed'
+        className='leading-relaxed'
       >
         { _.map(props.layers, (layer, index) => (
           <li
