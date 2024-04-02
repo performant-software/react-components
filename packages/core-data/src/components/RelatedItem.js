@@ -3,6 +3,7 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { AlertCircle, ChevronDown } from 'lucide-react';
 import React, { type Node } from 'react';
+import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import LoadAnimation from './LoadAnimation';
 
@@ -31,7 +32,7 @@ const RelatedItemsList = (props: Props) => (
       >
         <div>
           { props.label }
-          { props.count && (
+          { _.isFinite(props.count) && (
             <span className='ml-1'>
               { i18n.t('RelatedItemsList.labels.count', { count: props.count })}
             </span>
