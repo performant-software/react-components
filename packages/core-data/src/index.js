@@ -32,7 +32,6 @@ export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 // Contexts
 export { default as CoreDataContext } from './context/CoreData';
 export { default as FacetStateContext } from './context/FacetStateContext';
-export { default as I18nContext } from './context/I18n';
 
 // Hooks
 export { useLoader } from './hooks/CoreData';

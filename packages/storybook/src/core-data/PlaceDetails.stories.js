@@ -138,7 +138,7 @@ export const RelatedItems = () => (
       >
         <RelatedMedia
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedMedia(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedManifests(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
           )}
         />
       </RelatedItem>

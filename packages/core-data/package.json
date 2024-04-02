@@ -28,7 +28,6 @@
     "@turf/turf": "^6.5.0",
     "clsx": "^2.1.0",
     "dequal": "^2.0.3",
-    "i18next": "^23.8.2",
     "instantsearch.js": "^4.66.0",
     "lucide-react": "^0.321.0",
     "postcss-import": "^16.1.0",
