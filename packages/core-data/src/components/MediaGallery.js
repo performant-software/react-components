@@ -2,25 +2,19 @@
 
 import * as Dialog from '@radix-ui/react-dialog';
 import Viewer from '@samvera/clover-iiif/viewer';
-import { Image, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import React from 'react';
-import type { MediaContent } from '../types/MediaContent';
 
 type Props = {
   /**
-   * The MediaContent record contain the IIIF manifest URL.
+   * URL of the IIIF manifest to render.
    */
-  defaultItem: MediaContent,
+  manifestUrl: string,
 
   /**
    * Callback fired when the dialog is closed.
    */
-  onClose: () => void,
-
-  /**
-   * Title text to display at the top of the dialog.
-   */
-  title?: string
+  onClose: () => void
 };
 
 /**
@@ -28,9 +22,8 @@ type Props = {
  */
 const MediaGallery = (props: Props) => (
   <Dialog.Root
-    className='media-gallery'
+    open={props.manifestUrl}
     onOpenChange={props.onClose}
-    open={Boolean(props.defaultItem)}
   >
     <Dialog.Portal>
       <Dialog.Overlay
@@ -39,23 +32,16 @@ const MediaGallery = (props: Props) => (
       <Dialog.Content
         className='dialog-content'
       >
-        <Dialog.Title
-          className='dialog-title flex items-center'
-        >
-          <Image
-            className='h-4 w-4 mr-1.5'
-          />
-          { props.title }
-        </Dialog.Title>
         <div
           className='pt-6 pb-2 text-sm w-full text-muted min-h-20'
         >
-          { Boolean(props.defaultItem) && (
+          { props.manifestUrl && (
             <Viewer
-              iiifContent={props.defaultItem.manifest_url}
+              iiifContent={props.manifestUrl}
               options={{
                 informationPanel: {
-                  open: false
+                  open: false,
+                  renderToggle: false
                 }
               }}
             />
@@ -65,6 +51,7 @@ const MediaGallery = (props: Props) => (
           asChild
         >
           <button
+            aria-label='Close'
             className='dialog-close rounded-full'
             type='button'
           >

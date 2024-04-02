@@ -27,7 +27,7 @@ const fetchOne = (baseUrl, id, projectIds, params = {}) => {
  * @returns {Promise<any>}
  */
 const fetchRelatedMedia = (baseUrl, id, projectIds, params = {}) => {
-  const url = Api.buildNestedUrl(baseUrl, 'places', id, 'media_contents', projectIds, params);
+  const url = Api.buildNestedUrl(baseUrl, 'places', id, 'manifests', projectIds, params);
   return fetch(url).then((response) => response.json());
 };
 
