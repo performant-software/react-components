@@ -60,7 +60,7 @@ const PlaceLayersSelector = (props: Props) => {
             key={index}
           >
             <div
-              className='flex gap-1.5'
+              className='flex gap-1.5 items-center'
             >
               <Checkbox.Root
                 className='hover:bg-transparent mb-0.5'
