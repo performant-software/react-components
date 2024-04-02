@@ -15,6 +15,7 @@ export { default as MediaGallery } from './components/MediaGallery';
 export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
 export { default as PlaceDetails } from './components/PlaceDetails';
+export { default as PlaceLayersSelector } from './components/PlaceLayersSelector';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
 export { default as PlaceResultsList } from './components/PlaceResultsList';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
