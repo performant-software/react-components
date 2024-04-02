@@ -9,10 +9,26 @@ import Api from '../utils/Api';
  * @param id
  * @param projectIds
  * @param params
+ *
  * @returns {Promise<any>}
  */
 const fetchOne = (baseUrl, id, projectIds, params = {}) => {
   const url = Api.buildUrl(baseUrl, 'places', id, projectIds, params);
+  return fetch(url).then((response) => response.json());
+};
+
+/**
+ * Calls the GET /core_data/public/places/:id/manifests API endpoint.
+ *
+ * @param baseUrl
+ * @param id
+ * @param projectIds
+ * @param params
+ *
+ * @returns {Promise<any>}
+ */
+const fetchRelatedManifests = (baseUrl, id, projectIds, params = {}) => {
+  const url = Api.buildNestedUrl(baseUrl, 'places', id, 'manifests', projectIds, params);
   return fetch(url).then((response) => response.json());
 };
 
@@ -27,7 +43,7 @@ const fetchOne = (baseUrl, id, projectIds, params = {}) => {
  * @returns {Promise<any>}
  */
 const fetchRelatedMedia = (baseUrl, id, projectIds, params = {}) => {
-  const url = Api.buildNestedUrl(baseUrl, 'places', id, 'manifests', projectIds, params);
+  const url = Api.buildNestedUrl(baseUrl, 'places', id, 'media_contents', projectIds, params);
   return fetch(url).then((response) => response.json());
 };
 
@@ -93,6 +109,7 @@ const fetchRelatedTaxonomies = (baseUrl, id, projectIds, params = {}) => {
 
 export default {
   fetchOne,
+  fetchRelatedManifests,
   fetchRelatedMedia,
   fetchRelatedOrganizations,
   fetchRelatedPeople,
