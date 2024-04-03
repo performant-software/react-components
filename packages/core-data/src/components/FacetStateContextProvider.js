@@ -1,11 +1,10 @@
 // @flow
 
-import { useRuntimeConfig } from '@peripleo/peripleo';
 import React, {
   useCallback,
   useEffect,
   useState,
-  type ReactNode
+  type Node
 } from 'react';
 import _ from 'underscore';
 import FacetStateContext from '../context/FacetStateContext';
@@ -24,23 +23,47 @@ const RefinementListProxy = ({ attribute, useRefinementList }: RefinementListPro
 };
 
 type Props = {
-  children: ReactNode,
+  /**
+   * Search API key.
+   */
+  apiKey: string,
+
+  /**
+   * JSX child elements.
+   */
+  children: Node,
+
+  /**
+   * Search host URI.
+   */
+  host: string,
+
+  /**
+   * Search index name.
+   */
+  indexName: string,
+
+  /**
+   * Search protocol.
+   */
+  protocol: string,
+
+  /**
+   * `useRefinementList` hook. This hook is used as a work-around to keep the search state persistent.
+   *
+   * @param props
+   */
   useRefinementList: (props: RefinementListProxyProps) => void
 };
 
 const TYPE_AUTO = 'auto';
 
+/**
+ * This component renders a context that queries the Typesense collection and returns a list of all facetable
+ * attributes.
+ */
 const FacetStateContextProvider = (props: Props) => {
   const [attributes, setAttributes] = useState<Array<string>>([]);
-
-  const { typesense } = useRuntimeConfig<any>();
-
-  const {
-    protocol,
-    host,
-    api_key: key,
-    index_name: name
-  } = typesense;
 
   /**
    * Filters the list of facets to only include fields that are facetable, without the "auto" type.
@@ -62,8 +85,8 @@ const FacetStateContextProvider = (props: Props) => {
    * Loads the facets from the Typesense schema.
    */
   useEffect(() => {
-    const url = `${protocol}://${host}/collections/${name}`;
-    const headers = { 'X-TYPESENSE-API-KEY': key };
+    const url = `${props.protocol}://${props.host}/collections/${props.indexName}`;
+    const headers = { 'X-TYPESENSE-API-KEY': props.apiKey };
 
     fetch(url, { headers })
       .then((response) => response.json())
@@ -78,7 +101,7 @@ const FacetStateContextProvider = (props: Props) => {
         attributes
       }}
     >
-      { attributes.map((attribute) => (
+      { _.map(attributes, (attribute) => (
         <RefinementListProxy
           attribute={attribute}
           key={attribute}

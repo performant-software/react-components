@@ -7,16 +7,39 @@ import _ from 'underscore';
 import LoadAnimation from './LoadAnimation';
 
 type Props = {
+  /**
+   * JSC child elements.
+   */
   children: Node,
+
+  /**
+   * The count of the number of related items in the list.
+   */
   count?: number,
+
+  /**
+   * If `true`, an alert icon is rendered.
+   */
   error?: boolean,
+
+  /**
+   * The ID of the relationship.
+   */
   id: string,
+
+  /**
+   * The accordion item label.
+   */
   label: string,
+
+  /**
+   * If `true`, a loading indicator is rendered.
+   */
   loading?: boolean
 };
 
 /**
- * This component renders the passed list of related items in an accordion fashion.
+ * This component renders an accordion wrapper for the passed related item.
  */
 const RelatedItemsList = (props: Props) => (
   <Accordion.Item
@@ -27,7 +50,7 @@ const RelatedItemsList = (props: Props) => (
     <Accordion.Header>
       <Accordion.Trigger
         className='accordion-trigger border-black/20 border border-t border-b-0 border-l-0 border-r-0 border-solid
-          rounded-none w-full flex justify-between items-center px-3 py-3 text-sm'
+                   rounded-none w-full flex justify-between items-center px-3 py-3 text-sm'
       >
         <div>
           { props.label }

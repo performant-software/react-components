@@ -4,6 +4,9 @@ import * as Accordion from '@radix-ui/react-accordion';
 import React, { type Node } from 'react';
 
 type Props = {
+  /**
+   * JSX child elements.
+   */
   children: Node
 };
 

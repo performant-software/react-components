@@ -6,16 +6,37 @@ import React from 'react';
 import _ from 'underscore';
 
 type Layer = {
-  layer_type: string,
+  /**
+   * The type of layer to render.
+   */
+  layer_type: 'geojson' | 'raster',
+
+  /**
+   * (Optional) GeoJSON data to pass to the layer.
+   */
   data?: { [key: string]: any },
+
+  /**
+   * Name of the layer.
+   */
   name: string,
+
+  /**
+   * (Optional) URL that contains the layer. This can be a URL to GeoJSON data or a Raster tile set.
+   */
   url?: string
 };
 
 type OverlayLayerProps = {
+  /**
+   * The overlay layer to render.
+   */
   overlay: Layer
 };
 
+/**
+ * This component renders a GeoJSONLayer or RasterLayer component depending on the `layer_type` of the passed `overlay`.
+ */
 const OverlayLayer = (props: OverlayLayerProps) => {
   const { overlay } = props;
 
@@ -44,9 +65,15 @@ const OverlayLayer = (props: OverlayLayerProps) => {
 };
 
 type Props = {
+  /**
+   * The set of layers to render.
+   */
   overlays: Array<LayerType>
 };
 
+/**
+ * This component renders a set of overlay layers.
+ */
 const OverlayLayers = (props: Props) => (
   _.map(props.overlays, (overlay: LayerType, index: number) => (
     <OverlayLayer

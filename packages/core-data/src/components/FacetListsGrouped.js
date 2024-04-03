@@ -6,13 +6,31 @@ import FacetLists from './FacetLists';
 import TypesenseUtils from '../utils/Typesense';
 
 type Props = {
+  /**
+   * The list of attributes for which to render the lists.
+   */
   attributes: Array<string>,
+
+  /**
+   * Callback fired to render the facet list.
+   *
+   * @param attribute
+   */
   renderList: (attribute: string) => Node,
+
+  /**
+   * Returns the label for the passed UUID value.
+   *
+   * @param uuid
+   */
   resolveLabel: (uuid: string) => string
 };
 
 const DEFAULT_ID = 'root';
 
+/**
+ * This component renders a set of facet lists for the passed attributes, grouped by the relationship value.
+ */
 const FacetListsGrouped = (props: Props) => {
   /**
    * Groups the attributes according to the relationship UUID prefix.

@@ -7,15 +7,50 @@ import _ from 'underscore';
 import type { Layer } from '../types/RuntimeConfig';
 
 type Props = {
+  /**
+   * The current base layer value.
+   */
   baseLayer: Layer,
+
+  /**
+   * A list of all available base layer values.
+   */
   baseLayers: Array<Layer>,
+
+  /**
+   * A list of all available overlay layer values.
+   */
   dataLayers: Array<Layer>,
+
+  /**
+   * Label for the list of base layer values.
+   */
   baseLayersLabel: string,
+
+  /**
+   * Callback fired when the base layer is changed.
+   *
+   * @param config
+   */
   onChangeBaseLayer: (config: Layer) => void,
+
+  /**
+   * Callback fired when an overlay layer is toggled on/off.
+   *
+   * @param visible
+   */
   onChangeOverlays: (visible: Array<string>) => void,
+
+  /**
+   * Label for the list of overlay layer values.
+   */
   overlaysLabel: string
 };
 
+/**
+ * This component renders a dropdown to allow the selection of a base layer and multiple overlay layers for
+ * a Peripleo map.
+ */
 const LayerMenu = (props: Props) => {
   const [selectedOverlays, setSelectedOverlays] = useState({});
 

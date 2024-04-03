@@ -79,6 +79,7 @@ const HitComponent = (props: HitComponentProps) => {
       className={className}
     >
       <button
+        aria-label='Search result'
         className='py-2 px-3 flex-grow text-left inline-flex flex-col'
         onClick={props.onClick}
         type='button'

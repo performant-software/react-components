@@ -27,7 +27,7 @@ type Props = {
 };
 
 /**
- * This component is a helper component used to structure the lists for the other `Related*` comnponents.
+ * This component is a helper component used to structure the lists for the other `Related*` components.
  */
 const RelatedList = (props: Props) => {
   const { data, loading } = useLoader(props.onLoad, []);

@@ -7,13 +7,30 @@ import TypesenseUtils from '../utils/Typesense';
 import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
 
 type Props = {
+  /**
+   * Additional event data to pass to the fitToBounds function.
+   */
   boundingBoxData?: any,
+
+  /**
+   * Additional options to pass to the fitToBounds function.
+   */
   boundingBoxOptions?: any,
+
+  /**
+   * The number of miles to buffer the GeoJSON data.
+   */
   buffer?: number,
-  fitBoundingBox?: boolean,
-  layerId: string
+
+  /**
+   * If `true`, the map will fit the bounding box around the passed data.
+   */
+  fitBoundingBox?: boolean
 };
 
+/**
+ * This component renders a map layer for the search results from a Typesense search index.
+ */
 const SearchResultsLayer = (props: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -56,6 +73,10 @@ const SearchResultsLayer = (props: Props) => {
       fitBoundingBox={false}
     />
   );
+};
+
+SearchResultsLayer.defaultProps = {
+  fitBoundingBox: true
 };
 
 export default SearchResultsLayer;

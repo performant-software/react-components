@@ -9,11 +9,25 @@ import OverlayLayers from './OverlayLayers';
 import type { Layer as LayerType } from '../types/RuntimeConfig';
 
 type Props = {
+  /**
+   * Classname to append to the root element.
+   */
   className?: string | Array<string>,
+
+  /**
+   * The label to render for the selector.
+   */
   label: string,
+
+  /**
+   * The layer options to render for the selector.
+   */
   layers: Array<LayerType>
 };
 
+/**
+ * This component renders a selector for the passed list of layers.
+ */
 const PlaceLayersSelector = (props: Props) => {
   const [selectedLayers, setSelectedLayers] = useState([]);
 
