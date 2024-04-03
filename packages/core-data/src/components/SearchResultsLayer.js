@@ -33,11 +33,23 @@ type Props = {
  */
 const SearchResultsLayer = (props: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [searchCompleted, setSearchCompleted] = useState(false);
 
   const hits = useCachedHits();
   const map = useMap();
 
   const data = useMemo(() => TypesenseUtils.toFeatureCollection(hits), [hits]);
+
+  /**
+   * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,
+   * rather than using the default implementation in LocationMarker that will change when the "data" prop changes.
+   */
+  useEffect(() => {
+    if (props.fitBoundingBox && mapLoaded && searchCompleted) {
+      const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
+      map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
+    }
+  }, [mapLoaded, searchCompleted, props.boundingBoxData, props.boundingBoxOptions, props.buffer, props.fitBoundingBox]);
 
   /**
    * Sets the mapLoaded state to true.
@@ -56,15 +68,9 @@ const SearchResultsLayer = (props: Props) => {
   }, [map]);
 
   /**
-   * Here we'll implement our own fitting of the bounding box, rather than using
-   * the default implementation in LocationMarker that will change when the "data" prop changes.
+   * Sets the search completed state to true.
    */
-  useSearchCompleted(() => {
-    if (props.fitBoundingBox && mapLoaded && data) {
-      const boundingBox = MapUtils.getBoundingBox(data, props.buffer);
-      map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
-    }
-  }, [data, map, mapLoaded, props.boundingBoxData, props.boundingBoxOptions, props.buffer, props.fitBoundingBox]);
+  useSearchCompleted(() => setSearchCompleted(true), []);
 
   return (
     <LocationMarkers
