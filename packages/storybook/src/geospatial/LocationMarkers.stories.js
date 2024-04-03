@@ -128,3 +128,36 @@ export const MultiplePoints = () => (
     </Map>
   </Peripleo>
 );
+
+export const NoZoom = () => (
+  <Peripleo>
+    <Map
+      style={mapStyle}
+    >
+      <Controls
+        position='topright'
+      >
+        <Zoom />
+      </Controls>
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <LocationMarkers
+          boundingBoxOptions={{
+            animate: false
+          }}
+          data={{
+            type: 'Point',
+            coordinates: [
+              -81.2653727,
+              31.4252249
+            ]
+          }}
+        />
+      </div>
+    </Map>
+  </Peripleo>
+);
