@@ -1,5 +1,6 @@
 // @flow
 
+import booleanValid from '@turf/boolean-valid';
 import { bbox, bboxPolygon, buffer } from '@turf/turf';
 
 const MIN_LATITUDE = -90;
@@ -57,7 +58,17 @@ const validateCoordinates = (coordinates) => {
   return valid;
 };
 
+/**
+ * Returns true if the passed data set is valid GeoJSON.
+ *
+ * @param data
+ *
+ * @returns {boolean}
+ */
+const validateGeometry = (data) => booleanValid(data);
+
 export default {
   getBoundingBox,
-  validateCoordinates
+  validateCoordinates,
+  validateGeometry
 };

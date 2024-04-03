@@ -161,3 +161,51 @@ export const NoZoom = () => (
     </Map>
   </Peripleo>
 );
+
+export const EmptyDataSet = () => (
+  <Peripleo>
+    <Map
+      style={mapStyle}
+    >
+      <Controls
+        position='topright'
+      >
+        <Zoom />
+      </Controls>
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <LocationMarkers
+          data={{}}
+        />
+      </div>
+    </Map>
+  </Peripleo>
+);
+
+export const InvalidDataSet = () => (
+  <Peripleo>
+    <Map
+      style={mapStyle}
+    >
+      <Controls
+        position='topright'
+      >
+        <Zoom />
+      </Controls>
+      <div
+        style={{
+          width: '100%',
+          height: '300px'
+        }}
+      >
+        <LocationMarkers
+          data={{ test: '123' }}
+        />
+      </div>
+    </Map>
+  </Peripleo>
+);
