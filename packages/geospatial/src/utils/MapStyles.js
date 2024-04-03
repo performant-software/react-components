@@ -1,6 +1,6 @@
 // @flow
 
-export const DEFAULT_POINT_STYLE = {
+const point = {
   type: 'circle',
   paint: {
     'circle-radius': [
@@ -21,7 +21,7 @@ export const DEFAULT_POINT_STYLE = {
   }
 };
 
-export const DEFAULT_FILL_STYLE = {
+const fill = {
   type: 'fill',
   paint: {
     'fill-color': '#ff623b',
@@ -29,10 +29,16 @@ export const DEFAULT_FILL_STYLE = {
   }
 };
 
-export const DEFAULT_STROKE_STYLE = {
+const stroke = {
   type: 'line',
   paint: {
     'line-color': '#ff623b',
     'line-opacity': 0.6
   }
+};
+
+export default {
+  point,
+  fill,
+  stroke
 };

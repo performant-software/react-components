@@ -1,3 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './styles/FacetList.css';
+@import './styles/LoadAnimation.css';
+@import './styles/MediaGallery.css';
+@import './styles/PlaceResultsList.css';
+@import './styles/RelatedItemsList.css';

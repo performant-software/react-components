@@ -2,16 +2,18 @@
 
 import { ListTree } from 'lucide-react';
 import React from 'react';
-import i18n from '../i18n/i18n';
-import type { AnnotationPage } from '../types/AnnotationPage';
 import RelatedList from './RelatedList';
-import type { Taxonomy } from '../types/Taxonomy';
 
 type Props = {
   /**
-   * The annotation page containing the Core Data taxonomies to render.
+   * A message to display when no records are returned from the API.
    */
-  data: AnnotationPage<Taxonomy>
+  emptyMessage?: string,
+
+  /**
+   * Callback fired when the component is mounted to fetch the data.
+   */
+  onLoad: () => any,
 };
 
 /**
@@ -19,8 +21,8 @@ type Props = {
  */
 const RelatedTaxonomies = (props: Props) => (
   <RelatedList
-    data={props.data}
-    emptyMessage={i18n.t('RelatedTaxonomies.labels.empty')}
+    emptyMessage={props.emptyMessage}
+    onLoad={props.onLoad}
     renderItem={(taxonomy) => (
       <>
         <ListTree

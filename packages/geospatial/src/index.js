@@ -11,3 +11,4 @@ export { default as RasterLayer } from './components/RasterLayer';
 
 // Utils
 export { default as Map } from './utils/Map';
+export { default as MapStyles } from './utils/MapStyles';

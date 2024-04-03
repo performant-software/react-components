@@ -2,16 +2,18 @@
 
 import { MapPin } from 'lucide-react';
 import React from 'react';
-import i18n from '../i18n/i18n';
-import type { AnnotationPage } from '../types/AnnotationPage';
-import type { Place } from '../types/Place';
 import RelatedList from './RelatedList';
 
 type Props = {
   /**
-   * The annotation page containing the Core Data places to render.
+   * A message to display when no records are returned from the API.
    */
-  data: AnnotationPage<Place>
+  emptyMessage?: string,
+
+  /**
+   * Callback fired when the component is mounted to fetch the data.
+   */
+  onLoad: () => any,
 };
 
 /**
@@ -19,8 +21,8 @@ type Props = {
  */
 const RelatedPlaces = (props: Props) => (
   <RelatedList
-    data={props.data}
-    emptyMessage={i18n.t('RelatedPlaces.labels.empty')}
+    emptyMessage={props.emptyMessage}
+    onLoad={props.onLoad}
     renderItem={(place) => (
       <>
         <MapPin

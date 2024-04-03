@@ -1,12 +1,17 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import coreDataConfig from '@performant-software/core-data/tailwind.config';
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  presets: [
+    coreDataConfig
+  ],
   content: [
-    './src/index.css',
-    './src/**/*.js'
+    './src/**/*.{js,jsx,ts,tsx}',
+    '../../node_modules/@performant-software/core-data/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
-}
-
+  plugins: []
+};

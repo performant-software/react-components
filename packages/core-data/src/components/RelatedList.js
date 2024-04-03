@@ -2,7 +2,8 @@
 
 import React from 'react';
 import _ from 'underscore';
-import type { AnnotationPage } from '../types/AnnotationPage';
+import { useLoader } from '../hooks/CoreData';
+import LoadAnimation from './LoadAnimation';
 
 type Item = {
   id: string
@@ -10,9 +11,9 @@ type Item = {
 
 type Props = {
   /**
-   * An annotation page containing the list of records to render.
+   * Callback fired when the component is mounted to fetch the data.
    */
-  data: AnnotationPage<Item>,
+  onLoad: () => any,
 
   /**
    * A message to display when the list is empty.
@@ -26,12 +27,18 @@ type Props = {
 };
 
 /**
- * This component is a helper component used to structure the lists for the other `Related*` comnponents.
+ * This component is a helper component used to structure the lists for the other `Related*` components.
  */
 const RelatedList = (props: Props) => {
-  const { items } = props.data;
+  const { data, loading } = useLoader(props.onLoad, []);
 
-  if (_.isEmpty(items)) {
+  if (loading) {
+    return (
+      <LoadAnimation />
+    );
+  }
+
+  if (_.isEmpty(data?.items)) {
     return (
       <div
         className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/50 italic'
@@ -45,7 +52,7 @@ const RelatedList = (props: Props) => {
     <ul
       className='p-3 pt-1 pb-4'
     >
-      { _.map(items, (item) => (
+      { _.map(data?.items, (item) => (
         <li
           key={item.id}
           className='flex items-center'
