@@ -3,6 +3,7 @@
 import { LocationMarkers, Map as MapUtils } from '@performant-software/geospatial';
 import { useMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo, useState } from 'react';
+import _ from 'underscore';
 import TypesenseUtils from '../utils/Typesense';
 import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
 
@@ -38,7 +39,7 @@ const SearchResultsLayer = (props: Props) => {
   const hits = useCachedHits();
   const map = useMap();
 
-  const data = useMemo(() => TypesenseUtils.toFeatureCollection(hits), [hits]);
+  const data = useMemo(() => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits), [hits]);
 
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,
@@ -71,6 +72,10 @@ const SearchResultsLayer = (props: Props) => {
    * Sets the search completed state to true.
    */
   useSearchCompleted(() => setSearchCompleted(true), []);
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <LocationMarkers

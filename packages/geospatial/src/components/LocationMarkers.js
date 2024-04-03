@@ -2,6 +2,7 @@
 
 import { GeoJSONLayer, PulsingMarkerLayer, useMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo } from 'react';
+import _ from 'underscore';
 import MapStyles from '../utils/MapStyles';
 import MapUtils from '../utils/Map';
 
@@ -92,23 +93,23 @@ const LocationMarkers = (props: Props) => {
   const map = useMap();
 
   /**
-   * Memo-izes the data validation.
+   * Memo-izes the data prop.
    *
-   * @type {boolean}
+   * @type {{[p: string]: *}}
    */
-  const isValid = useMemo(() => MapUtils.validateGeometry(props.data), [props.data]);
+  const data = useMemo(() => (_.isEmpty(props.data) ? null : props.data), [props.data]);
 
   /**
    * Sets the bounding box on the map.
    */
   useEffect(() => {
-    if (map && isValid && props.data && props.fitBoundingBox) {
+    if (map && data && props.fitBoundingBox) {
       const boundingBox = MapUtils.getBoundingBox(props.data, props.buffer);
       map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
     }
-  }, [isValid, map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
+  }, [map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
 
-  if (!isValid) {
+  if (!data) {
     return null;
   }
 
