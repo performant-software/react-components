@@ -20,6 +20,10 @@ type TypesenseConfig = {
 const ATTRIBUTE_DELIMITER = '.';
 const SUFFIX_FACET = '_facet';
 
+const DEFAULT_SEARCH_PARAMETERS = {
+  limit: 250
+};
+
 const createCachedHits = (hits: Array<TypesenseSearchResult>) => {
   const ids = new Set(hits.map((h) => h.uuid));
 
@@ -87,10 +91,10 @@ const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
       cacheSearchResultsForSeconds: 120
     },
     geoLocationField: 'coordinates',
-    additionalSearchParameters: {
-      query_by: config.query_by,
-      limit: config.limit || 250
-    },
+    additionalSearchParameters: _.defaults(
+      config.additionalSearchParameters,
+      DEFAULT_SEARCH_PARAMETERS
+    ),
     ...options
   })
 );
