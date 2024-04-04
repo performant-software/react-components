@@ -63,33 +63,32 @@ const useProgressiveSearch = (infiniteHits) => {
     const { results } = infiniteHits;
 
     const isFirstPage = results.page === 0;
-    const isLastPage = results.page + 1 >= results.nbPages;
-
     const hits = TypesenseUtils.normalizeResults(results.hits);
-
-    const isSearchCompleted = (isLastPage || !infiniteHits.showMore)
-      && hasStateChanged(results._state, lastSearchState.current);
 
     // Add to cache and load next page
     if (isFirstPage && hasStateChanged(results._state, lastSearchState.current, true)) {
-      setCachedHits(() => TypesenseUtils.createCachedHits(hits, isSearchCompleted));
+      setCachedHits(() => TypesenseUtils.createCachedHits(hits));
     } else {
-      setCachedHits(({ merge }) => merge(hits, isSearchCompleted));
+      setCachedHits(({ merge }) => merge(hits));
     }
-
-    if (!isLastPage && infiniteHits.showMore) {
-      setTimeout(() => infiniteHits.showMore(), 25);
-    }
-
-    lastSearchState.current = results._state;
   }, [infiniteHits.results]);
 
   useEffect(() => {
-    if (cachedHits.isComplete) {
+    const { results } = infiniteHits;
+
+    const hits = TypesenseUtils.normalizeResults(results.hits);
+    const isLastPage = results.page + 1 >= results.nbPages;
+
+    if (!isLastPage && infiniteHits.showMore) {
+      setTimeout(() => infiniteHits.showMore(), 25);
+    } else if (hasStateChanged(results._state, lastSearchState.current)) {
       callbacks.current.forEach((callback) => {
-        callback(cachedHits.hits);
+        const merged = cachedHits.merge(hits);
+        callback(merged.hits);
       });
     }
+
+    lastSearchState.current = results._state;
   }, [cachedHits]);
 
   return { cachedHits: cachedHits.hits, observe, unobserve };
