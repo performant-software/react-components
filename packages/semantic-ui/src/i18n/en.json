@@ -262,7 +262,8 @@
       "lessThan": "Is less than",
       "notContain": "Does not contain",
       "notEmpty": "Is not empty",
-      "notEqual": "Does not equal"
+      "notEqual": "Does not equal",
+      "whereIn": "In in list"
     },
     "title": "Filters"
   },
