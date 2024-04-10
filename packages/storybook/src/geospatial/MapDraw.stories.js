@@ -21,21 +21,24 @@ export default {
 
 export const Default = () => (
   <MapDraw
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    apiKey={mapTilerKey}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   />
 );
 
 export const GeoJSON = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={bostonBoundaryData}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   />
 );
 
 export const Point = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={{
       type: 'Point',
       coordinates: [
@@ -43,13 +46,14 @@ export const Point = () => (
         31.4252249
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   />
 );
 
 export const GeoJSONFillLayer = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={{
       type: 'GeometryCollection',
       geometries: [
@@ -62,7 +66,7 @@ export const GeoJSONFillLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -79,6 +83,7 @@ export const GeoJSONFillLayer = () => (
 
 export const GeoJSONCircleLayer = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={{
       type: 'GeometryCollection',
       geometries: [
@@ -91,7 +96,7 @@ export const GeoJSONCircleLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -108,6 +113,7 @@ export const GeoJSONCircleLayer = () => (
 
 export const GeoJSONLayerStyles = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={{
       type: 'GeometryCollection',
       geometries: [
@@ -120,7 +126,7 @@ export const GeoJSONLayerStyles = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -141,6 +147,7 @@ export const GeoJSONLayerStyles = () => (
 
 export const RasterLayer = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     buffer={120}
     data={{
       type: 'GeometryCollection',
@@ -154,7 +161,7 @@ export const RasterLayer = () => (
         }
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <LayerMenu
@@ -176,6 +183,7 @@ export const RasterLayer = () => (
 
 export const EmptyLayerMenu = () => (
   <MapDraw
+    apiKey={mapTilerKey}
     data={{
       type: 'Point',
       coordinates: [
@@ -183,7 +191,7 @@ export const EmptyLayerMenu = () => (
         31.4252249
       ]
     }}
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <LayerMenu names={[]} />
@@ -192,7 +200,8 @@ export const EmptyLayerMenu = () => (
 
 export const CustomControl = () => (
   <MapDraw
-    mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`}
+    apiKey={mapTilerKey}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
     onChange={action('onChange')}
   >
     <MapControl
@@ -207,4 +216,24 @@ export const CustomControl = () => (
       </button>
     </MapControl>
   </MapDraw>
+);
+
+export const GeocodingPoints = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    geocoding='point'
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    onChange={action('onChange')}
+    onGeocodingSelection={action('onGeocodingSelection')}
+  />
+);
+
+export const GeocodingPolygons = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    geocoding='polygon'
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    onChange={action('onChange')}
+    onGeocodingSelection={action('onGeocodingSelection')}
+  />
 );

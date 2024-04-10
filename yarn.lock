@@ -2089,6 +2089,13 @@
     rw "^1.3.3"
     sort-object "^3.0.3"
 
+"@maptiler/geocoding-control@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@maptiler/geocoding-control/-/geocoding-control-1.2.2.tgz#319b1b2abaa2b4de6cc91e1a2990e58b18557960"
+  integrity sha512-w0JH0MOWN/z4l5t89LPinn9P9CGUg+L9R0WslXSVFP8gX9SYUMaqmGB28txXlSJsckA5/oyYfOe5UOBgXK7sbw==
+  dependencies:
+    geo-coordinates-parser "^1.6.4"
+
 "@mdx-js/react@^2.1.5":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-2.3.0.tgz#4208bd6d70f0d0831def28ef28c26149b03180b3"
@@ -9055,6 +9062,11 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
+
+geo-coordinates-parser@^1.6.4:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/geo-coordinates-parser/-/geo-coordinates-parser-1.6.6.tgz#856ea86639b5fb4ea20208418b7cfcf465d55fc2"
+  integrity sha512-+zmVBzbTrC/LyFUMcYrvUqi+XUYkJ6bWqPHywfCsMYLa9BEGHEzLsBgltwXS9Ul5oJcFbrdt2y/CjjxNtTTQ+w==
 
 geojson-equality@0.1.6:
   version "0.1.6"

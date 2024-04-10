@@ -14,6 +14,7 @@ import React, {
 import Map, { type MapboxMap } from 'react-map-gl';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
+import GeocodingControl from './GeocodingControl';
 import MapUtils from '../utils/Map';
 import './MapDraw.css';
 
@@ -23,6 +24,11 @@ MapboxDraw.constants.classes.CONTROL_PREFIX = 'maplibregl-ctrl-';
 MapboxDraw.constants.classes.CONTROL_GROUP = 'maplibregl-ctrl-group';
 
 type Props = {
+  /**
+   * MapTiler API key.
+   */
+  apiKey?: string,
+
   /**
    * The number of miles to buffer the GeoJSON data.
    */
@@ -39,6 +45,11 @@ type Props = {
   data: GeometryCollection | FeatureCollection,
 
   /**
+   * Controls the type of GeoJSON data returned from the MapTiler Geocoding API.
+   */
+  geocoding?: undefined | 'point' | 'polygon',
+
+  /**
    * URL of the map style to render. This URL should contain any necessary API keys.
    */
   mapStyle: string,
@@ -49,6 +60,11 @@ type Props = {
    * @param features
    */
   onChange: (features: Array<any>) => void,
+
+  /**
+   * Callback fired when an item is selected from the geocoding dropdown.
+   */
+  onGeocodingSelection?: (data: any) => void,
 
   /**
    * Map style object.
@@ -66,7 +82,8 @@ const DEFAULT_ZOOM_DELAY = 1000;
 
 const GeometryTypes = {
   geometryCollection: 'GeometryCollection',
-  point: 'Point'
+  point: 'Point',
+  polygon: 'Polygon'
 };
 
 /**
@@ -80,16 +97,52 @@ const MapDraw = (props: Props) => {
   const mapRef = useRef<MapboxMap>();
 
   /**
+   * Returns true if the passed geometry type is valid. MapTiler fires the onSelection callback twice: Once after
+   * selecting the record from the list (with a point geometry), and once after making a call to the server for the
+   * full record (polygon geometry). We should on fire the onGeocodingSelection callback and add the geometry to the
+   * map once.
+   *
+   * @type {function({geometry: {type: *}}): *}
+   */
+  const isValid = useCallback(({ geometry: { type } }) => (
+    (props.geocoding === 'point' && type === GeometryTypes.point)
+    || (props.geocoding === 'polygon' && type === GeometryTypes.polygon)
+  ), [props.geocoding]);
+
+  /**
    * Calls the onChange prop with all of the geometries in the current drawer.
    *
    * @type {(function(): void)|*}
    */
-  const onChange = useCallback(() => {
-    props.onChange(drawRef.current.getAll());
-  }, [props.onChange]);
+  const onChange = useCallback(() => props.onChange(drawRef.current.getAll()), [props.onChange]);
 
   /**
-   * Sets the map style.
+   * Adds the selected geometry to the map.
+   *
+   * @type {(function({detail: *}): void)|*}
+   */
+  const onSelection = useCallback(({ detail }) => {
+    if (isValid(detail)) {
+      // Add the geometry to the map
+      drawRef.current.add(detail.geometry);
+
+      // Trigger the onChange prop
+      onChange();
+
+      // Call the onGeocoding selection callback
+      props.onGeocodingSelection(detail);
+    }
+  }, [isValid, onChange, props.onGeocodingSelection]);
+
+  /**
+   * Sets the map style URL.
+   *
+   * @type {string}
+   */
+  const mapStyleUrl = useMemo(() => `${props.mapStyle}?key=${props.apiKey}`, [props.apiKey, props.mapStyle]);
+
+  /**
+   * Sets the element map style.
    *
    * @type {{width: string, height: number}}
    */
@@ -129,7 +182,7 @@ const MapDraw = (props: Props) => {
       mapLib={maplibregl}
       ref={mapRef}
       style={style}
-      mapStyle={props.mapStyle}
+      mapStyle={mapStyleUrl}
     >
       <DrawControl
         ref={drawRef}
@@ -145,6 +198,16 @@ const MapDraw = (props: Props) => {
         onDelete={onChange}
         position='bottom-left'
       />
+      { props.geocoding && (
+        <GeocodingControl
+          apiKey={props.apiKey}
+          collapsed
+          marker={false}
+          position='top-left'
+          onSelection={onSelection}
+          showResultMarkers={false}
+        />
+      )}
       { props.children }
     </Map>
   );
