@@ -72,7 +72,8 @@ const FilterOperators = {
   empty: 'empty',
   notEmpty: 'not_empty',
   greaterThan: 'greater_than',
-  lessThan: 'less_than'
+  lessThan: 'less_than',
+  whereIn: 'where_in'
 };
 
 const FilterOperatorOptions = [{
@@ -107,6 +108,10 @@ const FilterOperatorOptions = [{
   key: FilterOperators.lessThan,
   value: FilterOperators.lessThan,
   text: i18n.t('ListFilters.operators.lessThan')
+}, {
+  key: FilterOperators.whereIn,
+  value: FilterOperators.whereIn,
+  text: i18n.t('ListFilters.operators.whereIn')
 }];
 
 const OperatorsByType = {
@@ -114,7 +119,8 @@ const OperatorsByType = {
     FilterOperators.equal
   ],
   [FilterTypes.date]: [
-    FilterOperators.equal
+    FilterOperators.equal,
+    FilterOperators.whereIn
   ],
   [FilterTypes.relationship]: [
     FilterOperators.equal,
@@ -134,7 +140,8 @@ const OperatorsByType = {
     FilterOperators.contain,
     FilterOperators.notContain,
     FilterOperators.empty,
-    FilterOperators.notEmpty
+    FilterOperators.notEmpty,
+    FilterOperators.whereIn
   ],
   [FilterTypes.text]: [
     FilterOperators.contain,
