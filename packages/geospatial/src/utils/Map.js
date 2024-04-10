@@ -1,6 +1,7 @@
 // @flow
 
 import { bbox, bboxPolygon, buffer } from '@turf/turf';
+import _ from 'underscore';
 
 const MIN_LATITUDE = -90;
 const MAX_LATITUDE = 90;
@@ -10,14 +11,18 @@ const MAX_LONGITUDE = 180;
 /**
  * Returns a bounding box for the passed geometry (with optional buffer).
  *
- * @param geometry
+ * @param data
  * @param bufferDistance
  *
  * @returns {BBox}
  */
-const getBoundingBox = (geometry, bufferDistance = null) => {
+const getBoundingBox = (data, bufferDistance = null) => {
   // Convert the GeoJSON into a bounding box
-  const box = bbox(geometry);
+  const box = bbox(data);
+
+  if (!validateBoundingBox(box)) {
+    return null;
+  }
 
   // Convert the bounding box to a polygon
   const polygon = bboxPolygon(box);
@@ -34,6 +39,15 @@ const getBoundingBox = (geometry, bufferDistance = null) => {
   // Convert the buffer to a bounding box
   return bbox(polygonBuffer);
 };
+
+/**
+ * Validates that the passed bounding box contains finite coordinates.
+ *
+ * @param boundingBox
+ *
+ * @returns {*}
+ */
+const validateBoundingBox = (boundingBox: Array<number>) => _.every(boundingBox, _.isFinite);
 
 /**
  * Returns true if the passed coordinates are valid.
@@ -59,5 +73,6 @@ const validateCoordinates = (coordinates) => {
 
 export default {
   getBoundingBox,
+  validateBoundingBox,
   validateCoordinates
 };

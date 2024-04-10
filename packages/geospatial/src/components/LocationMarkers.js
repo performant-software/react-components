@@ -104,8 +104,11 @@ const LocationMarkers = (props: Props) => {
    */
   useEffect(() => {
     if (map && data && props.fitBoundingBox) {
-      const boundingBox = MapUtils.getBoundingBox(props.data, props.buffer);
-      map.fitBounds(boundingBox, props.boundingBoxOptions, props.boundingBoxData);
+      const bbox = MapUtils.getBoundingBox(data, props.buffer);
+
+      if (bbox) {
+        map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
+      }
     }
   }, [map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
 

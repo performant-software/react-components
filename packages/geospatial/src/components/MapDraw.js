@@ -153,15 +153,11 @@ const MapDraw = (props: Props) => {
    */
   useEffect(() => {
     if (loaded && props.data) {
-      // Get the bounding box for the passed data
-      const boundingBox = MapUtils.getBoundingBox(props.data, props.buffer);
-
       // Sets the bounding box for the current geometry
-      if (_.every(boundingBox, _.isFinite)) {
-        const [minLng, minLat, maxLng, maxLat] = boundingBox;
-        const bounds = [[minLng, minLat], [maxLng, maxLat]];
+      const bbox = MapUtils.getBoundingBox(props.data, props.buffer);
 
-        mapRef.current.fitBounds(bounds, { duration: props.zoomDuration });
+      if (bbox) {
+        mapRef.current.fitBounds(bbox, { duration: props.zoomDuration });
       }
 
       // Handle special cases for geometry collection (not supported by mabox-gl-draw) and point
