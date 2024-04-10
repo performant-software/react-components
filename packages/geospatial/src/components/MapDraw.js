@@ -197,7 +197,6 @@ const MapDraw = (props: Props) => {
       { props.geocoding && (
         <GeocodingControl
           apiKey={props.apiKey}
-          collapsed
           marker={false}
           position='top-left'
           onSelection={onSelection}
