@@ -1,23 +1,18 @@
 // @flow
 
-import { Timer } from '@performant-software/shared-components';
-import React, { Component, type ComponentType } from 'react';
-import {
-  Button,
-  Dropdown,
-  Message,
-  type ButtonProps
-} from 'semantic-ui-react';
-import _ from 'underscore';
-import EditModal from './EditModal';
-import i18n from '../i18n/i18n';
-import Toaster from './Toaster';
-import './AssociatedDropdown.css';
+import { Timer } from "@performant-software/shared-components";
+import React, { Component, type ComponentType } from "react";
+import { Button, Dropdown, Message, type ButtonProps } from "semantic-ui-react";
+import _ from "underscore";
+import EditModal from "./EditModal";
+import i18n from "../i18n/i18n";
+import Toaster from "./Toaster";
+import "./AssociatedDropdown.css";
 
 type Option = {
   key: number | string,
   value: number | string,
-  text: string
+  text: string,
 };
 
 type Props = {
@@ -29,7 +24,7 @@ type Props = {
     component: ComponentType<any>,
     props: any,
     onSave: (item: any) => Promise<any>,
-    state: any
+    state: any,
   },
   onSearch: (search: string) => Promise<any>,
   onSelection: (item: any) => void,
@@ -37,8 +32,9 @@ type Props = {
   renderOption: (option: any) => Option,
   required?: boolean,
   searchQuery: string,
-  value: ?number,
-  upward?: boolean
+  value?: number | number[],
+  upward?: boolean,
+  multiple?: boolean,
 };
 
 type State = {
@@ -48,12 +44,12 @@ type State = {
   options: Array<Option>,
   saved: boolean,
   searchQuery: string,
-  value: ?number | ?string
+  value: ?number | ?string,
 };
 
-const BUTTON_ADD = 'add';
-const BUTTON_CLEAR = 'clear';
-const BUTTON_EDIT = 'edit';
+const BUTTON_ADD = "add";
+const BUTTON_CLEAR = "clear";
+const BUTTON_EDIT = "edit";
 
 const TIMEOUT = 500;
 
@@ -77,8 +73,8 @@ class AssociatedDropdown extends Component<Props, State> {
       modalEdit: false,
       options: [],
       saved: false,
-      searchQuery: props.searchQuery || '',
-      value: props.value || ''
+      searchQuery: props.searchQuery || "",
+      value: props.value || (props.multiple ? [] : ""),
     };
 
     this.timeout = null;
@@ -112,7 +108,7 @@ class AssociatedDropdown extends Component<Props, State> {
    */
   onBlur() {
     this.setState((state) => {
-      let searchQuery = '';
+      let searchQuery = "";
 
       if (state.value) {
         searchQuery = this.props.searchQuery;
@@ -126,7 +122,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * Clears the search query and value.
    */
   onClear() {
-    this.setState({ searchQuery: '', value: '' }, () => {
+    this.setState({ searchQuery: "", value: "" }, () => {
       this.props.onSelection(this.state.value);
     });
   }
@@ -135,7 +131,7 @@ class AssociatedDropdown extends Component<Props, State> {
    * Clears the search query and executes the search.
    */
   onOpen() {
-    this.setState({ searchQuery: '' }, this.onSearch.bind(this));
+    this.setState({ searchQuery: "" }, this.onSearch.bind(this));
   }
 
   /**
@@ -145,13 +141,18 @@ class AssociatedDropdown extends Component<Props, State> {
    * @param value
    */
   onOptionSelection(e: Event, { value }: { value: any }) {
-    this.setState((state) => {
-      const option = _.findWhere(state.options, { value }) || {};
-      this.setState({ searchQuery: option.text, value: option.value });
-    });
+    if (this.props.multiple) {
+      this.setState({ value });
+      this.props.onSelection(value);
+    } else {
+      this.setState((state) => {
+        const option = _.findWhere(state.options, { value }) || {};
+        this.setState({ searchQuery: option.text, value: option.value });
+      });
 
-    const item = _.findWhere(this.state.items, { id: value });
-    this.props.onSelection(item);
+      const item = _.findWhere(this.state.items, { id: value });
+      this.props.onSelection(item);
+    }
   }
 
   /**
@@ -172,14 +173,12 @@ class AssociatedDropdown extends Component<Props, State> {
   }
 
   search() {
-    this.props
-      .onSearch(this.state.searchQuery)
-      .then(({ data }) => {
-        const items = data[this.props.collectionName];
-        const options = items.map(this.props.renderOption.bind(this));
+    this.props.onSearch(this.state.searchQuery).then(({ data }) => {
+      const items = data[this.props.collectionName];
+      const options = items.map(this.props.renderOption.bind(this));
 
-        this.setState({ items, options, loading: false });
-      });
+      this.setState({ items, options, loading: false });
+    });
   }
 
   /**
@@ -189,12 +188,10 @@ class AssociatedDropdown extends Component<Props, State> {
    */
   render() {
     return (
-      <div
-        className='association-dropdown'
-      >
-        <div className='dropdown-container'>
+      <div className="association-dropdown">
+        <div className="dropdown-container">
           <Dropdown
-            className={`inline-dropdown ${this.props.className || ''}`}
+            className={`inline-dropdown ${this.props.className || ""}`}
             disabled={this.state.loading}
             header={this.props.header}
             loading={this.state.loading}
@@ -206,37 +203,35 @@ class AssociatedDropdown extends Component<Props, State> {
             placeholder={this.props.placeholder}
             search={() => this.state.options}
             searchInput={{
-              'aria-label': this.props.collectionName,
-              className: 'dropdown-search-input',
+              "aria-label": this.props.collectionName,
+              className: "dropdown-search-input",
               onKeyDown: Timer.clearSearchTimer.bind(this),
-              onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))
+              onKeyUp: Timer.setSearchTimer.bind(
+                this,
+                this.onSearch.bind(this)
+              ),
             }}
             searchQuery={this.state.searchQuery}
             selectOnBlur={false}
             selection
             upward={this.props.upward}
+            multiple={this.props.multiple}
             value={this.state.value}
           />
         </div>
-        <Button.Group
-          className='buttons'
-        >
-          { this.renderEditButton() }
-          { this.renderAddButton() }
-          { this.renderClearButton() }
+        <Button.Group className="buttons">
+          {this.renderEditButton()}
+          {this.renderAddButton()}
+          {this.renderClearButton()}
         </Button.Group>
-        { this.renderModal() }
-        { this.state.saved && (
+        {this.renderModal()}
+        {this.state.saved && (
           <Toaster
             onDismiss={() => this.setState({ saved: false })}
             type={Toaster.MessageTypes.positive}
           >
-            <Message.Header
-              content={i18n.t('Common.messages.save.header')}
-            />
-            <Message.Content
-              content={i18n.t('Common.messages.save.content')}
-            />
+            <Message.Header content={i18n.t("Common.messages.save.header")} />
+            <Message.Content content={i18n.t("Common.messages.save.content")} />
           </Toaster>
         )}
       </div>
@@ -255,10 +250,10 @@ class AssociatedDropdown extends Component<Props, State> {
 
     return this.renderButton(BUTTON_ADD, {
       basic: true,
-      content: i18n.t('Common.buttons.add'),
-      icon: 'plus',
+      content: i18n.t("Common.buttons.add"),
+      icon: "plus",
       onClick: () => this.setState({ modalAdd: true }),
-      type: 'button'
+      type: "button",
     });
   }
 
@@ -277,11 +272,7 @@ class AssociatedDropdown extends Component<Props, State> {
       return null;
     }
 
-    return (
-      <Button
-        {..._.defaults(button, defaults)}
-      />
-    );
+    return <Button {..._.defaults(button, defaults)} />;
   }
 
   /**
@@ -296,10 +287,10 @@ class AssociatedDropdown extends Component<Props, State> {
 
     return this.renderButton(BUTTON_CLEAR, {
       basic: true,
-      content: i18n.t('Common.buttons.clear'),
-      icon: 'times',
+      content: i18n.t("Common.buttons.clear"),
+      icon: "times",
       onClick: this.onClear.bind(this),
-      type: 'button'
+      type: "button",
     });
   }
 
@@ -309,16 +300,21 @@ class AssociatedDropdown extends Component<Props, State> {
    * @returns {null|*}
    */
   renderEditButton() {
-    if (!this.props.modal || !this.props.modal.props || !this.props.modal.props.onInitialize || !this.state.value) {
+    if (
+      !this.props.modal ||
+      !this.props.modal.props ||
+      !this.props.modal.props.onInitialize ||
+      !this.state.value
+    ) {
       return null;
     }
 
     return this.renderButton(BUTTON_EDIT, {
       basic: true,
-      content: i18n.t('Common.buttons.edit'),
-      icon: 'pencil',
+      content: i18n.t("Common.buttons.edit"),
+      icon: "pencil",
       onClick: () => this.setState({ modalEdit: true }),
-      type: 'button'
+      type: "button",
     });
   }
 
@@ -339,7 +335,7 @@ class AssociatedDropdown extends Component<Props, State> {
 
     if (this.state.modalEdit) {
       item = {
-        id: this.state.value
+        id: this.state.value,
       };
     }
 
@@ -348,11 +344,12 @@ class AssociatedDropdown extends Component<Props, State> {
         component={component}
         item={item}
         onClose={() => this.setState({ modalAdd: false, modalEdit: false })}
-        onSave={(data) => onSave(data)
-          .then((record) => {
+        onSave={(data) =>
+          onSave(data).then((record) => {
             this.props.onSelection(record);
             this.setState({ modalAdd: false, modalEdit: false, saved: true });
-          })}
+          })
+        }
         {...props}
       />
     );
@@ -368,11 +365,11 @@ class AssociatedDropdown extends Component<Props, State> {
 }
 
 AssociatedDropdown.defaultProps = {
-  className: '',
+  className: "",
   modal: null,
   placeholder: null,
   required: false,
-  upward: false
+  upward: false,
 };
 
 export default AssociatedDropdown;
