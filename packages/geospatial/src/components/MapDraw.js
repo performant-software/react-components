@@ -104,10 +104,16 @@ const MapDraw = (props: Props) => {
    *
    * @type {function({geometry: {type: *}}): *}
    */
-  const isValid = useCallback(({ geometry: { type } }) => (
-    (props.geocoding === 'point' && type === GeometryTypes.point)
-    || (props.geocoding === 'polygon' && type === GeometryTypes.polygon)
-  ), [props.geocoding]);
+  const isValid = useCallback((detail) => {
+    if (!detail) {
+      return false;
+    }
+
+    const { geometry: { type } } = detail;
+
+    return (props.geocoding === 'point' && type === GeometryTypes.point)
+      || (props.geocoding === 'polygon' && type === GeometryTypes.polygon);
+  }, [props.geocoding]);
 
   /**
    * Calls the onChange prop with all of the geometries in the current drawer.
@@ -200,6 +206,7 @@ const MapDraw = (props: Props) => {
           marker={false}
           position='top-left'
           onSelection={onSelection}
+          showFullGeometry={props.geocoding === 'polygon'}
           showResultMarkers={false}
         />
       )}
