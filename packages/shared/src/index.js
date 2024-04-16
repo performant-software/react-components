@@ -23,6 +23,7 @@ export { default as BaseService } from './services/BaseService';
 export { default as Attachments } from './transforms/Attachments';
 export { default as BaseTransform } from './transforms/BaseTransform';
 export { default as FormDataTransform } from './transforms/FormDataTransform';
+export { default as FuzzyDateTransform } from './transforms/FuzzyDate';
 export { default as NestedAttributesTransform } from './transforms/NestedAttributesTransform';
 
 // Utils
