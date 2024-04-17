@@ -12,6 +12,10 @@ class FuzzyDate {
   toPayload(dateable, attribute) {
     const date = dateable[attribute];
 
+    if (!date) {
+      return null;
+    }
+
     return {
       [attribute]: {
         accuracy: date.accuracy,
