@@ -41,6 +41,7 @@ type DateComponent = {
 
 type Props = {
   calendar?: string,
+  centered?: boolean,
   date: DateInput,
   description?: boolean,
   locale?: string,
@@ -339,6 +340,7 @@ class FuzzyDate extends Component<Props, State> {
           { (mountNode) => (
             <Modal
               as={Form}
+              centered={this.props.centered}
               className='fuzzy-date-modal'
               mountNode={mountNode}
               open={this.state.modal}
