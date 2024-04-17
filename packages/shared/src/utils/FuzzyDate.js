@@ -45,7 +45,7 @@ const getDateView = (date, cal = null) => {
     dateView.push(calendar.format(parsed, date.accuracy));
   }
 
-  if (date.end_date) {
+  if (date.range && date.end_date) {
     const parsed = calendar.parseDate(date.end_date);
     dateView.push(calendar.format(parsed, date.accuracy));
   }
