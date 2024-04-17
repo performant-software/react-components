@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/semantic-components",
-  "version": "2.1.3-beta.8",
+  "version": "2.1.3-beta.9",
   "description": "A package of shared components based on the Semantic UI Framework.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -35,7 +35,7 @@
     "zotero-translation-client": "^5.0.1"
   },
   "peerDependencies": {
-    "@performant-software/shared-components": "^2.1.3-beta.8",
+    "@performant-software/shared-components": "^2.1.3-beta.9",
     "@samvera/clover-iiif": "^2.3.2",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dnd": "^11.1.3",
