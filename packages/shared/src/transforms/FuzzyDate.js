@@ -46,8 +46,7 @@ class FuzzyDate {
         end_date: date.endDate,
         range: date.range,
         start_date: date.startDate,
-        _destroy: date._destroy,
-        attribute
+        _destroy: date._destroy
       }
     };
   }
