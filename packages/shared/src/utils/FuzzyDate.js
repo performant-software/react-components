@@ -17,7 +17,11 @@ const DEFAULT_CALENDAR = Calendar.Calendars.gregorian;
  * @returns {null|string|*}
  */
 const getDateView = (date, cal = null) => {
-  if (!(date || date.description || date.start_date)) {
+  if (!date) {
+    return null;
+  }
+
+  if (!(date.description || date.start_date)) {
     return null;
   }
 
