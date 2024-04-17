@@ -41,6 +41,7 @@ class FuzzyDate {
 
     return {
       [attribute]: {
+        id: date.id,
         accuracy: date.accuracy,
         description: date.description,
         end_date: date.endDate,
