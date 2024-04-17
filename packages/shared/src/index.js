@@ -33,6 +33,7 @@ export { default as Date } from './utils/Date';
 export { default as useDragDrop } from './utils/DragDrop';
 export { default as Element } from './utils/Element';
 export { default as Form } from './utils/Form';
+export { default as FuzzyDate } from './utils/FuzzyDate';
 export { default as Hooks } from './utils/Hooks';
 export { default as IIIF } from './utils/IIIF';
 export { default as Map } from './utils/Map';
