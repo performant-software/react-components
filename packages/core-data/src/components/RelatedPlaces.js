@@ -21,6 +21,7 @@ type Props = {
  */
 const RelatedPlaces = (props: Props) => (
   <RelatedList
+    collectionName='places'
     emptyMessage={props.emptyMessage}
     onLoad={props.onLoad}
     renderItem={(place) => (
@@ -28,7 +29,7 @@ const RelatedPlaces = (props: Props) => (
         <MapPin
           className='h-4 w-4 mr-0.5 inline-block mb-0.5'
         />
-        { place.body.title }
+        { place.name }
       </>
     )}
   />

@@ -1,8 +1,9 @@
 // @flow
 
 import React from 'react';
+import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
+import PlacesService from '../../../core-data/src/services/Places';
 import RelatedOrganizations from '../../../core-data/src/components/RelatedOrganizations';
-import relatedOrganizations from '../data/RelatedOrganizations.json';
 
 export default {
   title: 'Components/Core Data/RelatedOrganizations',
@@ -10,13 +11,27 @@ export default {
 };
 
 export const Default = () => (
-  <RelatedOrganizations
-    data={relatedOrganizations}
-  />
+  <CoreDataContextProvider
+    baseUrl=''
+    projectIds={[]}
+  >
+    <RelatedOrganizations
+      onLoad={(baseUrl, projectIds) => (
+        PlacesService.fetchRelatedOrganizations(baseUrl, 1, projectIds)
+      )}
+    />
+  </CoreDataContextProvider>
+
 );
 
 export const EmptyList = () => (
-  <RelatedOrganizations
-    data={[]}
-  />
+  <CoreDataContextProvider
+    baseUrl=''
+    projectIds={[]}
+  >
+    <RelatedOrganizations
+      emptyMessage='No related organizations'
+      onLoad={() => Promise.resolve()}
+    />
+  </CoreDataContextProvider>
 );

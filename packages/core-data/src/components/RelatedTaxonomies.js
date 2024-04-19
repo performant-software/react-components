@@ -21,6 +21,7 @@ type Props = {
  */
 const RelatedTaxonomies = (props: Props) => (
   <RelatedList
+    collectionName='taxonomies'
     emptyMessage={props.emptyMessage}
     onLoad={props.onLoad}
     renderItem={(taxonomy) => (
@@ -28,7 +29,7 @@ const RelatedTaxonomies = (props: Props) => (
         <ListTree
           className='h-4 w-4 mr-1.5'
         />
-        { taxonomy.body.title }
+        { taxonomy.name }
       </>
     )}
   />

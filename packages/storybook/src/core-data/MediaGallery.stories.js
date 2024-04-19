@@ -8,15 +8,6 @@ export default {
   component: MediaGallery
 };
 
-const item = {
-  id: 'https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/media_contents/49123f66-6a4d-47b8-a781-0f31ab63adae',
-  record_id: 13,
-  title: 'hog-hammock-library.jpeg',
-  type: 'MediaContent',
-  uuid: '49123f66-6a4d-47b8-a781-0f31ab63adae',
-  manifest_url: 'https://iiif-cloud-staging.herokuapp.com/public/resources/013125a9-ad22-43d6-910b-ccc6662c0708/manifest',
-};
-
 export const Default = () => {
   const [open, setOpen] = useState(false);
 
@@ -37,9 +28,8 @@ export const Default = () => {
       </div>
       { open && (
         <MediaGallery
-          defaultItem={item}
+          manifestUrl='/core_data/public/places/1/manifests/1'
           onClose={() => setOpen(false)}
-          title='Media & Documents'
         />
       )}
     </>

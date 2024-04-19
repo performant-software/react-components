@@ -22,19 +22,19 @@ export default {
 
 export const Default = () => (
   <CoreDataContextProvider
-    baseUrl='https://core-data-cloud-staging-2c51db0617a5.herokuapp.com'
-    projectIds={[10]}
+    baseUrl=''
+    projectIds={[]}
   >
     <PlaceDetails
-      id='3aaf97a4-7052-4e2c-9056-4f4146ef0c87'
+      id={1}
     />
   </CoreDataContextProvider>
 );
 
 export const Sidebar = () => (
   <CoreDataContextProvider
-    baseUrl='https://core-data-cloud-staging-2c51db0617a5.herokuapp.com'
-    projectIds={[10]}
+    baseUrl=''
+    projectIds={[]}
   >
     <aside
       className='flex flex-col relative z-10 h-full w-[260px] bg-white/80 backdrop-blur shadow overflow-y-auto'
@@ -50,7 +50,7 @@ export const Sidebar = () => (
         />
       </button>
       <PlaceDetails
-        id='3aaf97a4-7052-4e2c-9056-4f4146ef0c87'
+        id={1}
       />
     </aside>
   </CoreDataContextProvider>
@@ -61,8 +61,8 @@ export const Modal = () => {
 
   return (
     <CoreDataContextProvider
-      baseUrl='https://core-data-cloud-staging-2c51db0617a5.herokuapp.com'
-      projectIds={[10]}
+      baseUrl=''
+      projectIds={[]}
     >
       <Transition.Root
         as={Fragment}
@@ -105,7 +105,7 @@ export const Modal = () => {
                   className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'
                 >
                   <PlaceDetails
-                    id='3aaf97a4-7052-4e2c-9056-4f4146ef0c87'
+                    id={1}
                   />
                 </Dialog.Panel>
               </Transition.Child>
@@ -125,11 +125,11 @@ export const Modal = () => {
 
 export const RelatedItems = () => (
   <CoreDataContextProvider
-    baseUrl='https://core-data-cloud-staging-2c51db0617a5.herokuapp.com'
-    projectIds={[10]}
+    baseUrl=''
+    projectIds={[]}
   >
     <PlaceDetails
-      id='3aaf97a4-7052-4e2c-9056-4f4146ef0c87'
+      id={1}
     />
     <RelatedItemsList>
       <RelatedItem
@@ -138,7 +138,7 @@ export const RelatedItems = () => (
       >
         <RelatedMedia
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedManifests(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedManifests(baseUrl, 1, projectIds)
           )}
         />
       </RelatedItem>
@@ -148,7 +148,7 @@ export const RelatedItems = () => (
       >
         <RelatedOrganizations
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedOrganizations(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedOrganizations(baseUrl, 1, projectIds)
           )}
         />
       </RelatedItem>
@@ -158,7 +158,7 @@ export const RelatedItems = () => (
       >
         <RelatedPeople
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedPeople(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedPeople(baseUrl, 1, projectIds)
           )}
         />
       </RelatedItem>
@@ -168,7 +168,7 @@ export const RelatedItems = () => (
       >
         <RelatedPlaces
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedPlaces(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedPlaces(baseUrl, 1, projectIds)
           )}
         />
       </RelatedItem>
@@ -178,7 +178,7 @@ export const RelatedItems = () => (
       >
         <RelatedTaxonomies
           onLoad={(baseUrl, projectIds) => (
-            PlacesService.fetchRelatedTaxonomies(baseUrl, '3aaf97a4-7052-4e2c-9056-4f4146ef0c87', projectIds)
+            PlacesService.fetchRelatedTaxonomies(baseUrl, 1, projectIds)
           )}
         />
       </RelatedItem>

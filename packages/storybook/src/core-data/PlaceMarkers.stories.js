@@ -30,7 +30,7 @@ export const Default = () => (
       >
         <PlaceMarkers
           urls={[
-            '/core_data/places/2'
+            '/core_data/public/places/1'
           ]}
         />
       </div>
@@ -55,7 +55,7 @@ export const MultiplePlaces = () => (
         }}
       >
         <PlaceMarkers
-          urls={_.map(_.times(10, (index) => index), (index) => `/core_data/places/${index}`)}
+          urls={_.map(_.times(10, (index) => index), (index) => `/core_data/public/places/${index}`)}
         />
       </div>
     </Map>
@@ -80,7 +80,7 @@ export const LargerBuffer = () => (
       >
         <PlaceMarkers
           urls={[
-            '/core_data/places/2'
+            '/core_data/public/places/1'
           ]}
           buffer={20}
         />

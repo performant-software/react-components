@@ -44,14 +44,14 @@ const PlaceDetails = (props: Props) => {
     PlacesService.fetchRelatedMedia(baseUrl, props.id, projectIds)
   ), [props.id]);
 
-  const { data: mediaContents } = useLoader(onLoadMediaContents);
+  const { data: { media_contents: mediaContents } = {} } = useLoader(onLoadMediaContents);
 
   /**
    * Sets the first related image.
    *
    * @type {*}
    */
-  const image = useMemo(() => _.first(mediaContents?.items)?.body, [mediaContents]);
+  const image = useMemo(() => _.first(mediaContents), [mediaContents]);
 
   /**
    * Sets the user defined field values.
@@ -91,7 +91,7 @@ const PlaceDetails = (props: Props) => {
             <img
               className='object-cover h-full w-full'
               src={image.content_iiif_url}
-              alt={image.title}
+              alt={image.name}
             />
           </div>
         </div>
@@ -103,7 +103,7 @@ const PlaceDetails = (props: Props) => {
           <h1
             className='pr-6 font-medium'
           >
-            { place.properties.title }
+            { place.name }
           </h1>
           <ol
             className='text-sm mt-4 leading-6 overflow-hidden'

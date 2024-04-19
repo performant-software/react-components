@@ -1,8 +1,9 @@
 // @flow
 
 import React from 'react';
+import RelatedItem from '../../../core-data/src/components/RelatedItem';
 import RelatedItemsList from '../../../core-data/src/components/RelatedItemsList';
-import relatedPlaces from '../data/RelatedPlaces.json';
+import RelatedList from '../../../core-data/src/components/RelatedList';
 
 export default {
   title: 'Components/Core Data/RelatedItemsList',
@@ -10,11 +11,24 @@ export default {
 };
 
 export const Default = () => (
-  <RelatedItemsList
-    items={[{
-      endpoint: 'places',
-      ui_label: 'Related Places',
-      data: relatedPlaces
-    }]}
-  />
+  <RelatedItemsList>
+    <RelatedItem
+      id='numbers'
+      label='Numbers'
+    >
+      <RelatedList
+        collectionName='items'
+        onLoad={() => (
+          Promise.resolve({
+            items: [
+              'One',
+              'Two',
+              'Three'
+            ]
+          })
+        )}
+        renderItem={(item) => item}
+      />
+    </RelatedItem>
+  </RelatedItemsList>
 );

@@ -21,6 +21,7 @@ type Props = {
  */
 const RelatedOrganizations = (props: Props) => (
   <RelatedList
+    collectionName='organizations'
     emptyMessage={props.emptyMessage}
     onLoad={props.onLoad}
     renderItem={(organization) => (
@@ -28,7 +29,7 @@ const RelatedOrganizations = (props: Props) => (
         <Building2
           className='h-4 w-4 mr-1.5'
         />
-        { organization.body.title }
+        { organization.name }
       </>
     )}
   />

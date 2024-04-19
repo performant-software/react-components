@@ -1,8 +1,9 @@
 // @flow
 
 import React from 'react';
+import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
+import PlacesService from '../../../core-data/src/services/Places';
 import RelatedTaxonomies from '../../../core-data/src/components/RelatedTaxonomies';
-import relatedTaxonomies from '../data/RelatedTaxonomies.json';
 
 export default {
   title: 'Components/Core Data/RelatedTaxonomies',
@@ -10,7 +11,26 @@ export default {
 };
 
 export const Default = () => (
-  <RelatedTaxonomies
-    data={relatedTaxonomies}
-  />
+  <CoreDataContextProvider
+    baseUrl=''
+    projectIds={[]}
+  >
+    <RelatedTaxonomies
+      onLoad={(baseUrl, projectIds) => (
+        PlacesService.fetchRelatedTaxonomies(baseUrl, 1, projectIds)
+      )}
+    />
+  </CoreDataContextProvider>
+);
+
+export const EmptyList = () => (
+  <CoreDataContextProvider
+    baseUrl=''
+    projectIds={[]}
+  >
+    <RelatedTaxonomies
+      emptyMessage='No related taxonomies'
+      onLoad={() => Promise.resolve()}
+    />
+  </CoreDataContextProvider>
 );
