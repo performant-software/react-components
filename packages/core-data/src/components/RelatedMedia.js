@@ -2,6 +2,7 @@
 
 import { Thumbnail } from '@samvera/clover-iiif/primitives';
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import _ from 'underscore';
 import LoadAnimation from './LoadAnimation';
 import MediaGallery from './MediaGallery';
@@ -9,9 +10,19 @@ import { useLoader } from '../hooks/CoreData';
 
 type Props = {
   /**
+   * Name of the class(es) to apply to the <ul> element.
+   */
+  className?: string,
+
+  /**
    * A message to display when no records are returned from the API.
    */
   emptyMessage?: string,
+
+  /**
+   * Number of items to display in each row of the grid.
+   */
+  itemsPerRow?: number,
 
   /**
    * Callback fired when the component is mounted to fetch the data.
@@ -57,12 +68,22 @@ const RelatedMedia = (props: Props) => {
   }
 
   return (
-    <div
-      className='p-3 pb-4 grid grid-cols-3 gap-1'
+    <ul
+      className={clsx(
+        'grid',
+        'gap-2',
+        { 'grid-cols-1': props.itemsPerRow === 1 },
+        { 'grid-cols-2': props.itemsPerRow === 2 },
+        { 'grid-cols-3': props.itemsPerRow === 3 },
+        { 'grid-cols-4': props.itemsPerRow === 4 },
+        { 'grid-cols-5': props.itemsPerRow === 5 },
+        { 'grid-cols-6': props.itemsPerRow === 6 },
+        props.className
+      )}
     >
       { _.map(data?.items, ({ id, label: { en: label }, thumbnail }) => (
-        <div
-          className='flex flex-col gap-2'
+        <li
+          className='flex flex-col'
           key={id}
         >
           <Thumbnail
@@ -79,17 +100,18 @@ const RelatedMedia = (props: Props) => {
           >
             { label }
           </div>
-        </div>
+        </li>
       ))}
       <MediaGallery
         manifestUrl={manifestUrl}
         onClose={() => setManifestUrl(null)}
       />
-    </div>
+    </ul>
   );
 };
 
 RelatedMedia.defaultProps = {
+  itemsPerRow: 1,
   thumbnailHeight: DEFAULT_THUMBNAIL_HEIGHT,
   thumbnailWidth: DEFAULT_THUMBNAIL_WIDTH
 };

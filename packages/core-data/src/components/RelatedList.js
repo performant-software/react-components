@@ -1,5 +1,6 @@
 // @flow
 
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import _ from 'underscore';
 import LoadAnimation from './LoadAnimation';
@@ -11,9 +12,19 @@ type Item = {
 
 type Props = {
   /**
+   * Name of the class(es) to apply to the <ul> element.
+   */
+  className?: string,
+
+  /**
    * Name of the collection that stores the items to display.
    */
   collectionName: string,
+
+  /**
+   * Number of items to display in each row of the grid.
+   */
+  itemsPerRow?: number,
 
   /**
    * Callback fired when the component is mounted to fetch the data.
@@ -60,7 +71,17 @@ const RelatedList = (props: Props) => {
 
   return (
     <ul
-      className='p-3 pt-1 pb-4'
+      className={clsx(
+        'grid',
+        'gap-2',
+        { 'grid-cols-1': props.itemsPerRow === 1 },
+        { 'grid-cols-2': props.itemsPerRow === 2 },
+        { 'grid-cols-3': props.itemsPerRow === 3 },
+        { 'grid-cols-4': props.itemsPerRow === 4 },
+        { 'grid-cols-5': props.itemsPerRow === 5 },
+        { 'grid-cols-6': props.itemsPerRow === 6 },
+        props.className
+      )}
     >
       { _.map(items, (item) => (
         <li
@@ -72,6 +93,10 @@ const RelatedList = (props: Props) => {
       ))}
     </ul>
   );
+};
+
+RelatedList.defaultProps = {
+  itemsPerRow: 1
 };
 
 export default RelatedList;

@@ -43,7 +43,6 @@ class Events extends Base {
    */
   createFuzzyDate() {
     const accuracy = faker.number.int({ min: 0, max: 2 });
-    const description = faker.lorem.sentences({ min: 0, max: 3 });
     let startDate = faker.date.anytime();
 
     let endDate;
@@ -73,8 +72,7 @@ class Events extends Base {
       accuracy,
       range,
       start_date: startDate,
-      end_date: endDate,
-      description
+      end_date: endDate
     };
   }
 }

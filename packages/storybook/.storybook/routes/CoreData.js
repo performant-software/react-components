@@ -1,6 +1,7 @@
 // @flow
 
 import Events from '../api/core-data/Events';
+import Items from '../api/core-data/Items';
 import Places from '../api/core-data/Places';
 import Organizations from '../api/core-data/Organizations';
 import People from '../api/core-data/People';
@@ -20,6 +21,26 @@ const addRoutes = (router) => {
    */
   router.get('/core_data/public/events/:id', (request, response) => {
     response.send(Events.createItem());
+    response.end();
+  });
+
+  router.get('/core_data/public/events/:id/items', (request, response) => {
+    response.send(Items.createItems(5));
+    response.end();
+  });
+
+  router.get('/core_data/public/events/:id/manifests', (request, response) => {
+    response.send(Manifests.createItems('events', 5));
+    response.end();
+  });
+
+  router.get('/core_data/public/events/:id/people', (request, response) => {
+    response.send(People.createItems(5));
+    response.end();
+  });
+
+  router.get('/core_data/public/events/:id/places', (request, response) => {
+    response.send(Places.createItems(5));
     response.end();
   });
 

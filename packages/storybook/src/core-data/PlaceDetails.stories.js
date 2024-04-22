@@ -137,6 +137,8 @@ export const RelatedItems = () => (
         label='Related Media & Documents'
       >
         <RelatedMedia
+          className='p-3 pt-1 pb-4'
+          itemsPerRow={3}
           onLoad={(baseUrl, projectIds) => (
             PlacesService.fetchRelatedManifests(baseUrl, 1, projectIds)
           )}
@@ -147,6 +149,7 @@ export const RelatedItems = () => (
         label='Related Organizations'
       >
         <RelatedOrganizations
+          className='p-3 pt-1 pb-4'
           onLoad={(baseUrl, projectIds) => (
             PlacesService.fetchRelatedOrganizations(baseUrl, 1, projectIds)
           )}
@@ -157,6 +160,7 @@ export const RelatedItems = () => (
         label='Related People'
       >
         <RelatedPeople
+          className='p-3 pt-1 pb-4'
           onLoad={(baseUrl, projectIds) => (
             PlacesService.fetchRelatedPeople(baseUrl, 1, projectIds)
           )}
@@ -167,6 +171,7 @@ export const RelatedItems = () => (
         label='Related Places'
       >
         <RelatedPlaces
+          className='p-3 pt-1 pb-4'
           onLoad={(baseUrl, projectIds) => (
             PlacesService.fetchRelatedPlaces(baseUrl, 1, projectIds)
           )}
@@ -177,6 +182,7 @@ export const RelatedItems = () => (
         label='Related Taxonomies'
       >
         <RelatedTaxonomies
+          className='p-3 pt-1 pb-4'
           onLoad={(baseUrl, projectIds) => (
             PlacesService.fetchRelatedTaxonomies(baseUrl, 1, projectIds)
           )}

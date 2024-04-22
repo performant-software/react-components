@@ -23,6 +23,20 @@ export const Default = () => (
   </CoreDataContextProvider>
 );
 
+export const Horizontal = () => (
+  <CoreDataContextProvider
+    baseUrl=''
+    projectIds={[]}
+  >
+    <RelatedPeople
+      itemsPerRow={2}
+      onLoad={(baseUrl, projectIds) => (
+        PlacesService.fetchRelatedPeople(baseUrl, 1, projectIds)
+      )}
+    />
+  </CoreDataContextProvider>
+);
+
 export const EmptyList = () => (
   <CoreDataContextProvider
     baseUrl=''

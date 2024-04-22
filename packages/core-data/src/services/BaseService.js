@@ -43,6 +43,21 @@ class BaseService {
   }
 
   /**
+   * Calls the GET /core_data/public/<route>/:id/items API endpoint.
+   *
+   * @param baseUrl
+   * @param id
+   * @param projectIds
+   * @param params
+   *
+   * @returns {Promise<any>}
+   */
+  fetchRelatedItems(baseUrl, id, projectIds, params = {}) {
+    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'items', projectIds, params);
+    return fetch(url).then((response) => response.json());
+  }
+
+  /**
    * Calls the GET /core_data/public/<route>/:id/manifests API endpoint.
    *
    * @param baseUrl
