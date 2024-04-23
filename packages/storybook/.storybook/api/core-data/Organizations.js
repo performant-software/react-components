@@ -12,7 +12,7 @@ class Organizations extends Base {
    *
    * @returns {{relationship_type: string, name: string, uuid: string}}
    */
-  createItem() {
+  buildItem() {
     return {
       relationship_type: 'Organizations',
       uuid: faker.string.uuid(),
@@ -25,8 +25,12 @@ class Organizations extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'organizations';
+  }
+
+  getShowAttribute() {
+    return 'organization';
   }
 }
 

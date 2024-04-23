@@ -11,9 +11,9 @@ const { Accuracy } = FuzzyDateUtils;
  */
 class Events extends Base {
   /**
-   * Returns a single event item.
+   * Builds a single event item.
    */
-  createItem() {
+  buildItem() {
     const startDate = this.createFuzzyDate();
     const endDate = this.createFuzzyDate(startDate.end_date);
 
@@ -28,12 +28,21 @@ class Events extends Base {
   }
 
   /**
-   * Returns the events parameter name.
+   * Returns the events index attribute name.
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'events';
+  }
+
+  /**
+   * Returns the events show attribute name.
+   *
+   * @returns {string}
+   */
+  getShowAttribute () {
+    return 'event';
   }
 
   /**

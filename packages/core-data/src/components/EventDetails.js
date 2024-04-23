@@ -31,7 +31,7 @@ const EventDetails = (props: Props) => {
     EventsService.fetchOne(baseUrl, props.id, projectIds)
   ), [props.id]);
 
-  const { data: event, loading } = useLoader(onLoad);
+  const { data: { event } = {}, loading } = useLoader(onLoad);
 
   if (loading) {
     return (

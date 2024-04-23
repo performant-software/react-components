@@ -28,7 +28,7 @@ class Places extends Base {
    *   uuid: string
    * }}
    */
-  createItem() {
+  buildItem() {
     const uuid = faker.string.uuid();
     const name = faker.location.city();
 
@@ -68,8 +68,12 @@ class Places extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'places';
+  }
+
+  getShowAttribute() {
+    return 'place';
   }
 
   /**

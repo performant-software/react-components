@@ -22,7 +22,7 @@ class MediaContents extends Base {
    *   content_download_url: string
    * }}
    */
-  createItem() {
+  buildItem() {
     const imageUrl = faker.image.url();
 
     return {
@@ -43,8 +43,12 @@ class MediaContents extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'media_contents';
+  }
+
+  getShowAttribute() {
+    return 'media_content';
   }
 }
 

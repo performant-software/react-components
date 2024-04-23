@@ -7,7 +7,7 @@ class Items extends Base {
   /**
    * Returns a single item.
    */
-  createItem() {
+  buildItem() {
     return {
       uuid: faker.string.uuid(),
       primary_name: {
@@ -23,8 +23,12 @@ class Items extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'items';
+  }
+
+  getShowAttribute() {
+    return 'item';
   }
 }
 

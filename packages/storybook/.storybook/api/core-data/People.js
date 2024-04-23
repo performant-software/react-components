@@ -12,7 +12,7 @@ class People extends Base {
    *
    * @returns {{last_name: string, middle_name: string, uuid: string, first_name: string}}
    */
-  createItem() {
+  buildItem() {
     const firstName = faker.person.firstName();
     const middleName = faker.person.middleName();
     const lastName = faker.person.lastName();
@@ -30,8 +30,12 @@ class People extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'people'
+  }
+
+  getShowAttribute() {
+    return 'person';
   }
 }
 

@@ -20,80 +20,72 @@ const addRoutes = (router) => {
    * Core Data Public API.
    */
   router.get('/core_data/public/events/:id', (request, response) => {
-    response.send(Events.createItem());
+    response.send(Events.fetchItem());
     response.end();
   });
 
   router.get('/core_data/public/events/:id/items', (request, response) => {
-    response.send(Items.createItems(5));
+    response.send(Items.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/events/:id/manifests', (request, response) => {
-    response.send(Manifests.createItems('events', 5));
+    response.send(Manifests.fetchItems('events', 5));
     response.end();
   });
 
   router.get('/core_data/public/events/:id/people', (request, response) => {
-    response.send(People.createItems(5));
+    response.send(People.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/events/:id/places', (request, response) => {
-    response.send(Places.createItems(5));
+    response.send(Places.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/places/:id', (request, response) => {
-    response.send(Places.createItem());
+    response.send(Places.fetchItem());
     response.end();
   });
 
   router.get('/core_data/public/places/:id/events', (request, response) => {
-    response.send(Events.createItems(5));
+    response.send(Events.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/places/:id/manifests', (request, response) => {
-    response.send(Manifests.createItems('places', 5));
+    response.send(Manifests.fetchItems('places', 5));
     response.end();
   });
 
   router.get('/core_data/public/places/:id/manifests/:manifest_id', (request, response) => {
-    response.send(Manifests.createItem('places', 10));
+    response.send(Manifests.fetchItems('places', 10));
     response.end();
   });
 
   router.get('/core_data/public/places/:id/media_contents', (request, response) => {
-    response.send(MediaContents.createItems(5))
+    response.send(MediaContents.fetchItems(5))
     response.end();
   });
 
   router.get('/core_data/public/places/:id/organizations', (request, response) => {
-    response.send(Organizations.createItems(5))
+    response.send(Organizations.fetchItems(5))
     response.end();
   });
 
   router.get('/core_data/public/places/:id/people', (request, response) => {
-    response.send(People.createItems(5));
+    response.send(People.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/places/:id/places', (request, response) => {
-    response.send(Places.createItems(5));
+    response.send(Places.fetchItems(5));
     response.end();
   });
 
   router.get('/core_data/public/places/:id/taxonomies', (request, response) => {
-    response.send(Taxonomies.createItems(5))
-    response.end();
-  });
-
-  /**
-   * Core Data Linked Places API.
-   */
-  router.get('/core_data/public/linked_places/places/:id', (request, response) => {
-    response.send(Places.createItems(5));
+    response.send(Taxonomies.fetchItems(5))
     response.end();
   });
 };

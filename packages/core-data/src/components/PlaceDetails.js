@@ -33,7 +33,7 @@ const PlaceDetails = (props: Props) => {
     PlacesService.fetchOne(baseUrl, props.id, projectIds)
   ), [props.id]);
 
-  const { data: place } = useLoader(onLoad);
+  const { data: { place } = {} } = useLoader(onLoad);
 
   /**
    * Load the related media contents.

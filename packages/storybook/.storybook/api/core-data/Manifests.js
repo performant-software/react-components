@@ -16,7 +16,7 @@ class Manifests extends Base {
    *
    * @returns {{id: string, label: {en: string[]}, type: string, '@context': string[], items: []}}
    */
-  createItem(route, count) {
+  fetchItem(route, count) {
     const itemId = faker.string.uuid();
     const manifestId = faker.string.uuid();
 
@@ -88,7 +88,7 @@ class Manifests extends Base {
    *
    * @returns {{id: string, label: {en: string[]}, type: string, '@context': string, items: []}}
    */
-  createItems(route, count) {
+  fetchItems(route, count) {
     const itemId = faker.string.uuid();
     const manifestId = faker.string.uuid();
 

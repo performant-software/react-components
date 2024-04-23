@@ -9,8 +9,10 @@ class Base {
   /**
    * Returns a single item.
    */
-  createItem() {
-    // Implemented in sub-classes
+  fetchItem() {
+    return {
+      [this.getShowAttribute()]: this.buildItem()
+    };
   }
 
   /**
@@ -20,15 +22,15 @@ class Base {
    *
    * @returns {{[p: string]: [], list: {pages: number, count, page: number}}}
    */
-  createItems(count) {
+  fetchItems(count) {
     const items = [];
 
     _.times(count, () => {
-      items.push(this.createItem());
+      items.push(this.buildItem());
     });
 
     return {
-      [this.getParameterName()]: items,
+      [this.getIndexAttribute()]: items,
       list: {
         count,
         page: 1,
@@ -39,12 +41,22 @@ class Base {
 
   // Protected
 
+  buildItem() {
+    // Implemented in sub-classes
+    return {};
+  }
+
   /**
    * Returns the parameter name.
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
+    // Implemented in sub-classes
+    return '';
+  }
+
+  getShowAttribute() {
     // Implemented in sub-classes
     return '';
   }

@@ -12,7 +12,7 @@ class Taxonomies extends Base {
    *
    * @returns {{name: string, uuid: string}}
    */
-  createItem() {
+  buildItem() {
     return {
       uuid: faker.string.uuid(),
       name: faker.location.country()
@@ -24,8 +24,12 @@ class Taxonomies extends Base {
    *
    * @returns {string}
    */
-  getParameterName() {
+  getIndexAttribute() {
     return 'taxonomies';
+  }
+
+  getShowAttribute() {
+    return 'taxonomy';
   }
 }
 
