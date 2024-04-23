@@ -62,7 +62,7 @@ const RelatedList = (props: Props) => {
   if (_.isEmpty(items)) {
     return (
       <div
-        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/50 italic'
+        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/60 italic'
       >
         { props.emptyMessage }
       </div>

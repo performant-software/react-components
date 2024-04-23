@@ -60,7 +60,7 @@ const addRoutes = (router) => {
   });
 
   router.get('/core_data/public/places/:id/manifests/:manifest_id', (request, response) => {
-    response.send(Manifests.fetchItems('places', 10));
+    response.send(Manifests.fetchItem('places', 10));
     response.end();
   });
 

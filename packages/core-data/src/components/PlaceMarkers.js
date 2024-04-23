@@ -36,7 +36,7 @@ const PlaceMarkers = ({ urls, ...props }: Props) => {
    * @type {function(): *}
    */
   const onFetch = useCallback(() => (
-    _.map(urls, (url) => fetch(url).then((res) => res.json()))
+    _.map(urls, (url) => fetch(url).then((res) => res.json()).then((res) => res.place))
   ), [urls]);
 
   /**

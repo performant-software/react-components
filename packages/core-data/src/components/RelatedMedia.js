@@ -60,7 +60,7 @@ const RelatedMedia = (props: Props) => {
   if (_.isEmpty(data?.items) && props.emptyMessage) {
     return (
       <div
-        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/50 italic'
+        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/60 italic'
       >
         { props.emptyMessage }
       </div>
@@ -87,6 +87,7 @@ const RelatedMedia = (props: Props) => {
           key={id}
         >
           <Thumbnail
+            aria-label={label}
             className='rounded shadow cursor-pointer'
             onClick={() => setManifestUrl(id)}
             thumbnail={_.map(thumbnail, (t) => ({

@@ -15,7 +15,7 @@ export const Default = () => (
     style={{
       position: 'relative',
       width: '360px',
-      height: '200px'
+      height: '100vh'
     }}
   >
     <div

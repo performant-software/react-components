@@ -46,7 +46,7 @@ const EventDetails = (props: Props) => {
   return (
     <div>
       <h1
-        className='pr-6 py-1 font-bold text-xl'
+        className='pr-6 py-1 font-bold text-2xl'
       >
         { event.name }
       </h1>

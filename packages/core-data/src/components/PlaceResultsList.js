@@ -4,50 +4,9 @@ import React, { useMemo } from 'react';
 import { Highlight } from 'react-instantsearch';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
-import _ from 'underscore';
 import type { Feature } from '../types/Feature';
 import type { Place } from '../types/typesense/Place';
-
-/**
- * Converts the passed place result to a feature.
- *
- * @param result
- *
- * @returns {{
- *   geometry: {coordinates: number[], type: string},
- *   id: number,
- *   type:
- *   string,
- *   properties: {
- *     ccode: *[],
- *     record_id: string,
- *     names: *,
- *     name: string,
- *     id: string,
- *     title: string,
- *     type: string,
- *     uuid: string
- *   }
- * }}
- */
-const toFeature = (result: Place) => ({
-  id: parseInt(result.record_id, 10),
-  type: 'Feature',
-  properties: {
-    id: result.record_id,
-    ccode: [],
-    title: result.name,
-    uuid: result.uuid,
-    record_id: result.record_id,
-    name: result.name,
-    names: _.map(result.names, (toponym) => ({ toponym })),
-    type: result.type
-  },
-  geometry: {
-    type: 'Point',
-    coordinates: result.coordinates.slice().reverse()
-  }
-});
+import TypesenseUtils from '../utils/Typesense';
 
 type HitComponentProps = {
   hit: any,
@@ -60,7 +19,7 @@ const HitComponent = (props: HitComponentProps) => {
 
   const className = useMemo(() => {
     const classNames = [
-      'h-[5.5em]',
+      'h-full',
       'border-b',
       'flex',
       'flex-col',
@@ -68,7 +27,7 @@ const HitComponent = (props: HitComponentProps) => {
     ];
 
     if (props.isHovered) {
-      classNames.add('bg-teal-700/30');
+      classNames.push('bg-teal-700/30');
     }
 
     return classNames.join(' ');
@@ -80,7 +39,7 @@ const HitComponent = (props: HitComponentProps) => {
     >
       <button
         aria-label='Search result'
-        className='py-2 px-3 flex-grow text-left inline-flex flex-col'
+        className='py-2 px-3 flex-grow text-left flex rounded-none flex-col hover:bg-transparent'
         onClick={props.onClick}
         type='button'
       >
@@ -147,7 +106,7 @@ const PlaceResultsList = (props: Props) => {
     return (
       <div
         style={style}
-        onPointerEnter={() => onHoverChange(hover?.id === id ? hover : toFeature(hit))}
+        onPointerEnter={() => onHoverChange(hover?.id === id ? hover : TypesenseUtils.toFeature(hit))}
         onPointerLeave={() => onHoverChange(undefined)}
       >
         <HitComponent

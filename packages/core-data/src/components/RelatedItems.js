@@ -81,11 +81,11 @@ const RelatedItems = (props: Props) => {
                     { props.renderHeader(item) }
                   </div>
                 )}
-                <h4
+                <h2
                   className='py-0.5 font-semibold text-lg'
                 >
                   { item.primary_name?.name?.name }
-                </h4>
+                </h2>
                 { props.renderDescription && (
                   <div
                     className='py-0.5 font-light text-sm'
