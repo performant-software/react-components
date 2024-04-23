@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/shared-components",
-  "version": "2.2.0-beta.0",
+  "version": "2.2.0-beta.1",
   "description": "A package of shared, framework agnostic, components.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
