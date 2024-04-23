@@ -24,17 +24,18 @@ type Props = {
   itemSize?: number,
 
   /**
-   * Callback fired when the hover item is changed.
-   */
-  onHoverChange: (hover?: Feature<{ id: string }>) => void,
-
-  /**
    * Callback fired when a search result is clicked.
    */
   onClick: (result: Place) => void,
 
   /**
-   * TODO: Comment me
+   * Callback fired when the hover item is changed.
+   */
+  onHoverChange: (hover?: Feature<{ id: string }>) => void,
+
+  /**
+   * Renders the search result row for the passed item.
+   *
    * @param result
    */
   renderItem: (result: Place) => JSX.Element
@@ -101,7 +102,7 @@ const SearchResultsList = (props: Props) => {
           <button
             aria-label='Search result'
             className='py-2 px-3 flex-grow text-left flex rounded-none flex-col hover:bg-transparent'
-            onClick={onClick}
+            onClick={() => onClick(hit)}
             type='button'
           >
             { renderItem(hit) }
