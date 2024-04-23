@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/user-defined-fields",
-  "version": "2.2.0-beta.1",
+  "version": "2.2.0-beta.2",
   "description": "A package of components used for allowing end users to define fields on models. Use with the \"user_defined_fields\" gem.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -23,8 +23,8 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/semantic-components": "^2.2.0-beta.1",
-    "@performant-software/shared-components": "^2.2.0-beta.1",
+    "@performant-software/semantic-components": "^2.2.0-beta.2",
+    "@performant-software/shared-components": "^2.2.0-beta.2",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
