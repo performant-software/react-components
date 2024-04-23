@@ -18,7 +18,7 @@ export { default as PersistentSearchStateContextProvider } from './components/Pe
 export { default as PlaceDetails } from './components/PlaceDetails';
 export { default as PlaceLayersSelector } from './components/PlaceLayersSelector';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
-export { default as PlaceResultsList } from './components/PlaceResultsList';
+export { default as PlaceResultsList } from './components/SearchResultsList.js';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
 export { default as RelatedEvents } from './components/RelatedEvents';
 export { default as RelatedItem } from './components/RelatedItem';
