@@ -1,36 +1,28 @@
 // @flow
 
 import React from 'react';
-import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
-import PlacesService from '../../../core-data/src/services/Places';
 import RelatedMedia from '../../../core-data/src/components/RelatedMedia';
+import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
+import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
 
 export default {
   title: 'Components/Core Data/RelatedMedia',
   component: RelatedMedia
 };
 
-export const Default = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
-    <RelatedMedia
-      onLoad={(baseUrl, projectIds) => (
-        PlacesService.fetchRelatedManifests(baseUrl, 1, projectIds)
-      )}
-    />
-  </CoreDataContextProvider>
-);
+export const Default = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
 
-export const EmptyList = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
+  return (
     <RelatedMedia
-      emptyMessage='No related media'
-      onLoad={() => Promise.resolve()}
+      onLoad={(params) => PlacesService.fetchRelatedManifests('1', params)}
     />
-  </CoreDataContextProvider>
-);
+  );
+});
+
+export const EmptyList = withCoreDataContextProvider(() => (
+  <RelatedMedia
+    emptyMessage='No related media'
+    onLoad={() => Promise.resolve()}
+  />
+));

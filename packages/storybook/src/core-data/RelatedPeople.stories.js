@@ -1,50 +1,41 @@
 // @flow
 
 import React from 'react';
-import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
-import PlacesService from '../../../core-data/src/services/Places';
 import RelatedPeople from '../../../core-data/src/components/RelatedPeople';
+import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
+import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
 
 export default {
   title: 'Components/Core Data/RelatedPeople',
   component: RelatedPeople
 };
 
-export const Default = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
+export const Default = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
     <RelatedPeople
-      onLoad={(baseUrl, projectIds) => (
-        PlacesService.fetchRelatedPeople(baseUrl, 1, projectIds)
+      onLoad={(params) => (
+        PlacesService.fetchRelatedPeople('1', params)
       )}
     />
-  </CoreDataContextProvider>
-);
+  );
+});
 
-export const Horizontal = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
+export const Horizontal = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
     <RelatedPeople
       itemsPerRow={2}
-      onLoad={(baseUrl, projectIds) => (
-        PlacesService.fetchRelatedPeople(baseUrl, 1, projectIds)
-      )}
+      onLoad={(params) => PlacesService.fetchRelatedPeople('1', params)}
     />
-  </CoreDataContextProvider>
-);
+  );
+});
 
-export const EmptyList = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
-    <RelatedPeople
-      emptyMessage='No related people'
-      onLoad={() => Promise.resolve()}
-    />
-  </CoreDataContextProvider>
-);
+export const EmptyList = withCoreDataContextProvider(() => (
+  <RelatedPeople
+    emptyMessage='No related people'
+    onLoad={() => Promise.resolve()}
+  />
+));

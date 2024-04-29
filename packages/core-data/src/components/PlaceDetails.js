@@ -3,8 +3,7 @@
 import { Image } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import _ from 'underscore';
-import PlacesService from '../services/Places';
-import { useLoader } from '../hooks/CoreData';
+import { useLoader, usePlacesService } from '../hooks/CoreData';
 
 type Props = {
   /**
@@ -24,14 +23,14 @@ type Props = {
  * This component renders a detail view for the passed Core Data place record.
  */
 const PlaceDetails = (props: Props) => {
+  const PlacesService = usePlacesService();
+
   /**
    * Load the base place record.
    *
    * @type {function(*, *): Promise<*>}
    */
-  const onLoad = useCallback((baseUrl, projectIds) => (
-    PlacesService.fetchOne(baseUrl, props.id, projectIds)
-  ), [props.id]);
+  const onLoad = useCallback(() => PlacesService.fetchOne(props.id), [props.id]);
 
   const { data: { place } = {} } = useLoader(onLoad);
 
@@ -40,9 +39,7 @@ const PlaceDetails = (props: Props) => {
    *
    * @type {function(*, *): Promise<*>}
    */
-  const onLoadMediaContents = useCallback((baseUrl, projectIds) => (
-    PlacesService.fetchRelatedMedia(baseUrl, props.id, projectIds)
-  ), [props.id]);
+  const onLoadMediaContents = useCallback((params) => PlacesService.fetchRelatedMedia(props.id, params), [props.id]);
 
   const { data: { media_contents: mediaContents } = {} } = useLoader(onLoadMediaContents);
 

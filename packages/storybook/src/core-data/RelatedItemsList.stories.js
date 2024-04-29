@@ -17,6 +17,7 @@ export const Default = () => (
       label='Numbers'
     >
       <RelatedList
+        className='p-3 pt-1 pb-4'
         collectionName='items'
         onLoad={() => (
           Promise.resolve({

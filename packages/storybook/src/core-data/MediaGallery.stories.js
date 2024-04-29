@@ -28,7 +28,7 @@ export const Default = () => {
       </div>
       { open && (
         <MediaGallery
-          manifestUrl='/core_data/public/places/1/manifests/1'
+          manifestUrl='/core_data/public/v1/places/1/manifests/1'
           onClose={() => setOpen(false)}
         />
       )}

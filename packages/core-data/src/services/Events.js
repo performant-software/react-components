@@ -16,4 +16,4 @@ class Events extends BaseService {
   }
 }
 
-export default new Events();
+export default Events;

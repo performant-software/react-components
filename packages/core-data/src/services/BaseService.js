@@ -6,144 +6,128 @@ class BaseService {
   /**
    * Constructs a new BaseService object. This constructor should never be used directly.
    */
-  constructor() {
+  constructor(baseUrl, projectIds) {
     if (this.constructor === BaseService) {
       throw new TypeError('Abstract class "BaseService" cannot be instantiated directly.');
     }
+
+    this.baseUrl = baseUrl;
+    this.projectIds = projectIds;
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchOne(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildUrl(baseUrl, this.getRoute(), id, projectIds, params);
+  fetchOne(id, params = {}) {
+    const url = Api.buildUrl(this.baseUrl, this.getRoute(), id, this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/events API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/events API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedEvents(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'events', projectIds, params);
+  fetchRelatedEvents(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'events', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/items API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/items API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedItems(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'items', projectIds, params);
+  fetchRelatedItems(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'items', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/manifests API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/manifests API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedManifests(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'manifests', projectIds, params);
+  fetchRelatedManifests(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'manifests', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/media_contents API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/media_contents API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedMedia(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'media_contents', projectIds, params);
+  fetchRelatedMedia(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'media_contents', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/organizations API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/organizations API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedOrganizations(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'organizations', projectIds, params);
+  fetchRelatedOrganizations(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'organizations', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/people API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/people API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
-   *
    * @returns {Promise<any>}
    */
-  fetchRelatedPeople(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'people', projectIds, params);
+  fetchRelatedPeople(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'people', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/places API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/places API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedPlaces(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'places', projectIds, params);
+  fetchRelatedPlaces(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'places', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
   /**
-   * Calls the GET /core_data/public/<route>/:id/taxonomies API endpoint.
+   * Calls the GET /core_data/public/<version>/<route>/:id/taxonomies API endpoint.
    *
-   * @param baseUrl
    * @param id
-   * @param projectIds
    * @param params
    *
    * @returns {Promise<any>}
    */
-  fetchRelatedTaxonomies(baseUrl, id, projectIds, params = {}) {
-    const url = Api.buildNestedUrl(baseUrl, this.getRoute(), id, 'taxonomies', projectIds, params);
+  fetchRelatedTaxonomies(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'taxonomies', this.getSearchParams(params));
     return fetch(url).then((response) => response.json());
   }
 
@@ -151,6 +135,20 @@ class BaseService {
 
   getRoute() {
     // Implemented in sub-classes
+  }
+
+  /**
+   * Returns the search params for the current request.
+   *
+   * @param params
+   *
+   * @returns {*&{project_ids}}
+   */
+  getSearchParams(params) {
+    return {
+      project_ids: this.projectIds,
+      ...params
+    };
   }
 }
 

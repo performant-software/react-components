@@ -2,7 +2,7 @@
 
 import { faker } from '@faker-js/faker';
 import _ from 'underscore';
-import Base from './Base';
+import Base, { BASE_URL } from './Base';
 
 /**
  * Class responsible for handling all manifest API requests for the Storybook Core Data API.
@@ -20,7 +20,7 @@ class Manifests extends Base {
     const itemId = faker.string.uuid();
     const manifestId = faker.string.uuid();
 
-    const manifestUrl = `/core_data/public/${route}/${itemId}/manifests/${manifestId}`;
+    const manifestUrl = `${BASE_URL}/${route}/${itemId}/manifests/${manifestId}`;
 
     const items = [];
 
@@ -92,7 +92,7 @@ class Manifests extends Base {
     const itemId = faker.string.uuid();
     const manifestId = faker.string.uuid();
 
-    const id = `/core_data/public/${route}/${itemId}/manifests`;
+    const id = `${BASE_URL}/${route}/${itemId}/manifests`;
     const name = faker.lorem.words({ min: 1, max: 3 });
 
     const items = [];

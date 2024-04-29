@@ -1,36 +1,28 @@
 // @flow
 
 import React from 'react';
-import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
-import PlacesService from '../../../core-data/src/services/Places';
 import RelatedPlaces from '../../../core-data/src/components/RelatedPlaces';
+import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
+import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
 
 export default {
   title: 'Components/Core Data/RelatedPlaces',
   component: RelatedPlaces
 };
 
-export const Default = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
-    <RelatedPlaces
-      onLoad={(baseUrl, projectIds) => (
-        PlacesService.fetchRelatedPlaces(baseUrl, '1', projectIds)
-      )}
-    />
-  </CoreDataContextProvider>
-);
+export const Default = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
 
-export const EmptyMessage = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
+  return (
     <RelatedPlaces
-      emptyMessage='No related places'
-      onLoad={() => Promise.resolve()}
+      onLoad={(params) => PlacesService.fetchRelatedPlaces('1', params)}
     />
-  </CoreDataContextProvider>
-);
+  );
+});
+
+export const EmptyMessage = withCoreDataContextProvider(() => (
+  <RelatedPlaces
+    emptyMessage='No related places'
+    onLoad={() => Promise.resolve()}
+  />
+));

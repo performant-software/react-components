@@ -1,37 +1,28 @@
 // @flow
 
 import React from 'react';
-import CoreDataContextProvider from '../../../core-data/src/components/CoreDataContextProvider';
-import PlacesService from '../../../core-data/src/services/Places';
 import RelatedOrganizations from '../../../core-data/src/components/RelatedOrganizations';
+import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
+import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
 
 export default {
   title: 'Components/Core Data/RelatedOrganizations',
   component: RelatedOrganizations
 };
 
-export const Default = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
-    <RelatedOrganizations
-      onLoad={(baseUrl, projectIds) => (
-        PlacesService.fetchRelatedOrganizations(baseUrl, 1, projectIds)
-      )}
-    />
-  </CoreDataContextProvider>
+export const Default = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
 
-);
-
-export const EmptyList = () => (
-  <CoreDataContextProvider
-    baseUrl=''
-    projectIds={[]}
-  >
+  return (
     <RelatedOrganizations
-      emptyMessage='No related organizations'
-      onLoad={() => Promise.resolve()}
+      onLoad={(params) => PlacesService.fetchRelatedOrganizations('1', params)}
     />
-  </CoreDataContextProvider>
-);
+  );
+});
+
+export const EmptyList = withCoreDataContextProvider(() => (
+  <RelatedOrganizations
+    emptyMessage='No related organizations'
+    onLoad={() => Promise.resolve()}
+  />
+));

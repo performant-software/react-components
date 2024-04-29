@@ -1,5 +1,6 @@
 // @flow
 
+import { BASE_URL } from '../api/core-data/Base';
 import Events from '../api/core-data/Events';
 import Items from '../api/core-data/Items';
 import Places from '../api/core-data/Places';
@@ -8,8 +9,6 @@ import People from '../api/core-data/People';
 import Taxonomies from '../api/core-data/Taxonomies';
 import Manifests from '../api/core-data/Manifests';
 import MediaContents from '../api/core-data/MediaContents';
-
-const BASE_URL = '/core_data/public/v1';
 
 /**
  * Adds the Core Data dummy routes.

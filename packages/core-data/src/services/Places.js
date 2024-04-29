@@ -16,5 +16,4 @@ class Places extends BaseService {
   }
 }
 
-const PlacesService: Places = new Places();
-export default PlacesService;
+export default Places;

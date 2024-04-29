@@ -2,9 +2,8 @@
 
 import React, { useCallback } from 'react';
 import EventUtils from '../utils/Event';
-import EventsService from '../services/Events';
 import LoadAnimation from './LoadAnimation';
-import { useLoader } from '../hooks/CoreData';
+import { useEventsService, useLoader } from '../hooks/CoreData';
 
 type Props = {
   /**
@@ -15,21 +14,16 @@ type Props = {
 
 /**
  * This component renders the details for a single event.
- *
- * @param props
- * @returns {JSX.Element|null}
- *
- * @constructor
  */
 const EventDetails = (props: Props) => {
+  const EventsService = useEventsService();
+
   /**
    * Loads the event record.
    *
    * @type {function(*, *): Promise<*>}
    */
-  const onLoad = useCallback((baseUrl, projectIds) => (
-    EventsService.fetchOne(baseUrl, props.id, projectIds)
-  ), [props.id]);
+  const onLoad = useCallback(() => EventsService.fetchOne(props.id), [props.id]);
 
   const { data: { event } = {}, loading } = useLoader(onLoad);
 
