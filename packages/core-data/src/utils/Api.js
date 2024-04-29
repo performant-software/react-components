@@ -13,7 +13,7 @@
  * @returns {`${string}?${string}`}
  */
 const buildNestedUrl = (baseUrl, route, id, nested, projectIds, searchParams = {}) => {
-  const url = `${baseUrl}/core_data/public/${route}/${id}/${nested}`;
+  const url = `${baseUrl}/core_data/public/v1/${route}/${id}/${nested}`;
   const params = new URLSearchParams({ ...searchParams, project_ids: projectIds });
 
   return `${url}?${params}`;
@@ -31,7 +31,7 @@ const buildNestedUrl = (baseUrl, route, id, nested, projectIds, searchParams = {
  * @returns {`${string}?${string}`}
  */
 const buildUrl = (baseUrl, route, id, projectIds, searchParams = {}) => {
-  const url = `${baseUrl}/core_data/public/${route}/${id}`;
+  const url = `${baseUrl}/core_data/public/v1/${route}/${id}`;
   const params = new URLSearchParams({ ...searchParams, project_ids: projectIds });
 
   return `${url}?${params}`;
