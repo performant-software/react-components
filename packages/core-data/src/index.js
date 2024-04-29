@@ -38,7 +38,15 @@ export { default as CoreDataContext } from './context/CoreData';
 export { default as FacetStateContext } from './context/FacetStateContext';
 
 // Hooks
-export { useLoader } from './hooks/CoreData';
+export {
+  useEventsService,
+  useInstancesService,
+  useItemsService,
+  useLoader,
+  usePeopleService,
+  usePlacesService,
+  useWorksService
+} from './hooks/CoreData';
 export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';
 export {
   useCachedHits,
@@ -50,7 +58,11 @@ export {
 
 // Services
 export { default as EventsService } from './services/Events';
+export { default as InstancesService } from './services/Instances';
+export { default as ItemsService } from './services/Items';
+export { default as PeopleService } from './services/People';
 export { default as PlacesService } from './services/Places';
+export { default as WorksService } from './services/Works';
 
 // Utilities
 export { default as Api } from './utils/Api';
