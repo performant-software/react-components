@@ -66,7 +66,8 @@ const RelatedList = (props: Props) => {
    */
   useEffect(() => {
     if (data) {
-      setItems((prevItems) => [...prevItems, ...data[props.collectionName]]);
+      const newItems = data[props.collectionName] || [];
+      setItems((prevItems) => [...prevItems, ...newItems]);
     }
   }, [data, props.collectionName]);
 
