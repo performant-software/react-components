@@ -36,6 +36,7 @@ export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 // Contexts
 export { default as CoreDataContext } from './context/CoreData';
 export { default as FacetStateContext } from './context/FacetStateContext';
+export { default as PersistentSearchStateContext } from './context/PersistentSearchState';
 
 // Hooks
 export {
