@@ -1,1 +1,0 @@
-import{v as i,w as n,a as u,D as o}from"./getElementType-CckcRzoH.js";function b(r,t){var a=[];return i(r,function(e,s,f){t(e,s,f)&&a.push(e)}),a}function p(r,t){var a=u(r)?o:b;return a(r,n(t))}export{p as f};

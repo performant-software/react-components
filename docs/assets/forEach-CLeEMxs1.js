@@ -1,0 +1,1 @@
+import{L as i,a as r,v as u}from"./getElementType-BSRayMAs.js";function a(n,e){for(var t=-1,f=n==null?0:n.length;++t<f&&e(n[t],t,n)!==!1;);return n}function c(n){return typeof n=="function"?n:i}function s(n,e){var t=r(n)?a:u;return t(n,c(e))}export{s as f};

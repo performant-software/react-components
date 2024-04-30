@@ -1,1 +1,0 @@
-import{r as t}from"./index-CBqU2yxZ.js";const l=t.createContext({baseUrl:void 0,projectIds:void 0}),i=(s,a=[])=>{const[o,r]=t.useState(),[n,e]=t.useState(!1),{baseUrl:c,projectIds:d}=t.useContext(l);return t.useEffect(()=>{e(!0),s(c,d).then(u=>r(u)).finally(()=>e(!1))},[...a]),{data:o,loading:n}};export{l as C,i as u};

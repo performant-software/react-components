@@ -1,6 +1,0 @@
-import{j as e}from"./jsx-runtime-BTCK_S7S.js";import"./index-CBqU2yxZ.js";import{R as s}from"./RelatedList-7oqBTiRX.js";import{c as r}from"./createLucideIcon-CT11eyui.js";/**
- * @license lucide-react v0.321.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */const n=r("ListTree",[["path",{d:"M21 12h-8",key:"1bmf0i"}],["path",{d:"M21 6H8",key:"1pqkrb"}],["path",{d:"M21 18h-8",key:"1tm79t"}],["path",{d:"M3 6v4c0 1.1.9 2 2 2h3",key:"1ywdgy"}],["path",{d:"M3 10v6c0 1.1.9 2 2 2h3",key:"2wc746"}]]),a=t=>e.jsx(s,{emptyMessage:t.emptyMessage,onLoad:t.onLoad,renderItem:o=>e.jsxs(e.Fragment,{children:[e.jsx(n,{className:"h-4 w-4 mr-1.5"}),o.body.title]})}),c=a;a.__docgenInfo={description:"This component renders the related Core Data taxonomies.",methods:[],displayName:"RelatedTaxonomies",props:{emptyMessage:{required:!1,flowType:{name:"string"},description:"A message to display when no records are returned from the API."},onLoad:{required:!0,flowType:{name:"signature",type:"function",raw:"() => any",signature:{arguments:[],return:{name:"any"}}},description:"Callback fired when the component is mounted to fetch the data."}}};export{c as R};
