@@ -21,9 +21,14 @@ type Props = {
   itemsPerRow?: number,
 
   /**
+   * The label to display on the "Show More" button.
+   */
+  moreLabel: string,
+
+  /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any,
+  onLoad: () => any
 };
 
 /**
@@ -35,6 +40,7 @@ const RelatedTaxonomies = (props: Props) => (
     collectionName='taxonomies'
     emptyMessage={props.emptyMessage}
     itemsPerRow={props.itemsPerRow}
+    moreLabel={props.moreLabel}
     onLoad={props.onLoad}
     renderItem={(taxonomy) => (
       <>

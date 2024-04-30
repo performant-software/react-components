@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import _ from 'underscore';
 import RelatedMedia from '../../../core-data/src/components/RelatedMedia';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';

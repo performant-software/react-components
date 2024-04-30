@@ -1,7 +1,7 @@
 // @flow
 
 import clsx from 'clsx';
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'underscore';
 import LoadAnimation from './LoadAnimation';
 import { useLoader } from '../hooks/CoreData';
@@ -37,6 +37,11 @@ type Props = {
   emptyMessage: string,
 
   /**
+   * The label to display on the "Show More" button.
+   */
+  moreLabel: string,
+
+  /**
    * Render function used to determine how to present the passed item.
    */
   renderItem: (item: Item) => JSX.Element
@@ -46,12 +51,24 @@ type Props = {
  * This component is a helper component used to structure the lists for the other `Related*` components.
  */
 const RelatedList = (props: Props) => {
-  const { data, loading } = useLoader(props.onLoad, []);
+  const [items, setItems] = useState([]);
+
+  const {
+    data,
+    loading,
+    isNextDisabled,
+    onNext,
+    pages
+  } = useLoader(props.onLoad);
 
   /**
-   * Memo-izes the list of items.
+   * Append the new items to the list.
    */
-  const items = useMemo(() => data && data[props.collectionName], [data, props.collectionName]);
+  useEffect(() => {
+    if (data) {
+      setItems((prevItems) => [...prevItems, ...data[props.collectionName]]);
+    }
+  }, [data, props.collectionName]);
 
   if (loading) {
     return (
@@ -70,28 +87,46 @@ const RelatedList = (props: Props) => {
   }
 
   return (
-    <ul
-      className={clsx(
-        'grid',
-        'gap-2',
-        { 'grid-cols-1': props.itemsPerRow === 1 },
-        { 'grid-cols-2': props.itemsPerRow === 2 },
-        { 'grid-cols-3': props.itemsPerRow === 3 },
-        { 'grid-cols-4': props.itemsPerRow === 4 },
-        { 'grid-cols-5': props.itemsPerRow === 5 },
-        { 'grid-cols-6': props.itemsPerRow === 6 },
-        props.className
-      )}
-    >
-      { _.map(items, (item) => (
-        <li
-          key={item.id}
-          className='flex items-center'
+    <div>
+      <ul
+        className={clsx(
+          'grid',
+          'gap-2',
+          { 'grid-cols-1': props.itemsPerRow === 1 },
+          { 'grid-cols-2': props.itemsPerRow === 2 },
+          { 'grid-cols-3': props.itemsPerRow === 3 },
+          { 'grid-cols-4': props.itemsPerRow === 4 },
+          { 'grid-cols-5': props.itemsPerRow === 5 },
+          { 'grid-cols-6': props.itemsPerRow === 6 },
+          props.className
+        )}
+      >
+        { _.map(items, (item) => (
+          <li
+            key={item.id}
+            className='flex items-center'
+          >
+            { props.renderItem(item) }
+          </li>
+        ))}
+      </ul>
+      { pages > 1 && !isNextDisabled && (
+        <button
+          className={clsx(
+            'py-2',
+            'px-3',
+            'mt-2',
+            { 'disable:pointer-events-none': isNextDisabled }
+          )}
+          disabled={isNextDisabled}
+          onClick={onNext}
+          type='button'
         >
-          { props.renderItem(item) }
-        </li>
-      ))}
-    </ul>
+          { props.moreLabel }
+        </button>
+      )}
+    </div>
+
   );
 };
 
