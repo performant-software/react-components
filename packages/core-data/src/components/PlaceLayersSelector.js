@@ -79,21 +79,27 @@ const PlaceLayersSelector = (props: Props) => {
               className='flex gap-1.5 items-center'
             >
               <Checkbox.Root
+                asChild
                 className='hover:bg-transparent mb-0.5'
                 id={layer.name}
                 checked={isSelected(layer)}
                 onCheckedChange={() => onChange(layer)}
               >
-                { isSelected(layer) && (
-                  <CheckSquare2
-                    className='w-5 h-5'
-                  />
-                )}
-                { !isSelected(layer) && (
-                  <Square
-                    className='w-5 h-5'
-                  />
-                )}
+                <button
+                  aria-label={layer.name}
+                  type='button'
+                >
+                  { isSelected(layer) && (
+                    <CheckSquare2
+                      className='w-5 h-5'
+                    />
+                  )}
+                  { !isSelected(layer) && (
+                    <Square
+                      className='w-5 h-5'
+                    />
+                  )}
+                </button>
               </Checkbox.Root>
               <label
                 className='cursor-pointer grow'

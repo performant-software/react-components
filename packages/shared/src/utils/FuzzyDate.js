@@ -8,6 +8,12 @@ const DATE_SEPARATOR = ' - ';
 
 const DEFAULT_CALENDAR = Calendar.Calendars.gregorian;
 
+const Accuracy = {
+  year: 0,
+  month: 1,
+  date: 2
+};
+
 /**
  * Returns a view for the passed fuzzy date object and calendar.
  *
@@ -54,5 +60,6 @@ const getDateView = (date, cal = null) => {
 };
 
 export default {
+  Accuracy,
   getDateView
 };

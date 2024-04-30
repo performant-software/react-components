@@ -47,33 +47,37 @@ const RelatedItemsList = (props: Props) => (
     key={props.id}
     value={props.id}
   >
-    <Accordion.Header>
-      <Accordion.Trigger
-        className='accordion-trigger border-black/20 border border-t border-b-0 border-l-0 border-r-0 border-solid
-                   rounded-none w-full flex justify-between items-center px-3 py-3 text-sm'
-      >
-        <div>
-          { props.label }
-          { _.isFinite(props.count) && (
-            <span className='ml-1'>
-              ({ props.count })
-            </span>
-          )}
-          { props.error && (
-            <AlertCircle
-              className='inline ml-1.5 h-4 w-4 text-red-600 align-text-bottom'
-            />
-          )}
-          { props.loading && (
-            <LoadAnimation
-              className='text-muted/60 ml-4'
-            />
-          )}
-        </div>
-        <ChevronDown
-          className='accordion-chevron h-4 w-4'
-        />
-      </Accordion.Trigger>
+    <Accordion.Header
+      asChild
+    >
+      <h2>
+        <Accordion.Trigger
+          className='accordion-trigger border-black/20 border border-t border-b-0 border-l-0 border-r-0 border-solid
+                     rounded-none w-full flex justify-between items-center px-3 py-3 text-sm'
+        >
+          <div>
+            { props.label }
+            { _.isFinite(props.count) && (
+              <span className='ml-1'>
+                ({ props.count })
+              </span>
+            )}
+            { props.error && (
+              <AlertCircle
+                className='inline ml-1.5 h-4 w-4 text-red-600 align-text-bottom'
+              />
+            )}
+            { props.loading && (
+              <LoadAnimation
+                className='text-muted/60 ml-4'
+              />
+            )}
+          </div>
+          <ChevronDown
+            className='accordion-chevron h-4 w-4'
+          />
+        </Accordion.Trigger>
+      </h2>
     </Accordion.Header>
     <Accordion.Content
       className='accordion-content text-sm leading-6'

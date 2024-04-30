@@ -36,7 +36,7 @@ const PlaceMarkers = ({ urls, ...props }: Props) => {
    * @type {function(): *}
    */
   const onFetch = useCallback(() => (
-    _.map(urls, (url) => fetch(url).then((res) => res.json()))
+    _.map(urls, (url) => fetch(url).then((res) => res.json()).then((res) => res.place))
   ), [urls]);
 
   /**
@@ -46,7 +46,7 @@ const PlaceMarkers = ({ urls, ...props }: Props) => {
    */
   const onLoad = useCallback((records) => (
     _.map(records, (record) => setPlaces((prevPlaces) => (
-      record.geometry ? [...prevPlaces, feature(record.geometry, record.properties)] : prevPlaces
+      record.place_geometry ? [...prevPlaces, feature(record.place_geometry.geometry_json, record)] : prevPlaces
     )))
   ), []);
 

@@ -6,6 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'event-selected': '#3758F9',
         muted: '#0005119e'
       },
       fontFamily: {

@@ -1,17 +1,31 @@
 // @flow
 
 import { Thumbnail } from '@samvera/clover-iiif/primitives';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import _ from 'underscore';
-import LoadAnimation from './LoadAnimation';
 import MediaGallery from './MediaGallery';
-import { useLoader } from '../hooks/CoreData';
+import RelatedList from './RelatedList';
 
 type Props = {
+  /**
+   * Name of the class(es) to apply to the <ul> element.
+   */
+  className?: string,
+
   /**
    * A message to display when no records are returned from the API.
    */
   emptyMessage?: string,
+
+  /**
+   * Number of items to display in each row of the grid.
+   */
+  itemsPerRow?: number,
+
+  /**
+   * The label to display on the "Show More" button.
+   */
+  moreLabel: string,
 
   /**
    * Callback fired when the component is mounted to fetch the data.
@@ -38,54 +52,49 @@ const DEFAULT_THUMBNAIL_WIDTH = 80;
 const RelatedMedia = (props: Props) => {
   const [manifestUrl, setManifestUrl] = useState<string>();
 
-  const { data, loading } = useLoader(props.onLoad);
-
-  if (loading) {
-    return (
-      <LoadAnimation />
-    );
-  }
-
-  if (_.isEmpty(data?.items) && props.emptyMessage) {
-    return (
+  /**
+   * Renders the manifest item.
+   *
+   * @type {function({id: *, label: {en: *}, thumbnail: *}): *}
+   */
+  const renderItem = useCallback(({ id, label: { en: label }, thumbnail }) => (
+    <div
+      className='flex flex-col'
+    >
+      <Thumbnail
+        aria-label={label}
+        className='rounded shadow cursor-pointer'
+        onClick={() => setManifestUrl(id)}
+        thumbnail={_.map(thumbnail, (t) => ({
+          ...t,
+          width: props.thumbnailWidth,
+          height: props.thumbnailHeight
+        }))}
+      />
       <div
-        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/50 italic'
+        className='text-sm whitespace-nowrap'
       >
-        { props.emptyMessage }
+        { label }
       </div>
-    );
-  }
+    </div>
+  ), [props.thumbnailHeight, props.thumbnailWidth]);
 
   return (
-    <div
-      className='p-3 pb-4 grid grid-cols-3 gap-1'
-    >
-      { _.map(data?.items, ({ id, label: { en: label }, thumbnail }) => (
-        <div
-          className='flex flex-col gap-2'
-          key={id}
-        >
-          <Thumbnail
-            className='rounded shadow cursor-pointer'
-            onClick={() => setManifestUrl(id)}
-            thumbnail={_.map(thumbnail, (t) => ({
-              ...t,
-              width: props.thumbnailWidth,
-              height: props.thumbnailHeight
-            }))}
-          />
-          <div
-            className='text-sm whitespace-nowrap'
-          >
-            { label }
-          </div>
-        </div>
-      ))}
+    <>
+      <RelatedList
+        className={props.className}
+        collectionName='items'
+        emptyMessage={props.emptyMessage}
+        itemsPerRow={props.itemsPerRow}
+        onLoad={props.onLoad}
+        moreLabel={props.moreLabel}
+        renderItem={renderItem}
+      />
       <MediaGallery
         manifestUrl={manifestUrl}
         onClose={() => setManifestUrl(null)}
       />
-    </div>
+    </>
   );
 };
 

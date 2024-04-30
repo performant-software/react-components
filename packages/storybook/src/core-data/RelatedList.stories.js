@@ -10,22 +10,23 @@ export default {
 
 export const Default = () => (
   <RelatedList
-    data={{
-      items: [
-        'One',
-        'Two',
-        'Three'
-      ]
-    }}
+    collectionName='items'
+    onLoad={() => (
+      Promise.resolve({
+        items: [
+          'One',
+          'Two',
+          'Three'
+        ]
+      })
+    )}
     renderItem={(item) => item}
   />
 );
 
 export const EmptyList = () => (
   <RelatedList
-    data={{
-      items: []
-    }}
+    onLoad={() => Promise.resolve()}
     emptyMessage='This list is empty'
     renderItem={(item) => item}
   />

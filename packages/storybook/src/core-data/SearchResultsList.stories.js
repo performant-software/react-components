@@ -2,12 +2,12 @@
 
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import PlaceResultsList from '../../../core-data/src/components/PlaceResultsList';
 import hits from '../data/typesense/Places.json';
+import SearchResultsList from '../../../core-data/src/components/SearchResultsList';
 
 export default {
-  title: 'Components/Core Data/PlaceResultsList',
-  component: PlaceResultsList
+  title: 'Components/Core Data/SearchResultsList',
+  component: SearchResultsList
 };
 
 export const Default = () => (
@@ -15,7 +15,7 @@ export const Default = () => (
     style={{
       position: 'relative',
       width: '360px',
-      height: '200px'
+      height: '100vh'
     }}
   >
     <div
@@ -27,10 +27,22 @@ export const Default = () => (
         height: '100%'
       }}
     >
-      <PlaceResultsList
+      <SearchResultsList
         hits={hits}
         onHoverChange={action('hover')}
         onClick={action('click')}
+        renderItem={(item) => (
+          <>
+            <h2>
+              { item.name }
+            </h2>
+            <p
+              className='text-muted text-xs line-clamp-1'
+            >
+              { item.names }
+            </p>
+          </>
+        )}
       />
     </div>
   </div>

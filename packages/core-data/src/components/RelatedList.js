@@ -1,15 +1,31 @@
 // @flow
 
-import React from 'react';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 import _ from 'underscore';
-import { useLoader } from '../hooks/CoreData';
 import LoadAnimation from './LoadAnimation';
+import { useLoader } from '../hooks/CoreData';
 
 type Item = {
   id: string
 };
 
 type Props = {
+  /**
+   * Name of the class(es) to apply to the <ul> element.
+   */
+  className?: string,
+
+  /**
+   * Name of the collection that stores the items to display.
+   */
+  collectionName: string,
+
+  /**
+   * Number of items to display in each row of the grid.
+   */
+  itemsPerRow?: number,
+
   /**
    * Callback fired when the component is mounted to fetch the data.
    */
@@ -21,6 +37,11 @@ type Props = {
   emptyMessage: string,
 
   /**
+   * The label to display on the "Show More" button.
+   */
+  moreLabel: string,
+
+  /**
    * Render function used to determine how to present the passed item.
    */
   renderItem: (item: Item) => JSX.Element
@@ -30,7 +51,25 @@ type Props = {
  * This component is a helper component used to structure the lists for the other `Related*` components.
  */
 const RelatedList = (props: Props) => {
-  const { data, loading } = useLoader(props.onLoad, []);
+  const [items, setItems] = useState([]);
+
+  const {
+    data,
+    loading,
+    isNextDisabled,
+    onNext,
+    pages
+  } = useLoader(props.onLoad);
+
+  /**
+   * Append the new items to the list.
+   */
+  useEffect(() => {
+    if (data) {
+      const newItems = data[props.collectionName] || [];
+      setItems((prevItems) => [...prevItems, ...newItems]);
+    }
+  }, [data, props.collectionName]);
 
   if (loading) {
     return (
@@ -38,10 +77,10 @@ const RelatedList = (props: Props) => {
     );
   }
 
-  if (_.isEmpty(data?.items)) {
+  if (_.isEmpty(items)) {
     return (
       <div
-        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/50 italic'
+        className='pt-6 pl-3 pr-6 pb-8 flex items-center justify-center text-muted/60 italic'
       >
         { props.emptyMessage }
       </div>
@@ -49,19 +88,51 @@ const RelatedList = (props: Props) => {
   }
 
   return (
-    <ul
-      className='p-3 pt-1 pb-4'
-    >
-      { _.map(data?.items, (item) => (
-        <li
-          key={item.id}
-          className='flex items-center'
+    <div>
+      <ul
+        className={clsx(
+          'grid',
+          'gap-2',
+          { 'grid-cols-1': props.itemsPerRow === 1 },
+          { 'grid-cols-2': props.itemsPerRow === 2 },
+          { 'grid-cols-3': props.itemsPerRow === 3 },
+          { 'grid-cols-4': props.itemsPerRow === 4 },
+          { 'grid-cols-5': props.itemsPerRow === 5 },
+          { 'grid-cols-6': props.itemsPerRow === 6 },
+          props.className
+        )}
+      >
+        { _.map(items, (item) => (
+          <li
+            key={item.id}
+            className='flex items-center'
+          >
+            { props.renderItem(item) }
+          </li>
+        ))}
+      </ul>
+      { pages > 1 && !isNextDisabled && (
+        <button
+          className={clsx(
+            'py-2',
+            'px-3',
+            'mt-2',
+            { 'disable:pointer-events-none': isNextDisabled }
+          )}
+          disabled={isNextDisabled}
+          onClick={onNext}
+          type='button'
         >
-          { props.renderItem(item) }
-        </li>
-      ))}
-    </ul>
+          { props.moreLabel }
+        </button>
+      )}
+    </div>
+
   );
+};
+
+RelatedList.defaultProps = {
+  itemsPerRow: 1
 };
 
 export default RelatedList;
