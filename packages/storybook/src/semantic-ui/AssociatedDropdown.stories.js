@@ -465,3 +465,41 @@ export const CustomButtons = () => (
     upward={boolean('Open upward', false)}
   />
 );
+
+export const AdditionalButtons = () => (
+  <AssociatedDropdown
+    buttons={[{
+      name: 'add',
+    }, {
+      name: 'clear',
+    }, {
+      basic: true,
+      name: 'navigate',
+      content: 'Navigate',
+      icon: 'world',
+      onClick: action('navigate'),
+      type: 'button'
+    }]}
+    collectionName='items'
+    modal={{
+      component: AddModal,
+      props: {
+        onInitialize: () => Promise.resolve({ })
+      },
+      onSave: () => {
+        action('save')();
+        return Promise.resolve({});
+      }
+    }}
+    onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
+    onSelection={action('selection')}
+    placeholder={text('Placeholder', 'Search')}
+    renderOption={(item) => ({
+      key: item.id,
+      value: item.id,
+      text: item.company,
+      description: item.country
+    })}
+    upward={boolean('Open upward', false)}
+  />
+);

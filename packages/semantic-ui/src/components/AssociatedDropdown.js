@@ -224,6 +224,7 @@ class AssociatedDropdown extends Component<Props, State> {
           { this.renderEditButton() }
           { this.renderAddButton() }
           { this.renderClearButton() }
+          { this.renderButtons() }
         </Button.Group>
         { this.renderModal() }
         { this.state.saved && (
@@ -282,6 +283,18 @@ class AssociatedDropdown extends Component<Props, State> {
         {..._.defaults(button, defaults)}
       />
     );
+  }
+
+  /**
+   * Renders the extra buttons.
+   *
+   * @returns {*}
+   */
+  renderButtons() {
+    const excludeButtons = [BUTTON_ADD, BUTTON_CLEAR, BUTTON_EDIT];
+    const buttons = _.filter(this.props.buttons, (button) => !excludeButtons.includes(button.name));
+
+    return _.map(buttons, (button) => this.renderButton(button.name, _.omit(button, 'name')));
   }
 
   /**
