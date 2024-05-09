@@ -9,12 +9,12 @@ import UserDefinedFieldModal from './UserDefinedFieldModal';
 import UserDefinedFields from '../utils/UserDefinedFields';
 
 type Props = EmbeddedListProps & {
+  actions?: Array<any>,
   defaults: any,
   excludeColumns?: Array<string>
 };
 
 const OMIT_PROPS = [
-  'actions',
   'columns',
   'defaults',
   'excludeColumns',
@@ -34,11 +34,6 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
   return (
     <EmbeddedList
       {..._.omit(props, OMIT_PROPS)}
-      actions={[{
-        name: 'edit'
-      }, {
-        name: 'delete'
-      }]}
       columns={[{
         name: 'table_name',
         label: i18n.t('UserDefinedFieldsEmbeddedList.columns.table'),
@@ -78,6 +73,14 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
       }}
     />
   );
+};
+
+UserDefinedFieldsEmbeddedList.defaultProps = {
+  actions: [{
+    name: 'edit'
+  }, {
+    name: 'delete'
+  }]
 };
 
 export default UserDefinedFieldsEmbeddedList;

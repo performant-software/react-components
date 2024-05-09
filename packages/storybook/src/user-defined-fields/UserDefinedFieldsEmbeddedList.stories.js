@@ -98,3 +98,36 @@ export const CustomAddButton = useDragDrop(() => {
     />
   );
 });
+
+export const CustomActions = useDragDrop(() => {
+  const [items, setItems] = useState([]);
+
+  /**
+   * Removes the passed item from the list.
+   *
+   * @type {function(*): void}
+   */
+  const onDelete = useCallback((item) => setItems((prevItems) => _.filter(prevItems, (i) => i !== item)), []);
+
+  /**
+   * Adds the passed item to the list.
+   *
+   * @type {function(*): void}
+   */
+  const onSave = useCallback((item) => setItems((prevItems) => [...prevItems, item]), []);
+
+  return (
+    <UserDefinedFieldsEmbeddedList
+      actions={[{
+        name: 'edit',
+        icon: 'pencil'
+      }, {
+        name: 'delete',
+        icon: 'times'
+      }]}
+      items={items}
+      onDelete={onDelete}
+      onSave={onSave}
+    />
+  );
+});

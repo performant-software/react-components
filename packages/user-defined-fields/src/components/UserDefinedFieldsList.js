@@ -15,7 +15,6 @@ type Props = ListTableProps & {
 };
 
 const OMIT_PROPS = [
-  'actions',
   'collectionName',
   'columns',
   'defaults',
@@ -39,11 +38,6 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
   return (
     <ListTable
       {..._.omit(props, OMIT_PROPS)}
-      actions={[{
-        name: 'edit'
-      }, {
-        name: 'delete'
-      }]}
       columns={[{
         name: 'table_name',
         label: i18n.t('UserDefinedFieldsList.columns.table'),
@@ -87,6 +81,14 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
       onSave={(udf) => UserDefinedFieldsService.save(udf)}
     />
   );
+};
+
+UserDefinedFieldsList.defaultProps = {
+  actions: [{
+    name: 'edit'
+  }, {
+    name: 'delete'
+  }]
 };
 
 export default UserDefinedFieldsList;
