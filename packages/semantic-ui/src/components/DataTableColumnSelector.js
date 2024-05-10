@@ -5,6 +5,7 @@ import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import Draggable from './Draggable';
+import ListSessionUtils from '../utils/ListSession';
 import type { Props as ListProps } from './List';
 import './DataTableColumnSelector.css';
 
@@ -75,9 +76,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
     constructor(props: Props) {
       super(props);
 
-      this.state = {
-        columns: props.columns
-      };
+      this.state = this.initializeState(props);
     }
 
     /**
@@ -85,10 +84,41 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      *
      * @param prevProps
      */
-    componentDidUpdate(prevProps: Props): * {
+    componentDidUpdate(prevProps: Props, prevState: State): * {
       if (!ObjectUtils.isEqual(prevProps.columns, this.props.columns)) {
         this.setState({ columns: this.props.columns });
       }
+
+      if (!ObjectUtils.isEqual(prevState.columns, this.state.columns)) {
+        this.setSession();
+      }
+    }
+
+    /**
+     * Sets the initial state from the session, if provided.
+     *
+     * @param props
+     *
+     * @returns {{columns}|{columns: *}}
+     */
+    initializeState(props) {
+      const { key, storage } = props.session || {};
+      const session = ListSessionUtils.restoreSession(key, storage) || {};
+
+      if (_.isEmpty(session.columns)) {
+        return {
+          columns: props.columns
+        };
+      }
+
+      const columns = _.map(session.columns, (column) => ({
+        ...(_.findWhere(props.columns, { name: column.name }) || {}),
+        ...column
+      }));
+
+      return {
+        columns
+      };
     }
 
     /**
@@ -202,6 +232,20 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
           )}
         </>
       );
+    }
+
+    /**
+     * Sets the list columns on the session.
+     */
+    setSession() {
+      const { key, storage } = this.props.session;
+
+      if (!key) {
+        return;
+      }
+
+      const columns = _.map(this.state.columns, (column) => _.pick(column, 'name', 'hidden'));
+      ListSessionUtils.setSession(key, storage, { columns });
     }
   }
 );

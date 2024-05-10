@@ -4,6 +4,7 @@ import { Hooks, ObjectJs as ObjectUtils } from '@performant-software/shared-comp
 import React, { useEffect } from 'react';
 import _ from 'underscore';
 import DataTable from './DataTable';
+import ListSessionUtils from '../utils/ListSession';
 import type { Props as DataTableProps } from './DataTable';
 import useDataList, { SORT_ASCENDING, SORT_DESCENDING, type Props as DataListProps } from './DataList';
 import './ListTable.css';
@@ -88,11 +89,12 @@ const ListTable = useDataList((props: Props) => {
    */
   useEffect(() => {
     if (!ObjectUtils.isEqual(props.columns, prevColumns)) {
-      const {
-        page,
-        defaultSort,
-        defaultSortDirection = SORT_ASCENDING
-      } = props;
+      const { key, storage } = props.session || {};
+      const session = ListSessionUtils.restoreSession(key, storage);
+
+      const defaultSort = session.sortColumn || props.defaultSort;
+      const defaultSortDirection = session.sortDirection || props.defaultSortDirection || SORT_ASCENDING;
+      const { page } = props;
 
       if (defaultSort) {
         props.onSort(defaultSort, defaultSortDirection, page);
