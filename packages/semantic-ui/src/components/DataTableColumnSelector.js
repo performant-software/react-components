@@ -112,11 +112,15 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
         };
       }
 
-      // Iterate over the session columns to preserve the ordering
-      const columns = _.map(session.columns, (column) => ({
-        ...(_.findWhere(props.columns, { name: column.name }) || {}),
-        ...column
-      }));
+      const columns = [];
+
+      // Iterate over the session columns to preserve the ordering.
+      _.each(session.columns, (column) => {
+        const findColumn = _.findWhere(props.columns, { name: column.name });
+        if (findColumn) {
+          columns.push({ ...findColumn, ...column });
+        }
+      });
 
       // Append any new columns not stored in the session
       const columnNames = _.pluck(columns, 'name');
