@@ -105,16 +105,27 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
       const { key, storage } = props.session || {};
       const session = ListSessionUtils.restoreSession(key, storage) || {};
 
+      // If the session does not have any stored columns, use the provided props
       if (_.isEmpty(session.columns)) {
         return {
           columns: props.columns
         };
       }
 
+      // Iterate over the session columns to preserve the ordering
       const columns = _.map(session.columns, (column) => ({
         ...(_.findWhere(props.columns, { name: column.name }) || {}),
         ...column
       }));
+
+      // Append any new columns not stored in the session
+      const columnNames = _.pluck(columns, 'name');
+
+      _.each(props.columns, (column) => {
+        if (!_.contains(columnNames, column.name)) {
+          columns.push(column);
+        }
+      });
 
       return {
         columns
