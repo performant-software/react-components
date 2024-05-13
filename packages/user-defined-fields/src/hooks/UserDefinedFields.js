@@ -2,7 +2,12 @@
 
 import { BooleanIcon } from '@performant-software/semantic-components';
 import { Date as DateUtils } from '@performant-software/shared-components';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import _ from 'underscore';
 import { DataTypes } from '../constants/DataTypes';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
@@ -18,6 +23,19 @@ import UserDefinedFieldsService from '../services/UserDefinedFields';
 const useUserDefinedColumns = (defineableId, defineableType) => {
   const [fields, setFields] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  /**
+   * Resolves the user defined field value for the passed item.
+   *
+   * @type {(function(*, *): (null|*))|*}
+   */
+  const resolveValue = useCallback((item, field) => {
+    if (!item.user_defined) {
+      return null;
+    }
+
+    return item.user_defined[field.uuid];
+  }, []);
 
   /**
    * Memo-izes the columns.
@@ -40,7 +58,7 @@ const useUserDefinedColumns = (defineableId, defineableType) => {
           ...column,
           render: (item) => (
             <BooleanIcon
-              value={item.user_defined[field.uuid]}
+              value={resolveValue(item, field)}
             />
           )
         });
@@ -49,20 +67,20 @@ const useUserDefinedColumns = (defineableId, defineableType) => {
       if (field.data_type === DataTypes.date) {
         columns.push({
           ...column,
-          resolve: (item) => DateUtils.formatDate(item.user_defined[field.uuid])
+          resolve: (item) => DateUtils.formatDate(resolveValue(item, field))
         });
       }
 
       if (field.data_type !== DataTypes.richText) {
         columns.push({
           ...column,
-          resolve: (item) => item.user_defined[field.uuid]
+          resolve: (item) => resolveValue(item, field)
         });
       }
     });
 
     return columns;
-  }, [fields]);
+  }, [fields, resolveValue]);
 
   /**
    * Fetches the user defined fields for the passed defineable ID and defineable type.
