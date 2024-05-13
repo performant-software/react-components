@@ -17,10 +17,11 @@ import UserDefinedFieldsService from '../services/UserDefinedFields';
  *
  * @param defineableId
  * @param defineableType
+ * @param options
  *
  * @returns {{userDefinedColumns: [], loading: boolean}}
  */
-const useUserDefinedColumns = (defineableId, defineableType) => {
+const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
   const [fields, setFields] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,12 +31,18 @@ const useUserDefinedColumns = (defineableId, defineableType) => {
    * @type {(function(*, *): (null|*))|*}
    */
   const resolveValue = useCallback((item, field) => {
-    if (!item.user_defined) {
+    let record = item;
+
+    if (options.resolveRecord) {
+      record = options.resolveRecord(item);
+    }
+
+    if (!record.user_defined) {
       return null;
     }
 
-    return item.user_defined[field.uuid];
-  }, []);
+    return record.user_defined[field.uuid];
+  }, [options.resolveRecord]);
 
   /**
    * Memo-izes the columns.
