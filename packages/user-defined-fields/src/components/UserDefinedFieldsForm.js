@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
+import { DataTypes } from '../constants/DataTypes';
 import UserDefinedFieldsService from '../services/UserDefinedFields';
 
 type Props = {
@@ -20,16 +21,6 @@ type Props = {
   onChange: (obj: any) => void,
   onClearValidationError: (...keys: Array<string>) => void,
   tableName?: string
-};
-
-const DataTypes = {
-  boolean: 'Boolean',
-  date: 'Date',
-  number: 'Number',
-  richText: 'RichText',
-  select: 'Select',
-  string: 'String',
-  text: 'Text'
 };
 
 const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
