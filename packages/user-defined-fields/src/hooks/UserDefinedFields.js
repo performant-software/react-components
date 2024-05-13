@@ -25,12 +25,7 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
   const [fields, setFields] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  /**
-   * If we're resolving a related record, the column cannot be sortable.
-   *
-   * @type {boolean}
-   */
-  const sortable = useMemo(() => !options.resolveRecord, [options.resolveRecord]);
+  const { sortable = true } = options;
 
   /**
    * Resolves the user defined field value for the passed item.
