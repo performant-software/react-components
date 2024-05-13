@@ -238,7 +238,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      * Sets the list columns on the session.
      */
     setSession() {
-      const { key, storage } = this.props.session;
+      const { key, storage } = this.props.session || {};
 
       if (!key) {
         return;
