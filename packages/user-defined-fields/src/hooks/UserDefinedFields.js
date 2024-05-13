@@ -56,7 +56,7 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
 
     _.each(fields, (field) => {
       const column = {
-        name: field.column_name,
+        name: field.uuid,
         label: field.column_name,
         hidden: true,
         sortable
