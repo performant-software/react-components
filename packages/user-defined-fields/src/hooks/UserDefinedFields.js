@@ -26,6 +26,13 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
   const [loading, setLoading] = useState(false);
 
   /**
+   * If we're resolving a related record, the column cannot be sortable.
+   *
+   * @type {boolean}
+   */
+  const sortable = useMemo(() => !options.resolveRecord, [options.resolveRecord]);
+
+  /**
    * Resolves the user defined field value for the passed item.
    *
    * @type {(function(*, *): (null|*))|*}
@@ -57,7 +64,7 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
         name: field.column_name,
         label: field.column_name,
         hidden: true,
-        sortable: true
+        sortable
       };
 
       if (field.data_type === DataTypes.boolean) {
