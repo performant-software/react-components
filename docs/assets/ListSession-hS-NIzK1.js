@@ -1,0 +1,1 @@
+const o="{}",e=(s,t)=>{if(!(s&&t))return{};const n=t.getItem(s)||o;return JSON.parse(n)},r=(s,t,n)=>{if(!(s&&t))return;const i=e(s,t);t.setItem(s,JSON.stringify({...i,...n}))},S={restoreSession:e,setSession:r};export{S as L};
