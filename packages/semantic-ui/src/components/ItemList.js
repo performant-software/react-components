@@ -16,6 +16,11 @@ type Sort = {
 
 type Props = DataListProps & ItemsProps & {
   /**
+   * If `true`, a dimmer will be displayed over the list component.
+   */
+  dimmable?: boolean,
+
+  /**
    * Callback fired when the sort dropdown is changed. This prop is provided by the <code>DataList</code>
    * higher-order component.
    */
@@ -94,7 +99,7 @@ const ItemList = useDataList((props: Props) => {
   return (
     <>
       <Dimmer
-        active={props.loading}
+        active={props.dimmable && props.loading}
         inverted
       >
         <Loader
@@ -116,6 +121,7 @@ const ItemList = useDataList((props: Props) => {
 });
 
 ItemList.defaultProps = {
+  dimmable: true,
   filters: {},
   searchable: true,
 };

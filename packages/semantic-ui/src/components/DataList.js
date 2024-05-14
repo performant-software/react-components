@@ -6,6 +6,7 @@ import uuid from 'react-uuid';
 import _ from 'underscore';
 import { Icon, Input, Message } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
+import ListSessionUtils from '../utils/ListSession';
 import Toaster from './Toaster';
 
 type Props = {
@@ -130,9 +131,6 @@ type State = {
   sortColumn: ?string,
   sortDirection: ?string
 };
-
-const SESSION_KEY = 'DataList';
-const SESSION_DEFAULT = '{}';
 
 const SORT_ASCENDING = 'ascending';
 const SORT_DESCENDING = 'descending';
@@ -286,19 +284,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Returns the session storage key for the current list.
-     *
-     * @returns {string|null}
-     */
-    getSessionKey() {
-      if (!this.props.session) {
-        return null;
-      }
-
-      return `${SESSION_KEY}.${this.props.session.key}`;
-    }
-
-    /**
      * Initializes the state based on the passed props.
      *
      * @param props
@@ -307,7 +292,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * saved: boolean, count: number, filters: (*|{}), page: number, error: null, loading: boolean, items: *[]}}
      */
     initializeState(props: Props) {
-      const session = this.restoreSession();
+      const { key, storage } = props.session || {};
+      const session = ListSessionUtils.restoreSession(key, storage) || {};
 
       const filters = session.filters || this.getDefaultFilters(props);
       const page = session.page || 1;
@@ -446,6 +432,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * When no columns are sortable, load data as is
+     *
+     */
+    onInit(page?: number = 1) {
+      this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
+    }
+
+    /**
      * Sets the new active page and reloads the data.
      *
      * @param e
@@ -517,14 +511,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * When no columns are sortable, load data as is
-     *
-     */
-    onInit(page?: number = 1) {
-      this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
-    }
-
-    /**
      * Renders the DataList component.
      *
      * @returns {*}
@@ -565,7 +551,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             sortColumn={this.state.sortColumn}
             sortDirection={this.state.sortDirection}
           />
-          {this.state.saved && (
+          { this.state.saved && (
             <Toaster
               onDismiss={() => this.setState({ saved: false })}
               type={Toaster.MessageTypes.positive}
@@ -578,7 +564,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               />
             </Toaster>
           )}
-          {this.state.error && (
+          { this.state.error && (
             <Toaster
               onDismiss={() => this.setState({ error: false })}
               timeout={0}
@@ -634,24 +620,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Restores the DataList session object.
-     */
-    restoreSession() {
-      const key = this.getSessionKey();
-
-      if (!key) {
-        return {};
-      }
-
-      const session = sessionStorage.getItem(key) || SESSION_DEFAULT;
-      return JSON.parse(session);
-    }
-
-    /**
      * Sets the DataList session object.
      */
     setSession() {
-      const key = this.getSessionKey();
+      const { key, storage } = this.props.session || {};
 
       if (!key) {
         return;
@@ -666,14 +638,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         sortDirection
       } = this.state;
 
-      sessionStorage.setItem(key, JSON.stringify({
+      ListSessionUtils.setSession(key, storage, {
         filters,
         page,
         perPage,
         search,
         sortColumn,
         sortDirection
-      }));
+      });
     }
   }
 );
