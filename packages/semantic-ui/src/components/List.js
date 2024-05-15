@@ -288,26 +288,25 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         addButton = {},
         csvExportButton = {},
         deleteButton = {},
-        modal,
-        selectable
+        modal
       } = this.props;
 
       // Add the add button to the list if the location specified is the passed location.
-      if (addButton.location === location && (addButton.onClick || modal) && !selectable) {
+      if (addButton.location === location && (addButton.onClick || modal)) {
         buttons.push({
           render: this.renderAddButton.bind(this)
         });
       }
 
       // Add the delete all button to the list if the location specified is the passed location.
-      if (deleteButton.location === location && this.props.onDeleteAll && !selectable) {
+      if (deleteButton.location === location && this.props.onDeleteAll) {
         buttons.push({
           render: this.renderDeleteAllButton.bind(this)
         });
       }
 
       // Add the CSV export button to the list if the csvExport prop is passed
-      if (csvExportButton.location === location && !selectable) {
+      if (csvExportButton.location === location) {
         buttons.push({
           render: this.renderCsvExportButton.bind(this)
         });
