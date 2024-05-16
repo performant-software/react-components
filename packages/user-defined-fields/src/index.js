@@ -8,7 +8,7 @@ export { default as UserDefinedFieldsForm } from './components/UserDefinedFields
 export { default as UserDefinedFieldsList } from './components/UserDefinedFieldsList';
 
 // Hooks
-export { useUserDefinedColumns, useUserDefinedFields } from './hooks/UserDefinedFields';
+export { default as useUserDefinedColumns } from './hooks/UserDefinedFields';
 
 // Services
 export { default as UserDefinedFieldsService } from './services/UserDefinedFields';
