@@ -21,10 +21,8 @@ import UserDefinedFieldsService from '../services/UserDefinedFields';
  *
  * @returns {{userDefinedColumns: [], loading: boolean}}
  */
-const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
-  const [fields, setFields] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+export const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
+  const { loading, userDefinedFields } = useUserDefinedFields(defineableId, defineableType);
   const { sortable = true } = options;
 
   /**
@@ -54,7 +52,7 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
   const userDefinedColumns = useMemo(() => {
     const columns = [];
 
-    _.each(fields, (field) => {
+    _.each(userDefinedFields, (field) => {
       const column = {
         name: field.uuid,
         label: field.column_name,
@@ -89,7 +87,17 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
     });
 
     return columns;
-  }, [fields, resolveValue]);
+  }, [userDefinedFields, resolveValue]);
+
+  return {
+    loading,
+    userDefinedColumns
+  };
+};
+
+export const useUserDefinedFields = (defineableId, defineableType) => {
+  const [loading, setLoading] = useState(false);
+  const [userDefinedFields, setUserDefinedFields] = useState([]);
 
   /**
    * Fetches the user defined fields for the passed defineable ID and defineable type.
@@ -99,14 +107,12 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
 
     UserDefinedFieldsService
       .fetchAll({ defineable_id: defineableId, defineable_type: defineableType })
-      .then(({ data }) => setFields(data.user_defined_fields))
+      .then(({ data }) => setUserDefinedFields(data.user_defined_fields))
       .finally(() => setLoading(false));
   }, [defineableId, defineableId]);
 
   return {
     loading,
-    userDefinedColumns
+    userDefinedFields
   };
 };
-
-export default useUserDefinedColumns;
