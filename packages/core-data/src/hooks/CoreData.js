@@ -85,7 +85,7 @@ export const useLoader = (onLoad, params = {}, deps = []) => {
   useEffect(() => {
     setLoading(true);
 
-    onLoad(baseUrl, projectIds, { ...params, page })
+    onLoad({ ...params, page })
       .then((d) => setData(d))
       .finally(() => setLoading(false));
   }, [...deps, page]);
