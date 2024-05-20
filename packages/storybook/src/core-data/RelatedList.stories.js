@@ -1,5 +1,6 @@
 // @flow
 
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import RelatedList from '../../../core-data/src/components/RelatedList';
 
@@ -11,6 +12,23 @@ export default {
 export const Default = () => (
   <RelatedList
     collectionName='items'
+    onLoad={() => (
+      Promise.resolve({
+        items: [
+          'One',
+          'Two',
+          'Three'
+        ]
+      })
+    )}
+    renderItem={(item) => item}
+  />
+);
+
+export const Click = () => (
+  <RelatedList
+    collectionName='items'
+    onClick={action('click')}
     onLoad={() => (
       Promise.resolve({
         items: [

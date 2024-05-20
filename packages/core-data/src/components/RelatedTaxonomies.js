@@ -26,6 +26,11 @@ type Props = {
   moreLabel: string,
 
   /**
+   * Callback fired when an item in the list is clicked.
+   */
+  onClick: (item: any) => void,
+
+  /**
    * Callback fired when the component is mounted to fetch the data.
    */
   onLoad: () => any
@@ -41,6 +46,7 @@ const RelatedTaxonomies = (props: Props) => (
     emptyMessage={props.emptyMessage}
     itemsPerRow={props.itemsPerRow}
     moreLabel={props.moreLabel}
+    onClick={props.onClick}
     onLoad={props.onLoad}
     renderItem={(taxonomy) => (
       <>

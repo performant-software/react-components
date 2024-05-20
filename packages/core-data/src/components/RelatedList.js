@@ -27,6 +27,11 @@ type Props = {
   itemsPerRow?: number,
 
   /**
+   * Callback fired when an item in the list is clicked.
+   */
+  onClick: (item: any) => void,
+
+  /**
    * Callback fired when the component is mounted to fetch the data.
    */
   onLoad: () => any,
@@ -107,7 +112,17 @@ const RelatedList = (props: Props) => {
             key={item.id}
             className='flex items-center'
           >
-            { props.renderItem(item) }
+            { props.onClick
+              ? (
+                <button
+                  className='flex items-center py-1 px-2'
+                  onClick={props.onClick}
+                  type='button'
+                >
+                  {props.renderItem(item)}
+                </button>
+              )
+              : props.renderItem(item)}
           </li>
         ))}
       </ul>

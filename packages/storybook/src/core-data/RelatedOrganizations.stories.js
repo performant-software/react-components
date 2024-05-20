@@ -2,6 +2,7 @@
 
 import React from 'react';
 import _ from 'underscore';
+import { action } from '@storybook/addon-actions';
 import RelatedOrganizations from '../../../core-data/src/components/RelatedOrganizations';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
@@ -16,6 +17,17 @@ export const Default = withCoreDataContextProvider(() => {
 
   return (
     <RelatedOrganizations
+      onLoad={(params) => PlacesService.fetchRelatedOrganizations('1', params)}
+    />
+  );
+});
+
+export const Click = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
+    <RelatedOrganizations
+      onClick={action('click')}
       onLoad={(params) => PlacesService.fetchRelatedOrganizations('1', params)}
     />
   );
