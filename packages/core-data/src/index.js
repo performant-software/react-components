@@ -31,6 +31,7 @@ export { default as RelatedPeople } from './components/RelatedPeople';
 export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedPlacesLayer } from './components/RelatedPlacesLayer';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
+export { default as RelatedWorks } from './components/RelatedWorks';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
 // Contexts
