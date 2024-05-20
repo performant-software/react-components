@@ -107,7 +107,7 @@ const getFieldId = (attribute: string) => {
 
   let value = attribute.replaceAll(SUFFIX_FACET, '');
   if (value.includes(ATTRIBUTE_DELIMITER)) {
-    value = value.substring(value.indexOf(ATTRIBUTE_DELIMITER) + 1, value.length - 1);
+    value = value.substring(value.indexOf(ATTRIBUTE_DELIMITER) + 1, value.length);
   }
 
   return value;
