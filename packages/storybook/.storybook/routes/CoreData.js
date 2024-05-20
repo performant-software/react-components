@@ -9,6 +9,7 @@ import People from '../api/core-data/People';
 import Taxonomies from '../api/core-data/Taxonomies';
 import Manifests from '../api/core-data/Manifests';
 import MediaContents from '../api/core-data/MediaContents';
+import Works from '../api/core-data/Works';
 
 /**
  * Adds the Core Data dummy routes.
@@ -42,6 +43,11 @@ const addRoutes = (router) => {
 
   router.get(`${BASE_URL}/events/:id/places`, (request, response) => {
     response.send(Places.fetchItems(5));
+    response.end();
+  });
+
+  router.get(`${BASE_URL}/events/:id/works`, (request, response) => {
+    response.send(Works.fetchItems(5));
     response.end();
   });
 

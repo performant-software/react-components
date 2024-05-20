@@ -131,6 +131,19 @@ class BaseService {
     return fetch(url).then((response) => response.json());
   }
 
+  /**
+   * Calls the GET /core_data/public/<version>/<route>/:id/works API endpoint.
+   *
+   * @param id
+   * @param params
+   *
+   * @returns {Promise<any>}
+   */
+  fetchRelatedWorks(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'works', this.getSearchParams(params));
+    return fetch(url).then((response) => response.json());
+  }
+
   // protected
 
   getRoute() {
