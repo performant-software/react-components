@@ -116,7 +116,7 @@ const RelatedList = (props: Props) => {
               ? (
                 <button
                   className='flex items-center py-1 px-2'
-                  onClick={props.onClick}
+                  onClick={() => props.onClick(item)}
                   type='button'
                 >
                   {props.renderItem(item)}
