@@ -46,7 +46,6 @@ const RelatedOrganizations = (props: Props) => (
     emptyMessage={props.emptyMessage}
     itemsPerRow={props.itemsPerRow}
     moreLabel={props.moreLabel}
-    onClick={props.onClick}
     onLoad={props.onLoad}
     renderItem={props.renderItem || ((organization) => (
       <>
