@@ -28,7 +28,12 @@ type Props = {
   /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any
+  onLoad: () => any,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
+  renderItem: (item: any) => JSX.Element,
 };
 
 /**
@@ -42,14 +47,14 @@ const RelatedTaxonomies = (props: Props) => (
     itemsPerRow={props.itemsPerRow}
     moreLabel={props.moreLabel}
     onLoad={props.onLoad}
-    renderItem={(taxonomy) => (
+    renderItem={props.renderItem || ((taxonomy) => (
       <>
         <ListTree
           className='h-4 w-4 mr-1.5'
         />
         { taxonomy.name }
       </>
-    )}
+    ))}
   />
 );
 

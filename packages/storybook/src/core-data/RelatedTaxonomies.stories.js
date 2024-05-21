@@ -21,6 +21,17 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
+export const CustomRender = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
+    <RelatedTaxonomies
+      onLoad={(params) => PlacesService.fetchRelatedTaxonomies('1', params)}
+      renderItem={(item) => <p style={{ color: 'pink' }}>{item.name}</p>}
+    />
+  );
+});
+
 export const EmptyList = withCoreDataContextProvider(() => (
   <RelatedTaxonomies
     emptyMessage='No related taxonomies'

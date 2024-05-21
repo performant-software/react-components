@@ -21,6 +21,26 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
+export const CustomRender = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
+    <RelatedOrganizations
+      onLoad={(params) => PlacesService.fetchRelatedOrganizations('1', params)}
+      renderItem={(item) => (
+        <p>
+          {`${item.name}:`}
+          &nbsp;
+          {Math.random() > 0.5
+            ? <span style={{ color: 'green' }}>↑</span>
+            : <span style={{ color: 'red' }}>↓</span>}
+          <strong>{`$${(Math.random() * 100).toPrecision(4)}`}</strong>
+        </p>
+      )}
+    />
+  );
+});
+
 export const EmptyList = withCoreDataContextProvider(() => (
   <RelatedOrganizations
     emptyMessage='No related organizations'

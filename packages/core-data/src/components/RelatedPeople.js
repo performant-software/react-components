@@ -31,7 +31,12 @@ type Props = {
   /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any
+  onLoad: () => any,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
+  renderItem: (item: any) => JSX.Element,
 };
 
 /**
@@ -57,14 +62,14 @@ const RelatedPeople = (props: Props) => {
       itemsPerRow={props.itemsPerRow}
       moreLabel={props.moreLabel}
       onLoad={props.onLoad}
-      renderItem={(person) => (
+      renderItem={props.renderItem || ((person) => (
         <>
           <UserCircle
             className='h-4 w-4 mr-1.5'
           />
           { getName(person) }
         </>
-      )}
+      ))}
       showMoreLabel={props.showMoreLabel}
     />
   );

@@ -21,6 +21,21 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
+export const CustomRender = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
+    <RelatedPlaces
+      onLoad={(params) => PlacesService.fetchRelatedPlaces('1', params)}
+      renderItem={(item) => (
+        <p>
+          {`I've ${Math.random() < 0.5 ? 'never' : ''} been to ${item.name}.`}
+        </p>
+      )}
+    />
+  );
+});
+
 export const EmptyMessage = withCoreDataContextProvider(() => (
   <RelatedPlaces
     emptyMessage='No related places'
