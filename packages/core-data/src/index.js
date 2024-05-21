@@ -22,6 +22,7 @@ export { default as SearchResultsList } from './components/SearchResultsList';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
 export { default as RelatedEvents } from './components/RelatedEvents';
 export { default as RelatedItem } from './components/RelatedItem';
+export { default as RelatedItems } from './components/RelatedItems';
 export { default as RelatedItemsList } from './components/RelatedItemsList';
 export { default as RelatedList } from './components/RelatedList';
 export { default as RelatedMedia } from './components/RelatedMedia';
