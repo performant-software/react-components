@@ -24,27 +24,6 @@ export const Default = () => (
   />
 );
 
-export const CustomRender = () => (
-  <RelatedList
-    collectionName='items'
-    onLoad={() => (
-      Promise.resolve({
-        items: [
-          'One',
-          'Two',
-          'Three'
-        ]
-      })
-    )}
-    renderItem={(item) => (
-      <p>
-        My name is
-        {item}
-      </p>
-    )}
-  />
-);
-
 export const EmptyList = () => (
   <RelatedList
     onLoad={() => Promise.resolve()}
