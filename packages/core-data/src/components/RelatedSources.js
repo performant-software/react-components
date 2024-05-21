@@ -2,7 +2,7 @@
 
 import React from 'react';
 import _ from 'underscore';
-import type { Source as SourceType } from '../types/SourceType';
+import type { Source as SourceType } from '../types/Source';
 import LoadAnimation from './LoadAnimation';
 import { useLoader } from '../hooks/CoreData';
 
