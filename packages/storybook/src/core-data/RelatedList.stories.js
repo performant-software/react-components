@@ -1,6 +1,5 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
 import React from 'react';
 import RelatedList from '../../../core-data/src/components/RelatedList';
 
@@ -25,10 +24,9 @@ export const Default = () => (
   />
 );
 
-export const Click = () => (
+export const CustomRender = () => (
   <RelatedList
     collectionName='items'
-    onClick={action('click')}
     onLoad={() => (
       Promise.resolve({
         items: [
@@ -38,7 +36,12 @@ export const Click = () => (
         ]
       })
     )}
-    renderItem={(item) => item}
+    renderItem={(item) => (
+      <p>
+        My name is
+        {item}
+      </p>
+    )}
   />
 );
 

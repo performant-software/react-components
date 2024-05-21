@@ -29,14 +29,14 @@ type Props = {
   moreLabel: string,
 
   /**
-   * Callback fired when an item in the list is clicked.
-   */
-  onClick: (item: any) => void,
-
-  /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any
+  onLoad: () => any,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
+  renderItem: (item: any) => void,
 };
 
 /**
@@ -61,16 +61,15 @@ const RelatedPeople = (props: Props) => {
       emptyMessage={props.emptyMessage}
       itemsPerRow={props.itemsPerRow}
       moreLabel={props.moreLabel}
-      onClick={props.onClick}
       onLoad={props.onLoad}
-      renderItem={(person) => (
+      renderItem={props.renderItem || ((person) => (
         <>
           <UserCircle
             className='h-4 w-4 mr-1.5'
           />
           { getName(person) }
         </>
-      )}
+      ))}
       showMoreLabel={props.showMoreLabel}
     />
   );

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import _ from 'underscore';
-import { action } from '@storybook/addon-actions';
 import RelatedPeople from '../../../core-data/src/components/RelatedPeople';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
@@ -24,14 +23,19 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
-export const Click = withCoreDataContextProvider(() => {
+export const CustomRender = withCoreDataContextProvider(() => {
   const PlacesService = usePlacesService();
 
   return (
     <RelatedPeople
-      onClick={action('click')}
       onLoad={(params) => (
         PlacesService.fetchRelatedPeople('1', params)
+      )}
+      renderItem={(item) => (
+        <p>
+          {`My name is ${item.first_name} ${item.middle_name}\
+           ${item.last_name} but you can just call me ${item.first_name}`}
+        </p>
       )}
     />
   );

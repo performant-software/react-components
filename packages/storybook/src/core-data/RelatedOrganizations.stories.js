@@ -2,7 +2,6 @@
 
 import React from 'react';
 import _ from 'underscore';
-import { action } from '@storybook/addon-actions';
 import RelatedOrganizations from '../../../core-data/src/components/RelatedOrganizations';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
@@ -22,13 +21,22 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
-export const Click = withCoreDataContextProvider(() => {
+export const CustomRender = withCoreDataContextProvider(() => {
   const PlacesService = usePlacesService();
 
   return (
     <RelatedOrganizations
-      onClick={action('click')}
       onLoad={(params) => PlacesService.fetchRelatedOrganizations('1', params)}
+      renderItem={(item) => (
+        <p>
+          {`${item.name}:`}
+          &nbsp;
+          {Math.random() > 0.5
+            ? <span style={{ color: 'green' }}>↑</span>
+            : <span style={{ color: 'red' }}>↓</span>}
+          <strong>{`$${(Math.random() * 100).toPrecision(4)}`}</strong>
+        </p>
+      )}
     />
   );
 });

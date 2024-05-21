@@ -26,14 +26,14 @@ type Props = {
   moreLabel: string,
 
   /**
-   * Callback fired when an item in the list is clicked.
-   */
-  onClick: (item: any) => void,
-
-  /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any
+  onLoad: () => any,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
+  renderItem: (item: any) => void,
 };
 
 /**
@@ -48,14 +48,14 @@ const RelatedOrganizations = (props: Props) => (
     moreLabel={props.moreLabel}
     onClick={props.onClick}
     onLoad={props.onLoad}
-    renderItem={(organization) => (
+    renderItem={props.renderItem || ((organization) => (
       <>
         <Building2
           className='h-4 w-4 mr-1.5'
         />
         { organization.name }
       </>
-    )}
+    ))}
   />
 );
 

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import _ from 'underscore';
-import { action } from '@storybook/addon-actions';
 import RelatedTaxonomies from '../../../core-data/src/components/RelatedTaxonomies';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
@@ -22,13 +21,13 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
-export const Click = withCoreDataContextProvider(() => {
+export const CustomRender = withCoreDataContextProvider(() => {
   const PlacesService = usePlacesService();
 
   return (
     <RelatedTaxonomies
-      onClick={action('click')}
       onLoad={(params) => PlacesService.fetchRelatedTaxonomies('1', params)}
+      renderItem={(item) => <p style={{ color: 'pink' }}>{item.name}</p>}
     />
   );
 });

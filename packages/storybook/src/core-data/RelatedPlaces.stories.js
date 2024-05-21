@@ -2,7 +2,6 @@
 
 import React from 'react';
 import _ from 'underscore';
-import { action } from '@storybook/addon-actions';
 import RelatedPlaces from '../../../core-data/src/components/RelatedPlaces';
 import { usePlacesService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
@@ -22,13 +21,17 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
-export const Click = withCoreDataContextProvider(() => {
+export const CustomRender = withCoreDataContextProvider(() => {
   const PlacesService = usePlacesService();
 
   return (
     <RelatedPlaces
-      onClick={action('click')}
       onLoad={(params) => PlacesService.fetchRelatedPlaces('1', params)}
+      renderItem={(item) => (
+        <p>
+          {`I've ${Math.random() < 0.5 ? 'never' : ''} been to ${item.name}.`}
+        </p>
+      )}
     />
   );
 });
