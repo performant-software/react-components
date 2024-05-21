@@ -2,13 +2,15 @@
 
 import { BASE_URL } from '../api/core-data/Base';
 import Events from '../api/core-data/Events';
+import Instances from '../api/core-data/Instances';
 import Items from '../api/core-data/Items';
 import Places from '../api/core-data/Places';
 import Organizations from '../api/core-data/Organizations';
 import People from '../api/core-data/People';
-import Taxonomies from '../api/core-data/Taxonomies';
 import Manifests from '../api/core-data/Manifests';
 import MediaContents from '../api/core-data/MediaContents';
+import Taxonomies from '../api/core-data/Taxonomies';
+import Works from '../api/core-data/Works';
 
 /**
  * Adds the Core Data dummy routes.
@@ -22,6 +24,11 @@ const addRoutes = (router) => {
    */
   router.get(`${BASE_URL}/events/:id`, (request, response) => {
     response.send(Events.fetchItem());
+    response.end();
+  });
+
+  router.get(`${BASE_URL}/events/:id/instances`, (request, response) => {
+    response.send(Instances.fetchItems(5));
     response.end();
   });
 
@@ -42,6 +49,11 @@ const addRoutes = (router) => {
 
   router.get(`${BASE_URL}/events/:id/places`, (request, response) => {
     response.send(Places.fetchItems(5));
+    response.end();
+  });
+
+  router.get(`${BASE_URL}/events/:id/works`, (request, response) => {
+    response.send(Works.fetchItems(5));
     response.end();
   });
 

@@ -35,8 +35,6 @@ export const useLoader = (onLoad, params = {}, deps = []) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(DEFAULT_PAGE);
 
-  const { baseUrl, projectIds } = useContext(CoreDataContext);
-
   /**
    * Memo-izes the list metadata.
    *
