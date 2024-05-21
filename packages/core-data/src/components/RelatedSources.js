@@ -2,7 +2,7 @@
 
 import React from 'react';
 import _ from 'underscore';
-import type { Work as WorkType } from '../types/Work';
+import type { Source as SourceType } from '../types/SourceType';
 import LoadAnimation from './LoadAnimation';
 import { useLoader } from '../hooks/CoreData';
 
@@ -13,36 +13,41 @@ type Props = {
   className?: string,
 
   /**
-   * Callback fired when an work in the list is clicked.
+   * Callback fired when a source in the list is clicked.
    */
-  onClick: (work: WorkType) => void,
+  onClick: (source: SourceType) => void,
 
   /**
-   * Callback fired on mount to load the list of works.
+   * Callback fired on mount to load the list of items.
    */
   onLoad: () => Promise<any>,
 
   /**
    * Function used to render the description element.
    */
-  renderDescription?: (work: WorkType) => JSX.Element,
+  renderDescription?: (source: SourceType) => JSX.Element,
 
   /**
    * Function used to render the header element.
    */
-  renderHeader?: (work: WorkType) => JSX.Element,
+  renderHeader?: (source: SourceType) => JSX.Element,
 
   /**
    * Function used to render the image element.
    */
-  renderImage?: (work: WorkType) => JSX.Element
+  renderImage?: (source: SourceType) => JSX.Element,
+
+  /**
+   * Type of the source being fetched.
+   */
+  sourceType: 'instances' | 'items' | 'works'
 };
 
 /**
- * This component render a list of related works.
+ * This component render a list of related items.
  */
-const RelatedWorks = (props: Props) => {
-  const { data: { works } = {}, loading } = useLoader(props.onLoad, []);
+const RelatedSources = (props: Props) => {
+  const { data = {}, loading } = useLoader(props.onLoad, []);
 
   if (loading) {
     return (
@@ -54,21 +59,21 @@ const RelatedWorks = (props: Props) => {
     <ul
       className={props.className}
     >
-      { _.map(works, (work) => (
+      { _.map(data[props.sourceType], (item) => (
         <li>
           <div
             className='min-h-[5.5em] flex flex-col justify-start'
           >
             <button
               className='my-0.5 flex-grow text-left inline-flex rounded-none bg-gray-100'
-              onClick={() => props.onClick(work)}
+              onClick={() => props.onClick(item)}
               type='button'
             >
               { props.renderImage && (
                 <div
                   className='w-[160px] h-[120px]'
                 >
-                  { props.renderImage(work) }
+                  { props.renderImage(item) }
                 </div>
               )}
               <div
@@ -78,19 +83,19 @@ const RelatedWorks = (props: Props) => {
                   <div
                     className='py-0.5 font-semibold uppercase text-sm'
                   >
-                    { props.renderHeader(work) }
+                    { props.renderHeader(item) }
                   </div>
                 )}
                 <h2
                   className='py-0.5 font-semibold text-lg'
                 >
-                  { work.primary_name?.name?.name }
+                  { item.primary_name?.name?.name }
                 </h2>
                 { props.renderDescription && (
                   <div
                     className='py-0.5 font-light text-sm'
                   >
-                    { props.renderDescription(work) }
+                    { props.renderDescription(item) }
                   </div>
                 )}
               </div>
@@ -102,4 +107,4 @@ const RelatedWorks = (props: Props) => {
   );
 };
 
-export default RelatedWorks;
+export default RelatedSources;

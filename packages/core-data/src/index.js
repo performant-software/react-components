@@ -22,7 +22,6 @@ export { default as SearchResultsList } from './components/SearchResultsList';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
 export { default as RelatedEvents } from './components/RelatedEvents';
 export { default as RelatedItem } from './components/RelatedItem';
-export { default as RelatedItems } from './components/RelatedItems';
 export { default as RelatedItemsList } from './components/RelatedItemsList';
 export { default as RelatedList } from './components/RelatedList';
 export { default as RelatedMedia } from './components/RelatedMedia';
@@ -30,8 +29,8 @@ export { default as RelatedOrganizations } from './components/RelatedOrganizatio
 export { default as RelatedPeople } from './components/RelatedPeople';
 export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedPlacesLayer } from './components/RelatedPlacesLayer';
+export { default as RelatedSources } from './components/RelatedSources';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
-export { default as RelatedWorks } from './components/RelatedWorks';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 
 // Contexts

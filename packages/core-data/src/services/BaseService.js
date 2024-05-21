@@ -42,6 +42,19 @@ class BaseService {
   }
 
   /**
+   * Calls the GET /core_data/public/<version>/<route>/:id/instances API endpoint.
+   *
+   * @param id
+   * @param params
+   *
+   * @returns {Promise<any>}
+   */
+  fetchRelatedInstances(id, params = {}) {
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'instances', this.getSearchParams(params));
+    return fetch(url).then((response) => response.json());
+  }
+
+  /**
    * Calls the GET /core_data/public/<version>/<route>/:id/items API endpoint.
    *
    * @param id

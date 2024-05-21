@@ -8,7 +8,7 @@ import React from 'react';
 import _ from 'underscore';
 import EventDetails from '../../../core-data/src/components/EventDetails';
 import mapStyle from '../data/MapStyles.json';
-import RelatedItems from '../../../core-data/src/components/RelatedItems';
+import RelatedSources from '../../../core-data/src/components/RelatedSources';
 import RelatedMedia from '../../../core-data/src/components/RelatedMedia';
 import RelatedPeople from '../../../core-data/src/components/RelatedPeople';
 import RelatedPlacesLayer from '../../../core-data/src/components/RelatedPlacesLayer';
@@ -75,7 +75,7 @@ export const RelatedRecords = withCoreDataContextProvider(() => {
         >
           Related Resources
         </h2>
-        <RelatedItems
+        <RelatedSources
           onClick={(item) => action('click')(item)}
           onLoad={(params) => EventsService.fetchRelatedItems('1', params)}
           renderDescription={() => faker.date.anytime().toLocaleDateString()}
@@ -86,6 +86,7 @@ export const RelatedRecords = withCoreDataContextProvider(() => {
               src={`https://picsum.photos/800/600?random=${item.uuid}`}
             />
           )}
+          sourceType='items'
         />
       </div>
       <div
