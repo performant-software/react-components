@@ -36,7 +36,7 @@ type Props = {
   /**
    * Render function used to determine how to present the passed item.
    */
-  renderItem: (item: any) => void,
+  renderItem: (item: any) => JSX.Element,
 };
 
 /**
