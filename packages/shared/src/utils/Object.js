@@ -127,11 +127,11 @@ const isPromise = (value: any) => !!value && typeof value === 'object' && typeof
  */
 const without = (value: any, attribute: string) => {
   if (_.isArray(value)) {
-    return _.map(value, (entry) => this.without(entry, attribute));
+    return _.map(value, (entry) => without(entry, attribute));
   }
 
   if (_.isObject(value)) {
-    return _.mapObject(_.omit(value, attribute), (v) => this.without(v, attribute));
+    return _.mapObject(_.omit(value, attribute), (v) => without(v, attribute));
   }
 
   return value;
