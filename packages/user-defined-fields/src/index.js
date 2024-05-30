@@ -7,6 +7,9 @@ export { default as UserDefinedFieldsEmbeddedList } from './components/UserDefin
 export { default as UserDefinedFieldsForm } from './components/UserDefinedFieldsForm';
 export { default as UserDefinedFieldsList } from './components/UserDefinedFieldsList';
 
+// Constants
+export { DataTypes } from './constants/DataTypes';
+
 // Hooks
 export { default as useUserDefinedColumns } from './hooks/UserDefinedFields';
 

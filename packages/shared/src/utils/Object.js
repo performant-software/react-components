@@ -116,8 +116,30 @@ const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
 
 const isPromise = (value: any) => !!value && typeof value === 'object' && typeof value.then === 'function';
 
+/**
+ * Returns a copy of the passed value (presumably an object) without the passed attribute included. This
+ * function is recursive and will remove the attribute from nested objects and arrays.
+ *
+ * @param value
+ * @param attribute
+ *
+ * @returns {*}
+ */
+const without = (value: any, attribute: string) => {
+  if (_.isArray(value)) {
+    return _.map(value, (entry) => without(entry, attribute));
+  }
+
+  if (_.isObject(value)) {
+    return _.mapObject(_.omit(value, attribute), (v) => without(v, attribute));
+  }
+
+  return value;
+};
+
 export default {
   isEmpty,
   isEqual,
-  isPromise
+  isPromise,
+  without
 };
