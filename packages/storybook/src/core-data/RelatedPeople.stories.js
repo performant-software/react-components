@@ -23,6 +23,24 @@ export const Default = withCoreDataContextProvider(() => {
   );
 });
 
+export const CustomRender = withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+
+  return (
+    <RelatedPeople
+      onLoad={(params) => (
+        PlacesService.fetchRelatedPeople('1', params)
+      )}
+      renderItem={(item) => (
+        <p>
+          {`My name is ${item.first_name} ${item.middle_name}\
+           ${item.last_name} but you can just call me ${item.first_name}`}
+        </p>
+      )}
+    />
+  );
+});
+
 export const Horizontal = withCoreDataContextProvider(() => {
   const PlacesService = usePlacesService();
 

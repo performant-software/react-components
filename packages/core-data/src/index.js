@@ -30,6 +30,7 @@ export { default as RelatedOrganizations } from './components/RelatedOrganizatio
 export { default as RelatedPeople } from './components/RelatedPeople';
 export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedPlacesLayer } from './components/RelatedPlacesLayer';
+export { default as RelatedSources } from './components/RelatedSources';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 

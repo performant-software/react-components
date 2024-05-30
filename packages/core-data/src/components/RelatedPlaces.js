@@ -28,7 +28,12 @@ type Props = {
   /**
    * Callback fired when the component is mounted to fetch the data.
    */
-  onLoad: () => any
+  onLoad: () => any,
+
+  /**
+   * Render function used to determine how to present the passed item.
+   */
+  renderItem: (item: any) => JSX.Element,
 };
 
 /**
@@ -42,14 +47,14 @@ const RelatedPlaces = (props: Props) => (
     itemsPerRow={props.itemsPerRow}
     moreLabel={props.moreLabel}
     onLoad={props.onLoad}
-    renderItem={(place) => (
+    renderItem={props.renderItem || ((place) => (
       <>
         <MapPin
           className='h-4 w-4 mr-0.5 inline-block mb-0.5'
         />
         { place.name }
       </>
-    )}
+    ))}
   />
 );
 

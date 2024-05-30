@@ -35,8 +35,6 @@ export const useLoader = (onLoad, params = {}, deps = []) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(DEFAULT_PAGE);
 
-  const { baseUrl, projectIds } = useContext(CoreDataContext);
-
   /**
    * Memo-izes the list metadata.
    *
@@ -85,7 +83,7 @@ export const useLoader = (onLoad, params = {}, deps = []) => {
   useEffect(() => {
     setLoading(true);
 
-    onLoad(baseUrl, projectIds, { ...params, page })
+    onLoad({ ...params, page })
       .then((d) => setData(d))
       .finally(() => setLoading(false));
   }, [...deps, page]);

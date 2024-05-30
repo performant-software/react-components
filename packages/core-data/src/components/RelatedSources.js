@@ -2,7 +2,7 @@
 
 import React from 'react';
 import _ from 'underscore';
-import type { Item as ItemType } from '../types/Item';
+import type { Source as SourceType } from '../types/Source';
 import LoadAnimation from './LoadAnimation';
 import { useLoader } from '../hooks/CoreData';
 
@@ -13,9 +13,9 @@ type Props = {
   className?: string,
 
   /**
-   * Callback fired when an item in the list is clicked.
+   * Callback fired when a source in the list is clicked.
    */
-  onClick: (item: ItemType) => void,
+  onClick: (source: SourceType) => void,
 
   /**
    * Callback fired on mount to load the list of items.
@@ -25,25 +25,29 @@ type Props = {
   /**
    * Function used to render the description element.
    */
-  renderDescription?: (item: ItemType) => JSX.Element,
+  renderDescription?: (source: SourceType) => JSX.Element,
 
   /**
    * Function used to render the header element.
    */
-  renderHeader?: (item: ItemType) => JSX.Element,
+  renderHeader?: (source: SourceType) => JSX.Element,
 
   /**
    * Function used to render the image element.
    */
-  renderImage?: (item: ItemType) => JSX.Element
+  renderImage?: (source: SourceType) => JSX.Element,
+
+  /**
+   * Type of the source being fetched.
+   */
+  sourceType: 'instances' | 'items' | 'works'
 };
 
 /**
  * This component render a list of related items.
- * @deprecated
  */
-const RelatedItems = (props: Props) => {
-  const { data: { items } = {}, loading } = useLoader(props.onLoad, []);
+const RelatedSources = (props: Props) => {
+  const { data = {}, loading } = useLoader(props.onLoad, []);
 
   if (loading) {
     return (
@@ -55,7 +59,7 @@ const RelatedItems = (props: Props) => {
     <ul
       className={props.className}
     >
-      { _.map(items, (item) => (
+      { _.map(data[props.sourceType], (item) => (
         <li>
           <div
             className='min-h-[5.5em] flex flex-col justify-start'
@@ -103,4 +107,4 @@ const RelatedItems = (props: Props) => {
   );
 };
 
-export default RelatedItems;
+export default RelatedSources;
