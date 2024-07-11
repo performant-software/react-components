@@ -29,6 +29,11 @@ type Props = {
   closeOnComplete?: boolean,
 
   /**
+   * An error message to display at the top of the modal.
+   */
+  errors?: string,
+
+  /**
    * Component to render at top of modal.
    */
   headerComponent?: ComponentType<any>,
@@ -436,6 +441,18 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 <Message.List>
                   { _.map(items, renderMessageItem) }
                 </Message.List>
+              </Message>
+            )}
+            { props.errors && (
+              <Message
+                error
+              >
+                <Message.Header
+                  content={i18n.t('FileUploadModal.errors.header')}
+                />
+                <Message.List
+                  content={props.errors}
+                />
               </Message>
             )}
             { hasUploadErrors && (
