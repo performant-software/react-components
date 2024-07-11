@@ -59,6 +59,14 @@ type Props = {
   onSave: (items: Array<any>) => Promise<any>,
 
   /**
+   * Callback fired when an item is validated. If the return value is `true`, the item will pass validation.
+   *
+   * @param item
+   * @param key
+   */
+  onValidate?: (item: any, key: string) => boolean,
+
+  /**
    * An object with keys containing the names of properties that are required.
    */
   required?: { [key: string]: string },
@@ -266,7 +274,9 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       const value = item[key];
       let invalid;
 
-      if (_.isNumber(value)) {
+      if (props.onValidate) {
+        invalid = props.onValidate(item, key);
+      } else if (_.isNumber(value)) {
         invalid = _.isEmpty(value.toString());
       } else {
         invalid = _.isEmpty(value);
@@ -281,7 +291,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       ...item,
       errors
     };
-  }, [props.required]);
+  }, [props.onValidate, props.required]);
 
   /**
    * Validates the items on the state.
