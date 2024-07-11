@@ -20,6 +20,7 @@ type Props = {
   isError: (key: string) => boolean,
   onChange: (obj: any) => void,
   onClearValidationError: (...keys: Array<string>) => void,
+  required?: boolean,
   tableName?: string
 };
 
@@ -170,6 +171,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       defineable_id: props.defineableId,
       defineable_type: props.defineableType,
       per_page: 0,
+      required: props.required,
       sort_by: 'order',
       table_name: props.tableName
     };
