@@ -451,7 +451,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                   content={i18n.t('FileUploadModal.errors.header')}
                 />
                 <Message.List
-                  content={props.errors}
+                  items={props.errors}
                 />
               </Message>
             )}
