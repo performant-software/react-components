@@ -17,6 +17,7 @@ type Props = {
   data: any,
   defineableId?: number,
   defineableType?: string,
+  fields?: Array,
   isError: (key: string) => boolean,
   onChange: (obj: any) => void,
   onClearValidationError: (...keys: Array<string>) => void,
@@ -25,7 +26,7 @@ type Props = {
 };
 
 const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState(props.fields || []);
 
   /**
    * Returns the key for the passed field.
@@ -167,6 +168,11 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    * Fetches the user defined fields when the component mounts.
    */
   useEffect(() => {
+    // If the fields have been provided as a prop, there is no need to query them here.
+    if (!_.isEmpty(fields)) {
+      return;
+    }
+
     const params = {
       defineable_id: props.defineableId,
       defineable_type: props.defineableType,
