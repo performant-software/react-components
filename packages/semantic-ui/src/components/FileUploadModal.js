@@ -44,6 +44,11 @@ type Props = {
   itemComponent: ComponentType<any>,
 
   /**
+   * Additional props to provide to the "itemComponent".
+   */
+  itemComponentProps?: any,
+
+  /**
    * Callback fired when a file is added.
    */
   onAddFile: (file: File) => any,
@@ -480,6 +485,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
             >
               { _.map(items, (item, index) => (
                 <UploadItem
+                  {...props.itemComponentProps}
                   isError={(key) => _.contains(item.errors, key)}
                   isRequired={(key) => !!(props.required && props.required[key])}
                   item={item}
@@ -519,6 +525,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
 
 FileUploadModal.defaultProps = {
   closeOnComplete: true,
+  itemComponentProps: {},
   strategy: Strategy.batch,
   showPageLoader: true
 };
