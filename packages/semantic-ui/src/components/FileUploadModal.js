@@ -29,6 +29,11 @@ type Props = {
   closeOnComplete?: boolean,
 
   /**
+   * An error message to display at the top of the modal.
+   */
+  errors?: string,
+
+  /**
    * Component to render at top of modal.
    */
   headerComponent?: ComponentType<any>,
@@ -37,6 +42,11 @@ type Props = {
    * Component to render within the modal.
    */
   itemComponent: ComponentType<any>,
+
+  /**
+   * Additional props to provide to the "itemComponent".
+   */
+  itemComponentProps?: any,
 
   /**
    * Callback fired when a file is added.
@@ -57,6 +67,14 @@ type Props = {
    * Callback fired when the save button is clicked. See <code>strategy</code> prop.
    */
   onSave: (items: Array<any>) => Promise<any>,
+
+  /**
+   * Callback fired when an item is validated. If the return value is `true`, the item will pass validation.
+   *
+   * @param item
+   * @param key
+   */
+  onValidate?: (item: any, key: string) => boolean,
 
   /**
    * An object with keys containing the names of properties that are required.
@@ -266,7 +284,9 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       const value = item[key];
       let invalid;
 
-      if (_.isNumber(value)) {
+      if (props.onValidate) {
+        invalid = props.onValidate(item, key);
+      } else if (_.isNumber(value)) {
         invalid = _.isEmpty(value.toString());
       } else {
         invalid = _.isEmpty(value);
@@ -281,7 +301,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       ...item,
       errors
     };
-  }, [props.required]);
+  }, [props.onValidate, props.required]);
 
   /**
    * Validates the items on the state.
@@ -428,6 +448,18 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 </Message.List>
               </Message>
             )}
+            { props.errors && (
+              <Message
+                error
+              >
+                <Message.Header
+                  content={i18n.t('FileUploadModal.errors.header')}
+                />
+                <Message.List
+                  items={props.errors}
+                />
+              </Message>
+            )}
             { hasUploadErrors && (
               <Message
                 content={i18n.t('FileUploadModal.errors.upload.content')}
@@ -453,6 +485,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
             >
               { _.map(items, (item, index) => (
                 <UploadItem
+                  {...props.itemComponentProps}
                   isError={(key) => _.contains(item.errors, key)}
                   isRequired={(key) => !!(props.required && props.required[key])}
                   item={item}
@@ -492,6 +525,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
 
 FileUploadModal.defaultProps = {
   closeOnComplete: true,
+  itemComponentProps: {},
   strategy: Strategy.batch,
   showPageLoader: true
 };
