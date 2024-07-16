@@ -21,5 +21,8 @@ export { default as FieldableTransform } from './transforms/Fieldable';
 export { default as UserDefinedFieldTransform } from './transforms/UserDefinedField';
 export { default as UserDefinedFieldsTransform } from './transforms/UserDefinedFields';
 
+// Types
+export type { UserDefinedField } from './types/UserDefinedField';
+
 // Utils
 export { default as UserDefinedFields } from './utils/UserDefinedFields';
