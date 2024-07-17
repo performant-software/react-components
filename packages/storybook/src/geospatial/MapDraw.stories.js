@@ -237,3 +237,30 @@ export const GeocodingPolygons = () => (
     onGeocodingSelection={action('onGeocodingSelection')}
   />
 );
+
+export const DisableCooperativeGestures = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    cooperativeGestures={false}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    onChange={action('onChange')}
+  />
+);
+
+export const FullScreenControl = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    fullscreen
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    onChange={action('onChange')}
+  />
+);
+
+export const NavigationControl = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    navigation
+    onChange={action('onChange')}
+  />
+);

@@ -11,7 +11,8 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { type MapboxMap } from 'react-map-gl';
+import Map, { type MapboxMap, NavigationControl } from 'react-map-gl';
+import { FullscreenControl } from 'react-map-gl/maplibre';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import GeocodingControl from './GeocodingControl';
@@ -40,9 +41,19 @@ type Props = {
   children?: Node,
 
   /**
+   * If `true`, the map will require CTRL + scroll to zoom.
+   */
+  cooperativeGestures?: boolean,
+
+  /**
    * GeoJSON structured data to be displayed on the map.
    */
   data: GeometryCollection | FeatureCollection,
+
+  /**
+   * If `true`, a control will be rendered to put the map in full screen mode.
+   */
+  fullscreen?: boolean,
 
   /**
    * Controls the type of GeoJSON data returned from the MapTiler Geocoding API.
@@ -53,6 +64,11 @@ type Props = {
    * URL of the map style to render. This URL should contain any necessary API keys.
    */
   mapStyle: string,
+
+  /**
+   * If `true`, the navigation controls will display.
+   */
+  navigation?: boolean,
 
   /**
    * Callback fired when the map geometries are changed.
@@ -180,6 +196,7 @@ const MapDraw = (props: Props) => {
   return (
     <Map
       attributionControl={false}
+      cooperativeGestures={props.cooperativeGestures}
       onLoad={() => setLoaded(true)}
       mapLib={maplibregl}
       ref={mapRef}
@@ -210,6 +227,12 @@ const MapDraw = (props: Props) => {
           showResultMarkers={false}
         />
       )}
+      { props.navigation && (
+        <NavigationControl />
+      )}
+      { props.fullscreen && (
+        <FullscreenControl />
+      )}
       { props.children }
     </Map>
   );
@@ -217,6 +240,7 @@ const MapDraw = (props: Props) => {
 
 MapDraw.defaultProps = {
   buffer: DEFAULT_BUFFER,
+  cooperativeGestures: true,
   zoomDuration: DEFAULT_ZOOM_DELAY
 };
 
