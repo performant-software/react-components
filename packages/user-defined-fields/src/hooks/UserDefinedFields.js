@@ -71,16 +71,12 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
             />
           )
         });
-      }
-
-      if (field.data_type === DataTypes.date) {
+      } else if (field.data_type === DataTypes.date) {
         columns.push({
           ...column,
           resolve: (item) => DateUtils.formatDate(resolveValue(item, field))
         });
-      }
-
-      if (field.data_type !== DataTypes.richText) {
+      } else if (field.data_type !== DataTypes.richText) {
         columns.push({
           ...column,
           resolve: (item) => resolveValue(item, field)
