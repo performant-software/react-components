@@ -1,7 +1,7 @@
 // @flow
 
-import { useEffect, useState } from 'react';
-import { useMap } from 'react-map-gl';
+import { useEffect } from 'react';
+import { useLoadedMap } from '@peripleo/maplibre';
 import MapUtils from '../utils/Map';
 
 type Props = {
@@ -27,24 +27,15 @@ type Props = {
 };
 
 const WarpedImageLayer = (props: Props) => {
-  const [loaded, setLoaded] = useState(false);
-
-  const mapRef = useMap();
-
-  useEffect(() => {
-    const instance = mapRef?.current?.getMap();
-    instance.on('load', () => setLoaded(true));
-  }, []);
+  const map = useLoadedMap();
 
   /**
    * Adds the WarpedMapLayer object to the map as a new layer.
    */
   useEffect(() => {
-    if (!loaded) {
+    if (!map) {
       return undefined;
     }
-
-    const map = mapRef.current.getMap();
 
     MapUtils.addGeoreferenceLayer(map, props.id, {
       manifest: props.manifest,
@@ -53,7 +44,7 @@ const WarpedImageLayer = (props: Props) => {
     });
 
     return () => MapUtils.removeLayer(map, props.id);
-  }, [loaded]);
+  }, [map]);
 
   return null;
 };

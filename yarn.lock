@@ -11321,7 +11321,7 @@ maplibre-gl@^3.6.2:
     tinyqueue "^2.0.3"
     vt-pbf "^3.1.3"
 
-maplibre-gl@^4.0.0:
+maplibre-gl@^4.0.0, maplibre-gl@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-4.5.0.tgz#aa5e6e214cb0cd35bc9a9f3c7417cb2092d96c58"
   integrity sha512-qOS1hn4d/pn2i0uva4S5Oz+fACzTkgBKq+NpwT/Tqzi4MSyzcWNtDELzLUSgWqHfNIkGCl5CZ/w7dtis+t4RCw==
@@ -12977,7 +12977,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-map-gl@^7.1.6:
+react-map-gl@^7.1.6, react-map-gl@^7.1.7:
   version "7.1.7"
   resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-7.1.7.tgz#f9b7d76cccad6d0bf1627d1827a0a378696ac1d0"
   integrity sha512-mwjc0obkBJOXCcoXQr3VoLqmqwo9vS4bXfbGsdxXzEgVCv/PM0v+1QggL7W0d/ccIy+VCjbXNlGij+PENz6VNg==

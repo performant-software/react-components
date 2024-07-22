@@ -4,7 +4,8 @@ import React, {
   Children,
   useCallback,
   useEffect,
-  useMemo, useRef,
+  useMemo,
+  useRef,
   useState
 } from 'react';
 import { BsStack } from 'react-icons/bs';
@@ -103,6 +104,7 @@ const LayerMenu = (props: Props) => {
         position={props.position}
       >
         <button
+          aria-label='Toggle Menu'
           className='mapbox-gl-draw_ctrl-draw-btn layer-button'
           onClick={() => setMenuOpen((prevMenuOpen) => !prevMenuOpen)}
           type='button'

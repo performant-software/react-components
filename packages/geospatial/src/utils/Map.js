@@ -1,5 +1,6 @@
 // @flow
 
+import { WarpedMapLayer } from '@allmaps/maplibre';
 import { bbox, bboxPolygon, buffer } from '@turf/turf';
 import _ from 'underscore';
 
@@ -7,6 +8,28 @@ const MIN_LATITUDE = -90;
 const MAX_LATITUDE = 90;
 const MIN_LONGITUDE = -180;
 const MAX_LONGITUDE = 180;
+
+/**
+ * Adds the geo-referenced image layer to the passed map.
+ *
+ * @param map
+ * @param layerId
+ * @param options
+ */
+const addGeoreferenceLayer = (map, layerId, options = {}) => {
+  const warpedMapLayer = new WarpedMapLayer(layerId);
+  map.addLayer(warpedMapLayer);
+
+  if (options.url) {
+    warpedMapLayer.addGeoreferenceAnnotationByUrl(options.url);
+  } else if (options.manifest) {
+    warpedMapLayer.addGeoreferenceAnnotation(options.manifest);
+  }
+
+  if (options.opacity) {
+    warpedMapLayer.setOpacity(options.opacity);
+  }
+};
 
 /**
  * Returns a bounding box for the passed geometry (with optional buffer).
@@ -41,6 +64,16 @@ const getBoundingBox = (data, bufferDistance = null) => {
 };
 
 /**
+ * Removes a layer from the passed map.
+ *
+ * @param map
+ * @param layerId
+ *
+ * @returns {*}
+ */
+const removeLayer = (map, layerId) => map && map.removeLayer(layerId);
+
+/**
  * Validates that the passed bounding box contains finite coordinates.
  *
  * @param boundingBox
@@ -72,7 +105,9 @@ const validateCoordinates = (coordinates) => {
 };
 
 export default {
+  addGeoreferenceLayer,
   getBoundingBox,
+  removeLayer,
   validateBoundingBox,
   validateCoordinates
 };

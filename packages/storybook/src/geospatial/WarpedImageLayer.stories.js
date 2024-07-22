@@ -1,10 +1,10 @@
 // @flow
 
-import { Map, Zoom } from '@peripleo/maplibre';
-import { Controls, Peripleo } from '@peripleo/peripleo';
+import maplibregl from 'maplibre-gl';
 import React from 'react';
-import WarpedImageLayer from '../../../geospatial/src/components/WarpedImageLayer';
+import { Map } from 'react-map-gl';
 import Env from '../utils/Environment';
+import WarpedImageLayer from '../../../geospatial/src/components/WarpedImageLayer';
 
 export default {
   title: 'Components/Geospatial/WarpedImageLayer',
@@ -15,30 +15,26 @@ const mapTilerKey = Env.getMapTilerKey();
 const mapStyle = `https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTilerKey}`;
 
 export const Default = () => (
-  <Peripleo>
-    <Map
-      defaultBounds={[
+  <Map
+    attributionControl={false}
+    initialViewState={{
+      bounds: [
         [-74.123501, 40.679546],
         [-73.796486, 40.805444]
-      ]}
-      style={mapStyle}
-    >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
-      <div
-        style={{
-          width: '100%',
-          height: '500px'
-        }}
-      >
-        <WarpedImageLayer
-          id='nyc'
-          url='https://annotations.allmaps.org/images/d180902cb93d5bf2'
-        />
-      </div>
-    </Map>
-  </Peripleo>
+      ]
+    }}
+    mapLib={maplibregl}
+    mapStyle={mapStyle}
+    maxPitch={0}
+    preserveDrawingBuffer
+    style={{
+      height: 500,
+      width: '100%'
+    }}
+  >
+    <WarpedImageLayer
+      id='nyc'
+      url='https://annotations.allmaps.org/images/d180902cb93d5bf2'
+    />
+  </Map>
 );

@@ -1,6 +1,6 @@
 // @flow
 
-import { MapStyles, WarpedImageLayer } from '@performant-software/geospatial';
+import { MapStyles, WarpedImageLayerPeripleo as WarpedImageLayer } from '@performant-software/geospatial';
 import { GeoJSONLayer, RasterLayer } from '@peripleo/maplibre';
 import React from 'react';
 import _ from 'underscore';
