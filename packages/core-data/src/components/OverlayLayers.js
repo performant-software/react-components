@@ -1,6 +1,6 @@
 // @flow
 
-import { MapStyles } from '@performant-software/geospatial';
+import { MapStyles, WarpedImageLayer } from '@performant-software/geospatial';
 import { GeoJSONLayer, RasterLayer } from '@peripleo/maplibre';
 import React from 'react';
 import _ from 'underscore';
@@ -9,7 +9,7 @@ type Layer = {
   /**
    * The type of layer to render.
    */
-  layer_type: 'geojson' | 'raster',
+  layer_type: 'geojson' | 'raster' | 'georeference',
 
   /**
    * (Optional) GeoJSON data to pass to the layer.
@@ -20,6 +20,11 @@ type Layer = {
    * Name of the layer.
    */
   name: string,
+
+  /**
+   * (Optional) Layer opacity.
+   */
+  opacity?: number,
 
   /**
    * (Optional) URL that contains the layer. This can be a URL to GeoJSON data or a Raster tile set.
@@ -56,6 +61,16 @@ const OverlayLayer = (props: OverlayLayerProps) => {
     return (
       <RasterLayer
         id={overlay.name}
+        url={overlay.url}
+      />
+    );
+  }
+
+  if (overlay.layer_type === 'georeference') {
+    return (
+      <WarpedImageLayer
+        id={overlay.name}
+        opacity={overlay.opacity}
         url={overlay.url}
       />
     );

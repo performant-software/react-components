@@ -18,6 +18,7 @@
     "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
+    "@allmaps/maplibre": "^1.0.0-beta.25",
     "@mapbox/mapbox-gl-draw": "^1.4.3",
     "@maptiler/geocoding-control": "^1.2.2",
     "@turf/turf": "^6.5.0",
