@@ -9,6 +9,8 @@ export { default as LocationMarkers } from './components/LocationMarkers';
 export { default as MapControl } from './components/MapControl';
 export { default as MapDraw } from './components/MapDraw';
 export { default as RasterLayer } from './components/RasterLayer';
+export { default as WarpedImageLayer } from './components/WarpedImageLayer';
+export { default as WarpedImageLayerPeripleo } from './components/WarpedImageLayerPeripleo';
 
 // Utils
 export { default as Map } from './utils/Map';

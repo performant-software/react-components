@@ -8,6 +8,7 @@ import LayerMenu from '../../../geospatial/src/components/LayerMenu';
 import MapControl from '../../../geospatial/src/components/MapControl';
 import MapDraw from '../../../geospatial/src/components/MapDraw';
 import RasterLayerComp from '../../../geospatial/src/components/RasterLayer';
+import WarpedImageLayer from '../../../geospatial/src/components/WarpedImageLayer';
 
 import bostonBoundaryData from '../data/Boston.json';
 import mbtaStops from '../data/MbtaStops.json';
@@ -176,6 +177,40 @@ export const RasterLayer = () => (
         url={(
           `https://api.maptiler.com/tiles/uk-baire250k1940/{z}/{x}/{y}.png?key=${mapTilerKey}`
         )}
+      />
+    </LayerMenu>
+  </MapDraw>
+);
+
+export const GeoreferenceLayer = () => (
+  <MapDraw
+    apiKey={mapTilerKey}
+    buffer={2}
+    data={{
+      type: 'GeometryCollection',
+      geometries: [
+        {
+          type: 'Point',
+          coordinates: [
+            -74.0,
+            40.7166638
+          ]
+        }
+      ]
+    }}
+    mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+    maxPitch={0}
+    onChange={action('onChange')}
+    preserveDrawingBuffer
+  >
+    <LayerMenu
+      names={[
+        'NYC'
+      ]}
+    >
+      <WarpedImageLayer
+        id='nyc'
+        url='https://annotations.allmaps.org/images/d180902cb93d5bf2'
       />
     </LayerMenu>
   </MapDraw>

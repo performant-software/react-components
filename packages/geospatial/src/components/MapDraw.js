@@ -66,6 +66,11 @@ type Props = {
   mapStyle: string,
 
   /**
+   * The maximum pitch of the map (0-85).
+   */
+  maxPitch?: number,
+
+  /**
    * If `true`, the navigation controls will display.
    */
   navigation?: boolean,
@@ -81,6 +86,11 @@ type Props = {
    * Callback fired when an item is selected from the geocoding dropdown.
    */
   onGeocodingSelection?: (data: any) => void,
+
+  /**
+   * If `true`, the map's canvas can be exported to a PNG using `map.getCanvas().toDataURL()`.
+   */
+  preserveDrawingBuffer?: boolean,
 
   /**
    * Map style object.
@@ -197,8 +207,10 @@ const MapDraw = (props: Props) => {
     <Map
       attributionControl={false}
       cooperativeGestures={props.cooperativeGestures}
-      onLoad={() => setLoaded(true)}
       mapLib={maplibregl}
+      maxPitch={props.maxPitch}
+      onLoad={() => setLoaded(true)}
+      preserveDrawingBuffer={props.preserveDrawingBuffer}
       ref={mapRef}
       style={style}
       mapStyle={mapStyleUrl}
@@ -241,6 +253,7 @@ const MapDraw = (props: Props) => {
 MapDraw.defaultProps = {
   buffer: DEFAULT_BUFFER,
   cooperativeGestures: true,
+  preserveDrawingBuffer: false,
   zoomDuration: DEFAULT_ZOOM_DELAY
 };
 

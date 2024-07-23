@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "A package of components for all things map-related.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -18,6 +18,7 @@
     "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
+    "@allmaps/maplibre": "^1.0.0-beta.25",
     "@mapbox/mapbox-gl-draw": "^1.4.3",
     "@maptiler/geocoding-control": "^1.2.2",
     "@turf/turf": "^6.5.0",
