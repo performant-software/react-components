@@ -47,7 +47,7 @@ const PlaceLayersSelector = (props: Props) => {
     if (isSelected(layer)) {
       setSelectedLayers((prevSelected) => _.filter(prevSelected, (l) => l.url !== layer.url));
     } else {
-      setSelectedLayers((prevSelected) => [...prevSelected, layer]);
+      setSelectedLayers((prevSelected) => [...prevSelected, { ...layer, content: JSON.parse(layer.content || '{}') }]);
     }
   }, [isSelected]);
 
