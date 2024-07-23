@@ -7,14 +7,14 @@ import _ from 'underscore';
 
 type Layer = {
   /**
+   * (Optional) GeoJSON data to pass to the layer.
+   */
+  content?: { [key: string]: any },
+
+  /**
    * The type of layer to render.
    */
   layer_type: 'geojson' | 'raster' | 'georeference',
-
-  /**
-   * (Optional) GeoJSON data to pass to the layer.
-   */
-  data?: { [key: string]: any },
 
   /**
    * Name of the layer.
@@ -49,7 +49,7 @@ const OverlayLayer = (props: OverlayLayerProps) => {
     return (
       <GeoJSONLayer
         id={overlay.name}
-        data={overlay.data || overlay.url}
+        data={overlay.content || overlay.url}
         fillStyle={MapStyles.fill}
         pointStyle={MapStyles.point}
         strokeStyle={MapStyles.stroke}
@@ -70,6 +70,7 @@ const OverlayLayer = (props: OverlayLayerProps) => {
     return (
       <WarpedImageLayer
         id={overlay.name}
+        manifest={overlay.content}
         opacity={overlay.opacity}
         url={overlay.url}
       />
