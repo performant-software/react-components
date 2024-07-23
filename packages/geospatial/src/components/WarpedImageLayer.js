@@ -31,9 +31,16 @@ const WarpedImageLayer = (props: Props) => {
 
   const mapRef = useMap();
 
+  /**
+   * Sets the "loaded" attribute on the state based on the current map state.
+   */
   useEffect(() => {
     const instance = mapRef?.current?.getMap();
-    instance.on('load', () => setLoaded(true));
+    if (instance && instance.loaded()) {
+      setLoaded(true);
+    } else if (instance) {
+      instance.on('load', () => setLoaded(true));
+    }
   }, []);
 
   /**
