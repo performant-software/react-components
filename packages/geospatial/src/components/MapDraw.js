@@ -66,6 +66,11 @@ type Props = {
   mapStyle: string,
 
   /**
+   * The maximum pitch of the map (0-85).
+   */
+  maxPitch?: number,
+
+  /**
    * If `true`, the navigation controls will display.
    */
   navigation?: boolean,
@@ -203,6 +208,7 @@ const MapDraw = (props: Props) => {
       attributionControl={false}
       cooperativeGestures={props.cooperativeGestures}
       mapLib={maplibregl}
+      maxPitch={props.maxPitch}
       onLoad={() => setLoaded(true)}
       preserveDrawingBuffer={props.preserveDrawingBuffer}
       ref={mapRef}
