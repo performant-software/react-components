@@ -39,9 +39,9 @@ const GeoJsonLayer = (props: Props) => (
 );
 
 GeoJsonLayer.defaultProps = {
-  fillStyle: MapStyles.fill,
-  pointStyle: MapStyles.point,
-  strokeStyle: MapStyles.stroke
+  fillStyle: MapStyles.fill.paint,
+  pointStyle: MapStyles.point.paint,
+  strokeStyle: MapStyles.stroke.paint
 };
 
 export default GeoJsonLayer;
