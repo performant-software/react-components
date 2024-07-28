@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'underscore';
 import Api from '../utils/Api';
 
 class BaseService {
@@ -172,8 +173,8 @@ class BaseService {
    */
   getSearchParams(params) {
     return {
-      project_ids: this.projectIds,
-      ...params
+      ...params,
+      'project_ids[]': this.projectIds
     };
   }
 }
