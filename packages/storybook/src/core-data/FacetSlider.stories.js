@@ -10,9 +10,8 @@ export default {
 
 export const Default = () => (
   <FacetSlider
-    markerStep={100}
-    min={1500}
-    max={2010}
+    defaultMin={1500}
+    defaultMax={2010}
   />
 );
 
@@ -27,9 +26,16 @@ export const CustomStyles = () => (
         thumb: 'bg-white',
         track: 'bg-gray-400'
       }}
-      markerStep={100}
-      min={1500}
-      max={2010}
+      defaultMin={1500}
+      defaultMax={2010}
     />
   </div>
+);
+
+export const Zoom = () => (
+  <FacetSlider
+    defaultMin={1500}
+    defaultMax={2010}
+    zoom={10}
+  />
 );

@@ -11,6 +11,7 @@ export { default as RichTextArea } from './components/RichTextArea';
 
 // Hooks
 export { default as useCitationStyles } from './hooks/CitationStyles';
+export { default as useTimer } from './hooks/Timer';
 export { default as withEditPage } from './hooks/EditPage';
 
 // I18n

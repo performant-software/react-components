@@ -1,10 +1,16 @@
 // @flow
 
-import { Timer } from '@performant-software/shared-components';
+import { useTimer } from '@performant-software/shared-components';
 import * as Slider from '@radix-ui/react-slider';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+  ZoomIn,
+  ZoomOut
+} from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
 
 type MarkerProps = {
@@ -16,6 +22,8 @@ const SliderMarker = (props: MarkerProps) => {
   const [initialized, setInitialized] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const { clearTimer, setTimer } = useTimer();
+
   /**
    * If initialized, sets the "open" state to "true".
    */
@@ -24,10 +32,14 @@ const SliderMarker = (props: MarkerProps) => {
       return;
     }
 
+    // Set the open state to "true"
     setOpen(true);
 
-    Timer.clearSearchTimer();
-    Timer.setSearchTimer(() => setOpen(false));
+    // Clear existing timers
+    clearTimer();
+
+    // Set a new timer
+    setTimer(() => setOpen(false));
   }, [props.value]);
 
   /**
@@ -91,12 +103,12 @@ type Props = {
   /**
    * The maximum facet value.
    */
-  max: number,
+  defaultMax: number,
 
   /**
    * The minimum facet value.
    */
-  min: number,
+  defaultMin: number,
 
   /**
    * Callback fired when the range is changed.
@@ -106,11 +118,18 @@ type Props = {
   /**
    * Number of steps to increment the slider.
    */
-  step?: number
+  step?: number,
+
+  /**
+   * Zoom in/out increment.
+   */
+  zoom?: number
 };
 
 const FacetSlider = (props: Props) => {
-  const [range, setRange] = useState([props.min, props.max]);
+  const [min, setMin] = useState(props.defaultMin);
+  const [max, setMax] = useState(props.defaultMax);
+  const [range, setRange] = useState([props.defaultMin, props.defaultMax]);
 
   /**
    * Callback fired when the left button is clicked. This function decrements the min range value by the "step" prop.
@@ -121,12 +140,12 @@ const FacetSlider = (props: Props) => {
     const [start, end] = range;
 
     let newStart = start - props.step;
-    if (newStart < props.min) {
-      newStart = props.min;
+    if (newStart < min) {
+      newStart = min;
     }
 
     setRange([newStart, end]);
-  }, [range, props.min, props.step]);
+  }, [min, range, props.step]);
 
   /**
    * Callback fired when the right button is clicked. This function increments the max range value by the "step" prop.
@@ -137,12 +156,68 @@ const FacetSlider = (props: Props) => {
     const [start, end] = range;
 
     let newEnd = end + props.step;
-    if (newEnd > props.max) {
-      newEnd = props.max;
+    if (newEnd > max) {
+      newEnd = max;
     }
 
     setRange([start, newEnd]);
-  }, [range, props.max, props.step]);
+  }, [max, range, props.step]);
+
+  /**
+   * Zooms in the min/max values.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomIn = useCallback(() => {
+    const newRange = [...range];
+
+    const newMin = min + props.zoom;
+    const newMax = max - props.zoom;
+
+    if (newMin >= newMax) {
+      return;
+    }
+
+    setMin(newMin);
+    setMax(newMax);
+
+    if (newMin > newRange[0]) {
+      newRange[0] = newMin;
+    }
+
+    if (newMax < newRange[1]) {
+      newRange[1] = newMax;
+    }
+
+    setRange(newRange);
+  }, [max, min, range, props.zoom]);
+
+  /**
+   * Zooms out the min/max values.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomOut = useCallback(() => {
+    const newMin = min - props.zoom;
+    const newMax = max + props.zoom;
+
+    if (newMin >= newMax) {
+      return;
+    }
+
+    setMin(newMin);
+    setMax(newMax);
+  }, [max, min, range, props.zoom]);
+
+  /**
+   * Resets the min/max values to the defaults.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomReset = useCallback(() => {
+    setMin(props.defaultMin);
+    setMax(props.defaultMax);
+  }, [props.defaultMax, props.defaultMin]);
 
   /**
    * Calls the onChange prop when the range value changes.
@@ -171,8 +246,8 @@ const FacetSlider = (props: Props) => {
             'relative flex flex-grow h-5 touch-none items-center w-full',
             props.classNames.root
           )}
-          max={props.max}
-          min={props.min}
+          max={max}
+          min={min}
           minStepsBetweenThumbs={1}
           onValueChange={setRange}
           step={1}
@@ -212,9 +287,39 @@ const FacetSlider = (props: Props) => {
       <div
         className='flex justify-between w-full px-12'
       >
-        <div>{ props.min }</div>
-        <div>{ props.max }</div>
+        <div>{ min }</div>
+        <div>{ max }</div>
       </div>
+      { props.zoom && (
+        <div
+          className='flex justify-center items-center w-full py-3 text-gray-600'
+        >
+          <button
+            aria-label='Zoom In'
+            className='p-3'
+            onClick={onZoomIn}
+            type='button'
+          >
+            <ZoomIn />
+          </button>
+          <button
+            aria-label='Zoom Out'
+            className='p-3'
+            onClick={onZoomOut}
+            type='button'
+          >
+            <ZoomOut />
+          </button>
+          <button
+            aria-label='Zoom Reset'
+            className='p-3'
+            onClick={onZoomReset}
+            type='button'
+          >
+            <RotateCcw />
+          </button>
+        </div>
+      )}
     </>
   );
 };
