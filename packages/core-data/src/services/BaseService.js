@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'underscore';
 import Api from '../utils/Api';
 
 class BaseService {
@@ -24,7 +25,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchOne(id, params = {}) {
-    const url = Api.buildUrl(this.baseUrl, this.getRoute(), id, this.getSearchParams(params));
+    const url = Api.buildUrl(this.baseUrl, this.getRoute(), id, this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -37,7 +38,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedEvents(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'events', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'events', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -50,7 +51,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedInstances(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'instances', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'instances', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -63,7 +64,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedItems(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'items', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'items', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -76,7 +77,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedManifests(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'manifests', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'manifests', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -89,7 +90,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedMedia(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'media_contents', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'media_contents', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -102,7 +103,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedOrganizations(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'organizations', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'organizations', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -114,7 +115,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedPeople(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'people', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'people', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -127,7 +128,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedPlaces(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'places', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'places', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -140,7 +141,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedTaxonomies(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'taxonomies', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'taxonomies', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -153,7 +154,7 @@ class BaseService {
    * @returns {Promise<any>}
    */
   fetchRelatedWorks(id, params = {}) {
-    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'works', this.getSearchParams(params));
+    const url = Api.buildNestedUrl(this.baseUrl, this.getRoute(), id, 'works', this.projectIds, params);
     return fetch(url).then((response) => response.json());
   }
 
@@ -172,8 +173,8 @@ class BaseService {
    */
   getSearchParams(params) {
     return {
-      project_ids: this.projectIds,
-      ...params
+      ...params,
+      'project_ids[]': this.projectIds
     };
   }
 }
