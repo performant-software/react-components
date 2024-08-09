@@ -12,6 +12,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
+import _ from 'underscore';
 
 type MarkerProps = {
   className?: string,
@@ -75,7 +76,7 @@ const SliderMarker = (props: MarkerProps) => {
           sideOffset={5}
         >
           <div
-            className='bg-white p-2 text-black rounded-md shadow-md'
+            className='bg-white p-2 text-black rounded-md shadow-md shadow-gray-1000'
           >
             { props.value }
           </div>
@@ -88,17 +89,47 @@ const SliderMarker = (props: MarkerProps) => {
   );
 };
 
+type Action = {
+  /**
+   * Class name to apply to the button element.
+   */
+  className?: string,
+
+  /**
+   * (Optional) icon to render inside the button element.
+   */
+  icon?: JSX.Element,
+
+  /**
+   * Button label.
+   */
+  label: string,
+
+  /**
+   * Callback fired when the button is clicked.
+   */
+  onClick: () => void
+};
+
+type ClassNames = {
+  button: string,
+  range: string,
+  root: string,
+  thumb: string,
+  track: string,
+  zoom: string
+};
+
 type Props = {
+  /**
+   * Custom actions to render as buttons.
+   */
+  actions?: Array<Action>,
+
   /**
    * Custom Tailwind CSS class names.
    */
-  classNames: {
-    button: string,
-    range: string,
-    root: string,
-    thumb: string,
-    track: string
-  },
+  classNames: ClassNames,
 
   /**
    * The maximum facet value.
@@ -113,7 +144,7 @@ type Props = {
   /**
    * Callback fired when the range is changed.
    */
-  onChange?: ([number, number]) => void,
+  onChange?: ([[number, number], [number, number]]) => void,
 
   /**
    * Number of steps to increment the slider.
@@ -224,9 +255,9 @@ const FacetSlider = (props: Props) => {
    */
   useEffect(() => {
     if (props.onChange) {
-      props.onChange(range);
+      props.onChange(range, [min, max]);
     }
-  }, [range]);
+  }, [max, min, range]);
 
   return (
     <>
@@ -292,7 +323,10 @@ const FacetSlider = (props: Props) => {
       </div>
       { props.zoom && (
         <div
-          className='flex justify-center items-center w-full py-3 text-gray-600'
+          className={clsx(
+            'flex justify-center items-center w-full py-3 text-gray-600',
+            props.classNames.zoom
+          )}
         >
           <button
             aria-label='Zoom In'
@@ -318,6 +352,24 @@ const FacetSlider = (props: Props) => {
           >
             <RotateCcw />
           </button>
+          { !_.isEmpty(props.actions) && (
+            <>
+              { _.map(props.actions, (action, index) => (
+                <button
+                  aria-label={action.label}
+                  className={clsx(
+                    'p-3',
+                    action.className
+                  )}
+                  key={index}
+                  onClick={action.onClick}
+                  type='button'
+                >
+                  { action.icon }
+                </button>
+              ))}
+            </>
+          )}
         </div>
       )}
     </>
@@ -330,3 +382,8 @@ FacetSlider.defaultProps = {
 };
 
 export default FacetSlider;
+
+export type {
+  Action,
+  ClassNames
+};

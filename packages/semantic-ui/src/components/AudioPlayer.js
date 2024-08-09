@@ -1,9 +1,9 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { Button, Message, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 import './AudioPlayer.css';
 
 type Props = {

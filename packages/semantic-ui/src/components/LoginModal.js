@@ -1,5 +1,6 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, { type Element } from 'react';
 import {
   Button,
@@ -12,7 +13,6 @@ import {
   Modal
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 import './LoginModal.css';
 
 type Props = {

@@ -22,8 +22,9 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-slider": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@samvera/clover-iiif": "^2.3.2",

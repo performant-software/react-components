@@ -18,6 +18,7 @@ const buildNestedUrl = (baseUrl, route, id, nested, projectIds = [], searchParam
   const url = `${baseUrl}/core_data/public/v1/${route}/${id}/${nested}`;
   const params = new URLSearchParams(searchParams);
 
+  // Append project IDs
   _.each(projectIds, (projectId) => {
     params.append('project_ids[]', projectId);
   });
@@ -37,9 +38,17 @@ const buildNestedUrl = (baseUrl, route, id, nested, projectIds = [], searchParam
  * @returns {`${string}?${string}`}
  */
 const buildUrl = (baseUrl, route, id, projectIds = [], searchParams = {}) => {
-  const url = `${baseUrl}/core_data/public/v1/${route}/${id}`;
+  let url = `${baseUrl}/core_data/public/v1/${route}`;
+
+  // Append the ID to the URL if provided
+  if (id) {
+    url = `${url}/${id}`;
+  }
+
+  // Create the search params
   const params = new URLSearchParams(searchParams);
 
+  // Append each project ID
   _.each(projectIds, (projectId) => {
     params.append('project_ids[]', projectId);
   });

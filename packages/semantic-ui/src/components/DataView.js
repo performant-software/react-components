@@ -1,5 +1,6 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import axios from 'axios';
 import React, {
   useCallback,
@@ -15,7 +16,6 @@ import DropdownButton from './DropdownButton';
 import i18n from '../i18n/i18n';
 import MenuBar from './MenuBar';
 import MenuSidebar from './MenuSidebar';
-import ModalContext from '../context/ModalContext';
 import useDataList, { SORT_ASCENDING, SORT_DESCENDING } from './DataList';
 import './DataView.css';
 

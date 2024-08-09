@@ -1,10 +1,10 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, { useState } from 'react';
 import { Image, Message, Modal } from 'semantic-ui-react';
-import ModalContext from '../context/ModalContext';
-import './PhotoViewer.css';
 import i18n from '../i18n/i18n';
+import './PhotoViewer.css';
 
 type Props = {
   alt?: string,

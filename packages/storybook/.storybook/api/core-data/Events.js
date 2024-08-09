@@ -13,9 +13,11 @@ class Events extends Base {
   /**
    * Builds a single event item.
    */
-  buildItem() {
-    const startDate = this.createFuzzyDate();
-    const endDate = this.createFuzzyDate(startDate.end_date);
+  buildItem(params) {
+    const { min, max } = params;
+
+    const startDate = this.createFuzzyDate(min, max);
+    // const endDate = this.createFuzzyDate(startDate.end_date);
 
     return {
       relationship_type: 'Events',
@@ -23,8 +25,8 @@ class Events extends Base {
       name: faker.lorem.words({ min: 1, max: 5 }),
       description: faker.lorem.sentences({ min: 0, max: 3 }),
       start_date: startDate,
-      end_date: endDate
-    }
+      end_date: null
+    };
   }
 
   /**
@@ -50,9 +52,16 @@ class Events extends Base {
    *
    * @returns {{end_date, accuracy: number, range: number, description: string, start_date: Date}}
    */
-  createFuzzyDate() {
+  createFuzzyDate(min = null, max = null) {
     const accuracy = faker.number.int({ min: 0, max: 2 });
-    let startDate = faker.date.anytime();
+
+    let startDate;
+
+    if (min && max) {
+      startDate = faker.date.between({ from: min, to: max });
+    } else {
+      startDate = faker.date.anytime();
+    }
 
     let endDate;
     let range = faker.number.int({ min: 0, max: 1 });

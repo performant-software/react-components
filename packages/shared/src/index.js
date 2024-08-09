@@ -9,6 +9,9 @@ export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
 export { default as RichTextArea } from './components/RichTextArea';
 
+// Context
+export { default as ModalContext } from './context/ModalContext';
+
 // Hooks
 export { default as useCitationStyles } from './hooks/CitationStyles';
 export { default as useTimer } from './hooks/Timer';

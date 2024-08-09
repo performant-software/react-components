@@ -1,0 +1,3 @@
+div[data-radix-popper-content-wrapper]:hover {
+  z-index: 99 !important;
+}

@@ -1,10 +1,10 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, { type ComponentType, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { Button, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 
 type Props = {
   highlighter?: any,
