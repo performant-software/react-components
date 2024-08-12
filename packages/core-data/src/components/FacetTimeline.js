@@ -35,24 +35,9 @@ type Props = {
   classNames?: ClassNamesType,
 
   /**
-   * Default maximum value.
-   */
-  defaultMax: number,
-
-  /**
-   * Default minimum value.
-   */
-  defaultMin: number,
-
-  /**
    * If `true`, the event popover content will display the event description.
    */
   description?: boolean,
-
-  /**
-   * Callback fired when the range or min/max properties are changed.
-   */
-  onChange?: (range: [number, number], minMax: [number, number]) => void,
 
   /**
    * Callback fired when the event popover is clicked.
@@ -65,10 +50,17 @@ type Props = {
   onLoad?: (events: Array<EventType>) => void,
 
   /**
+   * Typesense `useRange` hook.
+   */
+  useRange: ({ attribute: string }) => ({ refine: (range: [number, number]) => void }) => void,
+
+  /**
    * Zoom level increment.
    */
   zoom?: number
 };
+
+const FACET_EVENT_RANGE = 'event_range_facet';
 
 const FacetTimeline = (props: Props) => {
   const [events, setEvents] = useState();
@@ -80,6 +72,8 @@ const FacetTimeline = (props: Props) => {
   const { clearTimer, setTimer } = useTimer();
 
   const ref = useRef();
+
+  const { range: defaultRange, refine } = props.useRange({ attribute: FACET_EVENT_RANGE });
 
   /**
    * Returns the year value for the passed event.
@@ -142,10 +136,8 @@ const FacetTimeline = (props: Props) => {
         .then(onLoad)
     ));
 
-    if (props.onChange) {
-      props.onChange(range, [min, max]);
-    }
-  }, [max, min, range]);
+    refine(range);
+  }, [range]);
 
   /**
    * Calls the onLoad prop when the events are changed.
@@ -156,11 +148,28 @@ const FacetTimeline = (props: Props) => {
     }
   }, [events, props.onLoad]);
 
+  /**
+   * Sets the default min/max values based on the facet range.
+   */
+  useEffect(() => {
+    if (!min && defaultRange?.min) {
+      setMin(defaultRange.min);
+    }
+
+    if (!max && defaultRange?.max) {
+      setMax(defaultRange.max);
+    }
+  }, [max, min, defaultRange]);
+
+  if (!(min && max)) {
+    return null;
+  }
+
   return (
     <div
       className={clsx(
         'py-7',
-        { 'pt-12': !props.description },
+        { 'pt-16': !props.description },
         { 'pt-40': props.description },
         props.className
       )}
@@ -261,8 +270,8 @@ const FacetTimeline = (props: Props) => {
         childrenPosition='top'
         classNames={props.classNames}
         onChange={onChange}
-        defaultMin={props.defaultMin}
-        defaultMax={props.defaultMax}
+        defaultMin={min}
+        defaultMax={max}
         zoom={props.zoom}
       />
     </div>

@@ -14,7 +14,7 @@ class Events extends Base {
    * Builds a single event item.
    */
   buildItem(params) {
-    const { min, max } = params;
+    const { min_year: min, max_year: max } = params;
 
     const startDate = this.createFuzzyDate(min, max);
     // const endDate = this.createFuzzyDate(startDate.end_date);

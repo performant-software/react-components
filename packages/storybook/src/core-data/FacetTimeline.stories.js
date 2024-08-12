@@ -13,10 +13,17 @@ export default {
   component: FacetTimeline
 };
 
+const useRange = () => ({
+  range: {
+    min: 1768,
+    max: 1777
+  },
+  refine: () => {}
+});
+
 export const Default = withCoreDataContextProvider(() => (
   <FacetTimeline
-    defaultMin={2000}
-    defaultMax={2024}
+    useRange={useRange}
     zoom={10}
   />
 ));
@@ -31,8 +38,7 @@ export const Styled = withCoreDataContextProvider(() => (
       track: 'bg-gray-400',
       zoom: 'text-white'
     }}
-    defaultMin={2000}
-    defaultMax={2024}
+    useRange={useRange}
     zoom={10}
   />
 ));
@@ -43,9 +49,8 @@ export const EventModal = withCoreDataContextProvider(() => {
   return (
     <>
       <FacetTimeline
-        defaultMin={2000}
-        defaultMax={2024}
         onClick={(event) => setSelectedEvent(event)}
+        useRange={useRange}
         zoom={10}
       />
       { selectedEvent && (
@@ -84,9 +89,8 @@ export const ListView = withCoreDataContextProvider(() => {
           ),
           onClick: () => setListView(true)
         }]}
-        defaultMin={2000}
-        defaultMax={2024}
         onLoad={setEvents}
+        useRange={useRange}
         zoom={10}
       />
       { listView && (
@@ -122,9 +126,8 @@ export const ListView = withCoreDataContextProvider(() => {
 
 export const Description = withCoreDataContextProvider(() => (
   <FacetTimeline
-    defaultMin={2000}
-    defaultMax={2024}
     description
+    useRange={useRange}
     zoom={10}
   />
 ));
