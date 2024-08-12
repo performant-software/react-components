@@ -50,6 +50,11 @@ type Props = {
   description?: boolean,
 
   /**
+   * Callback fired when the range or min/max properties are changed.
+   */
+  onChange?: (range: [number, number], minMax: [number, number]) => void,
+
+  /**
    * Callback fired when the event popover is clicked.
    */
   onClick?: (event: EventType) => void,
@@ -136,6 +141,10 @@ const FacetTimeline = (props: Props) => {
         .fetchAll({ min_year: range[0], max_year: range[1] })
         .then(onLoad)
     ));
+
+    if (props.onChange) {
+      props.onChange(range, [min, max]);
+    }
   }, [max, min, range]);
 
   /**
