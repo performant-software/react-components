@@ -133,7 +133,7 @@ const FacetTimeline = (props: Props) => {
 
     setTimer(() => (
       EventsService
-        .fetchAll({ min: range[0], max: range[1] })
+        .fetchAll({ min_year: range[0], max_year: range[1] })
         .then(onLoad)
     ));
   }, [max, min, range]);
