@@ -119,3 +119,12 @@ export const ListView = withCoreDataContextProvider(() => {
     </>
   );
 });
+
+export const Description = withCoreDataContextProvider(() => (
+  <FacetTimeline
+    defaultMin={2000}
+    defaultMax={2024}
+    description
+    zoom={10}
+  />
+));

@@ -15,7 +15,7 @@ import React, {
 import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
 import EventUtils from '../utils/Event';
-import FacetSlider, { Action as ActionType, ClassNames as ClassNamesType } from './FacetSlider';
+import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesType } from './FacetSlider';
 import { useEventsService } from '../hooks/CoreData';
 
 type Props = {
@@ -43,6 +43,11 @@ type Props = {
    * Default minimum value.
    */
   defaultMin: number,
+
+  /**
+   * If `true`, the event popover content will display the event description.
+   */
+  description?: boolean,
 
   /**
    * Callback fired when the event popover is clicked.
@@ -127,11 +132,16 @@ const FacetTimeline = (props: Props) => {
 
   return (
     <div
-      className={clsx('py-7', props.className)}
+      className={clsx(
+        'py-7',
+        { 'pt-12': !props.description },
+        { 'pt-40': props.description },
+        props.className
+      )}
       ref={ref}
     >
       <div
-        className='flex justify-between items-center h-0 pt-40'
+        className='flex justify-between items-center'
       >
         <button
           aria-label='Slider Left'
@@ -196,11 +206,13 @@ const FacetTimeline = (props: Props) => {
                     <p>
                       { EventUtils.getDateView(event) }
                     </p>
-                    <p
-                      className='text-muted'
-                    >
-                      { event.description }
-                    </p>
+                    { props.description && (
+                      <p
+                        className='text-muted'
+                      >
+                        { event.description }
+                      </p>
+                    )}
                     <Popover.Arrow
                       className='fill-white'
                     />
