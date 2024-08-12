@@ -63,6 +63,8 @@ type Props = {
 const FACET_EVENT_RANGE = 'event_range_facet';
 
 const FacetTimeline = (props: Props) => {
+  const [defaultMin, setDefaultMin] = useState();
+  const [defaultMax, setDefaultMax] = useState();
   const [events, setEvents] = useState();
   const [max, setMax] = useState();
   const [min, setMin] = useState();
@@ -128,16 +130,19 @@ const FacetTimeline = (props: Props) => {
       return;
     }
 
+    // Clear the timeout when the range changes
     clearTimer();
 
+    // Reset the timer to fetch the events
     setTimer(() => (
       EventsService
         .fetchAll({ min_year: range[0], max_year: range[1] })
         .then(onLoad)
     ));
 
+    // Call the refine function to update search results
     refine(range);
-  }, [range]);
+  }, [max, min, range]);
 
   /**
    * Calls the onLoad prop when the events are changed.
@@ -152,16 +157,21 @@ const FacetTimeline = (props: Props) => {
    * Sets the default min/max values based on the facet range.
    */
   useEffect(() => {
-    if (!min && defaultRange?.min) {
+    if (!defaultMin && defaultRange?.min) {
+      setDefaultMin(defaultRange.min);
       setMin(defaultRange.min);
     }
 
-    if (!max && defaultRange?.max) {
+    if (!defaultMax && defaultRange?.max) {
+      setDefaultMax(defaultRange.max);
       setMax(defaultRange.max);
     }
-  }, [max, min, defaultRange]);
+  }, [defaultMin, defaultMax, defaultRange]);
 
-  if (!(min && max)) {
+  /**
+   * Only render if we have a default min/max value.
+   */
+  if (!(defaultMin && defaultMax)) {
     return null;
   }
 
@@ -270,8 +280,8 @@ const FacetTimeline = (props: Props) => {
         childrenPosition='top'
         classNames={props.classNames}
         onChange={onChange}
-        defaultMin={min}
-        defaultMax={max}
+        defaultMin={defaultMin}
+        defaultMax={defaultMax}
         zoom={props.zoom}
       />
     </div>
