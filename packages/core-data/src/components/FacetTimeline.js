@@ -169,6 +169,15 @@ const FacetTimeline = (props: Props) => {
   }, [defaultMin, defaultMax, defaultRange]);
 
   /**
+   * Sets the new range value based on the results of the `useRange` hook.
+   */
+  useEffect(() => {
+    if (defaultRange && range && defaultRange.min !== range[0] && defaultRange.max !== range[1]) {
+      setRange([defaultRange.min, defaultRange.max]);
+    }
+  }, [defaultRange]);
+
+  /**
    * Only render if we have a default min/max value.
    */
   if (!(defaultMin && defaultMax)) {
