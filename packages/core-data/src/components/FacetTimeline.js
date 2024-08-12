@@ -77,6 +77,23 @@ const FacetTimeline = (props: Props) => {
   const ref = useRef();
 
   /**
+   * Returns the year value for the passed event.
+   *
+   * @type {function(*): *}
+   */
+  const getYear = useCallback((event) => {
+    let year;
+
+    const date = event.start_date?.start_date || event.end_date?.start_date;
+
+    if (date) {
+      year = new Date(date).getFullYear();
+    }
+
+    return year;
+  }, []);
+
+  /**
    * Sets the new range and min/max values on the state.
    *
    * @type {(function(*, [*,*]): void)|*}
@@ -95,7 +112,7 @@ const FacetTimeline = (props: Props) => {
   const onLoad = useCallback((data) => {
     setEvents(_.map(data.events, (event) => ({
       ...event,
-      year: new Date(event.start_date?.start_date).getFullYear()
+      year: getYear(event)
     })));
   }, []);
 
