@@ -6,13 +6,17 @@ import './index.css';
 // Components
 export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
 export { default as EventDetails } from './components/EventDetails';
+export { default as EventsList } from './components/EventsList';
 export { default as FacetList } from './components/FacetList';
 export { default as FacetLists } from './components/FacetLists';
 export { default as FacetListsGrouped } from './components/FacetListsGrouped';
+export { default as FacetSlider } from './components/FacetSlider';
 export { default as FacetStateContextProvider } from './components/FacetStateContextProvider';
+export { default as FacetTimeline } from './components/FacetTimeline';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
+export { default as Modal } from './components/Modal';
 export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
 export { default as PlaceDetails } from './components/PlaceDetails';
