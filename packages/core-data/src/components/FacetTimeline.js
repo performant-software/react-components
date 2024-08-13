@@ -312,7 +312,8 @@ const FacetTimeline = (props: Props) => {
                       'hover:scale-105',
                       'cursor-pointer',
                       'focus:outline-none',
-                      'text-left'
+                      'text-left',
+                      'text-black'
                     )}
                     onClick={() => props.onClick && props.onClick(event)}
                     type='button'
