@@ -124,6 +124,19 @@ const FacetTimeline = (props: Props) => {
   const onZoomReset = useCallback(() => {
     setMin(defaultMin);
     setMax(defaultMax);
+
+    let newStart = value[0];
+    let newEnd = value[1];
+
+    if (value[0] < defaultMin) {
+      newStart = defaultMin;
+    }
+
+    if (value[1] > defaultMax) {
+      newEnd = defaultMax;
+    }
+
+    setValue([newStart, newEnd]);
   }, [defaultMax, defaultMin]);
 
   /**
