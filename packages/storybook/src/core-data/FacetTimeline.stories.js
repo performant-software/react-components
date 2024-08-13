@@ -131,3 +131,43 @@ export const Description = withCoreDataContextProvider(() => (
     zoom={10}
   />
 ));
+
+export const MinMax = withCoreDataContextProvider(() => {
+  const [min, setMin] = useState(1768);
+  const [max, setMax] = useState(1777);
+
+  const getRandomInt = (min, max) => {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  };
+
+  const onResetRange = useCallback(() => {
+    const newMin = getRandomInt(1768, 1777);
+    const newMax = getRandomInt(newMin, 1777);
+
+    setMin(newMin);
+    setMax(newMax);
+  }, []);
+
+  const useRangeTest = () => ({
+    range: { min, max },
+    refine: () => {}
+  });
+
+  return (
+    <>
+      <FacetTimeline
+        useRange={useRangeTest}
+        zoom={10}
+      />
+      <button
+        className='bg-blue-500 rounded-sm text-white p-3'
+        onClick={onResetRange}
+        type='button'
+      >
+        Reset Range
+      </button>
+    </>
+  );
+});

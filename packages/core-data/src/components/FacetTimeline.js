@@ -4,7 +4,13 @@ import { useTimer } from '@performant-software/shared-components';
 import * as Popover from '@radix-ui/react-popover';
 import * as Slider from '@radix-ui/react-slider';
 import { clsx } from 'clsx';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+  ZoomIn,
+  ZoomOut
+} from 'lucide-react';
 import React, {
   useCallback,
   useEffect,
@@ -63,19 +69,79 @@ type Props = {
 const FACET_EVENT_RANGE = 'event_range_facet';
 
 const FacetTimeline = (props: Props) => {
-  const [defaultMin, setDefaultMin] = useState();
-  const [defaultMax, setDefaultMax] = useState();
+  const { range = {}, refine, start = [] } = props.useRange({ attribute: FACET_EVENT_RANGE });
+
   const [events, setEvents] = useState();
-  const [max, setMax] = useState();
-  const [min, setMin] = useState();
-  const [range, setRange] = useState();
+  const [defaultMax] = useState(range.max);
+  const [defaultMin] = useState(range.min);
+  const [max, setMax] = useState(range.max);
+  const [min, setMin] = useState(range.min);
+  const [value, setValue] = useState([min, max]);
 
   const EventsService = useEventsService();
+  const ref = useRef();
   const { clearTimer, setTimer } = useTimer();
 
-  const ref = useRef();
+  /**
+   * Zooms in the min/max values.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomIn = useCallback(() => {
+    const newMin = min + props.zoom;
+    const newMax = max - props.zoom;
 
-  const { range: defaultRange, refine } = props.useRange({ attribute: FACET_EVENT_RANGE });
+    if (newMin >= newMax) {
+      return;
+    }
+
+    setMin(newMin);
+    setMax(newMax);
+  }, [max, min, props.zoom]);
+
+  /**
+   * Zooms out the min/max values.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomOut = useCallback(() => {
+    const newMin = min - props.zoom;
+    const newMax = max + props.zoom;
+
+    if (newMin >= newMax) {
+      return;
+    }
+
+    setMin(newMin);
+    setMax(newMax);
+  }, [max, min, range, props.zoom]);
+
+  /**
+   * Resets the min/max values to the defaults.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onZoomReset = useCallback(() => {
+    setMin(defaultMin);
+    setMax(defaultMax);
+  }, [defaultMax, defaultMin]);
+
+  /**
+   * List of actions to provide to the FacetSlider component.
+   */
+  const actions = useMemo(() => [{
+    label: 'Zoom In',
+    icon: <ZoomIn />,
+    onClick: onZoomIn
+  }, {
+    label: 'Zoom Out',
+    icon: <ZoomOut />,
+    onClick: onZoomOut
+  }, {
+    label: 'Zoom Reset',
+    icon: <RotateCcw />,
+    onClick: onZoomReset
+  }], [onZoomIn, onZoomOut, onZoomReset]);
 
   /**
    * Returns the year value for the passed event.
@@ -95,17 +161,6 @@ const FacetTimeline = (props: Props) => {
   }, []);
 
   /**
-   * Sets the new range and min/max values on the state.
-   *
-   * @type {(function(*, [*,*]): void)|*}
-   */
-  const onChange = useCallback((newRange, [newMin, newMax]) => {
-    setRange(newRange);
-    setMin(newMin);
-    setMax(newMax);
-  }, []);
-
-  /**
    * Sets the events on the state.
    *
    * @type {(function(*): void)|*}
@@ -120,13 +175,13 @@ const FacetTimeline = (props: Props) => {
   /**
    * Memo-izes the slider value.
    */
-  const value = useMemo(() => _.pluck(events, 'year'), [events]);
+  const years = useMemo(() => _.pluck(events, 'year'), [events]);
 
   /**
    * Loads the list of events when the range or min/max values are changed.
    */
   useEffect(() => {
-    if (!range) {
+    if (!value) {
       return;
     }
 
@@ -136,13 +191,10 @@ const FacetTimeline = (props: Props) => {
     // Reset the timer to fetch the events
     setTimer(() => (
       EventsService
-        .fetchAll({ min_year: range[0], max_year: range[1] })
+        .fetchAll({ min_year: value[0], max_year: value[1] })
         .then(onLoad)
     ));
-
-    // Call the refine function to update search results
-    refine(range);
-  }, [max, min, range]);
+  }, [onLoad, max, min, value]);
 
   /**
    * Calls the onLoad prop when the events are changed.
@@ -154,35 +206,16 @@ const FacetTimeline = (props: Props) => {
   }, [events, props.onLoad]);
 
   /**
-   * Sets the default min/max values based on the facet range.
+   * When the upper and/or lower bounds of the range change, update the value and min/max values.
    */
   useEffect(() => {
-    if (!defaultMin && defaultRange?.min) {
-      setDefaultMin(defaultRange.min);
-      setMin(defaultRange.min);
-    }
+    const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
+    const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
 
-    if (!defaultMax && defaultRange?.max) {
-      setDefaultMax(defaultRange.max);
-      setMax(defaultRange.max);
-    }
-  }, [defaultMin, defaultMax, defaultRange]);
-
-  /**
-   * Sets the new range value based on the results of the `useRange` hook.
-   */
-  useEffect(() => {
-    if (defaultRange && range && defaultRange.min !== range[0] && defaultRange.max !== range[1]) {
-      setRange([defaultRange.min, defaultRange.max]);
-    }
-  }, [defaultRange]);
-
-  /**
-   * Only render if we have a default min/max value.
-   */
-  if (!(defaultMin && defaultMax)) {
-    return null;
-  }
+    setValue([from, to]);
+    setMax(range.max);
+    setMin(range.min);
+  }, [range.min, range.max]);
 
   return (
     <div
@@ -208,7 +241,7 @@ const FacetTimeline = (props: Props) => {
           className='relative flex flex-grow h-5 touch-none items-center w-full'
           max={max}
           min={min}
-          value={value}
+          value={years}
         >
           { _.map(events, (event) => (
             <Popover.Root
@@ -285,13 +318,16 @@ const FacetTimeline = (props: Props) => {
         </button>
       </div>
       <FacetSlider
-        actions={props.actions}
-        childrenPosition='top'
+        actions={[
+          ...actions,
+          ...props.actions || []
+        ]}
         classNames={props.classNames}
-        onChange={onChange}
-        defaultMin={defaultMin}
-        defaultMax={defaultMax}
-        zoom={props.zoom}
+        max={max}
+        min={min}
+        onValueChange={setValue}
+        onValueCommit={refine}
+        value={value}
       />
     </div>
   );
