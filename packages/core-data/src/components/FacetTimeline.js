@@ -1,6 +1,6 @@
 // @flow
 
-import { useTimer } from '@performant-software/shared-components';
+import { Numbers, useTimer } from '@performant-software/shared-components';
 import * as Popover from '@radix-ui/react-popover';
 import * as Slider from '@radix-ui/react-slider';
 import { clsx } from 'clsx';
@@ -248,8 +248,7 @@ const FacetTimeline = (props: Props) => {
   return (
     <div
       className={clsx(
-        'py-7',
-        { 'pt-16': !props.description },
+        { 'pt-24': !props.description },
         { 'pt-40': props.description },
         props.className
       )}
@@ -291,7 +290,7 @@ const FacetTimeline = (props: Props) => {
                     right: 20,
                     bottom: 10
                   }}
-                  sideOffset={-20}
+                  sideOffset={Numbers.getRandomInt(-30, 10)}
                   side='top'
                 >
                   <button
@@ -316,10 +315,14 @@ const FacetTimeline = (props: Props) => {
                     onClick={() => props.onClick && props.onClick(event)}
                     type='button'
                   >
-                    <h2>
+                    <h2
+                      className='font-bold text-lg whitespace-nowrap line-clamp-1 text-ellipsis'
+                    >
                       { event.name }
                     </h2>
-                    <p>
+                    <p
+                      className='text-muted'
+                    >
                       { EventUtils.getDateView(event) }
                     </p>
                     { props.description && (
@@ -356,6 +359,7 @@ const FacetTimeline = (props: Props) => {
         min={min}
         onValueChange={setValue}
         onValueCommit={refine}
+        position='bottom'
         value={value}
       />
     </div>
