@@ -146,6 +146,9 @@ type Props = {
    */
   onValueChange: (value: [number, number]) => void,
 
+  /**
+   * Callback fired when the range is done changing.
+   */
   onValueCommit?: (value: [number, number]) => void,
 
   /**
@@ -165,6 +168,8 @@ type Props = {
 };
 
 const FacetSlider = (props: Props) => {
+  const { clearTimer, setTimer } = useTimer();
+
   /**
    * Callback fired when the left button is clicked. This function decrements the min range value by the "step" prop.
    *
@@ -179,7 +184,13 @@ const FacetSlider = (props: Props) => {
     }
 
     props.onValueChange([newStart, end]);
-  }, [props.min, props.onValueChange, props.step, props.value]);
+
+    // If provided, delay the onValueCommit function call
+    if (props.onValueCommit) {
+      clearTimer();
+      setTimer(() => props.onValueCommit([newStart, end]));
+    }
+  }, [props.min, props.onValueChange, props.onValueCommit, props.step, props.value]);
 
   /**
    * Callback fired when the right button is clicked. This function increments the max range value by the "step" prop.
@@ -195,7 +206,13 @@ const FacetSlider = (props: Props) => {
     }
 
     props.onValueChange([start, newEnd]);
-  }, [props.max, props.onValueChange, props.step, props.value]);
+
+    // If provided, delay the onValueCommit function call
+    if (props.onValueCommit) {
+      clearTimer();
+      setTimer(() => props.onValueCommit([start, newEnd]));
+    }
+  }, [props.max, props.onValueChange, props.onValueCommit, props.step, props.value]);
 
   return (
     <>
@@ -285,57 +302,6 @@ const FacetSlider = (props: Props) => {
           ))}
         </div>
       )}
-      {/*{ props.zoom && (*/}
-      {/*  <div*/}
-      {/*    className={clsx(*/}
-      {/*      'flex justify-center items-center w-full py-3 text-gray-600',*/}
-      {/*      props.classNames.zoom*/}
-      {/*    )}*/}
-      {/*  >*/}
-      {/*    <button*/}
-      {/*      aria-label='Zoom In'*/}
-      {/*      className='p-3'*/}
-      {/*      onClick={onZoomIn}*/}
-      {/*      type='button'*/}
-      {/*    >*/}
-      {/*      <ZoomIn />*/}
-      {/*    </button>*/}
-      {/*    <button*/}
-      {/*      aria-label='Zoom Out'*/}
-      {/*      className='p-3'*/}
-      {/*      onClick={onZoomOut}*/}
-      {/*      type='button'*/}
-      {/*    >*/}
-      {/*      <ZoomOut />*/}
-      {/*    </button>*/}
-      {/*    <button*/}
-      {/*      aria-label='Zoom Reset'*/}
-      {/*      className='p-3'*/}
-      {/*      onClick={onZoomReset}*/}
-      {/*      type='button'*/}
-      {/*    >*/}
-      {/*      <RotateCcw />*/}
-      {/*    </button>*/}
-      {/*    { !_.isEmpty(props.actions) && (*/}
-      {/*      <>*/}
-      {/*        { _.map(props.actions, (action, index) => (*/}
-      {/*          <button*/}
-      {/*            aria-label={action.label}*/}
-      {/*            className={clsx(*/}
-      {/*              'p-3',*/}
-      {/*              action.className*/}
-      {/*            )}*/}
-      {/*            key={index}*/}
-      {/*            onClick={action.onClick}*/}
-      {/*            type='button'*/}
-      {/*          >*/}
-      {/*            { action.icon }*/}
-      {/*          </button>*/}
-      {/*        ))}*/}
-      {/*      </>*/}
-      {/*    )}*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </>
   );
 };
