@@ -202,11 +202,18 @@ const FacetTimeline = (props: Props) => {
     clearTimer();
 
     // Reset the timer to fetch the events
-    setTimer(() => (
+    setTimer(() => {
+      setEvents([]);
+
+      const params = {
+        min_year: value[0],
+        max_year: value[1]
+      };
+
       EventsService
-        .fetchAll({ min_year: value[0], max_year: value[1] })
-        .then(onLoad)
-    ));
+        .fetchAll(params)
+        .then(onLoad);
+    });
   }, [onLoad, max, min, value]);
 
   /**
@@ -266,6 +273,7 @@ const FacetTimeline = (props: Props) => {
         >
           { _.map(events, (event) => (
             <Popover.Root
+              key={event.uuid}
               open
             >
               <Popover.Trigger
