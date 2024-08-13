@@ -41,6 +41,7 @@ export { default as FuzzyDate } from './utils/FuzzyDate';
 export { default as Hooks } from './utils/Hooks';
 export { default as IIIF } from './utils/IIIF';
 export { default as Map } from './utils/Map';
+export { default as Numbers } from './utils/Numbers';
 export { default as ObjectJs } from './utils/Object';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
