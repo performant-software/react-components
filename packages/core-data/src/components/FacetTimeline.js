@@ -280,7 +280,9 @@ const FacetTimeline = (props: Props) => {
               >
                 <Slider.Thumb />
               </Popover.Trigger>
-              <Popover.Portal>
+              <Popover.Portal
+                container={ref.current}
+              >
                 <Popover.Content
                   asChild
                   collisionBoundary={ref?.current}
