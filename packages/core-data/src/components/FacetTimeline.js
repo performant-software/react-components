@@ -137,7 +137,7 @@ const FacetTimeline = (props: Props) => {
     }
 
     setValue([newStart, newEnd]);
-  }, [defaultMax, defaultMin]);
+  }, [defaultMax, defaultMin, value]);
 
   /**
    * List of actions to provide to the FacetSlider component.
