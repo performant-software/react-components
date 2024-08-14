@@ -71,12 +71,15 @@ const FACET_EVENT_RANGE = 'event_range_facet';
 const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props.useRange({ attribute: FACET_EVENT_RANGE });
 
+  const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
+  const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
+
   const [events, setEvents] = useState();
   const [defaultMax, setDefaultMax] = useState(range.max);
   const [defaultMin, setDefaultMin] = useState(range.min);
   const [max, setMax] = useState(range.max);
   const [min, setMin] = useState(range.min);
-  const [value, setValue] = useState([min, max]);
+  const [value, setValue] = useState([from, to]);
 
   const EventsService = useEventsService();
   const ref = useRef();
@@ -230,9 +233,6 @@ const FacetTimeline = (props: Props) => {
    * When the upper and/or lower bounds of the range change, update the value and min/max values.
    */
   useEffect(() => {
-    const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
-    const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
-
     setValue([from, to]);
     setMin(range.min);
     setMax(range.max);
