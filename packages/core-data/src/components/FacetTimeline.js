@@ -181,7 +181,8 @@ const FacetTimeline = (props: Props) => {
   const onLoad = useCallback((data) => {
     setEvents(_.map(data.events, (event) => ({
       ...event,
-      year: getYear(event)
+      year: getYear(event),
+      offset: Numbers.getRandomInt(-30, 10)
     })));
   }, []);
 
@@ -292,7 +293,7 @@ const FacetTimeline = (props: Props) => {
                     right: 20,
                     bottom: 10
                   }}
-                  sideOffset={Numbers.getRandomInt(-30, 10)}
+                  sideOffset={event.offset}
                   side='top'
                 >
                   <button
