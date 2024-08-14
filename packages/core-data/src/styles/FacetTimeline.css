@@ -1,7 +1,7 @@
 div[data-radix-popper-content-wrapper] {
-  z-index: 90 !important;
+  z-index: 30 !important;
 }
 
 div[data-radix-popper-content-wrapper]:hover {
-  z-index: 99 !important;
+  z-index: 31 !important;
 }

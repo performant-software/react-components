@@ -319,7 +319,7 @@ const FacetTimeline = (props: Props) => {
                     type='button'
                   >
                     <h2
-                      className='font-bold text-lg whitespace-nowrap line-clamp-1 text-ellipsis'
+                      className='font-medium text-base whitespace-nowrap line-clamp-1 text-ellipsis'
                     >
                       { event.name }
                     </h2>
