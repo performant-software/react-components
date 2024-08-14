@@ -39,7 +39,7 @@ const createRouting = (config: TypesenseConfig) => ({
   stateMapping: {
     stateToRoute: (state: any) => {
       const uiState = state[config.index_name] || {};
-      const { refinementList } = uiState;
+      const { range, refinementList } = uiState;
 
       console.log(uiState);
 
@@ -54,11 +54,20 @@ const createRouting = (config: TypesenseConfig) => ({
         };
       }
 
+      if (range) {
+        route = {
+          ...route,
+          ...range
+        };
+      }
+
       return route;
     },
 
     routeToState: (state: any) => {
       const { q, ...facets } = state;
+
+      console.log(state);
 
       const uiState = {
         [config.index_name]: {
