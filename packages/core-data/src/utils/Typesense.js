@@ -41,6 +41,8 @@ const createRouting = (config: TypesenseConfig) => ({
       const uiState = state[config.index_name] || {};
       const { refinementList } = uiState;
 
+      console.log(uiState);
+
       let route = {
         q: uiState.query
       };
