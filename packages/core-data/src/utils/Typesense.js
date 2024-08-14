@@ -65,7 +65,7 @@ const createRouting = (config: TypesenseConfig) => ({
     },
 
     routeToState: (state: any) => {
-      const { q, ...facets } = state;
+      const { q, event_range_facet: range, ...facets } = state;
 
       console.log(state);
 
@@ -77,6 +77,7 @@ const createRouting = (config: TypesenseConfig) => ({
 
       if (Object.keys(facets).length > 0) {
         uiState[config.index_name].refinementList = facets;
+        uiState[config.index_name].range = range;
       }
 
       return uiState;
