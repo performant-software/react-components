@@ -38,33 +38,46 @@ export const Default = () => {
 };
 
 export const InModal = () => {
-  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
 
   return (
-    <Modal
-      description='Testing Media Gallery within a Modal'
-      title='Testing Modal'
-      open
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
+    <>
+      <button
+        onClick={() => setOpen1(true)}
+        type='button'
       >
-        <button
-          onClick={() => setOpen(true)}
-          type='button'
+        Open  First Modal
+      </button>
+      { open1 && (
+        <Modal
+          description='Testing Media Gallery within a Modal'
+          title='Testing Modal'
+          onClose={() => setOpen1(false)}
+          open
         >
-          Open  Gallery
-        </button>
-      </div>
-      { open && (
-        <MediaGallery
-          manifestUrl='/core_data/public/v1/places/1/manifests/1'
-          onClose={() => setOpen(false)}
-        />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <button
+              onClick={() => setOpen2(true)}
+              type='button'
+            >
+              Open  Gallery
+            </button>
+          </div>
+          { open2 && (
+            <MediaGallery
+              manifestUrl='/core_data/public/v1/places/1/manifests/1'
+              onClose={() => setOpen2(false)}
+            />
+          )}
+        </Modal>
       )}
-    </Modal>
+    </>
+
   );
 };

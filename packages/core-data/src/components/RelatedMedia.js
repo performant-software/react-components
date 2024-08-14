@@ -90,10 +90,12 @@ const RelatedMedia = (props: Props) => {
         moreLabel={props.moreLabel}
         renderItem={renderItem}
       />
-      <MediaGallery
-        manifestUrl={manifestUrl}
-        onClose={() => setManifestUrl(null)}
-      />
+      { manifestUrl && (
+        <MediaGallery
+          manifestUrl={manifestUrl}
+          onClose={() => setManifestUrl(null)}
+        />
+      )}
     </>
   );
 };
