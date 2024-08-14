@@ -54,6 +54,7 @@ const Modal = (props: Props) => {
 
   return (
     <Dialog.Root
+      modal
       open={props.open}
     >
       <Dialog.Portal
