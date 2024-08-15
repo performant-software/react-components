@@ -70,6 +70,8 @@ const FACET_EVENT_RANGE = 'event_range_facet';
 
 const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props.useRange({ attribute: FACET_EVENT_RANGE });
+  console.log('range', range);
+  constole.log('start', start);
 
   const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
   const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
