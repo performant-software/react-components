@@ -246,7 +246,7 @@ const FacetTimeline = (props: Props) => {
     if (!defaultMax && range.max) {
       setDefaultMax(range.max);
     }
-  }, [range.min, range.max]);
+  }, [from, to, range.min, range.max]);
 
   return (
     <div
