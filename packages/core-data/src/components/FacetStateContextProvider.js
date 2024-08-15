@@ -123,17 +123,17 @@ const FacetStateContextProvider = (props: Props) => {
         attributes
       }}
     >
-      { _.map(listFacets, (attribute) => (
+      { _.map(listFacets, (facet) => (
         <RefinementListProxy
-          attribute={attribute}
-          key={attribute}
+          attribute={facet.name}
+          key={facet.name}
           useRefinementList={props.useRefinementList}
         />
       ))}
-      { _.map(rangeFacets, (attribute) => (
+      { _.map(rangeFacets, (facet) => (
         <RangeProxy
-          attribute={attribute}
-          key={attribute}
+          attribute={facet.name}
+          key={facet.name}
           useRange={props.useRange}
         />
       ))}
