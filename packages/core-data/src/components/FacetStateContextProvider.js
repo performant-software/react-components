@@ -90,7 +90,7 @@ const FacetStateContextProvider = (props: Props) => {
    * Memo-ize the refinement list facets.
    */
   const listFacets = useMemo(() => (
-    _.filter(facets, (field: any) => field.facet && field.type !== TYPE_AUTO)
+    _.filter(facets, (field: any) => field.facet && field.type !== TYPE_AUTO && field.type !== TYPE_INT_ARRAY)
   ), [facets]);
 
   /**
