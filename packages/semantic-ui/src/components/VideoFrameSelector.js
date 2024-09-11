@@ -1,6 +1,6 @@
 // @flow
 
-import { Browser } from '@performant-software/shared-components';
+import { Browser, ModalContext } from '@performant-software/shared-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import {
@@ -12,7 +12,6 @@ import {
   Segment
 } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 import './VideoFrameSelector.css';
 
 type Props = {

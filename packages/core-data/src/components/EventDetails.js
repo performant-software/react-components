@@ -7,6 +7,11 @@ import { useEventsService, useLoader } from '../hooks/CoreData';
 
 type Props = {
   /**
+   * (Optional) class name to apply to the root element.
+   */
+  className?: string,
+
+  /**
    * Identifier for the event to fetch.
    */
   id: string
@@ -25,7 +30,7 @@ const EventDetails = (props: Props) => {
    */
   const onLoad = useCallback(() => EventsService.fetchOne(props.id), [props.id]);
 
-  const { data: { event } = {}, loading } = useLoader(onLoad);
+  const { data: { event } = {}, loading } = useLoader(onLoad, {}, [props.id]);
 
   if (loading) {
     return (
@@ -38,7 +43,9 @@ const EventDetails = (props: Props) => {
   }
 
   return (
-    <div>
+    <div
+      className={props.className}
+    >
       <h1
         className='pr-6 py-1 font-bold text-2xl'
       >

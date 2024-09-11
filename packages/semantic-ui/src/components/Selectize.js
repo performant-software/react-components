@@ -1,5 +1,6 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -20,7 +21,6 @@ import {
 import _ from 'underscore';
 import SelectizeHeader from './SelectizeHeader';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 import useDataList from './DataList';
 import useList, { type Props as ListProps } from './List';
 import './Selectize.css';

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useCallback } from 'react';
 import _ from 'underscore';
 import type { Event as EventType } from '../types/Item';
-import EventUtils from '../utils/Event';
+import EventsList from './EventsList';
 import LoadAnimation from './LoadAnimation';
 import { useLoader } from '../hooks/CoreData';
 
@@ -61,59 +61,12 @@ const RelatedEvents = (props: Props) => {
 
   return (
     <div>
-      <ul>
-        { _.map(events, (event) => (
-          <li>
-            <div
-              className='min-h-[5.5em] border-b flex flex-col justify-start'
-            >
-              <button
-                className={clsx(
-                  'py-3',
-                  'px-4',
-                  'flex-grow',
-                  'text-left',
-                  'inline-flex',
-                  'flex-col',
-                  'rounded-none',
-                  { 'hover:bg-event-selected': isSelected(event) },
-                  { 'text-white': isSelected(event) },
-                  { 'bg-event-selected': isSelected(event) }
-                )}
-                onClick={() => props.onClick(event)}
-                type='button'
-              >
-                <div
-                  className='flex justify-between w-full items-center'
-                >
-                  <div
-                    className='flex-grow'
-                  >
-                    <div>
-                      { EventUtils.getDateView(event) }
-                    </div>
-                    <h2
-                      className='text-xl font-bold'
-                    >
-                      { event.name }
-                    </h2>
-                  </div>
-                </div>
-                { props.description && (
-                  <p
-                    className={clsx(
-                      'py-2',
-                      { 'text-muted': !isSelected(event) }
-                    )}
-                  >
-                    { event.description }
-                  </p>
-                )}
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <EventsList
+        description={props.description}
+        events={events}
+        isSelected={isSelected}
+        onClick={props.onClick}
+      />
       { pages > 1 && (
         <div
           className='flex justify-between items-center py-4 px-3 w-full bg-black/10 text-gray-400'

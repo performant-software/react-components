@@ -18,7 +18,6 @@ import Works from '../api/core-data/Works';
  * @param router
  */
 const addRoutes = (router) => {
-
   /**
    * Core Data Public API.
    */
@@ -54,6 +53,13 @@ const addRoutes = (router) => {
 
   router.get(`${BASE_URL}/events/:id/works`, (request, response) => {
     response.send(Works.fetchItems(5));
+    response.end();
+  });
+
+  router.get(`${BASE_URL}/events`, (request, response) => {
+    const { count = '10', ...params } = request.query;
+
+    response.send(Events.fetchItems(parseInt(count, 10), params));
     response.end();
   });
 

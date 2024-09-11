@@ -1,11 +1,15 @@
 // @flow
 
-import * as Dialog from '@radix-ui/react-dialog';
 import Viewer from '@samvera/clover-iiif/viewer';
-import { X } from 'lucide-react';
 import React from 'react';
+import Modal from './Modal';
 
 type Props = {
+  /**
+   * Class name to append to the root element.
+   */
+  className?: string,
+
   /**
    * URL of the IIIF manifest to render.
    */
@@ -21,46 +25,27 @@ type Props = {
  * This component renders a IIIF Viewer for the passed MediaContent record.
  */
 const MediaGallery = (props: Props) => (
-  <Dialog.Root
-    open={props.manifestUrl}
-    onOpenChange={props.onClose}
+  <Modal
+    className={props.className}
+    onClose={props.onClose}
+    open
   >
-    <Dialog.Portal>
-      <Dialog.Overlay
-        className='dialog-overlay'
-      />
-      <Dialog.Content
-        className='dialog-content'
-      >
-        <div
-          className='pt-6 pb-2 text-sm w-full text-muted min-h-20'
-        >
-          { props.manifestUrl && (
-            <Viewer
-              iiifContent={props.manifestUrl}
-              options={{
-                informationPanel: {
-                  open: false,
-                  renderToggle: false
-                }
-              }}
-            />
-          )}
-        </div>
-        <Dialog.Close
-          asChild
-        >
-          <button
-            aria-label='Close'
-            className='dialog-close rounded-full'
-            type='button'
-          >
-            <X className='h-7 w-7 p-1.5' />
-          </button>
-        </Dialog.Close>
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
+    <div
+      className='pt-6 pb-2 text-sm w-full text-muted min-h-20'
+    >
+      { props.manifestUrl && (
+        <Viewer
+          iiifContent={props.manifestUrl}
+          options={{
+            informationPanel: {
+              open: false,
+              renderToggle: false
+            }
+          }}
+        />
+      )}
+    </div>
+  </Modal>
 );
 
 export default MediaGallery;

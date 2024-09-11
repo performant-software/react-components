@@ -1,6 +1,6 @@
 // @flow
 
-import { Timer } from '@performant-software/shared-components';
+import { ModalContext, Timer } from '@performant-software/shared-components';
 import React, { Component, type ComponentType, type Element } from 'react';
 import { withTranslation } from 'react-i18next';
 import {
@@ -15,7 +15,6 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import EditModal from './EditModal';
-import ModalContext from '../context/ModalContext';
 import NestedAccordion from './NestedAccordion';
 import SelectizeHeader from './SelectizeHeader';
 import Toaster from './Toaster';

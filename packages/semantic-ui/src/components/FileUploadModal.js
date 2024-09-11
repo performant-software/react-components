@@ -1,5 +1,6 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useMemo,
@@ -20,7 +21,6 @@ import FileUpload from './FileUpload';
 import FileUploadStatus from './FileUploadStatus';
 import FileUploadProgress from './FileUploadProgress';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 
 type Props = {
   /**

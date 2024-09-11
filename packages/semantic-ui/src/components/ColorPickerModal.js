@@ -1,10 +1,10 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import { SketchPicker } from 'react-color';
 import { Button, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
-import ModalContext from '../context/ModalContext';
 import './ColorPickerModal.css';
 
 type Props = {

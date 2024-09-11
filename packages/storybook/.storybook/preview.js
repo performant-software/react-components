@@ -2,7 +2,7 @@
 
 import { DocsContainer } from '@storybook/addon-docs';
 import React, { useRef } from 'react';
-import ModalContext from '../../semantic-ui/src/context/ModalContext';
+import ModalContext from '../../shared/src/context/ModalContext';
 
 // Peripleo styles
 import '@peripleo/maplibre/peripleo-maplibre.css';
