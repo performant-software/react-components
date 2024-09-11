@@ -1,7 +1,7 @@
 // @flow
 
 import { BooleanIcon } from '@performant-software/semantic-components';
-import { Date as DateUtils } from '@performant-software/shared-components';
+import { Date as DateUtils, FuzzyDate as FuzzyDateUtils } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -75,6 +75,11 @@ const useUserDefinedColumns = (defineableId, defineableType, options = {}) => {
         columns.push({
           ...column,
           resolve: (item) => DateUtils.formatDate(resolveValue(item, field))
+        });
+      } else if (field.data_type === DataTypes.fuzzyDate) {
+        columns.push({
+          ...column,
+          resolve: (item) => FuzzyDateUtils.getDateView(resolveValue(item, field))
         });
       } else if (field.data_type !== DataTypes.richText) {
         columns.push({

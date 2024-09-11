@@ -11,17 +11,14 @@ export default {
 };
 
 export const Default = () => {
-  const [data, setData] = useState({
-    'First name': 'Bob',
-    'Last name': 'Smith'
-  });
+  const [data, setData] = useState({});
 
   return (
     <Form>
       <UserDefinedFieldsForm
         data={data}
         isError={() => false}
-        onChange={(value) => setData(value)}
+        onChange={setData}
       />
     </Form>
   );

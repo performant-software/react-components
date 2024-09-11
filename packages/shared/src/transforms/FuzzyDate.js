@@ -2,6 +2,25 @@
 
 class FuzzyDate {
   /**
+   * Returns the passed fuzzy date as a data object.
+   *
+   * @param date
+   *
+   * @returns {{end_date, _destroy, accuracy, description, range, id, start_date}}
+   */
+  toData(date) {
+    return {
+      id: date.id,
+      accuracy: date.accuracy,
+      description: date.description,
+      end_date: date.endDate,
+      range: date.range,
+      start_date: date.startDate,
+      _destroy: date._destroy
+    };
+  }
+
+  /**
    * Returns the passed date as a FuzzyDate input date.
    *
    * @param date
@@ -40,15 +59,7 @@ class FuzzyDate {
     }
 
     return {
-      [attribute]: {
-        id: date.id,
-        accuracy: date.accuracy,
-        description: date.description,
-        end_date: date.endDate,
-        range: date.range,
-        start_date: date.startDate,
-        _destroy: date._destroy
-      }
+      [attribute]: this.toData(date)
     };
   }
 }

@@ -1,7 +1,7 @@
 // @flow
 
-import { DatePicker } from '@performant-software/semantic-components';
-import { RichTextArea } from '@performant-software/shared-components';
+import { DatePicker, FuzzyDate } from '@performant-software/semantic-components';
+import { FuzzyDateTransform, RichTextArea } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -130,6 +130,23 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           <DatePicker
             onChange={(date) => onChange(field, date && date.toISOString())}
             value={fieldValue && new Date(fieldValue)}
+          />
+        </Form.Input>
+      );
+    }
+
+    if (field.data_type === DataTypes.fuzzyDate) {
+      rendered = (
+        <Form.Input
+          error={isError(field)}
+          label={field.column_name}
+          required={field.required}
+        >
+          <FuzzyDate
+            centered={false}
+            date={FuzzyDateTransform.toFuzzyDate(fieldValue)}
+            onChange={(date) => onChange(field, FuzzyDateTransform.toData(date))}
+            title={field.column_name}
           />
         </Form.Input>
       );
