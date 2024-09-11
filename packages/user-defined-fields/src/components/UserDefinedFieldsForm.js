@@ -144,7 +144,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
         >
           <FuzzyDate
             centered={false}
-            date={FuzzyDateTransform.toFuzzyDate(fieldValue || {})}
+            date={fieldValue}
             onChange={(date) => onChange(field, date)}
             title={field.column_name}
           />
