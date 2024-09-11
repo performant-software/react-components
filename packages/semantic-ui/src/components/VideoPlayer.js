@@ -1,5 +1,6 @@
 // @flow
 
+import { ModalContext } from '@performant-software/shared-components';
 import React, {
   useEffect,
   useRef,
@@ -12,9 +13,8 @@ import {
   Modal,
   Ref
 } from 'semantic-ui-react';
-import ModalContext from '../context/ModalContext';
-import './VideoPlayer.css';
 import i18n from '../i18n/i18n';
+import './VideoPlayer.css';
 
 type Props = {
   autoPlay?: boolean,

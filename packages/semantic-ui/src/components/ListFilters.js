@@ -1,6 +1,6 @@
 // @flow
 
-import { type EditContainerProps } from '@performant-software/shared-components';
+import { ModalContext, type EditContainerProps } from '@performant-software/shared-components';
 import React, {
   useCallback,
   useEffect,
@@ -22,7 +22,6 @@ import i18n from '../i18n/i18n';
 import AssociatedDropdown from './AssociatedDropdown';
 import DropdownButton from './DropdownButton';
 import FuzzyDate from './FuzzyDate';
-import ModalContext from '../context/ModalContext';
 
 type Option = {
   key: string | number,

@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/core-data",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "description": "A package of components used with the Core Data platform.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -22,8 +22,11 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
     "@samvera/clover-iiif": "^2.3.2",
     "@turf/turf": "^6.5.0",
     "clsx": "^2.1.0",
@@ -37,8 +40,8 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/shared-components": "^2.2.9",
-    "@performant-software/geospatial": "^2.2.9",
+    "@performant-software/geospatial": "^2.2.10",
+    "@performant-software/shared-components": "^2.2.10",
     "@peripleo/maplibre": "^0.5.2",
     "@peripleo/peripleo": "^0.5.2",
     "react": ">= 16.13.1 < 19.0.0",

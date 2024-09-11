@@ -39,7 +39,7 @@ const createRouting = (config: TypesenseConfig) => ({
   stateMapping: {
     stateToRoute: (state: any) => {
       const uiState = state[config.index_name] || {};
-      const { refinementList } = uiState;
+      const { range, refinementList } = uiState;
 
       let route = {
         q: uiState.query
@@ -52,11 +52,18 @@ const createRouting = (config: TypesenseConfig) => ({
         };
       }
 
+      if (range) {
+        route = {
+          ...route,
+          ...range
+        };
+      }
+
       return route;
     },
 
     routeToState: (state: any) => {
-      const { q, ...facets } = state;
+      const { q, event_range_facet: eventRangeFacet, ...facets } = state;
 
       const uiState = {
         [config.index_name]: {
@@ -66,6 +73,10 @@ const createRouting = (config: TypesenseConfig) => ({
 
       if (Object.keys(facets).length > 0) {
         uiState[config.index_name].refinementList = facets;
+      }
+
+      if (eventRangeFacet) {
+        uiState[config.index_name].range = { event_range_facet: eventRangeFacet };
       }
 
       return uiState;

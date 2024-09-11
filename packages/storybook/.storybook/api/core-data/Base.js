@@ -11,9 +11,9 @@ class Base {
   /**
    * Returns a single item.
    */
-  fetchItem() {
+  fetchItem(params = {}) {
     return {
-      [this.getShowAttribute()]: this.buildItem()
+      [this.getShowAttribute()]: this.buildItem(params)
     };
   }
 
@@ -24,11 +24,11 @@ class Base {
    *
    * @returns {{[p: string]: [], list: {pages: number, count, page: number}}}
    */
-  fetchItems(count) {
+  fetchItems(count, params = {}) {
     const items = [];
 
     _.times(count, () => {
-      items.push(this.buildItem());
+      items.push(this.buildItem(params));
     });
 
     return {
@@ -43,7 +43,7 @@ class Base {
 
   // Protected
 
-  buildItem() {
+  buildItem(params = {}) {
     // Implemented in sub-classes
     return {};
   }

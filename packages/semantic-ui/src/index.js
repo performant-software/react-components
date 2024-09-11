@@ -101,9 +101,6 @@ export { default as VideoPlayerButton } from './components/VideoPlayerButton';
 export { default as ViewPDFButton } from './components/ViewPDFButton';
 export { default as ViewXML } from './components/ViewXML';
 
-// Context
-export { default as ModalContext } from './context/ModalContext';
-
 // Hooks
 export { default as BatchEdit } from './hooks/BatchEdit';
 

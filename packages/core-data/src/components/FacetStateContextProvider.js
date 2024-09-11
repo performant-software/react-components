@@ -1,17 +1,30 @@
 // @flow
 
 import React, {
-  useCallback,
   useEffect,
+  useMemo,
   useState,
   type Node
 } from 'react';
 import _ from 'underscore';
 import FacetStateContext from '../context/FacetStateContext';
 
+type RangeProxyProps = {
+  attribute: string,
+  useRange: (props: any) => void
+};
+
+const RangeProxy = ({ attribute, useRange }: RangeProxyProps) => {
+  // Just a trick to have an empty component that keeps this
+  // facet mounted, while the GUI element mounts and unmounts
+  useRange({ attribute });
+
+  return null;
+};
+
 type RefinementListProxyProps = {
   attribute: string,
-  useRefinementList: (props: RefinementListProxyProps) => void
+  useRefinementList: (props: any) => void
 };
 
 const RefinementListProxy = ({ attribute, useRefinementList }: RefinementListProxyProps) => {
@@ -49,6 +62,13 @@ type Props = {
   protocol: string,
 
   /**
+   * `useRange` hook. This hook is used as a work-around to keep the search state persistent.
+   *
+   * @param props
+   */
+  useRange: (props: RangeProxyProps) => void,
+
+  /**
    * `useRefinementList` hook. This hook is used as a work-around to keep the search state persistent.
    *
    * @param props
@@ -57,29 +77,33 @@ type Props = {
 };
 
 const TYPE_AUTO = 'auto';
+const TYPE_INT_ARRAY = 'int64[]';
 
 /**
  * This component renders a context that queries the Typesense collection and returns a list of all facetable
  * attributes.
  */
 const FacetStateContextProvider = (props: Props) => {
-  const [attributes, setAttributes] = useState<Array<string>>([]);
+  const [facets, setFacets] = useState<Array<string>>([]);
 
   /**
-   * Filters the list of facets to only include fields that are facetable, without the "auto" type.
-   *
-   * @type {function(*): *}
+   * Memo-ize the refinement list facets.
    */
-  const filterFacets = useCallback(({ fields }: any) => (
-    _.filter(fields, (field: any) => field.facet && field.type !== TYPE_AUTO)
-  ), []);
+  const listFacets = useMemo(() => (
+    _.filter(facets, (field: any) => field.facet && field.type !== TYPE_AUTO && field.type !== TYPE_INT_ARRAY)
+  ), [facets]);
 
   /**
-   * Returns an array of names for the passed list of facets.
-   *
-   * @type {function(*): *}
+   * Memo-ize the range facets.
    */
-  const pluckName = useCallback((facets: any) => _.pluck(facets, 'name'), []);
+  const rangeFacets = useMemo(() => (
+    _.filter(facets, (field: any) => field.facet && field.type === TYPE_INT_ARRAY)
+  ), [facets]);
+
+  /**
+   * Backwards compatability for consumers using the "attributes" return value.
+   */
+  const attributes = useMemo(() => _.pluck(listFacets, 'name'), [listFacets]);
 
   /**
    * Loads the facets from the Typesense schema.
@@ -90,9 +114,7 @@ const FacetStateContextProvider = (props: Props) => {
 
     fetch(url, { headers })
       .then((response) => response.json())
-      .then(filterFacets)
-      .then(pluckName)
-      .then((facets) => setAttributes(facets));
+      .then(({ fields }) => setFacets(fields));
   }, []);
 
   return (
@@ -101,11 +123,18 @@ const FacetStateContextProvider = (props: Props) => {
         attributes
       }}
     >
-      { _.map(attributes, (attribute) => (
+      { _.map(listFacets, (facet) => (
         <RefinementListProxy
-          attribute={attribute}
-          key={attribute}
+          attribute={facet.name}
+          key={facet.name}
           useRefinementList={props.useRefinementList}
+        />
+      ))}
+      { _.map(rangeFacets, (facet) => (
+        <RangeProxy
+          attribute={facet.name}
+          key={facet.name}
+          useRange={props.useRange}
         />
       ))}
       { props.children }

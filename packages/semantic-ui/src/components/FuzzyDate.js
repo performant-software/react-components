@@ -1,6 +1,6 @@
 // @flow
 
-import { Calendar, Browser } from '@performant-software/shared-components';
+import { Calendar, Browser, ModalContext } from '@performant-software/shared-components';
 import React, { Component } from 'react';
 import {
   Button,
@@ -14,7 +14,6 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import DateField from './DateInput';
-import ModalContext from '../context/ModalContext';
 import './FuzzyDate.css';
 
 type DateInput = {

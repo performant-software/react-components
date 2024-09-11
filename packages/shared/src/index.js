@@ -9,8 +9,12 @@ export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
 export { default as RichTextArea } from './components/RichTextArea';
 
+// Context
+export { default as ModalContext } from './context/ModalContext';
+
 // Hooks
 export { default as useCitationStyles } from './hooks/CitationStyles';
+export { default as useTimer } from './hooks/Timer';
 export { default as withEditPage } from './hooks/EditPage';
 
 // I18n
@@ -37,6 +41,7 @@ export { default as FuzzyDate } from './utils/FuzzyDate';
 export { default as Hooks } from './utils/Hooks';
 export { default as IIIF } from './utils/IIIF';
 export { default as Map } from './utils/Map';
+export { default as Numbers } from './utils/Numbers';
 export { default as ObjectJs } from './utils/Object';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';

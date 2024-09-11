@@ -1,6 +1,5 @@
 // @flow
 
-import _ from 'underscore';
 import Api from '../utils/Api';
 
 class BaseService {
@@ -14,6 +13,18 @@ class BaseService {
 
     this.baseUrl = baseUrl;
     this.projectIds = projectIds;
+  }
+
+  /**
+   * Calls the GET /core_data/public/<version>/<route> API endpoint.
+   *
+   * @param params
+   *
+   * @returns {Promise<any>}
+   */
+  fetchAll(params = {}) {
+    const url = Api.buildUrl(this.baseUrl, this.getRoute(), null, this.projectIds, params);
+    return fetch(url).then((response) => response.json());
   }
 
   /**
@@ -162,20 +173,6 @@ class BaseService {
 
   getRoute() {
     // Implemented in sub-classes
-  }
-
-  /**
-   * Returns the search params for the current request.
-   *
-   * @param params
-   *
-   * @returns {*&{project_ids}}
-   */
-  getSearchParams(params) {
-    return {
-      ...params,
-      'project_ids[]': this.projectIds
-    };
   }
 }
 
