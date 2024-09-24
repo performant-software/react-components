@@ -269,12 +269,14 @@ class ItemsClass extends Component<Props, {}> {
           >
             { _.map(actions, (action, actionIndex) => (
               <Button
+                as={action.as}
+                {...action.asProps}
                 aria-label={action.name}
                 basic
                 color={action.resolveColor ? action.resolveColor(item) : action.color}
                 icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
                 key={actionIndex}
-                onClick={action.onClick.bind(this, item)}
+                onClick={action.onClick && action.onClick.bind(this, item)}
                 size={action.size}
               />
             ))}
@@ -405,12 +407,14 @@ class ItemsClass extends Component<Props, {}> {
           )}
           { _.map(this.getActions(item), (action, actionIndex) => (
             <Button
+              as={action.as}
+              {...action.asProps}
               basic={action.basic}
               color={action.resolveColor ? action.resolveColor(item) : action.color}
               content={action.resolveName ? action.resolveName(item) : action.label}
               key={actionIndex}
               icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
-              onClick={action.onClick.bind(this, item)}
+              onClick={action.onClick && action.onClick.bind(this, item)}
               size={action.size}
             />
           ))}
