@@ -295,17 +295,7 @@ class ItemsClass extends Component<Props, {}> {
             textAlign='center'
           >
             { _.map(actions, (action, actionIndex) => (
-              <Button
-                as={action.as}
-                {...action.asProps}
-                aria-label={action.name}
-                basic
-                color={action.resolveColor ? action.resolveColor(item) : action.color}
-                icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
-                key={actionIndex}
-                onClick={action.onClick && action.onClick.bind(this, item)}
-                size={action.size}
-              />
+              this.renderActionButton(item, action, actionIndex)
             ))}
             { this.isSelectable() && (
               <Button
@@ -432,7 +422,9 @@ class ItemsClass extends Component<Props, {}> {
               { this.props.renderExtra(item) }
             </Item.Extra>
           )}
-          { _.map(this.getActions(item), (action, actionIndex) => this.renderActionButton(item, action, actionIndex))}
+          { _.map(this.getActions(item), (action, actionIndex) => (
+            this.renderActionButton(item, action, actionIndex)
+          ))}
         </Item.Content>
         { this.props.renderAdditionalContent && this.props.renderAdditionalContent(item) }
         { this.isSelectable() && (
