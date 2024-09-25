@@ -20,6 +20,8 @@ import './List.css';
 
 type Action = {
   accept: (item: any) => boolean,
+  as: ComponentType,
+  asProps: () => any,
   color?: string,
   icon?: string,
   name: string,
@@ -525,17 +527,29 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         if (action.name === 'edit') {
           defaults = {
             icon: 'edit outline',
-            onClick: this.onEditButton.bind(this)
+            onClick: this.onEditButton.bind(this),
+            popup: {
+              title: i18n.t('Common.actions.edit.title'),
+              content: i18n.t('Common.actions.edit.content')
+            }
           };
         } else if (action.name === 'copy') {
           defaults = {
             icon: 'copy outline',
-            onClick: this.onCopyButton.bind(this)
+            onClick: this.onCopyButton.bind(this),
+            popup: {
+              title: i18n.t('Common.actions.copy.title'),
+              content: i18n.t('Common.actions.copy.content')
+            }
           };
         } else if (action.name === 'delete') {
           defaults = {
             icon: 'times circle outline',
-            onClick: this.onDeleteButton.bind(this)
+            onClick: this.onDeleteButton.bind(this),
+            popup: {
+              title: i18n.t('Common.actions.delete.title'),
+              content: i18n.t('Common.actions.delete.content')
+            }
           };
         }
 

@@ -14,10 +14,8 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
 import useColumnSelector, { type Props as ColumnSelectorProps } from './DataTableColumnSelector';
-import useList, { type Props as ListProps } from './List';
+import useList, { type Action, type Props as ListProps } from './List';
 import './DataTable.css';
-
-import type { Action } from './List';
 
 type Props = ListProps & ColumnSelectorProps & {
   /**
@@ -302,9 +300,13 @@ class DataTable extends Component<Props, State> {
       return action.render(item, index);
     }
 
+    const { asProps = () => ({}) } = action;
+
     const actionButton = (
       <Button
         aria-label={action.name}
+        as={action.as}
+        {...asProps(item)}
         basic
         compact
         color={action.color}
@@ -348,36 +350,7 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const actions = this.props.actions
-      .filter((action) => !action.accept || action.accept(item))
-      .map((action) => {
-        let defaults = {};
-
-        if (action.name === 'edit') {
-          defaults = {
-            popup: {
-              title: i18n.t('DataTable.actions.edit.title'),
-              content: i18n.t('DataTable.actions.edit.content')
-            }
-          };
-        } else if (action.name === 'copy') {
-          defaults = {
-            popup: {
-              title: i18n.t('DataTable.actions.copy.title'),
-              content: i18n.t('DataTable.actions.copy.content')
-            }
-          };
-        } else if (action.name === 'delete') {
-          defaults = {
-            popup: {
-              title: i18n.t('DataTable.actions.delete.title'),
-              content: i18n.t('DataTable.actions.delete.content')
-            }
-          };
-        }
-
-        return _.defaults(action, defaults);
-      });
+    const actions = this.props.actions.filter((action) => !action.accept || action.accept(item));
 
     return (
       <Table.Cell

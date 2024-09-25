@@ -90,6 +90,19 @@ export const CustomActions = useDragDrop(() => (
       name: 'coffee',
       icon: 'coffee',
       onClick: action('coffee-click')
+    }, {
+      as: 'a',
+      asProps: () => ({
+        href: 'https://performantsoftware.com',
+        target: '_blank'
+      }),
+      basic: true,
+      icon: 'linkify',
+      label: 'Link',
+      popup: {
+        content: 'Testing popup',
+        title: 'POPUP!'
+      }
     }]}
     items={items}
     onCopy={action('copy')}
