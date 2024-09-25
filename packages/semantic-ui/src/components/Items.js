@@ -8,6 +8,7 @@ import {
   Header,
   Icon,
   Item,
+  Popup,
   Segment
 } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -267,19 +268,7 @@ class ItemsClass extends Component<Props, {}> {
             extra
             textAlign='center'
           >
-            { _.map(actions, (action, actionIndex) => (
-              <Button
-                as={action.as}
-                {...((action.asProps && action.asProps(item)) || {})}
-                aria-label={action.name}
-                basic
-                color={action.resolveColor ? action.resolveColor(item) : action.color}
-                icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
-                key={actionIndex}
-                onClick={action.onClick && action.onClick.bind(this, item)}
-                size={action.size}
-              />
-            ))}
+            { _.map(actions, this.renderCardAction.bind(this, item)) }
             { this.isSelectable() && (
               <Button
                 aria-label='Select'
@@ -309,6 +298,49 @@ class ItemsClass extends Component<Props, {}> {
     }
 
     return card;
+  }
+
+  /**
+   * Renders the action button for the passed item.
+   *
+   * @param action
+   * @param index
+   * @param item
+   *
+   * @returns {JSX.Element}
+   */
+  renderCardAction(item, action, index) {
+    const actionButton = (
+      <Button
+        as={action.as}
+        {...((action.asProps && action.asProps(item)) || {})}
+        aria-label={action.name}
+        basic
+        color={action.resolveColor ? action.resolveColor(item) : action.color}
+        icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
+        key={index}
+        onClick={action.onClick && action.onClick.bind(this, item)}
+        size={action.size}
+      />
+    );
+
+    // Wrap the button in a popup if the action specifies a popup attribute
+    if (action.popup) {
+      const { content, title } = action.popup;
+
+      return (
+        <Popup
+          content={content}
+          header={title}
+          hideOnScroll
+          mouseEnterDelay={500}
+          position='top right'
+          trigger={actionButton}
+        />
+      );
+    }
+
+    return actionButton;
   }
 
   /**

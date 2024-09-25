@@ -42,6 +42,20 @@
     }
   },
   "Common": {
+    "actions": {
+      "copy": {
+        "content": "Creates an editable copy to be saved as a new record",
+        "title": "Copy"
+      },
+      "delete": {
+        "content": "Removes the record, permanently",
+        "title": "Remove"
+      },
+      "edit": {
+        "content": "Opens the modal to edit the record",
+        "title": "Edit"
+      }
+    },
     "buttons": {
       "add": "Add",
       "cancel": "Cancel",

@@ -98,7 +98,11 @@ export const CustomActions = useDragDrop(() => (
       }),
       basic: true,
       icon: 'linkify',
-      label: 'Link'
+      label: 'Link',
+      popup: {
+        content: 'Testing popup',
+        title: 'POPUP!'
+      }
     }]}
     items={items}
     onCopy={action('copy')}
