@@ -92,10 +92,10 @@ export const CustomActions = useDragDrop(() => (
       onClick: action('coffee-click')
     }, {
       as: 'a',
-      asProps: {
+      asProps: () => ({
         href: 'https://performantsoftware.com',
         target: '_blank'
-      },
+      }),
       basic: true,
       icon: 'linkify',
       label: 'Link'

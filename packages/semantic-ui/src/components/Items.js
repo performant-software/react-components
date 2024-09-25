@@ -220,6 +220,33 @@ class ItemsClass extends Component<Props, {}> {
   }
 
   /**
+   * Renders the action button for the passed item/action.
+   *
+   * @param item
+   * @param action
+   * @param index
+   *
+   * @returns {JSX.Element}
+   */
+  renderActionButton(item, action, index) {
+    const { asProps = () => ({}) } = action;
+
+    return (
+      <Button
+        as={action.as}
+        {...asProps(item)}
+        basic={action.basic}
+        color={action.resolveColor ? action.resolveColor(item) : action.color}
+        content={action.resolveName ? action.resolveName(item) : action.label}
+        key={index}
+        icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
+        onClick={action.onClick && action.onClick.bind(this, item)}
+        size={action.size}
+      />
+    );
+  }
+
+  /**
    * Renders the card for the passed item.
    *
    * @param item
@@ -405,19 +432,7 @@ class ItemsClass extends Component<Props, {}> {
               { this.props.renderExtra(item) }
             </Item.Extra>
           )}
-          { _.map(this.getActions(item), (action, actionIndex) => (
-            <Button
-              as={action.as}
-              {...action.asProps}
-              basic={action.basic}
-              color={action.resolveColor ? action.resolveColor(item) : action.color}
-              content={action.resolveName ? action.resolveName(item) : action.label}
-              key={actionIndex}
-              icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
-              onClick={action.onClick && action.onClick.bind(this, item)}
-              size={action.size}
-            />
-          ))}
+          { _.map(this.getActions(item), (action, actionIndex) => this.renderActionButton(item, action, actionIndex))}
         </Item.Content>
         { this.props.renderAdditionalContent && this.props.renderAdditionalContent(item) }
         { this.isSelectable() && (
