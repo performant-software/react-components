@@ -20,6 +20,8 @@ import './List.css';
 
 type Action = {
   accept: (item: any) => boolean,
+  as: ComponentType,
+  asProps: () => any,
   color?: string,
   icon?: string,
   name: string,
