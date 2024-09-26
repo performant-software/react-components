@@ -29,7 +29,7 @@ type Props = DataTableProps & ColumnSelectorProps & {
   /**
    * Props to apply to the underlying Table component.
    */
-  tableProps?: any
+  tableProps?: { [key: string]: any }
 };
 
 type State = {
