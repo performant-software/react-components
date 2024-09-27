@@ -24,7 +24,12 @@ type Props = DataTableProps & ColumnSelectorProps & {
   /**
    * Callback fired when a table row is dragged.
    */
-  onDrag?: (dragIndex: number, hoverIndex: number) => void
+  onDrag?: (dragIndex: number, hoverIndex: number) => void,
+
+  /**
+   * Props to apply to the underlying Table component.
+   */
+  tableProps?: { [key: string]: any }
 };
 
 type State = {
@@ -178,7 +183,8 @@ class EmbeddedList extends Component<Props, State> {
         sortDirection={this.state.sortDirection}
         tableProps={{
           celled: true,
-          sortable: !this.props.onDrag
+          sortable: !this.props.onDrag,
+          ...(this.props.tableProps || {})
         }}
         selectable={this.props.selectable}
         onRowSelect={this.props.onRowSelect}
