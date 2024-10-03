@@ -448,7 +448,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
                 </Message.List>
               </Message>
             )}
-            { props.errors && (
+            { !_.isEmpty(props.errors) && (
               <Message
                 error
               >
