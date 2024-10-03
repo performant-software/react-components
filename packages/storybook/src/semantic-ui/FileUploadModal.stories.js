@@ -51,7 +51,7 @@ export const Default = withWrapper((props) => (
   />
 ));
 
-export const Errors = withWrapper((props) => (
+export const InputErrors = withWrapper((props) => (
   <FileUploadModal
     closeOnComplete={false}
     itemComponent={({
@@ -94,6 +94,28 @@ export const Errors = withWrapper((props) => (
     }}
     required={{
       name: 'Name'
+    }}
+  />
+));
+
+export const UploadErrors = withWrapper((props) => (
+  <FileUploadModal
+    errors={['File too large.']}
+    itemComponent={({ item }) => (
+      <Form.Input
+        label='Name'
+        value={item.name || ''}
+      />
+    )}
+    onAddFile={(file) => ({
+      name: file.name,
+      content: file,
+      type: file.type
+    })}
+    onClose={props.onClose}
+    onSave={() => {
+      action('save')();
+      return Promise.resolve();
     }}
   />
 ));
