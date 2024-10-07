@@ -50,7 +50,7 @@ describe('isEqual', () => {
       name: 'Test 123'
     };
 
-    expect(ObjectUtils.isEqual(a, b)).toBeTruthy();
+    expect(ObjectUtils.isEqual(a, b, { removeEmptyValues: true })).toBeTruthy();
   });
 
   test('should be unequal for objects with different keys with null values with removeEmptyValues "false"', () => {
@@ -63,6 +63,6 @@ describe('isEqual', () => {
       name: 'Test 123'
     };
 
-    expect(ObjectUtils.isEqual(a, b, { removeEmptyValues: false })).toBeFalsy();
+    expect(ObjectUtils.isEqual(a, b)).toBeFalsy();
   });
 });
