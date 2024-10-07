@@ -39,4 +39,30 @@ describe('isEqual', () => {
 
     expect(ObjectUtils.isEqual(func1, func2)).toBeTruthy();
   });
+
+  test('should be equal for objects with different keys with null values', () => {
+    const a = {
+      name: 'Test 123',
+      address: null
+    };
+
+    const b = {
+      name: 'Test 123'
+    };
+
+    expect(ObjectUtils.isEqual(a, b)).toBeTruthy();
+  });
+
+  test('should be unequal for objects with different keys with null values with removeEmptyValues "false"', () => {
+    const a = {
+      name: 'Test 123',
+      address: null
+    };
+
+    const b = {
+      name: 'Test 123'
+    };
+
+    expect(ObjectUtils.isEqual(a, b, { removeEmptyValues: false })).toBeFalsy();
+  });
 });
