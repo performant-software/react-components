@@ -3,8 +3,25 @@
 import _ from 'underscore';
 
 type OptionsProps = {
-  emptyValues: Array<any>,
-  ignoreHtml: boolean
+  /**
+   * List of values to consider "empty", these values will be treated as equivalent.
+   */
+  emptyValues?: Array<any>,
+
+  /**
+   * If true, HTML tags will be stripped from string values.
+   */
+  ignoreHtml?: boolean,
+
+  /**
+   * If true, whitespace will be stripped from string values.
+   */
+  ignoreWhitespace?: boolean,
+
+  /**
+   * If true, "empty" keys/values will be removed from objects prior to equality check.
+   */
+  removeEmptyValues?: boolean
 };
 
 const EMPTY_VALUES = [
@@ -18,7 +35,8 @@ const EMPTY_VALUES = [
 const DEFAULT_OPTIONS = {
   emptyValues: EMPTY_VALUES,
   ignoreHtml: true,
-  ignoreWhitespace: true
+  ignoreWhitespace: true,
+  removeEmptyValues: false
 };
 
 const HTML_REGEX = /(<([^>]+)>)/gi;
@@ -85,8 +103,16 @@ const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
   }
 
   if (a !== null && typeof a === 'object' && b !== null && typeof b === 'object') {
-    const aKeys = _.keys(a);
-    const bKeys = _.keys(b);
+    let aObject = a;
+    let bObject = b;
+
+    if (options.removeEmptyValues) {
+      aObject = _.omit(a, (value) => _.contains(options.emptyValues, value));
+      bObject = _.omit(b, (value) => _.contains(options.emptyValues, value));
+    }
+
+    const aKeys = _.keys(aObject);
+    const bKeys = _.keys(bObject);
 
     // If the objects contain different number of keys, return false
     if (aKeys.length !== bKeys.length) {
@@ -96,8 +122,8 @@ const isEqual = (a: any, b: any, userOptions: OptionsProps = {}) => {
     // Recursively check each key for equality
     let equal = true;
 
-    _.each(_.keys(a), (key) => {
-      if (!(_.has(b, key) && isEqual(a[key], b[key]))) {
+    _.each(_.keys(aObject), (key) => {
+      if (!(_.has(bObject, key) && isEqual(aObject[key], bObject[key]))) {
         equal = false;
       }
     });
