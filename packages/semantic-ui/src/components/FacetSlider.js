@@ -25,14 +25,14 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     refine,
   } = useRangeSlider(props);
 
-  const [valueView, setValueView] = useState < Array < number >> ([range.min, range.max]);
+  const [valueView, setValueView] = useState<Array<number>>([range.min, range.max]);
 
   /**
    * Sets the visibility variable based on the range min and max.
    *
    * @type {unknown}
    */
-  const visible = useMemo(() => range.min !== 0 && range.max !== 0, [range.min, range.max]);
+  const visible = useMemo(() => range.min !== range.max, [range.min, range.max]);
 
   /**
    * Resets the value and valueView when the current refinement is cleared.
