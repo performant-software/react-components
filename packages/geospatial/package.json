@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/geospatial",
-  "version": "2.2.16",
+  "version": "2.2.17",
   "description": "A package of components for all things map-related.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",

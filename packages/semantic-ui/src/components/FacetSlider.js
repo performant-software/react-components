@@ -4,7 +4,6 @@ import Slider from 'rc-slider';
 import React, {
   forwardRef,
   useEffect,
-  useMemo,
   useState
 } from 'react';
 import { Grid } from 'semantic-ui-react';
@@ -22,26 +21,20 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
   const {
     start,
     range,
-    refine,
+    canRefine = true,
+    refine
   } = useRangeSlider(props);
 
-  const [valueView, setValueView] = useState < Array < number >> ([range.min, range.max]);
+  const { min, max } = range;
 
-  /**
-   * Sets the visibility variable based on the range min and max.
-   *
-   * @type {unknown}
-   */
-  const visible = useMemo(() => range.min !== 0 && range.max !== 0, [range.min, range.max]);
+  const [value, setValue] = useState([min, max]);
 
-  /**
-   * Resets the value and valueView when the current refinement is cleared.
-   */
+  const from = Math.max(min, Number.isFinite(start[0]) ? start[0] : min);
+  const to = Math.min(max, Number.isFinite(start[1]) ? start[1] : max);
+
   useEffect(() => {
-    if (start[0] <= range.min && start[1] >= range.max) {
-      setValueView([range.min, range.max]);
-    }
-  }, [range, start]);
+    setValue([from, to]);
+  }, [from, to]);
 
   return (
     <Facet
@@ -49,7 +42,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
       divided={props.divided}
       innerRef={ref}
       title={props.title}
-      visible={visible}
+      visible={props.visible}
     >
       <div
         className='facet-slider'
@@ -60,24 +53,25 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
           <Slider
             allowCross={false}
             defaultValue={start}
+            disabled={!canRefine}
             max={range.max}
             min={range.min}
-            onAfterChange={(v) => refine(v)}
-            onChange={(v) => setValueView(v)}
+            onChangeComplete={(v) => refine(v)}
+            onChange={(v) => setValue(v)}
             range
-            value={valueView}
+            value={value}
           />
         </div>
         <Grid
           columns={2}
         >
           <Grid.Column>
-            {valueView[0]}
+            { value[0] }
           </Grid.Column>
           <Grid.Column
             textAlign='right'
           >
-            {valueView[1]}
+            { value[1] }
           </Grid.Column>
         </Grid>
       </div>
