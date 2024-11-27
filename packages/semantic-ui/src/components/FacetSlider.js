@@ -18,7 +18,13 @@ type Props = FacetProps & RangeSliderProps;
  * This component can be used with the `useRange` hook from Instant Search Hooks.
  */
 const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLElement) => {
-  const { start, range, refine } = useRangeSlider(props);
+  const {
+    start,
+    range,
+    canRefine = true,
+    refine
+  } = useRangeSlider(props);
+
   const { min, max } = range;
 
   const [value, setValue] = useState([min, max]);
@@ -36,6 +42,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
       divided={props.divided}
       innerRef={ref}
       title={props.title}
+      visible={props.visible}
     >
       <div
         className='facet-slider'
@@ -46,6 +53,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
           <Slider
             allowCross={false}
             defaultValue={start}
+            disabled={!canRefine}
             max={range.max}
             min={range.min}
             onChangeComplete={(v) => refine(v)}
