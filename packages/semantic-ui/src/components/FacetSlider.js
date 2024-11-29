@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { Button, Grid, Input } from 'semantic-ui-react';
+import { Grid, Input } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
 import './FacetSlider.css';
@@ -64,16 +64,6 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     clearTimer();
     setTimer(() => refine(newValue));
   }, [getInputValue, refine]);
-
-  /**
-   * Resets the slider min/max values to the default  range.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onReset = useCallback(() => {
-    setValue([min, max]);
-    refine([min, max]);
-  }, [max, min, refine]);
 
   /**
    * Sets the view value when to/from change.
@@ -132,18 +122,6 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
             )}
           </Grid.Column>
         </Grid>
-        { props.editable && (
-          <div
-            className='buttons'
-          >
-            <Button
-              color='red'
-              icon='repeat'
-              onClick={onReset}
-              size='small'
-            />
-          </div>
-        )}
       </div>
     </Facet>
   );
