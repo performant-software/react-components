@@ -49,7 +49,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     let inputValue = parseInt(str, RADIX);
 
     if (_.isNaN(inputValue)) {
-      inputValue = '';
+      inputValue = str;
     }
 
     return inputValue;
