@@ -16,3 +16,9 @@
 .facet-slider .ui.input {
   width: 65px;
 }
+
+.facet-slider .buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
