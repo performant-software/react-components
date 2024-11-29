@@ -66,7 +66,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     }
 
     refine(v);
-  }, []);
+  }, [refine]);
 
   /**
    * Parses the input strings, sets the value on the state, and sets a timer to call "refine".
@@ -85,7 +85,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     // Use a timer to only refine the value when the user stops typing
     clearTimer();
     setTimer(() => onChangeComplete(newValue));
-  }, [onChangeComplete]);
+  }, [getInputValue, onChangeComplete]);
 
   /**
    * Sets the view value when to/from change.
@@ -136,10 +136,12 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
             textAlign='right'
           >
             { !props.editable && value[1] }
-            <Input
-              onChange={(e, data) => onChange(value[0], data.value)}
-              value={value[1]}
-            />
+            { props.editable && (
+              <Input
+                onChange={(e, data) => onChange(value[0], data.value)}
+                value={value[1]}
+              />
+            )}
           </Grid.Column>
         </Grid>
       </div>
