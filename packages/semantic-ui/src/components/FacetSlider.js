@@ -3,11 +3,13 @@
 import { useTimer } from '@performant-software/shared-components';
 import Slider from 'rc-slider';
 import React, {
-  forwardRef, useCallback,
+  forwardRef,
+  useCallback,
   useEffect,
   useState
 } from 'react';
 import { Grid, Input } from 'semantic-ui-react';
+import _ from 'underscore';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
 import './FacetSlider.css';
@@ -15,6 +17,8 @@ import './FacetSlider.css';
 type Props = FacetProps & RangeSliderProps & {
   editable?: boolean
 };
+
+const RADIX = 10;
 
 /**
  * This component can be used with the `useRange` hook from Instant Search Hooks.
@@ -36,16 +40,56 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
   const from = Math.max(min, Number.isFinite(start[0]) ? start[0] : min);
   const to = Math.min(max, Number.isFinite(start[1]) ? start[1] : max);
 
+  /**
+   * Parses the input string to an integer.
+   *
+   * @type {function(*): number}
+   */
+  const getInputValue = useCallback((str) => {
+    let inputValue = parseInt(str, RADIX);
+
+    if (_.isNaN(inputValue)) {
+      inputValue = '';
+    }
+
+    return inputValue;
+  }, []);
+
+  /**
+   * Calls "refine" if both start and end values are numeric.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onChangeComplete = useCallback((v) => {
+    if (!(_.isNumber(v[0]) && _.isNumber(v[1]))) {
+      return;
+    }
+
+    refine(v);
+  }, []);
+
+  /**
+   * Parses the input strings, sets the value on the state, and sets a timer to call "refine".
+   *
+   * @type {(function(*, *): void)|*}
+   */
   const onChange = useCallback((newStart, newEnd) => {
     // Set the new value on the state
-    const newValue = [newStart, newEnd];
+    const newValue = [
+      getInputValue(newStart),
+      getInputValue(newEnd)
+    ];
+
     setValue(newValue);
 
     // Use a timer to only refine the value when the user stops typing
     clearTimer();
-    setTimer(() => refine(newValue));
-  }, []);
+    setTimer(() => onChangeComplete(newValue));
+  }, [onChangeComplete]);
 
+  /**
+   * Sets the view value when to/from change.
+   */
   useEffect(() => {
     setValue([from, to]);
   }, [from, to]);
@@ -70,7 +114,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
             disabled={!canRefine}
             max={range.max}
             min={range.min}
-            onChangeComplete={(v) => refine(v)}
+            onChangeComplete={onChangeComplete}
             onChange={(v) => setValue(v)}
             range
             value={value}
