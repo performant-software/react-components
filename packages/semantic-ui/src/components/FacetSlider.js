@@ -9,7 +9,6 @@ import React, {
   useState
 } from 'react';
 import { Grid, Input } from 'semantic-ui-react';
-import _ from 'underscore';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
 import './FacetSlider.css';
@@ -45,28 +44,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
    *
    * @type {function(*): number}
    */
-  const getInputValue = useCallback((str) => {
-    let inputValue = parseInt(str, RADIX);
-
-    if (_.isNaN(inputValue)) {
-      inputValue = '';
-    }
-
-    return inputValue;
-  }, []);
-
-  /**
-   * Calls "refine" if both start and end values are numeric.
-   *
-   * @type {(function(*): void)|*}
-   */
-  const onChangeComplete = useCallback((v) => {
-    if (!(_.isNumber(v[0]) && _.isNumber(v[1]))) {
-      return;
-    }
-
-    refine(v);
-  }, [refine]);
+  const getInputValue = useCallback((str) => parseInt(str, RADIX), []);
 
   /**
    * Parses the input strings, sets the value on the state, and sets a timer to call "refine".
@@ -76,16 +54,16 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
   const onChange = useCallback((newStart, newEnd) => {
     // Set the new value on the state
     const newValue = [
-      getInputValue(newStart),
-      getInputValue(newEnd)
+      getInputValue(newStart) || value[0],
+      getInputValue(newEnd) || value[1]
     ];
 
     setValue(newValue);
 
     // Use a timer to only refine the value when the user stops typing
     clearTimer();
-    setTimer(() => onChangeComplete(newValue));
-  }, [getInputValue, onChangeComplete]);
+    setTimer(() => refine(newValue));
+  }, [getInputValue, refine]);
 
   /**
    * Sets the view value when to/from change.
@@ -114,7 +92,7 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
             disabled={!canRefine}
             max={range.max}
             min={range.min}
-            onChangeComplete={onChangeComplete}
+            onChangeComplete={(v) => refine(v)}
             onChange={(v) => setValue(v)}
             range
             value={value}
