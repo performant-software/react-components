@@ -9,6 +9,7 @@ import React, {
   useState
 } from 'react';
 import { Grid, Input } from 'semantic-ui-react';
+import _ from 'underscore';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
 import './FacetSlider.css';
@@ -44,7 +45,15 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
    *
    * @type {function(*): number}
    */
-  const getInputValue = useCallback((str) => parseInt(str, RADIX), []);
+  const getInputValue = useCallback((str) => {
+    let inputValue = parseInt(str, RADIX);
+
+    if (_.isNaN(inputValue)) {
+      inputValue = '';
+    }
+
+    return inputValue;
+  }, []);
 
   /**
    * Parses the input strings, sets the value on the state, and sets a timer to call "refine".
@@ -54,15 +63,18 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
   const onChange = useCallback((newStart, newEnd) => {
     // Set the new value on the state
     const newValue = [
-      getInputValue(newStart) || value[0],
-      getInputValue(newEnd) || value[1]
+      getInputValue(newStart),
+      getInputValue(newEnd)
     ];
 
     setValue(newValue);
 
     // Use a timer to only refine the value when the user stops typing
     clearTimer();
-    setTimer(() => refine(newValue));
+
+    if (_.isNumber(newValue[0]) && _.isNumber(newValue[1])) {
+      setTimer(() => refine(newValue));
+    }
   }, [getInputValue, refine]);
 
   /**

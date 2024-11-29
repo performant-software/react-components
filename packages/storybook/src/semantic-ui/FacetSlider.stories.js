@@ -30,7 +30,7 @@ export const Editable = () => (
     useRangeSlider={() => ({
       start: [],
       range: {
-        min: 0,
+        min: 100,
         max: 5000
       },
       refine: action('refine')
