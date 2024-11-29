@@ -1,18 +1,20 @@
 // @flow
 
+import { useTimer } from '@performant-software/shared-components';
 import Slider from 'rc-slider';
 import React, {
-  forwardRef,
+  forwardRef, useCallback,
   useEffect,
   useState
 } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Input } from 'semantic-ui-react';
 import Facet, { type Props as FacetProps } from './Facet';
 import { type RangeSliderProps } from '../types/InstantSearch';
-
 import './FacetSlider.css';
 
-type Props = FacetProps & RangeSliderProps;
+type Props = FacetProps & RangeSliderProps & {
+  editable?: boolean
+};
 
 /**
  * This component can be used with the `useRange` hook from Instant Search Hooks.
@@ -29,8 +31,20 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
 
   const [value, setValue] = useState([min, max]);
 
+  const { clearTimer, setTimer } = useTimer();
+
   const from = Math.max(min, Number.isFinite(start[0]) ? start[0] : min);
   const to = Math.min(max, Number.isFinite(start[1]) ? start[1] : max);
+
+  const onChange = useCallback((newStart, newEnd) => {
+    // Set the new value on the state
+    const newValue = [newStart, newEnd];
+    setValue(newValue);
+
+    // Use a timer to only refine the value when the user stops typing
+    clearTimer();
+    setTimer(() => refine(newValue));
+  }, []);
 
   useEffect(() => {
     setValue([from, to]);
@@ -66,12 +80,22 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
           columns={2}
         >
           <Grid.Column>
-            { value[0] }
+            { !props.editable && value[0] }
+            { props.editable && (
+              <Input
+                onChange={(e, data) => onChange(data.value, value[1])}
+                value={value[0]}
+              />
+            )}
           </Grid.Column>
           <Grid.Column
             textAlign='right'
           >
-            { value[1] }
+            { !props.editable && value[1] }
+            <Input
+              onChange={(e, data) => onChange(value[0], data.value)}
+              value={value[1]}
+            />
           </Grid.Column>
         </Grid>
       </div>
@@ -79,6 +103,9 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
   );
 });
 
-FacetSlider.defaultProps = Facet.defaultProps;
+FacetSlider.defaultProps = {
+  ...Facet.defaultProps,
+  editable: false
+};
 
 export default FacetSlider;

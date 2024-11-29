@@ -22,3 +22,18 @@ export const Default = () => (
     })}
   />
 );
+
+export const Editable = () => (
+  <FacetSlider
+    editable
+    title='Date Range'
+    useRangeSlider={() => ({
+      start: [],
+      range: {
+        min: 0,
+        max: 5000
+      },
+      refine: action('refine')
+    })}
+  />
+);
