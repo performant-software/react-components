@@ -30,7 +30,8 @@ const normalize = (config: RuntimeConfig) => ({
   typesense: {
     ...config.typesense,
     host: config.typesense.host || '443',
-    protocol: config.typesense.protocol || 'https'
+    protocol: config.typesense.protocol || 'https',
+    sort_by: `_text_match:desc${config.typesense.default_sort ? `,${config.typesense.default_sort}:asc` : ''}`
   },
   core_data: {
     ...config.core_data,

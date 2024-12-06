@@ -34,7 +34,8 @@ export type RuntimeConfig = {
     facets?: {
       include?: string[],
       exclude?: string[]
-    }
+    },
+    default_sort?: string
   },
   core_data: {
     project_ids: number[],

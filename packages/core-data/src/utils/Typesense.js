@@ -14,7 +14,8 @@ type TypesenseConfig = {
   limit: number,
   port: number,
   protocol: string,
-  query_by: string
+  query_by: string,
+  default_sort?: string
 };
 
 const ATTRIBUTE_DELIMITER = '.';
@@ -100,7 +101,8 @@ const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
     geoLocationField: 'coordinates',
     additionalSearchParameters: {
       query_by: config.query_by,
-      limit: config.limit || 250
+      limit: config.limit || 250,
+      sort_by: `_text_match:desc${config.default_sort ? `,${config.default_sort}:asc` : ''}`
     },
     ...options
   })
