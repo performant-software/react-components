@@ -137,6 +137,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
       defaultActive={props.defaultActive}
       divided={props.divided}
       innerRef={ref}
+      onActive={props.onActive}
       title={props.title}
       visible={visible}
     >

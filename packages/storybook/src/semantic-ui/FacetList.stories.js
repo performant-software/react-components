@@ -269,3 +269,34 @@ export const CustomRender = () => (
     })}
   />
 );
+
+export const onActive = () => (
+  <FacetList
+    onActive={action('active')}
+    title='Make'
+    useRefinementList={() => ({
+      items: [{
+        label: 'Chevrolet',
+        count: 783,
+        value: 'chevrolet'
+      }, {
+        label: 'Ford',
+        count: 399,
+        value: 'ford'
+      }, {
+        label: 'Toyota',
+        count: 236,
+        value: 'toyota'
+      }, {
+        label: 'Acura',
+        count: 122,
+        value: 'acura'
+      }],
+      refine: action('refine'),
+      canToggleShowMore: false,
+      isShowingMore: false,
+      searchForItems: action('search'),
+      toggleShowMore: action('show more')
+    })}
+  />
+);
