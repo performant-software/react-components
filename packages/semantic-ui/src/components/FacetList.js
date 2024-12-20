@@ -161,9 +161,9 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
       <List
         className='facet-list'
       >
-        { _.map(items, (item, index) => (
+        { _.map(items, (item) => (
           <List.Item
-            key={index}
+            key={item.value}
           >
             <Checkbox
               checked={item.isRefined}
