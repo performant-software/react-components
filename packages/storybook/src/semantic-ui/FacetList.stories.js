@@ -230,7 +230,7 @@ export const ExpandCollapse = () => {
 
 export const CustomRender = () => (
   <FacetList
-    renderItem={({ item, index, onClick }) => (
+    renderItem={(item, index, refine) => (
       <List.Item
         key={index}
       >
@@ -250,7 +250,7 @@ export const CustomRender = () => (
               </div>
             )
           }}
-          onClick={onClick}
+          onClick={() => refine(item.value)}
           style={{
             width: '100%'
           }}

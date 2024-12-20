@@ -114,10 +114,8 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
    * @type {(function(*, *): (*))|*}
    */
   const renderItem = useCallback((item, index) => {
-    const onClick = () => refine(item.value);
-
     if (props.renderItem) {
-      return props.renderItem({ item, index, onClick });
+      return props.renderItem(item, index, refine);
     }
 
     return (
@@ -138,7 +136,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
               </>
             )
           }}
-          onClick={onClick}
+          onClick={() => refine(item.value)}
         />
       </List.Item>
     );
