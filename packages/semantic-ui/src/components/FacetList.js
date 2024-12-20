@@ -35,6 +35,11 @@ type Props = FacetProps & RefinementListProps & {
   defaultValue?: string,
 
   /**
+   * Renders a custom list item element.
+   */
+  renderItem?: () => JSX.Element,
+
+  /**
    * If "true", the component will render a search box for searching individual facet values.
    */
   searchable?: boolean,
@@ -104,6 +109,42 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
   }, []);
 
   /**
+   * Renders the facet value for the passed item. If a `renderItem` prop is provided, rendering is deferred.
+   *
+   * @type {(function(*, *): (*))|*}
+   */
+  const renderItem = useCallback((item, index) => {
+    const onClick = () => refine(item.value);
+
+    if (props.renderItem) {
+      return props.renderItem({ item, index, onClick });
+    }
+
+    return (
+      <List.Item
+        key={index}
+      >
+        <Checkbox
+          checked={item.isRefined}
+          label={{
+            children: (
+              <>
+                <span>{ item.label }</span>
+                <Label
+                  circular
+                  content={item.count}
+                  size='small'
+                />
+              </>
+            )
+          }}
+          onClick={onClick}
+        />
+      </List.Item>
+    );
+  }, [refine, props.renderItem]);
+
+  /**
    * Sets the visibility variable based on the items and query.
    */
   const visible = useMemo(() => !(canRefine && _.isEmpty(items) && _.isEmpty(query)), [items, query]);
@@ -156,28 +197,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
       <List
         className='facet-list'
       >
-        { _.map(items, (item, index) => (
-          <List.Item
-            key={index}
-          >
-            <Checkbox
-              checked={item.isRefined}
-              label={{
-                children: (
-                  <>
-                    <span>{ item.label }</span>
-                    <Label
-                      circular
-                      content={item.count}
-                      size='small'
-                    />
-                  </>
-                )
-              }}
-              onClick={() => refine(item.value)}
-            />
-          </List.Item>
-        ))}
+        { _.map(items, renderItem) }
       </List>
       { canToggleShowMore && (
         <>

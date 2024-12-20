@@ -2,7 +2,7 @@
 
 import { action } from '@storybook/addon-actions';
 import React, { useCallback, useRef } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Checkbox, List } from 'semantic-ui-react';
 import FacetList from '../../../semantic-ui/src/components/FacetList';
 
 export default {
@@ -227,3 +227,60 @@ export const ExpandCollapse = () => {
     </>
   );
 };
+
+export const CustomRender = () => (
+  <FacetList
+    renderItem={({ item, index, onClick }) => (
+      <List.Item
+        key={index}
+      >
+        <Checkbox
+          checked={item.isRefined}
+          label={{
+            children: (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '100%'
+                }}
+              >
+                <span>{ item.label }</span>
+                <span>{ item.count }</span>
+              </div>
+            )
+          }}
+          onClick={onClick}
+          style={{
+            width: '100%'
+          }}
+        />
+      </List.Item>
+    )}
+    title='Make'
+    useRefinementList={() => ({
+      items: [{
+        label: 'Chevrolet',
+        count: 783,
+        value: 'chevrolet'
+      }, {
+        label: 'Ford',
+        count: 399,
+        value: 'ford'
+      }, {
+        label: 'Toyota',
+        count: 236,
+        value: 'toyota'
+      }, {
+        label: 'Acura',
+        count: 122,
+        value: 'acura'
+      }],
+      refine: action('refine'),
+      canToggleShowMore: false,
+      isShowingMore: false,
+      searchForItems: action('search'),
+      toggleShowMore: action('show more')
+    })}
+  />
+);
