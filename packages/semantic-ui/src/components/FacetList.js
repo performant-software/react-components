@@ -35,9 +35,9 @@ type Props = FacetProps & RefinementListProps & {
   defaultValue?: string,
 
   /**
-   * Renders a custom list item element.
+   * Renders a custom label element for the passed item.
    */
-  renderItem?: () => JSX.Element,
+  renderLabel?: (item: any) => JSX.Element,
 
   /**
    * If "true", the component will render a search box for searching individual facet values.
@@ -109,40 +109,6 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
   }, []);
 
   /**
-   * Renders the facet value for the passed item. If a `renderItem` prop is provided, rendering is deferred.
-   *
-   * @type {(function(*, *): (*))|*}
-   */
-  const renderItem = useCallback((item, index) => {
-    if (props.renderItem) {
-      return props.renderItem(item, index, refine);
-    }
-
-    return (
-      <List.Item
-        key={index}
-      >
-        <Checkbox
-          checked={item.isRefined}
-          label={{
-            children: (
-              <>
-                <span>{ item.label }</span>
-                <Label
-                  circular
-                  content={item.count}
-                  size='small'
-                />
-              </>
-            )
-          }}
-          onClick={() => refine(item.value)}
-        />
-      </List.Item>
-    );
-  }, [refine, props.renderItem]);
-
-  /**
    * Sets the visibility variable based on the items and query.
    */
   const visible = useMemo(() => !(canRefine && _.isEmpty(items) && _.isEmpty(query)), [items, query]);
@@ -195,7 +161,30 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
       <List
         className='facet-list'
       >
-        { _.map(items, renderItem) }
+        { _.map(items, (item, index) => (
+          <List.Item
+            key={index}
+          >
+            <Checkbox
+              checked={item.isRefined}
+              label={{
+                children: props.renderLabel
+                  ? props.renderLabel(item)
+                  : (
+                    <>
+                      <span>{ item.label }</span>
+                      <Label
+                        circular
+                        content={item.count}
+                        size='small'
+                      />
+                    </>
+                  )
+              }}
+              onClick={() => refine(item.value)}
+            />
+          </List.Item>
+        ))}
       </List>
       { canToggleShowMore && (
         <>

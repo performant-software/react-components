@@ -230,32 +230,17 @@ export const ExpandCollapse = () => {
 
 export const CustomRender = () => (
   <FacetList
-    renderItem={(item, index, refine) => (
-      <List.Item
-        key={index}
+    renderLabel={(item) => (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%'
+        }}
       >
-        <Checkbox
-          checked={item.isRefined}
-          label={{
-            children: (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '100%'
-                }}
-              >
-                <span>{ item.label }</span>
-                <span>{ item.count }</span>
-              </div>
-            )
-          }}
-          onClick={() => refine(item.value)}
-          style={{
-            width: '100%'
-          }}
-        />
-      </List.Item>
+        <span>{ item.label }</span>
+        <span>{ item.count }</span>
+      </div>
     )}
     title='Make'
     useRefinementList={() => ({
