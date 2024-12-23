@@ -3,6 +3,7 @@
 import { Thumbnail } from '@samvera/clover-iiif/primitives';
 import React, { useCallback, useState } from 'react';
 import _ from 'underscore';
+import { Images } from 'lucide-react';
 import MediaGallery from './MediaGallery';
 import RelatedList from './RelatedList';
 
@@ -61,16 +62,30 @@ const RelatedMedia = (props: Props) => {
     <div
       className='flex flex-col'
     >
-      <Thumbnail
-        aria-label={label}
-        className='rounded shadow cursor-pointer'
-        onClick={() => setManifestUrl(id)}
-        thumbnail={_.map(thumbnail, (t) => ({
-          ...t,
-          width: props.thumbnailWidth,
-          height: props.thumbnailHeight
-        }))}
-      />
+      {thumbnail && (
+        <Thumbnail
+          aria-label={label}
+          className='rounded shadow cursor-pointer'
+          onClick={() => setManifestUrl(id)}
+          thumbnail={_.map(thumbnail, (t) => ({
+            ...t,
+            width: props.thumbnailWidth,
+            height: props.thumbnailHeight
+          }))}
+        />
+      )}
+      {!thumbnail && (
+        <button
+          aria-label={label}
+          className='rounded shadow cursor-pointer'
+          onClick={() => setManifestUrl(id)}
+          type='button'
+        >
+          <Images
+            size={80}
+          />
+        </button>
+      )}
       <div
         className='text-sm whitespace-nowrap'
       >
