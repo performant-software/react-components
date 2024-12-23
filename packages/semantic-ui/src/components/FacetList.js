@@ -55,6 +55,7 @@ type Props = FacetProps & RefinementListProps & {
   toggleable?: boolean
 };
 
+const CLASS_SEPARATOR = ' ';
 const OPERATOR_OR = 'or';
 const OPERATOR_AND = 'and';
 
@@ -81,7 +82,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
   /**
    * Memo-izes the class name.
    */
-  const className = useMemo(() => _.compact(['facet-list', props.className]), [props.className]);
+  const className = useMemo(() => _.compact(['facet-list', props.className]).join(CLASS_SEPARATOR), [props.className]);
 
   /**
    * Clears the current search state.
