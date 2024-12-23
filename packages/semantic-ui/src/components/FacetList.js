@@ -25,6 +25,11 @@ import './FacetList.css';
 
 type Props = FacetProps & RefinementListProps & {
   /**
+   * (Optional) class name to append to the root element.
+   */
+  className?: string,
+
+  /**
    * The default value for the `operator` prop. If not provided, this will default to `or`.
    */
   defaultOperator?: string,
@@ -72,6 +77,11 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
 
   const searchRef = useRef();
   const [query, setQuery] = useState('');
+
+  /**
+   * Memo-izes the class name.
+   */
+  const className = useMemo(() => _.compact(['facet-list', props.className]), [props.className]);
 
   /**
    * Clears the current search state.
@@ -133,7 +143,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
 
   return (
     <Facet
-      className='facet-list'
+      className={className}
       defaultActive={props.defaultActive}
       divided={props.divided}
       innerRef={ref}
