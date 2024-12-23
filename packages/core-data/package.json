@@ -32,7 +32,7 @@
     "clsx": "^2.1.0",
     "dequal": "^2.0.3",
     "instantsearch.js": "^4.66.0",
-    "lucide-react": "^0.321.0",
+    "lucide-react": "^0.362.0",
     "postcss-import": "^16.1.0",
     "react-virtualized-auto-sizer": "^1.0.22",
     "react-window": "^1.8.10",
