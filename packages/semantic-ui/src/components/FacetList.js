@@ -25,6 +25,11 @@ import './FacetList.css';
 
 type Props = FacetProps & RefinementListProps & {
   /**
+   * (Optional) class name to append to the root element.
+   */
+  className?: string,
+
+  /**
    * The default value for the `operator` prop. If not provided, this will default to `or`.
    */
   defaultOperator?: string,
@@ -33,6 +38,11 @@ type Props = FacetProps & RefinementListProps & {
    * Default value of the facet list.
    */
   defaultValue?: string,
+
+  /**
+   * Renders a custom label element for the passed item.
+   */
+  renderLabel?: (item: any) => JSX.Element,
 
   /**
    * If "true", the component will render a search box for searching individual facet values.
@@ -45,6 +55,7 @@ type Props = FacetProps & RefinementListProps & {
   toggleable?: boolean
 };
 
+const CLASS_SEPARATOR = ' ';
 const OPERATOR_OR = 'or';
 const OPERATOR_AND = 'and';
 
@@ -67,6 +78,11 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
 
   const searchRef = useRef();
   const [query, setQuery] = useState('');
+
+  /**
+   * Memo-izes the class name.
+   */
+  const className = useMemo(() => _.compact(['facet-list', props.className]).join(CLASS_SEPARATOR), [props.className]);
 
   /**
    * Clears the current search state.
@@ -128,10 +144,11 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
 
   return (
     <Facet
-      className='facet-list'
+      className={className}
       defaultActive={props.defaultActive}
       divided={props.divided}
       innerRef={ref}
+      onActive={props.onActive}
       title={props.title}
       visible={visible}
     >
@@ -156,23 +173,25 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
       <List
         className='facet-list'
       >
-        { _.map(items, (item, index) => (
+        { _.map(items, (item) => (
           <List.Item
-            key={index}
+            key={item.value}
           >
             <Checkbox
               checked={item.isRefined}
               label={{
-                children: (
-                  <>
-                    <span>{ item.label }</span>
-                    <Label
-                      circular
-                      content={item.count}
-                      size='small'
-                    />
-                  </>
-                )
+                children: props.renderLabel
+                  ? props.renderLabel(item)
+                  : (
+                    <>
+                      <span>{ item.label }</span>
+                      <Label
+                        circular
+                        content={item.count}
+                        size='small'
+                      />
+                    </>
+                  )
               }}
               onClick={() => refine(item.value)}
             />

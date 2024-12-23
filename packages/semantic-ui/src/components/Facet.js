@@ -1,6 +1,7 @@
 // @flow
 
 import React, {
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -41,6 +42,11 @@ type Props = {
   innerRef?: {
     current: ?HTMLElement
   },
+
+  /**
+   * Callback fired when the facet active state is toggled.
+   */
+  onActive?: () => void,
 
   /**
    * Facet title to display at the top.
@@ -85,6 +91,12 @@ const Facet = (props: Props) => {
     collapse: () => setActive(false),
     expand: () => setActive(true)
   }));
+
+  useEffect(() => {
+    if (active && props.onActive) {
+      props.onActive();
+    }
+  }, [active]);
 
   return (
     <>
