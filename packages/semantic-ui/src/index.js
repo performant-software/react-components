@@ -27,6 +27,7 @@ export { default as DataView } from './components/DataView';
 export { default as DatabaseView } from './components/DatabaseView';
 export { default as DateInput } from './components/DateInput';
 export { default as DatePicker } from './components/DatePicker';
+export { default as DatetimeLocalInput } from './components/DatetimeLocalInput';
 export { default as DescriptorField } from './components/DescriptorField';
 export { default as DownloadButton } from './components/DownloadButton';
 export { default as Draggable } from './components/Draggable';
