@@ -162,9 +162,7 @@ const MapDraw = (props: Props) => {
       onChange();
 
       // Call the onGeocoding selection callback
-      if (props.onGeocodingSelection) {
-        props.onGeocodingSelection(detail);
-      }
+      props.onGeocodingSelection(detail);
     }
   }, [isValid, onChange, props.onGeocodingSelection]);
 
