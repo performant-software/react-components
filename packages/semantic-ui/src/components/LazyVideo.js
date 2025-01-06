@@ -2,6 +2,7 @@
 
 import React, {
   useCallback,
+  useMemo,
   useState,
   type Element,
   type Node
@@ -62,6 +63,13 @@ const LazyVideo = (props: Props) => {
 
     return classNames.join(' ');
   }, [loaded]);
+
+  const playButtonLabel = useMemo(() => {
+    if (props.src?.startsWith('blob:')) {
+      return i18n.t('LazyMedia.buttons.preview');
+    }
+    return i18n.t('LazyVideo.buttons.play');
+  }, [props.src]);
 
   if (!visible) {
     return (
@@ -155,13 +163,13 @@ const LazyVideo = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyVideo.buttons.play')}
+                    content={playButtonLabel}
                     icon='video'
                     onClick={() => setModal(true)}
                     primary
                   />
                 )}
-                { props.download && (
+                { props.download && !props.download.startsWith('blob:') && (
                   <DownloadButton
                     color='green'
                     filename={props.name}

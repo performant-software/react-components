@@ -1,6 +1,11 @@
 // @flow
 
-import React, { useCallback, useState, type Node } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  type Node
+} from 'react';
 import {
   Button,
   Dimmer,
@@ -54,6 +59,13 @@ const LazyImage = (props: Props) => {
 
     return classNames.join(' ');
   }, [loaded]);
+
+  const viewButtonLabel = useMemo(() => {
+    if (props.src?.startsWith('blob:')) {
+      return i18n.t('LazyMedia.buttons.preview');
+    }
+    return i18n.t('LazyImage.buttons.view');
+  }, [props.src]);
 
   if (!visible) {
     return (
@@ -128,13 +140,13 @@ const LazyImage = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyImage.buttons.view')}
+                    content={viewButtonLabel}
                     icon='photo'
                     onClick={() => setModal(true)}
                     primary
                   />
                 )}
-                { props.download && (
+                { props.download && !props.download.startsWith('blob:') && (
                   <DownloadButton
                     color='green'
                     filename={props.name}

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, type Node } from 'react';
+import React, { useMemo, useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -35,6 +35,13 @@ const LazyAudio = (props: Props) => {
   const [loaded, setLoaded] = useState(!props.preview);
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const playButtonLabel = useMemo(() => {
+    if (props.src?.startsWith('blob:')) {
+      return i18n.t('LazyMedia.buttons.preview');
+    }
+    return i18n.t('LazyAudio.buttons.play');
+  }, [props.src]);
 
   if (!visible) {
     return (
@@ -108,13 +115,13 @@ const LazyAudio = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyAudio.buttons.play')}
+                    content={playButtonLabel}
                     icon='play circle outline'
                     onClick={() => setModal(true)}
                     primary
                   />
                 )}
-                { props.download && (
+                { props.download && !props.download.startsWith('blob:') && (
                   <DownloadButton
                     color='green'
                     filename={props.name}

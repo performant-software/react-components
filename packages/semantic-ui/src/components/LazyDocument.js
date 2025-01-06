@@ -144,7 +144,7 @@ const LazyDocument = (props: Props) => {
               <div
                 className='buttons'
               >
-                {props.download && (
+                {props.download && !props.download.startsWith('blob:') && (
                   <DownloadButton
                     primary
                     url={props.download || props.src}
