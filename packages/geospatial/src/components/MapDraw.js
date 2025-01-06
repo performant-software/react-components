@@ -109,7 +109,7 @@ const DEFAULT_ZOOM_DELAY = 1000;
 const GeometryTypes = {
   geometryCollection: 'GeometryCollection',
   point: 'Point',
-  polygon: 'Polygon']
+  polygon: 'Polygon'
 };
 
 /**
