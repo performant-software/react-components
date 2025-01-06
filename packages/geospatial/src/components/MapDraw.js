@@ -109,7 +109,7 @@ const DEFAULT_ZOOM_DELAY = 1000;
 const GeometryTypes = {
   geometryCollection: 'GeometryCollection',
   point: 'Point',
-  polygon: 'Polygon'
+  polygon: ['Polygon', 'MultiPolygon']
 };
 
 /**
@@ -138,7 +138,7 @@ const MapDraw = (props: Props) => {
     const { geometry: { type } } = detail;
 
     return (props.geocoding === 'point' && type === GeometryTypes.point)
-      || (props.geocoding === 'polygon' && type === GeometryTypes.polygon);
+      || (props.geocoding === 'polygon' && GeometryTypes.polygon.includes(type));
   }, [props.geocoding]);
 
   /**
@@ -162,7 +162,9 @@ const MapDraw = (props: Props) => {
       onChange();
 
       // Call the onGeocoding selection callback
-      props.onGeocodingSelection(detail);
+      if (props.onGeocodingSelection) {
+        props.onGeocodingSelection(detail);
+      }
     }
   }, [isValid, onChange, props.onGeocodingSelection]);
 
