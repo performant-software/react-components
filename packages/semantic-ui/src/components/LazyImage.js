@@ -1,11 +1,6 @@
 // @flow
 
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  type Node
-} from 'react';
+import React, { useCallback, useState, type Node } from 'react';
 import {
   Button,
   Dimmer,
@@ -31,7 +26,8 @@ type Props = {
   name?: string,
   preview?: string,
   size?: string,
-  src?: string
+  src?: string,
+  viewButtonLabel?: string
 };
 
 const LazyImage = (props: Props) => {
@@ -59,13 +55,6 @@ const LazyImage = (props: Props) => {
 
     return classNames.join(' ');
   }, [loaded]);
-
-  const viewButtonLabel = useMemo(() => {
-    if (props.src?.startsWith('blob:')) {
-      return i18n.t('LazyMedia.buttons.preview');
-    }
-    return i18n.t('LazyImage.buttons.view');
-  }, [props.src]);
 
   if (!visible) {
     return (
@@ -140,13 +129,13 @@ const LazyImage = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={viewButtonLabel}
+                    content={props.viewButtonLabel || i18n.t('LazyImage.buttons.view')}
                     icon='photo'
                     onClick={() => setModal(true)}
                     primary
                   />
                 )}
-                { props.download && !props.download.startsWith('blob:') && (
+                { props.download && (
                   <DownloadButton
                     color='green'
                     filename={props.name}

@@ -2,7 +2,6 @@
 
 import React, {
   useCallback,
-  useMemo,
   useState,
   type Element,
   type Node
@@ -33,6 +32,7 @@ type Props = {
   icon?: string | Element<any>,
   image?: any,
   name?: string,
+  playButtonLabel?: string,
   preview?: ?string,
   size?: string,
   src?: string
@@ -63,13 +63,6 @@ const LazyVideo = (props: Props) => {
 
     return classNames.join(' ');
   }, [loaded]);
-
-  const playButtonLabel = useMemo(() => {
-    if (props.src?.startsWith('blob:')) {
-      return i18n.t('LazyMedia.buttons.preview');
-    }
-    return i18n.t('LazyVideo.buttons.play');
-  }, [props.src]);
 
   if (!visible) {
     return (
@@ -163,13 +156,13 @@ const LazyVideo = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={playButtonLabel}
+                    content={props.playButtonLabel || i18n.t('LazyVideo.buttons.play')}
                     icon='video'
                     onClick={() => setModal(true)}
                     primary
                   />
                 )}
-                { props.download && !props.download.startsWith('blob:') && (
+                { props.download && (
                   <DownloadButton
                     color='green'
                     filename={props.name}
