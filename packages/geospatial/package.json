@@ -20,7 +20,7 @@
   "dependencies": {
     "@allmaps/maplibre": "^1.0.0-beta.25",
     "@mapbox/mapbox-gl-draw": "^1.4.3",
-    "@maptiler/geocoding-control": "^1.2.2",
+    "@maptiler/geocoding-control": "^1.4.1",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^3.6.2",

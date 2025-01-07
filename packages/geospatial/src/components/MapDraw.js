@@ -239,6 +239,7 @@ const MapDraw = (props: Props) => {
           onSelection={onSelection}
           showFullGeometry={props.geocoding === 'polygon'}
           showResultMarkers={false}
+          key={props.geocoding}
         />
       )}
       { props.navigation && (
