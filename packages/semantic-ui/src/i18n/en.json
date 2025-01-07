@@ -236,6 +236,9 @@
     }
   },
   "LazyMedia": {
+    "buttons": {
+      "preview": "Preview before upload"
+    },
     "messages": {
       "uploaded": "Your <bold>{{type}}</bold> has been received"
     }

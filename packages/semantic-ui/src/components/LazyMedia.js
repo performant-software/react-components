@@ -52,6 +52,8 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
   const [name, setName] = useState(props.name);
   const [preview, setPreview] = useState(props.preview);
   const [source, setSource] = useState(props.src);
+  const [downloadUrl, setDownloadUrl] = useState(props.downloadUrl);
+  const [viewButtonLabel, setViewButtonLabel] = useState(null);
 
   /**
    * Sets the file extension based on the name.
@@ -80,13 +82,16 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
     setContentType(file.type);
     setName(file.name);
     setPreview(null);
+    setDownloadUrl(null);
 
     if (_.contains(WebContentTypes, file.type)
       || file.type.startsWith(ContentTypes.audio)
       || file.type === ContentTypes.pdf) {
       setSource(URL.createObjectURL(file));
+      setViewButtonLabel(i18n.t('LazyMedia.buttons.preview'));
     } else {
       setSource(null);
+      setViewButtonLabel(null);
     }
 
     props.onUpload(file);
@@ -121,10 +126,11 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
       return (
         <LazyImage
           dimmable={props.dimmable}
-          download={props.downloadUrl}
+          download={downloadUrl}
           preview={preview}
           src={source}
           size={props.size}
+          viewButtonLabel={viewButtonLabel}
         >
           { renderChildren() }
         </LazyImage>
@@ -135,7 +141,8 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
       return (
         <LazyVideo
           dimmable={props.dimmable}
-          download={props.downloadUrl}
+          download={downloadUrl}
+          playButtonLabel={viewButtonLabel}
           preview={preview}
           src={source}
           size={props.size}
@@ -149,7 +156,8 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
       return (
         <LazyAudio
           dimmable={props.dimmable}
-          download={props.downloadUrl}
+          download={downloadUrl}
+          playButtonLabel={viewButtonLabel}
           preview={preview}
           src={source}
           size={props.size}
@@ -162,7 +170,7 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
     return (
       <LazyDocument
         dimmable={props.dimmable}
-        download={props.downloadUrl}
+        download={downloadUrl}
         pdf={contentType === ContentTypes.pdf}
         preview={preview}
         src={source}
@@ -171,7 +179,7 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
         { renderChildren() }
       </LazyDocument>
     );
-  }, [contentType, preview, source, props.dimmable, props.downloadUrl, props.size]);
+  }, [contentType, preview, source, props.dimmable, downloadUrl, props.size]);
 
   /**
    * Renders the upload message.

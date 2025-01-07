@@ -24,6 +24,7 @@ type Props = {
   duration?: number,
   image?: any,
   name?: string,
+  playButtonLabel?: string,
   preview?: string,
   size?: string,
   src?: string
@@ -108,7 +109,7 @@ const LazyAudio = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyAudio.buttons.play')}
+                    content={props.playButtonLabel || i18n.t('LazyAudio.buttons.play')}
                     icon='play circle outline'
                     onClick={() => setModal(true)}
                     primary

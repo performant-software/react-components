@@ -26,7 +26,8 @@ type Props = {
   name?: string,
   preview?: string,
   size?: string,
-  src?: string
+  src?: string,
+  viewButtonLabel?: string
 };
 
 const LazyImage = (props: Props) => {
@@ -128,7 +129,7 @@ const LazyImage = (props: Props) => {
               >
                 { props.src && (
                   <Button
-                    content={i18n.t('LazyImage.buttons.view')}
+                    content={props.viewButtonLabel || i18n.t('LazyImage.buttons.view')}
                     icon='photo'
                     onClick={() => setModal(true)}
                     primary
