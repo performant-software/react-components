@@ -108,7 +108,7 @@ const FacetStateContextProvider = (props: Props) => {
     }
 
     if (!_.isEmpty(props.exclude)) {
-      return _.contains(props.exclude, field.name);
+      return !_.contains(props.exclude, field.name);
     }
 
     return true;
