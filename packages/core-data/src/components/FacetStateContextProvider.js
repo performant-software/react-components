@@ -1,6 +1,7 @@
 // @flow
 
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -47,9 +48,19 @@ type Props = {
   children: Node,
 
   /**
+   * A list of facets to exclude.
+   */
+  exclude?: Array<string>,
+
+  /**
    * Search host URI.
    */
   host: string,
+
+  /**
+   * A list of facets to include.
+   */
+  include?: Array<string>,
 
   /**
    * Search index name.
@@ -87,18 +98,37 @@ const FacetStateContextProvider = (props: Props) => {
   const [facets, setFacets] = useState<Array<string>>([]);
 
   /**
+   * Returns true if the passed field should be included as a facet.
+   *
+   * @type {(function(*): (*|boolean))|*}
+   */
+  const isValid = useCallback((field) => {
+    if (!_.isEmpty(props.include)) {
+      return _.contains(props.include, field.name);
+    }
+
+    if (!_.isEmpty(props.exclude)) {
+      return _.contains(props.exclude, field.name);
+    }
+
+    return true;
+  }, [props.exclude, props.include]);
+
+  /**
    * Memo-ize the refinement list facets.
    */
   const listFacets = useMemo(() => (
-    _.filter(facets, (field: any) => field.facet && field.type !== TYPE_AUTO && field.type !== TYPE_INT_ARRAY)
-  ), [facets]);
+    _.filter(facets, (field: any) => isValid(field)
+      && field.facet && field.type !== TYPE_AUTO
+      && field.type !== TYPE_INT_ARRAY)
+  ), [facets, isValid]);
 
   /**
    * Memo-ize the range facets.
    */
   const rangeFacets = useMemo(() => (
-    _.filter(facets, (field: any) => field.facet && field.type === TYPE_INT_ARRAY)
-  ), [facets]);
+    _.filter(facets, (field: any) => isValid(field) && field.facet && field.type === TYPE_INT_ARRAY)
+  ), [facets, isValid]);
 
   /**
    * Backwards compatability for consumers using the "attributes" return value.
