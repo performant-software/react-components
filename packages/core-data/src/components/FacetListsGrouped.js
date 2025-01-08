@@ -43,6 +43,13 @@ const FacetListsGrouped = (props: Props) => {
       const label = props.resolveLabel(id);
 
       let group = _.findWhere(value, { id });
+
+      // If we cannot find a value by ID, lookup the value by label
+      if (!group) {
+        group = _.findWhere(value, { label });
+      }
+
+      // If we cannot find a value by ID or label, create new group
       if (!group) {
         group = { id, label, items: [] };
         value.push(group);
