@@ -79,10 +79,10 @@ After all testing has passed, create your release of `0.5.16`. See publishing be
 
 Each of the versions of the individual packages will be kept in sync. The following steps should be taken when publishing a new version of these packages.
 
-1. Commit your changes and create a PR into the `master` branch. Wait until your PR is merged to proceed.
-2. Create a [release](https://github.com/performant-software/react-components/releases) in GitHub. Be sure to note any breaking changes, new features, and bug fixes
-3. Update the version in `react-components.json`. See Semantic Versioning Guide below to determine the new version.
-4. From the project root, run `yarn publish-production`.
+1. Update the version in `react-components.json`. See Semantic Versioning Guide below to determine the new version.
+2. From the project root, run `yarn publish-production`.
+3. Commit your changes and create a PR into the `master` branch. Wait until your PR is merged to proceed.
+4. Create a [release](https://github.com/performant-software/react-components/releases) in GitHub. Be sure to note any breaking changes, new features, and bug fixes
 5. In GitHub update the "next release" label to "<your_release_number>". This will allow us to go back and see exactly which PRs were included in each release.
 6. Create a new "next release" label in GitHub.
 
