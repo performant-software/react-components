@@ -4,6 +4,7 @@ import { GeocodingControl as MapTilerGeocoding } from '@maptiler/geocoding-contr
 import maplibregl from 'maplibre-gl';
 import { forwardRef, useImperativeHandle } from 'react';
 import { useControl, type ControlPosition } from 'react-map-gl';
+import './GeocodingControl.css';
 
 type Props = {
   apiKey: string,
