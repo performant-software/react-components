@@ -158,9 +158,7 @@ const normalizeResults = (results: Array<TypesenseSearchResult>) => (
  *
  * @returns {*}
  */
-const toFeature = (result: TypesenseSearchResult) => {
-  let value;
-
+const toFeature = (result: any, polygons?: boolean) => {
   const properties = {
     id: result.record_id,
     ccode: [],
@@ -174,14 +172,16 @@ const toFeature = (result: TypesenseSearchResult) => {
 
   const id = parseInt(result.record_id, 10);
 
-  if (result.coordinates) {
-    const coordinates = result.coordinates.slice().reverse();
-    value = point(coordinates, properties, { id });
-  } else {
-    value = feature(result.geometry, properties, { id });
+  if (polygons) {
+    return feature(result.geometry, properties, { id });
   }
 
-  return value;
+  if (result.coordinates) {
+    const coordinates = result.coordinates.slice().reverse();
+    return point(coordinates, properties, { id });
+  }
+
+  return feature(result.geometry, properties, { id });
 };
 
 /**
@@ -191,8 +191,8 @@ const toFeature = (result: TypesenseSearchResult) => {
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<TypesenseSearchResult>) => (
-  featureCollection(_.map(results, toFeature))
+const toFeatureCollection = (results: Array<any>, polygons?: boolean) => (
+  featureCollection(_.map(results, (result) => toFeature(result, polygons)))
 );
 
 export default {

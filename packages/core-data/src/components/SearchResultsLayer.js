@@ -26,8 +26,14 @@ type Props = {
   /**
    * If `true`, the map will fit the bounding box around the passed data.
    */
-  fitBoundingBox?: boolean
-};
+  fitBoundingBox?: boolean,
+
+  /**
+   * If `true`, polygons will be shown (when available) on the map
+   * instead of points.
+   */
+  showPolygons?: boolean
+}
 
 /**
  * This component renders a map layer for the search results from a Typesense search index.
@@ -44,7 +50,7 @@ const SearchResultsLayer = (props: Props) => {
    *
    * @type {unknown}
    */
-  const data = useMemo(() => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits), [hits]);
+  const data = useMemo(() => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.showPolygons), [hits]);
 
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,
