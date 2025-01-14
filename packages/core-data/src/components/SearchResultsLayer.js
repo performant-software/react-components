@@ -50,7 +50,10 @@ const SearchResultsLayer = (props: Props) => {
    *
    * @type {unknown}
    */
-  const data = useMemo(() => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.showPolygons), [hits]);
+  const data = useMemo(
+    () => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.showPolygons),
+    [hits, props.showPolygons]
+  );
 
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,

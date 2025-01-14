@@ -155,6 +155,7 @@ const normalizeResults = (results: Array<TypesenseSearchResult>) => (
  * Returns the passed Typesense search result as a GeoJSON feature.
  *
  * @param result
+ * @param polygons
  *
  * @returns {*}
  */
@@ -188,6 +189,7 @@ const toFeature = (result: any, polygons?: boolean) => {
  * Returns the passed array of Typesense search results as a GeoJSON feature collection.
  *
  * @param results
+ * @param polygons
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
