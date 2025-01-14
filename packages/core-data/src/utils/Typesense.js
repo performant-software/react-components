@@ -15,7 +15,8 @@ type TypesenseConfig = {
   port: number,
   protocol: string,
   query_by: string,
-  sort_by: string
+  sort_by: string,
+  exclude_fields: string
 };
 
 const ATTRIBUTE_DELIMITER = '.';
@@ -102,7 +103,8 @@ const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
     additionalSearchParameters: {
       query_by: config.query_by,
       limit: config.limit || 250,
-      sort_by: config.sort_by
+      sort_by: config.sort_by,
+      exclude_fields: config.exclude_fields
     },
     ...options
   })
