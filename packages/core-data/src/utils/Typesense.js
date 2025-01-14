@@ -155,12 +155,11 @@ const normalizeResults = (results: Array<TypesenseSearchResult>) => (
  * Returns the passed Typesense search result as a GeoJSON feature.
  *
  * @param result
+ * @param polygons
  *
  * @returns {*}
  */
-const toFeature = (result: TypesenseSearchResult) => {
-  let value;
-
+const toFeature = (result: any, polygons?: boolean) => {
   const properties = {
     id: result.record_id,
     ccode: [],
@@ -174,25 +173,28 @@ const toFeature = (result: TypesenseSearchResult) => {
 
   const id = parseInt(result.record_id, 10);
 
-  if (result.coordinates) {
-    const coordinates = result.coordinates.slice().reverse();
-    value = point(coordinates, properties, { id });
-  } else {
-    value = feature(result.geometry, properties, { id });
+  if (polygons) {
+    return feature(result.geometry, properties, { id });
   }
 
-  return value;
+  if (result.coordinates) {
+    const coordinates = result.coordinates.slice().reverse();
+    return point(coordinates, properties, { id });
+  }
+
+  return feature(result.geometry, properties, { id });
 };
 
 /**
  * Returns the passed array of Typesense search results as a GeoJSON feature collection.
  *
  * @param results
+ * @param polygons
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<TypesenseSearchResult>) => (
-  featureCollection(_.map(results, toFeature))
+const toFeatureCollection = (results: Array<any>, polygons?: boolean) => (
+  featureCollection(_.map(results, (result) => toFeature(result, polygons)))
 );
 
 export default {
