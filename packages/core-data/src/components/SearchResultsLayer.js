@@ -29,10 +29,9 @@ type Props = {
   fitBoundingBox?: boolean,
 
   /**
-   * If `true`, polygons will be shown (when available) on the map
-   * instead of points.
+   * Path to the geometry attribute for each result.
    */
-  showPolygons?: boolean
+  geometry: string,
 }
 
 /**
@@ -50,10 +49,9 @@ const SearchResultsLayer = (props: Props) => {
    *
    * @type {unknown}
    */
-  const data = useMemo(
-    () => !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.showPolygons),
-    [hits, props.showPolygons]
-  );
+  const data = useMemo(() => (
+    !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.geometry)
+  ), [hits, props.geometry]);
 
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,

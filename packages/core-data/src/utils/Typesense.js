@@ -1,6 +1,6 @@
 // @flow
 
-import { feature, featureCollection, point } from '@turf/turf';
+import { feature, featureCollection } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
@@ -128,6 +128,30 @@ const getFieldId = (attribute: string) => {
 };
 
 /**
+ * Returns the value at the passed path for the passed result.
+ *
+ * @param result
+ * @param path
+ *
+ * @returns {*}
+ */
+const getNestedValue = (result: any, path: string) => {
+  const paths = path.split('.');
+
+  let value = result;
+
+  _.each(paths, (attr) => {
+    if (_.isArray(value)) {
+      value = _.map(value, (entry) => _.get(entry, attr));
+    } else {
+      value = _.get(value, attr);
+    }
+  });
+
+  return value;
+};
+
+/**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
  *
  * @param attribute
@@ -150,7 +174,7 @@ const getRelationshipId = (attribute: string) => {
  *
  * @returns {*}
  */
-const toFeature = (result: any, polygons?: boolean) => {
+const toFeature = (result: any, geometry: any) => {
   const properties = {
     id: result.record_id,
     ccode: [],
@@ -163,29 +187,23 @@ const toFeature = (result: any, polygons?: boolean) => {
   };
 
   const id = parseInt(result.record_id, 10);
-
-  if (polygons) {
-    return feature(result.geometry, properties, { id });
-  }
-
-  if (result.coordinates) {
-    const coordinates = result.coordinates.slice().reverse();
-    return point(coordinates, properties, { id });
-  }
-
-  return feature(result.geometry, properties, { id });
+  return feature(geometry, properties, { id });
 };
 
 /**
  * Returns the passed array of Typesense search results as a GeoJSON feature collection.
  *
  * @param results
- * @param polygons
+ * @param path
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<any>, polygons?: boolean) => (
-  featureCollection(_.map(results, (result) => toFeature(result, polygons)))
+const toFeatureCollection = (results: Array<any>, path: string) => (
+  featureCollection(
+    _.flatten(
+      _.map(results, (result) => _.map(getNestedValue(result, path), (geometry) => toFeature(result, geometry)))
+    )
+  )
 );
 
 export default {
@@ -193,6 +211,7 @@ export default {
   createRouting,
   createTypesenseAdapter,
   getFieldId,
+  getNestedValue,
   getRelationshipId,
   toFeature,
   toFeatureCollection
