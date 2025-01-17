@@ -198,13 +198,20 @@ const toFeature = (result: any, geometry: any) => {
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<any>, path: string) => (
-  featureCollection(
-    _.flatten(
-      _.map(results, (result) => _.map(getNestedValue(result, path), (geometry) => toFeature(result, geometry)))
-    )
-  )
-);
+const toFeatureCollection = (results: Array<any>, path: string) => {
+  const features = [];
+
+  _.each(results, (result) => {
+    const geometries = getNestedValue(result, path);
+    _.each(geometries, (geometry) => {
+      if (geometry) {
+        features.push(toFeature(result, geometry));
+      }
+    });
+  });
+
+  return featureCollection(features);
+};
 
 export default {
   createCachedHits,
