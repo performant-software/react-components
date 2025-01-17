@@ -1,6 +1,5 @@
 // @flow
 
-import { Map as MapUtils } from '@performant-software/geospatial';
 import { feature, featureCollection, point } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
@@ -144,16 +143,6 @@ const getRelationshipId = (attribute: string) => {
 };
 
 /**
- * Necessary normalization steps to make the TypeSense result work
- * for visualization. Currently, these include:
- *
- * - Removing places without coordinates
- */
-const normalizeResults = (results: Array<TypesenseSearchResult>) => (
-  results.filter((h) => MapUtils.validateCoordinates(h.coordinates))
-);
-
-/**
  * Returns the passed Typesense search result as a GeoJSON feature.
  *
  * @param result
@@ -205,7 +194,6 @@ export default {
   createTypesenseAdapter,
   getFieldId,
   getRelationshipId,
-  normalizeResults,
   toFeature,
   toFeatureCollection
 };

@@ -12,7 +12,7 @@ import TypesenseUtils from '../utils/Typesense';
 
 type OnCompleteCallback = (results: Array<SearchResult>) => void;
 
-const useProgressiveSearch = (infiniteHits) => {
+const useProgressiveSearch = (infiniteHits, transformResults = null) => {
   const [cachedHits, setCachedHits] = useState(TypesenseUtils.createCachedHits([]));
 
   const lastSearchState = useRef<any>();
@@ -59,11 +59,28 @@ const useProgressiveSearch = (infiniteHits) => {
     return !dequal(a, b);
   };
 
+  /**
+   * Returns the transformed hits if the callback is provided. Otherwise, the untransformed hits are returned.
+   *
+   * @param results
+   *
+   * @returns {*}
+   */
+  const getHits = (results) => {
+    let value = results.hits;
+
+    if (transformResults) {
+      value = transformResults(value);
+    }
+
+    return value;
+  };
+
   useEffect(() => {
     const { results } = infiniteHits;
 
     const isFirstPage = results.page === 0;
-    const hits = TypesenseUtils.normalizeResults(results.hits);
+    const hits = getHits(results);
 
     // Add to cache and load next page
     if (isFirstPage && hasStateChanged(results._state, lastSearchState.current, true)) {
@@ -75,8 +92,8 @@ const useProgressiveSearch = (infiniteHits) => {
 
   useEffect(() => {
     const { results } = infiniteHits;
+    const hits = getHits(results);
 
-    const hits = TypesenseUtils.normalizeResults(results.hits);
     const isLastPage = results.page + 1 >= results.nbPages;
 
     if (!isLastPage && infiniteHits.showMore) {
