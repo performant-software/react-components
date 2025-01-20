@@ -1,8 +1,9 @@
 // @flow
 
-import { Image } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import _ from 'underscore';
+import HeaderImage from './HeaderImage';
+import KeyValueList from './KeyValueList';
 import { useLoader, usePlacesService } from '../hooks/CoreData';
 
 type Props = {
@@ -20,7 +21,10 @@ type Props = {
 };
 
 /**
- * This component renders a detail view for the passed Core Data place record.
+ * This component renders a detail view for the passed Core Data place record. This component is deprecated, as it is
+ * just a composition of other components, and will be removed in a future release.
+ *
+ * @deprecated
  */
 const PlaceDetails = (props: Props) => {
   const PlacesService = usePlacesService();
@@ -71,27 +75,10 @@ const PlaceDetails = (props: Props) => {
   return (
     <>
       { image && (
-        <div
-          className='relative w-full h-[200px] flex-grow-0 flex-shrink-0 bg-muted/20 z-0'
-        >
-          <div
-            className='absolute top-0 left-0 w-full h-full flex justify-center items-center'
-          >
-            <Image
-              className='h-20 w-20 text-gray-400'
-              strokeWidth={1}
-            />
-          </div>
-          <div
-            className='absolute top-0 left-0 w-full h-full flex justify-center items-center'
-          >
-            <img
-              className='object-cover h-full w-full'
-              src={image.content_iiif_url}
-              alt={image.name}
-            />
-          </div>
-        </div>
+        <HeaderImage
+          alt={image.name}
+          src={image.content_iiif_url}
+        />
       )}
       { place && (
         <div
@@ -102,27 +89,11 @@ const PlaceDetails = (props: Props) => {
           >
             { place.name }
           </h1>
-          <ol
-            className='text-sm mt-4 leading-6 overflow-hidden'
-          >
-            { _.map(userDefined, ({ label, value }) => (
-              <li
-                key={label}
-                className='mb-2'
-              >
-                <div
-                  className='text-muted'
-                >
-                  { label }
-                </div>
-                <div
-                  className='font-medium overflow-hidden text-ellipsis'
-                >
-                  { value }
-                </div>
-              </li>
-            ))}
-          </ol>
+          { userDefined && (
+            <KeyValueList
+              items={userDefined}
+            />
+          )}
         </div>
       )}
     </>
