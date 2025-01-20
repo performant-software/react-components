@@ -51,6 +51,7 @@ export {
   useInstancesService,
   useItemsService,
   useLoader,
+  useOrganizationsService,
   usePeopleService,
   usePlacesService,
   useWorksService
