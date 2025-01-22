@@ -4,6 +4,7 @@ import { ModalContext } from '@performant-software/shared-components';
 import React, { type Element } from 'react';
 import {
   Button,
+  Divider,
   Form,
   Grid,
   Header,
@@ -21,6 +22,7 @@ type Props = {
   onClose: () => void,
   onLogin: () => void,
   onPasswordChange: () => void,
+  onSSO?: () => void,
   onUsernameChange: () => void,
   open: boolean,
   trigger?: () => Element<any>,
@@ -53,6 +55,21 @@ const LoginModal = (props: Props) => (
           textAlign='center'
         >
           <Grid.Column>
+            {props.onSSO && (
+              <>
+                <Grid.Row>
+                  <Button
+                    onClick={props.onSSO.bind(this)}
+                    secondary
+                    size='medium'
+                    type='button'
+                  >
+                    {i18n.t('LoginModal.logInWithSso')}
+                  </Button>
+                  <Divider />
+                </Grid.Row>
+              </>
+            )}
             <Grid.Row>
               <Input
                 autoFocus

@@ -32,3 +32,15 @@ export const NoCloseButton = () => (
     open={boolean('Open', true)}
   />
 );
+
+export const SSO = () => (
+  <LoginModal
+    disabled={boolean('Disabled', false)}
+    loginFailed={boolean('Login failed', false)}
+    onLogin={action('login')}
+    onPasswordChange={action('password-change')}
+    onUsernameChange={action('username-change')}
+    onSSO={action('sso')}
+    open={boolean('Open', true)}
+  />
+);
