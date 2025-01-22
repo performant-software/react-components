@@ -57,7 +57,7 @@ const LoginModal = (props: Props) => (
           <Grid.Column>
             {props.onSSO && (
               <>
-                <Grid.Row>
+                <Grid.Row className='sso-row'>
                   <Button
                     onClick={props.onSSO.bind(this)}
                     secondary
@@ -66,8 +66,8 @@ const LoginModal = (props: Props) => (
                   >
                     {i18n.t('LoginModal.logInWithSso')}
                   </Button>
-                  <Divider />
                 </Grid.Row>
+                <Divider />
               </>
             )}
             <Grid.Row>
