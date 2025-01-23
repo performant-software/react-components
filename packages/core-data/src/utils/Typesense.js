@@ -202,7 +202,12 @@ const toFeatureCollection = (results: Array<any>, path: string) => {
   const features = [];
 
   _.each(results, (result) => {
-    const geometries = getNestedValue(result, path);
+    let geometries = getNestedValue(result, path);
+
+    if (!_.isArray(geometries)) {
+      geometries = [geometries];
+    }
+
     _.each(geometries, (geometry) => {
       if (geometry) {
         features.push(toFeature(result, geometry));
