@@ -69,6 +69,7 @@ export {
 export { default as EventsService } from './services/Events';
 export { default as InstancesService } from './services/Instances';
 export { default as ItemsService } from './services/Items';
+export { default as OrganizationsService } from './services/Organizations';
 export { default as PeopleService } from './services/People';
 export { default as PlacesService } from './services/Places';
 export { default as WorksService } from './services/Works';
