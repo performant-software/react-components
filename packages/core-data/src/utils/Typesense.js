@@ -182,7 +182,7 @@ const toFeature = (result: any, geometry: any) => {
     uuid: result.uuid,
     record_id: result.record_id,
     name: result.name,
-    names: result.names.map((toponym: string) => ({ toponym })),
+    names: result.names?.map((toponym: string) => ({ toponym })),
     type: result.type
   };
 
