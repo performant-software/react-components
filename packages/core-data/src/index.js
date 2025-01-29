@@ -13,6 +13,8 @@ export { default as FacetListsGrouped } from './components/FacetListsGrouped';
 export { default as FacetSlider } from './components/FacetSlider';
 export { default as FacetStateContextProvider } from './components/FacetStateContextProvider';
 export { default as FacetTimeline } from './components/FacetTimeline';
+export { default as HeaderImage } from './components/HeaderImage';
+export { default as KeyValueList } from './components/KeyValueList';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as MediaGallery } from './components/MediaGallery';
@@ -49,6 +51,7 @@ export {
   useInstancesService,
   useItemsService,
   useLoader,
+  useOrganizationsService,
   usePeopleService,
   usePlacesService,
   useWorksService
@@ -66,6 +69,7 @@ export {
 export { default as EventsService } from './services/Events';
 export { default as InstancesService } from './services/Instances';
 export { default as ItemsService } from './services/Items';
+export { default as OrganizationsService } from './services/Organizations';
 export { default as PeopleService } from './services/People';
 export { default as PlacesService } from './services/Places';
 export { default as WorksService } from './services/Works';

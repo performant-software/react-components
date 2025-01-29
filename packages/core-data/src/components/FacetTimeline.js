@@ -56,9 +56,24 @@ type Props = {
   onLoad?: (events: Array<EventType>) => void,
 
   /**
-   * Typesense `useRange` hook.
+   * The absolute min/max values for the timeline range.
    */
-  useRange: ({ attribute: string }) => ({ refine: (range: [number, number]) => void }) => void,
+  range: {
+    max: number,
+    min: number
+  },
+
+  /**
+   * Callback fired when the slider value(s) are changed.
+   *
+   * @param any
+   */
+  refine: (number | [number, number]) => void,
+
+  /**
+   * The current value of the slider.
+   */
+  start: [number, number],
 
   /**
    * Zoom level increment.
@@ -66,10 +81,8 @@ type Props = {
   zoom?: number
 };
 
-const FACET_EVENT_RANGE = 'event_range_facet';
-
 const FacetTimeline = (props: Props) => {
-  const { range = {}, refine, start = [] } = props.useRange({ attribute: FACET_EVENT_RANGE });
+  const { range = {}, refine, start = [] } = props;
 
   const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
   const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);

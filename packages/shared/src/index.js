@@ -45,6 +45,7 @@ export { default as Numbers } from './utils/Numbers';
 export { default as ObjectJs } from './utils/Object';
 export { default as String } from './utils/String';
 export { default as Timer } from './utils/Timer';
+export { default as UserDefinedFields } from './utils/UserDefinedFields';
 
 // Types
 export type { CitationsStyleProps } from './hooks/CitationStyles';

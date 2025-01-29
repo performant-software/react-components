@@ -13,17 +13,17 @@ export default {
   component: FacetTimeline
 };
 
-const useRange = () => ({
-  range: {
-    min: 1768,
-    max: 1777
-  },
-  refine: () => {}
-});
+const range = {
+  min: 1768,
+  max: 1777
+};
+
+const refine = () => {};
 
 export const Default = withCoreDataContextProvider(() => (
   <FacetTimeline
-    useRange={useRange}
+    range={range}
+    refine={refine}
     zoom={10}
   />
 ));
@@ -38,7 +38,8 @@ export const Styled = withCoreDataContextProvider(() => (
       track: 'bg-gray-400',
       zoom: 'text-white'
     }}
-    useRange={useRange}
+    range={range}
+    refine={refine}
     zoom={10}
   />
 ));
@@ -50,7 +51,8 @@ export const EventModal = withCoreDataContextProvider(() => {
     <>
       <FacetTimeline
         onClick={(event) => setSelectedEvent(event)}
-        useRange={useRange}
+        range={range}
+        refine={refine}
         zoom={10}
       />
       { selectedEvent && (
@@ -90,7 +92,8 @@ export const ListView = withCoreDataContextProvider(() => {
           onClick: () => setListView(true)
         }]}
         onLoad={setEvents}
-        useRange={useRange}
+        range={range}
+        refine={refine}
         zoom={10}
       />
       { listView && (
@@ -127,7 +130,8 @@ export const ListView = withCoreDataContextProvider(() => {
 export const Description = withCoreDataContextProvider(() => (
   <FacetTimeline
     description
-    useRange={useRange}
+    range={range}
+    refine={refine}
     zoom={10}
   />
 ));

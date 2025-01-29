@@ -1,7 +1,6 @@
 // @flow
 
-import { Map as MapUtils } from '@performant-software/geospatial';
-import { feature, featureCollection, point } from '@turf/turf';
+import { feature, featureCollection } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
@@ -129,6 +128,30 @@ const getFieldId = (attribute: string) => {
 };
 
 /**
+ * Returns the value at the passed path for the passed result.
+ *
+ * @param result
+ * @param path
+ *
+ * @returns {*}
+ */
+const getNestedValue = (result: any, path: string) => {
+  const paths = path.split('.');
+
+  let value = result;
+
+  _.each(paths, (attr) => {
+    if (_.isArray(value)) {
+      value = _.map(value, (entry) => _.get(entry, attr));
+    } else {
+      value = _.get(value, attr);
+    }
+  });
+
+  return value;
+};
+
+/**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
  *
  * @param attribute
@@ -144,16 +167,6 @@ const getRelationshipId = (attribute: string) => {
 };
 
 /**
- * Necessary normalization steps to make the TypeSense result work
- * for visualization. Currently, these include:
- *
- * - Removing places without coordinates
- */
-const normalizeResults = (results: Array<TypesenseSearchResult>) => (
-  results.filter((h) => MapUtils.validateCoordinates(h.coordinates))
-);
-
-/**
  * Returns the passed Typesense search result as a GeoJSON feature.
  *
  * @param result
@@ -161,7 +174,7 @@ const normalizeResults = (results: Array<TypesenseSearchResult>) => (
  *
  * @returns {*}
  */
-const toFeature = (result: any, polygons?: boolean) => {
+const toFeature = (result: any, geometry: any) => {
   const properties = {
     id: result.record_id,
     ccode: [],
@@ -169,43 +182,49 @@ const toFeature = (result: any, polygons?: boolean) => {
     uuid: result.uuid,
     record_id: result.record_id,
     name: result.name,
-    names: result.names.map((toponym: string) => ({ toponym })),
+    names: result.names?.map((toponym: string) => ({ toponym })),
     type: result.type
   };
 
   const id = parseInt(result.record_id, 10);
-
-  if (polygons) {
-    return feature(result.geometry, properties, { id });
-  }
-
-  if (result.coordinates) {
-    const coordinates = result.coordinates.slice().reverse();
-    return point(coordinates, properties, { id });
-  }
-
-  return feature(result.geometry, properties, { id });
+  return feature(geometry, properties, { id });
 };
 
 /**
  * Returns the passed array of Typesense search results as a GeoJSON feature collection.
  *
  * @param results
- * @param polygons
+ * @param path
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<any>, polygons?: boolean) => (
-  featureCollection(_.map(results, (result) => toFeature(result, polygons)))
-);
+const toFeatureCollection = (results: Array<any>, path: string) => {
+  const features = [];
+
+  _.each(results, (result) => {
+    let geometries = getNestedValue(result, path);
+
+    if (!_.isArray(geometries)) {
+      geometries = [geometries];
+    }
+
+    _.each(geometries, (geometry) => {
+      if (geometry) {
+        features.push(toFeature(result, geometry));
+      }
+    });
+  });
+
+  return featureCollection(features);
+};
 
 export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
   getFieldId,
+  getNestedValue,
   getRelationshipId,
-  normalizeResults,
   toFeature,
   toFeatureCollection
 };

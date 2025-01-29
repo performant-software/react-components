@@ -11,6 +11,7 @@ import CoreDataContext from '../context/CoreData';
 import EventsService from '../services/Events';
 import InstancesService from '../services/Instances';
 import ItemsService from '../services/Items';
+import OrganizationsService from '../services/Organizations';
 import PeopleService from '../services/People';
 import PlacesService from '../services/Places';
 import WorksService from '../services/Works';
@@ -130,6 +131,16 @@ export const useInstancesService = () => {
 export const useItemsService = () => {
   const { baseUrl, projectIds } = useContext(CoreDataContext);
   return new ItemsService(baseUrl, projectIds);
+};
+
+/**
+ * Hook to initialize the organizations service.
+ *
+ * @returns {Items}
+ */
+export const useOrganizationsService = () => {
+  const { baseUrl, projectIds } = useContext(CoreDataContext);
+  return new OrganizationsService(baseUrl, projectIds);
 };
 
 /**

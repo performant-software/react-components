@@ -1,15 +1,8 @@
 // @flow
 
-const DataTypes = {
-  boolean: 'Boolean',
-  date: 'Date',
-  fuzzyDate: 'FuzzyDate',
-  number: 'Number',
-  richText: 'RichText',
-  select: 'Select',
-  string: 'String',
-  text: 'Text'
-};
+import { UserDefinedFields as UserDefinedFieldsUtils } from '@performant-software/shared-components';
+
+const { DataTypes } = UserDefinedFieldsUtils;
 
 export {
   DataTypes
