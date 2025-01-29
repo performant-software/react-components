@@ -99,16 +99,6 @@ const LocationMarkers = (props: Props) => {
    */
   const data = useMemo(() => (_.isEmpty(props.data) ? null : props.data), [props.data]);
 
-  const cluster = useMemo(() => {
-    if (!props.cluster) {
-      return false;
-    }
-
-    console.log(data);
-
-    return true;
-  }, [data, props.cluster]);
-
   /**
    * Sets the bounding box on the map.
    */
@@ -135,7 +125,7 @@ const LocationMarkers = (props: Props) => {
         />
       )}
       <GeoJSONLayer
-        cluster={cluster}
+        cluster={props.cluster}
         clusterMaxZoom={props.clusterMaxZoom}
         clusterMinPoints={props.clusterMinPoints}
         clusterProperties={props.clusterProperties}
