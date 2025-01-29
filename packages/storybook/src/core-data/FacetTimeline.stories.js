@@ -20,14 +20,6 @@ const range = {
 
 const refine = () => {};
 
-// const useRange = () => ({
-//   range: {
-//     min: 1768,
-//     max: 1777
-//   },
-//   refine: () => {}
-// });
-
 export const Default = withCoreDataContextProvider(() => (
   <FacetTimeline
     range={range}
