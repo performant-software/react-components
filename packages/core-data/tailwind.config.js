@@ -1,3 +1,5 @@
+import colors from 'tailwindcss/colors';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,20 +9,12 @@ export default {
     extend: {
       colors: {
         'event-selected': '#3758F9',
-        muted: '#0005119e',
         gray: {
-          1000: '#505A6A'
-        }
-      },
-      fontFamily: {
-        sans: [
-          '-apple-system',
-          'Roboto',
-          'sans-serif'
-        ],
-        'dm-display': [
-          'DM Serif Display'
-        ]
+          '1000': '#505A6A'
+        },
+        muted: '#0005119e',
+        primary: '#073B4C',
+        secondary: colors.neutral['200']
       }
     }
   },
