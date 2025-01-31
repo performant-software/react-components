@@ -1,9 +1,11 @@
 import colors from 'tailwindcss/colors';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.js'
+    './src/**/*.js',
+    './src/**/*.css'
   ],
   theme: {
     extend: {
@@ -15,6 +17,12 @@ export default {
         muted: '#0005119e',
         primary: '#073B4C',
         secondary: colors.neutral['200']
+      },
+      fontFamily: {
+        inter: [
+          'Inter',
+          ...fontFamily.sans
+        ]
       }
     }
   },
