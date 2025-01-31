@@ -1,7 +1,6 @@
 // @flow
 
-import { ModalContext } from '@performant-software/semantic-components';
-import type { EditContainerProps } from '@performant-software/shared-components';
+import { ModalContext, type EditContainerProps } from '@performant-software/shared-components';
 import React from 'react';
 import { Form, Modal } from 'semantic-ui-react';
 import i18n from '../i18n/i18n';
