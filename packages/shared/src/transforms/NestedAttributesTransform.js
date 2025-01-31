@@ -55,7 +55,7 @@ class NestedAttributesTransform {
   toPayload(record: any, collection: string) {
     return {
       [collection]: _.map(record[collection],
-        (item, index) => ({ ..._.pick(item, this.getPayloadKeys()), order: index }))
+        (item, index) => ({ order: index, ..._.pick(item, this.getPayloadKeys()) }))
     };
   }
 }
