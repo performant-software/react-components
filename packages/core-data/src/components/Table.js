@@ -1,15 +1,32 @@
 // @flow
 
-import React, { type Element } from 'react';
+import React from 'react';
 
 type Column = {
+  /**
+   * Label to use in the table header.
+   */
   label?: string,
+  /**
+   * Name of the column. If no `render` prop is provided, the table will try to use item[name] to get the value.
+   */
   name: string,
-  render?: (item: any) => Element<any>
+  /**
+   * Function for fetching the display value from the item.
+   * If this is provided, the component will put the result of this function
+   * in the table cell instead of item[name].
+   */
+  render?: (item: any) => JSX.Element
 }
 
 type Props = {
+  /**
+   * Columns to display in the table.
+   */
   columns: Array<Column>,
+  /**
+   * List of TypeSense hits.
+   */
   hits: Array<any>
 }
 
