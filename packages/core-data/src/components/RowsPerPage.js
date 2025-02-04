@@ -31,7 +31,7 @@ const HITS_PER_PAGE_OPTIONS = {
 };
 
 const HitsPerPage = () => {
-  const refinePerPage = useHitsPerPage(HITS_PER_PAGE_OPTIONS).refine;
+  const { refine } = useHitsPerPage(HITS_PER_PAGE_OPTIONS);
   const { results } = useInstantSearch();
 
   return (
@@ -47,12 +47,12 @@ const HitsPerPage = () => {
       </Dropdown.Trigger>
       <Dropdown.Portal>
         <Dropdown.Content
-          className='bg-white'
+          className='bg-white shadow-md'
         >
           {HITS_PER_PAGE_OPTIONS.items.map((opt) => (
             <Dropdown.Item
-              className='p-2 cursor-pointer'
-              onSelect={() => refinePerPage(opt.value)}
+              className='p-2 cursor-pointer hover:bg-neutral-200'
+              onSelect={() => refine(opt.value)}
             >
               {opt.label}
             </Dropdown.Item>
