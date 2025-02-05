@@ -1,0 +1,1 @@
+var e={BASE_URL:"./",MODE:"production",DEV:!1,PROD:!0,SSR:!1,STORYBOOK:"true"};const E=()=>e.VITE_GOOGLE_MAPS_API_KEY,t=()=>e.VITE_MAP_TILER_KEY,_=()=>e.VITE_TYPESENSE_COLLECTION,s=()=>e.VITE_TYPESENSE_SEARCH_KEY,T=()=>e.VITE_TYPESENSE_URL,n={getGoogleMapsApiKey:E,getMapTilerKey:t,getTypesenseCollection:_,getTypesenseSearchKey:s,getTypesenseSearchUrl:T};export{n as E};
