@@ -4,6 +4,7 @@
 import './index.css';
 
 // Components
+export { default as Checkbox } from './components/Checkbox';
 export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
 export { default as EventDetails } from './components/EventDetails';
 export { default as EventsList } from './components/EventsList';
