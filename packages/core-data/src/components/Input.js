@@ -5,12 +5,33 @@ import React from 'react';
 import Icon from './Icon';
 
 type Props = {
+  /**
+   * (Optional) Extra styles for the input
+   */
   className?: string,
+  /**
+   * (Optional) Whether the user should be able to clear the input.
+   * This causes an X button to appear on the righthand side of the input.
+   */
   clearable?: boolean,
+  /**
+   * (Optional) Placeholder text to show when the user hasn't typed anything.
+   */
   placeholder?: string,
+  /**
+   * Callback function telling the component what to do when the user changes the value.
+   * @param {string} value
+   * @returns
+   */
   onChange: (value: string) => any,
-  icon: string,
-  value?: string
+  /**
+   * (Optional) The name of the icon to show on the left side of the component.
+   */
+  icon?: string,
+  /**
+   * The value of the field. If undefined, it will start as ''.
+   */
+  value: string
 };
 
 const Input = (props: Props) => {
