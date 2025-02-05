@@ -10,13 +10,15 @@ type Props = {
   size: number
 };
 
-const DEFAULT_SIZE = 14;
+const DEFAULT_SIZE = 16;
 
 const Icon = ({ className, name, size = DEFAULT_SIZE }: Props) => (
   <svg
     className={clsx('icon', className)}
     width={size}
     height={size}
+    viewBox={`0 0 ${DEFAULT_SIZE} ${DEFAULT_SIZE}`}
+    preserveAspectRatio='none'
   >
     <use
       xlinkHref={`${Icons}#icon-${name}`}
