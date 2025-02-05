@@ -1,0 +1,10 @@
+{
+  "Common": {
+    "words": {
+      "of": "of"
+    }
+  },
+  "SearchResultsTable": {
+    "rowsPerPage": "Rows per page"
+  }
+}
