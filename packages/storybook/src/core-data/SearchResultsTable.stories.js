@@ -3,7 +3,7 @@
 import React from 'react';
 import SearchResultsTable from '../../../core-data/src/components/SearchResultsTable';
 import hits from '../data/typesense/Places.json';
-import InstantSearchProvider from '../components/TypesenseAdapter';
+import InstantSearchProvider from '../components/InstantSearchProvider';
 
 export default {
   title: 'Components/Core Data/SearchResultsTable',
