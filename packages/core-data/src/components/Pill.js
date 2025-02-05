@@ -2,7 +2,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
-import { Cross1Icon } from '@radix-ui/react-icons';
+import Icon from '../components/Icon';
 
 type Props = {
   /**
@@ -46,7 +46,10 @@ const Pill = (props: Props) => (
       onClick={props.onRemove}
       type='button'
     >
-      <Cross1Icon />
+      <Icon
+        name='close'
+        size={14}
+      />
     </button>
     )}
   </div>
