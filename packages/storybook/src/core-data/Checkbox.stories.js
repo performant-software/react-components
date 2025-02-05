@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import React, { useState } from 'react';
 import Checkbox from '../../../core-data/src/components/Checkbox';
 
 export default {
@@ -9,9 +8,13 @@ export default {
   component: Checkbox
 };
 
-export const Default = () => (
-  <Checkbox
-    onClick={action('click')}
-    label='Option 1'
-  />
-);
+export const Default = () => {
+  const [checked, setChecked] = useState(true);
+
+  return (
+    <Checkbox
+      onClick={() => setChecked(!checked)}
+      checked={checked}
+    />
+  );
+};
