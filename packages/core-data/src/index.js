@@ -23,6 +23,7 @@ export { default as Modal } from './components/Modal';
 export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as Pagination } from './components/Pagination';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
+export { default as Pill } from './components/Pill';
 export { default as PlaceDetails } from './components/PlaceDetails';
 export { default as PlaceLayersSelector } from './components/PlaceLayersSelector';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
