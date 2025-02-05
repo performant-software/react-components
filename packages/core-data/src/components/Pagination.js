@@ -10,7 +10,7 @@ import {
   ChevronRightIcon
 } from '@radix-ui/react-icons';
 import clsx from 'clsx';
-import RowsPerPage from './RowsPerPage';
+import HitsPerPage from './HitsPerPage';
 import i18n from '../i18n/i18n';
 
 const Pagination = () => {
@@ -52,7 +52,7 @@ const Pagination = () => {
       <span className='font-bold'>
         {i18n.t('SearchResultsTable.rowsPerPage')}
       </span>
-      <RowsPerPage />
+      <HitsPerPage />
       <span>
         {firstItemPosition}
         -
