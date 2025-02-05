@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import clsx from 'clsx';
-import Icon from './Icon';
+import { Cross1Icon } from '@radix-ui/react-icons';
 
 type Props = {
   /**
@@ -19,45 +19,36 @@ type Props = {
   primary?: string
 }
 
-const Pill = (props: Props) => {
-  const colorClass = props.primary
-    ? `bg-[${props.primary}]`
-    : null;
-
-  return (
-    <div
-      className={clsx(
-        'text-white',
-        'fill-white',
-        'inline-flex',
-        'gap-2',
-        'justify-center',
-        'items-center',
-        'rounded-[50px]',
-        'text-sm',
-        'py-1',
-        'pl-1.5',
-        { 'pr-2.5': !!props.onRemove },
-        { 'pr-1.5': !props.onRemove },
-        { [colorClass]: !!colorClass },
-        { 'bg-primary': !colorClass }
-      )}
+const Pill = (props: Props) => (
+  <div
+    className={clsx(
+      'text-white',
+      'fill-white',
+      'inline-flex',
+      'gap-2',
+      'justify-center',
+      'items-center',
+      'rounded-[50px]',
+      'text-sm',
+      'py-1',
+      'pl-2.5',
+      { 'pr-1.5': !!props.onRemove },
+      { 'pr-2.5': !props.onRemove },
+      { 'bg-primary': !props.primary }
+    )}
+    style={{ backgroundColor: props.primary }}
+  >
+    <span>{props.label}</span>
+    {props.onRemove && (
+    <button
+      className='flex justify-center items-center h-full'
+      onClick={props.onRemove}
+      type='button'
     >
-      <span>{props.label}</span>
-      {props.onRemove && (
-        <button
-          className='flex justify-center items-center h-full'
-          onClick={props.onRemove}
-          type='button'
-        >
-          <Icon
-            className='relative'
-            name='close'
-          />
-        </button>
-      )}
-    </div>
-  )
-};
+      <Cross1Icon />
+    </button>
+    )}
+  </div>
+);
 
 export default Pill;
