@@ -13,10 +13,10 @@ const sampleData = [
         title: 'Related People',
         items: [
             {
-                name: 'Gon Freecs'
+                name: 'Kazuya Miyuki'
             },
             {
-                name: 'Killua Zoldyck'
+                name: 'Eijun Sawamura'
             }
         ]
     },
@@ -24,7 +24,7 @@ const sampleData = [
         title: 'Related Organizations',
         items: [
             {
-                name: 'Hunters Association'
+                name: 'Seido High School Baseball Club'
             }
         ]
     }
@@ -35,10 +35,10 @@ const sampleDataWithIcon = [
         title: 'Related People',
         items: [
             {
-                name: 'Gon Freecs'
+                name: 'Kazuya Miyuki'
             },
             {
-                name: 'Killua Zoldyck'
+                name: 'Eijun Sawamura'
             }
         ],
         icon: 'person'
@@ -47,7 +47,7 @@ const sampleDataWithIcon = [
         title: 'Related Organizations',
         items: [
             {
-                name: 'Hunters Association'
+                name: 'Seido High School Baseball Club'
             }
         ],
         icon: 'occupation'
@@ -59,10 +59,10 @@ const sampleDataWithCount = [
       title: 'Related People',
       items: [
           {
-              name: 'Gon Freecs'
+              name: 'Kazuya Miyuki'
           },
           {
-              name: 'Killua Zoldyck'
+              name: 'Eijun Sawamura'
           }
       ],
       count: true
@@ -71,7 +71,7 @@ const sampleDataWithCount = [
       title: 'Related Organizations',
       items: [
           {
-              name: 'Hunters Association'
+              name: 'Seido High School Baseball Club'
           }
       ],
       count: true
@@ -83,11 +83,11 @@ const sampleDataWithClickEvent = [
       title: 'Related People',
       items: [
           {
-              name: 'Gon Freecs',
-              onClick: () => { alert('Gon!') }
+              name: 'Kazuya Miyuki',
+              onClick: () => { alert('Kazuya Miyuki!') }
           },
           {
-              name: 'Killua Zoldyck'
+              name: 'Eijun Sawamura'
           }
       ],
       count: true
@@ -96,7 +96,7 @@ const sampleDataWithClickEvent = [
       title: 'Related Organizations',
       items: [
           {
-              name: 'Hunters Association'
+              name: 'Seido High School Baseball Club'
           }
       ],
       count: true
