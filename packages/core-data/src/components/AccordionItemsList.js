@@ -30,7 +30,7 @@ type RelatedRecordsList = {
   count?: boolean,
   
   /**
-   * Icon to use in front of each list item. Defaults to bullet. Note this is overridden if a renderItem prop is provided
+   * Icon to use in front of each list item. Defaults to none. Note this is overridden if a renderItem prop is provided
    */
   icon?: JSX.Element,
 
