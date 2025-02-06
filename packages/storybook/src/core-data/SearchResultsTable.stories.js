@@ -12,25 +12,81 @@ export default {
 
 export const Default = () => (
   <InstantSearchProvider>
-    <SearchResultsTable
-      columns={[
-        {
-          label: 'UUID',
-          name: 'uuid'
-        },
-        {
-          label: 'Name',
-          name: 'name'
-        },
-        {
-          label: 'Location',
-          name: 'geometry',
-          render: (item) => (item.coordinates
-            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
-            : '')
-        }
-      ]}
-      hits={hits}
-    />
+    <div className='h-80'>
+      <SearchResultsTable
+        columns={[
+          {
+            label: 'UUID',
+            name: 'uuid'
+          },
+          {
+            label: 'Name',
+            name: 'name'
+          },
+          {
+            label: 'Location',
+            name: 'geometry',
+            render: (item) => (item.coordinates
+              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+              : '')
+          }
+        ]}
+        hits={hits}
+      />
+    </div>
+  </InstantSearchProvider>
+);
+
+export const Narrow = () => (
+  <InstantSearchProvider>
+    <div className='h-80 w-[400px]'>
+      <SearchResultsTable
+        columns={[
+          {
+            label: 'UUID',
+            name: 'uuid'
+          },
+          {
+            label: 'Name',
+            name: 'name'
+          },
+          {
+            label: 'Location',
+            name: 'geometry',
+            render: (item) => (item.coordinates
+              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+              : '')
+          }
+        ]}
+        hits={hits}
+      />
+    </div>
+  </InstantSearchProvider>
+);
+
+export const ReallyBig = () => (
+  <InstantSearchProvider>
+    <div className='h-[80vh] w-[1000px]'>
+      <SearchResultsTable
+        columns={[
+          {
+            label: 'UUID',
+            name: 'uuid'
+          },
+          {
+            label: 'Name',
+            name: 'name'
+          },
+          {
+            label: 'Location',
+            name: 'geometry',
+            render: (item) => (item.coordinates
+              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+              : '')
+          }
+        ]}
+        hits={hits}
+      />
+    </div>
   </InstantSearchProvider>
 );

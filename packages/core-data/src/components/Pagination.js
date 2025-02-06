@@ -13,7 +13,14 @@ import clsx from 'clsx';
 import HitsPerPage from './HitsPerPage';
 import i18n from '../i18n/i18n';
 
-const Pagination = () => {
+type Props = {
+  /**
+   * (Optional) Class name to append to the list of the Pagination container
+   */
+  className?: string
+}
+
+const Pagination = (props: Props) => {
   const { refine } = usePagination();
   const { results } = useInstantSearch();
 
@@ -48,7 +55,19 @@ const Pagination = () => {
   const onPreviousPage = () => refine(results.page - 1);
 
   return (
-    <div className='w-full h-10 bg-white flex justify-end items-center gap-4 text-sm px-4'>
+    <div className={clsx(
+      'w-full',
+      'h-10',
+      'bg-white',
+      'flex',
+      'justify-end',
+      'items-center',
+      'gap-4',
+      'text-sm',
+      'px-4',
+      props.className
+    )}
+    >
       <span className='font-bold'>
         {i18n.t('SearchResultsTable.rowsPerPage')}
       </span>
