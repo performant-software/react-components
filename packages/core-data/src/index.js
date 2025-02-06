@@ -61,7 +61,7 @@ export {
   useOrganizationsService,
   usePeopleService,
   usePlacesService,
-  useWorksService,
+  useWorksService
 } from './hooks/CoreData';
 export { default as useProgressiveSearch } from './hooks/ProgressiveSearch';
 export {
@@ -69,7 +69,7 @@ export {
   useGeoSearch,
   useGeoSearchToggle,
   useSearchBox,
-  useSearchCompleted,
+  useSearchCompleted
 } from './hooks/Typesense';
 
 // Services
