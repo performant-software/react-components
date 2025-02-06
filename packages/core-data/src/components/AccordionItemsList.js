@@ -85,8 +85,7 @@ const AccordionItemsList = (props: Props) => (
         >
           <h2>
             <Accordion.Trigger
-              className='accordion-list-trigger border-black/20 border border-t border-b-0 border-l-0 border-r-0 border-solid 
-                          rounded-none w-full flex justify-between items-center p-4 text-[15px] font-bold leading-[120%]'
+              className='accordion-list-trigger border-neutral-100 border border-t border-b-0 border-l-0 border-r-0 border-solid rounded-none w-full flex justify-between items-center p-4 text-[15px] font-bold leading-[120%]'
             >
               {
                 relation.renderTitle ? (
@@ -107,13 +106,7 @@ const AccordionItemsList = (props: Props) => (
           </h2>
         </Accordion.Header>
         <Accordion.Content
-          className={clsx(
-              'accordion-list-content',
-              'text-[13px]',
-              'font-semibold',
-              'leading-[120%]'
-            )
-          }
+          className='accordion-list-content text-[13px] font-semibold leading-[120%]'
         >
           <ul>
             {
@@ -133,12 +126,12 @@ const AccordionItemsList = (props: Props) => (
                         )}
                       >                           
                         {
-                          relation.icon ? (
+                          relation.icon && (
                             <Icon
                               name={relation.icon}
                               size={14}
                             />
-                          ) : null
+                          )
                         }
                         <span>
                           { item.name }                        
