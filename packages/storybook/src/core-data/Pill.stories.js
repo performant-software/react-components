@@ -22,10 +22,11 @@ export const OnRemove = () => (
   />
 );
 
-export const CustomColor = () => (
+export const CustomColors = () => (
   <Pill
     label='Chip Text'
     onRemove={action('click')}
     primary='#fc94af'
+    textColor='#000000'
   />
 );
