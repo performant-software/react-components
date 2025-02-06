@@ -64,7 +64,7 @@ const Input = (props: Props) => {
         />
       )}
       <input
-        className='grow bg-transparent focus:outline-none group'
+        className='grow bg-transparent focus:outline-none'
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
         type='text'
