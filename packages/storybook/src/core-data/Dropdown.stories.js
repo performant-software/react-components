@@ -35,7 +35,7 @@ export const Default = () => {
   const [country, setCountry] = useState();
 
   return (
-    <div className='w-60'>
+    <div className='w-60 h-40 bg-neutral-200 flex items-center justify-center p-8'>
       <Dropdown
         options={OPTIONS}
         onChange={(val) => setCountry(val)}
@@ -49,9 +49,42 @@ export const WithPlaceholder = () => {
   const [country, setCountry] = useState();
 
   return (
-    <div className='w-60'>
+    <div className='w-60 h-40 bg-neutral-200 flex items-center justify-center p-8'>
       <Dropdown
         options={OPTIONS}
+        onChange={(val) => setCountry(val)}
+        placeholder='Select Country'
+        value={country}
+      />
+    </div>
+  );
+};
+
+export const WithLabel = () => {
+  const [country, setCountry] = useState();
+
+  return (
+    <div className='w-60 h-40 bg-neutral-200 flex items-center justify-center p-8'>
+      <Dropdown
+        options={OPTIONS}
+        label='Country'
+        onChange={(val) => setCountry(val)}
+        placeholder='Select Country'
+        value={country}
+      />
+    </div>
+  );
+};
+
+export const WithIconAndLabel = () => {
+  const [country, setCountry] = useState();
+
+  return (
+    <div className='w-60 h-40 bg-neutral-200 flex items-center justify-center p-8'>
+      <Dropdown
+        options={OPTIONS}
+        icon='location'
+        label='Country'
         onChange={(val) => setCountry(val)}
         placeholder='Select Country'
         value={country}
