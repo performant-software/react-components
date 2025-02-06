@@ -16,6 +16,7 @@ export { default as FacetStateContextProvider } from './components/FacetStateCon
 export { default as FacetTimeline } from './components/FacetTimeline';
 export { default as HeaderImage } from './components/HeaderImage';
 export { default as HitsPerPage } from './components/HitsPerPage';
+export { default as Input } from './components/Input';
 export { default as KeyValueList } from './components/KeyValueList';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as LoadAnimation } from './components/LoadAnimation';
