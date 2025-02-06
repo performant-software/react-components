@@ -23,6 +23,12 @@ type Props = {
    * @param {string} value
    * @returns
    */
+  onBlur: (value: string) => any,
+  /**
+   * Callback function telling the component what to do when the user changes the value.
+   * @param {string} value
+   * @returns
+   */
   onChange: (value: string) => any,
   /**
    * (Optional) The name of the icon to show on the left side of the component.
@@ -66,6 +72,7 @@ const Input = (props: Props) => {
       <input
         className='grow bg-transparent focus:outline-none'
         placeholder={props.placeholder}
+        onBlur={(e) => props.onBlur(e.target.value)}
         onChange={(e) => props.onChange(e.target.value)}
         type='text'
         value={props.value || ''}
