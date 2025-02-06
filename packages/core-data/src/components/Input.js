@@ -53,6 +53,7 @@ const Input = (props: Props) => {
         'rounded-[50px]',
         'text-md',
         'fill-neutral-800',
+        'focus-within:border-primary',
         props.className
       )}
     >
@@ -63,7 +64,7 @@ const Input = (props: Props) => {
         />
       )}
       <input
-        className='grow bg-transparent'
+        className='grow bg-transparent focus:outline-none'
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
         type='text'
