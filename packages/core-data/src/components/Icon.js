@@ -7,18 +7,22 @@ import Icons from '../icons/icons.svg';
 type Props = {
   className?: string,
   name: string,
-  size: number
+  size: number,
+  style?: any
 };
 
 const DEFAULT_SIZE = 16;
 
-const Icon = ({ className, name, size = DEFAULT_SIZE }: Props) => (
+const Icon = ({
+  className, name, style, size = DEFAULT_SIZE
+}: Props) => (
   <svg
     className={clsx('icon', className)}
     width={size}
     height={size}
     viewBox={`0 0 ${DEFAULT_SIZE} ${DEFAULT_SIZE}`}
     preserveAspectRatio='none'
+    style={style}
   >
     <use
       xlinkHref={`${Icons}#icon-${name}`}

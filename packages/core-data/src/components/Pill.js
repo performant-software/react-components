@@ -2,7 +2,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
-import Icon from '../components/Icon';
+import Icon from './Icon';
 
 type Props = {
   /**
@@ -15,9 +15,13 @@ type Props = {
    */
   onRemove?: (data) => any,
   /**
-   * (Optional) Background color for the pill.
+   * (Optional) Background color for the pill (CSS value, not Tailwind).
    */
-  primary?: string
+  primary?: string,
+  /**
+   * (Optional) Text color for the pill (CSS value, not Tailwind).
+   */
+  textColor?: string
 }
 
 const Pill = (props: Props) => (
@@ -37,7 +41,7 @@ const Pill = (props: Props) => (
       { 'pr-2.5': !props.onRemove },
       { 'bg-primary': !props.primary }
     )}
-    style={{ backgroundColor: props.primary }}
+    style={{ backgroundColor: props.primary, color: props.textColor }}
   >
     <span>{props.label}</span>
     {props.onRemove && (
@@ -49,6 +53,7 @@ const Pill = (props: Props) => (
       <Icon
         name='close'
         size={14}
+        style={{ fill: props.textColor }}
       />
     </button>
     )}
