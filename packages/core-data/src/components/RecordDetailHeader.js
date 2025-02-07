@@ -16,9 +16,9 @@ type Props = {
   children?: Node,
 
   /**
-   * Class name to apply to the main div.
+   * Class names to apply to the main div, the title element, and the list element containing the detail items.
    */
-  className?: string,
+  classNames?: { items?: string, root?: string, title?: string },
 
   /**
    * List of detail fields to be rendered above the blurb
@@ -61,26 +61,30 @@ const RecordDetailHeader = (props: Props) => (
     <RecordDetailTitle
       text={props.title}
       icon={props.icon}
-      className={props.titleClassName}
+      className={props.classNames?.title}
     />
-    <ul>
-      {
-        _.map(props.detailItems, (item, idx) => (
-          <RecordDetailItem
-            text={item.text}
-            icon={item.icon}
-            className={item.className}
-            key={idx}
-          />
-        ))
-      }
-    </ul>
+    {
+      !!props.detailItems?.length && (
+        <ul className={props.classNames.items}>
+          {
+            _.map(props.detailItems, (item, idx) => (
+              <RecordDetailItem
+                text={item.text}
+                icon={item.icon}
+                className={item.className}
+                key={idx}
+              />
+            ))
+          }
+        </ul>
+      )
+    }
     <div>
       { props.children }
     </div>
     { props.detailPageUrl && (
       <a href={props.detailPageUrl}>   
-        <Button rounded customClassName='w-full justify-center'>
+        <Button rounded className='w-full justify-center'>
           { i18n.t('RecordDetailHeader.viewDetails') }
         </Button>
       </a>
