@@ -7,7 +7,7 @@ type Props = {
   /**
    * Class name to apply to the root button element.
    */
-  className?: string,
+  customClassName?: string,
 
   /**
    * Child elements to append to the button.
@@ -48,7 +48,7 @@ const Button = (props: Props) => (
       { 'border border-solid border-gray-200': !props.primary },
       { 'bg-primary hover:bg-primary hover:saturate-50 text-white fill-white': props.primary },
       { 'rounded-md': props.rounded },
-      props.className
+      props.customClassName
     )}
     type='button'
     {...props}
