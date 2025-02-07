@@ -40,7 +40,7 @@ const sampleData = [
 export const Default = () => (
   <RecordDetailPanel
     relations={sampleData}
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -62,7 +62,7 @@ export const WithViewDetail = () => (
   <RecordDetailPanel
     relations={sampleData}
     detailPageUrl='#'
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -83,7 +83,7 @@ export const WithViewDetail = () => (
 export const WithIcon = () => (
   <RecordDetailPanel
     relations={sampleData}
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -105,7 +105,7 @@ export const WithIcon = () => (
 export const WithClose = () => (
   <RecordDetailPanel
     relations={sampleData}
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -127,7 +127,7 @@ export const WithClose = () => (
 export const WithBreadcrumbs = () => (
   <RecordDetailPanel
     relations={sampleData}
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -138,6 +138,8 @@ export const WithBreadcrumbs = () => (
         icon: 'location'
       }
     ]}
+    breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
+    onGoBack={() => { alert('Go back!'); }}
   >
     <p>
       Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
@@ -145,10 +147,10 @@ export const WithBreadcrumbs = () => (
   </RecordDetailPanel>
 )
 
-export const FixedWidth = () => (
+export const FixedWidthAndHeight = () => (
   <RecordDetailPanel
     relations={sampleData}
-    title='West Tokyo Regional Qualifiers Quarterfinal'
+    title='West Tokyo Qualifiers Quarterfinal'
     detailItems={[
       {
         text: 'July 27',
@@ -159,10 +161,13 @@ export const FixedWidth = () => (
         icon: 'location'
       }
     ]}
+    breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
+    onGoBack={() => { alert('Go back!'); }}
     classNames={{
-        root: 'w-[380px]'
+        root: 'w-[380px] h-[450px]'
       }
     } 
+    onClose={() => { alert('Close!') }}
   >
     <p>
       Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.

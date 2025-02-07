@@ -11,6 +11,7 @@ import RecordDetailHeader from './RecordDetailHeader';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
 import i18n from '../i18n/i18n';
 import _ from 'underscore';
+import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
 
 type Props = {
   /**
@@ -69,34 +70,44 @@ const RecordDetailPanel = (props: Props) => (
     className={clsx(
       'relative',
       'shadow-[0px_5px_12px_0px_rgba(0,0,0,.10)]',
+      'overflow-y-auto',
       props.classNames?.root
     )}
   >
-    { props.onClose && (
-      <Icon
-        name='close'
-        size='24'
-        onClick={props.onClose}
-        className='absolute top-6 right-6'
-      />
-    )}
-    <RecordDetailHeader
-      title={props.title}
-      icon={props.icon}
-      classNames={
-        { 
-          root: clsx('sticky', 'inset-0', 'shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)]', props.classNames?.header), 
-          title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), //make sure there's space for the close icon
-          items: props.classNames?.items 
+    <div className='sticky inset-0 shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)] bg-white z-[5]'>
+      { props.onClose && (
+        <div onClick={props.onClose} className='absolute top-6 right-6 z-10 cursor-pointer'>
+          <Icon
+            name='close'
+            size={24}
+          />
+        </div>
+      )}
+      { (props.breadcrumbs || props.onGoBack) && (
+        <RecordDetailBreadcrumbs
+          history={props.breadcrumbs || []}
+          onGoBack={props.onGoBack}
+          className='absolute top-6 left-6 pr-6 max-w-[calc(100%_-4.5em)] z-10'
+        />
+      ) }
+      <RecordDetailHeader
+        title={props.title}
+        icon={props.icon}
+        classNames={
+          { 
+            root: clsx({'pt-16': props.breadcrumbs || props.onGoBack}, props.classNames?.header), 
+            title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), //make sure there's space for the close icon
+            items: props.classNames?.items 
+          }
         }
-      }
-      detailItems={props.detailItems}
-      detailPageUrl={props.detailPageUrl}
-    >
-      { props.children }
-    </RecordDetailHeader>
+        detailItems={props.detailItems}
+        detailPageUrl={props.detailPageUrl}
+      >
+        { props.children }
+      </RecordDetailHeader>
+    </div>
     <AccordionItemsList
-      className={clsx('overflow-auto', props.classNames?.relatedRecords)}
+      className={clsx('shadow-[0px_1px_4px_rgba(0,0,0,.15)]', props.classNames?.relatedRecords)}
       relations={props.relations}
     />
   </div>
