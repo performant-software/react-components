@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import Button from '../../../core-data/src/components/RecordDetailHeader';
 import RecordDetailHeader from '../../../core-data/src/components/RecordDetailHeader';
 
 export default {
