@@ -39,11 +39,6 @@ type Props = {
    * The text of the header.
    */
   title: string,
-
-  /**
-   * Additional classes to apply to the title element
-   */
-  titleClassName?: string
 };
 
 const RecordDetailHeader = (props: Props) => (
@@ -55,7 +50,7 @@ const RecordDetailHeader = (props: Props) => (
       'px-6',
       'pt-6',
       'pb-4',
-      props.className
+      props.classNames?.root
     )}
   >
     <RecordDetailTitle
@@ -65,7 +60,7 @@ const RecordDetailHeader = (props: Props) => (
     />
     {
       !!props.detailItems?.length && (
-        <ul className={props.classNames.items}>
+        <ul className={props.classNames?.items}>
           {
             _.map(props.detailItems, (item, idx) => (
               <RecordDetailItem
