@@ -4,6 +4,9 @@
       "of": "of"
     }
   },
+  "RecordDetailHeader": {
+    "viewDetails": "View Details"
+  },
   "SearchResultsTable": {
     "rowsPerPage": "Rows per page"
   }
