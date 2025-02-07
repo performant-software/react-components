@@ -1,0 +1,1 @@
+import{i as e}from"./i18next-Sc0HEOoc.js";const a={words:{of:"of"}},o={viewDetails:"View Details"},n={rowsPerPage:"Rows per page"},s={Common:a,RecordDetailHeader:o,SearchResultsTable:n},t={en:{translation:s}},r=e.createInstance();r.init({debug:!0,fallbackLng:"en",lng:"en",interpolation:{escapeValue:!1},resources:t});export{r as i};
