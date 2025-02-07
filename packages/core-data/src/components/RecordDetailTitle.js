@@ -21,7 +21,7 @@ type Props = {
   text: string,
 };
 
-const RecordDetailHeader = (props: Props) => (
+const RecordDetailTitle = (props: Props) => (
   <h1
     className={clsx(
       'flex',
@@ -39,4 +39,4 @@ const RecordDetailHeader = (props: Props) => (
   </h1>
 );
 
-export default RecordDetailHeader;
+export default RecordDetailTitle;

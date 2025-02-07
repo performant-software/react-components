@@ -1,28 +1,28 @@
 // @flow
 
 import React from 'react';
-import RecordDetailHeader from '../../../core-data/src/components/RecordDetailHeader';
+import RecordDetailTitle from '../../../core-data/src/components/RecordDetailTitle';
 
 export default {
-  title: 'Components/Core Data/RecordDetailHeader',
-  component: RecordDetailHeader
+  title: 'Components/Core Data/RecordDetailTitle',
+  component: RecordDetailTitle
 };
 
 export const Default = () => (
-  <RecordDetailHeader
+  <RecordDetailTitle
     text='This is a header!'
   />
 );
 
 export const Icon = () => (
-  <RecordDetailHeader
+  <RecordDetailTitle
     text='This is a place name!'
     icon='location'
   />
 );
 
 export const Multiline = () => (
-  <RecordDetailHeader
+  <RecordDetailTitle
     text='This is a really long header that goes onto the second line'
     className='w-80'
   />
