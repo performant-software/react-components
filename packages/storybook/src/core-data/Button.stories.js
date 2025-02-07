@@ -72,7 +72,7 @@ export const IconOnly = () => (
 
 export const customClasses = () => (
   <Button
-    customClassName='bg-blue-500 text-white'
+    className='bg-blue-500 text-white'
   >
     This is blue
   </Button>
