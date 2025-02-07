@@ -164,10 +164,11 @@ export const FixedWidthAndHeight = () => (
     breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
     onGoBack={() => { alert('Go back!'); }}
     classNames={{
-        root: 'w-[380px] h-[450px]'
+        root: 'w-[380px] h-[500px]'
       }
     } 
     onClose={() => { alert('Close!') }}
+    detailPageUrl='#'
   >
     <p>
       Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
