@@ -1,0 +1,22 @@
+import{j as e}from"./jsx-runtime-BTCK_S7S.js";import"./index-CBqU2yxZ.js";import{d as a}from"./index-CRbjvGQW.js";import{_ as h}from"./index-default-C_maRo4o.js";import{T as o}from"./TabbedModal-D0B2H8Qg.js";import"./_commonjsHelpers-BosuxZz1.js";import"./mapValues-BXr-GEgA.js";import"./pickBy-ILmh4CwI.js";import"./_commonjs-dynamic-modules-TDtrdbi3.js";import"./isPlainObject-CVmyTvcu.js";import"./index-Cw1G72V2.js";import"./index-CKJfshIT.js";import"./tiny-invariant.cjs-DxxScMW_.js";import"./___vite-browser-external_commonjs-proxy-DRaEfepn.js";import"./preview-errors-CzpZmerH.js";import"./debounce-C2QphL08.js";import"./index.es33-xAz7_TJc.js";import"./index-DZGZymok.js";import"./iframe-DaOy50uq.js";import"../sb-preview/runtime.js";import"./index.es24-BD0kU5QO.js";import"./Menu-9i0apxqd.js";import"./extends-CCbyfPlC.js";import"./inheritsLoose-1HkgTRWY.js";import"./setPrototypeOf-DgZC2w_0.js";import"./map-B4PnIEPz.js";import"./getElementType-CckcRzoH.js";import"./ModernAutoControlledComponent-DJBWk5EW.js";import"./assertThisInitialized-B9jnkVVz.js";import"./_arrayReduce-CrxnWFSq.js";import"./deburr-CEfyoYOr.js";import"./Icon-2tEtgK8g.js";import"./Header-BJ3NNdPz.js";import"./Label-Cq1fb1cd.js";import"./includes-CQoJOerW.js";import"./toFinite-KQ8KevIC.js";import"./forEach-CXlln0XP.js";import"./Dimmer-D_gwaesu.js";import"./Portal-DvhHJPzU.js";import"./keyboardKey-OMDgGVm3.js";import"./objectWithoutPropertiesLoose-1QL-frMM.js";import"./Modal-Bz2VEyQG.js";import"./index-BBpNyw-T.js";import"./_baseSet-6y0qliU9.js";import"./_baseAssignValue-izmKBXUH.js";import"./isEmpty-Cyb9hIKi.js";import"./Button-Blq7Z6RX.js";const pe={title:"Components/Semantic UI/TabbedModal",decorators:[a.withKnobs]},t=()=>e.jsxs(o,{header:a.text("Header","Modal Header"),inlineTabs:a.boolean("Inline tabs",!1),open:!0,children:[e.jsx(o.Tab,{name:"Tab 1",children:e.jsx("div",{children:"Tab 1 content"})}),e.jsx(o.Tab,{name:"Tab 2",children:e.jsx("div",{children:"Tab 2 content"})})]}),r=()=>{const M=a.number("Number of tabs",3);return e.jsx(o,{header:a.text("Header","Modal Header"),inlineTabs:a.boolean("Inline tabs",!1),open:!0,children:h.times(M,d=>e.jsx(o.Tab,{name:`Tab ${d}`,children:e.jsx("div",{children:`Tab ${d} content`})}))})},n=()=>e.jsxs(o,{header:a.text("Header","Modal Header"),inlineTabs:a.boolean("Inline tabs",!1),open:!0,children:[e.jsx(o.Tab,{name:a.text("Tab 1 Name","Tab 1"),children:e.jsx("div",{children:"Tab 1 content"})}),e.jsx(o.Tab,{name:a.text("Tab 2 Name","Tab 2"),children:e.jsx("div",{children:"Tab 2 content"})})]});t.__docgenInfo={description:"",methods:[],displayName:"Default"};r.__docgenInfo={description:"",methods:[],displayName:"DynamicTabs"};n.__docgenInfo={description:"",methods:[],displayName:"NamedTabs"};var i,b,s;t.parameters={...t.parameters,docs:{...(i=t.parameters)==null?void 0:i.docs,source:{originalSource:`() => <TabbedModal header={text('Header', 'Modal Header')} inlineTabs={boolean('Inline tabs', false)} open>
+    <TabbedModal.Tab name='Tab 1'>
+      <div>Tab 1 content</div>
+    </TabbedModal.Tab>
+    <TabbedModal.Tab name='Tab 2'>
+      <div>Tab 2 content</div>
+    </TabbedModal.Tab>
+  </TabbedModal>`,...(s=(b=t.parameters)==null?void 0:b.docs)==null?void 0:s.source}}};var m,p,l;r.parameters={...r.parameters,docs:{...(m=r.parameters)==null?void 0:m.docs,source:{originalSource:`() => {
+  const tabs = number('Number of tabs', 3);
+  return <TabbedModal header={text('Header', 'Modal Header')} inlineTabs={boolean('Inline tabs', false)} open>
+      {_.times(tabs, index => <TabbedModal.Tab name={\`Tab \${index}\`}>
+          <div>{\`Tab \${index} content\`}</div>
+        </TabbedModal.Tab>)}
+    </TabbedModal>;
+}`,...(l=(p=r.parameters)==null?void 0:p.docs)==null?void 0:l.source}}};var T,c,x;n.parameters={...n.parameters,docs:{...(T=n.parameters)==null?void 0:T.docs,source:{originalSource:`() => <TabbedModal header={text('Header', 'Modal Header')} inlineTabs={boolean('Inline tabs', false)} open>
+    <TabbedModal.Tab name={text('Tab 1 Name', 'Tab 1')}>
+      <div>Tab 1 content</div>
+    </TabbedModal.Tab>
+    <TabbedModal.Tab name={text('Tab 2 Name', 'Tab 2')}>
+      <div>Tab 2 content</div>
+    </TabbedModal.Tab>
+  </TabbedModal>`,...(x=(c=n.parameters)==null?void 0:c.docs)==null?void 0:x.source}}};const le=["Default","DynamicTabs","NamedTabs"];export{t as Default,r as DynamicTabs,n as NamedTabs,le as __namedExportsOrder,pe as default};
