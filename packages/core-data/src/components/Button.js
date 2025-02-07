@@ -37,6 +37,7 @@ type Props = {
 
 const Button = (props: Props) => (
   <button
+    {...props}
     className={clsx(
       'flex',
       'items-center',
@@ -51,7 +52,6 @@ const Button = (props: Props) => (
       props.className
     )}
     type='button'
-    {...props}
   >
     { props.children }
   </button>
