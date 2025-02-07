@@ -80,7 +80,7 @@ const RecordDetailHeader = (props: Props) => (
     </div>
     { props.detailPageUrl && (
       <a href={props.detailPageUrl}>   
-        <Button rounded>
+        <Button rounded customClassName='w-full justify-center'>
           { i18n.t('RecordDetailHeader.viewDetails') }
         </Button>
       </a>
