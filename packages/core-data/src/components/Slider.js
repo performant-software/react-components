@@ -178,14 +178,17 @@ const Slider = (props: Props) => {
       newVals.reverse();
     }
 
+    // Set first value to min if lower than min
     if (typeof props.min !== 'undefined' && newVals[0] <= props.min) {
       newVals[0] = props.min;
     }
 
+    // Set second value to max if higher than max
     if (typeof props.max !== 'undefined' && newVals[1] >= props.max) {
       newVals[1] = props.max;
     }
 
+    // keep a separation of at least 1 between values
     if (newVals[0] === newVals[1]) {
       if (props.max && newVals[1] < props.max) {
         newVals[1] += 1;
