@@ -73,6 +73,7 @@ export const Default = () => {
         onSearch={onSearch}
         icon='location'
         label='Countries'
+        placeholder='Select countries'
         values={values}
       />
     </div>

@@ -116,7 +116,9 @@ const Combobox = (props: Props) => {
               ))}
               <input
                 className='focus:outline-none w-full'
-                placeholder={props.placeholder || i18n.t('Combobox.select')}
+                placeholder={props.values.length === 0
+                  ? props.placeholder || i18n.t('Combobox.select')
+                  : undefined}
                 onChange={(e) => onSearch(e.target.value)}
                 value={search}
               />
@@ -124,6 +126,7 @@ const Combobox = (props: Props) => {
             <div className='flex gap-2 h-full'>
               {props.onClear && props.values.length > 0 && (
                 <button
+                  className='rounded-full'
                   onClick={props.onClear}
                   type='button'
                 >
