@@ -6,6 +6,7 @@ import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import Input from './Input';
+import Icon from './Icon';
 
 type MarkerProps = {
   className?: string,
@@ -125,6 +126,16 @@ type Props = {
   classNames: ClassNames,
 
   /**
+   * Icon to show in the header
+   */
+  icon?: string,
+
+  /**
+   * Label to show in the header
+   */
+  label?: string,
+
+  /**
    * The maximum facet value.
    */
   max?: number,
@@ -192,6 +203,26 @@ const Slider = (props: Props) => {
 
   return (
     <div className='p-4'>
+      {(props.icon || props.label) && (
+      <div
+        className='flex gap-2 items-center justify-center w-full'
+      >
+        {props.icon && (
+        <Icon
+          className='fill-neutral-800'
+          name={props.icon}
+          size={16}
+        />
+        )}
+        {props.label && (
+        <span
+          className='text-neutral-800 grow font-semibold text-lg'
+        >
+          {props.label}
+        </span>
+        )}
+      </div>
+      )}
       <div
         className='flex justify-between items-center pt-4'
       >

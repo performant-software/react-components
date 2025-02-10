@@ -21,6 +21,39 @@ export const Default = () => {
   );
 };
 
+export const WithLabel = () => {
+  const [value, setValue] = useState([1500, 2010]);
+
+  return (
+    <div className='w-[300px] border border-black rounded-md'>
+      <Slider
+        min={1500}
+        max={2010}
+        label='Lifespan'
+        onValueChange={setValue}
+        value={value}
+      />
+    </div>
+  );
+};
+
+export const WithLabelAndIcon = () => {
+  const [value, setValue] = useState([1500, 2010]);
+
+  return (
+    <div className='w-[300px] border border-black rounded-md'>
+      <Slider
+        min={1500}
+        max={2010}
+        icon='person'
+        label='Lifespan'
+        onValueChange={setValue}
+        value={value}
+      />
+    </div>
+  );
+};
+
 export const CustomStyles = () => {
   const [value, setValue] = useState([1500, 2010]);
   const [committedValue, setCommittedValue] = useState([1500, 2010]);
@@ -63,5 +96,20 @@ export const TooltipPosition = () => {
       position='right'
       value={value}
     />
+  );
+};
+
+export const NarrowContainer = () => {
+  const [value, setValue] = useState([1500, 2010]);
+
+  return (
+    <div className='w-[300px] border border-black rounded-md'>
+      <Slider
+        min={1500}
+        max={2010}
+        onValueChange={setValue}
+        value={value}
+      />
+    </div>
   );
 };
