@@ -4,7 +4,7 @@ import { useTimer } from '@performant-software/shared-components';
 import * as RadixSlider from '@radix-ui/react-slider';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Input from './Input';
 
 type MarkerProps = {
@@ -111,12 +111,11 @@ type Action = {
 };
 
 type ClassNames = {
-  button: string,
+  input: string,
   range: string,
   root: string,
   thumb: string,
-  track: string,
-  zoom: string
+  track: string
 };
 
 type Props = {
@@ -156,69 +155,111 @@ type Props = {
   value: [number, number]
 };
 
-const Slider = (props: Props) => (
-  <>
-    <div
-      className='flex justify-between items-center pt-4'
-    >
-      <RadixSlider.Root
-        className={clsx(
-          'relative flex flex-grow h-5 touch-none items-center w-full',
-          props.classNames.root
-        )}
-        max={props.max}
-        min={props.min}
-        minStepsBetweenThumbs={1}
-        onValueChange={props.onValueChange}
-        onValueCommit={props.onValueCommit}
-        step={1}
-        value={props.value}
+const Slider = (props: Props) => {
+  /**
+   * Adjusts the values entered by the user based on range
+   * and step constraints.
+   */
+  const onInputCommit = useCallback((vals) => {
+    const newVals = vals;
+
+    if (newVals[0] > newVals[1]) {
+      newVals.reverse();
+    }
+
+    if (typeof props.min !== 'undefined' && newVals[0] <= props.min) {
+      newVals[0] = props.min;
+    }
+
+    if (typeof props.max !== 'undefined' && newVals[1] >= props.max) {
+      newVals[1] = props.max;
+    }
+
+    if (newVals[0] === newVals[1]) {
+      if (props.max && newVals[1] < props.max) {
+        newVals[1] += 1;
+      } else if (props.min && newVals[0] > props.min) {
+        newVals[0] -= 1;
+      }
+    }
+
+    props.onValueChange(newVals);
+
+    if (props.onValueCommit) {
+      props.onValueCommit(newVals);
+    }
+  }, [props.onValueCommit, props.onValueChange, props.min, props.max]);
+
+  return (
+    <div className='p-4'>
+      <div
+        className='flex justify-between items-center pt-4'
       >
-        <RadixSlider.Track
+        <RadixSlider.Root
           className={clsx(
-            'relative h-1 w-full grow bg-gray-100',
-            props.classNames.track
+            'relative flex flex-grow h-5 touch-none items-center w-full',
+            props.classNames.root
           )}
+          max={props.max}
+          min={props.min}
+          minStepsBetweenThumbs={1}
+          onValueChange={props.onValueChange}
+          onValueCommit={props.onValueCommit}
+          step={1}
+          value={props.value}
         >
-          <RadixSlider.Range
+          <RadixSlider.Track
             className={clsx(
-              'absolute h-full bg-gray-600',
-              props.classNames.range
+              'relative h-1 w-full grow bg-gray-100',
+              props.classNames.track
             )}
+          >
+            <RadixSlider.Range
+              className={clsx(
+                'absolute h-full bg-gray-600',
+                props.classNames.range
+              )}
+            />
+          </RadixSlider.Track>
+          <SliderMarker
+            className={props.classNames.thumb}
+            position={props.position}
+            value={props.value[0]}
           />
-        </RadixSlider.Track>
-        <SliderMarker
-          className={props.classNames.thumb}
-          position={props.position}
+          <SliderMarker
+            className={props.classNames.thumb}
+            position={props.position}
+            value={props.value[1]}
+          />
+        </RadixSlider.Root>
+      </div>
+      <div
+        className='flex justify-between w-full py-4'
+      >
+        <Input
+          className={clsx(
+            'rounded-md !w-20',
+            props.classNames.input
+          )}
+          clearable={false}
+          onBlur={(val) => onInputCommit([parseInt(val, 10), props.value[1]])}
+          onChange={(val) => props.onValueChange([parseInt(val, 10), props.value[1]])}
           value={props.value[0]}
         />
-        <SliderMarker
-          className={props.classNames.thumb}
-          position={props.position}
+        <Input
+          className={clsx(
+            'rounded-md !w-20',
+            props.classNames.input
+          )}
+          clearable={false}
+          onBlur={(val) => onInputCommit([props.value[0], parseInt(val, 10)])}
+          onChange={(val) => props.onValueChange([props.value[0], parseInt(val, 10)])}
           value={props.value[1]}
         />
-      </RadixSlider.Root>
+      </div>
     </div>
-    <div
-      className='flex justify-between w-full px-12'
-    >
-      <Input
-        className='rounded-md'
-        clearable={false}
-        onBlur={props.onValueCommit ? ((val) => props.onValueCommit([val, props.value[1]])) : undefined}
-        onChange={(val) => props.onValueChange([val, props.value[1]])}
-        value={props.value[0]}
-      />
-      <Input
-        className='rounded-md'
-        clearable={false}
-        onBlur={props.onValueCommit ? (val) => props.onValueCommit([props.value[0], val]) : undefined}
-        onChange={(val) => props.onValueChange([props.value[0], val])}
-        value={props.value[1]}
-      />
-    </div>
-  </>
-);
+  );
+};
 
 Slider.defaultProps = {
   classNames: {},

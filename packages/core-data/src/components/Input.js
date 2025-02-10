@@ -70,12 +70,12 @@ const Input = (props: Props) => {
         />
       )}
       <input
-        className='grow bg-transparent focus:outline-none'
+        className='grow bg-transparent focus:outline-none w-full'
         placeholder={props.placeholder}
         onBlur={(e) => props.onBlur(e.target.value)}
         onChange={(e) => props.onChange(e.target.value)}
         type='text'
-        value={props.value || ''}
+        value={typeof props.value === 'undefined' ? '' : props.value}
       />
       {clearable && (
         <button
