@@ -5,6 +5,8 @@ import './index.css';
 
 // Components
 export { default as AccordionItemsList } from './components/AccordionItemsList';
+export { default as Button } from './components/Button';
+export { default as ButtonGroup } from './components/ButtonGroup';
 export { default as Checkbox } from './components/Checkbox';
 export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
 export { default as EventDetails } from './components/EventDetails';
@@ -17,6 +19,7 @@ export { default as FacetStateContextProvider } from './components/FacetStateCon
 export { default as FacetTimeline } from './components/FacetTimeline';
 export { default as HeaderImage } from './components/HeaderImage';
 export { default as HitsPerPage } from './components/HitsPerPage';
+export { default as Icon } from './components/Icon';
 export { default as Input } from './components/Input';
 export { default as KeyValueList } from './components/KeyValueList';
 export { default as LayerMenu } from './components/LayerMenu';
