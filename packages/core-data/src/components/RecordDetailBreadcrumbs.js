@@ -45,8 +45,8 @@ const RecordDetailBreadcrumbs = (props: Props) => (
               'text-[13px]',
               'overflow-hidden',
               'text-nowrap',
-              { 'font-semibold underline' : idx == 0 },
-              { 'shrink-0' : idx == props.history.length - 1 },
+              { 'font-semibold' : idx === 0 },
+              { 'shrink-0' : idx === props.history.length - 1 },
               { 'text-ellipsis' : idx < props.history.length - 1 }
             )}
           >
