@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import Icon from './Icon';
 import i18n from '../i18n/i18n';
@@ -45,7 +45,7 @@ type Props = {
   */
   onClear: (val: string) => any,
   /**
-   * (Optional) Callback fired when the user searches.
+   * Callback fired when the user searches.
    */
   onSearch: (val: string) => any,
   /**
@@ -72,11 +72,10 @@ const Combobox = (props: Props) => {
     [props.values]
   );
 
-  const onSearchChange = useCallback((val: string) => {
-    setSearch(val);
-    if (props.onSearch) {
-      props.onSearch(val);
-    }
+  const onSearch = useCallback((query: string) => {
+    setSearch(query);
+    setOpen(true);
+    props.onSearch(query);
   }, [props.onSearch]);
 
   return (
@@ -108,21 +107,19 @@ const Combobox = (props: Props) => {
           <div
             className='flex items-center justify-center gap-1 pr-2 pl-3 rounded-[5px] bg-white w-full min-h-10 border focus-within:border-primary'
           >
-            <div className='grow flex gap-2 flex-wrap p-2'>
-              {props.values.length === 0 && (
-                <input
-                  className='focus:outline-none   w-full'
-                  placeholder={props.placeholder || i18n.t('Combobox.select')}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  value={search}
-                />
-              )}
+            <div className='grow flex gap-1 flex-wrap p-2'>
               {props.values.map((value) => (
                 <ComboboxValue
                   onClick={() => props.onChange(value)}
                   value={value}
                 />
               ))}
+              <input
+                className='focus:outline-none w-full'
+                placeholder={props.placeholder || i18n.t('Combobox.select')}
+                onChange={(e) => onSearch(e.target.value)}
+                value={search}
+              />
             </div>
             <div className='flex gap-2 h-full'>
               {props.onClear && props.values.length > 0 && (
@@ -149,7 +146,7 @@ const Combobox = (props: Props) => {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
-            className='bg-white shadow-md w-full radix-combobox-portal'
+            className='bg-white shadow-md w-full radix-combobox-portal max-h-[200px] overflow-y-auto'
           >
             {props.options.map((option) => (
               <button

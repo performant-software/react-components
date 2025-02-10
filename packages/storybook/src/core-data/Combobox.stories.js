@@ -10,8 +10,8 @@ export default {
 
 const OPTIONS = [
   {
-    label: 'United States',
-    value: 'united_states'
+    label: 'USA',
+    value: 'usa'
   },
   {
     label: 'United Kingdom',
@@ -28,21 +28,41 @@ const OPTIONS = [
   {
     label: 'Canada',
     value: 'canada'
+  },
+  {
+    label: 'Brazil',
+    value: 'brazil'
+  },
+  {
+    label: 'Spain',
+    value: 'spain'
+  },
+  {
+    label: 'Andorra',
+    value: 'andorra'
+  },
+  {
+    label: 'Earth',
+    value: 'earth'
   }
 ];
 
 export const Default = () => {
-  const [countries, setCountries] = useState([]);
+  const [values, setValues] = useState([]);
 
   const onChange = (val) => {
-    if (countries.includes(val)) {
-      setCountries(countries.filter((c) => c !== val));
+    if (values.includes(val)) {
+      setValues(values.filter((c) => c !== val));
     } else {
-      setCountries([...countries, val]);
+      setValues([...values, val]);
     }
   };
 
-  const onClear = () => setCountries([]);
+  const onClear = () => setValues([]);
+
+  const onSearch = (query: string) => {
+    console.log(query);
+  };
 
   return (
     <div className='w-80 bg-neutral-200 flex items-center justify-center p-8'>
@@ -50,7 +70,10 @@ export const Default = () => {
         options={OPTIONS}
         onChange={onChange}
         onClear={onClear}
-        values={countries}
+        onSearch={onSearch}
+        icon='location'
+        label='Countries'
+        values={values}
       />
     </div>
   );
