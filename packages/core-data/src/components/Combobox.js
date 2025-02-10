@@ -112,7 +112,7 @@ const Combobox = (props: Props) => {
               {props.values.length === 0 && (
                 <input
                   className='focus:outline-none   w-full'
-                  placeholder={props.placeholder || i18n.t('Dropdown.select')}
+                  placeholder={props.placeholder || i18n.t('Combobox.select')}
                   onChange={(e) => onSearchChange(e.target.value)}
                   value={search}
                 />
@@ -149,7 +149,7 @@ const Combobox = (props: Props) => {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
-            className='bg-white shadow-md w-full radix-dropdown-portal'
+            className='bg-white shadow-md w-full radix-combobox-portal'
           >
             {props.options.map((option) => (
               <button

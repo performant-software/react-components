@@ -7,7 +7,7 @@
   "RecordDetailHeader": {
     "viewDetails": "View Details"
   },
-  "Dropdown": {
+  "Combobox": {
     "select": "Select"
   },
   "SearchResultsTable": {
