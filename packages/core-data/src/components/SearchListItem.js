@@ -10,7 +10,7 @@ type Props = {
    */
   title: string,
   /**
-   * Attributes to display
+   * Attributes to display (only the first three are shown)
    */
   attributes: Attribute[],
   /**
@@ -24,7 +24,7 @@ const ListItem = (props: Props) => (
     <p className='font-bold text-neutral-800'>{props.title}</p>
     {props.attributes.length > 0 && (
       <ul className='list-none'>
-        {props.attributes.map((att) => (
+        {props.attributes.slice(0, 3).map((att) => (
           <li
             className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
             key={att.name}
