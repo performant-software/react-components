@@ -32,6 +32,7 @@ export { default as PlaceDetails } from './components/PlaceDetails';
 export { default as PlaceLayersSelector } from './components/PlaceLayersSelector';
 export { default as PlaceMarkers } from './components/PlaceMarkers';
 export { default as SearchResultsList } from './components/SearchResultsList';
+export { default as RecordDetailPanel } from './components/RecordDetailPanel';
 export { default as RefinementListProxy } from './components/RefinementListProxy';
 export { default as RelatedEvents } from './components/RelatedEvents';
 export { default as RelatedItem } from './components/RelatedItem';
