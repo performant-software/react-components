@@ -6,6 +6,7 @@ import './index.css';
 // Components
 export { default as AccordionItemsList } from './components/AccordionItemsList';
 export { default as Checkbox } from './components/Checkbox';
+export { default as Combobox } from './components/Combobox';
 export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
 export { default as EventDetails } from './components/EventDetails';
 export { default as EventsList } from './components/EventsList';
