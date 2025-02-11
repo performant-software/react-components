@@ -31,6 +31,11 @@ type Props = {
   onClick: (item: any) => void,
 
   /**
+   * Callback fired when the close button is clicked.
+   */
+  onClose: () => void,
+
+  /**
    * Callback to get an item's name for the list.
    */
   renderItemName: (item: any) => string,
@@ -45,37 +50,48 @@ type Props = {
  * This component renders a list of search results returned from a Core Data Typesense index.
  */
 const SearchResultsList = (props: Props) => (
-  <div className='h-full bg-white'>
-    <div className='flex items-center gap-2 w-full'>
+  <div className='h-full bg-white font-inter'>
+    <div className='flex items-center gap-2 w-full p-6'>
       {props.headerIcon && (
         <Icon
           name={props.headerIcon}
           size={24}
         />
       )}
-      <h2 className='font-bold text-xl'>{props.title}</h2>
+      <p className='font-bold text-xl grow'>{props.title}</p>
+      <button
+        className='flex items-center justify-center rounded-full hover:brightness-50 p-2'
+        onClick={props.onClose}
+        type='button'
+      >
+        <Icon
+          name='close'
+          size={24}
+        />
+      </button>
     </div>
-    <h2 className='font-bold'>
+    <p className='font-bold pt-2 pb-4 px-6 border-b text-lg'>
       {i18n.t('Common.words.Select')}
       &nbsp;
       {props.modelName}
-    </h2>
-    <ul className='w-full h-full'>
-      {props.items.map((item) => (
+    </p>
+    <ul className='w-full h-full divide-y divide-solid'>
+      {props.items.map((item, idx) => (
         <li
-          className='hover:brightness-50 w-full'
+          className='hover:bg-neutral-100 w-full'
+          key={idx}
         >
           <button
-            className='flex items-center gap-2 py-2 px-6'
+            className='flex items-center gap-2 py-2 px-6 w-full min-h-[50px]'
             onClick={() => props.onClick(item)}
             type='button'
           >
             <Icon
               name={props.itemIcon || 'bullet'}
-              size={24}
+              size={14}
             />
             <span
-              className='font-semibold'
+              className='font-semibold text-left text-sm'
             >
               {props.renderItemName(item)}
             </span>
