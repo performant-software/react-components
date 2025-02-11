@@ -6,6 +6,10 @@ import Icon from './Icon';
 
 type Props = {
   /**
+   * (Optional) Custom Tailwind classes for the pill.
+   */
+  className?: string,
+  /**
    * Text to display inside the pill.
    */
   label: string,
@@ -14,20 +18,13 @@ type Props = {
    * @param
    */
   onRemove?: (data) => any,
-  /**
-   * (Optional) Background color for the pill (CSS value, not Tailwind).
-   */
-  primary?: string,
-  /**
-   * (Optional) Text color for the pill (CSS value, not Tailwind).
-   */
-  textColor?: string
 }
 
 const Pill = (props: Props) => (
   <div
     className={clsx(
       'text-white',
+      'bg-primary',
       'fill-white',
       'inline-flex',
       'gap-2',
@@ -39,9 +36,8 @@ const Pill = (props: Props) => (
       'pl-2.5',
       { 'pr-1.5': !!props.onRemove },
       { 'pr-2.5': !props.onRemove },
-      { 'bg-primary': !props.primary }
+      props.className
     )}
-    style={{ backgroundColor: props.primary, color: props.textColor }}
   >
     <span>{props.label}</span>
     {props.onRemove && (
@@ -53,7 +49,6 @@ const Pill = (props: Props) => (
       <Icon
         name='close'
         size={14}
-        style={{ fill: props.textColor }}
       />
     </button>
     )}
