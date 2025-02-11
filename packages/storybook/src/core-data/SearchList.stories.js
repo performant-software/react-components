@@ -1,8 +1,23 @@
 // @flow
 
 import React from 'react';
-import InstantSearchProvider from '../components/InstantSearchProvider';
 import SearchList from '../../../core-data/src/components/SearchList';
+import data from '../data/typesense/Places.json';
+
+const LOTS_OF_DATA = [
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data,
+  ...data
+];
+
+LOTS_OF_DATA[0].name = "I'm a really long name to showcase how this component handles really long names.";
 
 export default {
   title: 'Components/Core Data/SearchList',
@@ -10,7 +25,28 @@ export default {
 };
 
 export const Default = () => (
-  <InstantSearchProvider>
-    <SearchList attributes={[]} />
-  </InstantSearchProvider>
+  <div className='h-[600px] w-[360px]'>
+    <SearchList
+      attributes={[
+        {
+          label: 'UUID',
+          name: 'uuid',
+        },
+        {
+          label: 'Record ID',
+          name: 'record_id',
+          icon: 'person'
+        },
+        {
+          label: 'Location',
+          name: 'geometry',
+          icon: 'location',
+          render: (item) => (item.coordinates
+            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+            : '')
+        },
+      ]}
+      items={LOTS_OF_DATA}
+    />
+  </div>
 );
