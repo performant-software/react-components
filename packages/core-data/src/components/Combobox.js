@@ -1,10 +1,9 @@
 // @flow
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import Icon from './Icon';
 import i18n from '../i18n/i18n';
-import './Combobox.css';
 
 type Option = {
   label: string,
@@ -149,7 +148,7 @@ const Combobox = (props: Props) => {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
-            className='bg-white shadow-md w-full radix-combobox-portal max-h-[200px] overflow-y-auto'
+            className='bg-white shadow-md radix-combobox-content max-h-[200px] overflow-y-auto'
           >
             {props.options.map((option) => (
               <button
