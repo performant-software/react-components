@@ -24,9 +24,8 @@ export const OnRemove = () => (
 
 export const CustomColors = () => (
   <Pill
+    className='bg-[#fc94af] text-white fill-purple-600'
     label='Chip Text'
     onRemove={action('click')}
-    primary='#fc94af'
-    textColor='#000000'
   />
 );
