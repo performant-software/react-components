@@ -12,6 +12,7 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js"
     },
+    "./icons.svg": "./dist/assets/icons.svg",
     "./style.css": "./dist/packages/core-data/src/index.css",
     "./tailwind.css": "./dist/packages/core-data/src/tailwind.css",
     "./tailwind.config": "./dist/tailwind.config.js"
