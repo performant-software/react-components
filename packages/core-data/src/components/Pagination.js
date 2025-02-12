@@ -2,10 +2,6 @@
 
 import React from 'react';
 import {
-  useInstantSearch,
-  usePagination
-} from 'react-instantsearch';
-import {
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@radix-ui/react-icons';
@@ -17,42 +13,64 @@ type Props = {
   /**
    * (Optional) Class name to append to the list of the Pagination container
    */
-  className?: string
+  className?: string,
+
+  /**
+   * Hits to show on each page
+   */
+  hitsPerPage: number,
+
+  /**
+   * Total number of hits
+   */
+  nbHits: number,
+
+  /**
+   * Callback that runs when the hits per page setting is changed
+   */
+  onChangeHitsPerPage: (num: number) => void,
+
+  /**
+   * Callback that runs when the page is changed
+   */
+  onChangePage: (num: number) => void,
+
+  /**
+   * The current page
+   */
+  page: number
 }
 
 const Pagination = (props: Props) => {
-  const { refine } = usePagination();
-  const { results } = useInstantSearch();
-
   /**
    * The position of the first item in the visible results list.
    */
-  const firstItemPosition = (results.page * results.hitsPerPage) + 1;
+  const firstItemPosition = (props.page * props.hitsPerPage) + 1;
 
   /**
    * The position of the last item in the visible results list.
    */
-  const lastItemPosition = firstItemPosition + results.hits.length - 1;
+  const lastItemPosition = firstItemPosition + (props.hitsPerPage % (props.nbHits - (props.hitsPerPage * props.page))) - 1;
 
   /**
    * Whether the user can go forward to the next page.
    */
-  const canGoForward = (firstItemPosition + results.hitsPerPage) < results.nbHits;
+  const canGoForward = (firstItemPosition + props.hitsPerPage) < props.nbHits;
 
   /**
    * Whether the user can go back to the previous page.
    */
-  const canGoBack = firstItemPosition > results.hitsPerPage;
+  const canGoBack = firstItemPosition > props.hitsPerPage;
 
   /**
    * Requests the next page of results.
    */
-  const onNextPage = () => refine(results.page + 1);
+  const onNextPage = () => props.onChangePage(props.page + 1);
 
   /**
    * Requests the previous page of results.
    */
-  const onPreviousPage = () => refine(results.page - 1);
+  const onPreviousPage = () => props.onChangePage(props.page - 1);
 
   return (
     <div className={clsx(
@@ -71,7 +89,10 @@ const Pagination = (props: Props) => {
       <span className='font-bold'>
         {i18n.t('SearchResultsTable.rowsPerPage')}
       </span>
-      <HitsPerPage />
+      <HitsPerPage
+        hitsPerPage={props.hitsPerPage}
+        onChange={props.onChangeHitsPerPage}
+      />
       <span>
         {firstItemPosition}
         -
@@ -79,7 +100,7 @@ const Pagination = (props: Props) => {
         &nbsp;
         {i18n.t('Common.words.of')}
         &nbsp;
-        {results.nbHits}
+        {props.nbHits}
       </span>
       <button
         className={clsx(

@@ -1,92 +1,97 @@
 // @flow
 
-import React from 'react';
+import React, { useState } from 'react';
 import SearchResultsTable from '../../../core-data/src/components/SearchResultsTable';
 import hits from '../data/typesense/Places.json';
-import InstantSearchProvider from '../components/InstantSearchProvider';
+import { shuffle } from '../utils/Array';
+
+const LOTS_OF_HITS = shuffle([
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+  ...hits,
+]);
 
 export default {
   title: 'Components/Core Data/SearchResultsTable',
   component: SearchResultsTable
 };
 
-export const Default = () => (
-  <InstantSearchProvider>
+const COLUMNS = [
+  {
+    label: 'UUID',
+    name: 'uuid'
+  },
+  {
+    label: 'Name',
+    name: 'name'
+  },
+  {
+    label: 'Location',
+    name: 'geometry',
+    render: (item) => (item.coordinates
+      ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+      : '')
+  }
+];
+
+export const Default = () => {
+  const [page, setPage] = useState(1);
+  const [hitsPerPage, setHitsPerPage] = useState(10);
+
+  return (
     <div className='h-80'>
       <SearchResultsTable
-        columns={[
-          {
-            label: 'UUID',
-            name: 'uuid'
-          },
-          {
-            label: 'Name',
-            name: 'name'
-          },
-          {
-            label: 'Location',
-            name: 'geometry',
-            render: (item) => (item.coordinates
-              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
-              : '')
-          }
-        ]}
-        hits={hits}
+        columns={COLUMNS}
+        hits={LOTS_OF_HITS}
+        hitsPerPage={hitsPerPage}
+        onChangeHitsPerPage={setHitsPerPage}
+        onChangePage={setPage}
+        page={page}
       />
     </div>
-  </InstantSearchProvider>
-);
+  );
+};
 
-export const Narrow = () => (
-  <InstantSearchProvider>
+export const Narrow = () => {
+  const [page, setPage] = useState(1);
+  const [hitsPerPage, setHitsPerPage] = useState(10);
+
+  return (
     <div className='h-80 w-[400px]'>
       <SearchResultsTable
-        columns={[
-          {
-            label: 'UUID',
-            name: 'uuid'
-          },
-          {
-            label: 'Name',
-            name: 'name'
-          },
-          {
-            label: 'Location',
-            name: 'geometry',
-            render: (item) => (item.coordinates
-              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
-              : '')
-          }
-        ]}
-        hits={hits}
+        columns={COLUMNS}
+        hits={LOTS_OF_HITS}
+        hitsPerPage={hitsPerPage}
+        onChangeHitsPerPage={setHitsPerPage}
+        onChangePage={setPage}
+        page={page}
       />
     </div>
-  </InstantSearchProvider>
-);
+  );
+};
 
-export const ReallyBig = () => (
-  <InstantSearchProvider>
+export const ReallyBig = () => {
+  const [page, setPage] = useState(1);
+  const [hitsPerPage, setHitsPerPage] = useState(10);
+
+  return (
     <div className='h-[80vh] w-[1000px]'>
       <SearchResultsTable
-        columns={[
-          {
-            label: 'UUID',
-            name: 'uuid'
-          },
-          {
-            label: 'Name',
-            name: 'name'
-          },
-          {
-            label: 'Location',
-            name: 'geometry',
-            render: (item) => (item.coordinates
-              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
-              : '')
-          }
-        ]}
-        hits={hits}
+        columns={COLUMNS}
+        hits={LOTS_OF_HITS}
+        hitsPerPage={hitsPerPage}
+        onChangeHitsPerPage={setHitsPerPage}
+        onChangePage={setPage}
+        page={page}
       />
     </div>
-  </InstantSearchProvider>
-);
+  );
+};
