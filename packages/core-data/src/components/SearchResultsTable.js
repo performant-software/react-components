@@ -51,16 +51,23 @@ type Props = {
 }
 
 const SearchResultsTable = (props: Props) => {
-  useEffect(() => {
-    props.onChangePage(1);
-  }, [props.hitsPerPage]);
-
+  /**
+   * Calculate which hits to display with the current settings
+   */
   const hitsToShow = useMemo(() => {
-    const first = (props.hitsPerPage * (props.page - 1)) + 1;
+    const first = (props.hitsPerPage * (props.page - 1));
     const last = Math.min(first + props.hitsPerPage, props.hits.length) - 1;
 
     return props.hits.slice(first, last + 1);
   }, [props.hitsPerPage, props.hits, props.page]);
+
+  /**
+   * Reset to the first page when the hits per page changes
+   */
+  const onChangeHitsPerPage = (num: number) => {
+    props.onChangePage(1);
+    props.onChangeHitsPerPage(num);
+  };
 
   return (
     <div className='rounded-md inline-block border border-neutral-200 w-full h-full min-h-full flex flex-col'>
@@ -106,6 +113,7 @@ const SearchResultsTable = (props: Props) => {
         {...props}
         className='sticky bottom-0 grow-0 w-full min-w-full'
         nbHits={props.hits.length}
+        onChangeHitsPerPage={onChangeHitsPerPage}
       />
     </div>
   );

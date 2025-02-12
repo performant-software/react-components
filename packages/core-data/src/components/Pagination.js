@@ -45,12 +45,12 @@ const Pagination = (props: Props) => {
   /**
    * The position of the first item in the visible results list.
    */
-  const firstItemPosition = (props.page * props.hitsPerPage) + 1;
+  const firstItemPosition = (props.hitsPerPage * (props.page - 1)) + 1;
 
   /**
    * The position of the last item in the visible results list.
    */
-  const lastItemPosition = firstItemPosition + (props.hitsPerPage % (props.nbHits - (props.hitsPerPage * props.page))) - 1;
+  const lastItemPosition = Math.min(firstItemPosition + props.hitsPerPage - 1, props.nbHits);
 
   /**
    * Whether the user can go forward to the next page.
