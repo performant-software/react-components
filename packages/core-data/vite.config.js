@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import copy from 'rollup-plugin-copy';
 import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets';
+import svgr from 'vite-plugin-svgr';
 import * as packageJson from './package.json';
 
 export default defineConfig(() => ({
@@ -30,7 +31,8 @@ export default defineConfig(() => ({
     }),
     libAssetsPlugin({
       include: /\.svg(\?.*)?$/
-    })
+    }),
+    svgr()
   ],
   build: {
     cssCodeSplit: true,

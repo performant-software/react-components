@@ -2,7 +2,8 @@
 
 import clsx from 'clsx';
 import React from 'react';
-import Icons from '../icons/icons.svg';
+// eslint-disable-next-line import/no-unresolved
+import Icons from '../icons/icons.svg?url';
 
 type Props = {
   className?: string,
