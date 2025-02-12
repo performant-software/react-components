@@ -5,55 +5,7 @@ import clsx from 'clsx';
 import React, { type Node } from 'react';
 import _ from 'underscore';
 import Icon from './Icon';
-
-type RelatedRecord = {
-  /**
-   * Optional data prop to pass other fields, e.g. if needed for rendering
-  */
-  data?: any,
- 
-  /**
-    * Optional event fired when the item is clicked. Note this will be overridden if a renderItem prop is provided in the parent list
-  */
-  onClick?: () => void,
-
-  /**
-   * The primary name of the record (will display as text of the list item by default)
-   */
-  name: string,
-}
-
-type RelatedRecordsList = {  
-  /**
-   * The item count (optional)
-   */
-  count?: boolean,
-  
-  /**
-   * Icon to use in front of each list item. Defaults to none. Note this is overridden if a renderItem prop is provided
-   */
-  icon?: JSX.Element,
-
-  /**
-   * List of related items
-   */
-  items: Array<RelatedRecord>,
-
-  /**
-   * Optional render prop to render the title and count; defaults to `${title} (${count})`
-   */
-  renderTitle?: (title: String, count?: number | string) => JSX.Element,
-  
-  /**
-   * Optional render prop to render each item in the list
-  */
-  renderItem?: (item: RelatedRecord) => JSX.Element,
-
-  /**
-   * The title of the related model
-   */
-  title: string,
-}
+import type { RelatedRecordsList } from '../types/RelatedRecordsList';
 
 type Props = {
   /**

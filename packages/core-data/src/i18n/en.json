@@ -1,11 +1,15 @@
 {
   "Common": {
     "words": {
-      "of": "of"
+      "of": "of",
+      "results": "results"
     }
   },
   "RecordDetailHeader": {
     "viewDetails": "View Details"
+  },
+  "Combobox": {
+    "select": "Select"
   },
   "SearchResultsTable": {
     "rowsPerPage": "Rows per page"

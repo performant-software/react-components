@@ -3,6 +3,7 @@
 
 /* Component styles */
 @import './styles/AccordionItemsList.css';
+@import './styles/Combobox.css';
 @import './styles/FacetList.css';
 @import './styles/FacetTimeline.css';
 @import './styles/LoadAnimation.css';
