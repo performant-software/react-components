@@ -29,8 +29,7 @@ export default defineConfig(() => ({
       hook: 'writeBundle'
     }),
     libAssetsPlugin({
-      include: /\.svg(\?.*)?$/,
-      name: '[name].[ext]'
+      include: /\.svg(\?.*)?$/
     })
   ],
   build: {
