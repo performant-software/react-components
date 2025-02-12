@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Pagination from './Pagination';
 
 type Column = {
