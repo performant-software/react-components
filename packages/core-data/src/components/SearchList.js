@@ -26,15 +26,15 @@ type Props = {
   /**
    * Callback that fires when an item is clicked
    */
-  onItemClick: (item: any) => void,
+  onItemClick?: (item: any) => void,
   /**
    * Callback that fires when the mouse begins to hover over an item
    */
-  onItemMouseEnter: (item: any) => void,
+  onItemMouseEnter?: (item: any) => void,
   /**
    * Callback that fires when the mouse stops hovering over an item
    */
-  onItemMouseLeave: (item: any) => void
+  onItemMouseLeave?: (item: any) => void
 };
 
 const SearchList = (props: Props) => (

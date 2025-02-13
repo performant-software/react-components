@@ -16,15 +16,15 @@ type SearchListItemProps = {
   /**
    * Callback that fires when an item is clicked
    */
-  onClick: (item: any) => void,
+  onClick?: (item: any) => void,
   /**
    * Callback that fires when the mouse begins to hover over an item
    */
-  onMouseEnter: (item: any) => void,
+  onMouseEnter?: (item: any) => void,
   /**
    * Callback that fires when the mouse stops hovering over an item
    */
-  onMouseLeave: (item: any) => void,
+  onMouseLeave?: (item: any) => void,
   /**
    * Title of the record
    */
