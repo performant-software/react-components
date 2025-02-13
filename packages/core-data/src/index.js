@@ -46,6 +46,7 @@ export { default as RelatedPlaces } from './components/RelatedPlaces';
 export { default as RelatedPlacesLayer } from './components/RelatedPlacesLayer';
 export { default as RelatedSources } from './components/RelatedSources';
 export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
+export { default as SearchList } from './components/SearchList';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 export { default as SearchResultsTable } from './components/SearchResultsTable';
 
