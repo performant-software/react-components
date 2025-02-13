@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import React from 'react';
+import _ from 'underscore';
 import Icon from './Icon';
 import Button from './Button';
 import RecordDetailTitle from './RecordDetailTitle';
@@ -10,7 +11,6 @@ import AccordionItemsList from './AccordionItemsList';
 import RecordDetailHeader from './RecordDetailHeader';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
 import i18n from '../i18n/i18n';
-import _ from 'underscore';
 import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
 
 type Props = {
@@ -94,10 +94,10 @@ const RecordDetailPanel = (props: Props) => (
         title={props.title}
         icon={props.icon}
         classNames={
-          { 
-            root: clsx({'pt-16': props.breadcrumbs || props.onGoBack}, props.classNames?.header), 
-            title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), //make sure there's space for the close icon
-            items: props.classNames?.items 
+          {
+            root: clsx({ 'pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
+            title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), // make sure there's space for the close icon
+            items: props.classNames?.items
           }
         }
         detailItems={props.detailItems}

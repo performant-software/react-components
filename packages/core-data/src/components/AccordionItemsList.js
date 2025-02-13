@@ -45,7 +45,13 @@ const AccordionItemsList = (props: Props) => (
                 ) : (
                   <span>
                     { relation.title }
-                    { relation.count ? <span className='ml-2'>({ relation.items.length })</span> : null }
+                    { relation.count ? (
+                      <span className='ml-2'>
+                        (
+                        { relation.items.length }
+                        )
+                      </span>
+                    ) : null }
                   </span>
                 )
               }
@@ -68,15 +74,19 @@ const AccordionItemsList = (props: Props) => (
                     relation.renderItem ? (
                       relation.renderItem(item)
                     ) : (
-                      <li key={idx} onClick={item.onClick} className={
+                      <li
+                        key={idx}
+                        onClick={item.onClick}
+                        className={
                         clsx(
                           'flex flex-row gap-2 items-baseline px-6 py-2',
-                          { 
-                            'hover:bg-neutral-100' : item.onClick,
+                          {
+                            'hover:bg-neutral-100': item.onClick,
                             'cursor-pointer': item.onClick
                           }
-                        )}
-                      >                           
+                        )
+}
+                      >
                         {
                           relation.icon && (
                             <Icon
@@ -86,7 +96,7 @@ const AccordionItemsList = (props: Props) => (
                           )
                         }
                         <span>
-                          { item.name }                        
+                          { item.name }
                         </span>
                       </li>
                     )
