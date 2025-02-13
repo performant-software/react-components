@@ -1,0 +1,1 @@
+import{t as o}from"./toPropertyKey-BcUJYDQU.js";function n(r,e,t){return e=o(e),e in r?Object.defineProperty(r,e,{value:t,enumerable:!0,configurable:!0,writable:!0}):r[e]=t,r}const f=Object.freeze(Object.defineProperty({__proto__:null,default:n},Symbol.toStringTag,{value:"Module"}));export{n as _,f as d};
