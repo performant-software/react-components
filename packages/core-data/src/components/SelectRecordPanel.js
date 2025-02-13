@@ -50,7 +50,7 @@ type Props = {
  * This component renders a list of search results returned from a Core Data Typesense index.
  */
 const SearchResultsList = (props: Props) => (
-  <div className='h-full bg-white font-inter'>
+  <div className='h-full bg-white'>
     <div className='flex items-center gap-2 w-full p-6'>
       {props.headerIcon && (
         <Icon
