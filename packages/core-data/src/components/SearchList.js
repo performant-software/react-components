@@ -13,7 +13,11 @@ type Props = {
   /**
    * Array of search result items
    */
-  items: Array<any>
+  items: Array<any>,
+  /**
+   * Field name or callback function to return the title of an item
+   */
+  itemTitle: string | (item: any) => string
 };
 
 const SearchList = (props: Props) => (
@@ -26,10 +30,10 @@ const SearchList = (props: Props) => (
     <ul className='overflow-y-auto h-full divide-y divide-solid'>
       {props.items.map((item, idx) => (
         <SearchListItem
-          key={idx}
-          title={item.name}
           attributes={props.attributes}
+          key={idx}
           item={item}
+          title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
         />
       ))}
     </ul>

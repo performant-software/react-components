@@ -47,6 +47,35 @@ export const Default = () => (
         },
       ]}
       items={LOTS_OF_DATA}
+      itemTitle='name'
+    />
+  </div>
+);
+
+export const TitleCallback = () => (
+  <div className='h-[600px] w-[360px]'>
+    <SearchList
+      attributes={[
+        {
+          label: 'UUID',
+          name: 'uuid',
+        },
+        {
+          label: 'Record ID',
+          name: 'record_id',
+          icon: 'person'
+        },
+        {
+          label: 'Location',
+          name: 'geometry',
+          icon: 'location',
+          render: (item) => (item.coordinates
+            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+            : '')
+        },
+      ]}
+      items={LOTS_OF_DATA}
+      itemTitle={(item) => `This record's name is "${item.name}"`}
     />
   </div>
 );
