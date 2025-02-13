@@ -2,7 +2,8 @@
   "Common": {
     "words": {
       "of": "of",
-      "results": "results"
+      "results": "results",
+      "result": "result"
     }
   },
   "RecordDetailHeader": {
