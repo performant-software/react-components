@@ -1,7 +1,7 @@
 // @flow
 
 import { action } from '@storybook/addon-actions';
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '../../../core-data/src/components/Button';
 import Icon from '../../../core-data/src/components/Icon';
 
@@ -76,4 +76,4 @@ export const customClasses = () => (
   >
     This is blue
   </Button>
-)
+);

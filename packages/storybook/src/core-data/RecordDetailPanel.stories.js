@@ -9,33 +9,33 @@ export default {
 };
 
 const sampleData = [
-    {
-        title: 'Related People',
-        items: [
-            {
-                name: 'Kazuya Miyuki'
-            },
-            {
-                name: 'Eijun Sawamura'
-            }
-        ],
-        icon: 'person',
-        count: true
-    },
-    {
-        title: 'Related Organizations',
-        items: [
-            {
-              name: 'Seido High School Baseball Club'
-            },
-            {
-              name: 'Yakushi High School Baseball Club'
-            }
-        ],
-        icon: 'occupation',
-        count: true
-    }
-]
+  {
+    title: 'Related People',
+    items: [
+      {
+        name: 'Kazuya Miyuki'
+      },
+      {
+        name: 'Eijun Sawamura'
+      }
+    ],
+    icon: 'person',
+    count: true
+  },
+  {
+    title: 'Related Organizations',
+    items: [
+      {
+        name: 'Seido High School Baseball Club'
+      },
+      {
+        name: 'Yakushi High School Baseball Club'
+      }
+    ],
+    icon: 'occupation',
+    count: true
+  }
+];
 
 export const Default = () => (
   <RecordDetailPanel
@@ -53,7 +53,12 @@ export const Default = () => (
     ]}
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailPanel>
 );
@@ -75,10 +80,15 @@ export const WithViewDetail = () => (
     ]}
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailPanel>
-)
+);
 
 export const WithIcon = () => (
   <RecordDetailPanel
@@ -97,10 +107,15 @@ export const WithIcon = () => (
     icon='participants'
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailPanel>
-)
+);
 
 export const WithClose = () => (
   <RecordDetailPanel
@@ -116,13 +131,18 @@ export const WithClose = () => (
         icon: 'location'
       }
     ]}
-    onClose={() => { alert('Closed!') }}
+    onClose={() => { alert('Closed!'); }}
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
-    </p>  
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+    </p>
   </RecordDetailPanel>
-)
+);
 
 export const WithBreadcrumbs = () => (
   <RecordDetailPanel
@@ -142,10 +162,15 @@ export const WithBreadcrumbs = () => (
     onGoBack={() => { alert('Go back!'); }}
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailPanel>
-)
+);
 
 export const FixedWidthAndHeight = () => (
   <RecordDetailPanel
@@ -164,14 +189,18 @@ export const FixedWidthAndHeight = () => (
     breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
     onGoBack={() => { alert('Go back!'); }}
     classNames={{
-        root: 'w-[380px] h-[500px]'
-      }
-    } 
-    onClose={() => { alert('Close!') }}
+      root: 'w-[380px] h-[500px]'
+    }}
+    onClose={() => { alert('Close!'); }}
     detailPageUrl='#'
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailPanel>
-)
+);

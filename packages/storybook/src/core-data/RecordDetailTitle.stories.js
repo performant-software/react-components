@@ -26,4 +26,4 @@ export const Multiline = () => (
     text='This is a really long header that goes onto the second line'
     className='w-80'
   />
-)
+);
