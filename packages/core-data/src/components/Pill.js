@@ -18,14 +18,19 @@ type Props = {
    * @param
    */
   onRemove?: (data) => any,
+  /**
+   * If `true`, the button will display with the primary background color.
+   */
+  primary?: boolean,
+  /**
+   * If `true`, the button will display with the secondary background color.
+   */
+  secondary?: boolean
 }
 
 const Pill = (props: Props) => (
   <div
     className={clsx(
-      'text-white',
-      'bg-primary',
-      'fill-white',
       'inline-flex',
       'gap-2',
       'justify-center',
@@ -36,13 +41,16 @@ const Pill = (props: Props) => (
       'pl-2.5',
       { 'pr-1.5': !!props.onRemove },
       { 'pr-2.5': !props.onRemove },
+      { 'bg-primary text-white fill-white': props.primary },
+      { 'border border-solid border-secondary text-black': !props.primary },
+      { 'bg-secondary': props.secondary },
       props.className
     )}
   >
     <span>{props.label}</span>
     {props.onRemove && (
     <button
-      className='flex justify-center items-center h-full'
+      className='flex justify-center items-center h-full rounded-full'
       onClick={props.onRemove}
       type='button'
     >

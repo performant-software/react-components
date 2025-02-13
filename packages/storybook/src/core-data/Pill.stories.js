@@ -29,3 +29,19 @@ export const CustomColors = () => (
     onRemove={action('click')}
   />
 );
+
+export const PrimaryColor = () => (
+  <Pill
+    primary
+    label='Chip Text'
+    onRemove={action('click')}
+  />
+);
+
+export const SecondaryColor = () => (
+  <Pill
+    label='Chip Text'
+    onRemove={action('click')}
+    secondary
+  />
+);
