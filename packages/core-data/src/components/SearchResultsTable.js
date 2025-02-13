@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Pagination from './Pagination';
 
 type Column = {
@@ -28,45 +28,36 @@ type Props = {
   /**
    * Array of search hit objects.
    */
-  hits: Array<any>,
-  /**
-   * Hits to show on each page
-   */
-  hitsPerPage: number,
-
-  /**
-   * Callback that runs when the hits per page setting is changed
-   */
-  onChangeHitsPerPage: (num: number) => void,
-
-  /**
-   * Callback that runs when the page is changed
-   */
-  onChangePage: (num: number) => void,
-
-  /**
-   * The current page
-   */
-  page: number
+  hits: Array<any>
 }
 
 const SearchResultsTable = (props: Props) => {
   /**
+   * Which page of the results we're currently displaying
+   */
+  const [page, setPage] = useState(1);
+
+  /**
+   * Number of hits to show on each page
+   */
+  const [hitsPerPage, setHitsPerPage] = useState(10);
+
+  /**
    * Calculate which hits to display with the current settings
    */
   const hitsToShow = useMemo(() => {
-    const first = (props.hitsPerPage * (props.page - 1));
-    const last = Math.min(first + props.hitsPerPage, props.hits.length) - 1;
+    const first = (hitsPerPage * (page - 1));
+    const last = Math.min(first + hitsPerPage, props.hits.length) - 1;
 
     return props.hits.slice(first, last + 1);
-  }, [props.hitsPerPage, props.hits, props.page]);
+  }, [hitsPerPage, props.hits, page]);
 
   /**
    * Reset to the first page when the hits per page changes
    */
   const onChangeHitsPerPage = (num: number) => {
-    props.onChangePage(1);
-    props.onChangeHitsPerPage(num);
+    setPage(1);
+    setHitsPerPage(num);
   };
 
   return (
@@ -110,10 +101,12 @@ const SearchResultsTable = (props: Props) => {
           when there aren't enough results to fill the table */}
       <div className='grow' />
       <Pagination
-        {...props}
         className='sticky bottom-0 grow-0 w-full min-w-full'
         nbHits={props.hits.length}
         onChangeHitsPerPage={onChangeHitsPerPage}
+        page={page}
+        onChangePage={setPage}
+        hitsPerPage={hitsPerPage}
       />
     </div>
   );
