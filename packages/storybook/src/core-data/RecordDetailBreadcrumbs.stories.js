@@ -17,9 +17,9 @@ export const Default = () => (
 export const WithBackArrow = () => (
   <RecordDetailBreadcrumbs
     history={['First record', 'Second record', 'Third record']}
-    onGoBack={() => { alert('Go Back!') }}
+    onGoBack={() => { alert('Go Back!'); }}
   />
-)
+);
 
 export const NarrowWidth = () => (
   <RecordDetailBreadcrumbs

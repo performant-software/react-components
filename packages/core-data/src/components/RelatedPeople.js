@@ -70,7 +70,6 @@ const RelatedPeople = (props: Props) => {
           { getName(person) }
         </>
       ))}
-      showMoreLabel={props.showMoreLabel}
     />
   );
 };

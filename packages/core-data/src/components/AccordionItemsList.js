@@ -2,7 +2,7 @@
 
 import * as Accordion from '@radix-ui/react-accordion';
 import clsx from 'clsx';
-import React, { type Node } from 'react';
+import React from 'react';
 import _ from 'underscore';
 import Icon from './Icon';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
@@ -45,7 +45,13 @@ const AccordionItemsList = (props: Props) => (
                 ) : (
                   <span>
                     { relation.title }
-                    { relation.count ? <span className='ml-2'>({ relation.items.length })</span> : null }
+                    { relation.count ? (
+                      <span className='ml-2'>
+                        (
+                        { relation.items.length }
+                        )
+                      </span>
+                    ) : null }
                   </span>
                 )
               }
@@ -62,21 +68,29 @@ const AccordionItemsList = (props: Props) => (
         >
           <ul>
             {
-              _.map(relation.items, (item, idx) => (
+              _.map(relation.items, (item, idxx) => (
                 <>
                   {
                     relation.renderItem ? (
                       relation.renderItem(item)
                     ) : (
-                      <li key={idx} onClick={item.onClick} className={
+                      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+                      <li
+                        key={idxx}
+                        onClick={item.onClick}
+                        onKeyDown={item.onClick}
+                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                        tabIndex={item.onClick ? '0' : '-1'}
+                        className={
                         clsx(
                           'flex flex-row gap-2 items-baseline px-6 py-2',
-                          { 
-                            'hover:bg-neutral-100' : item.onClick,
+                          {
+                            'hover:bg-neutral-100': item.onClick,
                             'cursor-pointer': item.onClick
                           }
-                        )}
-                      >                           
+                        )
+                        }
+                      >
                         {
                           relation.icon && (
                             <Icon
@@ -86,7 +100,7 @@ const AccordionItemsList = (props: Props) => (
                           )
                         }
                         <span>
-                          { item.name }                        
+                          { item.name }
                         </span>
                       </li>
                     )

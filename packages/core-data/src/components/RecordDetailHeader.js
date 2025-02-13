@@ -2,10 +2,9 @@
 
 import clsx from 'clsx';
 import React from 'react';
-import Icon from './Icon';
+import _ from 'underscore';
 import Button from './Button';
 import RecordDetailTitle from './RecordDetailTitle';
-import _ from 'underscore';
 import RecordDetailItem from './RecordDetailItem';
 import i18n from '../i18n/i18n';
 
@@ -78,7 +77,7 @@ const RecordDetailHeader = (props: Props) => (
       { props.children }
     </div>
     { props.detailPageUrl && (
-      <a href={props.detailPageUrl}>   
+      <a href={props.detailPageUrl}>
         <Button rounded className='w-full justify-center'>
           { i18n.t('RecordDetailHeader.viewDetails') }
         </Button>

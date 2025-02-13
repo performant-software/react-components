@@ -59,7 +59,9 @@ const RelatedItemsList = (props: Props) => (
             { props.label }
             { _.isFinite(props.count) && (
               <span className='ml-1'>
-                ({ props.count })
+                (
+                { props.count }
+                )
               </span>
             )}
             { props.error && (

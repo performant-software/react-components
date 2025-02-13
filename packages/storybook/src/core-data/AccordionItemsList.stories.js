@@ -9,99 +9,99 @@ export default {
 };
 
 const sampleData = [
-    {
-        title: 'Related People',
-        items: [
-            {
-                name: 'Kazuya Miyuki'
-            },
-            {
-                name: 'Eijun Sawamura'
-            }
-        ]
-    },
-    {
-        title: 'Related Organizations',
-        items: [
-            {
-                name: 'Seido High School Baseball Club'
-            }
-        ]
-    }
-]
+  {
+    title: 'Related People',
+    items: [
+      {
+        name: 'Kazuya Miyuki'
+      },
+      {
+        name: 'Eijun Sawamura'
+      }
+    ]
+  },
+  {
+    title: 'Related Organizations',
+    items: [
+      {
+        name: 'Seido High School Baseball Club'
+      }
+    ]
+  }
+];
 
 const sampleDataWithIcon = [
-    {
-        title: 'Related People',
-        items: [
-            {
-                name: 'Kazuya Miyuki'
-            },
-            {
-                name: 'Eijun Sawamura'
-            }
-        ],
-        icon: 'person'
-    },
-    {
-        title: 'Related Organizations',
-        items: [
-            {
-                name: 'Seido High School Baseball Club'
-            }
-        ],
-        icon: 'occupation'
-    }
-]
+  {
+    title: 'Related People',
+    items: [
+      {
+        name: 'Kazuya Miyuki'
+      },
+      {
+        name: 'Eijun Sawamura'
+      }
+    ],
+    icon: 'person'
+  },
+  {
+    title: 'Related Organizations',
+    items: [
+      {
+        name: 'Seido High School Baseball Club'
+      }
+    ],
+    icon: 'occupation'
+  }
+];
 
 const sampleDataWithCount = [
   {
-      title: 'Related People',
-      items: [
-          {
-              name: 'Kazuya Miyuki'
-          },
-          {
-              name: 'Eijun Sawamura'
-          }
-      ],
-      count: true
+    title: 'Related People',
+    items: [
+      {
+        name: 'Kazuya Miyuki'
+      },
+      {
+        name: 'Eijun Sawamura'
+      }
+    ],
+    count: true
   },
   {
-      title: 'Related Organizations',
-      items: [
-          {
-              name: 'Seido High School Baseball Club'
-          }
-      ],
-      count: true
+    title: 'Related Organizations',
+    items: [
+      {
+        name: 'Seido High School Baseball Club'
+      }
+    ],
+    count: true
   }
-]
+];
 
 const sampleDataWithClickEvent = [
   {
-      title: 'Related People',
-      items: [
-          {
-              name: 'Kazuya Miyuki',
-              onClick: () => { alert('Kazuya Miyuki!') }
-          },
-          {
-              name: 'Eijun Sawamura'
-          }
-      ],
-      count: true
+    title: 'Related People',
+    items: [
+      {
+        name: 'Kazuya Miyuki',
+        onClick: () => { alert('Kazuya Miyuki!'); }
+      },
+      {
+        name: 'Eijun Sawamura'
+      }
+    ],
+    count: true
   },
   {
-      title: 'Related Organizations',
-      items: [
-          {
-              name: 'Seido High School Baseball Club'
-          }
-      ],
-      count: true
+    title: 'Related Organizations',
+    items: [
+      {
+        name: 'Seido High School Baseball Club'
+      }
+    ],
+    count: true
   }
-]
+];
 
 export const Default = () => (
   <AccordionItemsList
@@ -113,16 +113,16 @@ export const WithIcons = () => (
   <AccordionItemsList
     relations={sampleDataWithIcon}
   />
-)
+);
 
 export const WithCount = () => (
   <AccordionItemsList
     relations={sampleDataWithCount}
   />
-)
+);
 
 export const WithClickEvent = () => (
   <AccordionItemsList
     relations={sampleDataWithClickEvent}
   />
-)
+);

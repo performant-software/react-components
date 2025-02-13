@@ -1,6 +1,5 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
 import React, { useState } from 'react';
 import FacetSlider from '../../../core-data/src/components/FacetSlider';
 

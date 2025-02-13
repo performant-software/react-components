@@ -2,8 +2,8 @@
 
 import clsx from 'clsx';
 import React from 'react';
+import _ from 'underscore';
 import Icon from './Icon';
-import _ from 'underscore'
 
 type Props = {
   /**
@@ -29,31 +29,29 @@ const RecordDetailBreadcrumbs = (props: Props) => (
       'flex-row',
       'items-center',
       'gap-1.5',
-      props.className  
+      props.className
     )}
   >
     { props.onGoBack && (
-      <div onClick={props.onGoBack} className='cursor-pointer'>
+      <div role='button' tabIndex='0' onClick={props.onGoBack} onKeyDown={props.onGoBack} className='cursor-pointer'>
         <Icon name='left_arrow' size={16} />
       </div>
     )}
     {
-      _.map(props.history, (item, idx) => {
-        return (
-          <span
-            className={clsx(
-              'text-[13px]',
-              'overflow-hidden',
-              'text-nowrap',
-              { 'font-semibold' : idx === 0 },
-              { 'shrink-0' : idx === props.history.length - 1 },
-              { 'text-ellipsis' : idx < props.history.length - 1 }
-            )}
-          >
-            { `${ idx != 0 ? ' / ' : ''}${item}` }
-          </span>
-        )
-      })
+      _.map(props.history, (item, idx) => (
+        <span
+          className={clsx(
+            'text-[13px]',
+            'overflow-hidden',
+            'text-nowrap',
+            { 'font-semibold': idx === 0 },
+            { 'shrink-0': idx === props.history.length - 1 },
+            { 'text-ellipsis': idx < props.history.length - 1 }
+          )}
+        >
+          { `${idx !== 0 ? ' / ' : ''}${item}` }
+        </span>
+      ))
     }
   </div>
 );
