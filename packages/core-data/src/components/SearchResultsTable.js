@@ -31,15 +31,15 @@ type Props = {
    */
   hits: Array<any>,
   /**
-   * Callback that fires when an item is clicked
+   * Callback that fires when a row is clicked
    */
   onRowClick?: (hit: any) => void,
   /**
-    * Callback that fires when the mouse begins to hover over an item
+    * Callback that fires when the mouse begins to hover over a row
     */
   onRowMouseEnter?: (hit: any) => void,
   /**
-    * Callback that fires when the mouse stops hovering over an item
+    * Callback that fires when the mouse stops hovering over a row
     */
   onRowMouseLeave?: (hit: any) => void
 }
