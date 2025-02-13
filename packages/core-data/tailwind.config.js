@@ -19,7 +19,7 @@ export default {
         secondary: colors.neutral['200']
       },
       fontFamily: {
-        inter: [
+        sans: [
           'Inter',
           ...fontFamily.sans
         ]
