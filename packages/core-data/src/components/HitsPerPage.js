@@ -1,10 +1,6 @@
 // @flow
 
 import React from 'react';
-import {
-  useHitsPerPage,
-  useInstantSearch
-} from 'react-instantsearch';
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
@@ -30,37 +26,44 @@ const HITS_PER_PAGE_OPTIONS = {
   ]
 };
 
-const HitsPerPage = () => {
-  const { refine } = useHitsPerPage(HITS_PER_PAGE_OPTIONS);
-  const { results } = useInstantSearch();
+type Props = {
+  /**
+   * Current hits per page setting
+   */
+  hitsPerPage: number,
+  /**
+   * Callback fired when the user changes the hits per page setting
+   */
+  onChange: (num: number) => void
+}
 
-  return (
-    <Dropdown.Root>
-      <Dropdown.Trigger asChild>
-        <button
-          className='flex items-center p-2'
-          type='button'
-        >
-          <span>{results.hitsPerPage}</span>
-          <ChevronDownIcon />
-        </button>
-      </Dropdown.Trigger>
-      <Dropdown.Portal>
-        <Dropdown.Content
-          className='bg-white shadow-md'
-        >
-          {HITS_PER_PAGE_OPTIONS.items.map((opt) => (
-            <Dropdown.Item
-              className='p-2 cursor-pointer hover:bg-neutral-200'
-              onSelect={() => refine(opt.value)}
-            >
-              {opt.label}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Content>
-      </Dropdown.Portal>
-    </Dropdown.Root>
-  );
-};
+const HitsPerPage = (props: Props) => (
+  <Dropdown.Root>
+    <Dropdown.Trigger asChild>
+      <button
+        className='flex items-center p-2'
+        type='button'
+      >
+        <span>{props.hitsPerPage}</span>
+        <ChevronDownIcon />
+      </button>
+    </Dropdown.Trigger>
+    <Dropdown.Portal>
+      <Dropdown.Content
+        className='bg-white shadow-md'
+      >
+        {HITS_PER_PAGE_OPTIONS.items.map((opt) => (
+          <Dropdown.Item
+            className='p-2 cursor-pointer hover:bg-neutral-200'
+            key={opt.value}
+            onSelect={() => props.onChange(opt.value)}
+          >
+            {opt.label}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Content>
+    </Dropdown.Portal>
+  </Dropdown.Root>
+);
 
 export default HitsPerPage;

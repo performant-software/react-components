@@ -1,7 +1,6 @@
 // @flow
 
-import React from 'react';
-import { useInstantSearch } from 'react-instantsearch';
+import React, { useMemo, useState } from 'react';
 import Pagination from './Pagination';
 
 type Column = {
@@ -25,11 +24,41 @@ type Props = {
   /**
    * Columns to display in the table.
    */
-  columns: Array<Column>
+  columns: Array<Column>,
+  /**
+   * Array of search hit objects.
+   */
+  hits: Array<any>
 }
 
 const SearchResultsTable = (props: Props) => {
-  const { results } = useInstantSearch();
+  /**
+   * Which page of the results we're currently displaying
+   */
+  const [page, setPage] = useState(1);
+
+  /**
+   * Number of hits to show on each page
+   */
+  const [hitsPerPage, setHitsPerPage] = useState(10);
+
+  /**
+   * Calculate which hits to display with the current settings
+   */
+  const hitsToShow = useMemo(() => {
+    const first = (hitsPerPage * (page - 1));
+    const last = Math.min(first + hitsPerPage, props.hits.length) - 1;
+
+    return props.hits.slice(first, last + 1);
+  }, [hitsPerPage, props.hits, page]);
+
+  /**
+   * Reset to the first page when the hits per page changes
+   */
+  const onChangeHitsPerPage = (num: number) => {
+    setPage(1);
+    setHitsPerPage(num);
+  };
 
   return (
     <div className='rounded-md inline-block border border-neutral-200 w-full h-full min-h-full flex flex-col'>
@@ -38,23 +67,29 @@ const SearchResultsTable = (props: Props) => {
           <thead className='bg-neutral-100 sticky top-0'>
             <tr className='divide-x divide-neutral-200'>
               {props.columns.map((col) => (
-                <th className='px-4 py-3 text-left text-sm font-bold text-gray-800 max-h-10'>
+                <th
+                  className='px-4 py-3 text-left text-sm font-bold text-gray-800 max-h-10'
+                  key={col.name}
+                >
                   {col.label}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody className='divide-y divide-neutral-200 border-b border-neutral-200'>
-            {results.hits.map((item, idx) => (
+            {hitsToShow.map((hit, idx) => (
               <tr
                 className='divide-x divide-neutral-200'
                 key={idx}
               >
                 {props.columns.map((col) => (
-                  <td className='px-4 py-3 text-sm whitespace-nowrap text-gray-800 text-sm max-h-10'>
+                  <td
+                    className='px-4 py-3 text-sm whitespace-nowrap text-gray-800 text-sm max-h-10'
+                    key={col.name}
+                  >
                     {col.render
-                      ? col.render(item)
-                      : item[col.name]}
+                      ? col.render(hit)
+                      : hit[col.name]}
                   </td>
                 ))}
               </tr>
@@ -67,6 +102,11 @@ const SearchResultsTable = (props: Props) => {
       <div className='grow' />
       <Pagination
         className='sticky bottom-0 grow-0 w-full min-w-full'
+        nbHits={props.hits.length}
+        onChangeHitsPerPage={onChangeHitsPerPage}
+        page={page}
+        onChangePage={setPage}
+        hitsPerPage={hitsPerPage}
       />
     </div>
   );
