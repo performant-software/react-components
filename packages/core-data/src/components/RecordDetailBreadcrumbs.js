@@ -33,7 +33,7 @@ const RecordDetailBreadcrumbs = (props: Props) => (
     )}
   >
     { props.onGoBack && (
-      <div onClick={props.onGoBack} className='cursor-pointer'>
+      <div role='button' tabIndex='0' onClick={props.onGoBack} onKeyDown={props.onGoBack} className='cursor-pointer'>
         <Icon name='left_arrow' size={16} />
       </div>
     )}
@@ -49,7 +49,7 @@ const RecordDetailBreadcrumbs = (props: Props) => (
             { 'text-ellipsis': idx < props.history.length - 1 }
           )}
         >
-          { `${idx != 0 ? ' / ' : ''}${item}` }
+          { `${idx !== 0 ? ' / ' : ''}${item}` }
         </span>
       ))
     }

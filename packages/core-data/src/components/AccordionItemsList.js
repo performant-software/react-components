@@ -2,7 +2,7 @@
 
 import * as Accordion from '@radix-ui/react-accordion';
 import clsx from 'clsx';
-import React, { type Node } from 'react';
+import React from 'react';
 import _ from 'underscore';
 import Icon from './Icon';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
@@ -68,15 +68,19 @@ const AccordionItemsList = (props: Props) => (
         >
           <ul>
             {
-              _.map(relation.items, (item, idx) => (
+              _.map(relation.items, (item, idxx) => (
                 <>
                   {
                     relation.renderItem ? (
                       relation.renderItem(item)
                     ) : (
+                      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                       <li
-                        key={idx}
+                        key={idxx}
                         onClick={item.onClick}
+                        onKeyDown={item.onClick}
+                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                        tabIndex={item.onClick ? '0' : '-1'}
                         className={
                         clsx(
                           'flex flex-row gap-2 items-baseline px-6 py-2',
@@ -85,7 +89,7 @@ const AccordionItemsList = (props: Props) => (
                             'cursor-pointer': item.onClick
                           }
                         )
-}
+                        }
                       >
                         {
                           relation.icon && (

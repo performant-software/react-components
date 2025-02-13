@@ -3,7 +3,6 @@
 import clsx from 'clsx';
 import React from 'react';
 import _ from 'underscore';
-import Icon from './Icon';
 import Button from './Button';
 import RecordDetailTitle from './RecordDetailTitle';
 import RecordDetailItem from './RecordDetailItem';

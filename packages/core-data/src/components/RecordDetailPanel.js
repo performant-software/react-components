@@ -2,15 +2,10 @@
 
 import clsx from 'clsx';
 import React from 'react';
-import _ from 'underscore';
 import Icon from './Icon';
-import Button from './Button';
-import RecordDetailTitle from './RecordDetailTitle';
-import RecordDetailItem from './RecordDetailItem';
 import AccordionItemsList from './AccordionItemsList';
 import RecordDetailHeader from './RecordDetailHeader';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
-import i18n from '../i18n/i18n';
 import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
 
 type Props = {
@@ -25,7 +20,8 @@ type Props = {
   children?: Node,
 
   /**
-   * Class names to apply to the root div, the header box, the title element, the list element containing the detail items, and the accordion list containing related records
+   * Class names to apply to the root div, the header box, the title element,
+   * the list element containing the detail items, and the accordion list containing related records
    */
   classNames?: { header?: string, items?: string, relatedRecords?: string, root?: string, title?: string },
 
@@ -76,7 +72,7 @@ const RecordDetailPanel = (props: Props) => (
   >
     <div className='sticky inset-0 shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)] bg-white z-[5]'>
       { props.onClose && (
-        <div onClick={props.onClose} className='absolute top-6 right-6 z-10 cursor-pointer'>
+        <div onClick={props.onClose} onKeyDown={props.onClose} tabIndex='0' role='button' className='absolute top-6 right-6 z-10 cursor-pointer'>
           <Icon
             name='close'
             size={24}
