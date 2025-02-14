@@ -23,7 +23,12 @@ export const Default = () => (
     ]}
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailHeader>
 );
@@ -44,7 +49,12 @@ export const WithLink = () => (
     detailPageUrl='#'
   >
     <p>
-      Arcu imperdiet sit sit viverra id volutpat commodo. <span className='font-bold'>Tempor sem malesuada porttitor congue.</span> Nibh aenean vitae blandit vitae sapien ac varius mattis. Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
     </p>
   </RecordDetailHeader>
-)
+);
