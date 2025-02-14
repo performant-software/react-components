@@ -54,30 +54,6 @@ const sampleDataWithIcon = [
   }
 ];
 
-const sampleDataWithCount = [
-  {
-    title: 'Related People',
-    items: [
-      {
-        name: 'Kazuya Miyuki'
-      },
-      {
-        name: 'Eijun Sawamura'
-      }
-    ],
-    count: true
-  },
-  {
-    title: 'Related Organizations',
-    items: [
-      {
-        name: 'Seido High School Baseball Club'
-      }
-    ],
-    count: true
-  }
-];
-
 const sampleDataWithClickEvent = [
   {
     title: 'Related People',
@@ -105,24 +81,25 @@ const sampleDataWithClickEvent = [
 
 export const Default = () => (
   <AccordionItemsList
-    relations={sampleData}
+    items={sampleData}
   />
 );
 
 export const WithIcons = () => (
   <AccordionItemsList
-    relations={sampleDataWithIcon}
+    items={sampleDataWithIcon}
   />
 );
 
 export const WithCount = () => (
   <AccordionItemsList
-    relations={sampleDataWithCount}
+    items={sampleData}
+    count
   />
 );
 
 export const WithClickEvent = () => (
   <AccordionItemsList
-    relations={sampleDataWithClickEvent}
+    items={sampleDataWithClickEvent}
   />
 );

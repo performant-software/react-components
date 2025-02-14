@@ -14,9 +14,14 @@ type Props = {
   className?: string,
 
   /**
+   * If true, will display the number of items in each section after the title
+   */
+  count?: Boolean,
+
+  /**
    * List of related models to render
    */
-  relations: Array<RelatedRecordsList>
+  items: Array<RelatedRecordsList>
 };
 
 /**
@@ -30,7 +35,7 @@ const AccordionItemsList = (props: Props) => (
     )}
     type='multiple'
   >
-    { _.map(props.relations, (relation, idx) => (
+    { _.map(props.items, (relation, idx) => (
       <Accordion.Item key={idx} value={relation.title}>
         <Accordion.Header
           asChild
@@ -45,7 +50,7 @@ const AccordionItemsList = (props: Props) => (
                 ) : (
                   <span>
                     { relation.title }
-                    { relation.count ? (
+                    { props.count ? (
                       <span className='ml-2'>
                         (
                         { relation.items.length }

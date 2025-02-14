@@ -204,3 +204,30 @@ export const FixedWidthAndHeight = () => (
     </p>
   </RecordDetailPanel>
 );
+
+export const WithCounts = () => (
+  <RecordDetailPanel
+    relations={sampleData}
+    title='West Tokyo Qualifiers Quarterfinal'
+    count
+    detailItems={[
+      {
+        text: 'July 27',
+        icon: 'date'
+      },
+      {
+        text: 'Meiji Jinju Stadium',
+        icon: 'location'
+      }
+    ]}
+  >
+    <p>
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+    </p>
+  </RecordDetailPanel>
+);
