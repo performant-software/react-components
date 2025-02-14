@@ -61,10 +61,10 @@ const SearchListItem = (props: SearchListItemProps) => (
     <li
       className='py-3 px-6'
       onPointerEnter={props.onPointerEnter
-        ? (item) => props.onPointerEnter(item)
+        ? () => props.onPointerEnter(props.item)
         : undefined}
       onPointerLeave={props.onPointerLeave
-        ? (item) => props.onPointerLeave(item)
+        ? () => props.onPointerLeave(props.item)
         : undefined}
     >
       <p className='font-bold text-neutral-800'>{props.title}</p>
