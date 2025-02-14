@@ -1,28 +1,27 @@
 // @flow
 
-import clsx from 'clsx';
 import React from 'react';
-import bulletIcon from '../icons/Icon=bullet.svg';
-import closeIcon from '../icons/Icon=close.svg';
-import dateIcon from '../icons/Icon=date.svg';
-import downIcon from '../icons/Icon=down.svg';
-import exportIcon from '../icons/Icon=export.svg';
-import filtersIcon from '../icons/Icon=filters.svg';
-import genderIcon from '../icons/Icon=gender.svg';
-import infoIcon from '../icons/Icon=info.svg';
-import leftArrowIcon from '../icons/Icon=left_arrow.svg';
-import leftIcon from '../icons/Icon=left.svg';
-import listIcon from '../icons/Icon=list.svg';
-import locationIcon from '../icons/Icon=location.svg';
-import occupationIcon from '../icons/Icon=occupation.svg';
-import participantsIcon from '../icons/Icon=participants.svg';
-import personIcon from '../icons/Icon=person.svg';
-import rightIcon from '../icons/Icon=right.svg';
-import searchIcon from '../icons/Icon=search.svg';
-import tableIcon from '../icons/Icon=table.svg';
-import timelineIcon from '../icons/Icon=timeline.svg';
-import zoomInIcon from '../icons/Icon=zoom_in.svg';
-import zoomOutIcon from '../icons/Icon=zoom_out.svg';
+import BulletIcon from '../icons/BulletIcon';
+import CloseIcon from '../icons/CloseIcon';
+import DateIcon from '../icons/DateIcon';
+import DownIcon from '../icons/DownIcon';
+import ExportIcon from '../icons/ExportIcon';
+import FiltersIcon from '../icons/FiltersIcon';
+import GenderIcon from '../icons/GenderIcon';
+import InfoIcon from '../icons/InfoIcon';
+import LeftArrowIcon from '../icons/LeftArrowIcon';
+import LeftIcon from '../icons/LeftIcon';
+import ListIcon from '../icons/ListIcon';
+import LocationIcon from '../icons/LocationIcon';
+import OccupationIcon from '../icons/OccupationIcon';
+import ParticipantsIcon from '../icons/ParticipantsIcon';
+import PersonIcon from '../icons/PersonIcon';
+import RightIcon from '../icons/RightIcon';
+import SearchIcon from '../icons/SearchIcon';
+import TableIcon from '../icons/TableIcon';
+import TimelineIcon from '../icons/TimelineIcon';
+import ZoomInIcon from '../icons/ZoomInIcon';
+import ZoomOutIcon from '../icons/ZoomOutIcon';
 
 type Props = {
   className?: string,
@@ -36,90 +35,78 @@ const DEFAULT_SIZE = 16;
 const Icon = ({
   className, name, style, size = DEFAULT_SIZE
 }: Props) => {
-  let thisIcon;
+  let ThisIcon;
 
   switch (name) {
     case 'bullet':
-      thisIcon = bulletIcon;
+      ThisIcon = BulletIcon;
       break;
     case 'close':
-      thisIcon = closeIcon;
+      ThisIcon = CloseIcon;
       break;
     case 'date':
-      thisIcon = dateIcon;
+      ThisIcon = DateIcon;
       break;
     case 'down':
-      thisIcon = downIcon;
+      ThisIcon = DownIcon;
       break;
     case 'export':
-      thisIcon = exportIcon;
+      ThisIcon = ExportIcon;
       break;
     case 'filters':
-      thisIcon = filtersIcon;
+      ThisIcon = FiltersIcon;
       break;
     case 'gender':
-      thisIcon = genderIcon;
+      ThisIcon = GenderIcon;
       break;
     case 'info':
-      thisIcon = infoIcon;
+      ThisIcon = InfoIcon;
       break;
     case 'left_arrow':
-      thisIcon = leftArrowIcon;
+      ThisIcon = LeftArrowIcon;
       break;
     case 'left':
-      thisIcon = leftIcon;
+      ThisIcon = LeftIcon;
       break;
     case 'list':
-      thisIcon = listIcon;
+      ThisIcon = ListIcon;
       break;
     case 'location':
-      thisIcon = locationIcon;
+      ThisIcon = LocationIcon;
       break;
     case 'occupation':
-      thisIcon = occupationIcon;
+      ThisIcon = OccupationIcon;
       break;
     case 'participants':
-      thisIcon = participantsIcon;
+      ThisIcon = ParticipantsIcon;
       break;
     case 'person':
-      thisIcon = personIcon;
+      ThisIcon = PersonIcon;
       break;
     case 'right':
-      thisIcon = rightIcon;
+      ThisIcon = RightIcon;
       break;
     case 'search':
-      thisIcon = searchIcon;
+      ThisIcon = SearchIcon;
       break;
     case 'table':
-      thisIcon = tableIcon;
+      ThisIcon = TableIcon;
       break;
     case 'timeline':
-      thisIcon = timelineIcon;
+      ThisIcon = TimelineIcon;
       break;
     case 'zoom_in':
-      thisIcon = zoomInIcon;
+      ThisIcon = ZoomInIcon;
       break;
     case 'zoom_out':
-      thisIcon = zoomOutIcon;
+      ThisIcon = ZoomOutIcon;
       break;
     default:
-      thisIcon = infoIcon;
+      ThisIcon = InfoIcon;
   }
 
   return (
-    <svg
-      className={clsx('icon', className)}
-      width={size}
-      height={size}
-      fill='currentColor'
-      viewBox={`0 0 ${DEFAULT_SIZE} ${DEFAULT_SIZE}`}
-      preserveAspectRatio='none'
-      style={style}
-    >
-      <use
-        xlinkHref={`${thisIcon}#${name}`}
-      />
-    </svg>
+    <ThisIcon className={className} style={style} size={size} />
   );
 };
 
