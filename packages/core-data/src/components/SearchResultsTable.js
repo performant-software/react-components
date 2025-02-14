@@ -1,5 +1,6 @@
 // @flow
 
+import clsx from 'clsx';
 import React, { useMemo, useState } from 'react';
 import Pagination from './Pagination';
 
@@ -28,7 +29,19 @@ type Props = {
   /**
    * Array of search hit objects.
    */
-  hits: Array<any>
+  hits: Array<any>,
+  /**
+   * Callback that fires when a row is clicked
+   */
+  onRowClick?: (hit: any) => void,
+  /**
+    * Callback that fires when the pointer begins to hover over a row
+    */
+  onRowPointerEnter?: (hit: any) => void,
+  /**
+    * Callback that fires when the pointer stops hovering over a row
+    */
+  onRowPointerLeave?: (hit: any) => void
 }
 
 const SearchResultsTable = (props: Props) => {
@@ -79,7 +92,19 @@ const SearchResultsTable = (props: Props) => {
           <tbody className='divide-y divide-neutral-200 border-b border-neutral-200'>
             {hitsToShow.map((hit, idx) => (
               <tr
-                className='divide-x divide-neutral-200'
+                className={clsx(
+                  'divide-x divide-neutral-200',
+                  { 'hover:bg-neutral-200 cursor-pointer': props.onRowClick }
+                )}
+                onClick={props.onRowClick
+                  ? () => props.onRowClick(hit)
+                  : undefined}
+                onPointerEnter={props.onRowPointerEnter
+                  ? () => props.onRowPointerEnter(hit)
+                  : undefined}
+                onPointerLeave={props.onRowPointerLeave
+                  ? () => props.onRowPointerLeave(hit)
+                  : undefined}
                 key={idx}
               >
                 {props.columns.map((col) => (

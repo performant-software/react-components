@@ -1,5 +1,6 @@
 // @flow
 
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import SearchResultsTable from '../../../core-data/src/components/SearchResultsTable';
 import hits from '../data/typesense/Places.json';
@@ -65,6 +66,18 @@ export const ReallyBig = () => (
     <SearchResultsTable
       columns={COLUMNS}
       hits={LOTS_OF_HITS}
+    />
+  </div>
+);
+
+export const EventHandlers = () => (
+  <div className='h-[400px] w-[1000px]'>
+    <SearchResultsTable
+      columns={COLUMNS}
+      hits={LOTS_OF_HITS}
+      onRowClick={action('click')}
+      onRowPointerEnter={action('pointerEnter')}
+      onRowPointerLeave={action('pointerLeave')}
     />
   </div>
 );
