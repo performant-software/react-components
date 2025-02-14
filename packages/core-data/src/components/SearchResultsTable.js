@@ -35,11 +35,11 @@ type Props = {
    */
   onRowClick?: (hit: any) => void,
   /**
-    * Callback that fires when the mouse begins to hover over a row
+    * Callback that fires when the pointer begins to hover over a row
     */
   onRowPointerEnter?: (hit: any) => void,
   /**
-    * Callback that fires when the mouse stops hovering over a row
+    * Callback that fires when the pointer stops hovering over a row
     */
   onRowPointerLeave?: (hit: any) => void
 }
