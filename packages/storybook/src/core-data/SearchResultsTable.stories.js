@@ -76,8 +76,8 @@ export const EventHandlers = () => (
       columns={COLUMNS}
       hits={LOTS_OF_HITS}
       onRowClick={action('click')}
-      onRowMouseEnter={action('mouseEnter')}
-      onRowMouseLeave={action('mouseLeave')}
+      onRowPointerEnter={action('pointerEnter')}
+      onRowPointerLeave={action('pointerLeave')}
     />
   </div>
 );

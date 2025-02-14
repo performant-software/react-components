@@ -37,11 +37,11 @@ type Props = {
   /**
     * Callback that fires when the mouse begins to hover over a row
     */
-  onRowMouseEnter?: (hit: any) => void,
+  onRowPointerEnter?: (hit: any) => void,
   /**
     * Callback that fires when the mouse stops hovering over a row
     */
-  onRowMouseLeave?: (hit: any) => void
+  onRowPointerLeave?: (hit: any) => void
 }
 
 const SearchResultsTable = (props: Props) => {
@@ -99,11 +99,11 @@ const SearchResultsTable = (props: Props) => {
                 onClick={props.onRowClick
                   ? () => props.onRowClick(hit)
                   : undefined}
-                onMouseEnter={props.onRowMouseEnter
-                  ? () => props.onRowMouseEnter(hit)
+                onPointerEnter={props.onRowPointerEnter
+                  ? () => props.onRowPointerEnter(hit)
                   : undefined}
-                onMouseLeave={props.onRowMouseLeave
-                  ? () => props.onRowMouseLeave(hit)
+                onPointerLeave={props.onRowPointerLeave
+                  ? () => props.onRowPointerLeave(hit)
                   : undefined}
                 key={idx}
               >
