@@ -58,8 +58,8 @@ const SearchList = (props: Props) => (
           item={item}
           title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
           onClick={props.onItemClick}
-          onPointerEnter={() => props.onItemPointerEnter(item)}
-          onPointerLeave={() => props.onItemPointerLeave(item)}
+          onPointerEnter={props.onItemPointerEnter}
+          onPointerLeave={props.onItemPointerLeave}
         />
       ))}
     </ul>
