@@ -18,13 +18,13 @@ type SearchListItemProps = {
    */
   onClick?: (item: any) => void,
   /**
-   * Callback that fires when the mouse begins to hover over an item
+   * Callback that fires when the pointer begins to hover over an item
    */
-  onMouseEnter?: (item: any) => void,
+  onPointerEnter?: (item: any) => void,
   /**
-   * Callback that fires when the mouse stops hovering over an item
+   * Callback that fires when the pointer stops hovering over an item
    */
-  onMouseLeave?: (item: any) => void,
+  onPointerLeave?: (item: any) => void,
   /**
    * Title of the record
    */
@@ -60,11 +60,11 @@ const SearchListItem = (props: SearchListItemProps) => (
   <ItemWrapper {...props}>
     <li
       className='py-3 px-6'
-      onMouseEnter={props.onMouseEnter
-        ? (item) => props.onMouseEnter(item)
+      onMouseEnter={props.onPointerEnter
+        ? (item) => props.onPointerEnter(item)
         : undefined}
-      onMouseLeave={props.onMouseLeave
-        ? (item) => props.onMouseLeave(item)
+      onMouseLeave={props.onPointerLeave
+        ? (item) => props.onPointerLeave(item)
         : undefined}
     >
       <p className='font-bold text-neutral-800'>{props.title}</p>

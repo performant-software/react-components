@@ -28,13 +28,13 @@ type Props = {
    */
   onItemClick?: (item: any) => void,
   /**
-   * Callback that fires when the mouse begins to hover over an item
+   * Callback that fires when the pointer begins to hover over an item
    */
-  onItemMouseEnter?: (item: any) => void,
+  onItemPointerEnter?: (item: any) => void,
   /**
-   * Callback that fires when the mouse stops hovering over an item
+   * Callback that fires when the pointer stops hovering over an item
    */
-  onItemMouseLeave?: (item: any) => void
+  onItemPointerLeave?: (item: any) => void
 };
 
 const SearchList = (props: Props) => (
@@ -58,8 +58,8 @@ const SearchList = (props: Props) => (
           item={item}
           title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
           onClick={props.onItemClick}
-          onMouseEnter={props.onItemMouseEnter}
-          onMouseLeave={props.onItemMouseLeave}
+          onPointerEnter={props.onItemPointerEnter}
+          onPointerLeave={props.onItemPointerLeave}
         />
       ))}
     </ul>

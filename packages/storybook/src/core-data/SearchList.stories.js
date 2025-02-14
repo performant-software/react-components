@@ -132,10 +132,9 @@ export const EventHandlers = () => (
       ]}
       items={LOTS_OF_DATA}
       itemTitle='name'
-      // eslint-disable-next-line no-alert
-      onItemClick={(item) => window.alert(`You clicked on ${item.name}!`)}
-      onItemMouseEnter={action('onMouseEnter')}
-      onItemMouseLeave={action('onMouseLeave')}
+      onItemClick={action('click')}
+      onItemPointerEnter={action('onPointerEnter')}
+      onItemPointerLeave={action('onPointerLeave')}
     />
   </div>
 );
