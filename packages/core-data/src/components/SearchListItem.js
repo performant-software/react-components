@@ -60,10 +60,10 @@ const SearchListItem = (props: SearchListItemProps) => (
   <ItemWrapper {...props}>
     <li
       className='py-3 px-6'
-      onMouseEnter={props.onPointerEnter
+      onPointerEnter={props.onPointerEnter
         ? (item) => props.onPointerEnter(item)
         : undefined}
-      onMouseLeave={props.onPointerLeave
+      onPointerLeave={props.onPointerLeave
         ? (item) => props.onPointerLeave(item)
         : undefined}
     >
