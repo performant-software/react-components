@@ -1,13 +1,10 @@
 // @flow
 
 import React from 'react';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon
-} from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import HitsPerPage from './HitsPerPage';
 import i18n from '../i18n/i18n';
+import Icon from './Icon';
 
 type Props = {
   /**
@@ -110,13 +107,13 @@ const Pagination = (props: Props) => {
           'flex',
           'items-center',
           'justify-center',
-          { 'text-gray-300': !canGoBack }
+          { 'fill-gray-300': !canGoBack }
         )}
         disabled={!canGoBack}
         onClick={onPreviousPage}
         type='button'
       >
-        <ChevronLeftIcon />
+        <Icon name='left' />
       </button>
       <button
         className={clsx(
@@ -126,13 +123,13 @@ const Pagination = (props: Props) => {
           'flex',
           'items-center',
           'justify-center',
-          { 'text-gray-300': !canGoForward }
+          { 'fill-gray-300': !canGoForward }
         )}
         disabled={!canGoForward}
         onClick={onNextPage}
         type='button'
       >
-        <ChevronRightIcon />
+        <Icon name='right' />
       </button>
     </div>
   );

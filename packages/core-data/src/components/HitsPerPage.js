@@ -2,7 +2,7 @@
 
 import React from 'react';
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
-import { ChevronDownIcon } from '@radix-ui/react-icons';
+import Icon from './Icon';
 
 const HITS_PER_PAGE_OPTIONS = {
   items: [
@@ -45,7 +45,7 @@ const HitsPerPage = (props: Props) => (
         type='button'
       >
         <span>{props.hitsPerPage}</span>
-        <ChevronDownIcon />
+        <Icon name='down' />
       </button>
     </Dropdown.Trigger>
     <Dropdown.Portal>
