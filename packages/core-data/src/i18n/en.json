@@ -18,6 +18,9 @@
   "Input": {
     "clear": "Clear"
   },
+  "Pill": {
+    "remove": "Remove"
+  },
   "Pagination": {
     "next": "Next",
     "previous": "Previous",
