@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import clsx from 'clsx';
 import BulletIcon from '../icons/BulletIcon';
 import CloseIcon from '../icons/CloseIcon';
 import DateIcon from '../icons/DateIcon';
@@ -106,7 +107,18 @@ const Icon = ({
   }
 
   return (
-    <ThisIcon className={className} style={style} size={size} />
+    <svg
+      width={size}
+      height={size}
+      fill='currentColor'
+      viewBox='0 0 16 16'
+      xmlns='http://www.w3.org/2000/svg'
+      id={name}
+      style={style}
+      className={clsx('icon', className)}
+    >
+      <ThisIcon />
+    </svg>
   );
 };
 
