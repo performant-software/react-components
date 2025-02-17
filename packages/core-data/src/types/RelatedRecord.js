@@ -5,9 +5,9 @@ export type RelatedRecord = {
    * Optional data prop to pass other fields, e.g. if needed for rendering
   */
   data?: any,
-  
+
   /**
-    * Optional event fired when the item is clicked. Note this will be overridden if a renderItem prop is provided in the parent list
+    * Optional event fired when item is clicked. Will be overridden if a renderItem prop is provided in the parent list
   */
   onClick?: () => void,
 

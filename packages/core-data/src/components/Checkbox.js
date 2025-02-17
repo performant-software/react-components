@@ -17,6 +17,10 @@ type Props = {
    */
   checked: boolean,
   /**
+   * HTML ID to apply to the checkbox
+   */
+  id?: string,
+  /**
    * (Optional) Whether to disable the checkbox.
    */
   disabled?: boolean
@@ -27,6 +31,7 @@ const Checkbox = (props: Props) => (
     checked={props.checked}
     className='rounded-sm'
     disabled={props.disabled}
+    id={props.id}
     onCheckedChange={props.onClick}
   >
     <RadixCheckbox.Indicator asChild forceMount>

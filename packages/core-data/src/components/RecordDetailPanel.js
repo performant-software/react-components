@@ -26,6 +26,11 @@ type Props = {
   classNames?: { header?: string, items?: string, relatedRecords?: string, root?: string, title?: string },
 
   /**
+   * If true, the number of related records will be displayed for each type
+   */
+  count?: Boolean,
+
+  /**
    * List of detail fields to be rendered above the blurb
    */
   detailItems?: Array<{ text: string, icon?: string, className?: string }>,
@@ -104,7 +109,8 @@ const RecordDetailPanel = (props: Props) => (
     </div>
     <AccordionItemsList
       className={clsx('shadow-[0px_1px_4px_rgba(0,0,0,.15)]', props.classNames?.relatedRecords)}
-      relations={props.relations}
+      items={props.relations}
+      count={props.count}
     />
   </div>
 );
