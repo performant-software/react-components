@@ -4,7 +4,7 @@ import React from 'react';
 import clsx from 'clsx';
 import BulletIcon from '../icons/BulletIcon';
 import CheckboxIcon from '../icons/Checkbox';
-import CheckboxCheckedIcon from '../icons/CheckboxChecked';
+import CheckboxFilledIcon from '../icons/CheckboxFilled';
 import CloseIcon from '../icons/CloseIcon';
 import DateIcon from '../icons/DateIcon';
 import DownIcon from '../icons/DownIcon';
@@ -47,8 +47,8 @@ const Icon = ({
     case 'checkbox':
       ThisIcon = CheckboxIcon;
       break;
-    case 'checkbox_checked':
-      ThisIcon = CheckboxCheckedIcon;
+    case 'checkbox_filled':
+      ThisIcon = CheckboxFilledIcon;
       break;
     case 'close':
       ThisIcon = CloseIcon;

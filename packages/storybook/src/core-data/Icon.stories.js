@@ -40,9 +40,9 @@ export const Checkbox = () => (
   />
 );
 
-export const CheckboxChecked = () => (
+export const CheckboxFilled = () => (
   <Icon
-    name='checkbox_checked'
+    name='checkbox_filled'
   />
 );
 
