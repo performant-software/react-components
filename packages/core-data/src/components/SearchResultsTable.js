@@ -112,7 +112,7 @@ const SearchResultsTable = (props: Props) => {
               >
                 {props.columns.map((col) => (
                   <td
-                    className='px-4 py-3 text-sm whitespace-nowrap text-gray-800 text-sm max-h-10'
+                    className='px-4 py-3 text-sm text-gray-800 text-sm max-h-10'
                     key={col.name}
                   >
                     {col.render
