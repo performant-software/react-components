@@ -46,7 +46,7 @@ const Checkbox = (props: Props) => (
           { 'fill-black': !props.checked },
           { 'hover:bg-white': !props.checked },
         )}
-        name={props.checked ? 'checkbox-filled' : 'checkbox'}
+        name={props.checked ? 'checkbox_filled' : 'checkbox'}
       />
     </RadixCheckbox.Indicator>
   </RadixCheckbox.Root>

@@ -7,6 +7,10 @@ import i18n from '../i18n/i18n';
 
 type Props = {
   /**
+   * (Optional) aria-label attribute for the input if not already contained in a label element
+   */
+  ariaLabel?: string,
+  /**
    * (Optional) Extra styles for the input
    */
   className?: string,
@@ -71,6 +75,7 @@ const Input = (props: Props) => {
         />
       )}
       <input
+        aria-label={props.ariaLabel}
         className='grow bg-transparent focus:outline-none w-full'
         placeholder={props.placeholder}
         onBlur={(e) => props.onBlur(e.target.value)}
@@ -81,7 +86,7 @@ const Input = (props: Props) => {
       {clearable && (
         <button
           aria-label={i18n.t('Input.clear')}
-          className='p-2 rounded-full flex items-center justify-center absolute right-4'
+          className='p-2 rounded-full flex items-center justify-center relative left-2'
           onClick={() => props.onChange('')}
           type='button'
         >

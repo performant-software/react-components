@@ -50,7 +50,10 @@ const SearchList = (props: Props) => (
         ? i18n.t('Common.words.result')
         : i18n.t('Common.words.results') }
     </div>
-    <ul className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'>
+    <ul
+      className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
+      tabIndex={0}
+    >
       {props.items.map((item, idx) => (
         <SearchListItem
           attributes={props.attributes}

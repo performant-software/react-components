@@ -18,7 +18,16 @@
   "Input": {
     "clear": "Clear"
   },
-  "SearchResultsTable": {
+  "Pill": {
+    "remove": "Remove"
+  },
+  "Pagination": {
+    "next": "Next",
+    "previous": "Previous",
     "rowsPerPage": "Rows per page"
+  },
+  "Slider": {
+    "end": "End",
+    "start": "Start"
   }
 }
