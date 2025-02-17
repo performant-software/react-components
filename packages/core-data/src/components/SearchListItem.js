@@ -57,38 +57,40 @@ const ItemWrapper = (props: ItemWrapperProps) => {
 };
 
 const SearchListItem = (props: SearchListItemProps) => (
-  <ItemWrapper {...props}>
-    <li
-      className='py-3 px-6'
-      onPointerEnter={props.onPointerEnter
-        ? () => props.onPointerEnter(props.item)
-        : undefined}
-      onPointerLeave={props.onPointerLeave
-        ? () => props.onPointerLeave(props.item)
-        : undefined}
-    >
-      <p className='font-bold text-neutral-800'>{props.title}</p>
-      {props.attributes && props.attributes.length > 0 && (
-        <ul className='list-none'>
-          {props.attributes.slice(0, 3).map((att) => (
-            <li
-              className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
-              key={att.name}
-            >
-              <Icon
-                className='min-w-[13px]'
-                name={att.icon || 'bullet'}
-                size={13}
-              />
-              {att.render
-                ? att.render(props.item)
-                : props.item[att.name]}
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  </ItemWrapper>
+  <li>
+    <ItemWrapper {...props}>
+      <div
+        className='py-3 px-6'
+        onPointerEnter={props.onPointerEnter
+          ? () => props.onPointerEnter(props.item)
+          : undefined}
+        onPointerLeave={props.onPointerLeave
+          ? () => props.onPointerLeave(props.item)
+          : undefined}
+      >
+        <p className='font-bold text-neutral-800'>{props.title}</p>
+        {props.attributes && props.attributes.length > 0 && (
+          <ul className='list-none'>
+            {props.attributes.slice(0, 3).map((att) => (
+              <li
+                className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
+                key={att.name}
+              >
+                <Icon
+                  className='min-w-[13px]'
+                  name={att.icon || 'bullet'}
+                  size={13}
+                />
+                {att.render
+                  ? att.render(props.item)
+                  : props.item[att.name]}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </ItemWrapper>
+  </li>
 );
 
 export default SearchListItem;
