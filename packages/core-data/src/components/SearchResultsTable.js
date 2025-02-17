@@ -76,7 +76,10 @@ const SearchResultsTable = (props: Props) => {
   return (
     <div className='rounded-md inline-block border border-neutral-200 w-full h-full min-h-full flex flex-col'>
       <div className='overflow-auto'>
-        <table className='divide-y divide-neutral-200 w-full max-h-full overflow-auto border-b border-neutral-200 grow-0'>
+        <table
+          className='divide-y divide-neutral-200 w-full max-h-full overflow-auto border-b border-neutral-200 grow-0'
+          tabIndex={0}
+        >
           <thead className='bg-neutral-100 sticky top-0'>
             <tr className='divide-x divide-neutral-200'>
               {props.columns.map((col) => (
