@@ -34,6 +34,18 @@ export const Bullet = () => (
   />
 );
 
+export const Checkbox = () => (
+  <Icon
+    name='checkbox'
+  />
+);
+
+export const CheckboxChecked = () => (
+  <Icon
+    name='checkbox_checked'
+  />
+);
+
 export const Close = () => (
   <Icon
     name='close'
