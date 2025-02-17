@@ -111,10 +111,10 @@ const Icon = ({
       ThisIcon = ZoomOutIcon;
       break;
     default:
-      ThisIcon = InfoIcon;
+      ThisIcon = null;
   }
 
-  return (
+  return ThisIcon ? (
     <svg
       width={size}
       height={size}
@@ -127,7 +127,7 @@ const Icon = ({
     >
       <ThisIcon />
     </svg>
-  );
+  ) : null;
 };
 
 export default Icon;
