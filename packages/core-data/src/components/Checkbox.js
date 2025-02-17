@@ -7,27 +7,32 @@ import Icon from './Icon';
 
 type Props = {
   /**
-   * Callback that determines what to do when the checkbox is clicked.
-   * @param {boolean} arg
-   * @returns
+   * Label to show in the aria-label property for screen readers.
    */
-  onClick: (arg: boolean) => any,
+  ariaLabel: string,
   /**
    * Boolean state of the checkbox.
    */
   checked: boolean,
   /**
+   * (Optional) Whether to disable the checkbox.
+   */
+  disabled?: boolean,
+  /**
    * HTML ID to apply to the checkbox
    */
   id?: string,
   /**
-   * (Optional) Whether to disable the checkbox.
+   * Callback that determines what to do when the checkbox is clicked.
+   * @param {boolean} arg
+   * @returns
    */
-  disabled?: boolean
+  onClick: (arg: boolean) => any
 }
 
 const Checkbox = (props: Props) => (
   <RadixCheckbox.Root
+    aria-label={props.ariaLabel}
     checked={props.checked}
     className='rounded-sm'
     disabled={props.disabled}

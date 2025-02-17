@@ -102,7 +102,7 @@ const Combobox = (props: Props) => {
       <Popover.Root
         open={open}
       >
-        <Popover.Trigger asChild>
+        <Popover.Anchor asChild>
           <div
             className='flex items-center justify-center gap-1 pr-2 pl-3 rounded-[5px] bg-white w-full min-h-10 border focus-within:border-primary'
           >
@@ -125,6 +125,7 @@ const Combobox = (props: Props) => {
             <div className='flex gap-2 h-full'>
               {props.onClear && props.values.length > 0 && (
                 <button
+                  aria-label={i18n.t('Combobox.clearValues')}
                   className='rounded-full'
                   onClick={props.onClear}
                   type='button'
@@ -135,6 +136,9 @@ const Combobox = (props: Props) => {
                 </button>
               )}
               <button
+                aria-label={open
+                  ? i18n.t('Combobox.collapse')
+                  : i18n.t('Combobox.expand')}
                 className='flex items-center justify-center h-8 w-8 rounded-full'
                 onClick={() => setOpen(!open)}
                 type='button'
@@ -145,7 +149,7 @@ const Combobox = (props: Props) => {
               </button>
             </div>
           </div>
-        </Popover.Trigger>
+        </Popover.Anchor>
         <Popover.Portal>
           <Popover.Content
             className='bg-white shadow-md radix-combobox-content max-h-[200px] overflow-y-auto'

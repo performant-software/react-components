@@ -10,7 +10,13 @@
     "viewDetails": "View Details"
   },
   "Combobox": {
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "clearValues": "Clear Values",
     "select": "Select"
+  },
+  "Input": {
+    "clear": "Clear"
   },
   "SearchResultsTable": {
     "rowsPerPage": "Rows per page"
