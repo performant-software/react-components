@@ -77,7 +77,7 @@ const RecordDetailPanel = (props: Props) => (
   >
     <div className='sticky inset-0 shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)] bg-white z-[5]'>
       { props.onClose && (
-        <div onClick={props.onClose} onKeyDown={props.onClose} tabIndex='0' role='button' className='absolute top-6 right-6 z-10 cursor-pointer'>
+        <div onClick={props.onClose} onKeyDown={props.onClose} tabIndex='0' role='button' aria-label='Close' className='absolute top-6 right-6 z-10 cursor-pointer'>
           <Icon
             name='close'
             size={24}
@@ -96,7 +96,7 @@ const RecordDetailPanel = (props: Props) => (
         icon={props.icon}
         classNames={
           {
-            root: clsx({ 'pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
+            root: clsx({ '!pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
             title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), // make sure there's space for the close icon
             items: props.classNames?.items
           }
