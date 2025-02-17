@@ -15,6 +15,9 @@
     "clearValues": "Clear Values",
     "select": "Select"
   },
+  "Input": {
+    "clear": "Clear"
+  },
   "SearchResultsTable": {
     "rowsPerPage": "Rows per page"
   }
