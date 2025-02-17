@@ -16,7 +16,7 @@ export const Default = () => (
 
 export const Color = () => (
   <Icon
-    className='fill-blue-500'
+    className='text-blue-500'
     name='info'
   />
 );
