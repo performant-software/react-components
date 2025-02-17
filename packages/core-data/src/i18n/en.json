@@ -18,7 +18,9 @@
   "Input": {
     "clear": "Clear"
   },
-  "SearchResultsTable": {
+  "Pagination": {
+    "next": "Next",
+    "previous": "Previous",
     "rowsPerPage": "Rows per page"
   }
 }
