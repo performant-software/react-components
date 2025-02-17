@@ -20,5 +20,9 @@
   },
   "SearchResultsTable": {
     "rowsPerPage": "Rows per page"
+  },
+  "Slider": {
+    "end": "End",
+    "start": "Start"
   }
 }
