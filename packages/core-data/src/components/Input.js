@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import Icon from './Icon';
+import i18n from '../i18n/i18n';
 
 type Props = {
   /**
@@ -79,6 +80,7 @@ const Input = (props: Props) => {
       />
       {clearable && (
         <button
+          aria-label={i18n.t('Input.clear')}
           className='p-2 rounded-full flex items-center justify-center absolute right-4'
           onClick={() => props.onChange('')}
           type='button'
