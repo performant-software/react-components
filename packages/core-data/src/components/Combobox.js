@@ -163,7 +163,7 @@ const Combobox = (props: Props) => {
               >
                 <Icon
                   name={isSelected(option)
-                    ? 'checkbox-filled'
+                    ? 'checkbox_filled'
                     : 'checkbox'}
                 />
                 {option.label}

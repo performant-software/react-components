@@ -7,6 +7,7 @@ import { clsx } from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import Input from './Input';
 import Icon from './Icon';
+import i18n from '../i18n/i18n';
 
 type MarkerProps = {
   className?: string,
@@ -271,6 +272,7 @@ const Slider = (props: Props) => {
         className='flex justify-between w-full py-4'
       >
         <Input
+          ariaLabel={i18n.t('Slider.start')}
           className={clsx(
             'rounded-md !w-20',
             props.classNames.input
@@ -281,6 +283,7 @@ const Slider = (props: Props) => {
           value={props.value[0]}
         />
         <Input
+          ariaLabel={i18n.t('Slider.end')}
           className={clsx(
             'rounded-md !w-20',
             props.classNames.input

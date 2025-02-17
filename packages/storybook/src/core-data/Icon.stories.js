@@ -16,7 +16,7 @@ export const Default = () => (
 
 export const Color = () => (
   <Icon
-    className='fill-blue-500'
+    className='text-blue-500'
     name='info'
   />
 );
@@ -31,6 +31,18 @@ export const Size = () => (
 export const Bullet = () => (
   <Icon
     name='bullet'
+  />
+);
+
+export const Checkbox = () => (
+  <Icon
+    name='checkbox'
+  />
+);
+
+export const CheckboxFilled = () => (
+  <Icon
+    name='checkbox_filled'
   />
 );
 

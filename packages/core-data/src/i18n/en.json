@@ -21,7 +21,13 @@
   "Pill": {
     "remove": "Remove"
   },
-  "SearchResultsTable": {
+  "Pagination": {
+    "next": "Next",
+    "previous": "Previous",
     "rowsPerPage": "Rows per page"
+  },
+  "Slider": {
+    "end": "End",
+    "start": "Start"
   }
 }

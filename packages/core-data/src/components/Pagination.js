@@ -84,7 +84,7 @@ const Pagination = (props: Props) => {
     )}
     >
       <span className='font-bold'>
-        {i18n.t('SearchResultsTable.rowsPerPage')}
+        {i18n.t('Pagination.rowsPerPage')}
       </span>
       <HitsPerPage
         hitsPerPage={props.hitsPerPage}
@@ -100,6 +100,7 @@ const Pagination = (props: Props) => {
         {props.nbHits}
       </span>
       <button
+        aria-label={i18n.t('Pagination.previous')}
         className={clsx(
           'h-6',
           'w-6',
@@ -116,6 +117,7 @@ const Pagination = (props: Props) => {
         <Icon name='left' />
       </button>
       <button
+        aria-label={i18n.t('Pagination.next')}
         className={clsx(
           'h-6',
           'w-6',
