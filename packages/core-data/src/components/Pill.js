@@ -3,6 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
+import i18n from '../i18n/i18n';
 
 type Props = {
   /**
@@ -50,6 +51,7 @@ const Pill = (props: Props) => (
     <span>{props.label}</span>
     {props.onRemove && (
     <button
+      aria-label={i18n.t('Pill.remove')}
       className='flex justify-center items-center h-full rounded-full'
       onClick={props.onRemove}
       type='button'
