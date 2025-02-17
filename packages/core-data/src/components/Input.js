@@ -86,7 +86,7 @@ const Input = (props: Props) => {
       {clearable && (
         <button
           aria-label={i18n.t('Input.clear')}
-          className='p-2 rounded-full flex items-center justify-center absolute right-4'
+          className='p-2 rounded-full flex items-center justify-center relative left-2'
           onClick={() => props.onChange('')}
           type='button'
         >
