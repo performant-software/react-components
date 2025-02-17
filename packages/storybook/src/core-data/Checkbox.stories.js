@@ -15,6 +15,7 @@ export const Default = () => {
     <Checkbox
       onClick={() => setChecked(!checked)}
       checked={checked}
+      ariaLabel='my checkbox'
     />
   );
 };
@@ -36,6 +37,7 @@ export const WithId = () => {
         id='my-checkbox'
         onClick={() => setChecked(!checked)}
         checked={checked}
+        ariaLabel='my checkbox'
       />
     </>
   );
