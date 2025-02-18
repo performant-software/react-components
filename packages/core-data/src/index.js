@@ -5,6 +5,8 @@ import './index.css';
 
 // Components
 export { default as AccordionItemsList } from './components/AccordionItemsList';
+export { default as Button } from './components/Button';
+export { default as ButtonGroup } from './components/ButtonGroup';
 export { default as Checkbox } from './components/Checkbox';
 export { default as Combobox } from './components/Combobox';
 export { default as CoreDataContextProvider } from './components/CoreDataContextProvider';
@@ -50,6 +52,7 @@ export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchList } from './components/SearchList';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 export { default as SearchResultsTable } from './components/SearchResultsTable';
+export { default as Slider } from './components/Slider';
 
 // Contexts
 export { default as CoreDataContext } from './context/CoreData';

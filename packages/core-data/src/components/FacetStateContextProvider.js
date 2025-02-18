@@ -136,6 +136,11 @@ const FacetStateContextProvider = (props: Props) => {
   const attributes = useMemo(() => _.pluck(listFacets, 'name'), [listFacets]);
 
   /**
+   * Backwards compatability for consumers using the "rangeAttributes" return value.
+   */
+  const rangeAttributes = useMemo(() => _.pluck(rangeFacets, 'name'), [rangeFacets]);
+
+  /**
    * Loads the facets from the Typesense schema.
    */
   useEffect(() => {
@@ -150,7 +155,8 @@ const FacetStateContextProvider = (props: Props) => {
   return (
     <FacetStateContext.Provider
       value={{
-        attributes
+        attributes,
+        rangeAttributes
       }}
     >
       { _.map(listFacets, (facet) => (
