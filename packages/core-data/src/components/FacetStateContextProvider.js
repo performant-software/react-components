@@ -150,7 +150,8 @@ const FacetStateContextProvider = (props: Props) => {
   return (
     <FacetStateContext.Provider
       value={{
-        attributes
+        attributes,
+        rangeFacets
       }}
     >
       { _.map(listFacets, (facet) => (
