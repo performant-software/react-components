@@ -73,7 +73,8 @@ export const CustomStyles = () => {
           button: 'px-4',
           range: 'bg-white',
           thumb: 'bg-white',
-          track: 'bg-gray-400'
+          track: 'bg-gray-400',
+          container: 'p-8'
         }}
         min={1500}
         max={2010}

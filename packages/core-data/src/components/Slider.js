@@ -58,7 +58,7 @@ const SliderMarker = (props: MarkerProps) => {
         >
           <RadixSlider.Thumb
             className={clsx(
-              'block h-5 w-5 rounded-full bg-gray-600',
+              'block h-5 w-5 rounded-full bg-neutral-800',
               'focus:outline-none focus-visible:ring focus-visible:ring-black focus-visible:ring-opacity-30',
               props.className
             )}
@@ -117,7 +117,8 @@ type ClassNames = {
   range: string,
   root: string,
   thumb: string,
-  track: string
+  track: string,
+  container: string
 };
 
 type Props = {
@@ -206,7 +207,7 @@ const Slider = (props: Props) => {
   }, [props.onValueCommit, props.onValueChange, props.min, props.max]);
 
   return (
-    <div className='p-4'>
+    <div className={props.classNames?.container}>
       {(props.icon || props.label) && (
       <div
         className='flex gap-2 items-center justify-center w-full'
@@ -251,7 +252,7 @@ const Slider = (props: Props) => {
           >
             <RadixSlider.Range
               className={clsx(
-                'absolute h-full bg-gray-600',
+                'absolute h-full bg-neutral-800',
                 props.classNames.range
               )}
             />
