@@ -52,13 +52,22 @@ type Props = {
  * a Peripleo map.
  */
 const LayerMenu = (props: Props) => {
-  const [selectedOverlays, setSelectedOverlays] = useState({});
-
   const {
     baseLayer,
     baseLayers,
     dataLayers
   } = props;
+
+  /**
+   * Set default data layers on initial selectedOverlays state.
+   */
+  const [selectedOverlays, setSelectedOverlays] = useState(
+    _.chain(dataLayers)
+      .filter((dl) => dl.default === true)
+      .map((dl) => [dl.name, true])
+      .object()
+      .value()
+  );
 
   /**
    * Changes the base layer to the layer with the passed name.
