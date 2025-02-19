@@ -21,9 +21,9 @@ type Props = {
   items: Array<any>,
 
   /**
-   * Name of the related modal
+   * Label to show at the top of the list
    */
-  modelName: string,
+  label?: string,
 
   /**
    * Callback fired when a record is clicked.
@@ -46,10 +46,7 @@ type Props = {
   title: string
 };
 
-/**
- * This component renders a list of search results returned from a Core Data Typesense index.
- */
-const SearchResultsList = (props: Props) => (
+const SelectRecordPanel = (props: Props) => (
   <div className='h-full bg-white'>
     <div className='flex items-center gap-2 w-full p-6'>
       {props.headerIcon && (
@@ -60,6 +57,7 @@ const SearchResultsList = (props: Props) => (
       )}
       <p className='font-bold text-xl grow'>{props.title}</p>
       <button
+        aria-label={i18n.t('Common.words.close')}
         className='flex items-center justify-center rounded-full hover:brightness-50 p-2'
         onClick={props.onClose}
         type='button'
@@ -70,11 +68,11 @@ const SearchResultsList = (props: Props) => (
         />
       </button>
     </div>
-    <p className='font-bold pt-2 pb-4 px-6 border-b text-lg'>
-      {i18n.t('Common.words.Select')}
-      &nbsp;
-      {props.modelName}
-    </p>
+    {props.label && (
+      <p className='font-bold pt-2 pb-4 px-6 border-b text-lg'>
+        {props.label}
+      </p>
+    )}
     <ul className='w-full h-full divide-y divide-solid'>
       {props.items.map((item, idx) => (
         <li
@@ -102,4 +100,4 @@ const SearchResultsList = (props: Props) => (
   </div>
 );
 
-export default SearchResultsList;
+export default SelectRecordPanel;

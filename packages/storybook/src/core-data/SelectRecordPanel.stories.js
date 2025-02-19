@@ -19,7 +19,21 @@ export const Default = () => (
   <div className='w-[360px] h-[600px]'>
     <SelectRecordPanel
       items={data}
-      modelName='Organization'
+      onClick={action('click')}
+      onClose={action('click')}
+      renderItemName={(item) => item.company}
+      itemIcon='occupation'
+      headerIcon='location'
+      title='Cincinnati, Ohio'
+      label='Select organization'
+    />
+  </div>
+);
+
+export const NoLabel = () => (
+  <div className='w-[360px] h-[600px]'>
+    <SelectRecordPanel
+      items={data}
       onClick={action('click')}
       onClose={action('click')}
       renderItemName={(item) => item.company}

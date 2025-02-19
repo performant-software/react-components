@@ -1,9 +1,9 @@
 {
   "Common": {
     "words": {
+      "close": "Close",
       "of": "of",
-      "results": "results",
-      "Select": "Select"
+      "results": "results"
     }
   },
   "RecordDetailHeader": {
