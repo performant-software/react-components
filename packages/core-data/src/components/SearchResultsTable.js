@@ -31,6 +31,10 @@ type Props = {
    */
   hits: Array<any>,
   /**
+   * Optional callback that determines whether to highlight an item
+   */
+  isHighlight?: (item: any) => boolean,
+  /**
    * Callback that fires when a row is clicked
    */
   onRowClick?: (hit: any) => void,
@@ -78,6 +82,7 @@ const SearchResultsTable = (props: Props) => {
       <div className='overflow-auto'>
         <table
           className='divide-y divide-neutral-200 w-full max-h-full overflow-auto border-b border-neutral-200 grow-0'
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
         >
           <thead className='bg-neutral-100 sticky top-0'>
@@ -97,7 +102,8 @@ const SearchResultsTable = (props: Props) => {
               <tr
                 className={clsx(
                   'divide-x divide-neutral-200',
-                  { 'hover:bg-neutral-200 cursor-pointer': props.onRowClick }
+                  { 'hover:bg-neutral-200 cursor-pointer': props.onRowClick },
+                  { 'bg-neutral-200': props.isHighlight && props.isHighlight(hit) }
                 )}
                 onClick={props.onRowClick
                   ? () => props.onRowClick(hit)

@@ -1,6 +1,7 @@
 // @flow
 
 import React, { type Element } from 'react';
+import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
 
@@ -13,6 +14,10 @@ type SearchListItemProps = {
    * Search item object
    */
   item: any,
+  /**
+   * Boolean that determines whether to highlight the item
+   */
+  isHighlight?: boolean,
   /**
    * Callback that fires when an item is clicked
    */
@@ -60,7 +65,10 @@ const SearchListItem = (props: SearchListItemProps) => (
   <li>
     <ItemWrapper {...props}>
       <div
-        className='py-3 px-6'
+        className={clsx(
+          'py-3 px-6',
+          { 'bg-neutral-200': props.isHighlight }
+        )}
         onPointerEnter={props.onPointerEnter
           ? () => props.onPointerEnter(props.item)
           : undefined}

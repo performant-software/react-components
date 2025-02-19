@@ -16,6 +16,10 @@ type Props = {
    */
   className?: string,
   /**
+   * Optional callback that determines whether to highlight an item
+   */
+  isHighlight?: (item: any) => boolean,
+  /**
    * Array of search result items
    */
   items: Array<any>,
@@ -52,6 +56,7 @@ const SearchList = (props: Props) => (
     </div>
     <ul
       className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
     >
       {props.items.map((item, idx) => (
@@ -59,6 +64,7 @@ const SearchList = (props: Props) => (
           attributes={props.attributes}
           key={idx}
           item={item}
+          isHighlight={props.isHighlight && props.isHighlight(item)}
           title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
           onClick={props.onItemClick}
           onPointerEnter={props.onItemPointerEnter}
