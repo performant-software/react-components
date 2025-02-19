@@ -189,7 +189,7 @@ export const FixedWidthAndHeight = () => (
     breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
     onGoBack={() => { alert('Go back!'); }}
     classNames={{
-      root: 'w-[380px] h-[500px]'
+      root: 'w-[380px] h-[560px]'
     }}
     onClose={() => { alert('Close!'); }}
     detailPageUrl='#'
@@ -201,6 +201,16 @@ export const FixedWidthAndHeight = () => (
       {' '}
       Nibh aenean vitae blandit vitae sapien ac varius mattis.
       Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+      Lorem ipsum odor amet, consectetuer adipiscing elit.
+      Fringilla morbi diam vehicula nostra gravida faucibus consequat sociosqu.
+      Platea taciti ridiculus nostra feugiat hac elit quisque.
+      Magnis risus natoque sagittis finibus ridiculus aenean ac posuere.
+      Euismod ridiculus placerat dictum himenaeos odio aenean magnis magna.
+      Maximus justo curabitur purus porttitor dictum penatibus lacus. Nisl lectus finibus sollicitudin;
+      arcu adipiscing urna fermentum facilisis. Natoque blandit elit viverra penatibus facilisis.
+      Praesent habitant volutpat efficitur in lacus lacinia torquent.
+      Cras ultricies mus ante et dapibus dolor vivamus nunc.
+      Velit interdum litora lobortis ultrices sollicitudin molestie ut.
     </p>
   </RecordDetailPanel>
 );

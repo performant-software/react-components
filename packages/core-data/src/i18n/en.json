@@ -7,6 +7,8 @@
     }
   },
   "RecordDetailHeader": {
+    "showLess": "Show Less",
+    "showMore": "Show More",
     "viewDetails": "View Details"
   },
   "Combobox": {
