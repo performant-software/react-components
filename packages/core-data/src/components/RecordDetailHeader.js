@@ -87,9 +87,7 @@ const RecordDetailHeader = (props: Props) => {
       <div
         ref={content}
         className={clsx(
-          { 'max-h-[120px]': !expanded },
-          { 'overflow-hidden': !expanded },
-          { 'text-ellipsis': !expanded }
+          { 'line-clamp-6': !expanded }
         )}
       >
         { props.children }
