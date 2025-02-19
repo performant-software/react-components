@@ -4,6 +4,11 @@ import type { RelatedRecord } from './RelatedRecord';
 
 export type RelatedRecordsList = {
   /**
+   * When set to true, items will be displayed in a row rather than a column
+   */
+  horizontal?: boolean,
+
+  /**
    * Icon to use in front of each list item. Defaults to none. Note this is overridden if a renderItem prop is provided
    */
   icon?: JSX.Element,

@@ -68,10 +68,15 @@ const AccordionItemsList = (props: Props) => (
             </Accordion.Trigger>
           </h2>
         </Accordion.Header>
-        <Accordion.Content
-          className='accordion-list-content text-[13px] font-semibold leading-[120%]'
-        >
-          <ul>
+        <Accordion.Content className='accordion-list-content text-[13px] font-semibold leading-[120%]'>
+          <ul className={clsx(
+            { flex: relation.horizontal },
+            { 'flex-row': relation.horizontal },
+            { 'flex-wrap': relation.horizontal },
+            { 'gap-6': relation.horizontal },
+            { 'py-6': relation.horizontal }
+          )}
+          >
             {
               _.map(relation.items, (item, idxx) => (
                 <>
