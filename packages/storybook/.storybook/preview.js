@@ -64,6 +64,19 @@ export const parameters = {
       )
     }
   },
+  backgrounds: {
+    values: [
+      {
+        name: 'light',
+        value: '#ffffff'
+      },
+      {
+        name: 'dark',
+        value: '#555555'
+      }
+    ],
+    default: 'light'
+  },
   options: {
     storySort: {
       order: ['Overview', 'Components']
