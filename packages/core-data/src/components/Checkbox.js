@@ -11,6 +11,10 @@ type Props = {
    */
   ariaLabel: string,
   /**
+   * (Optional) Tailwind classes for the root button component.
+   */
+  className?: string,
+  /**
    * Boolean state of the checkbox.
    */
   checked: boolean,
@@ -34,7 +38,10 @@ const Checkbox = (props: Props) => (
   <RadixCheckbox.Root
     aria-label={props.ariaLabel}
     checked={props.checked}
-    className='rounded-sm'
+    className={clsx(
+      'rounded-sm hover:bg-transparent',
+      props.className,
+    )}
     disabled={props.disabled}
     id={props.id}
     onCheckedChange={props.onClick}
@@ -44,7 +51,6 @@ const Checkbox = (props: Props) => (
         className={clsx(
           { 'fill-primary': props.checked },
           { 'fill-black': !props.checked },
-          { 'hover:bg-white': !props.checked },
         )}
         name={props.checked ? 'checkbox_filled' : 'checkbox'}
       />

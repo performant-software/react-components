@@ -42,3 +42,27 @@ export const WithId = () => {
     </>
   );
 };
+
+export const CustomStyles = () => {
+  const [checked, setChecked] = useState(true);
+
+  return (
+    <>
+      <label htmlFor='my-checkbox'>
+        Because this label&apos;s
+        &nbsp;
+        <code>htmlFor</code>
+        &nbsp;
+        prop matches the Checkbox&apos;s ID, you can click anywhere on this label to toggle the checkbox.
+      </label>
+      <br />
+      <Checkbox
+        className='bg-red-200 hover:bg-purple-200'
+        id='my-checkbox'
+        onClick={() => setChecked(!checked)}
+        checked={checked}
+        ariaLabel='my checkbox'
+      />
+    </>
+  );
+};
