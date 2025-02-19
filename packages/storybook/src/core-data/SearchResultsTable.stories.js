@@ -81,3 +81,13 @@ export const EventHandlers = () => (
     />
   </div>
 );
+
+export const ControlledHighlight = () => (
+  <div className='h-80'>
+    <SearchResultsTable
+      columns={COLUMNS}
+      hits={LOTS_OF_HITS}
+      isHighlight={(item) => item.id % 2 === 0}
+    />
+  </div>
+);
