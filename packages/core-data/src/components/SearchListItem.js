@@ -49,7 +49,7 @@ const ItemWrapper = (props: ItemWrapperProps) => {
   if (props.onClick) {
     return (
       <button
-        className='w-full border-0 text-left hover:bg-neutral-200'
+        className='w-full border-0 text-left hover:bg-transparent'
         onClick={() => props.onClick(props.item)}
         type='button'
       >
@@ -63,7 +63,10 @@ const ItemWrapper = (props: ItemWrapperProps) => {
 
 const SearchListItem = (props: SearchListItemProps) => (
   <li
-    className={clsx({ 'bg-neutral-200': props.isHighlight })}
+    className={clsx(
+      { 'bg-neutral-200': props.isHighlight },
+      { 'hover:bg-neutral-200': props.onClick }
+    )}
   >
     <ItemWrapper {...props}>
       <div
