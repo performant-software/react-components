@@ -49,7 +49,7 @@ const RecordDetailHeader = (props: Props) => {
     if (content.current) {
       setShowMore(content.current.scrollHeight > content.current.clientHeight);
     }
-  }, [content]);
+  }, [content, content.current?.scrollHeight]);
 
   return (
     <div
