@@ -1,7 +1,9 @@
 // @flow
 
 import clsx from 'clsx';
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect, useMemo
+} from 'react';
 import _ from 'underscore';
 import Button from './Button';
 import RecordDetailTitle from './RecordDetailTitle';
@@ -43,13 +45,36 @@ type Props = {
 const RecordDetailHeader = (props: Props) => {
   const [expanded, setExpanded] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
   const content = useRef(null);
+
+  const observer = useMemo(
+    () => new ResizeObserver((entries) => {
+      setContentHeight(entries[0].target.scrollHeight);
+      setContainerHeight(entries[0].target.clientHeight);
+    }),
+    []
+  );
+
+  const sizeRef = React.useCallback(
+    (node) => {
+      if (content !== null) {
+        content.current = node;
+        observer.observe(node);
+      } else {
+        observer.unobserve(content.current);
+        content.current = null;
+      }
+    },
+    [observer]
+  );
 
   useEffect(() => {
     if (content.current) {
-      setShowMore(content.current.scrollHeight > content.current.clientHeight);
+      setShowMore(contentHeight > containerHeight || expanded);
     }
-  }, [content]);
+  }, [contentHeight, containerHeight]);
 
   return (
     <div
@@ -85,7 +110,7 @@ const RecordDetailHeader = (props: Props) => {
       )
     }
       <div
-        ref={content}
+        ref={sizeRef}
         className={clsx(
           { 'line-clamp-6': !expanded }
         )}
