@@ -47,9 +47,9 @@ const RecordDetailHeader = (props: Props) => {
 
   useEffect(() => {
     if (content.current) {
-      setShowMore(content.current.scrollHeight > content.current.clientHeight);
+      setShowMore(content.current.scrollHeight > content.current.clientHeight || expanded);
     }
-  }, [content, content.current?.scrollHeight]);
+  }, [content.current, content.current?.scrollHeight, content.current?.clientHeight]);
 
   return (
     <div
