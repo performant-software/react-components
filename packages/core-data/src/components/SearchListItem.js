@@ -65,7 +65,7 @@ const SearchListItem = (props: SearchListItemProps) => (
   <li
     className={clsx(
       { 'bg-neutral-200': props.isHighlight },
-      { 'hover:bg-neutral-200': props.onClick }
+      { 'hover:bg-neutral-200': !!props.onClick }
     )}
   >
     <ItemWrapper {...props}>
