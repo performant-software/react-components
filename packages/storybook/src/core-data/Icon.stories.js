@@ -130,6 +130,12 @@ export const Person = () => (
   />
 );
 
+export const Reset = () => (
+  <Icon
+    name='reset'
+  />
+);
+
 export const Right = () => (
   <Icon
     name='right'

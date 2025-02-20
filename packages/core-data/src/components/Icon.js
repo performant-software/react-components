@@ -19,6 +19,7 @@ import LocationIcon from '../icons/LocationIcon';
 import OccupationIcon from '../icons/OccupationIcon';
 import ParticipantsIcon from '../icons/ParticipantsIcon';
 import PersonIcon from '../icons/PersonIcon';
+import ResetIcon from '../icons/ResetIcon';
 import RightIcon from '../icons/RightIcon';
 import SearchIcon from '../icons/SearchIcon';
 import TableIcon from '../icons/TableIcon';
@@ -91,6 +92,9 @@ const Icon = ({
       break;
     case 'person':
       ThisIcon = PersonIcon;
+      break;
+    case 'reset':
+      ThisIcon = ResetIcon;
       break;
     case 'right':
       ThisIcon = RightIcon;
