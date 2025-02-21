@@ -127,7 +127,7 @@ const Icon = ({
       xmlns='http://www.w3.org/2000/svg'
       id={name}
       style={style}
-      className={clsx('icon', className)}
+      className={clsx('icon', 'flex-shrink-0', className)}
     >
       <ThisIcon />
     </svg>
