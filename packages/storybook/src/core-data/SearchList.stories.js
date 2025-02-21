@@ -196,3 +196,33 @@ export const ControlledHighlight = () => (
     />
   </div>
 );
+
+export const ControlledHighlightWithOnClick = () => (
+  <div className='h-[600px] w-[360px]'>
+    <SearchList
+      attributes={[
+        {
+          label: 'UUID',
+          name: 'uuid',
+        },
+        {
+          label: 'Record ID',
+          name: 'record_id',
+          icon: 'person'
+        },
+        {
+          label: 'Location',
+          name: 'geometry',
+          icon: 'location',
+          render: (item) => (item.coordinates
+            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+            : '')
+        },
+      ]}
+      items={LOTS_OF_DATA}
+      itemTitle='name'
+      isHighlight={(item) => item.id % 2 === 0}
+      onItemClick={action('click')}
+    />
+  </div>
+);
