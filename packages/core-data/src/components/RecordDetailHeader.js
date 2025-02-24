@@ -59,11 +59,10 @@ const RecordDetailHeader = (props: Props) => {
 
   const sizeRef = React.useCallback(
     (node) => {
-      if (content !== null) {
+      if (node) {
         content.current = node;
         observer.observe(node);
       } else {
-        observer.unobserve(content.current);
         content.current = null;
       }
     },
@@ -75,6 +74,8 @@ const RecordDetailHeader = (props: Props) => {
       setShowMore(contentHeight > containerHeight || expanded);
     }
   }, [contentHeight, containerHeight]);
+
+  useEffect(() => () => observer.disconnect(), []);
 
   return (
     <div
