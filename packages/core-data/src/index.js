@@ -52,6 +52,7 @@ export { default as RelatedTaxonomies } from './components/RelatedTaxonomies';
 export { default as SearchList } from './components/SearchList';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 export { default as SearchResultsTable } from './components/SearchResultsTable';
+export { default as SelectRecordPanel } from './components/SelectRecordPanel';
 export { default as Slider } from './components/Slider';
 
 // Contexts
