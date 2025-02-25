@@ -73,7 +73,7 @@ const SelectRecordPanel = (props: Props) => (
         {props.label}
       </p>
     )}
-    <ul className='w-full h-full divide-y divide-solid'>
+    <ul className='w-full divide-y divide-solid'>
       {props.items.map((item, idx) => (
         <li
           className='hover:bg-neutral-100 w-full'
