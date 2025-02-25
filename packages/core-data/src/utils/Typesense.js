@@ -169,24 +169,26 @@ const getRelationshipId = (attribute: string) => {
 /**
  * Returns the passed Typesense search result as a GeoJSON feature.
  *
- * @param result
- * @param polygons
+ * @param record
+ * @param item
+ * @param geometry
  *
- * @returns {*}
+ * @returns {Feature<*, {ccode: [], record_id: *, names: *, name: *, id: *, title: *, type: *, uuid: *, items: [*]}>}
  */
-const toFeature = (result: any, geometry: any) => {
+const toFeature = (record: any, item: any, geometry: any) => {
   const properties = {
-    id: result.record_id,
+    id: record.record_id,
     ccode: [],
-    title: result.name,
-    uuid: result.uuid,
-    record_id: result.record_id,
-    name: result.name,
-    names: result.names?.map((toponym: string) => ({ toponym })),
-    type: result.type
+    title: record.name,
+    uuid: record.uuid,
+    record_id: record.record_id,
+    name: record.name,
+    names: record.names?.map((toponym: string) => ({ toponym })),
+    type: record.type,
+    items: [item]
   };
 
-  const id = parseInt(result.record_id, 10);
+  const id = parseInt(record.record_id, 10);
   return feature(geometry, properties, { id });
 };
 
@@ -201,16 +203,27 @@ const toFeature = (result: any, geometry: any) => {
 const toFeatureCollection = (results: Array<any>, path: string) => {
   const features = [];
 
-  _.each(results, (result) => {
-    let geometries = getNestedValue(result, path);
+  const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
+  const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
 
-    if (!_.isArray(geometries)) {
-      geometries = [geometries];
+  _.each(results, (result) => {
+    let geometryObjects = _.isEmpty(objectPath) ? result : getNestedValue(result, objectPath);
+
+    if (!_.isArray(geometryObjects)) {
+      geometryObjects = [geometryObjects];
     }
 
-    _.each(geometries, (geometry) => {
+    _.each(geometryObjects, (geometryObject) => {
+      const geometry = _.get(geometryObject, geometryPath);
+
       if (geometry) {
-        features.push(toFeature(result, geometry));
+        const record = _.find(features, (f) => f.properties?.uuid === geometryObject.uuid);
+
+        if (record) {
+          record.properties?.items.push(result);
+        } else {
+          features.push(toFeature(geometryObject, result, geometry));
+        }
       }
     });
   });
