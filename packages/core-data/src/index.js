@@ -77,7 +77,8 @@ export {
   useGeoSearch,
   useGeoSearchToggle,
   useSearchBox,
-  useSearchCompleted
+  useSearchCompleted,
+  useSearching
 } from './hooks/Typesense';
 
 // Services
