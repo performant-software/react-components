@@ -5,7 +5,7 @@ import { useMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import TypesenseUtils from '../utils/Typesense';
-import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
+import { useCachedHits, useSearching } from '../hooks/Typesense';
 
 type Props = {
   /**
@@ -39,10 +39,10 @@ type Props = {
  */
 const SearchResultsLayer = (props: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [searchCompleted, setSearchCompleted] = useState(false);
 
   const hits = useCachedHits();
   const map = useMap();
+  const isSearching = useSearching();
 
   /**
    * Memo-ize the Typesense hits as a feature collection.
@@ -59,8 +59,8 @@ const SearchResultsLayer = (props: Props) => {
    */
   const boundingBoxDependencies = [
     data,
+    isSearching,
     mapLoaded,
-    searchCompleted,
     props.boundingBoxData,
     props.boundingBoxOptions,
     props.buffer,
@@ -68,16 +68,13 @@ const SearchResultsLayer = (props: Props) => {
   ];
 
   useEffect(() => {
-    if (props.fitBoundingBox && data && mapLoaded && searchCompleted) {
+    if (props.fitBoundingBox && data && mapLoaded && !isSearching) {
       // Set the bounding box on the map
       const bbox = MapUtils.getBoundingBox(data, props.buffer);
 
       if (bbox) {
         map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
       }
-
-      // Reset search completed
-      setSearchCompleted(false);
     }
   }, boundingBoxDependencies);
 
@@ -96,11 +93,6 @@ const SearchResultsLayer = (props: Props) => {
       setMapLoaded(false);
     };
   }, [map]);
-
-  /**
-   * Sets the search completed state to true.
-   */
-  useSearchCompleted(() => setSearchCompleted(true), []);
 
   if (!data) {
     return null;
