@@ -14,7 +14,6 @@ type OnCompleteCallback = (results: Array<SearchResult>) => void;
 
 const useProgressiveSearch = (infiniteHits, transformResults = null) => {
   const [cachedHits, setCachedHits] = useState(TypesenseUtils.createCachedHits([]));
-  const [searching, setSearching] = useState(false);
 
   const lastSearchState = useRef<any>();
   const callbacks = useRef<Array<OnCompleteCallback>>([]);
@@ -83,10 +82,6 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
     const isFirstPage = results.page === 0;
     const hits = getHits(results);
 
-    if (isFirstPage) {
-      setSearching(true);
-    }
-
     // Add to cache and load next page
     if (isFirstPage && hasStateChanged(results._state, lastSearchState.current, true)) {
       setCachedHits(() => TypesenseUtils.createCachedHits(hits));
@@ -110,18 +105,13 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
       });
     }
 
-    if (isLastPage) {
-      setSearching(false);
-    }
-
     lastSearchState.current = results._state;
   }, [cachedHits]);
 
   return {
     cachedHits: cachedHits.hits,
     observe,
-    unobserve,
-    searching
+    unobserve
   };
 };
 
