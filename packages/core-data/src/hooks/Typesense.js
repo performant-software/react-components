@@ -36,6 +36,11 @@ export const useSearchCompleted = (callback: ((hits: TypesenseSearchResult[]) =>
   }, deps);
 };
 
+export const useSearching = () => {
+  const { searching } = useContext(PersistentSearchStateContext);
+  return searching;
+};
+
 export const useGeoSearchToggle = () => {
   const { clearMapRefinement, isRefinedWithMap, refine } = useGeoSearch();
 
