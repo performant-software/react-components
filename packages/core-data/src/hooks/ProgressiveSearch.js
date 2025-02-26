@@ -46,14 +46,24 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
    * @returns {boolean}
    */
   const hasStateChanged = (a: any, b: any, ignorePageNo?: boolean) => {
-    if (ignorePageNo && a) {
+    if (a) {
       // eslint-disable-next-line no-param-reassign
-      delete a.page;
+      delete a.maxValuesPerFacet;
+
+      if (ignorePageNo) {
+        // eslint-disable-next-line no-param-reassign
+        delete a.page;
+      }
     }
 
-    if (ignorePageNo && b) {
+    if (b) {
       // eslint-disable-next-line no-param-reassign
-      delete b.page;
+      delete b.maxValuesPerFacet;
+
+      if (ignorePageNo) {
+        // eslint-disable-next-line no-param-reassign
+        delete b.page;
+      }
     }
 
     return !dequal(a, b);
