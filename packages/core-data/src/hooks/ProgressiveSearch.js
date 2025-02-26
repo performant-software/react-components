@@ -46,24 +46,14 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
    * @returns {boolean}
    */
   const hasStateChanged = (a: any, b: any, ignorePageNo?: boolean) => {
-    if (a) {
+    if (a && ignorePageNo) {
       // eslint-disable-next-line no-param-reassign
-      delete a.maxValuesPerFacet;
-
-      if (ignorePageNo) {
-        // eslint-disable-next-line no-param-reassign
-        delete a.page;
-      }
+      delete a.page;
     }
 
-    if (b) {
+    if (b && ignorePageNo) {
       // eslint-disable-next-line no-param-reassign
-      delete b.maxValuesPerFacet;
-
-      if (ignorePageNo) {
-        // eslint-disable-next-line no-param-reassign
-        delete b.page;
-      }
+      delete b.page;
     }
 
     return !dequal(a, b);
@@ -87,9 +77,7 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
   };
 
   useEffect(() => {
-    const { results } = infiniteHits;
-
-    const isFirstPage = results.page === 0;
+    const { isFirstPage, results } = infiniteHits;
     const hits = getHits(results);
 
     // Add to cache and load next page
@@ -101,10 +89,8 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
   }, [infiniteHits.results]);
 
   useEffect(() => {
-    const { results } = infiniteHits;
+    const { isLastPage, results } = infiniteHits;
     const hits = getHits(results);
-
-    const isLastPage = results.page + 1 >= results.nbPages;
 
     if (!isLastPage && infiniteHits.showMore) {
       setTimeout(() => infiniteHits.showMore(), 25);

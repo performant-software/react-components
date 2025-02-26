@@ -2,10 +2,10 @@
 
 import { LocationMarkers, Map as MapUtils } from '@performant-software/geospatial';
 import { useMap } from '@peripleo/maplibre';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import TypesenseUtils from '../utils/Typesense';
-import { useCachedHits, useSearchCompleted } from '../hooks/Typesense';
+import { useCachedHits } from '../hooks/Typesense';
 
 type Props = {
   /**
@@ -39,6 +39,7 @@ type Props = {
  */
 const SearchResultsLayer = (props: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [searchCompleted, setSearchCompleted] = useState(false);
 
   const hits = useCachedHits();
   const map = useMap();
@@ -52,46 +53,33 @@ const SearchResultsLayer = (props: Props) => {
     !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.geometry)
   ), [hits, props.geometry]);
 
-  const fitBounds = useCallback(() => {
-    // Set the bounding box on the map
-    const bbox = MapUtils.getBoundingBox(data, props.buffer);
-
-    if (bbox) {
-      map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
-    }
-  }, [data, map, props.boundingBoxData, props.boundingBoxOptions, props.buffer]);
-
-  useEffect(() => {
-    if (mapLoaded && props.fitBoundingBox) {
-      fitBounds();
-    }
-  }, [props.boundingBoxData, props.boundingBoxOptions, props.buffer, props.fitBoundingBox, mapLoaded]);
-
-  useSearchCompleted(() => fitBounds(), [fitBounds]);
-
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,
    * rather than using the default implementation in LocationMarker that will change when the "data" prop changes.
    */
-  // const boundingBoxDependencies = [
-  //   data,
-  //   mapLoaded,
-  //   props.boundingBoxData,
-  //   props.boundingBoxOptions,
-  //   props.buffer,
-  //   props.fitBoundingBox
-  // ];
-  //
-  // useEffect(() => {
-  //   if (props.fitBoundingBox && data && mapLoaded) {
-  //     // Set the bounding box on the map
-  //     const bbox = MapUtils.getBoundingBox(data, props.buffer);
-  //
-  //     if (bbox) {
-  //       map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
-  //     }
-  //   }
-  // }, boundingBoxDependencies);
+  const boundingBoxDependencies = [
+    data,
+    mapLoaded,
+    searchCompleted,
+    props.boundingBoxData,
+    props.boundingBoxOptions,
+    props.buffer,
+    props.fitBoundingBox
+  ];
+
+  useEffect(() => {
+    if (props.fitBoundingBox && data && mapLoaded && searchCompleted) {
+      // Set the bounding box on the map
+      const bbox = MapUtils.getBoundingBox(data, props.buffer);
+
+      if (bbox) {
+        map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
+      }
+
+      // Reset search completed
+      setSearchCompleted(false);
+    }
+  }, boundingBoxDependencies);
 
   /**
    * Sets the mapLoaded state to true.
