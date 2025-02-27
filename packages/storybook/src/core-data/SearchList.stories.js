@@ -8,6 +8,8 @@ import { shuffle } from '../utils/Array';
 
 const LOTS_OF_DATA = shuffle(new Array(10).fill(data).flat());
 
+const LOTS_AND_LOTS_OF_DATA = shuffle(new Array(250).fill(data).flat());
+
 LOTS_OF_DATA[0].name = "I'm a really long name to showcase how this component handles really long names.";
 
 export default {
@@ -222,6 +224,35 @@ export const ControlledHighlightWithOnClick = () => (
       items={LOTS_OF_DATA}
       itemTitle='name'
       isHighlight={(item) => item.id % 2 === 0}
+      onItemClick={action('click')}
+    />
+  </div>
+);
+
+export const HugeAmountOfData = () => (
+  <div className='h-[600px] w-[360px]'>
+    <SearchList
+      attributes={[
+        {
+          label: 'UUID',
+          name: 'uuid',
+        },
+        {
+          label: 'Record ID',
+          name: 'record_id',
+          icon: 'person'
+        },
+        {
+          label: 'Location',
+          name: 'geometry',
+          icon: 'location',
+          render: (item) => (item.coordinates
+            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+            : '')
+        },
+      ]}
+      items={LOTS_AND_LOTS_OF_DATA}
+      itemTitle='name'
       onItemClick={action('click')}
     />
   </div>
