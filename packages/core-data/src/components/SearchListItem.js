@@ -1,6 +1,6 @@
 // @flow
 
-import React, { type Element } from 'react';
+import React, { type Element, useMemo } from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
@@ -61,46 +61,58 @@ const ItemWrapper = (props: ItemWrapperProps) => {
   return props.children;
 };
 
-const SearchListItem = (props: SearchListItemProps) => (
-  <li
-    className={clsx(
-      { 'bg-neutral-200': props.isHighlight },
-      { 'hover:bg-neutral-200': !!props.onClick }
-    )}
-  >
-    <ItemWrapper {...props}>
-      <div
-        className='py-3 px-6'
-        onPointerEnter={props.onPointerEnter
-          ? () => props.onPointerEnter(props.item)
-          : undefined}
-        onPointerLeave={props.onPointerLeave
-          ? () => props.onPointerLeave(props.item)
-          : undefined}
-      >
-        <p className='font-bold text-neutral-800'>{props.title}</p>
-        {props.attributes && props.attributes.length > 0 && (
-          <ul className='list-none'>
-            {props.attributes.slice(0, 3).map((att) => (
-              <li
-                className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
-                key={att.name}
-              >
-                <Icon
-                  className='min-w-[13px]'
-                  name={att.icon || 'bullet'}
-                  size={13}
-                />
-                {att.render
-                  ? att.render(props.item)
-                  : props.item[att.name]}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </ItemWrapper>
-  </li>
-);
+const SearchListItem = (props: SearchListItemProps) => {
+  const attributeValues = useMemo(() => props.attributes.slice(0, 3).map((attribute) => {
+    if (attribute.render) {
+      return attribute.render(props.item);
+    }
+
+    return props.item[attribute.name];
+  }), [props.attributes, props.item]);
+
+  return (
+    <li
+      className={clsx(
+        { 'bg-neutral-200': props.isHighlight },
+        { 'hover:bg-neutral-200': !!props.onClick }
+      )}
+    >
+      <ItemWrapper {...props}>
+        <div
+          className='py-3 px-6'
+          onPointerEnter={props.onPointerEnter
+            ? () => props.onPointerEnter(props.item)
+            : undefined}
+          onPointerLeave={props.onPointerLeave
+            ? () => props.onPointerLeave(props.item)
+            : undefined}
+        >
+          <p className='font-bold text-neutral-800'>{props.title}</p>
+          {props.attributes && attributeValues.some(Boolean) && (
+            <ul className='list-none'>
+              {props.attributes.slice(0, 3).map((att, idx) => (
+                <>
+                  {!!attributeValues[idx] && (
+                    <li
+                      className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
+                      key={att.name}
+                    >
+                      <Icon
+                        className='min-w-[13px]'
+                        name={att.icon || 'bullet'}
+                        size={13}
+                      />
+                      {attributeValues[idx]}
+                    </li>
+                  )}
+                </>
+              ))}
+            </ul>
+          )}
+        </div>
+      </ItemWrapper>
+    </li>
+  );
+};
 
 export default SearchListItem;
