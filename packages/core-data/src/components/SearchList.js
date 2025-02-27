@@ -1,6 +1,12 @@
 // @flow
 
-import React from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+  useRef
+} from 'react';
 import clsx from 'clsx';
 import { type Attribute } from '../types/SearchList';
 import SearchListItem from './SearchListItem';
@@ -41,38 +47,84 @@ type Props = {
   onItemPointerLeave?: (item: any) => void
 };
 
-const SearchList = (props: Props) => (
-  <div className={clsx(
-    'h-full flex flex-col',
-    props.className
-  )}
-  >
-    <div className='text-sm italic bg-white sticky top-0 py-2.5 px-6 shadow-sm'>
-      {props.items.length}
-        &nbsp;
-      {props.items.length === 1
-        ? i18n.t('Common.words.result')
-        : i18n.t('Common.words.results') }
-    </div>
-    <ul
-      className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={0}
+const LIMIT_STEP = 50;
+
+/**
+ * Memoize the search list item component so it doesn't
+ * re-render when we increase the limit value in SearchList.
+ */
+const MemoizedSearchListItem = memo(SearchListItem);
+
+const SearchList = (props: Props) => {
+  /**
+   * Set the max number of items to display.
+   */
+  const [limit, setLimit] = useState(LIMIT_STEP);
+
+  const listRef = useRef(null);
+
+  /**
+   * Increase the limit value when the user scrolls 90% down in the list.
+   */
+  const onScroll = useCallback((event) => {
+    setLimit((oldLimit) => {
+      if (
+        event.target.scrollTop / event.target.scrollHeight >= 0.8
+        && props.items.length >= oldLimit + LIMIT_STEP
+      ) {
+        return oldLimit + LIMIT_STEP;
+      }
+
+      return oldLimit;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.addEventListener('scroll', onScroll);
+    }
+
+    return () => {
+      if (listRef.current) {
+        listRef.current.removeEventListener('scroll', onScroll);
+      }
+    };
+  }, []);
+
+  return (
+    <div className={clsx(
+      'h-full flex flex-col',
+      props.className
+    )}
     >
-      {props.items.map((item, idx) => (
-        <SearchListItem
-          attributes={props.attributes}
-          key={idx}
-          item={item}
-          isHighlight={props.isHighlight && props.isHighlight(item)}
-          title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
-          onClick={props.onItemClick}
-          onPointerEnter={props.onItemPointerEnter}
-          onPointerLeave={props.onItemPointerLeave}
-        />
-      ))}
-    </ul>
-  </div>
-);
+      <div className='text-sm italic bg-white sticky top-0 py-2.5 px-6 shadow-sm'>
+        {props.items.length}
+        &nbsp;
+        {props.items.length === 1
+          ? i18n.t('Common.words.result')
+          : i18n.t('Common.words.results') }
+      </div>
+      <ul
+        className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        ref={listRef}
+      >
+        {props.items.slice(0, limit).map((item, idx) => (
+          <MemoizedSearchListItem
+            attributes={props.attributes}
+            key={idx}
+            item={item}
+            isHighlight={props.isHighlight && props.isHighlight(item)}
+            title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
+            onClick={props.onItemClick}
+            onPointerEnter={props.onItemPointerEnter}
+            onPointerLeave={props.onItemPointerLeave}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default SearchList;
