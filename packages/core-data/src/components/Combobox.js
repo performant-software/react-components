@@ -66,10 +66,9 @@ const Combobox = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
 
-  const isSelected = (option: Option) => useCallback(
-    props.values.some((opt) => opt.value === option.value),
-    [props.values]
-  );
+  const isSelected = useCallback((option: Option) => (
+    props.values.some((opt) => opt.value === option.value)
+  ), [props.values]);
 
   const onSearch = useCallback((query: string) => {
     setSearch(query);
