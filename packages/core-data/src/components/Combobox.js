@@ -2,6 +2,7 @@
 
 import React, { useCallback, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
+import clsx from 'clsx';
 import Icon from './Icon';
 import i18n from '../i18n/i18n';
 
@@ -17,22 +18,31 @@ type ComboboxValueProps = {
 
 const ComboboxValue = (props: ComboboxValueProps) => (
   <button
-    className='flex gap-2 items-center text-sm bg-neutral-200 px-1.5 py-0.5 rounded-[5px]'
+    className='flex gap-2 items-center text-sm bg-neutral-200 px-2 py-1 rounded-[5px]'
     onClick={props.onClick}
     type='button'
   >
-    {props.value.label}
+    <span
+      className='text-left'
+    >
+      {props.value.label}
+    </span>
+
     <Icon name='close' size={10} />
   </button>
 );
 
 type Props = {
   /**
-   * (Optional) Name of the icon to show above the combobox
+   * (Optional) class name to apply to the root element.
+   */
+  className?: string,
+  /**
+   * (Optional) Name of the icon to show above the combobox.
    */
   icon?: string,
   /**
-   * (Optional) Label to show above the combobox
+   * (Optional) Label to show above the combobox.
    */
   label?: string,
   /**
@@ -77,7 +87,9 @@ const Combobox = (props: Props) => {
   }, [props.onSearch]);
 
   return (
-    <div className='w-full flex flex-col gap-3 py-4'>
+    <div
+      className={clsx('flex flex-col w-full gap-3', props.className)}
+    >
       {(props.icon || props.label) && (
       <div
         className='flex gap-2 items-center justify-center w-full'
@@ -103,7 +115,7 @@ const Combobox = (props: Props) => {
       >
         <Popover.Anchor asChild>
           <div
-            className='flex items-center justify-center gap-1 pr-2 pl-3 rounded-[5px] bg-white w-full min-h-10 border focus-within:border-primary'
+            className='flex items-center justify-center gap-1 pr-2 pl-0.5 rounded-[5px] bg-white w-full min-h-10 border focus-within:border-primary'
           >
             <div className='grow flex gap-1 flex-wrap p-2'>
               {props.values.map((value) => (
@@ -121,11 +133,11 @@ const Combobox = (props: Props) => {
                 value={search}
               />
             </div>
-            <div className='flex gap-2 h-full'>
+            <div className='flex h-full'>
               {props.onClear && props.values.length > 0 && (
                 <button
                   aria-label={i18n.t('Combobox.clearValues')}
-                  className='rounded-full'
+                  className='flex items-center justify-center rounded-full h-8 w-8'
                   onClick={props.onClear}
                   type='button'
                 >
@@ -165,7 +177,12 @@ const Combobox = (props: Props) => {
                     ? 'checkbox_filled'
                     : 'checkbox'}
                 />
-                {option.label}
+                <span
+                  className='truncate'
+                  title={option.label}
+                >
+                  {option.label}
+                </span>
               </button>
             ))}
           </Popover.Content>
