@@ -120,11 +120,8 @@ const Combobox = (props: Props) => {
               flex 
               items-center 
               justify-center 
-              gap-1 
-              pr-2 
-              pl-0.5 
-              rounded-[5px] 
-              w-full 
+              gap-1
+              rounded-[5px]
               bg-white 
               min-h-10 
               border 
@@ -147,11 +144,11 @@ const Combobox = (props: Props) => {
                 value={search}
               />
             </div>
-            <div className='flex h-full'>
+            <div className='flex h-full gap-x-1 pe-2'>
               {props.onClear && props.values.length > 0 && (
                 <button
                   aria-label={i18n.t('Combobox.clearValues')}
-                  className='flex items-center justify-center rounded-full h-8 w-8'
+                  className='flex items-center justify-center rounded-full hover:bg-transparent'
                   onClick={props.onClear}
                   type='button'
                 >
@@ -164,7 +161,7 @@ const Combobox = (props: Props) => {
                 aria-label={open
                   ? i18n.t('Combobox.collapse')
                   : i18n.t('Combobox.expand')}
-                className='flex items-center justify-center h-8 w-8 rounded-full'
+                className='flex items-center justify-center rounded-full hover:bg-transparent'
                 onClick={() => setOpen(!open)}
                 type='button'
               >

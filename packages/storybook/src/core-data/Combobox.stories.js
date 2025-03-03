@@ -115,7 +115,8 @@ export const OptionFormatting = () => {
     'Johnplank',
     'Large Bill The Pirate',
     'Black Bill The Feared',
-    'Lorem ipsum odor amet, consectetuer adipiscing elit.'
+    'Lorem ipsum odor amet, consectetuer adipiscing elit.',
+    'El Independiente'
   ];
 
   const initOptions = names.map((n) => ({ label: n, value: n }));
@@ -134,12 +135,9 @@ export const OptionFormatting = () => {
 
   return (
     <div
-      className='w-[150px] border border-black/20 p-2'
+      className='w-[170px] border border-black/20 p-2'
     >
       <Combobox
-        classNames={{
-          value: 'max-w-[75px]'
-        }}
         options={options}
         onChange={onChange}
         onClear={onClear}
