@@ -77,10 +77,11 @@ const SearchList = (props: Props) => {
 
       return oldLimit;
     });
-  }, []);
+  }, [props.items]);
 
   useEffect(() => {
     if (listRef.current) {
+      listRef.current.removeEventListener('scroll', onScroll);
       listRef.current.addEventListener('scroll', onScroll);
     }
 
@@ -89,7 +90,7 @@ const SearchList = (props: Props) => {
         listRef.current.removeEventListener('scroll', onScroll);
       }
     };
-  }, []);
+  }, [props.items]);
 
   return (
     <div className={clsx(

@@ -1,7 +1,7 @@
 // @flow
 
 import { action } from '@storybook/addon-actions';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchList from '../../../core-data/src/components/SearchList';
 import data from '../data/typesense/Places.json';
 import { shuffle } from '../utils/Array';
@@ -229,31 +229,39 @@ export const ControlledHighlightWithOnClick = () => (
   </div>
 );
 
-export const HugeAmountOfData = () => (
-  <div className='h-[600px] w-[360px]'>
-    <SearchList
-      attributes={[
-        {
-          label: 'UUID',
-          name: 'uuid',
-        },
-        {
-          label: 'Record ID',
-          name: 'record_id',
-          icon: 'person'
-        },
-        {
-          label: 'Location',
-          name: 'geometry',
-          icon: 'location',
-          render: (item) => (item.coordinates
-            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
-            : '')
-        },
-      ]}
-      items={LOTS_AND_LOTS_OF_DATA}
-      itemTitle='name'
-      onItemClick={action('click')}
-    />
-  </div>
-);
+export const HugeAmountOfData = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setTimeout(() => setItems(LOTS_AND_LOTS_OF_DATA), 500);
+  }, []);
+
+  return (
+    <div className='h-[600px] w-[360px]'>
+      <SearchList
+        attributes={[
+          {
+            label: 'UUID',
+            name: 'uuid',
+          },
+          {
+            label: 'Record ID',
+            name: 'record_id',
+            icon: 'person'
+          },
+          {
+            label: 'Location',
+            name: 'geometry',
+            icon: 'location',
+            render: (item) => (item.coordinates
+              ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+              : '')
+          },
+        ]}
+        items={items}
+        itemTitle='name'
+        onItemClick={action('click')}
+      />
+    </div>
+  );
+};
