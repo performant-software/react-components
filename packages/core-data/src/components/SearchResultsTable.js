@@ -102,8 +102,8 @@ const SearchResultsTable = (props: Props) => {
               <tr
                 className={clsx(
                   'divide-x divide-neutral-200',
-                  { 'hover:bg-neutral-200 cursor-pointer': props.onRowClick },
-                  { 'bg-neutral-200': props.isHighlight && props.isHighlight(hit) }
+                  { 'hover:bg-primary/20 cursor-pointer': props.onRowClick },
+                  { 'bg-primary/20': props.isHighlight && props.isHighlight(hit) }
                 )}
                 onClick={props.onRowClick
                   ? () => props.onRowClick(hit)
