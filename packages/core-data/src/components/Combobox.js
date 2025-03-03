@@ -115,7 +115,7 @@ const Combobox = (props: Props) => {
       >
         <Popover.Anchor asChild>
           <div
-            className='flex items-center justify-center gap-1 pr-2 pl-0.5 rounded-[5px] bg-white w-full min-h-10 border focus-within:border-primary'
+            className='flex items-center justify-center gap-1 pr-2 pl-0.5 rounded-[5px] bg-white w-fit min-h-10 border focus-within:border-primary'
           >
             <div className='grow flex gap-1 flex-wrap p-2'>
               {props.values.map((value) => (

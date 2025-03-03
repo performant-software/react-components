@@ -134,7 +134,7 @@ export const OptionFormatting = () => {
 
   return (
     <div
-      className='w-[200px]'
+      className='w-[150px]'
     >
       <Combobox
         options={options}
