@@ -73,13 +73,13 @@ const SearchListItem = (props: SearchListItemProps) => {
   return (
     <li
       className={clsx(
-        { 'bg-neutral-200': props.isHighlight },
-        { 'hover:bg-neutral-200': !!props.onClick }
+        { 'bg-primary/20': props.isHighlight },
+        { 'hover:bg-primary/20': !!props.onClick }
       )}
     >
       <ItemWrapper {...props}>
         <div
-          className='py-3 px-6'
+          className='py-3 px-4'
           onPointerEnter={props.onPointerEnter
             ? () => props.onPointerEnter(props.item)
             : undefined}
