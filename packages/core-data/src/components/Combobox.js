@@ -148,7 +148,7 @@ const Combobox = (props: Props) => {
               {props.onClear && props.values.length > 0 && (
                 <button
                   aria-label={i18n.t('Combobox.clearValues')}
-                  className='flex items-center justify-center rounded-full hover:bg-transparent'
+                  className='flex items-center justify-center rounded-full hover:bg-transparent p-0'
                   onClick={props.onClear}
                   type='button'
                 >
@@ -161,7 +161,7 @@ const Combobox = (props: Props) => {
                 aria-label={open
                   ? i18n.t('Combobox.collapse')
                   : i18n.t('Combobox.expand')}
-                className='flex items-center justify-center rounded-full hover:bg-transparent'
+                className='flex items-center justify-center rounded-full hover:bg-transparent p-0'
                 onClick={() => setOpen(!open)}
                 type='button'
               >
