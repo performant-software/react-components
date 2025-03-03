@@ -134,9 +134,12 @@ export const OptionFormatting = () => {
 
   return (
     <div
-      className='w-[150px]'
+      className='w-[150px] border border-black/20 p-2'
     >
       <Combobox
+        classNames={{
+          value: 'max-w-[75px]'
+        }}
         options={options}
         onChange={onChange}
         onClear={onClear}

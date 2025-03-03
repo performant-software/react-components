@@ -12,13 +12,13 @@ type Option = {
 }
 
 type ComboboxValueProps = {
-  value: Option,
-  onClick: (option: Option) => void
+  onClick: (option: Option) => void,
+  value: Option
 }
 
 const ComboboxValue = (props: ComboboxValueProps) => (
   <button
-    className='flex gap-2 items-center text-sm bg-neutral-200 px-2 py-1 rounded-[5px]'
+    className='flex gap-2 items-center text-xs bg-neutral-200 px-2 py-1 rounded-[5px]'
     onClick={props.onClick}
     type='button'
   >
@@ -27,7 +27,6 @@ const ComboboxValue = (props: ComboboxValueProps) => (
     >
       {props.value.label}
     </span>
-
     <Icon name='close' size={10} />
   </button>
 );
@@ -113,9 +112,24 @@ const Combobox = (props: Props) => {
       <Popover.Root
         open={open}
       >
-        <Popover.Anchor asChild>
+        <Popover.Anchor
+          asChild
+        >
           <div
-            className='flex items-center justify-center gap-1 pr-2 pl-0.5 rounded-[5px] bg-white w-fit min-h-10 border focus-within:border-primary'
+            className={`
+              flex 
+              items-center 
+              justify-center 
+              gap-1 
+              pr-2 
+              pl-0.5 
+              rounded-[5px] 
+              w-full 
+              bg-white 
+              min-h-10 
+              border 
+              focus-within:border-primary
+            `}
           >
             <div className='grow flex gap-1 flex-wrap p-2'>
               {props.values.map((value) => (
@@ -163,7 +177,7 @@ const Combobox = (props: Props) => {
         </Popover.Anchor>
         <Popover.Portal>
           <Popover.Content
-            className='bg-white shadow-md radix-combobox-content max-h-[200px] overflow-y-auto'
+            className='bg-white shadow-md radix-combobox-content max-h-[200px] overflow-y-auto text-sm'
           >
             {props.options.map((option) => (
               <button
