@@ -46,7 +46,7 @@ type Props = {
 };
 
 const Input = (props: Props) => {
-  const clearable = typeof props.clearable === 'undefined' ? true : props.clearable;
+  const clearable = props.value && (typeof props.clearable === 'undefined' || props.clearable);
 
   return (
     <div

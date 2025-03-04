@@ -20,6 +20,19 @@ export const Default = () => {
   );
 };
 
+export const NotClearable = () => {
+  const [query, setQuery] = useState('');
+
+  return (
+    <Input
+      clearable={false}
+      onChange={(val) => setQuery(val)}
+      placeholder='Search'
+      value={query}
+    />
+  );
+};
+
 export const WithIcon = () => {
   const [query, setQuery] = useState('');
 
