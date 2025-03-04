@@ -27,7 +27,7 @@ const RecordDetailTitle = (props: Props) => (
       'flex',
       'flex-row',
       'gap-2',
-      'items-center',
+      'items-start',
       'text-[20px]',
       'font-bold',
       'leading-[120%]',

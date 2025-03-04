@@ -31,6 +31,7 @@ const AccordionItemsList = (props: Props) => (
   <Accordion.Root
     className={clsx(
       'accordion-items-list',
+      'bg-white',
       props.className
     )}
     type='multiple'
@@ -42,7 +43,7 @@ const AccordionItemsList = (props: Props) => (
         >
           <h2>
             <Accordion.Trigger
-              className='accordion-list-trigger border-neutral-100 border border-t border-b-0 border-l-0 border-r-0 border-solid rounded-none w-full flex justify-between items-center p-4 text-[15px] font-bold leading-[120%]'
+              className='accordion-list-trigger border-neutral-200 border border-t border-b-0 border-l-0 border-r-0 border-solid rounded-none w-full flex justify-between items-center p-4 text-[15px] font-bold leading-[120%]'
             >
               {
                 relation.renderTitle ? (

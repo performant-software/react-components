@@ -70,12 +70,18 @@ const RecordDetailPanel = (props: Props) => (
   <div
     className={clsx(
       'relative',
-      'shadow-[0px_5px_12px_0px_rgba(0,0,0,.10)]',
       'overflow-y-auto',
       props.classNames?.root
     )}
   >
-    <div className='sticky inset-0 shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)] bg-white z-[5]'>
+    <div className={clsx(
+      'sticky',
+      'inset-0',
+      'bg-white',
+      'z-[5]',
+      { 'shadow-[0px_1px_4px_0px_rgba(0,0,0,.15)]': props.relations && props.relations.length }
+    )}
+    >
       { props.onClose && (
         <div onClick={props.onClose} onKeyDown={props.onClose} tabIndex='0' role='button' aria-label='Close' className='absolute top-6 right-6 z-10 cursor-pointer'>
           <Icon
@@ -108,7 +114,7 @@ const RecordDetailPanel = (props: Props) => (
       </RecordDetailHeader>
     </div>
     <AccordionItemsList
-      className={clsx('shadow-[0px_1px_4px_rgba(0,0,0,.15)]', props.classNames?.relatedRecords)}
+      className={clsx(props.classNames?.relatedRecords)}
       items={props.relations}
       count={props.count}
     />
