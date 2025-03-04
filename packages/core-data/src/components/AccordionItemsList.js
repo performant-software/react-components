@@ -31,6 +31,7 @@ const AccordionItemsList = (props: Props) => (
   <Accordion.Root
     className={clsx(
       'accordion-items-list',
+      'bg-white',
       props.className
     )}
     type='multiple'
