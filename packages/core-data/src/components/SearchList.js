@@ -3,7 +3,6 @@
 import React, {
   memo,
   useCallback,
-  useEffect,
   useState,
   useRef
 } from 'react';
@@ -11,6 +10,7 @@ import clsx from 'clsx';
 import { type Attribute } from '../types/SearchList';
 import SearchListItem from './SearchListItem';
 import i18n from '../i18n/i18n';
+import InfiniteScroll from '../../../shared/src/components/InfiniteScroll';
 
 type Props = {
   /**
@@ -66,30 +66,14 @@ const SearchList = (props: Props) => {
   /**
    * Increase the limit value when the user scrolls 90% down in the list.
    */
-  const onScroll = useCallback((event) => {
+  const onBottomReached = useCallback(() => {
     setLimit((oldLimit) => {
-      if (
-        event.target.scrollTop / event.target.scrollHeight >= 0.8
-        && props.items.length > oldLimit
-      ) {
+      if (props.items.length > oldLimit) {
         return oldLimit + LIMIT_STEP;
       }
 
       return oldLimit;
     });
-  }, [props.items]);
-
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.removeEventListener('scroll', onScroll);
-      listRef.current.addEventListener('scroll', onScroll);
-    }
-
-    return () => {
-      if (listRef.current) {
-        listRef.current.removeEventListener('scroll', onScroll);
-      }
-    };
   }, [props.items]);
 
   return (
@@ -105,25 +89,32 @@ const SearchList = (props: Props) => {
           ? i18n.t('Common.words.result')
           : i18n.t('Common.words.results') }
       </div>
-      <ul
+      <div
         className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         ref={listRef}
       >
-        {props.items.slice(0, limit).map((item, idx) => (
-          <MemoizedSearchListItem
-            attributes={props.attributes}
-            key={idx}
-            item={item}
-            isHighlight={props.isHighlight && props.isHighlight(item)}
-            title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
-            onClick={props.onItemClick}
-            onPointerEnter={props.onItemPointerEnter}
-            onPointerLeave={props.onItemPointerLeave}
-          />
-        ))}
-      </ul>
+        <InfiniteScroll
+          offset={150}
+          onBottomReached={onBottomReached}
+          context={listRef}
+          key={props.items.length}
+        >
+          {props.items.slice(0, limit).map((item, idx) => (
+            <MemoizedSearchListItem
+              attributes={props.attributes}
+              key={idx}
+              item={item}
+              isHighlight={props.isHighlight && props.isHighlight(item)}
+              title={typeof props.itemTitle === 'string' ? item[props.itemTitle] : props.itemTitle(item)}
+              onClick={props.onItemClick}
+              onPointerEnter={props.onItemPointerEnter}
+              onPointerLeave={props.onItemPointerLeave}
+            />
+          ))}
+        </InfiniteScroll>
+      </div>
     </div>
   );
 };
