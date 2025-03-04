@@ -7,10 +7,10 @@ import React, {
   useRef
 } from 'react';
 import clsx from 'clsx';
+import { InfiniteScroll } from '@performant-software/shared-components';
 import { type Attribute } from '../types/SearchList';
 import SearchListItem from './SearchListItem';
 import i18n from '../i18n/i18n';
-import InfiniteScroll from '../../../shared/src/components/InfiniteScroll';
 
 type Props = {
   /**
