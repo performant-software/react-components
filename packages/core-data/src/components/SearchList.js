@@ -70,7 +70,7 @@ const SearchList = (props: Props) => {
     setLimit((oldLimit) => {
       if (
         event.target.scrollTop / event.target.scrollHeight >= 0.8
-        && props.items.length >= oldLimit + LIMIT_STEP
+        && props.items.length > oldLimit
       ) {
         return oldLimit + LIMIT_STEP;
       }
