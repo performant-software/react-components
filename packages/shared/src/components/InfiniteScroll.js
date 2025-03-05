@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useMemo,
   useRef,
   useState,
   type Element
@@ -9,7 +10,9 @@ import React, {
 import Browser from '../utils/Browser';
 
 type Props = {
+  as?: string;
   children: Element<any>,
+  className?: string,
   context?: { current: HTMLElement },
   offset: number,
   onBottomReached: () => void
@@ -104,12 +107,15 @@ const InfiniteScroll = (props: Props) => {
     }
   });
 
+  const Component = useMemo(() => props.as || 'div', [props.as]);
+
   return (
-    <div
+    <Component
+      className={props.className}
       ref={containerRef}
     >
       { props.children }
-    </div>
+    </Component>
   );
 };
 

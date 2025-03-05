@@ -71,7 +71,7 @@ const SearchListItem = (props: SearchListItemProps) => {
   }), [props.attributes, props.item]);
 
   return (
-    <div
+    <li
       className={clsx(
         { 'bg-primary/20': props.isHighlight },
         { 'hover:bg-primary/20': !!props.onClick }
@@ -111,7 +111,7 @@ const SearchListItem = (props: SearchListItemProps) => {
           )}
         </div>
       </ItemWrapper>
-    </div>
+    </li>
   );
 };
 
