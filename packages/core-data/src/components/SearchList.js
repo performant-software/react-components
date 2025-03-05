@@ -90,12 +90,14 @@ const SearchList = (props: Props) => {
           : i18n.t('Common.words.results') }
       </div>
       <div
-        className='overflow-y-auto h-full divide-y divide-solid divide-neutral-200'
+        className='overflow-y-auto h-full'
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         ref={listRef}
       >
         <InfiniteScroll
+          as='ul'
+          className='divide-y divide-solid divide-neutral-200'
           offset={150}
           onBottomReached={onBottomReached}
           context={listRef}
