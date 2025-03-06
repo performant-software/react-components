@@ -7,6 +7,7 @@ import AccordionItemsList from './AccordionItemsList';
 import RecordDetailHeader from './RecordDetailHeader';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
 import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
+import LoadAnimation from './LoadAnimation';
 
 type Props = {
   /**
@@ -44,6 +45,11 @@ type Props = {
    * The icon to display before the header.
    */
   icon?: string,
+
+  /**
+   * If true, displays a loading icon in place of the related records list
+   */
+  loading?: Boolean,
 
   /**
    * A function called when the `close` icon is clicked
@@ -113,11 +119,15 @@ const RecordDetailPanel = (props: Props) => (
         { props.children }
       </RecordDetailHeader>
     </div>
-    <AccordionItemsList
-      className={clsx(props.classNames?.relatedRecords)}
-      items={props.relations}
-      count={props.count}
-    />
+    { props.loading
+      ? <div className='py-4 px-8'><LoadAnimation /></div>
+      : (
+        <AccordionItemsList
+          className={clsx(props.classNames?.relatedRecords)}
+          items={props.relations}
+          count={props.count}
+        />
+      ) }
   </div>
 );
 
