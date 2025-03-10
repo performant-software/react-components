@@ -414,6 +414,7 @@ const FacetTimeline = (props: Props) => {
         onValueChange={setValue}
         onValueCommit={refine}
         position='bottom'
+        ticks
         value={value}
       />
     </div>

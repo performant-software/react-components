@@ -24,7 +24,20 @@ export const Default = withCoreDataContextProvider(() => (
   <FacetTimeline
     range={range}
     refine={refine}
-    zoom={10}
+    zoom={1}
+  />
+));
+
+const largeRange = {
+  min: 112,
+  max: 2025
+};
+
+export const LargeRange = withCoreDataContextProvider(() => (
+  <FacetTimeline
+    range={largeRange}
+    refine={refine}
+    zoom={50}
   />
 ));
 
@@ -40,7 +53,7 @@ export const Styled = withCoreDataContextProvider(() => (
     }}
     range={range}
     refine={refine}
-    zoom={10}
+    zoom={1}
   />
 ));
 
@@ -53,7 +66,7 @@ export const EventModal = withCoreDataContextProvider(() => {
         onClick={(event) => setSelectedEvent(event)}
         range={range}
         refine={refine}
-        zoom={10}
+        zoom={1}
       />
       { selectedEvent && (
         <Modal
@@ -94,7 +107,7 @@ export const ListView = withCoreDataContextProvider(() => {
         onLoad={setEvents}
         range={range}
         refine={refine}
-        zoom={10}
+        zoom={1}
       />
       { listView && (
         <Modal
@@ -132,6 +145,6 @@ export const Description = withCoreDataContextProvider(() => (
     description
     range={range}
     refine={refine}
-    zoom={10}
+    zoom={1}
   />
 ));
