@@ -291,8 +291,11 @@ const FacetSlider = (props: Props) => {
               aria-label={action.label}
               className={clsx(
                 'p-3',
+                'disabled:opacity-50',
+                'disabled:hover:bg-transparent',
                 action.className
               )}
+              disabled={action.disabled}
               key={index}
               onClick={action.onClick}
               type='button'
