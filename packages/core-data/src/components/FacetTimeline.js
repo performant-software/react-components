@@ -108,11 +108,23 @@ const FacetTimeline = (props: Props) => {
     const newMax = max - props.zoom;
 
     if (newMin >= newMax) {
+      // Restrict zoom-in to a range of props.zoom years
       return;
     }
 
     setMin(newMin);
     setMax(newMax);
+
+    setValue((slider) => {
+      // if the user zooms in and the slider bounds are outside the
+      // zoom window, auto-narrow the slider bounds
+      const newSliderVal = [...slider];
+      if (newMin > slider[0]) newSliderVal[0] = newMin;
+      else if (newMax < slider[0]) newSliderVal[0] = newMax;
+      if (newMax < slider[1]) newSliderVal[1] = newMax;
+      else if (newMin > slider[1]) newSliderVal[1] = newMin;
+      return newSliderVal;
+    });
   }, [max, min, props.zoom]);
 
   /**
@@ -124,7 +136,9 @@ const FacetTimeline = (props: Props) => {
     const newMin = min - props.zoom;
     const newMax = max + props.zoom;
 
-    if (newMin >= newMax) {
+    if (newMin < range.min || newMax > range.max) {
+      // Restrict zoom-out to smallest range of dates possible
+      // while showing all events
       return;
     }
 
@@ -156,21 +170,44 @@ const FacetTimeline = (props: Props) => {
   }, [defaultMax, defaultMin, value]);
 
   /**
+   * True if zoomed out all the way, in other words, zooming out
+   * once more would bring the timeline's viewport out of the range
+   * of possible values.
+   */
+  const isMinZoom = useMemo(() => {
+    const newMin = min - props.zoom;
+    const newMax = max + props.zoom;
+    return newMin < range.min || newMax > range.max;
+  }, [min, max, props.zoom, range.min, range.max]);
+
+  /**
+   * True if zoomed in all the way.
+   */
+  const isMaxZoom = useMemo(() => {
+    const newMin = min + props.zoom;
+    const newMax = max - props.zoom;
+    return newMin >= newMax;
+  }, [min, max, props.zoom]);
+
+  /**
    * List of actions to provide to the FacetSlider component.
    */
   const actions = useMemo(() => [{
     label: 'Zoom In',
     icon: <ZoomIn />,
-    onClick: onZoomIn
+    onClick: onZoomIn,
+    disabled: isMaxZoom
   }, {
     label: 'Zoom Out',
     icon: <ZoomOut />,
-    onClick: onZoomOut
+    onClick: onZoomOut,
+    disabled: isMinZoom
   }, {
     label: 'Zoom Reset',
     icon: <RotateCcw />,
-    onClick: onZoomReset
-  }], [onZoomIn, onZoomOut, onZoomReset]);
+    onClick: onZoomReset,
+    disabled: isMinZoom
+  }], [onZoomIn, onZoomOut, onZoomReset, isMinZoom]);
 
   /**
    * Returns the year value for the passed event.

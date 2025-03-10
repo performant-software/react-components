@@ -234,7 +234,7 @@ const FacetSlider = (props: Props) => {
           )}
           max={props.max}
           min={props.min}
-          minStepsBetweenThumbs={1}
+          minStepsBetweenThumbs={0}
           onValueChange={props.onValueChange}
           onValueCommit={props.onValueCommit}
           step={1}
