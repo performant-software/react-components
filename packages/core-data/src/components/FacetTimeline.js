@@ -125,14 +125,14 @@ const FacetTimeline = (props: Props) => {
     const newMin = min - props.zoom;
     const newMax = max + props.zoom;
 
-    if (newMin < range.min || newMax > range.max) {
-      // Restrict zoom-out to smallest range of dates possible
-      // while showing all events
-      return;
+    // Restrict zoom-out to smallest range of dates possible
+    // while showing all events
+    if (newMin >= range.min) {
+      setMin(newMin);
     }
-
-    setMin(newMin);
-    setMax(newMax);
+    if (newMax <= range.max) {
+      setMax(newMax);
+    }
   }, [max, min, range, props.zoom]);
 
   /**
@@ -166,7 +166,7 @@ const FacetTimeline = (props: Props) => {
   const isMinZoom = useMemo(() => {
     const newMin = min - props.zoom;
     const newMax = max + props.zoom;
-    return newMin < range.min || newMax > range.max;
+    return newMin < range.min && newMax > range.max;
   }, [min, max, props.zoom, range.min, range.max]);
 
   /**
