@@ -114,17 +114,6 @@ const FacetTimeline = (props: Props) => {
 
     setMin(newMin);
     setMax(newMax);
-
-    setValue((slider) => {
-      // if the user zooms in and the slider bounds are outside the
-      // zoom window, auto-narrow the slider bounds
-      const newSliderVal = [...slider];
-      if (newMin > slider[0]) newSliderVal[0] = newMin;
-      else if (newMax < slider[0]) newSliderVal[0] = newMax;
-      if (newMax < slider[1]) newSliderVal[1] = newMax;
-      else if (newMin > slider[1]) newSliderVal[1] = newMin;
-      return newSliderVal;
-    });
   }, [max, min, props.zoom]);
 
   /**
@@ -188,6 +177,22 @@ const FacetTimeline = (props: Props) => {
     const newMax = max - props.zoom;
     return newMin >= newMax;
   }, [min, max, props.zoom]);
+
+  /**
+   * Handle change in min/max: auto-narrow slider bounds if needed
+   */
+  useEffect(() => {
+    setValue((slider) => {
+      // if the user zooms in and the slider bounds are outside the
+      // zoom window, auto-narrow the slider bounds
+      const newSliderVal = [...slider];
+      if (min > slider[0]) newSliderVal[0] = min;
+      else if (max < slider[0]) newSliderVal[0] = max;
+      if (max < slider[1]) newSliderVal[1] = max;
+      else if (min > slider[1]) newSliderVal[1] = min;
+      return newSliderVal;
+    });
+  }, [min, max]);
 
   /**
    * List of actions to provide to the FacetSlider component.
@@ -295,6 +300,24 @@ const FacetTimeline = (props: Props) => {
       setDefaultMax(range.max);
     }
   }, [from, to, range.min, range.max]);
+
+  /**
+   * Callback for clicking the left button on the timeline, which decreases the minimum
+   * and maximum years shown.
+   */
+  const onLeft = useCallback(() => {
+    setMin((prevMin) => prevMin - props.zoom);
+    setMax((prevMax) => prevMax - props.zoom);
+  }, [props.zoom]);
+
+  /**
+   * Callback for clicking the right button on the timeline, which increases the minimum
+   * and maximum years shown.
+   */
+  const onRight = useCallback(() => {
+    setMin((prevMin) => prevMin + props.zoom);
+    setMax((prevMax) => prevMax + props.zoom);
+  }, [props.zoom]);
 
   return (
     <div
@@ -411,9 +434,11 @@ const FacetTimeline = (props: Props) => {
         classNames={props.classNames}
         max={max}
         min={min}
+        left={{ onClick: onLeft, disabled: min === range.min }}
         onValueChange={setValue}
         onValueCommit={refine}
         position='bottom'
+        right={{ onClick: onRight, disabled: max === range.max }}
         ticks
         value={value}
       />

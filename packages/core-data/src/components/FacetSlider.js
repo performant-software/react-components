@@ -100,6 +100,11 @@ type Action = {
   className?: string,
 
   /**
+   * (Optional) boolean to conditionally disable the action.
+   */
+  disabled?: boolean,
+
+  /**
    * (Optional) icon to render inside the button element.
    */
   icon?: JSX.Element,
@@ -113,6 +118,18 @@ type Action = {
    * Callback fired when the button is clicked.
    */
   onClick: () => void
+};
+
+type DirectionButton = {
+  /**
+   * (Optional) boolean to conditionally disable the direction button.
+   */
+  disabled?: boolean,
+
+  /**
+   * Callback fired when the button is clicked.
+   */
+  onClick: () => void,
 };
 
 type ClassNames = {
@@ -144,6 +161,18 @@ type Props = {
    * The minimum facet value.
    */
   min?: number,
+
+  /**
+   * Settings for callback and disabled state for the "step left" button.
+   * If unset, will decrement the slider's lower bound.
+   */
+  left?: DirectionButton,
+
+  /**
+   * Settings for callback and disabled state for the "step right" button.
+   * If unset, will increment the slider's upper bound.
+   */
+  right?: DirectionButton,
 
   /**
    * Callback fired when the range is changed.
@@ -281,8 +310,15 @@ const FacetSlider = (props: Props) => {
       >
         <button
           aria-label='Slider Left'
-          className={clsx('px-3 py-3', props.classNames.button)}
-          onClick={onLeft}
+          className={clsx(
+            'px-3',
+            'py-3',
+            'disabled:opacity-50',
+            'disabled:hover:bg-transparent',
+            props.classNames.button
+          )}
+          disabled={props.left?.disabled}
+          onClick={props.left ? props.left.onClick : onLeft}
           type='button'
         >
           <ChevronLeft />
@@ -359,8 +395,15 @@ const FacetSlider = (props: Props) => {
         </Slider.Root>
         <button
           aria-label='Slider Right'
-          className={clsx('px-3 py-3', props.classNames.button)}
-          onClick={onRight}
+          className={clsx(
+            'px-3',
+            'py-3',
+            'disabled:opacity-50',
+            'disabled:hover:bg-transparent',
+            props.classNames.button
+          )}
+          disabled={props.right?.disabled}
+          onClick={props.right ? props.right.onClick : onRight}
           type='button'
         >
           <ChevronRight />
