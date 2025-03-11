@@ -10,11 +10,7 @@ import _ from 'underscore';
  *
  * @returns {Feature<*, *>}
  */
-const toFeature = (place) => feature(
-  place?.place_geometry?.geometry_json,
-  _.omit(place, 'place_geometry'),
-  { id: place.id }
-);
+const toFeature = (place) => feature(place?.place_geometry?.geometry_json, _.omit(place, 'place_geometry'), { id: place.uuid });
 
 /**
  * Converts the passed collection of places to a feature collection.
