@@ -121,7 +121,7 @@ const LocationMarkers = (props: Props) => {
       { props.animate && (
         <PulsingMarkerLayer
           data={props.data}
-          id={props.layerId}
+          id={`pulsing-${props.layerId}`}
         />
       )}
       <GeoJSONLayer
