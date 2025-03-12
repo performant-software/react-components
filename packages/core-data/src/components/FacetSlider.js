@@ -269,16 +269,10 @@ const FacetSlider = (props: Props) => {
     const width = sliderWidth - THUMB_SPACING;
     const tickSpacing = width / nTicks;
     if (tickSpacing < MAJOR_TICKS_MIN_SPACE) {
-      if (tickType === 'minor' && tickSpacing < MINOR_TICKS_MIN_SPACE) {
-        // ensure at least MINOR_TICKS_MIN_SPACE between ticks
-        nTicks = Math.floor(width / MINOR_TICKS_MIN_SPACE);
-      } else {
-        // ensure at least MAJOR_TICKS_MIN_SPACE between ticks
-        nTicks = Math.floor(width / MAJOR_TICKS_MIN_SPACE);
-      }
+      // ensure at least *_TICKS_MIN_SPACE between ticks
+      nTicks = Math.floor(width / (tickType === 'minor' ? MINOR_TICKS_MIN_SPACE : MAJOR_TICKS_MIN_SPACE));
     } else if (tickType === 'minor') {
-      // only render minor ticks if major ticks' nTicks is less than
-      // max - min
+      // only render minor ticks if some values are not included in major ticks
       return [];
     }
     // use d3-scale to produce scaled tick intervals
