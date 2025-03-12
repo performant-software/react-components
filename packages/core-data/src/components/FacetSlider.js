@@ -120,18 +120,6 @@ type Action = {
   onClick: () => void
 };
 
-type DirectionButton = {
-  /**
-   * (Optional) boolean to conditionally disable the direction button.
-   */
-  disabled?: boolean,
-
-  /**
-   * Callback fired when the button is clicked.
-   */
-  onClick: () => void,
-};
-
 type ClassNames = {
   button: string,
   range: string,
@@ -153,6 +141,11 @@ type Props = {
   classNames: ClassNames,
 
   /**
+   * True if the step buttons should be hidden.
+   */
+  hideStepButtons?: boolean,
+
+  /**
    * The maximum facet value.
    */
   max?: number,
@@ -161,18 +154,6 @@ type Props = {
    * The minimum facet value.
    */
   min?: number,
-
-  /**
-   * Settings for callback and disabled state for the "step left" button.
-   * If unset, will decrement the slider's lower bound.
-   */
-  left?: DirectionButton,
-
-  /**
-   * Settings for callback and disabled state for the "step right" button.
-   * If unset, will increment the slider's upper bound.
-   */
-  right?: DirectionButton,
 
   /**
    * Callback fired when the range is changed.
@@ -302,21 +283,22 @@ const FacetSlider = (props: Props) => {
       <div
         className='flex justify-between items-center pt-4'
       >
-        <button
-          aria-label='Slider Left'
-          className={clsx(
-            'px-3',
-            'py-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            props.classNames.button
-          )}
-          disabled={props.left?.disabled}
-          onClick={props.left ? props.left.onClick : onLeft}
-          type='button'
-        >
-          <ChevronLeft />
-        </button>
+        {!props.hideStepButtons && (
+          <button
+            aria-label='Slider Left'
+            className={clsx(
+              'px-3',
+              'py-3',
+              'disabled:opacity-50',
+              'disabled:hover:bg-transparent',
+              props.classNames.button
+            )}
+            onClick={onLeft}
+            type='button'
+          >
+            <ChevronLeft />
+          </button>
+        )}
         <Slider.Root
           className={clsx(
             'relative flex flex-grow h-5 touch-none items-center w-full',
@@ -387,21 +369,22 @@ const FacetSlider = (props: Props) => {
             value={props.value[1]}
           />
         </Slider.Root>
-        <button
-          aria-label='Slider Right'
-          className={clsx(
-            'px-3',
-            'py-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            props.classNames.button
-          )}
-          disabled={props.right?.disabled}
-          onClick={props.right ? props.right.onClick : onRight}
-          type='button'
-        >
-          <ChevronRight />
-        </button>
+        {!props.hideStepButtons && (
+          <button
+            aria-label='Slider Right'
+            className={clsx(
+              'px-3',
+              'py-3',
+              'disabled:opacity-50',
+              'disabled:hover:bg-transparent',
+              props.classNames.button
+            )}
+            onClick={onRight}
+            type='button'
+          >
+            <ChevronRight />
+          </button>
+        )}
       </div>
       {!props.ticks && (
         <div className='flex justify-between w-full px-12'>

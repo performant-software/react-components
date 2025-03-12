@@ -301,24 +301,6 @@ const FacetTimeline = (props: Props) => {
     }
   }, [from, to, range.min, range.max]);
 
-  /**
-   * Callback for clicking the left button on the timeline, which decreases the minimum
-   * and maximum years shown.
-   */
-  const onLeft = useCallback(() => {
-    setMin((prevMin) => prevMin - props.zoom);
-    setMax((prevMax) => prevMax - props.zoom);
-  }, [props.zoom]);
-
-  /**
-   * Callback for clicking the right button on the timeline, which increases the minimum
-   * and maximum years shown.
-   */
-  const onRight = useCallback(() => {
-    setMin((prevMin) => prevMin + props.zoom);
-    setMax((prevMax) => prevMax + props.zoom);
-  }, [props.zoom]);
-
   return (
     <div
       className={clsx(
@@ -432,13 +414,12 @@ const FacetTimeline = (props: Props) => {
           ...props.actions || []
         ]}
         classNames={props.classNames}
+        hideStepButtons
         max={max}
         min={min}
-        left={{ onClick: onLeft, disabled: min === range.min }}
         onValueChange={setValue}
         onValueCommit={refine}
         position='bottom'
-        right={{ onClick: onRight, disabled: max === range.max }}
         ticks
         value={value}
       />
