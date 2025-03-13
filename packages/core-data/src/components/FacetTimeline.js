@@ -206,42 +206,6 @@ const FacetTimeline = (props: Props) => {
   }, [from, to, range.min, range.max]);
 
   /**
-   * On load (or slider width change), adjust based on the width of the slider.
-   */
-  useEffect(() => {
-    // for ticks, expand overall range to get round values
-    let nTicks = range.max - range.min;
-    const tickSpacing = sliderBounds.width / nTicks;
-    if (tickSpacing < MAJOR_TICKS_MIN_SPACE) {
-      // calculate major ticks
-      nTicks = Math.floor(sliderBounds.width / MAJOR_TICKS_MIN_SPACE);
-      const scale = scaleLinear()
-        .domain([range.min, range.max])
-        .range([0, sliderBounds.width]);
-      const ticks = scale.ticks(nTicks);
-      if (ticks?.length > 2) {
-        // adjust the min and max such that no values are outside of the
-        // first and last major tick
-        let [newMin, newMax] = [min, max];
-        const tickInterval = ticks[1] - ticks[0];
-        if (_.first(ticks) > range.min) {
-          newMin = _.first(ticks) - tickInterval;
-          setMin(newMin);
-        }
-        if (_.last(ticks) < range.max) {
-          newMax = _.last(ticks) + tickInterval;
-          setMax(newMax);
-        }
-        if (value[0] === range.min && value[1] === range.max) {
-          // if the slider hasn't been changed from the initial range,
-          // set it to encompass the new slider min and max
-          setValue([newMin, newMax]);
-        }
-      }
-    }
-  }, [range.min, range.max, sliderBounds.width]);
-
-  /**
    * Helper function to generate major or minor ticks given min/max of the slider,
    * and the width of the slider.
    */
@@ -258,9 +222,7 @@ const FacetTimeline = (props: Props) => {
       return [];
     }
     // use d3-scale to produce scaled tick intervals
-    const scale = scaleLinear()
-      .domain([tMin, tMax])
-      .range([thumbSpacing, width]);
+    const scale = scaleLinear().domain([tMin, tMax]).range([thumbSpacing, width]);
     // produce year and x offset for each tick
     return scale.ticks(nTicks).map((year) => ({
       value: year,
@@ -278,6 +240,32 @@ const FacetTimeline = (props: Props) => {
   const minorTicks = useMemo(() => (sliderBounds?.width ? generateTicks(
     min, max, sliderBounds.width, 'minor'
   ) : []), [min, max, sliderBounds.width]);
+
+  /**
+   * On load (or slider width change), adjust based on the width of the slider.
+   */
+  useEffect(() => {
+    // for ticks, expand overall range to get round values
+    const nValues = range.max - range.min;
+    // generate ticks across the range of valid values
+    const ticks = _.pluck(generateTicks(
+      range.min, range.max, sliderBounds.width, 'major'
+    ), 'value');
+    if (ticks?.length < nValues && ticks.length > 2) {
+      // adjust the min and max such that no values are outside of the
+      // first and last major tick
+      const tickInterval = ticks[1] - ticks[0];
+      const newMin = Math.min(range.min, _.first(ticks) - tickInterval);
+      const newMax = Math.max(range.max, _.last(ticks) + tickInterval);
+      setMin(newMin);
+      setMax(newMax);
+      if (value[0] === range.min && value[1] === range.max) {
+        // if the slider hasn't been changed from the initial range,
+        // set it to encompass the new slider min and max
+        setValue([newMin, newMax]);
+      }
+    }
+  }, [range.min, range.max, sliderBounds.width]);
 
   return (
     <div
