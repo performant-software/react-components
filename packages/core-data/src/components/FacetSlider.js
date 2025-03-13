@@ -4,12 +4,10 @@ import { useTimer } from '@performant-software/shared-components';
 import * as Slider from '@radix-ui/react-slider';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
-import { scaleLinear } from 'd3-scale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, {
-  useCallback, useMemo, useEffect, useState
+  forwardRef, useCallback, useEffect, useState
 } from 'react';
-import useMeasure from 'react-use-measure';
 import _ from 'underscore';
 
 type MarkerProps = {
@@ -129,6 +127,11 @@ type ClassNames = {
   zoom: string
 };
 
+type Tick = {
+  value: number,
+  xOffset: number,
+}
+
 type Props = {
   /**
    * Custom actions to render as buttons.
@@ -146,6 +149,11 @@ type Props = {
   hideStepButtons?: boolean,
 
   /**
+   * Major (tall) ticks to render below the slider.
+   */
+  majorTicks?: Array<Tick>,
+
+  /**
    * The maximum facet value.
    */
   max?: number,
@@ -154,6 +162,11 @@ type Props = {
    * The minimum facet value.
    */
   min?: number,
+
+  /**
+   * Minor (short) ticks to render below the slider.
+   */
+  minorTicks?: Array<Tick>,
 
   /**
    * Callback fired when the range is changed.
@@ -176,26 +189,13 @@ type Props = {
   step?: number,
 
   /**
-   * Whether or not to display ticks.
-   */
-  ticks?: boolean,
-
-  /**
    * Value for controlled input.
    */
   value: [number, number]
 };
 
-// The minimum space between major ticks, in pixels.
-const MAJOR_TICKS_MIN_SPACE = 80;
-// The minimum space between minor ticks, in pixels.
-const MINOR_TICKS_MIN_SPACE = 10;
-// spacing required around tick positions for thumbs
-const THUMB_SPACING = 9;
-
-const FacetSlider = (props: Props) => {
+const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
   const { clearTimer, setTimer } = useTimer();
-  const [ticksRef, ticksBounds] = useMeasure();
 
   /**
    * Callback fired when the left button is clicked. This function decrements the min range value by the "step" prop.
@@ -241,43 +241,6 @@ const FacetSlider = (props: Props) => {
     }
   }, [props.max, props.onValueChange, props.onValueCommit, props.step, props.value]);
 
-  /**
-   * Helper function to generate major or minor ticks given min/max of the slider,
-   * and the width of the slider.
-   */
-  const generateTicks = useCallback((min, max, sliderWidth, tickType = 'major') => {
-    let nTicks = max - min;
-    const width = sliderWidth - THUMB_SPACING;
-    const tickSpacing = width / nTicks;
-    if (tickSpacing < MAJOR_TICKS_MIN_SPACE) {
-      // ensure at least *_TICKS_MIN_SPACE between ticks
-      nTicks = Math.floor(width / (tickType === 'minor' ? MINOR_TICKS_MIN_SPACE : MAJOR_TICKS_MIN_SPACE));
-    } else if (tickType === 'minor') {
-      // only render minor ticks if some values are not included in major ticks
-      return [];
-    }
-    // use d3-scale to produce scaled tick intervals
-    const scale = scaleLinear()
-      .domain([min, max])
-      .range([THUMB_SPACING, width]);
-    // produce year and x offset for each tick
-    return scale.ticks(nTicks).map((year) => ({
-      value: year,
-      xOffset: scale(year),
-    }));
-  }, []);
-
-  /**
-   * Memoize the set of major and minor ticks based on the current min,
-   * max, and slider width.
-   */
-  const majorTicks = useMemo(() => (ticksBounds?.width ? generateTicks(
-    props.min, props.max, ticksBounds.width, 'major'
-  ) : []), [props.min, props.max, ticksBounds.width]);
-  const minorTicks = useMemo(() => (ticksBounds?.width ? generateTicks(
-    props.min, props.max, ticksBounds.width, 'minor'
-  ) : []), [props.min, props.max, ticksBounds.width]);
-
   return (
     <>
       <div
@@ -309,7 +272,7 @@ const FacetSlider = (props: Props) => {
           minStepsBetweenThumbs={0}
           onValueChange={props.onValueChange}
           onValueCommit={props.onValueCommit}
-          ref={ticksRef}
+          ref={ref}
           step={1}
           value={props.value}
         >
@@ -326,7 +289,7 @@ const FacetSlider = (props: Props) => {
               )}
             />
           </Slider.Track>
-          {props.ticks && majorTicks
+          {props.majorTicks
             && (
             <svg
               className='absolute mt-12 z-0 !overflow-visible'
@@ -336,7 +299,7 @@ const FacetSlider = (props: Props) => {
               shapeRendering='crispEdges'
             >
               {/* Ticks and labels */}
-              {majorTicks.map(({ value, xOffset }) => (
+              {props.majorTicks.map(({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={10} stroke='currentColor' />
                   <text
@@ -351,7 +314,7 @@ const FacetSlider = (props: Props) => {
                   </text>
                 </g>
               ))}
-              {minorTicks.map(({ value, xOffset }) => (
+              {props.minorTicks.map(({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={5} stroke='currentColor' />
                 </g>
@@ -386,7 +349,7 @@ const FacetSlider = (props: Props) => {
           </button>
         )}
       </div>
-      {!props.ticks && (
+      {!props.majorTicks && !props.minorTicks && (
         <div className='flex justify-between w-full px-12'>
           <div>{props.min}</div>
           <div>{props.max}</div>
@@ -406,7 +369,7 @@ const FacetSlider = (props: Props) => {
                 'p-3',
                 'disabled:opacity-50',
                 'disabled:hover:bg-transparent',
-                props.ticks ? 'mt-2' : '',
+                (props.majorTicks || props.minorTicks) ? 'mt-5' : '',
                 action.className
               )}
               disabled={action.disabled}
@@ -421,7 +384,7 @@ const FacetSlider = (props: Props) => {
       )}
     </>
   );
-};
+});
 
 FacetSlider.defaultProps = {
   classNames: {},

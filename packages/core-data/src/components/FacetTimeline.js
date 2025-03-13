@@ -4,13 +4,8 @@ import { Numbers, useTimer } from '@performant-software/shared-components';
 import * as Popover from '@radix-ui/react-popover';
 import * as Slider from '@radix-ui/react-slider';
 import { clsx } from 'clsx';
-import {
-  ChevronLeft,
-  ChevronRight,
-  RotateCcw,
-  ZoomIn,
-  ZoomOut
-} from 'lucide-react';
+import { scaleLinear } from 'd3-scale';
+import { RotateCcw } from 'lucide-react';
 import React, {
   useCallback,
   useEffect,
@@ -18,6 +13,7 @@ import React, {
   useRef,
   useState
 } from 'react';
+import useMeasure from 'react-use-measure';
 import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
 import EventUtils from '../utils/Event';
@@ -74,12 +70,12 @@ type Props = {
    * The current value of the slider.
    */
   start: [number, number],
-
-  /**
-   * Zoom level increment.
-   */
-  zoom?: number
 };
+
+// The minimum space between major ticks, in pixels.
+const MAJOR_TICKS_MIN_SPACE = 80;
+// The minimum space between minor ticks, in pixels.
+const MINOR_TICKS_MIN_SPACE = 10;
 
 const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props;
@@ -88,8 +84,6 @@ const FacetTimeline = (props: Props) => {
   const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
 
   const [events, setEvents] = useState();
-  const [defaultMax, setDefaultMax] = useState(range.max);
-  const [defaultMin, setDefaultMin] = useState(range.min);
   const [max, setMax] = useState(range.max);
   const [min, setMin] = useState(range.min);
   const [value, setValue] = useState([from, to]);
@@ -97,86 +91,7 @@ const FacetTimeline = (props: Props) => {
   const EventsService = useEventsService();
   const ref = useRef();
   const { clearTimer, setTimer } = useTimer();
-
-  /**
-   * Zooms in the min/max values.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onZoomIn = useCallback(() => {
-    const newMin = min + props.zoom;
-    const newMax = max - props.zoom;
-
-    if (newMin >= newMax) {
-      // Restrict zoom-in to a range of props.zoom years
-      return;
-    }
-
-    setMin(newMin);
-    setMax(newMax);
-  }, [max, min, props.zoom]);
-
-  /**
-   * Zooms out the min/max values.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onZoomOut = useCallback(() => {
-    const newMin = min - props.zoom;
-    const newMax = max + props.zoom;
-
-    // Restrict zoom-out to smallest range of dates possible
-    // while showing all events
-    if (newMin >= range.min) {
-      setMin(newMin);
-    }
-    if (newMax <= range.max) {
-      setMax(newMax);
-    }
-  }, [max, min, range, props.zoom]);
-
-  /**
-   * Resets the min/max values to the defaults.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onZoomReset = useCallback(() => {
-    setMin(defaultMin);
-    setMax(defaultMax);
-
-    let newStart = value[0];
-    let newEnd = value[1];
-
-    if (value[0] < defaultMin) {
-      newStart = defaultMin;
-    }
-
-    if (value[1] > defaultMax) {
-      newEnd = defaultMax;
-    }
-
-    setValue([newStart, newEnd]);
-  }, [defaultMax, defaultMin, value]);
-
-  /**
-   * True if zoomed out all the way, in other words, zooming out
-   * once more would bring the timeline's viewport out of the range
-   * of possible values.
-   */
-  const isMinZoom = useMemo(() => {
-    const newMin = min - props.zoom;
-    const newMax = max + props.zoom;
-    return newMin < range.min && newMax > range.max;
-  }, [min, max, props.zoom, range.min, range.max]);
-
-  /**
-   * True if zoomed in all the way.
-   */
-  const isMaxZoom = useMemo(() => {
-    const newMin = min + props.zoom;
-    const newMax = max - props.zoom;
-    return newMin >= newMax;
-  }, [min, max, props.zoom]);
+  const [sliderRef, sliderBounds] = useMeasure();
 
   /**
    * Handle change in min/max: auto-narrow slider bounds if needed
@@ -195,24 +110,21 @@ const FacetTimeline = (props: Props) => {
   }, [min, max]);
 
   /**
+   * Callback to reset the slider position to encompass the full range.
+   */
+  const onSliderReset = useCallback(() => {
+    setValue([min, max]);
+  });
+
+  /**
    * List of actions to provide to the FacetSlider component.
    */
   const actions = useMemo(() => [{
-    label: 'Zoom In',
-    icon: <ZoomIn />,
-    onClick: onZoomIn,
-    disabled: isMaxZoom
-  }, {
-    label: 'Zoom Out',
-    icon: <ZoomOut />,
-    onClick: onZoomOut,
-    disabled: isMinZoom
-  }, {
     label: 'Zoom Reset',
     icon: <RotateCcw />,
-    onClick: onZoomReset,
-    disabled: isMinZoom
-  }], [onZoomIn, onZoomOut, onZoomReset, isMinZoom]);
+    onClick: onSliderReset,
+    disabled: value[0] === min && value[1] === max
+  }], [onSliderReset, value]);
 
   /**
    * Returns the year value for the passed event.
@@ -291,15 +203,45 @@ const FacetTimeline = (props: Props) => {
     setValue([from, to]);
     setMin(range.min);
     setMax(range.max);
-
-    if (!defaultMin && range.min) {
-      setDefaultMin(range.min);
-    }
-
-    if (!defaultMax && range.max) {
-      setDefaultMax(range.max);
-    }
   }, [from, to, range.min, range.max]);
+
+  /**
+   * Helper function to generate major or minor ticks given min/max of the slider,
+   * and the width of the slider.
+   */
+  const generateTicks = useCallback((tMin, tMax, sliderWidth, tickType = 'major') => {
+    let nTicks = tMax - tMin;
+    const thumbSpacing = 0.5;
+    const width = sliderWidth - thumbSpacing;
+    const tickSpacing = width / nTicks;
+    if (tickSpacing < MAJOR_TICKS_MIN_SPACE) {
+      // ensure at least *_TICKS_MIN_SPACE between ticks
+      nTicks = Math.floor(width / (tickType === 'minor' ? MINOR_TICKS_MIN_SPACE : MAJOR_TICKS_MIN_SPACE));
+    } else if (tickType === 'minor') {
+      // only render minor ticks if some values are not included in major ticks
+      return [];
+    }
+    // use d3-scale to produce scaled tick intervals
+    const scale = scaleLinear()
+      .domain([tMin, tMax])
+      .range([thumbSpacing, width]);
+    // produce year and x offset for each tick
+    return scale.ticks(nTicks).map((year) => ({
+      value: year,
+      xOffset: scale(year),
+    }));
+  }, []);
+
+  /**
+   * Memoize the set of major and minor ticks based on the current min,
+   * max, and slider width.
+   */
+  const majorTicks = useMemo(() => (sliderBounds?.width ? generateTicks(
+    min, max, sliderBounds.width, 'major'
+  ) : []), [min, max, sliderBounds.width]);
+  const minorTicks = useMemo(() => (sliderBounds?.width ? generateTicks(
+    min, max, sliderBounds.width, 'minor'
+  ) : []), [min, max, sliderBounds.width]);
 
   return (
     <div
@@ -313,15 +255,8 @@ const FacetTimeline = (props: Props) => {
       <div
         className='flex justify-between items-center'
       >
-        <button
-          aria-label='Slider Left'
-          className='p-4 cursor-auto opacity-0'
-          type='button'
-        >
-          <ChevronLeft />
-        </button>
         <Slider.Root
-          className='relative flex flex-grow h-5 touch-none items-center w-full'
+          className='relative flex flex-grow h-14 touch-none items-center w-full mb-5'
           max={max}
           min={min}
           value={years}
@@ -400,27 +335,29 @@ const FacetTimeline = (props: Props) => {
             </Popover.Root>
           ))}
         </Slider.Root>
-        <button
-          aria-label='Slider Right'
-          className='p-4 cursor-auto opacity-0'
-          type='button'
-        >
-          <ChevronRight />
-        </button>
       </div>
       <FacetSlider
         actions={[
           ...actions,
           ...props.actions || []
         ]}
-        classNames={props.classNames}
+        classNames={{
+          ...props.classNames,
+          range: clsx('bg-gray-500', 'border', 'border-black', props.classNames?.range),
+          root: clsx('mx-14', props.classNames?.root),
+          track: clsx('h-5', 'mb-4', props.classNames?.track),
+          thumb: clsx('opacity-0', 'w-[1px]', 'cursor-pointer', props.classNames?.thumb),
+        }}
         hideStepButtons
+        majorTicks={majorTicks}
         max={max}
         min={min}
+        minorTicks={minorTicks}
         onValueChange={setValue}
         onValueCommit={refine}
         position='bottom'
-        ticks
+        thumbless
+        ref={sliderRef}
         value={value}
       />
     </div>
