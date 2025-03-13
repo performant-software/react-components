@@ -6,7 +6,7 @@ import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, {
-  forwardRef, useCallback, useEffect, useState
+  forwardRef, useCallback, useEffect, useMemo, useState
 } from 'react';
 import _ from 'underscore';
 
@@ -111,6 +111,11 @@ type Action = {
    * Button label.
    */
   label: string,
+
+  /**
+   * Position of the action relative to the slider.
+   */
+  position?: 'right' | 'bottom',
 
   /**
    * Callback fired when the button is clicked.
@@ -241,10 +246,27 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
     }
   }, [props.max, props.onValueChange, props.onValueCommit, props.step, props.value]);
 
+  /**
+   * Filtered actions by position.
+   */
+  const bottomActions = useMemo(() => props.actions?.filter(
+    (action) => !action.position || action.position === 'bottom'
+  ), [props.actions]);
+  const rightActions = useMemo(() => props.actions?.filter(
+    (action) => action.position === 'right'
+  ), [props.actions]);
+
   return (
     <>
       <div
-        className='flex justify-between items-center pt-4'
+        className={clsx(
+          'flex',
+          'justify-between',
+          'items-center',
+          'pt-4',
+          !_.isEmpty(rightActions) ? 'px-4' : '',
+          _.isEmpty(bottomActions) && (props.majorTicks || props.minorTicks) ? 'pb-7' : '',
+        )}
       >
         {!props.hideStepButtons && (
           <button
@@ -348,6 +370,32 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
             <ChevronRight />
           </button>
         )}
+        { !_.isEmpty(rightActions) && (
+          <div
+            className={clsx(
+              'flex justify-center items-center py-3 text-gray-600',
+              props.classNames.zoom
+            )}
+          >
+            { _.map(rightActions, (action, index) => (
+              <button
+                aria-label={action.label}
+                className={clsx(
+                  'p-3',
+                  'disabled:opacity-50',
+                  'disabled:hover:bg-transparent',
+                  action.className
+                )}
+                disabled={action.disabled}
+                key={index}
+                onClick={action.onClick}
+                type='button'
+              >
+                { action.icon }
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       {!props.majorTicks && !props.minorTicks && (
         <div className='flex justify-between w-full px-12'>
@@ -355,14 +403,14 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           <div>{props.max}</div>
         </div>
       )}
-      { !_.isEmpty(props.actions) && (
+      { !_.isEmpty(bottomActions) && (
         <div
           className={clsx(
             'flex justify-center items-center w-full py-3 text-gray-600',
             props.classNames.zoom
           )}
         >
-          { _.map(props.actions, (action, index) => (
+          { _.map(bottomActions, (action, index) => (
             <button
               aria-label={action.label}
               className={clsx(

@@ -120,9 +120,11 @@ const FacetTimeline = (props: Props) => {
    * List of actions to provide to the FacetSlider component.
    */
   const actions = useMemo(() => [{
+    className: '-mt-4',
     label: 'Zoom Reset',
-    icon: <RotateCcw />,
+    icon: <RotateCcw className='w-5 h-5' />,
     onClick: onSliderReset,
+    position: 'right',
     disabled: value[0] === min && value[1] === max
   }], [onSliderReset, value]);
 
@@ -368,7 +370,7 @@ const FacetTimeline = (props: Props) => {
         classNames={{
           ...props.classNames,
           range: clsx('bg-gray-500', 'border', 'border-black', props.classNames?.range),
-          root: clsx('mx-14', props.classNames?.root),
+          root: clsx('ml-14', 'mr-5', props.classNames?.root),
           track: clsx('h-5', 'mb-4', props.classNames?.track),
           thumb: clsx('opacity-0', 'w-[1px]', 'cursor-pointer', props.classNames?.thumb),
         }}
