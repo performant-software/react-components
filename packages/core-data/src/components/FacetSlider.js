@@ -137,6 +137,11 @@ type Tick = {
   xOffset: number,
 }
 
+type Ticks = {
+  major: Array<Tick>,
+  minor?: Array<Tick>,
+}
+
 type Props = {
   /**
    * Custom actions to render as buttons.
@@ -154,11 +159,6 @@ type Props = {
   hideStepButtons?: boolean,
 
   /**
-   * Major (tall) ticks to render below the slider.
-   */
-  majorTicks?: Array<Tick>,
-
-  /**
    * The maximum facet value.
    */
   max?: number,
@@ -167,11 +167,6 @@ type Props = {
    * The minimum facet value.
    */
   min?: number,
-
-  /**
-   * Minor (short) ticks to render below the slider.
-   */
-  minorTicks?: Array<Tick>,
 
   /**
    * Callback fired when the range is changed.
@@ -192,6 +187,11 @@ type Props = {
    * Number of steps to increment the slider.
    */
   step?: number,
+
+  /**
+   * Ticks to render below the slider.
+   */
+  ticks?: Ticks,
 
   /**
    * Value for controlled input.
@@ -265,7 +265,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           'items-center',
           'pt-4',
           !_.isEmpty(rightActions) ? 'px-4' : '',
-          _.isEmpty(bottomActions) && (props.majorTicks || props.minorTicks) ? 'pb-7' : '',
+          _.isEmpty(bottomActions) && props.ticks ? 'pb-7' : '',
         )}
       >
         {!props.hideStepButtons && (
@@ -311,7 +311,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
               )}
             />
           </Slider.Track>
-          {props.majorTicks
+          {props.ticks
             && (
             <svg
               className='absolute mt-12 z-0 !overflow-visible'
@@ -321,7 +321,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
               shapeRendering='crispEdges'
             >
               {/* Ticks and labels */}
-              {props.majorTicks.map(({ value, xOffset }) => (
+              {props.ticks.major.map(({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={10} stroke='currentColor' />
                   <text
@@ -336,7 +336,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
                   </text>
                 </g>
               ))}
-              {props.minorTicks.map(({ value, xOffset }) => (
+              {props.ticks.minor?.map(({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={5} stroke='currentColor' />
                 </g>
@@ -397,7 +397,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           </div>
         )}
       </div>
-      {!props.majorTicks && !props.minorTicks && (
+      {!props.ticks && (
         <div className='flex justify-between w-full px-12'>
           <div>{props.min}</div>
           <div>{props.max}</div>
@@ -417,7 +417,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
                 'p-3',
                 'disabled:opacity-50',
                 'disabled:hover:bg-transparent',
-                (props.majorTicks || props.minorTicks) ? 'mt-5' : '',
+                props.ticks ? 'mt-5' : '',
                 action.className
               )}
               disabled={action.disabled}

@@ -236,12 +236,10 @@ const FacetTimeline = (props: Props) => {
    * Memoize the set of major and minor ticks based on the current min,
    * max, and slider width.
    */
-  const majorTicks = useMemo(() => (sliderBounds?.width ? generateTicks(
-    min, max, sliderBounds.width, 'major'
-  ) : []), [min, max, sliderBounds.width]);
-  const minorTicks = useMemo(() => (sliderBounds?.width ? generateTicks(
-    min, max, sliderBounds.width, 'minor'
-  ) : []), [min, max, sliderBounds.width]);
+  const ticks = useMemo(() => ({
+    major: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'major') : [],
+    minor: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'minor') : [],
+  }), [min, max, sliderBounds.width]);
 
   /**
    * On load (or slider width change), adjust based on the width of the slider.
@@ -250,15 +248,15 @@ const FacetTimeline = (props: Props) => {
     // for ticks, expand overall range to get round values
     const nValues = range.max - range.min;
     // generate ticks across the range of valid values
-    const ticks = _.pluck(generateTicks(
+    const genTicks = _.pluck(generateTicks(
       range.min, range.max, sliderBounds.width, 'major'
     ), 'value');
-    if (ticks?.length < nValues && ticks.length > 2) {
+    if (genTicks?.length < nValues && genTicks.length > 2) {
       // adjust the min and max such that no values are outside of the
       // first and last major tick
-      const tickInterval = ticks[1] - ticks[0];
-      const newMin = Math.min(range.min, _.first(ticks) - tickInterval);
-      const newMax = Math.max(range.max, _.last(ticks) + tickInterval);
+      const tickInterval = genTicks[1] - genTicks[0];
+      const newMin = Math.min(range.min, _.first(genTicks) - tickInterval);
+      const newMax = Math.max(range.max, _.last(genTicks) + tickInterval);
       setMin(newMin);
       setMax(newMax);
       if (value[0] === range.min && value[1] === range.max) {
@@ -375,14 +373,12 @@ const FacetTimeline = (props: Props) => {
           thumb: clsx('opacity-0', 'w-[1px]', 'cursor-pointer', props.classNames?.thumb),
         }}
         hideStepButtons
-        majorTicks={majorTicks}
         max={max}
         min={min}
-        minorTicks={minorTicks}
         onValueChange={setValue}
         onValueCommit={refine}
         position='bottom'
-        thumbless
+        ticks={ticks}
         ref={sliderRef}
         value={value}
       />
