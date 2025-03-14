@@ -367,10 +367,10 @@ const FacetTimeline = (props: Props) => {
         ]}
         classNames={{
           ...props.classNames,
-          range: clsx('bg-gray-500', 'border', 'border-black', props.classNames?.range),
+          range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-gray-500', 'border', 'border-black', props.classNames?.range),
           root: clsx('ml-14', 'mr-5', props.classNames?.root),
-          track: clsx('h-5', 'mb-4', props.classNames?.track),
-          thumb: clsx('opacity-0', 'w-[1px]', 'cursor-pointer', props.classNames?.thumb),
+          track: clsx('cursor-grab', 'active:cursor-grabbing', 'h-5', 'mb-4', props.classNames?.track),
+          thumb: clsx('opacity-0', 'w-[1px]', props.classNames?.thumb),
         }}
         hideStepButtons
         max={max}
