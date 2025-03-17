@@ -78,13 +78,14 @@ const RecordDetailContent = (props: Props) => {
   useEffect(() => () => observer.disconnect(), []);
 
   return (
-    <>
+    <div
+      className={props.classNames?.root}
+    >
       <div
         className={clsx(
           'flex',
           'flex-col',
           'relative',
-          props.classNames?.root,
           { 'max-h-[250px]': !expanded }
         )}
       >
@@ -123,7 +124,7 @@ const RecordDetailContent = (props: Props) => {
             : i18n.t('RecordDetailHeader.showMore') }
         </Button>
       )}
-    </>
+    </div>
   );
 };
 
