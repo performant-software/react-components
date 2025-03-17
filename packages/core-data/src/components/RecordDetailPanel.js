@@ -2,12 +2,13 @@
 
 import clsx from 'clsx';
 import React from 'react';
-import Icon from './Icon';
 import AccordionItemsList from './AccordionItemsList';
+import Icon from './Icon';
+import LoadAnimation from './LoadAnimation';
+import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
+import RecordDetailContent from './RecordDetailContent';
 import RecordDetailHeader from './RecordDetailHeader';
 import type { RelatedRecordsList } from '../types/RelatedRecordsList';
-import RecordDetailBreadcrumbs from './RecordDetailBreadcrumbs';
-import LoadAnimation from './LoadAnimation';
 
 type Props = {
   /**
@@ -89,7 +90,14 @@ const RecordDetailPanel = (props: Props) => (
     )}
     >
       { props.onClose && (
-        <div onClick={props.onClose} onKeyDown={props.onClose} tabIndex='0' role='button' aria-label='Close' className='absolute top-6 right-6 z-10 cursor-pointer'>
+        <div
+          aria-label='Close'
+          className='absolute top-6 right-6 z-10 cursor-pointer'
+          onClick={props.onClose}
+          onKeyDown={props.onClose}
+          role='button'
+          tabIndex='0'
+        >
           <Icon
             name='close'
             size={24}
@@ -106,28 +114,35 @@ const RecordDetailPanel = (props: Props) => (
       <RecordDetailHeader
         title={props.title}
         icon={props.icon}
-        classNames={
-          {
-            root: clsx({ '!pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
-            title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), // make sure there's space for the close icon
-            items: props.classNames?.items
-          }
-        }
-        detailItems={props.detailItems}
+        classNames={{
+          root: clsx({ '!pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
+          title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), // make sure there's space for the close icon
+          items: props.classNames?.items
+        }}
         detailPageUrl={props.detailPageUrl}
-      >
-        { props.children }
-      </RecordDetailHeader>
+      />
     </div>
-    { props.loading
-      ? <div className='py-4 px-8'><LoadAnimation /></div>
-      : (
-        <AccordionItemsList
-          className={clsx(props.classNames?.relatedRecords)}
-          items={props.relations}
-          count={props.count}
-        />
-      ) }
+    <RecordDetailContent
+      classNames={{
+        root: 'py-4 px-8',
+        items: props.classNames?.items
+      }}
+      items={props.detailItems}
+    >
+      { props.children }
+    </RecordDetailContent>
+    { props.loading && (
+      <div className='py-4 px-8'>
+        <LoadAnimation />
+      </div>
+    )}
+    { !props.loading && (
+      <AccordionItemsList
+        className={clsx(props.classNames?.relatedRecords)}
+        items={props.relations}
+        count={props.count}
+      />
+    )}
   </div>
 );
 
