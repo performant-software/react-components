@@ -1,1 +1,0 @@
-const e={osm:{type:"raster",tiles:["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],tileSize:256,attribution:"&copy; OpenStreetMap Contributors",maxzoom:19}},s=[{id:"osm",type:"raster",source:"osm"}],t={version:8,sources:e,layers:s};export{t as m};
