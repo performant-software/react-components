@@ -34,10 +34,17 @@ export default defineConfig(() => ({
     lib: {
       entry: [
         './src/index.js',
-        './src/tailwind.js'
+        './src/tailwind.js',
+        './src/ssr.js'
       ],
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`
+      fileName: (format, name) => {
+        if (name.endsWith('ssr')) {
+          return `ssr.${format}.js`;
+        }
+
+        return `index.${format}.js`;
+      }
     },
     rollupOptions: {
       external: [
