@@ -124,7 +124,7 @@ const RecordDetailPanel = (props: Props) => (
     </div>
     <RecordDetailContent
       classNames={{
-        root: 'py-4 px-8',
+        root: 'py-4 px-6',
         items: props.classNames?.items
       }}
       items={props.detailItems}
