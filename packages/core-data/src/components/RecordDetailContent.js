@@ -73,6 +73,13 @@ const RecordDetailContent = (props: Props) => {
   }, [contentHeight, containerHeight]);
 
   /**
+   * Reset the expanded toggle when the content is changed.
+   */
+  useEffect(() => {
+    setExpanded(false);
+  }, [props.children, props.items]);
+
+  /**
    * Disconnects the observer.
    */
   useEffect(() => () => observer.disconnect(), []);
