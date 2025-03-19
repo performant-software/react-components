@@ -59,7 +59,28 @@ const getDateView = (date, cal = null) => {
   return _.isEmpty(dateView) ? null : dateView.join(DATE_SEPARATOR);
 };
 
+/**
+ * Returns the year range as an array for the passed fuzzy date.
+ *
+ * @param date
+ *
+ * @returns {[]}
+ */
+const getYearRange = (date) => {
+  const range = [];
+
+  const startDate = new Date(date.start_date);
+  const endDate = new Date(date.end_date);
+
+  for (let i = startDate.getFullYear(); i <= endDate.getFullYear(); i += 1) {
+    range.push(i);
+  }
+
+  return range;
+};
+
 export default {
   Accuracy,
-  getDateView
+  getDateView,
+  getYearRange
 };

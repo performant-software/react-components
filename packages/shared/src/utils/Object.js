@@ -43,6 +43,30 @@ const HTML_REGEX = /(<([^>]+)>)/gi;
 const WHITESPACE_REGEX = /\s\s+/g;
 
 /**
+ * Returns the value at the passed path for the passed object.
+ *
+ * @param object
+ * @param path
+ *
+ * @returns {*}
+ */
+const getNestedValue = (object: any, path: string) => {
+  const paths = path.split('.');
+
+  let value = object;
+
+  _.each(paths, (attr) => {
+    if (_.isArray(value)) {
+      value = _.map(value, (entry) => _.get(entry, attr));
+    } else {
+      value = _.get(value, attr);
+    }
+  });
+
+  return value;
+};
+
+/**
  * Returns true if the passed value is considered "empty".
  *
  * @param value
@@ -164,6 +188,7 @@ const without = (value: any, attribute: string) => {
 };
 
 export default {
+  getNestedValue,
   isEmpty,
   isEqual,
   isPromise,

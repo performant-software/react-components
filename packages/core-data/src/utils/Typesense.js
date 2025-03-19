@@ -1,5 +1,6 @@
 // @flow
 
+import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import { feature, featureCollection } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
@@ -128,30 +129,6 @@ const getFieldId = (attribute: string) => {
 };
 
 /**
- * Returns the value at the passed path for the passed result.
- *
- * @param result
- * @param path
- *
- * @returns {*}
- */
-const getNestedValue = (result: any, path: string) => {
-  const paths = path.split('.');
-
-  let value = result;
-
-  _.each(paths, (attr) => {
-    if (_.isArray(value)) {
-      value = _.map(value, (entry) => _.get(entry, attr));
-    } else {
-      value = _.get(value, attr);
-    }
-  });
-
-  return value;
-};
-
-/**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
  *
  * @param attribute
@@ -207,7 +184,7 @@ const toFeatureCollection = (results: Array<any>, path: string) => {
   const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
 
   _.each(results, (result) => {
-    let geometryObjects = _.isEmpty(objectPath) ? result : getNestedValue(result, objectPath);
+    let geometryObjects = _.isEmpty(objectPath) ? result : ObjectUtils.getNestedValue(result, objectPath);
 
     if (!_.isArray(geometryObjects)) {
       geometryObjects = [geometryObjects];
@@ -236,7 +213,6 @@ export default {
   createRouting,
   createTypesenseAdapter,
   getFieldId,
-  getNestedValue,
   getRelationshipId,
   toFeature,
   toFeatureCollection

@@ -10,7 +10,13 @@ import _ from 'underscore';
  *
  * @returns {Feature<*, *>}
  */
-const toFeature = (place) => feature(place?.place_geometry?.geometry_json, _.omit(place, 'place_geometry'));
+const toFeature = (place, index) => {
+  const geometry = place?.place_geometry?.geometry_json;
+  const properties = _.omit(place, 'place_geometry');
+  const options = { id: place.id || index };
+
+  return feature(geometry, properties, options);
+};
 
 /**
  * Converts the passed collection of places to a feature collection.
@@ -19,7 +25,7 @@ const toFeature = (place) => feature(place?.place_geometry?.geometry_json, _.omi
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (places) => featureCollection(_.map(places, (place) => toFeature(place)));
+const toFeatureCollection = (places) => featureCollection(_.map(places, toFeature));
 
 export default {
   toFeature,
