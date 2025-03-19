@@ -12,6 +12,10 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js"
     },
+    "./ssr": {
+      "import": "./dist/ssr.es.js",
+      "require": "./dist/ssr.cjs.js"
+    },
     "./style.css": "./dist/packages/core-data/src/index.css",
     "./tailwind.css": "./dist/packages/core-data/src/tailwind.css",
     "./tailwind.config": "./dist/tailwind.config.js"
