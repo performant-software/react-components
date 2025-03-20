@@ -7,6 +7,10 @@ import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
+type Options = {
+  type?: string
+};
+
 type TypesenseConfig = {
   api_key: string,
   host: string,
@@ -174,10 +178,11 @@ const toFeature = (record: any, item: any, geometry: any) => {
  *
  * @param results
  * @param path
+ * @param options
  *
  * @returns {FeatureCollection<Geometry, Properties>}
  */
-const toFeatureCollection = (results: Array<any>, path: string) => {
+const toFeatureCollection = (results: Array<any>, path: string, options: Options = {}) => {
   const features = [];
 
   const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
@@ -193,7 +198,9 @@ const toFeatureCollection = (results: Array<any>, path: string) => {
     _.each(geometryObjects, (geometryObject) => {
       const geometry = _.get(geometryObject, geometryPath);
 
-      if (geometry) {
+      const include = geometry && (!options.type || geometry.type === options.type);
+
+      if (include) {
         const record = _.find(features, (f) => f.properties?.uuid === geometryObject.uuid);
 
         if (record) {
