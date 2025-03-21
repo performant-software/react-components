@@ -21,6 +21,13 @@ const range = {
 const refine = () => {};
 
 export const Default = withCoreDataContextProvider(() => (
+  <FacetTimeline
+    range={range}
+    refine={refine}
+  />
+));
+
+export const FitBounds = withCoreDataContextProvider(() => (
   <div className='h-[400px] w-[800px]'>
     <FacetTimeline
       range={range}
@@ -53,7 +60,8 @@ export const Styled = withCoreDataContextProvider(() => (
         range: 'bg-white',
         thumb: 'bg-white',
         track: 'bg-gray-400',
-        zoom: 'text-white'
+        zoom: 'text-white',
+        marker: 'fill-gray-300'
       }}
       range={range}
       refine={refine}
@@ -113,6 +121,7 @@ export const ListView = withCoreDataContextProvider(() => {
       />
       { listView && (
         <Modal
+          className='z-40'
           onClose={() => setListView(false)}
           open
         >
@@ -141,11 +150,3 @@ export const ListView = withCoreDataContextProvider(() => {
     </>
   );
 });
-
-export const Description = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    description
-    range={range}
-    refine={refine}
-  />
-));

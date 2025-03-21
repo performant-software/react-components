@@ -47,6 +47,13 @@ const MINOR_TICKS_MIN_SPACE = 15;
 
 type TimelineProps = {
   /**
+   * Class names to apply to the FacetSlider and Timeline components.
+   */
+  classNames?: ClassNamesType & {
+    marker?: string,
+  },
+
+  /**
    * Events to render on the timeline.
    */
   events: Array<EventType>,
@@ -397,7 +404,7 @@ const Timeline = (props: TimelineProps) => {
                   cx={4}
                   cy={event.yOffset + 3}
                   r={4}
-                  className='fill-neutral-500'
+                  className={clsx(props.classNames?.marker || 'fill-neutral-500')}
                 />
               </svg>
               <button
@@ -487,9 +494,11 @@ type Props = {
   className?: string,
 
   /**
-   * Class names to apply to the FacetSlider components.
+   * Class names to apply to the FacetSlider and Timeline components.
    */
-  classNames?: ClassNamesType,
+  classNames?: ClassNamesType & {
+    marker?: string,
+  },
 
   /**
    * Callback fired when the event popover is clicked.
@@ -719,6 +728,7 @@ const FacetTimeline = (props: Props) => {
       ref={ref}
     >
       <Timeline
+        classNames={props.classNames}
         events={events}
         onClick={props.onClick}
         range={{ min: value[0], max: value[1] }}
