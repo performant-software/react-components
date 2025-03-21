@@ -1,11 +1,10 @@
 // @flow
 
-import { Numbers, useTimer } from '@performant-software/shared-components';
-import * as Popover from '@radix-ui/react-popover';
-import * as Slider from '@radix-ui/react-slider';
+import { useTimer } from '@performant-software/shared-components';
 import { clsx } from 'clsx';
-import { scaleLinear } from 'd3-scale';
-import { RotateCcw } from 'lucide-react';
+import { scaleLinear, scaleTime } from 'd3-scale';
+import { timeTicks } from 'd3-time';
+import { RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
 import React, {
   useCallback,
   useEffect,
@@ -13,12 +12,468 @@ import React, {
   useRef,
   useState
 } from 'react';
+import { mergeRefs } from 'react-merge-refs';
 import useMeasure from 'react-use-measure';
 import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
-import EventUtils from '../utils/Event';
 import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesType } from './FacetSlider';
 import { useEventsService } from '../hooks/CoreData';
+import i18n from '../i18n/i18n';
+
+/**
+ * Helper constants: periods of time in milliseconds.
+ */
+const ONE_DAY = 86400000;
+const MIN_MONTH = 2419200000; // 28 days
+const MAX_MONTH = 2678400000; // 31 days
+
+/**
+ * Width/height of a single event in px.
+ */
+const EVENT_WIDTH = 154;
+const EVENT_HEIGHT = 42;
+const VERTICAL_SPACER = 8;
+
+/**
+ * Maximum width of the frame bounds in px.
+ */
+const TIMELINE_WIDTH_LIMIT = 3000;
+
+/**
+ * The minimum space between major and minor ticks, in pixels.
+ */
+const MAJOR_TICKS_MIN_SPACE = 80;
+const MINOR_TICKS_MIN_SPACE = 15;
+
+type TimelineProps = {
+  /**
+   * Events to render on the timeline.
+   */
+  events: Array<EventType>,
+
+  /**
+   * Callback fired when an event element is clicked.
+   */
+  onClick?: (event: EventType) => void,
+
+  /**
+   * The current facet min/max values for the timeline range.
+   */
+  range: {
+    max: number,
+    min: number
+  },
+};
+
+const Timeline = (props: TimelineProps) => {
+  const [min, setMin] = useState(new Date(props.range.min, 0, 1));
+  const [max, setMax] = useState(new Date(props.range.max, 11, 31));
+  const [ticksRef, ticksBounds] = useMeasure();
+  const [frameRef, frameBounds] = useMeasure();
+  const draggableRef = useRef();
+  const [dragging, setDragging] = useState(false);
+
+  const [zoom, setZoom] = useState(1.0);
+
+  /**
+   * Reset the zoom to 100% if the facet range changes.
+   */
+  useEffect(() => {
+    setZoom(1.0);
+  }, [props.range]);
+
+  /**
+   * Calculate the timeline's zoomed width as a product of the frame's width.
+   */
+  const zoomWidth = useMemo(() => (frameBounds.width - 32) * zoom, [zoom, frameBounds]);
+
+  /**
+   * Memoizes the current facet range (years) as JavaScript Date objects
+   */
+  const range = useMemo(() => ({
+    min: new Date(props.range.min, 0, 1),
+    max: new Date(props.range.max, 0, 1),
+  }), [props.range]);
+
+  /**
+   * Re-center the timeline on zoom.
+   */
+  useEffect(() => {
+    const halfFrame = frameBounds.width / 2;
+    const halfTimeline = ticksBounds.width / 2;
+    const left = halfTimeline - halfFrame;
+    draggableRef.current?.scrollTo({ left });
+  }, [zoom, frameBounds, ticksBounds, draggableRef]);
+
+  /**
+   * Callback for zooming in.
+   */
+  const onZoomIn = useCallback(() => {
+    setZoom((prev) => prev * 2);
+  }, [setZoom]);
+
+  /**
+   * Callback for zooming out.
+   */
+  const onZoomOut = useCallback(() => {
+    setZoom((prev) => (prev === 1.0 ? prev : prev * 0.5));
+  }, [setZoom]);
+
+  /**
+   * Callback for starting the timeline drag.
+   */
+  const onDragStart = useCallback((evt: PointerEvent) => {
+    setDragging(true);
+    draggableRef.current?.setPointerCapture(evt.pointerId);
+  }, [draggableRef.current]);
+
+  /**
+   * Callback for ending the timeline drag.
+   */
+  const onDragEnd = useCallback((evt: PointerEvent) => {
+    setDragging(false);
+    draggableRef.current?.releasePointerCapture(evt.pointerId);
+  }, [draggableRef.current]);
+
+  /**
+   * Callback for dragging the timeline.
+   */
+  const onDrag = useCallback((evt: PointerEvent) => {
+    if (draggableRef.current?.hasPointerCapture(evt.pointerId)) {
+      draggableRef.current.scrollLeft -= evt.movementX * 1.5;
+    }
+  }, [draggableRef]);
+
+  /**
+   * Memoizes the button enabled state for zoom in, which is enabled as long
+   * as the timeline width doesn't exceed TIMELINE_WIDTH_LIMIT.
+   */
+  const canZoomIn = useMemo(() => ticksBounds.width < TIMELINE_WIDTH_LIMIT, [ticksBounds.width, zoom]);
+
+  /**
+   * Memoizes the button enabled state for zoom out, which is enabled as long
+   * as the current zoom is greater than 1.0.
+   */
+  const canZoomOut = useMemo(() => zoom > 1.0, [zoom]);
+
+  /**
+   * Helper function to determine if an event is overlapping other events on the timeline.
+   */
+  const isOverlapping = useCallback(
+    (event, prevEvents) => _.some(prevEvents, (prevEvent) => prevEvent.yOffset === event.yOffset
+        && event.xOffset < prevEvent.xOffset + EVENT_WIDTH
+        && event.xOffset + EVENT_WIDTH > prevEvent.xOffset),
+    [],
+  );
+
+  /**
+   * Memoizes the x/y positions of events relative to the timeline.
+   */
+  const timelineEvents = useMemo(() => _.chain(props.events)
+    .sortBy('date')
+    .reduce((acc, event) => {
+      // calculate xOffset
+      const relativePos = (event.date - range.min) / (range.max - range.min);
+      let xOffset = relativePos * ticksBounds.width;
+      let anchorRight = false;
+      // if this would overflow the timeline, swap the side of the event
+      // to the other side of its anchor
+      if (xOffset + EVENT_WIDTH > ticksBounds.width) {
+        anchorRight = true;
+        xOffset -= EVENT_WIDTH;
+      }
+      // calculate yOffset based on previous events and frame bounds
+      let yOffset = VERTICAL_SPACER;
+      const eventsTop = frameBounds.height - ticksBounds.height;
+      while (isOverlapping({ xOffset, yOffset }, acc)) {
+        if ((yOffset + EVENT_HEIGHT * 2) >= eventsTop) {
+          // if we are at the top and about to overflow, set yOffset back to 0
+          yOffset = VERTICAL_SPACER;
+          break;
+        }
+        yOffset += EVENT_HEIGHT;
+      }
+      acc.push({
+        ...event, xOffset, yOffset, anchorRight
+      });
+      return acc;
+    }, [])
+    .value(), [props.events, ticksBounds, frameBounds.height, range]);
+
+  /**
+   * Helper function to generate major or minor calendar-based ticks given min/max of the timeline,
+   * and the width of the timeline.
+   */
+  const generateTicks = useCallback((tMin, tMax, timelineWidth, tickType = 'major') => {
+    const width = timelineWidth;
+    const nMajorTicks = Math.floor(width / MAJOR_TICKS_MIN_SPACE);
+    // use d3-scale to produce scaled tick intervals
+    const scale = scaleTime().domain([tMin, tMax]).range([0, width]);
+    // produce date and x offset for each tick
+    const majorTicks = timeTicks(tMin, tMax, nMajorTicks).map((date) => ({
+      value: date,
+      xOffset: scale(date),
+    }));
+    // Ensure the last major tick is at tMax (if not already included)
+    if (majorTicks.length > 0 && _.last(majorTicks).value.getTime() < tMax.getTime()) {
+      majorTicks.push({ value: tMax, xOffset: scale(tMax), hideVal: true });
+    }
+    if (tickType === 'minor') {
+      // because major ticks aren't evenly distributed due to calendar irregularities,
+      // generate unique set of minor ticks per interval between major ticks
+      if (majorTicks.length > 1) {
+        return _.chain(majorTicks)
+          .map((majorTick, i) => {
+            if (i > 0) {
+              // produce scaled tick intervals according to MINOR_TICKS_MIN_SPACE
+              const minDomain = [majorTicks[i - 1].value, majorTick.value];
+              if (minDomain[1] - minDomain[0] <= MAX_MONTH) {
+                // if the major ticks are spaced <= one month apart, NO minor ticks
+                return [];
+              }
+              const minRange = [majorTicks[i - 1].xOffset, majorTick.xOffset];
+              const minWidth = minRange[1] - minRange[0];
+              const nMinorTicks = Math.floor(minWidth / MINOR_TICKS_MIN_SPACE);
+              const minScale = scaleTime().domain(minDomain).range(minRange).nice();
+              const minTicks = _.map(minScale.ticks(nMinorTicks), (date) => ({
+                value: date,
+                xOffset: minScale(date),
+              }));
+              // skip the minor ticks that are equivalent to major ticks
+              const filtered = _.filter(minTicks, (date) => !_.map(
+                minDomain, (d) => d.getTime()
+              ).includes(date.value.getTime()));
+              return filtered;
+            }
+            return [];
+          })
+          .flatten()
+          // prevent duplicate ticks
+          .uniq(true, (t) => t.value)
+          .value();
+      }
+      return [];
+    }
+    return majorTicks;
+  }, []);
+
+  /**
+   * On load (or timeline width change), adjust based on the width of the slider.
+   */
+  useEffect(() => {
+    let newMin = range.min;
+    let newMax = range.max;
+
+    // for ticks, expand overall range to get round values
+    // generate major and minor ticks across the range of valid values
+    const majTicks = _.pluck(generateTicks(
+      range.min, range.max, ticksBounds.width, MAJOR_TICKS_MIN_SPACE
+    ), 'value');
+    if (majTicks?.length > 1) {
+      // adjust the min and max such that no values are outside of the
+      // first and last major tick
+      const tickInterval = majTicks[1] - majTicks[0];
+      if (range.min < _.first(majTicks)) {
+        const firstMaj = _.first(majTicks);
+        newMin = Math.min(range.min, firstMaj.getTime() - ONE_DAY - tickInterval);
+      }
+      if (range.max > _.last(majTicks)) {
+        const lastMaj = _.last(majTicks);
+        newMax = Math.max(range.max, lastMaj.getTime() + ONE_DAY + tickInterval);
+      }
+    }
+    setMin(newMin);
+    setMax(newMax);
+  }, [range.min, range.max, ticksBounds.width]);
+
+  /**
+   * Memoize the set of major and minor ticks based on the current min,
+   * max, and slider width.
+   */
+  const ticks = useMemo(() => ({
+    major: ticksBounds?.width ? generateTicks(min, max, ticksBounds.width, 'major') : [],
+    minor: ticksBounds?.width ? generateTicks(min, max, ticksBounds.width, 'minor') : [],
+  }), [min, max, ticksBounds.width]);
+
+  /**
+   * Callback to handle displaying dates on the timeline ticks at different
+   * resolutions (day, month, year).
+   */
+  const displayTickDate = useCallback((date, prevDate) => {
+    if (ticks?.major?.length > 1) {
+      const tickInterval = ticks.major[1].value - ticks.major[0].value;
+      if (!prevDate || prevDate?.getFullYear() !== date.getFullYear()) {
+        // show every new year encountered
+        return date.getFullYear();
+      }
+      if (tickInterval > MIN_MONTH) {
+        // less than a year, more than a month between ticks? show month
+        return date.toLocaleDateString(undefined, { month: 'short' });
+      }
+      // less than a month between ticks? show day (numeric)
+      if (!prevDate || prevDate?.getMonth() !== date.getMonth()) {
+        // show every new month encountered, though
+        return date.toLocaleDateString(undefined, { month: 'short' });
+      }
+      return date.toLocaleDateString(undefined, { day: 'numeric' });
+    }
+    return date.toString();
+  }, [ticks.major]);
+
+  return (
+    <div
+      className={clsx(
+        'grow',
+        'px-4',
+        'pt-6',
+        'pb-2',
+        'flex',
+        'flex-col',
+        'justify-end',
+        'overflow-x-scroll',
+        'select-none',
+        dragging ? 'cursor-grabbing' : 'cursor-grab',
+      )}
+      ref={mergeRefs([frameRef, draggableRef])}
+      onPointerMove={onDrag}
+      onPointerUp={onDragEnd}
+      style={{ scrollbarWidth: 'none' }}
+    >
+      <div className='absolute top-5 right-5 z-30 flex flex-row'>
+        <button
+          aria-label={i18n.t('Timeline.zoomIn')}
+          className={clsx('disabled:opacity-50', 'disabled:hover:bg-transparent')}
+          disabled={!canZoomIn}
+          type='button'
+          onClick={onZoomIn}
+        >
+          <ZoomIn />
+        </button>
+        <button
+          aria-label={i18n.t('Timeline.zoomOut')}
+          className={clsx('disabled:opacity-50', 'disabled:hover:bg-transparent')}
+          disabled={!canZoomOut}
+          type='button'
+          onClick={onZoomOut}
+        >
+          <ZoomOut />
+        </button>
+      </div>
+      <div
+        className='h-full min-h-36 flex flex-col'
+        style={{ width: zoomWidth }}
+        onPointerDown={onDragStart}
+      >
+        <div className='grow relative'>
+          {_.map(timelineEvents, (event) => (
+            <div
+              className='w-44 absolute'
+              key={event.uuid}
+              style={{
+                left: `${event.xOffset}px`,
+                bottom: `${event.yOffset}px`,
+              }}
+            >
+              <svg
+                className={clsx(
+                  'absolute',
+                  'top-[32px]',
+                )}
+                height={event.yOffset + 7}
+                width={8}
+                style={{
+                  left: event.anchorRight ? EVENT_WIDTH - 3 : '-4px',
+                }}
+              >
+                <line
+                  x1={4}
+                  x2={4}
+                  y1={0}
+                  y2={event.yOffset + 3}
+                  className='stroke-neutral-300 stroke-[1px]'
+                  shapeRendering='crispEdges'
+                />
+                <circle
+                  cx={4}
+                  cy={event.yOffset + 3}
+                  r={4}
+                  className='fill-neutral-500'
+                />
+              </svg>
+              <button
+                className={clsx(
+                  'h-9',
+                  'w-44',
+                  'px-2',
+                  'flex',
+                  'items-center',
+                  'bg-neutral-100',
+                  'active:bg-neutral-300',
+                  'outline',
+                  'outline-1',
+                  'outline-neutral-300',
+                  'rounded-tl',
+                  'rounded-tr',
+                  'relative',
+                  'z-10',
+                  'hover:z-20',
+                  'hover:bg-neutral-200',
+                  'text-neutral-800',
+                  event.anchorRight ? 'rounded-bl' : 'rounded-br',
+                  'mb-1',
+                )}
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={() => props.onClick(event)}
+                type='button'
+              >
+                <span className='truncate text-sm'>
+                  {event.name}
+                </span>
+              </button>
+            </div>
+          ))}
+        </div>
+        <div ref={ticksRef} className='w-fill'>
+          {ticks && (
+            <svg
+              className='!overflow-visible w-fill'
+              height={40}
+              width='100%'
+              overflow='visible'
+              shapeRendering='crispEdges'
+            >
+              {/* Baseline */}
+              {_.last(ticks.major) && (
+                <line x1='0' y1='0' x2={_.last(ticks.major).xOffset + 0.5} y2='0' stroke='currentColor' />
+              )}
+              {/* Ticks and labels */}
+              {_.map(ticks.major, ({ value, xOffset, hideVal }, i) => !hideVal && (
+                <g key={value} transform={`translate(${xOffset}, 0)`}>
+                  <line y2={10} stroke='currentColor' />
+                  <text
+                    className='translate-y-8'
+                    key={value}
+                    style={{
+                      textAnchor: 'middle',
+                    }}
+                    fill='currentColor'
+                  >
+                    {displayTickDate(value, i !== 0 ? ticks.major[i - 1].value : null)}
+                  </text>
+                </g>
+              ))}
+              {_.map(ticks.minor, ({ xOffset }, i) => (
+                <g key={i} transform={`translate(${xOffset}, 0)`}>
+                  <line y2={5} stroke='currentColor' />
+                </g>
+              ))}
+            </svg>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 type Props = {
   /**
@@ -35,11 +490,6 @@ type Props = {
    * Class names to apply to the FacetSlider components.
    */
   classNames?: ClassNamesType,
-
-  /**
-   * If `true`, the event popover content will display the event description.
-   */
-  description?: boolean,
 
   /**
    * Callback fired when the event popover is clicked.
@@ -71,11 +521,6 @@ type Props = {
    */
   start: [number, number],
 };
-
-// The minimum space between major ticks, in pixels.
-const MAJOR_TICKS_MIN_SPACE = 80;
-// The minimum space between minor ticks, in pixels.
-const MINOR_TICKS_MIN_SPACE = 10;
 
 const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props;
@@ -132,20 +577,18 @@ const FacetTimeline = (props: Props) => {
   }], [onSliderReset, value]);
 
   /**
-   * Returns the year value for the passed event.
+   * Returns passed event's start date as a JavaScript Date object.
    *
    * @type {function(*): *}
    */
-  const getYear = useCallback((event) => {
-    let year;
-
+  const getDate = useCallback((event) => {
     const date = event.start_date?.start_date || event.end_date?.start_date;
 
     if (date) {
-      year = new Date(date).getFullYear();
+      return new Date(date);
     }
 
-    return year;
+    return date;
   }, []);
 
   /**
@@ -156,15 +599,9 @@ const FacetTimeline = (props: Props) => {
   const onLoad = useCallback((data) => {
     setEvents(_.map(data.events, (event) => ({
       ...event,
-      year: getYear(event),
-      offset: Numbers.getRandomInt(-30, 10)
+      date: getDate(event)
     })));
   }, []);
-
-  /**
-   * Memo-izes the slider value.
-   */
-  const years = useMemo(() => _.pluck(events, 'year'), [events]);
 
   /**
    * Loads the list of events when the range or min/max values are changed.
@@ -273,96 +710,19 @@ const FacetTimeline = (props: Props) => {
   return (
     <div
       className={clsx(
-        { 'pt-24': !props.description },
-        { 'pt-40': props.description },
+        'h-full',
+        'flex',
+        'flex-col',
+        'relative',
         props.className
       )}
       ref={ref}
     >
-      <div
-        className='flex justify-between items-center'
-      >
-        <Slider.Root
-          className='relative flex flex-grow h-14 touch-none items-center w-full mb-5'
-          max={max}
-          min={min}
-          value={years}
-        >
-          { _.map(events, (event) => (
-            <Popover.Root
-              key={event.uuid}
-              open
-            >
-              <Popover.Trigger
-                asChild
-              >
-                <Slider.Thumb />
-              </Popover.Trigger>
-              <Popover.Portal
-                container={ref.current}
-              >
-                <Popover.Content
-                  asChild
-                  collisionBoundary={ref?.current}
-                  collisionPadding={{
-                    top: 10,
-                    left: 20,
-                    right: 20,
-                    bottom: 10
-                  }}
-                  sideOffset={event.offset}
-                  side='top'
-                >
-                  <button
-                    aria-label={event.name}
-                    className={clsx(
-                      'bg-white',
-                      'hover:bg-white',
-                      'p-5',
-                      'rounded-md',
-                      'shadow-md',
-                      'shadow-gray-1000',
-                      'max-w-xs',
-                      'max-h-36',
-                      'overflow-hidden',
-                      'transition',
-                      'duration-500',
-                      'hover:scale-105',
-                      'cursor-pointer',
-                      'focus:outline-none',
-                      'text-left',
-                      'text-black'
-                    )}
-                    onClick={() => props.onClick && props.onClick(event)}
-                    type='button'
-                  >
-                    <h2
-                      className='font-medium text-base whitespace-nowrap line-clamp-1 text-ellipsis'
-                    >
-                      { event.name }
-                    </h2>
-                    <p
-                      className='text-muted'
-                    >
-                      { EventUtils.getDateView(event) }
-                    </p>
-                    { props.description && (
-                      <p
-                        className='text-muted'
-                      >
-                        { event.description }
-                      </p>
-                    )}
-                    <Popover.Arrow
-                      className='fill-white'
-                    />
-                  </button>
-                </Popover.Content>
-              </Popover.Portal>
-            </Popover.Root>
-          ))}
-        </Slider.Root>
-      </div>
+      <Timeline
+        events={events}
+        onClick={props.onClick}
+        range={{ min: value[0], max: value[1] }}
+      />
       <FacetSlider
         actions={[
           ...actions,

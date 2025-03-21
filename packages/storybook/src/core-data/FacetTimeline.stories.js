@@ -21,11 +21,12 @@ const range = {
 const refine = () => {};
 
 export const Default = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    range={range}
-    refine={refine}
-    zoom={1}
-  />
+  <div className='h-[400px] w-[800px]'>
+    <FacetTimeline
+      range={range}
+      refine={refine}
+    />
+  </div>
 ));
 
 const largeRange = {
@@ -34,27 +35,30 @@ const largeRange = {
 };
 
 export const LargeRange = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    range={largeRange}
-    refine={refine}
-    zoom={50}
-  />
+  // container with full height and negative margin to fill the storybook viewport
+  <div className='h-[500px]'>
+    <FacetTimeline
+      range={largeRange}
+      refine={refine}
+    />
+  </div>
 ));
 
 export const Styled = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    className='bg-gray-1000 text-white'
-    classNames={{
-      button: 'px-4',
-      range: 'bg-white',
-      thumb: 'bg-white',
-      track: 'bg-gray-400',
-      zoom: 'text-white'
-    }}
-    range={range}
-    refine={refine}
-    zoom={1}
-  />
+  <div className='h-[450px]'>
+    <FacetTimeline
+      className='bg-gray-1000 text-white'
+      classNames={{
+        button: 'px-4',
+        range: 'bg-white',
+        thumb: 'bg-white',
+        track: 'bg-gray-400',
+        zoom: 'text-white'
+      }}
+      range={range}
+      refine={refine}
+    />
+  </div>
 ));
 
 export const EventModal = withCoreDataContextProvider(() => {
@@ -66,7 +70,6 @@ export const EventModal = withCoreDataContextProvider(() => {
         onClick={(event) => setSelectedEvent(event)}
         range={range}
         refine={refine}
-        zoom={1}
       />
       { selectedEvent && (
         <Modal
@@ -107,7 +110,6 @@ export const ListView = withCoreDataContextProvider(() => {
         onLoad={setEvents}
         range={range}
         refine={refine}
-        zoom={1}
       />
       { listView && (
         <Modal
@@ -145,6 +147,5 @@ export const Description = withCoreDataContextProvider(() => (
     description
     range={range}
     refine={refine}
-    zoom={1}
   />
 ));
