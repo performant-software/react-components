@@ -291,7 +291,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           )}
           max={props.max}
           min={props.min}
-          minStepsBetweenThumbs={0}
+          minStepsBetweenThumbs={1}
           onValueChange={props.onValueChange}
           onValueCommit={props.onValueCommit}
           ref={ref}
@@ -321,7 +321,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
               shapeRendering='crispEdges'
             >
               {/* Ticks and labels */}
-              {props.ticks.major.map(({ value, xOffset }) => (
+              {_.map(props.ticks.major, ({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={10} stroke='currentColor' />
                   <text
@@ -336,7 +336,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
                   </text>
                 </g>
               ))}
-              {props.ticks.minor?.map(({ value, xOffset }) => (
+              {_.map(props.ticks.minor, ({ value, xOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, 0)`}>
                   <line y2={5} stroke='currentColor' />
                 </g>
