@@ -2,10 +2,7 @@
 
 import { LocationMarkers, Map as MapUtils } from '@performant-software/geospatial';
 import { useMap } from '@peripleo/maplibre';
-import React, { useEffect, useMemo, useState } from 'react';
-import _ from 'underscore';
-import TypesenseUtils from '../utils/Typesense';
-import { useCachedHits, useSearching } from '../hooks/Typesense';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   /**
@@ -24,6 +21,11 @@ type Props = {
   buffer?: number,
 
   /**
+   * The GeoJSON data representing the location.
+   */
+  data: { [key: string]: any },
+
+  /**
    * If `true`, the map will fit the bounding box around the passed data.
    */
   fitBoundingBox?: boolean,
@@ -32,6 +34,11 @@ type Props = {
    * Path to the geometry attribute for each result.
    */
   geometry: string,
+
+  /**
+   * If `true`, the bounding box will not be fit.
+   */
+  searching?: boolean
 };
 
 /**
@@ -40,37 +47,26 @@ type Props = {
 const SearchResultsLayer = (props: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const hits = useCachedHits();
   const map = useMap();
-  const isSearching = useSearching();
-
-  /**
-   * Memo-ize the Typesense hits as a feature collection.
-   *
-   * @type {unknown}
-   */
-  const data = useMemo(() => (
-    !_.isEmpty(hits) && TypesenseUtils.toFeatureCollection(hits, props.geometry)
-  ), [hits, props.geometry]);
 
   /**
    * Here we'll implement our own fitting of the bounding box once the search has completed and the map has loaded,
    * rather than using the default implementation in LocationMarker that will change when the "data" prop changes.
    */
   const boundingBoxDependencies = [
-    data,
     mapLoaded,
-    isSearching,
     props.boundingBoxData,
     props.boundingBoxOptions,
     props.buffer,
-    props.fitBoundingBox
+    props.data,
+    props.fitBoundingBox,
+    props.searching
   ];
 
   useEffect(() => {
-    if (props.fitBoundingBox && data && mapLoaded && !isSearching) {
+    if (props.fitBoundingBox && props.data && mapLoaded && !props.searching) {
       // Set the bounding box on the map
-      const bbox = MapUtils.getBoundingBox(data, props.buffer);
+      const bbox = MapUtils.getBoundingBox(props.data, props.buffer);
 
       if (bbox) {
         map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
@@ -94,14 +90,14 @@ const SearchResultsLayer = (props: Props) => {
     };
   }, [map]);
 
-  if (!data) {
+  if (!props.data) {
     return null;
   }
 
   return (
     <LocationMarkers
       {...props}
-      data={data}
+      data={props.data}
       fitBoundingBox={false}
     />
   );

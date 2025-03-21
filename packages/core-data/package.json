@@ -47,8 +47,8 @@
   "peerDependencies": {
     "@performant-software/geospatial": "^2.3.8",
     "@performant-software/shared-components": "^2.3.8",
-    "@peripleo/maplibre": "^0.5.2",
-    "@peripleo/peripleo": "^0.5.2",
+    "@peripleo/maplibre": "^0.8.7",
+    "@peripleo/peripleo": "^0.8.7",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },

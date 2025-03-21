@@ -69,6 +69,11 @@ type Props = {
   fitBoundingBox?: boolean,
 
   /**
+   * If `true`, the selection and hover state will apply to the layer.
+   */
+  interactive?: boolean,
+
+  /**
    * An ID value to apply to the layer.
    */
   layerId?: string,
@@ -133,6 +138,7 @@ const LocationMarkers = (props: Props) => {
         data={props.data}
         fillStyle={props.fillStyle}
         id={props.layerId}
+        interactive={props.interactive}
         strokeStyle={props.strokeStyle}
         pointStyle={props.pointStyle}
       />
