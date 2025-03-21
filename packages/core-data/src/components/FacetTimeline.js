@@ -32,7 +32,6 @@ const MAX_MONTH = 2678400000; // 31 days
  */
 const EVENT_WIDTH = 154;
 const EVENT_HEIGHT = 42;
-const VERTICAL_SPACER = 8;
 
 /**
  * Maximum width of the frame bounds in px.
@@ -176,36 +175,46 @@ const Timeline = (props: TimelineProps) => {
   /**
    * Memoizes the x/y positions of events relative to the timeline.
    */
-  const timelineEvents = useMemo(() => _.chain(props.events)
-    .sortBy('date')
-    .reduce((acc, event) => {
-      // calculate xOffset
-      const relativePos = (event.date - range.min) / (range.max - range.min);
-      let xOffset = relativePos * ticksBounds.width;
-      let anchorRight = false;
-      // if this would overflow the timeline, swap the side of the event
-      // to the other side of its anchor
-      if (xOffset + EVENT_WIDTH > ticksBounds.width) {
-        anchorRight = true;
-        xOffset -= EVENT_WIDTH;
-      }
-      // calculate yOffset based on previous events and frame bounds
-      let yOffset = VERTICAL_SPACER;
-      const eventsTop = frameBounds.height - ticksBounds.height;
-      while (isOverlapping({ xOffset, yOffset }, acc)) {
-        if ((yOffset + EVENT_HEIGHT * 2) >= eventsTop) {
-          // if we are at the top and about to overflow, set yOffset back to 0
-          yOffset = VERTICAL_SPACER;
-          break;
+  const timelineEvents = useMemo(() => {
+    // track the lowest available yOffset in case of overflow
+    let overflowYOffset = 0;
+    return _.chain(props.events)
+      .sortBy('date')
+      .reduce((acc, event) => {
+        // calculate xOffset by date
+        const relativePos = (event.date - range.min) / (range.max - range.min);
+        let xOffset = relativePos * ticksBounds.width;
+        let anchorRight = false;
+        // if this would overflow the timeline, swap the side of the event
+        if (xOffset + EVENT_WIDTH > ticksBounds.width) {
+          anchorRight = true;
+          xOffset -= EVENT_WIDTH;
         }
-        yOffset += EVENT_HEIGHT;
-      }
-      acc.push({
-        ...event, xOffset, yOffset, anchorRight
-      });
-      return acc;
-    }, [])
-    .value(), [props.events, ticksBounds, frameBounds.height, range]);
+        // calculate yOffset based on previous events
+        let yOffset = 0;
+        const eventsTop = frameBounds.height - ticksBounds.height;
+        while (isOverlapping({ xOffset, yOffset }, acc)) {
+          if ((yOffset + EVENT_HEIGHT * 2) >= eventsTop) {
+            // if we are at the top and about to overflow, reset to overflowYOffset
+            yOffset = overflowYOffset;
+            // increment overflowYOffset for next overflow case
+            if (overflowYOffset + EVENT_HEIGHT * 2 < eventsTop) {
+              overflowYOffset += EVENT_HEIGHT;
+            } else {
+              overflowYOffset = 0;
+            }
+            break;
+          }
+          // stack vertically on top of the previous events
+          yOffset += EVENT_HEIGHT;
+        }
+        acc.push({
+          ...event, xOffset, yOffset, anchorRight
+        });
+        return acc;
+      }, [])
+      .value();
+  }, [props.events, ticksBounds, frameBounds.height, range]);
 
   /**
    * Helper function to generate major or minor calendar-based ticks given min/max of the timeline,
@@ -378,7 +387,7 @@ const Timeline = (props: TimelineProps) => {
               key={event.uuid}
               style={{
                 left: `${event.xOffset}px`,
-                bottom: `${event.yOffset}px`,
+                bottom: `${event.yOffset + 8}px`,
               }}
             >
               <svg
@@ -386,7 +395,7 @@ const Timeline = (props: TimelineProps) => {
                   'absolute',
                   'top-[32px]',
                 )}
-                height={event.yOffset + 7}
+                height={event.yOffset + 15}
                 width={8}
                 style={{
                   left: event.anchorRight ? EVENT_WIDTH - 3 : '-4px',
@@ -396,13 +405,13 @@ const Timeline = (props: TimelineProps) => {
                   x1={4}
                   x2={4}
                   y1={0}
-                  y2={event.yOffset + 3}
+                  y2={event.yOffset + 11}
                   className='stroke-neutral-300 stroke-[1px]'
                   shapeRendering='crispEdges'
                 />
                 <circle
                   cx={4}
-                  cy={event.yOffset + 3}
+                  cy={event.yOffset + 11}
                   r={4}
                   className={clsx(props.classNames?.marker || 'fill-neutral-500')}
                 />
