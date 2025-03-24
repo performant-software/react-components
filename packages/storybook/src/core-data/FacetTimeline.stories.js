@@ -60,8 +60,9 @@ export const Styled = withCoreDataContextProvider(() => (
         range: 'bg-white',
         thumb: 'bg-white',
         track: 'bg-gray-400',
-        zoom: 'text-white',
-        marker: 'fill-gray-300'
+        reset: 'text-white',
+        marker: 'fill-gray-300',
+        zoom: 'bg-white text-black hover:bg-gray-200 disabled:hover:bg-white',
       }}
       range={range}
       refine={refine}

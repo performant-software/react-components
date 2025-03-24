@@ -129,6 +129,7 @@ type ClassNames = {
   root: string,
   thumb: string,
   track: string,
+  reset: string,
   zoom: string
 };
 
@@ -374,7 +375,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           <div
             className={clsx(
               'flex justify-center items-center py-3 text-gray-600',
-              props.classNames.zoom
+              props.classNames.reset
             )}
           >
             { _.map(rightActions, (action, index) => (

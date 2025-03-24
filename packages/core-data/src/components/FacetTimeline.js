@@ -358,21 +358,32 @@ const Timeline = (props: TimelineProps) => {
       <div className='absolute top-5 right-5 z-30 flex flex-row'>
         <button
           aria-label={i18n.t('Timeline.zoomIn')}
-          className={clsx('disabled:opacity-50', 'disabled:hover:bg-transparent')}
+          className={clsx(
+            'p-3',
+            'disabled:opacity-50',
+            'disabled:hover:bg-transparent',
+            props.classNames?.zoom
+          )}
           disabled={!canZoomIn}
           type='button'
           onClick={onZoomIn}
         >
-          <ZoomIn />
+          <ZoomIn className='size-6' />
         </button>
         <button
           aria-label={i18n.t('Timeline.zoomOut')}
-          className={clsx('disabled:opacity-50', 'disabled:hover:bg-transparent')}
+          className={clsx(
+            'ml-[1px]',
+            'p-3',
+            'disabled:opacity-50',
+            'disabled:hover:bg-transparent',
+            props.classNames?.zoom
+          )}
           disabled={!canZoomOut}
           type='button'
           onClick={onZoomOut}
         >
-          <ZoomOut />
+          <ZoomOut className='size-6' />
         </button>
       </div>
       <div
