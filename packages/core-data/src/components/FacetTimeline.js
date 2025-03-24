@@ -322,15 +322,11 @@ const Timeline = (props: TimelineProps) => {
         // show every new year encountered
         return date.getFullYear();
       }
-      if (tickInterval > MIN_MONTH) {
+      if (tickInterval > MIN_MONTH || prevDate || prevDate?.getMonth() !== date.getMonth()) {
         // less than a year, more than a month between ticks? show month
         return date.toLocaleDateString(undefined, { month: 'short' });
       }
       // less than a month between ticks? show day (numeric)
-      if (!prevDate || prevDate?.getMonth() !== date.getMonth()) {
-        // show every new month encountered, though
-        return date.toLocaleDateString(undefined, { month: 'short' });
-      }
       return date.toLocaleDateString(undefined, { day: 'numeric' });
     }
     return date.toString();
