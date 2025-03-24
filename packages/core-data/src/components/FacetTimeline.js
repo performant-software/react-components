@@ -34,6 +34,17 @@ const EVENT_WIDTH = 154;
 const EVENT_HEIGHT = 42;
 
 /**
+ * Additional timeline display constants.
+ */
+const MARKER_RADIUS = 4; // radius of a circular marker on the timeline
+const MARKER_DIAMETER = MARKER_RADIUS * 2;
+const EVENT_LEFT_BORDER = 1; // accounting for the border width
+const TIMELINE_PADTOP = 8; // vertical padding between timeline and events
+const TIMELINE_HEIGHT = 1; // height of the actual line
+const SVG_WIGGLE_ROOM = 0.5; // helper to line up left and right edges in svg
+const FRAME_PADDING = 32; // right padding between timeline and frame
+
+/**
  * Maximum width of the frame bounds in px.
  */
 const TIMELINE_WIDTH_LIMIT = 3000;
@@ -43,6 +54,13 @@ const TIMELINE_WIDTH_LIMIT = 3000;
  */
 const MAJOR_TICKS_MIN_SPACE = 80;
 const MINOR_TICKS_MIN_SPACE = 15;
+
+/**
+ * Zoom and pan constants.
+ */
+const MIN_ZOOM = 1.0;
+const ZOOM_FACTOR = 2.0;
+const DRAG_FACTOR = 1.5;
 
 type TimelineProps = {
   /**
@@ -79,19 +97,19 @@ const Timeline = (props: TimelineProps) => {
   const draggableRef = useRef();
   const [dragging, setDragging] = useState(false);
 
-  const [zoom, setZoom] = useState(1.0);
+  const [zoom, setZoom] = useState(MIN_ZOOM);
 
   /**
-   * Reset the zoom to 100% if the facet range changes.
+   * Reset the zoom to MIN_ZOOM if the facet range changes.
    */
   useEffect(() => {
-    setZoom(1.0);
+    setZoom(MIN_ZOOM);
   }, [props.range]);
 
   /**
    * Calculate the timeline's zoomed width as a product of the frame's width.
    */
-  const zoomWidth = useMemo(() => (frameBounds.width - 32) * zoom, [zoom, frameBounds]);
+  const zoomWidth = useMemo(() => (frameBounds.width - FRAME_PADDING) * zoom, [zoom, frameBounds]);
 
   /**
    * Memoizes the current facet range (years) as JavaScript Date objects
@@ -115,14 +133,14 @@ const Timeline = (props: TimelineProps) => {
    * Callback for zooming in.
    */
   const onZoomIn = useCallback(() => {
-    setZoom((prev) => prev * 2);
+    setZoom((prev) => prev * ZOOM_FACTOR);
   }, [setZoom]);
 
   /**
    * Callback for zooming out.
    */
   const onZoomOut = useCallback(() => {
-    setZoom((prev) => (prev === 1.0 ? prev : prev * 0.5));
+    setZoom((prev) => (prev === MIN_ZOOM ? prev : prev / ZOOM_FACTOR));
   }, [setZoom]);
 
   /**
@@ -146,7 +164,7 @@ const Timeline = (props: TimelineProps) => {
    */
   const onDrag = useCallback((evt: PointerEvent) => {
     if (draggableRef.current?.hasPointerCapture(evt.pointerId)) {
-      draggableRef.current.scrollLeft -= evt.movementX * 1.5;
+      draggableRef.current.scrollLeft -= evt.movementX * DRAG_FACTOR;
     }
   }, [draggableRef]);
 
@@ -158,9 +176,9 @@ const Timeline = (props: TimelineProps) => {
 
   /**
    * Memoizes the button enabled state for zoom out, which is enabled as long
-   * as the current zoom is greater than 1.0.
+   * as the current zoom is greater than MIN_ZOOM.
    */
-  const canZoomOut = useMemo(() => zoom > 1.0, [zoom]);
+  const canZoomOut = useMemo(() => zoom > MIN_ZOOM, [zoom]);
 
   /**
    * Helper function to determine if an event is overlapping other events on the timeline.
@@ -394,7 +412,7 @@ const Timeline = (props: TimelineProps) => {
               key={event.uuid}
               style={{
                 left: `${event.xOffset}px`,
-                bottom: `${event.yOffset + 8}px`,
+                bottom: `${event.yOffset + TIMELINE_PADTOP}px`,
               }}
             >
               <svg
@@ -402,24 +420,26 @@ const Timeline = (props: TimelineProps) => {
                   'absolute',
                   'top-[32px]',
                 )}
-                height={event.yOffset + 15}
-                width={8}
+                height={event.yOffset + TIMELINE_PADTOP + MARKER_DIAMETER}
+                width={MARKER_DIAMETER}
                 style={{
-                  left: event.anchorRight ? EVENT_WIDTH - 3 : '-4px',
+                  left: `${event.anchorRight
+                    ? EVENT_WIDTH + EVENT_LEFT_BORDER - MARKER_RADIUS
+                    : -MARKER_RADIUS}px`,
                 }}
               >
                 <line
-                  x1={4}
-                  x2={4}
+                  x1={MARKER_RADIUS}
+                  x2={MARKER_RADIUS}
                   y1={0}
-                  y2={event.yOffset + 11}
+                  y2={event.yOffset + TIMELINE_PADTOP + MARKER_RADIUS - TIMELINE_HEIGHT}
                   className='stroke-neutral-300 stroke-[1px]'
                   shapeRendering='crispEdges'
                 />
                 <circle
-                  cx={4}
-                  cy={event.yOffset + 11}
-                  r={4}
+                  cx={MARKER_RADIUS}
+                  cy={event.yOffset + TIMELINE_PADTOP + MARKER_RADIUS - TIMELINE_HEIGHT}
+                  r={MARKER_RADIUS}
                   className={clsx(props.classNames?.marker || 'fill-neutral-500')}
                 />
               </svg>
@@ -467,7 +487,7 @@ const Timeline = (props: TimelineProps) => {
             >
               {/* Baseline */}
               {_.last(ticks.major) && (
-                <line x1='0' y1='0' x2={_.last(ticks.major).xOffset + 0.5} y2='0' stroke='currentColor' />
+                <line x1='0' y1='0' x2={_.last(ticks.major).xOffset + SVG_WIGGLE_ROOM} y2='0' stroke='currentColor' />
               )}
               {/* Ticks and labels */}
               {_.map(ticks.major, ({ value, xOffset, hideVal }, i) => !hideVal && (
@@ -678,8 +698,7 @@ const FacetTimeline = (props: Props) => {
    */
   const generateTicks = useCallback((tMin, tMax, sliderWidth, tickType = 'major') => {
     let nTicks = tMax - tMin;
-    const thumbSpacing = 0.5;
-    const width = sliderWidth - thumbSpacing;
+    const width = sliderWidth - SVG_WIGGLE_ROOM;
     const tickSpacing = width / nTicks;
     if (tickSpacing < MAJOR_TICKS_MIN_SPACE) {
       // ensure at least *_TICKS_MIN_SPACE between ticks
@@ -689,7 +708,7 @@ const FacetTimeline = (props: Props) => {
       return [];
     }
     // use d3-scale to produce scaled tick intervals
-    const scale = scaleLinear().domain([tMin, tMax]).range([thumbSpacing, width]);
+    const scale = scaleLinear().domain([tMin, tMax]).range([SVG_WIGGLE_ROOM, width]);
     // produce year and x offset for each tick
     return scale.ticks(nTicks).map((year) => ({
       value: year,
