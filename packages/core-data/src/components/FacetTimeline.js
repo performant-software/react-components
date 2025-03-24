@@ -4,7 +4,6 @@ import { useTimer } from '@performant-software/shared-components';
 import { clsx } from 'clsx';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { timeTicks } from 'd3-time';
-import { RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
 import React, {
   useCallback,
   useEffect,
@@ -17,6 +16,7 @@ import useMeasure from 'react-use-measure';
 import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
 import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesType } from './FacetSlider';
+import Icon from './Icon';
 import { useEventsService } from '../hooks/CoreData';
 import i18n from '../i18n/i18n';
 
@@ -376,13 +376,15 @@ const Timeline = (props: TimelineProps) => {
             'p-3',
             'disabled:opacity-50',
             'disabled:hover:bg-transparent',
+            'rounded-tl',
+            'rounded-bl',
             props.classNames?.zoom
           )}
           disabled={!canZoomIn}
           type='button'
           onClick={onZoomIn}
         >
-          <ZoomIn className='size-6' />
+          <Icon name='magnifying_glass_plus' size={19} />
         </button>
         <button
           aria-label={i18n.t('Timeline.zoomOut')}
@@ -391,13 +393,15 @@ const Timeline = (props: TimelineProps) => {
             'p-3',
             'disabled:opacity-50',
             'disabled:hover:bg-transparent',
+            'rounded-tr',
+            'rounded-br',
             props.classNames?.zoom
           )}
           disabled={!canZoomOut}
           type='button'
           onClick={onZoomOut}
         >
-          <ZoomOut className='size-6' />
+          <Icon name='magnifying_glass_minus' size={19} />
         </button>
       </div>
       <div
@@ -621,7 +625,7 @@ const FacetTimeline = (props: Props) => {
   const actions = useMemo(() => [{
     className: '-mt-4',
     label: i18n.t('Timeline.resetRange'),
-    icon: <RotateCcw className='w-5 h-5' />,
+    icon: <Icon name='reset' className='w-5 h-5' />,
     onClick: onSliderReset,
     position: 'right',
     disabled: value[0] === min && value[1] === max
