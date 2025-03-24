@@ -611,9 +611,9 @@ const FacetTimeline = (props: Props) => {
   /**
    * Callback to reset the slider position to encompass the full range.
    */
-  const onSliderReset = useCallback(() => {
+  const onSliderReset = () => {
     setValue([min, max]);
-  });
+  };
 
   /**
    * List of actions to provide to the FacetSlider component.
