@@ -594,10 +594,16 @@ const FacetTimeline = (props: Props) => {
       // if the user zooms in and the slider bounds are outside the
       // zoom window, auto-narrow the slider bounds
       const newSliderVal = [...slider];
-      if (min > slider[0]) newSliderVal[0] = min;
-      else if (max < slider[0]) newSliderVal[0] = max;
-      if (max < slider[1]) newSliderVal[1] = max;
-      else if (min > slider[1]) newSliderVal[1] = min;
+      if (min > slider[0]) {
+        newSliderVal[0] = min;
+      } else if (max < slider[0]) {
+        newSliderVal[0] = max;
+      }
+      if (max < slider[1]) {
+        newSliderVal[1] = max;
+      } else if (min > slider[1]) {
+        newSliderVal[1] = min;
+      }
       return newSliderVal;
     });
   }, [min, max]);
