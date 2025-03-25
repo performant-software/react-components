@@ -112,6 +112,18 @@ export const Location = () => (
   />
 );
 
+export const MagnifyingGlassMinus = () => (
+  <Icon
+    name='magnifying_glass_minus'
+  />
+);
+
+export const MagnifyingGlassPlus = () => (
+  <Icon
+    name='magnifying_glass_plus'
+  />
+);
+
 export const Occupation = () => (
   <Icon
     name='occupation'
