@@ -32,5 +32,10 @@
   "Slider": {
     "end": "End",
     "start": "Start"
+  },
+  "Timeline": {
+    "resetRange": "Reset slider range",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out"
   }
 }

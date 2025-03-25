@@ -5,7 +5,9 @@ import * as Slider from '@radix-ui/react-slider';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { clsx } from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  forwardRef, useCallback, useEffect, useMemo, useState
+} from 'react';
 import _ from 'underscore';
 
 type MarkerProps = {
@@ -96,6 +98,11 @@ type Action = {
   className?: string,
 
   /**
+   * (Optional) boolean to conditionally disable the action.
+   */
+  disabled?: boolean,
+
+  /**
    * (Optional) icon to render inside the button element.
    */
   icon?: JSX.Element,
@@ -104,6 +111,11 @@ type Action = {
    * Button label.
    */
   label: string,
+
+  /**
+   * Position of the action relative to the slider.
+   */
+  position?: 'right' | 'bottom',
 
   /**
    * Callback fired when the button is clicked.
@@ -117,8 +129,19 @@ type ClassNames = {
   root: string,
   thumb: string,
   track: string,
+  reset: string,
   zoom: string
 };
+
+type Tick = {
+  value: number,
+  xOffset: number,
+}
+
+type Ticks = {
+  major: Array<Tick>,
+  minor?: Array<Tick>,
+}
 
 type Props = {
   /**
@@ -130,6 +153,11 @@ type Props = {
    * Custom Tailwind CSS class names.
    */
   classNames: ClassNames,
+
+  /**
+   * True if the step buttons should be hidden.
+   */
+  hideStepButtons?: boolean,
 
   /**
    * The maximum facet value.
@@ -162,12 +190,17 @@ type Props = {
   step?: number,
 
   /**
+   * Ticks to render below the slider.
+   */
+  ticks?: Ticks,
+
+  /**
    * Value for controlled input.
    */
   value: [number, number]
 };
 
-const FacetSlider = (props: Props) => {
+const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
   const { clearTimer, setTimer } = useTimer();
 
   /**
@@ -214,19 +247,44 @@ const FacetSlider = (props: Props) => {
     }
   }, [props.max, props.onValueChange, props.onValueCommit, props.step, props.value]);
 
+  /**
+   * Filtered actions by position.
+   */
+  const bottomActions = useMemo(() => props.actions?.filter(
+    (action) => !action.position || action.position === 'bottom'
+  ), [props.actions]);
+  const rightActions = useMemo(() => props.actions?.filter(
+    (action) => action.position === 'right'
+  ), [props.actions]);
+
   return (
     <>
       <div
-        className='flex justify-between items-center pt-4'
+        className={clsx(
+          'flex',
+          'justify-between',
+          'items-center',
+          'pt-4',
+          !_.isEmpty(rightActions) ? 'px-4' : '',
+          _.isEmpty(bottomActions) && props.ticks ? 'pb-7' : '',
+        )}
       >
-        <button
-          aria-label='Slider Left'
-          className={clsx('px-3 py-3', props.classNames.button)}
-          onClick={onLeft}
-          type='button'
-        >
-          <ChevronLeft />
-        </button>
+        {!props.hideStepButtons && (
+          <button
+            aria-label='Slider Left'
+            className={clsx(
+              'px-3',
+              'py-3',
+              'disabled:opacity-50',
+              'disabled:hover:bg-transparent',
+              props.classNames.button
+            )}
+            onClick={onLeft}
+            type='button'
+          >
+            <ChevronLeft />
+          </button>
+        )}
         <Slider.Root
           className={clsx(
             'relative flex flex-grow h-5 touch-none items-center w-full',
@@ -237,6 +295,7 @@ const FacetSlider = (props: Props) => {
           minStepsBetweenThumbs={1}
           onValueChange={props.onValueChange}
           onValueCommit={props.onValueCommit}
+          ref={ref}
           step={1}
           value={props.value}
         >
@@ -253,6 +312,38 @@ const FacetSlider = (props: Props) => {
               )}
             />
           </Slider.Track>
+          {props.ticks
+            && (
+            <svg
+              className='absolute mt-12 z-0 !overflow-visible'
+              width='100%'
+              height={40}
+              overflow='visible'
+              shapeRendering='crispEdges'
+            >
+              {/* Ticks and labels */}
+              {_.map(props.ticks.major, ({ value, xOffset }) => (
+                <g key={value} transform={`translate(${xOffset}, 0)`}>
+                  <line y2={10} stroke='currentColor' />
+                  <text
+                    className='translate-y-8'
+                    key={value}
+                    style={{
+                      textAnchor: 'middle',
+                    }}
+                    fill='currentColor'
+                  >
+                    {value}
+                  </text>
+                </g>
+              ))}
+              {_.map(props.ticks.minor, ({ value, xOffset }) => (
+                <g key={value} transform={`translate(${xOffset}, 0)`}>
+                  <line y2={5} stroke='currentColor' />
+                </g>
+              ))}
+            </svg>
+            )}
           <SliderMarker
             className={props.classNames.thumb}
             position={props.position}
@@ -264,35 +355,73 @@ const FacetSlider = (props: Props) => {
             value={props.value[1]}
           />
         </Slider.Root>
-        <button
-          aria-label='Slider Right'
-          className={clsx('px-3 py-3', props.classNames.button)}
-          onClick={onRight}
-          type='button'
-        >
-          <ChevronRight />
-        </button>
+        {!props.hideStepButtons && (
+          <button
+            aria-label='Slider Right'
+            className={clsx(
+              'px-3',
+              'py-3',
+              'disabled:opacity-50',
+              'disabled:hover:bg-transparent',
+              props.classNames.button
+            )}
+            onClick={onRight}
+            type='button'
+          >
+            <ChevronRight />
+          </button>
+        )}
+        { !_.isEmpty(rightActions) && (
+          <div
+            className={clsx(
+              'flex justify-center items-center py-3 text-gray-600',
+              props.classNames.reset
+            )}
+          >
+            { _.map(rightActions, (action, index) => (
+              <button
+                aria-label={action.label}
+                className={clsx(
+                  'p-3',
+                  'disabled:opacity-50',
+                  'disabled:hover:bg-transparent',
+                  action.className
+                )}
+                disabled={action.disabled}
+                key={index}
+                onClick={action.onClick}
+                type='button'
+              >
+                { action.icon }
+              </button>
+            ))}
+          </div>
+        )}
       </div>
-      <div
-        className='flex justify-between w-full px-12'
-      >
-        <div>{ props.min }</div>
-        <div>{ props.max }</div>
-      </div>
-      { !_.isEmpty(props.actions) && (
+      {!props.ticks && (
+        <div className='flex justify-between w-full px-12'>
+          <div>{props.min}</div>
+          <div>{props.max}</div>
+        </div>
+      )}
+      { !_.isEmpty(bottomActions) && (
         <div
           className={clsx(
             'flex justify-center items-center w-full py-3 text-gray-600',
             props.classNames.zoom
           )}
         >
-          { _.map(props.actions, (action, index) => (
+          { _.map(bottomActions, (action, index) => (
             <button
               aria-label={action.label}
               className={clsx(
                 'p-3',
+                'disabled:opacity-50',
+                'disabled:hover:bg-transparent',
+                props.ticks ? 'mt-5' : '',
                 action.className
               )}
+              disabled={action.disabled}
               key={index}
               onClick={action.onClick}
               type='button'
@@ -304,7 +433,7 @@ const FacetSlider = (props: Props) => {
       )}
     </>
   );
-};
+});
 
 FacetSlider.defaultProps = {
   classNames: {},

@@ -16,6 +16,8 @@ import LeftArrowIcon from '../icons/LeftArrowIcon';
 import LeftIcon from '../icons/LeftIcon';
 import ListIcon from '../icons/ListIcon';
 import LocationIcon from '../icons/LocationIcon';
+import MagnifyingGlassMinusIcon from '../icons/MagnifyingGlassMinusIcon';
+import MagnifyingGlassPlusIcon from '../icons/MagnifyingGlassPlusIcon';
 import OccupationIcon from '../icons/OccupationIcon';
 import ParticipantsIcon from '../icons/ParticipantsIcon';
 import PersonIcon from '../icons/PersonIcon';
@@ -83,6 +85,12 @@ const Icon = ({
       break;
     case 'location':
       ThisIcon = LocationIcon;
+      break;
+    case 'magnifying_glass_minus':
+      ThisIcon = MagnifyingGlassMinusIcon;
+      break;
+    case 'magnifying_glass_plus':
+      ThisIcon = MagnifyingGlassPlusIcon;
       break;
     case 'occupation':
       ThisIcon = OccupationIcon;

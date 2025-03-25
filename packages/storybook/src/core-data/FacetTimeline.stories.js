@@ -24,24 +24,50 @@ export const Default = withCoreDataContextProvider(() => (
   <FacetTimeline
     range={range}
     refine={refine}
-    zoom={10}
   />
 ));
 
+export const FitBounds = withCoreDataContextProvider(() => (
+  <div className='h-[400px] w-[800px]'>
+    <FacetTimeline
+      range={range}
+      refine={refine}
+    />
+  </div>
+));
+
+const largeRange = {
+  min: 112,
+  max: 2025
+};
+
+export const LargeRange = withCoreDataContextProvider(() => (
+  // container with full height and negative margin to fill the storybook viewport
+  <div className='h-[500px]'>
+    <FacetTimeline
+      range={largeRange}
+      refine={refine}
+    />
+  </div>
+));
+
 export const Styled = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    className='bg-gray-1000 text-white'
-    classNames={{
-      button: 'px-4',
-      range: 'bg-white',
-      thumb: 'bg-white',
-      track: 'bg-gray-400',
-      zoom: 'text-white'
-    }}
-    range={range}
-    refine={refine}
-    zoom={10}
-  />
+  <div className='h-[450px]'>
+    <FacetTimeline
+      className='bg-gray-1000 text-white'
+      classNames={{
+        button: 'px-4',
+        range: 'bg-white',
+        thumb: 'bg-white',
+        track: 'bg-gray-400',
+        reset: 'text-white',
+        marker: 'fill-gray-300',
+        zoom: 'bg-white text-black hover:bg-gray-200 disabled:hover:bg-white',
+      }}
+      range={range}
+      refine={refine}
+    />
+  </div>
 ));
 
 export const EventModal = withCoreDataContextProvider(() => {
@@ -53,7 +79,6 @@ export const EventModal = withCoreDataContextProvider(() => {
         onClick={(event) => setSelectedEvent(event)}
         range={range}
         refine={refine}
-        zoom={10}
       />
       { selectedEvent && (
         <Modal
@@ -94,10 +119,10 @@ export const ListView = withCoreDataContextProvider(() => {
         onLoad={setEvents}
         range={range}
         refine={refine}
-        zoom={10}
       />
       { listView && (
         <Modal
+          className='z-40'
           onClose={() => setListView(false)}
           open
         >
@@ -126,12 +151,3 @@ export const ListView = withCoreDataContextProvider(() => {
     </>
   );
 });
-
-export const Description = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    description
-    range={range}
-    refine={refine}
-    zoom={10}
-  />
-));
