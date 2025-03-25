@@ -102,8 +102,8 @@ const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
         }
       ],
       cacheSearchResultsForSeconds: 120,
-      connectionTimeoutSeconds: options.connection_timeout,
-      timeoutSeconds: options.timeout
+      connectionTimeoutSeconds: config.connection_timeout,
+      timeoutSeconds: config.timeout
     },
     geoLocationField: 'coordinates',
     additionalSearchParameters: {
