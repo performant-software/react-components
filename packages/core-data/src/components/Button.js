@@ -15,6 +15,11 @@ type Props = {
   children: Node,
 
   /**
+   * If `true`, the button will get the `disabled` HTML attribute and appropriate styles.
+   */
+  disabled?: boolean,
+
+  /**
    * If `true`, the button will be assumed to contain a single icon.
    */
   icon?: boolean,
@@ -47,8 +52,9 @@ const Button = (props: Props) => (
       { 'rounded-full px-2': props.icon },
       { 'bg-secondary': props.secondary },
       { 'border border-solid border-gray-200 bg-white': !props.primary },
-      { 'border border-solid border-transparent bg-primary hover:bg-primary hover:saturate-50 text-white fill-white': props.primary },
+      { 'border border-solid border-transparent bg-primary hover:bg-primary hover:saturate-50 text-white fill-white': props.primary && !props.disabled },
       { 'rounded-md': props.rounded },
+      { 'text-gray-400 hover:bg-white': props.disabled },
       props.className
     )}
     type='button'
