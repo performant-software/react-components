@@ -77,3 +77,12 @@ export const customClasses = () => (
     This is blue
   </Button>
 );
+
+export const Disabled = () => (
+  <Button
+    onClick={action('click')}
+    disabled
+  >
+    Button
+  </Button>
+);
