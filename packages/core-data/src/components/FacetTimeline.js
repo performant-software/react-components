@@ -17,8 +17,9 @@ import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
 import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesType } from './FacetSlider';
 import Icon from './Icon';
-import { useEventsService } from '../hooks/CoreData';
 import i18n from '../i18n/i18n';
+import Button from './Button';
+import ButtonGroup from './ButtonGroup';
 
 /**
  * Helper constants: periods of time in milliseconds.
@@ -372,39 +373,29 @@ const Timeline = (props: TimelineProps) => {
       style={{ scrollbarWidth: 'none' }}
     >
       <div className='absolute top-5 right-5 z-30 flex flex-row'>
-        <button
-          aria-label={i18n.t('Timeline.zoomIn')}
-          className={clsx(
-            'p-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            'rounded-tl',
-            'rounded-bl',
-            props.classNames?.zoom
-          )}
-          disabled={!canZoomIn}
-          type='button'
-          onClick={onZoomIn}
+        <ButtonGroup
+          className='h-12'
+          rounded
         >
-          <Icon name='magnifying_glass_plus' size={19} />
-        </button>
-        <button
-          aria-label={i18n.t('Timeline.zoomOut')}
-          className={clsx(
-            'ml-[1px]',
-            'p-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            'rounded-tr',
-            'rounded-br',
-            props.classNames?.zoom
-          )}
-          disabled={!canZoomOut}
-          type='button'
-          onClick={onZoomOut}
-        >
-          <Icon name='magnifying_glass_minus' size={19} />
-        </button>
+          <Button
+            aria-label={i18n.t('Timeline.zoomIn')}
+            className={clsx('w-12', 'pl-3', props.classNames?.zoom)}
+            disabled={!canZoomIn}
+            onClick={onZoomIn}
+            primary
+          >
+            <Icon name='magnifying_glass_plus' size={19} />
+          </Button>
+          <Button
+            aria-label={i18n.t('Timeline.zoomOut')}
+            className={clsx('w-12', 'pl-3', 'border-l-slate-500', props.classNames?.zoom)}
+            disabled={!canZoomOut}
+            onClick={onZoomOut}
+            primary
+          >
+            <Icon name='magnifying_glass_minus' size={19} />
+          </Button>
+        </ButtonGroup>
       </div>
       <div
         className='h-full min-h-36 flex flex-col'
