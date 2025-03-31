@@ -23,18 +23,12 @@ import i18n from '../i18n/i18n';
 /**
  * Helper constants: periods of time in milliseconds.
  */
-const ONE_DAY = 86400000;
+const ONE_SECOND = 1000;
 const MIN_MONTH = 2419200000; // 28 days
 const MAX_MONTH = 2678400000; // 31 days
 
 /**
- * Width/height of a single event in px.
- */
-const EVENT_WIDTH = 154;
-const EVENT_HEIGHT = 42;
-
-/**
- * Additional timeline display constants.
+ * Timeline display constants.
  */
 const MARKER_RADIUS = 4; // radius of a circular marker on the timeline
 const MARKER_DIAMETER = MARKER_RADIUS * 2;
@@ -43,6 +37,14 @@ const TIMELINE_PADTOP = 8; // vertical padding between timeline and events
 const TIMELINE_HEIGHT = 1; // height of the actual line
 const SVG_WIGGLE_ROOM = 0.5; // helper to line up left and right edges in svg
 const FRAME_PADDING = 32; // right padding between timeline and frame
+
+/**
+ * Width/height of a single event in px.
+ */
+// account for difference in font size between storybook and CDP
+const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
+const EVENT_WIDTH = 11 * ONE_REM; // 11rem
+const EVENT_HEIGHT = 2.5 * ONE_REM + TIMELINE_PADTOP; // 2.5rem + timeline padding
 
 /**
  * Maximum width of the frame bounds in px.
