@@ -201,6 +201,7 @@ const Timeline = (props: TimelineProps) => {
     let overflowYOffset = 0;
     return _.chain(props.events)
       .sortBy('date')
+      .filter((event) => event.date >= range.min && event.date <= range.max)
       .reduce((acc, event) => {
         // calculate xOffset by date
         const relativePos = (event.date - range.min) / (range.max - range.min);
@@ -252,8 +253,13 @@ const Timeline = (props: TimelineProps) => {
       xOffset: scale(date),
     }));
     // Ensure the last major tick is at tMax (if not already included)
-    if (majorTicks.length > 0 && _.last(majorTicks).value.getTime() < tMax.getTime()) {
-      majorTicks.push({ value: tMax, xOffset: scale(tMax), hideVal: true });
+    if (majorTicks.length > 0) {
+      if (_.last(majorTicks).value.getTime() < tMax.getTime()) {
+        majorTicks.push({ value: tMax, xOffset: scale(tMax), hideVal: true });
+      }
+      if (_.first(majorTicks).value.getTime() > tMin.getTime()) {
+        majorTicks.unshift({ value: tMin, xOffset: scale(tMin), hideVal: true });
+      }
     }
     if (tickType === 'minor') {
       // because major ticks aren't evenly distributed due to calendar irregularities,
@@ -295,33 +301,12 @@ const Timeline = (props: TimelineProps) => {
   }, []);
 
   /**
-   * On load (or timeline width change), adjust based on the width of the slider.
+   * On facet change, update the timeline min and max.
    */
   useEffect(() => {
-    let newMin = range.min;
-    let newMax = range.max;
-
-    // for ticks, expand overall range to get round values
-    // generate major and minor ticks across the range of valid values
-    const majTicks = _.pluck(generateTicks(
-      range.min, range.max, ticksBounds.width, MAJOR_TICKS_MIN_SPACE
-    ), 'value');
-    if (majTicks?.length > 1) {
-      // adjust the min and max such that no values are outside of the
-      // first and last major tick
-      const tickInterval = majTicks[1] - majTicks[0];
-      if (range.min < _.first(majTicks)) {
-        const firstMaj = _.first(majTicks);
-        newMin = Math.min(range.min, firstMaj.getTime() - ONE_DAY - tickInterval);
-      }
-      if (range.max > _.last(majTicks)) {
-        const lastMaj = _.last(majTicks);
-        newMax = Math.max(range.max, lastMaj.getTime() + ONE_DAY + tickInterval);
-      }
-    }
-    setMin(newMin);
-    setMax(newMax);
-  }, [range.min, range.max, ticksBounds.width]);
+    setMin(range.min);
+    setMax(range.max);
+  }, [range.min, range.max]);
 
   /**
    * Memoize the set of major and minor ticks based on the current min,
@@ -568,13 +553,10 @@ const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props;
 
   const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
-  // NOTE: All calculations are done on range.max + 1, because range.min and range.max are years,
-  // while actual values of events are dates. Therefore, range.max should be one more than
-  // the highest year, so that events occuring during that year fall within the visible range.
-  const to = Math.min(range.max + 1, Number.isFinite(start[1]) ? start[1] : range.max + 1);
+  const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
 
   const [events, setEvents] = useState();
-  const [max, setMax] = useState(range.max + 1);
+  const [max, setMax] = useState(range.max);
   const [min, setMin] = useState(range.min);
   const [value, setValue] = useState([from, to]);
 
@@ -692,7 +674,7 @@ const FacetTimeline = (props: Props) => {
   useEffect(() => {
     setValue([from, to]);
     setMin(range.min);
-    setMax(range.max + 1);
+    setMax(range.max);
   }, [from, to, range.min, range.max]);
 
   /**
@@ -728,32 +710,6 @@ const FacetTimeline = (props: Props) => {
     minor: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'minor') : [],
   }), [min, max, sliderBounds.width]);
 
-  /**
-   * On load (or slider width change), adjust based on the width of the slider.
-   */
-  useEffect(() => {
-    // for ticks, expand overall range to get round values
-    const nValues = range.max + 1 - range.min;
-    // generate ticks across the range of valid values
-    const genTicks = _.pluck(generateTicks(
-      range.min, range.max + 1, sliderBounds.width, 'major'
-    ), 'value');
-    if (genTicks?.length < nValues && genTicks.length > 1) {
-      // adjust the min and max such that no values are outside of the
-      // first and last major tick
-      const tickInterval = genTicks[1] - genTicks[0];
-      const newMin = Math.min(range.min, _.first(genTicks) - tickInterval);
-      const newMax = Math.max(range.max + 1, _.last(genTicks) + tickInterval);
-      setMin(newMin);
-      setMax(newMax);
-      if (value[0] === range.min && value[1] === range.max + 1) {
-        // if the slider hasn't been changed from the initial range,
-        // set it to encompass the new slider min and max
-        setValue([newMin, newMax]);
-      }
-    }
-  }, [range.min, range.max, sliderBounds.width]);
-
   return (
     <div
       className={clsx(
@@ -769,7 +725,9 @@ const FacetTimeline = (props: Props) => {
         classNames={props.classNames}
         events={events}
         onClick={props.onClick}
-        range={{ min: value[0], max: value[1] }}
+        // range.min and range.max are years; actual values of events are dates. Therefore, use
+        // value[1] + 1, so that events occuring during final year fall within the visible range.
+        range={{ min: value[0], max: value[1] + 1 }}
       />
       <FacetSlider
         actions={[
