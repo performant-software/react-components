@@ -1,6 +1,5 @@
 // @flow
 
-import { useTimer } from '@performant-software/shared-components';
 import { clsx } from 'clsx';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { timeTicks } from 'd3-time';
@@ -519,6 +518,11 @@ type Props = {
   },
 
   /**
+   * Typesense hit events to display, as an array.
+   */
+  data: Array<EventType>,
+
+  /**
    * Callback fired when the event popover is clicked.
    */
   onClick?: (event: EventType) => void,
@@ -560,9 +564,7 @@ const FacetTimeline = (props: Props) => {
   const [min, setMin] = useState(range.min);
   const [value, setValue] = useState([from, to]);
 
-  const EventsService = useEventsService();
   const ref = useRef();
-  const { clearTimer, setTimer } = useTimer();
   const [sliderRef, sliderBounds] = useMeasure();
 
   /**
@@ -592,6 +594,7 @@ const FacetTimeline = (props: Props) => {
    */
   const onSliderReset = () => {
     setValue([min, max]);
+    refine([min, max]);
   };
 
   /**
@@ -612,10 +615,12 @@ const FacetTimeline = (props: Props) => {
    * @type {function(*): *}
    */
   const getDate = useCallback((event) => {
-    const date = event.start_date?.start_date || event.end_date?.start_date;
+    const date = (!_.isEmpty(event.start_date) && event.start_date[0])
+      || (!_.isEmpty(event.end_date) && event.end_date[0]);
 
-    if (date) {
-      return new Date(date);
+    if (_.isNumber(date)) {
+      // Typesense date is a Unix timestamp, which is in seconds, so convert to ms
+      return new Date(date * ONE_SECOND);
     }
 
     return date;
@@ -626,38 +631,12 @@ const FacetTimeline = (props: Props) => {
    *
    * @type {(function(*): void)|*}
    */
-  const onLoad = useCallback((data) => {
-    setEvents(_.map(data.events, (event) => ({
+  useEffect(() => {
+    setEvents(_.map(props.data, (event) => ({
       ...event,
       date: getDate(event)
     })));
-  }, []);
-
-  /**
-   * Loads the list of events when the range or min/max values are changed.
-   */
-  useEffect(() => {
-    if (!value) {
-      return;
-    }
-
-    // Clear the timeout when the range changes
-    clearTimer();
-
-    // Reset the timer to fetch the events
-    setTimer(() => {
-      setEvents([]);
-
-      const params = {
-        min_year: value[0],
-        max_year: value[1]
-      };
-
-      EventsService
-        .fetchAll(params)
-        .then(onLoad);
-    });
-  }, [onLoad, max, min, value]);
+  }, [props.data]);
 
   /**
    * Calls the onLoad prop when the events are changed.

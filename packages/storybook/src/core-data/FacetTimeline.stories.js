@@ -1,11 +1,15 @@
 // @flow
 
+import { faker } from '@faker-js/faker';
+import { action } from '@storybook/addon-actions';
 import { List } from 'lucide-react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import _ from 'underscore';
 import EventDetails from '../../../core-data/src/components/EventDetails';
 import EventsList from '../../../core-data/src/components/EventsList';
 import FacetTimeline from '../../../core-data/src/components/FacetTimeline';
 import Modal from '../../../core-data/src/components/Modal';
+import { useEventsService } from '../../../core-data/src/hooks/CoreData';
 import withCoreDataContextProvider from '../hooks/CoreDataContextProvider';
 
 export default {
@@ -13,47 +17,67 @@ export default {
   component: FacetTimeline
 };
 
-const range = {
+const smallRange = {
   min: 1768,
   max: 1777
 };
-
-const refine = () => {};
-
-export const Default = withCoreDataContextProvider(() => (
-  <FacetTimeline
-    range={range}
-    refine={refine}
-  />
-));
-
-export const FitBounds = withCoreDataContextProvider(() => (
-  <div className='h-[400px] w-[800px]'>
-    <FacetTimeline
-      range={range}
-      refine={refine}
-    />
-  </div>
-));
 
 const largeRange = {
   min: 112,
   max: 2025
 };
 
-export const LargeRange = withCoreDataContextProvider(() => (
-  // container with full height and negative margin to fill the storybook viewport
-  <div className='h-[500px]'>
+// mock typesense data
+const createEvent = (count, range) => _.times(count, () => {
+  // create JS date
+  let date = faker.date.between({
+    from: `${range.min}-01-01`,
+    to: `${range.max}-01-01`
+  });
+  // convert to Unicode date for typesense mock (seconds since epoch)
+  date = Math.floor(date.getTime() / 1000);
+  return {
+    uuid: faker.string.uuid(),
+    name: faker.lorem.words({ min: 1, max: 8 }),
+    description: faker.lorem.paragraph(),
+    start_date: [date, date],
+    end_date: [],
+  };
+});
+
+export const Default = () => (
+  <FacetTimeline
+    data={createEvent(10, smallRange)}
+    range={smallRange}
+    refine={action('refine')}
+  />
+);
+
+export const FitBounds = () => (
+  <div className='h-[400px] w-[800px]'>
     <FacetTimeline
-      range={largeRange}
-      refine={refine}
+      data={createEvent(10, smallRange)}
+      range={smallRange}
+      refine={action('refine')}
     />
   </div>
-));
+);
 
-export const Styled = withCoreDataContextProvider(() => (
+export const LargeRange = () => (
+  // container with full height and negative margin to fill the storybook viewport
+  <div className='h-[500px] p-2'>
+    <FacetTimeline
+      data={createEvent(50, largeRange)}
+      range={largeRange}
+      refine={action('refine')}
+    />
+  </div>
+);
+
+export const Styled = () => (
   <div className='h-[450px]'>
     <FacetTimeline
+      data={createEvent(10, smallRange)}
       className='bg-gray-1000 text-white'
       classNames={{
         button: 'px-4',
@@ -62,26 +86,44 @@ export const Styled = withCoreDataContextProvider(() => (
         track: 'bg-gray-400',
         reset: 'text-white',
         marker: 'fill-gray-300',
-        zoom: 'bg-white text-black hover:bg-gray-200 disabled:hover:bg-white',
       }}
-      range={range}
-      refine={refine}
+      range={smallRange}
+      refine={action('refine')}
     />
   </div>
-));
+);
 
 export const EventModal = withCoreDataContextProvider(() => {
   const [selectedEvent, setSelectedEvent] = useState();
+  const [data, setData] = useState([]);
+  const [events, setEvents] = useState([]);
+  const EventsService = useEventsService();
+
+  useEffect(() => {
+    EventsService.fetchAll().then((res) => setEvents(res.events));
+  }, []);
+
+  useEffect(() => {
+    const fakeEvents = createEvent(10, smallRange);
+    setData(_.map(fakeEvents, (event, i) => ({
+      ...event,
+      name: events[i]?.name,
+      uuid: events[i]?.uuid,
+      start_date: event.start_date,
+    })));
+  }, [events]);
 
   return (
     <>
       <FacetTimeline
+        data={data}
         onClick={(event) => setSelectedEvent(event)}
-        range={range}
-        refine={refine}
+        range={smallRange}
+        refine={action('refine')}
       />
       { selectedEvent && (
         <Modal
+          className='z-50'
           onClose={() => setSelectedEvent(null)}
           open
         >
@@ -94,7 +136,8 @@ export const EventModal = withCoreDataContextProvider(() => {
   );
 });
 
-export const ListView = withCoreDataContextProvider(() => {
+export const ListView = () => {
+  const [data, setData] = useState([]);
   const [events, setEvents] = useState([]);
   const [listView, setListView] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
@@ -106,9 +149,14 @@ export const ListView = withCoreDataContextProvider(() => {
    */
   const isSelected = useCallback((event) => selectedEvent && selectedEvent.uuid === event.uuid, [selectedEvent]);
 
+  useEffect(() => {
+    setData(createEvent(10, smallRange));
+  }, []);
+
   return (
     <>
       <FacetTimeline
+        data={data}
         actions={[{
           label: 'Show List',
           icon: (
@@ -117,12 +165,11 @@ export const ListView = withCoreDataContextProvider(() => {
           onClick: () => setListView(true)
         }]}
         onLoad={setEvents}
-        range={range}
-        refine={refine}
+        range={smallRange}
+        refine={action('refine')}
       />
       { listView && (
         <Modal
-          className='z-40'
           onClose={() => setListView(false)}
           open
         >
@@ -150,4 +197,4 @@ export const ListView = withCoreDataContextProvider(() => {
       )}
     </>
   );
-});
+};
