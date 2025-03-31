@@ -31,7 +31,7 @@ const normalize = (config: RuntimeConfig) => ({
     ...search,
     typesense: {
       ...search.typesense,
-      host: search.typesense.host || '443',
+      port: search.typesense.port || '443',
       protocol: search.typesense.protocol || 'https',
       sort_by: `_text_match:desc${search.typesense.default_sort ? `,${search.typesense.default_sort}:asc` : ''}`
     }
