@@ -62,7 +62,7 @@ const Modal = (props: Props) => {
       >
         <Dialog.Overlay
           className={clsx(
-            'fixed bg-black/70 inset-0 transition-opacity flex justify-center z-10',
+            'fixed bg-black/70 inset-0 transition-opacity flex justify-center z-50',
             { 'items-center': props.centered },
             { 'overflow-auto': !props.scrolling }
           )}

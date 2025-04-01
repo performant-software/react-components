@@ -1,6 +1,5 @@
 // @flow
 
-import { useTimer } from '@performant-software/shared-components';
 import { clsx } from 'clsx';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { timeTicks } from 'd3-time';
@@ -17,24 +16,19 @@ import _ from 'underscore';
 import type { Event as EventType } from '../types/Event';
 import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesType } from './FacetSlider';
 import Icon from './Icon';
-import { useEventsService } from '../hooks/CoreData';
 import i18n from '../i18n/i18n';
+import Button from './Button';
+import ButtonGroup from './ButtonGroup';
 
 /**
  * Helper constants: periods of time in milliseconds.
  */
-const ONE_DAY = 86400000;
+const ONE_SECOND = 1000;
 const MIN_MONTH = 2419200000; // 28 days
 const MAX_MONTH = 2678400000; // 31 days
 
 /**
- * Width/height of a single event in px.
- */
-const EVENT_WIDTH = 154;
-const EVENT_HEIGHT = 42;
-
-/**
- * Additional timeline display constants.
+ * Timeline display constants.
  */
 const MARKER_RADIUS = 4; // radius of a circular marker on the timeline
 const MARKER_DIAMETER = MARKER_RADIUS * 2;
@@ -43,6 +37,14 @@ const TIMELINE_PADTOP = 8; // vertical padding between timeline and events
 const TIMELINE_HEIGHT = 1; // height of the actual line
 const SVG_WIGGLE_ROOM = 0.5; // helper to line up left and right edges in svg
 const FRAME_PADDING = 32; // right padding between timeline and frame
+
+/**
+ * Width/height of a single event in px.
+ */
+// account for difference in font size between storybook and CDP
+const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
+const EVENT_WIDTH = 11 * ONE_REM; // 11rem
+const EVENT_HEIGHT = 2.5 * ONE_REM + TIMELINE_PADTOP; // 2.5rem + timeline padding
 
 /**
  * Maximum width of the frame bounds in px.
@@ -198,6 +200,7 @@ const Timeline = (props: TimelineProps) => {
     let overflowYOffset = 0;
     return _.chain(props.events)
       .sortBy('date')
+      .filter((event) => event.date >= range.min && event.date <= range.max)
       .reduce((acc, event) => {
         // calculate xOffset by date
         const relativePos = (event.date - range.min) / (range.max - range.min);
@@ -249,8 +252,13 @@ const Timeline = (props: TimelineProps) => {
       xOffset: scale(date),
     }));
     // Ensure the last major tick is at tMax (if not already included)
-    if (majorTicks.length > 0 && _.last(majorTicks).value.getTime() < tMax.getTime()) {
-      majorTicks.push({ value: tMax, xOffset: scale(tMax), hideVal: true });
+    if (majorTicks.length > 0) {
+      if (_.last(majorTicks).value.getTime() < tMax.getTime()) {
+        majorTicks.push({ value: tMax, xOffset: scale(tMax), hideVal: true });
+      }
+      if (_.first(majorTicks).value.getTime() > tMin.getTime()) {
+        majorTicks.unshift({ value: tMin, xOffset: scale(tMin), hideVal: true });
+      }
     }
     if (tickType === 'minor') {
       // because major ticks aren't evenly distributed due to calendar irregularities,
@@ -292,33 +300,12 @@ const Timeline = (props: TimelineProps) => {
   }, []);
 
   /**
-   * On load (or timeline width change), adjust based on the width of the slider.
+   * On facet change, update the timeline min and max.
    */
   useEffect(() => {
-    let newMin = range.min;
-    let newMax = range.max;
-
-    // for ticks, expand overall range to get round values
-    // generate major and minor ticks across the range of valid values
-    const majTicks = _.pluck(generateTicks(
-      range.min, range.max, ticksBounds.width, MAJOR_TICKS_MIN_SPACE
-    ), 'value');
-    if (majTicks?.length > 1) {
-      // adjust the min and max such that no values are outside of the
-      // first and last major tick
-      const tickInterval = majTicks[1] - majTicks[0];
-      if (range.min < _.first(majTicks)) {
-        const firstMaj = _.first(majTicks);
-        newMin = Math.min(range.min, firstMaj.getTime() - ONE_DAY - tickInterval);
-      }
-      if (range.max > _.last(majTicks)) {
-        const lastMaj = _.last(majTicks);
-        newMax = Math.max(range.max, lastMaj.getTime() + ONE_DAY + tickInterval);
-      }
-    }
-    setMin(newMin);
-    setMax(newMax);
-  }, [range.min, range.max, ticksBounds.width]);
+    setMin(range.min);
+    setMax(range.max);
+  }, [range.min, range.max]);
 
   /**
    * Memoize the set of major and minor ticks based on the current min,
@@ -370,39 +357,29 @@ const Timeline = (props: TimelineProps) => {
       style={{ scrollbarWidth: 'none' }}
     >
       <div className='absolute top-5 right-5 z-30 flex flex-row'>
-        <button
-          aria-label={i18n.t('Timeline.zoomIn')}
-          className={clsx(
-            'p-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            'rounded-tl',
-            'rounded-bl',
-            props.classNames?.zoom
-          )}
-          disabled={!canZoomIn}
-          type='button'
-          onClick={onZoomIn}
+        <ButtonGroup
+          className='h-12'
+          rounded
         >
-          <Icon name='magnifying_glass_plus' size={19} />
-        </button>
-        <button
-          aria-label={i18n.t('Timeline.zoomOut')}
-          className={clsx(
-            'ml-[1px]',
-            'p-3',
-            'disabled:opacity-50',
-            'disabled:hover:bg-transparent',
-            'rounded-tr',
-            'rounded-br',
-            props.classNames?.zoom
-          )}
-          disabled={!canZoomOut}
-          type='button'
-          onClick={onZoomOut}
-        >
-          <Icon name='magnifying_glass_minus' size={19} />
-        </button>
+          <Button
+            aria-label={i18n.t('Timeline.zoomIn')}
+            className={clsx('w-12', 'pl-3', props.classNames?.zoom)}
+            disabled={!canZoomIn}
+            onClick={onZoomIn}
+            primary
+          >
+            <Icon name='magnifying_glass_plus' size={19} />
+          </Button>
+          <Button
+            aria-label={i18n.t('Timeline.zoomOut')}
+            className={clsx('w-12', 'pl-3', 'border-l-slate-500', props.classNames?.zoom)}
+            disabled={!canZoomOut}
+            onClick={onZoomOut}
+            primary
+          >
+            <Icon name='magnifying_glass_minus' size={19} />
+          </Button>
+        </ButtonGroup>
       </div>
       <div
         className='h-full min-h-36 flex flex-col'
@@ -541,6 +518,11 @@ type Props = {
   },
 
   /**
+   * Typesense hit events to display, as an array.
+   */
+  data: Array<EventType>,
+
+  /**
    * Callback fired when the event popover is clicked.
    */
   onClick?: (event: EventType) => void,
@@ -575,19 +557,14 @@ const FacetTimeline = (props: Props) => {
   const { range = {}, refine, start = [] } = props;
 
   const from = Math.max(range.min, Number.isFinite(start[0]) ? start[0] : range.min);
-  // NOTE: All calculations are done on range.max + 1, because range.min and range.max are years,
-  // while actual values of events are dates. Therefore, range.max should be one more than
-  // the highest year, so that events occuring during that year fall within the visible range.
-  const to = Math.min(range.max + 1, Number.isFinite(start[1]) ? start[1] : range.max + 1);
+  const to = Math.min(range.max, Number.isFinite(start[1]) ? start[1] : range.max);
 
   const [events, setEvents] = useState();
-  const [max, setMax] = useState(range.max + 1);
+  const [max, setMax] = useState(range.max);
   const [min, setMin] = useState(range.min);
   const [value, setValue] = useState([from, to]);
 
-  const EventsService = useEventsService();
   const ref = useRef();
-  const { clearTimer, setTimer } = useTimer();
   const [sliderRef, sliderBounds] = useMeasure();
 
   /**
@@ -617,6 +594,7 @@ const FacetTimeline = (props: Props) => {
    */
   const onSliderReset = () => {
     setValue([min, max]);
+    refine([min, max]);
   };
 
   /**
@@ -637,10 +615,12 @@ const FacetTimeline = (props: Props) => {
    * @type {function(*): *}
    */
   const getDate = useCallback((event) => {
-    const date = event.start_date?.start_date || event.end_date?.start_date;
+    const date = (!_.isEmpty(event.start_date) && event.start_date[0])
+      || (!_.isEmpty(event.end_date) && event.end_date[0]);
 
-    if (date) {
-      return new Date(date);
+    if (_.isNumber(date)) {
+      // Typesense date is a Unix timestamp, which is in seconds, so convert to ms
+      return new Date(date * ONE_SECOND);
     }
 
     return date;
@@ -651,38 +631,12 @@ const FacetTimeline = (props: Props) => {
    *
    * @type {(function(*): void)|*}
    */
-  const onLoad = useCallback((data) => {
-    setEvents(_.map(data.events, (event) => ({
+  useEffect(() => {
+    setEvents(_.map(props.data, (event) => ({
       ...event,
       date: getDate(event)
     })));
-  }, []);
-
-  /**
-   * Loads the list of events when the range or min/max values are changed.
-   */
-  useEffect(() => {
-    if (!value) {
-      return;
-    }
-
-    // Clear the timeout when the range changes
-    clearTimer();
-
-    // Reset the timer to fetch the events
-    setTimer(() => {
-      setEvents([]);
-
-      const params = {
-        min_year: value[0],
-        max_year: value[1]
-      };
-
-      EventsService
-        .fetchAll(params)
-        .then(onLoad);
-    });
-  }, [onLoad, max, min, value]);
+  }, [props.data]);
 
   /**
    * Calls the onLoad prop when the events are changed.
@@ -699,7 +653,7 @@ const FacetTimeline = (props: Props) => {
   useEffect(() => {
     setValue([from, to]);
     setMin(range.min);
-    setMax(range.max + 1);
+    setMax(range.max);
   }, [from, to, range.min, range.max]);
 
   /**
@@ -735,32 +689,6 @@ const FacetTimeline = (props: Props) => {
     minor: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'minor') : [],
   }), [min, max, sliderBounds.width]);
 
-  /**
-   * On load (or slider width change), adjust based on the width of the slider.
-   */
-  useEffect(() => {
-    // for ticks, expand overall range to get round values
-    const nValues = range.max + 1 - range.min;
-    // generate ticks across the range of valid values
-    const genTicks = _.pluck(generateTicks(
-      range.min, range.max + 1, sliderBounds.width, 'major'
-    ), 'value');
-    if (genTicks?.length < nValues && genTicks.length > 1) {
-      // adjust the min and max such that no values are outside of the
-      // first and last major tick
-      const tickInterval = genTicks[1] - genTicks[0];
-      const newMin = Math.min(range.min, _.first(genTicks) - tickInterval);
-      const newMax = Math.max(range.max + 1, _.last(genTicks) + tickInterval);
-      setMin(newMin);
-      setMax(newMax);
-      if (value[0] === range.min && value[1] === range.max + 1) {
-        // if the slider hasn't been changed from the initial range,
-        // set it to encompass the new slider min and max
-        setValue([newMin, newMax]);
-      }
-    }
-  }, [range.min, range.max, sliderBounds.width]);
-
   return (
     <div
       className={clsx(
@@ -776,7 +704,9 @@ const FacetTimeline = (props: Props) => {
         classNames={props.classNames}
         events={events}
         onClick={props.onClick}
-        range={{ min: value[0], max: value[1] }}
+        // range.min and range.max are years; actual values of events are dates. Therefore, use
+        // value[1] + 1, so that events occuring during final year fall within the visible range.
+        range={{ min: value[0], max: value[1] + 1 }}
       />
       <FacetSlider
         actions={[

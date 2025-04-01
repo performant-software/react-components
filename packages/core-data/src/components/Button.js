@@ -55,7 +55,7 @@ const Button = (props: Props) => (
       { 'border border-solid border-gray-200': !props.primary },
       { 'border border-solid border-transparent bg-primary hover:bg-primary hover:saturate-50 text-white fill-white': props.primary && !props.disabled },
       { 'rounded-md': props.rounded },
-      { 'text-gray-400 bg-white hover:bg-white': props.disabled },
+      { 'border border-solid border-gray-200 text-gray-400 bg-white hover:bg-white': props.disabled },
       props.className
     )}
     type='button'
