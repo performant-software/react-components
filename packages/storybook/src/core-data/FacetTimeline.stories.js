@@ -34,7 +34,7 @@ const createEvent = (count, range) => _.times(count, () => {
     from: `${range.min}-01-01`,
     to: `${range.max}-01-01`
   });
-  // convert to Unicode date for typesense mock (seconds since epoch)
+  // convert to Unix date for typesense mock (seconds since epoch)
   date = Math.floor(date.getTime() / 1000);
   return {
     uuid: faker.string.uuid(),
