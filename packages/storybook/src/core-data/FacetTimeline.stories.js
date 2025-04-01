@@ -64,7 +64,6 @@ export const FitBounds = () => (
 );
 
 export const LargeRange = () => (
-  // container with full height and negative margin to fill the storybook viewport
   <div className='h-[500px] p-2'>
     <FacetTimeline
       data={createEvent(50, largeRange)}
@@ -105,6 +104,8 @@ export const EventModal = withCoreDataContextProvider(() => {
 
   useEffect(() => {
     const fakeEvents = createEvent(10, smallRange);
+    // get "real" uuids from the EventService mock, so clicking
+    // them will bring up their data
     setData(_.map(fakeEvents, (event, i) => ({
       ...event,
       name: events[i]?.name,
