@@ -208,10 +208,10 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
         const trimmedResult = ObjectUtils.setNestedValue(
           result,
           objectPath,
-          [...ObjectUtils.getNestedValue(result, objectPath).map((obj) => ({
+          ObjectUtils.getNestedValue(result, objectPath).map((obj) => ({
             ...obj,
             geometry: undefined
-          }))]
+          }))
         );
 
         trimmedResult._rawTypesenseHit = undefined;

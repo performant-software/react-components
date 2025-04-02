@@ -83,7 +83,6 @@ const setNestedValue = (object: any, path: string, value: any) => {
 
   for (let i = 0; i < paths.length; i += 1) {
     if (i < paths.length - 1) {
-      // toUpdate = toUpdate[paths[i]]
       if (_.isArray(toUpdate[paths[i]])) {
         toUpdate = _.map(toUpdate, (entry) => _.get(entry, paths[i]));
       } else {
@@ -95,7 +94,7 @@ const setNestedValue = (object: any, path: string, value: any) => {
   }
 
   return cloned;
-}
+};
 
 /**
  * Returns true if the passed value is considered "empty".
