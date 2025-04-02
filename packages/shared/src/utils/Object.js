@@ -67,6 +67,37 @@ const getNestedValue = (object: any, path: string) => {
 };
 
 /**
+ * Returns a new object with the nested attribute at the given path
+ * replaced with the provided value.
+ *
+ * @param object
+ * @param path
+ *
+ * @returns {*}
+ */
+const setNestedValue = (object: any, path: string, value: any) => {
+  const paths = path.split('.');
+
+  const cloned = _.clone(object);
+  let toUpdate = cloned;
+
+  for (let i = 0; i < paths.length; i += 1) {
+    if (i < paths.length - 1) {
+      // toUpdate = toUpdate[paths[i]]
+      if (_.isArray(toUpdate[paths[i]])) {
+        toUpdate = _.map(toUpdate, (entry) => _.get(entry, paths[i]));
+      } else {
+        toUpdate = _.get(toUpdate, paths[i]);
+      }
+    } else {
+      toUpdate[paths[i]] = value;
+    }
+  }
+
+  return cloned;
+}
+
+/**
  * Returns true if the passed value is considered "empty".
  *
  * @param value
@@ -189,6 +220,7 @@ const without = (value: any, attribute: string) => {
 
 export default {
   getNestedValue,
+  setNestedValue,
   isEmpty,
   isEqual,
   isPromise,
