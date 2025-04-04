@@ -205,18 +205,24 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
       if (include) {
         const record = _.find(features, (f) => f.properties?.uuid === geometryObject.uuid);
 
-        const trimmedResult = ObjectUtils.setNestedValue(
-          result,
-          objectPath,
-          ObjectUtils.getNestedValue(result, objectPath).map((obj) => ({
-            ...obj,
-            geometry: undefined
-          }))
-        );
+        let trimmedResult = result;
 
-        trimmedResult._rawTypesenseHit = undefined;
-        trimmedResult._snippetResult = undefined;
-        trimmedResult._highlightResult = undefined;
+        const relatedRecords = _.get(result, objectPath);
+
+        if (relatedRecords) {
+          trimmedResult = ObjectUtils.setNestedValue(
+            result,
+            objectPath,
+            relatedRecords.map((obj) => ({
+              ...obj,
+              geometry: undefined
+            }))
+          );
+
+          trimmedResult._rawTypesenseHit = undefined;
+          trimmedResult._snippetResult = undefined;
+          trimmedResult._highlightResult = undefined;
+        }
 
         if (record) {
           record.properties?.items.push(trimmedResult);
