@@ -1,6 +1,6 @@
 // @flow
 
-import { GeoJSONLayer, PulsingMarkerLayer, useMap } from '@peripleo/maplibre';
+import { GeoJSONLayer, PulsingMarkerLayer, useLoadedMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo } from 'react';
 import _ from 'underscore';
 import MapStyles from '../utils/MapStyles';
@@ -95,7 +95,7 @@ const DEFAULT_BUFFER = 2;
  * This component renders a location marker to be used in a Peripleo context.
  */
 const LocationMarkers = (props: Props) => {
-  const map = useMap();
+  const map = useLoadedMap();
 
   /**
    * Memo-izes the data prop.
