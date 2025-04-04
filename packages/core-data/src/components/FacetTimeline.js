@@ -30,8 +30,11 @@ const MAX_MONTH = 2678400000; // 31 days
 /**
  * Timeline display constants.
  */
+// account for difference in font size between storybook and CDP
+const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const MARKER_RADIUS = 4; // radius of a circular marker on the timeline
 const MARKER_DIAMETER = MARKER_RADIUS * 2;
+const MARKER_LINE_OFFSET = 2.25 * ONE_REM; // vertical offset of the marker from the event
 const EVENT_LEFT_BORDER = 1; // accounting for the border width
 const TIMELINE_PADTOP = 8; // vertical padding between timeline and events
 const TIMELINE_HEIGHT = 1; // height of the actual line
@@ -41,8 +44,6 @@ const FRAME_PADDING = 32; // right padding between timeline and frame
 /**
  * Width/height of a single event in px.
  */
-// account for difference in font size between storybook and CDP
-const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const EVENT_WIDTH = 11 * ONE_REM; // 11rem
 const EVENT_HEIGHT = 2.5 * ONE_REM + TIMELINE_PADTOP; // 2.5rem + timeline padding
 
@@ -372,7 +373,7 @@ const Timeline = (props: TimelineProps) => {
           </Button>
           <Button
             aria-label={i18n.t('Timeline.zoomOut')}
-            className={clsx('w-12', 'pl-3', 'border-l-slate-500', props.classNames?.zoom)}
+            className={clsx('w-12', 'pl-3', props.classNames?.zoom)}
             disabled={!canZoomOut}
             onClick={onZoomOut}
             primary
@@ -399,7 +400,6 @@ const Timeline = (props: TimelineProps) => {
               <svg
                 className={clsx(
                   'absolute',
-                  'top-[32px]',
                 )}
                 height={event.yOffset + TIMELINE_PADTOP + MARKER_DIAMETER}
                 width={MARKER_DIAMETER}
@@ -407,6 +407,7 @@ const Timeline = (props: TimelineProps) => {
                   left: `${event.anchorRight
                     ? EVENT_WIDTH + EVENT_LEFT_BORDER - MARKER_RADIUS
                     : -MARKER_RADIUS}px`,
+                  top: MARKER_LINE_OFFSET
                 }}
               >
                 <line
@@ -715,7 +716,7 @@ const FacetTimeline = (props: Props) => {
         ]}
         classNames={{
           ...props.classNames,
-          range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-slate-500', 'border', 'border-black', props.classNames?.range),
+          range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-primary-500', 'border', 'border-black', props.classNames?.range),
           root: clsx('ml-14', 'mr-5', props.classNames?.root),
           track: clsx('cursor-grab', 'active:cursor-grabbing', 'h-5', 'mb-4', props.classNames?.track),
           thumb: clsx('opacity-0', 'w-[1px]', props.classNames?.thumb),
