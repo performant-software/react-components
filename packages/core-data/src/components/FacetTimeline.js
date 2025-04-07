@@ -16,11 +16,7 @@ import FacetSlider, { type Action as ActionType, type ClassNames as ClassNamesTy
 import Icon from './Icon';
 import i18n from '../i18n/i18n';
 import Timeline from './Timeline';
-
-/**
- * Helper constants: periods of time in milliseconds.
- */
-const ONE_SECOND = 1000;
+import TypesenseUtils from '../utils/Typesense';
 
 /**
  * Timeline display constants.
@@ -145,23 +141,6 @@ const FacetTimeline = (props: Props) => {
   }], [onSliderReset, value]);
 
   /**
-   * Returns passed event's start date as a JavaScript Date object.
-   *
-   * @type {function(*): *}
-   */
-  const getDate = useCallback((event) => {
-    const date = (!_.isEmpty(event.start_date) && event.start_date[0])
-      || (!_.isEmpty(event.end_date) && event.end_date[0]);
-
-    if (_.isNumber(date)) {
-      // Typesense date is a Unix timestamp, which is in seconds, so convert to ms
-      return new Date(date * ONE_SECOND);
-    }
-
-    return date;
-  }, []);
-
-  /**
    * Sets the events on the state.
    *
    * @type {(function(*): void)|*}
@@ -169,7 +148,7 @@ const FacetTimeline = (props: Props) => {
   useEffect(() => {
     setEvents(_.map(props.data, (event) => ({
       ...event,
-      date: getDate(event)
+      date: TypesenseUtils.getDate(event)
     })));
   }, [props.data]);
 

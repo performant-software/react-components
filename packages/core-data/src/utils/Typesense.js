@@ -5,6 +5,7 @@ import { feature, featureCollection } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
+import type { Event as EventType } from '../types/Event';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
 type Options = {
@@ -25,6 +26,9 @@ type TypesenseConfig = {
 
 const ATTRIBUTE_DELIMITER = '.';
 const SUFFIX_FACET = '_facet';
+
+// periods of time in milliseconds
+const ONE_SECOND = 1000;
 
 const createCachedHits = (hits: Array<TypesenseSearchResult>) => {
   const ids = new Set(hits.map((h) => h.uuid));
@@ -115,6 +119,25 @@ const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
     ...options
   })
 );
+
+/**
+ * Returns passed event's start date as a JavaScript Date object.
+ *
+ * @param event
+ *
+ * @returns {*|false|Date}
+ */
+const getDate = (event: EventType) => {
+  const date = (!_.isEmpty(event.start_date) && event.start_date[0])
+    || (!_.isEmpty(event.end_date) && event.end_date[0]);
+
+  if (_.isNumber(date)) {
+    // Typesense date is a Unix timestamp, which is in seconds, so convert to ms
+    return new Date(date * ONE_SECOND);
+  }
+
+  return date;
+};
 
 /**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed field UUID.
@@ -240,6 +263,7 @@ export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
+  getDate,
   getFieldId,
   getRelationshipId,
   toFeature,
