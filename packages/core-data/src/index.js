@@ -27,6 +27,7 @@ export { default as RelatedPlacesLayer } from './components/RelatedPlacesLayer';
 export { default as SearchList } from './components/SearchList';
 export { default as SearchResultsLayer } from './components/SearchResultsLayer';
 export { default as Slider } from './components/Slider';
+export { default as Timeline } from './components/Timeline';
 
 // Contexts
 export { default as FacetStateContext } from './context/FacetStateContext';
