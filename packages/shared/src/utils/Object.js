@@ -51,7 +51,7 @@ const WHITESPACE_REGEX = /\s\s+/g;
  * @returns {*}
  */
 const getNestedValue = (object: any, path: string) => {
-  const paths = path.split('.');
+  const paths = _.compact(path?.split('.'));
 
   let value = object;
 
