@@ -124,7 +124,7 @@ const RecordDetailPanel = (props: Props) => (
         <img
           alt={props.title}
           src={props.coverUrl}
-          className='object-cover max-h-[220px] w-full'
+          className='object-cover h-[220px] max-h-[220px] w-full'
         />
       )}
       <RecordDetailHeader
