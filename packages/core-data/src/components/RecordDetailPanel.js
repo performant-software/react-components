@@ -33,6 +33,11 @@ type Props = {
   count?: Boolean,
 
   /**
+   * If provided, the panel will display this image above the header.
+   */
+  coverUrl?: string,
+
+  /**
    * List of detail fields to be rendered above the blurb
    */
   detailItems?: Array<{ text: string, icon?: string, className?: string }>,
@@ -92,7 +97,11 @@ const RecordDetailPanel = (props: Props) => (
       { props.onClose && (
         <div
           aria-label='Close'
-          className='absolute top-6 right-6 z-10 cursor-pointer'
+          className={clsx(
+            'absolute z-10 cursor-pointer',
+            { 'top-6 right-6': !props.coverUrl },
+            { 'bg-black rounded-full p-2.5 text-white top-2 right-2': props.coverUrl }
+          )}
           onClick={props.onClose}
           onKeyDown={props.onClose}
           role='button'
@@ -111,6 +120,13 @@ const RecordDetailPanel = (props: Props) => (
           className='absolute top-6 left-6 pr-6 max-w-[calc(100%_-4.5em)] z-10'
         />
       ) }
+      {props.coverUrl && (
+        <img
+          alt={props.title}
+          src={props.coverUrl}
+          className='object-cover max-h-[220px] w-full'
+        />
+      )}
       <RecordDetailHeader
         title={props.title}
         icon={props.icon}
