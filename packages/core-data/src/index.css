@@ -10,8 +10,3 @@
 @import './styles/MediaGallery.css';
 @import './styles/PlaceResultsList.css';
 @import './styles/RelatedItemsList.css';
-
-/* Override Peripleo button styles */
-button {
-  border-radius: 0;
-}
