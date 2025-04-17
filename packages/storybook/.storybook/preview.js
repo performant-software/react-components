@@ -4,10 +4,6 @@ import { DocsContainer } from '@storybook/addon-docs';
 import React, { useRef } from 'react';
 import ModalContext from '../../shared/src/context/ModalContext';
 
-// Peripleo styles
-import '@peripleo/maplibre/peripleo-maplibre.css';
-import '@peripleo/peripleo/default-theme';
-
 // Component package styles
 import '../../controlled-vocabulary/dist/style.css';
 import '../../core-data/dist/packages/core-data/src/index.css';
