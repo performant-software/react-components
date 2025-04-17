@@ -1,6 +1,7 @@
 // @flow
 
 import { flowPlugin, esbuildFlowPlugin } from '@bunchtogether/vite-plugin-flow';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import copy from 'rollup-plugin-copy';
@@ -26,7 +27,8 @@ export default defineConfig(() => ({
         dest: 'dist',
       }],
       hook: 'writeBundle'
-    })
+    }),
+    tailwindcss()
   ],
   build: {
     cssCodeSplit: true,
