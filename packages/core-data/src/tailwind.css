@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+
+:root {
+  --color-event-selected: #3758F9;
+  --color-gray-1000: #505A6A;
+  --color-muted: #0005119e;
+  --color-primary: #073B4C;
+}
