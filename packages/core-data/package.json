@@ -17,8 +17,7 @@
       "require": "./dist/ssr.cjs.js"
     },
     "./style.css": "./dist/packages/core-data/src/index.css",
-    "./tailwind.css": "./dist/packages/core-data/src/tailwind.css",
-    "./tailwind.config": "./dist/tailwind.config.js"
+    "./tailwind.css": "./dist/packages/core-data/src/tailwind.css"
   },
   "scripts": {
     "build": "vite build && flow-copy-source -v src types"
