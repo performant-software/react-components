@@ -70,7 +70,7 @@ export const IconOnly = () => (
   </Button>
 );
 
-export const customClasses = () => (
+export const CustomClasses = () => (
   <Button
     className='bg-blue-500 text-white'
   >
@@ -84,5 +84,13 @@ export const Disabled = () => (
     disabled
   >
     Button
+  </Button>
+);
+
+export const Breakpoints = () => (
+  <Button
+    className='text-white bg-blue-500 md:bg-green-500 lg:bg-red-500'
+  >
+    Breakpoints
   </Button>
 );
