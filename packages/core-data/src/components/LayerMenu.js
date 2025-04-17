@@ -28,6 +28,11 @@ type Props = {
   baseLayersLabel: string,
 
   /**
+   * (Optional) class name to apply to the button element.
+   */
+  className?: string,
+
+  /**
    * Callback fired when the base layer is changed.
    *
    * @param config
@@ -106,7 +111,7 @@ const LayerMenu = (props: Props) => {
           asChild
         >
           <button
-            className='p6o-control p6o-control-btn'
+            className={props.className || 'p6o-control p6o-control-btn'}
             aria-label='Select Map Layers'
             type='button'
           >
