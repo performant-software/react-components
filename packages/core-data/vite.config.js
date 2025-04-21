@@ -1,7 +1,6 @@
 // @flow
 
 import { flowPlugin, esbuildFlowPlugin } from '@bunchtogether/vite-plugin-flow';
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import * as packageJson from './package.json';
@@ -19,8 +18,7 @@ export default defineConfig(() => ({
   },
   plugins: [
     react(),
-    flowPlugin(),
-    tailwindcss()
+    flowPlugin()
   ],
   build: {
     cssCodeSplit: true,

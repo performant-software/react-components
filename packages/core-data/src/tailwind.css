@@ -1,3 +1,11 @@
+@theme {
+  --color-event-selected: #3758F9;
+  --color-gray-1000: #505A6A;
+  --color-muted: #0005119e;
+  --color-primary: #073B4C;
+  --color-secondary: var(--color-neutral-200);
+}
+
 @layer base {
   button,
   [role='button'] {
@@ -16,14 +24,4 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
-}
-
-@theme {
-  --color-event-selected: #3758F9;
-  --color-gray-1000: #505A6A;
-  --color-muted: #0005119e;
-  --color-primary: #073B4C;
-  --color-secondary: var(--color-neutral-200);
-
-  --font-sans: Inter;
 }

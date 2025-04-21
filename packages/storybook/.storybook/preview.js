@@ -7,7 +7,6 @@ import ModalContext from '../../shared/src/context/ModalContext';
 // Component package styles
 import '../../controlled-vocabulary/dist/style.css';
 import '../../core-data/dist/packages/core-data/src/index.css';
-import '../../core-data/dist/packages/core-data/src/tailwind.css';
 import '../../geospatial/dist/style.css';
 import '../../semantic-ui/dist/style.css';
 import '../../shared/dist/style.css';
