@@ -17,8 +17,7 @@
       "require": "./dist/ssr.cjs.js"
     },
     "./style.css": "./dist/packages/core-data/src/index.css",
-    "./tailwind.css": "./dist/packages/core-data/src/tailwind.css",
-    "./tailwind.config": "./dist/tailwind.config.js"
+    "./tailwind.css": "./dist/packages/core-data/src/tailwind.css"
   },
   "scripts": {
     "build": "vite build && flow-copy-source -v src types"
@@ -40,7 +39,6 @@
     "i18next": "^19.4.4",
     "instantsearch.js": "^4.66.0",
     "lucide-react": "^0.321.0",
-    "postcss-import": "^16.1.0",
     "react-merge-refs": "^2.1.1",
     "react-use-measure": "^2.1.7",
     "react-virtualized-auto-sizer": "^1.0.22",
@@ -54,18 +52,18 @@
     "@peripleo/maplibre": "^0.8.7",
     "@peripleo/peripleo": "^0.8.7",
     "react": ">= 16.13.1 < 19.0.0",
-    "react-dom": ">= 16.13.1 < 19.0.0"
+    "react-dom": ">= 16.13.1 < 19.0.0",
+    "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@bunchtogether/vite-plugin-flow": "^1.0.2",
+    "@tailwindcss/postcss": "^4.1.4",
+    "@tailwindcss/vite": "^4.1.4",
     "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.17",
     "postcss": "^8.4.34",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup-plugin-copy": "^3.5.0",
-    "tailwindcss": "^3.4.1",
     "vite": "^5.1.4",
     "vite-plugin-copy": "^0.1.6"
   }

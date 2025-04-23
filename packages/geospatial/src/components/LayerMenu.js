@@ -16,6 +16,7 @@ import './LayerMenu.css';
 
 type Props = {
   children: Node,
+  className?: string,
   names: Array<string>,
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right'
 };
@@ -105,7 +106,7 @@ const LayerMenu = (props: Props) => {
       >
         <button
           aria-label='Toggle Menu'
-          className='mapbox-gl-draw_ctrl-draw-btn layer-button'
+          className={props.className || 'mapbox-gl-draw_ctrl-draw-btn layer-button'}
           onClick={() => setMenuOpen((prevMenuOpen) => !prevMenuOpen)}
           type='button'
         >

@@ -17,6 +17,8 @@ import _ from 'underscore';
 import DrawControl from './DrawControl';
 import GeocodingControl from './GeocodingControl';
 import MapUtils from '../utils/Map';
+
+import '@maptiler/geocoding-control/style.css';
 import './MapDraw.css';
 
 // Override the MapboxDraw components to use MapLibre styles
