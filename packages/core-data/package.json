@@ -30,7 +30,7 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-slider": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.1.2",
-    "@samvera/clover-iiif": "^2.3.2",
+    "@samvera/clover-iiif": "^2.14.1",
     "@turf/turf": "^6.5.0",
     "clsx": "^2.1.0",
     "d3-scale": "^4.0.2",

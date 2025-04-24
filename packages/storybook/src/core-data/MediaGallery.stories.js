@@ -29,7 +29,8 @@ export const Default = () => {
       </div>
       { open && (
         <MediaGallery
-          manifestUrl='/core_data/public/v1/places/1/manifests/1'
+          // Clover IIIF 2.4+ does not like relative URLs
+          manifestUrl={`${window.origin}/core_data/public/v1/places/1/manifests/1`}
           onClose={() => setOpen(false)}
         />
       )}
@@ -71,7 +72,7 @@ export const InModal = () => {
           </div>
           { open2 && (
             <MediaGallery
-              manifestUrl='/core_data/public/v1/places/1/manifests/1'
+              manifestUrl={`${window.origin}/core_data/public/v1/places/1/manifests/1`}
               onClose={() => setOpen2(false)}
             />
           )}

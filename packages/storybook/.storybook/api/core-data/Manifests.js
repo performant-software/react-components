@@ -16,11 +16,8 @@ class Manifests extends Base {
    *
    * @returns {{id: string, label: {en: string[]}, type: string, '@context': string[], items: []}}
    */
-  fetchItem(route, count) {
+  fetchItem(route, count, manifestUrl) {
     const itemId = faker.string.uuid();
-    const manifestId = faker.string.uuid();
-
-    const manifestUrl = `${BASE_URL}/${route}/${itemId}/manifests/${manifestId}`;
 
     const items = [];
 
@@ -41,6 +38,10 @@ class Manifests extends Base {
             faker.lorem.words({ min: 1, max: 5 })
           ]
         },
+        metadata: _.map([...Array(5).keys()], () => ({
+          label: faker.lorem.words({ min: 1, max: 3 }),
+          value: faker.lorem.words({ min: 1, max: 10 }),
+        })),
         items: [{
           id: `/resources/${imageId}/page/1/annotation_page/1`,
           type: 'AnnotationPage',
