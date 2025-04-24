@@ -21,6 +21,10 @@
   "Input": {
     "clear": "Clear"
   },
+  "MediaGallery": {
+    "metadata": "Additional Metadata",
+    "noMetadata": "No additional metadata"
+  },
   "Pill": {
     "remove": "Remove"
   },

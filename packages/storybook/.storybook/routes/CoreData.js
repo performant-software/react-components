@@ -79,7 +79,10 @@ const addRoutes = (router) => {
   });
 
   router.get(`${BASE_URL}/places/:id/manifests/:manifest_id`, (request, response) => {
-    response.send(Manifests.fetchItem('places', 10));
+    // For Clover IIIF 2.4+, the manifest URL must resolve to the manifest
+    response.send(Manifests.fetchItem(
+      'places', 10, `${request.protocol}://${request.get('host')}${request.originalUrl}`
+    ));
     response.end();
   });
 
