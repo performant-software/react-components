@@ -55,20 +55,18 @@ const MediaGallery = (props: Props) => (
   <Modal className={props.className} onClose={props.onClose} open>
     <div className='pt-6 pb-2 text-sm w-full text-muted min-h-20'>
       {props.manifestUrl && (
-        <>
-          <Viewer
-            iiifContent={props.manifestUrl}
-            plugins={[
-              {
-                id: 'metadata2',
-                informationPanel: {
-                  component: CanvasMetadataPanel,
-                  label: props.metadataLabel || i18n.t('MediaGallery.metadata'),
-                },
+        <Viewer
+          iiifContent={props.manifestUrl}
+          plugins={[
+            {
+              id: 'metadata2',
+              informationPanel: {
+                component: CanvasMetadataPanel,
+                label: props.metadataLabel || i18n.t('MediaGallery.metadata'),
               },
-            ]}
-          />
-        </>
+            },
+          ]}
+        />
       )}
     </div>
   </Modal>
