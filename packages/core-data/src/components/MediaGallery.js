@@ -22,7 +22,9 @@ const CanvasMetadataPanel = (props: CanvasMetadataPanelProps) => (
       }
     </dl>
   ) : (
-    <span>{i18n.t('MediaGallery.noMetadata')}</span>
+    <span className='p-6.5 pt-0 text-base'>
+      {i18n.t('MediaGallery.noMetadata')}
+    </span>
   )
 );
 
