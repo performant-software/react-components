@@ -19,7 +19,7 @@ import {
 import i18n from '../i18n/i18n';
 import DownloadButton from './DownloadButton';
 import LazyLoader from './LazyLoader';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer, { type Transcription } from './VideoPlayer';
 import './LazyVideo.css';
 
 type Props = {
@@ -35,7 +35,8 @@ type Props = {
   playButtonLabel?: string,
   preview?: ?string,
   size?: string,
-  src?: string
+  src?: string,
+  transcriptions?: Array<Transcription>
 };
 
 const LazyVideo = (props: Props) => {
@@ -184,6 +185,7 @@ const LazyVideo = (props: Props) => {
           open={modal}
           placeholder={props.preview}
           size='large'
+          transcriptions={props.transcriptions}
           video={props.src}
         />
       )}
@@ -201,3 +203,7 @@ LazyVideo.defaultProps = {
 };
 
 export default LazyVideo;
+
+export type {
+  Transcription
+};

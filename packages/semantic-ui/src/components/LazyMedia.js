@@ -16,7 +16,7 @@ import i18n from '../i18n/i18n';
 import LazyAudio from './LazyAudio';
 import LazyDocument from './LazyDocument';
 import LazyImage from './LazyImage';
-import LazyVideo from './LazyVideo';
+import LazyVideo, { type Transcription } from './LazyVideo';
 
 type Props = {
   children?: Node,
@@ -27,7 +27,8 @@ type Props = {
   onUpload: (file: File) => void,
   preview?: string,
   size?: string,
-  src?: string
+  src?: string,
+  transcriptions?: Array<Transcription>
 };
 
 const ContentTypes = {
@@ -146,6 +147,7 @@ const LazyMedia: ComponentType<any> = (props: Props) => {
           preview={preview}
           src={source}
           size={props.size}
+          transcriptions={props.transcriptions}
         >
           { renderChildren() }
         </LazyVideo>

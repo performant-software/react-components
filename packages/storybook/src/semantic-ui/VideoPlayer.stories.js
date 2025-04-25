@@ -102,3 +102,22 @@ export const ErrorLongURL = () => (
     video='http://localhost:3000/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ0lEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--05fcfd55941c73ff139611bcc194a158f08fe5a5/sample_640x426.mp4'
   />
 );
+
+export const Captions = () => (
+  <VideoPlayer
+    onClose={action('close')}
+    open
+    transcriptions={[{
+      default: true,
+      label: 'English',
+      language: 'en',
+      src: 'src/assets/test.vtt'
+    }, {
+      default: true,
+      label: 'French',
+      language: 'fr',
+      src: 'src/assets/test.vtt'
+    }]}
+    video={video}
+  />
+);

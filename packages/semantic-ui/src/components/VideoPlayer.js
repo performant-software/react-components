@@ -13,8 +13,16 @@ import {
   Modal,
   Ref
 } from 'semantic-ui-react';
+import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import './VideoPlayer.css';
+
+export type Transcription = {
+  default?: boolean,
+  label: string,
+  language: string,
+  src: string
+};
 
 type Props = {
   autoPlay?: boolean,
@@ -25,6 +33,7 @@ type Props = {
   placeholder?: ?string,
   placeholderAlt?: string,
   size?: string,
+  transcriptions?: Array<Transcription>,
   video: string
 };
 
@@ -85,7 +94,18 @@ const VideoPlayer = (props: Props) => {
                 controls
                 onError={() => setError(true)}
                 src={props.video}
-              />
+              >
+                { _.map(props.transcriptions, (transcription) => (
+                  <track
+                    default={transcription.default}
+                    key={transcription.language}
+                    kind='subtitles'
+                    label={transcription.label}
+                    srcLang={transcription.language}
+                    src={transcription.src}
+                  />
+                ))}
+              </video>
             )}
           </Modal.Content>
         </Modal>
