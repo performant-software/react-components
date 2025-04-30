@@ -1,7 +1,0 @@
-import{j as t}from"./jsx-runtime-D9TvR9R2.js";import"./index-C0dDX-lL.js";import{R as r,a}from"./RelatedItemsList-Clo7DELO.js";import{R as p}from"./RelatedList-CXViI6JL.js";import"./_commonjsHelpers-BosuxZz1.js";import"./index-CZiC6lbb.js";import"./extends-CCbyfPlC.js";import"./index-BbtE80dZ.js";import"./index-DOYXiIEK.js";import"./index-C_ObMD2W.js";import"./index-CW-4Sh1t.js";import"./index-B8cpGa5N.js";import"./index-default-C_maRo4o.js";import"./LoadAnimation-b0qjd8WL.js";import"./createLucideIcon-Cly0WHBx.js";import"./clsx-B-dksMZM.js";import"./CoreData-37WkoVSV.js";const O={title:"Components/Core Data/RelatedItemsList",component:r},e=()=>t.jsx(r,{children:t.jsx(a,{id:"numbers",label:"Numbers",children:t.jsx(p,{className:"p-3 pt-1 pb-4",collectionName:"items",onLoad:()=>Promise.resolve({items:["One","Two","Three"]}),renderItem:i=>i})})});e.__docgenInfo={description:"",methods:[],displayName:"Default"};var s,o,m;e.parameters={...e.parameters,docs:{...(s=e.parameters)==null?void 0:s.docs,source:{originalSource:`() => <RelatedItemsList>
-    <RelatedItem id='numbers' label='Numbers'>
-      <RelatedList className='p-3 pt-1 pb-4' collectionName='items' onLoad={() => Promise.resolve({
-      items: ['One', 'Two', 'Three']
-    })} renderItem={item => item} />
-    </RelatedItem>
-  </RelatedItemsList>`,...(m=(o=e.parameters)==null?void 0:o.docs)==null?void 0:m.source}}};const g=["Default"];export{e as Default,g as __namedExportsOrder,O as default};

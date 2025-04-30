@@ -1,1 +1,0 @@
-import{r as e,e as n}from"./index-C0dDX-lL.js";const f=globalThis!=null&&globalThis.document?e.useLayoutEffect:()=>{},l=n.useId||(()=>{});let s=0;function r(o){const[t,$]=e.useState(l());return f(()=>{o||$(a=>a??String(s++))},[o]),o||(t?`radix-${t}`:"")}export{r as $};
