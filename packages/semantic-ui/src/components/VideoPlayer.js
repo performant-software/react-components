@@ -1,6 +1,6 @@
 // @flow
 
-import { ModalContext } from '@performant-software/shared-components';
+import { ModalContext, VideoTrack } from '@performant-software/shared-components';
 import React, {
   useEffect,
   useRef,
@@ -96,7 +96,7 @@ const VideoPlayer = (props: Props) => {
                 src={props.video}
               >
                 { _.map(props.transcriptions, (transcription) => (
-                  <track
+                  <VideoTrack
                     default={transcription.default}
                     key={transcription.language}
                     kind='subtitles'

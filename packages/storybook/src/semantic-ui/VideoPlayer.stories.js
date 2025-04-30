@@ -121,3 +121,17 @@ export const Captions = () => (
     video={video}
   />
 );
+
+export const CaptionsCORS = () => (
+  <VideoPlayer
+    onClose={action('close')}
+    open
+    transcriptions={[{
+      default: true,
+      label: 'Portuguese',
+      language: 'pt',
+      src: 'https://raw.githubusercontent.com/brenopolanski/html5-video-webvtt-example/refs/heads/master/MIB2-subtitles-pt-BR.vtt'
+    }]}
+    video='https://github.com/brenopolanski/html5-video-webvtt-example/raw/refs/heads/master/MIB2.mp4'
+  />
+);
