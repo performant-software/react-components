@@ -78,59 +78,57 @@ const SearchResultsTable = (props: Props) => {
   };
 
   return (
-    <div className='rounded-md inline-block border border-neutral-200 w-full h-full min-h-full flex flex-col'>
-      <div className='overflow-auto'>
-        <table
-          className='divide-y divide-neutral-200 w-full max-h-full overflow-auto border-b border-neutral-200 grow-0'
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={0}
-        >
-          <thead className='bg-neutral-100 sticky top-0'>
-            <tr className='divide-x divide-neutral-200'>
+    <div
+      className='rounded-md border border-neutral-200 w-full h-full min-h-full flex flex-col overflow-auto'
+    >
+      <table
+        className='divide-y divide-neutral-200 w-full max-h-full overflow-auto border-b border-neutral-200 grow-0'
+      >
+        <thead className='bg-neutral-100 sticky top-0'>
+          <tr className='divide-x divide-neutral-200'>
+            {props.columns.map((col) => (
+              <th
+                className='px-4 py-3 text-left text-sm font-bold text-gray-800 max-h-10'
+                key={col.name}
+              >
+                {col.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className='divide-y divide-neutral-200 border-b border-neutral-200'>
+          {hitsToShow.map((hit, idx) => (
+            <tr
+              className={clsx(
+                'divide-x divide-neutral-200',
+                { 'hover:bg-primary/20 cursor-pointer': props.onRowClick },
+                { 'bg-primary/20': props.isHighlight && props.isHighlight(hit) }
+              )}
+              onClick={props.onRowClick
+                ? () => props.onRowClick(hit)
+                : undefined}
+              onPointerEnter={props.onRowPointerEnter
+                ? () => props.onRowPointerEnter(hit)
+                : undefined}
+              onPointerLeave={props.onRowPointerLeave
+                ? () => props.onRowPointerLeave(hit)
+                : undefined}
+              key={idx}
+            >
               {props.columns.map((col) => (
-                <th
-                  className='px-4 py-3 text-left text-sm font-bold text-gray-800 max-h-10'
+                <td
+                  className='px-4 py-3 text-sm text-gray-800 text-sm max-h-10'
                   key={col.name}
                 >
-                  {col.label}
-                </th>
+                  {col.render
+                    ? col.render(hit)
+                    : hit[col.name]}
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody className='divide-y divide-neutral-200 border-b border-neutral-200'>
-            {hitsToShow.map((hit, idx) => (
-              <tr
-                className={clsx(
-                  'divide-x divide-neutral-200',
-                  { 'hover:bg-primary/20 cursor-pointer': props.onRowClick },
-                  { 'bg-primary/20': props.isHighlight && props.isHighlight(hit) }
-                )}
-                onClick={props.onRowClick
-                  ? () => props.onRowClick(hit)
-                  : undefined}
-                onPointerEnter={props.onRowPointerEnter
-                  ? () => props.onRowPointerEnter(hit)
-                  : undefined}
-                onPointerLeave={props.onRowPointerLeave
-                  ? () => props.onRowPointerLeave(hit)
-                  : undefined}
-                key={idx}
-              >
-                {props.columns.map((col) => (
-                  <td
-                    className='px-4 py-3 text-sm text-gray-800 text-sm max-h-10'
-                    key={col.name}
-                  >
-                    {col.render
-                      ? col.render(hit)
-                      : hit[col.name]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
       {/* this empty div keeps the Pagination bar at the bottom, even
           when there aren't enough results to fill the table */}
       <div className='grow' />
