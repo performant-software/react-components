@@ -203,6 +203,35 @@ export const WithBreadcrumbs = () => (
   </RecordDetailPanel>
 );
 
+export const WithBreadcrumbsAndCoverUrl = () => (
+  <RecordDetailPanel
+    coverUrl='https://m.media-amazon.com/images/I/91-OHYmdS2L._AC_SL1500_.jpg'
+    relations={sampleData}
+    title='West Tokyo Qualifiers Quarterfinal'
+    detailItems={[
+      {
+        text: 'July 27',
+        icon: 'date'
+      },
+      {
+        text: 'Meiji Jinju Stadium',
+        icon: 'location'
+      }
+    ]}
+    breadcrumbs={['West Tokyo Qualifiers Semifinal', 'West Tokyo Qualifiers Quarterfinal']}
+    onGoBack={action('back')}
+  >
+    <p>
+      Arcu imperdiet sit sit viverra id volutpat commodo.
+      {' '}
+      <span className='font-bold'>Tempor sem malesuada porttitor congue.</span>
+      {' '}
+      Nibh aenean vitae blandit vitae sapien ac varius mattis.
+      Aliquam vitae purus arcu eros enim tempus parturient orci fames.
+    </p>
+  </RecordDetailPanel>
+);
+
 export const FixedWidthAndHeight = () => (
   <RecordDetailPanel
     relations={sampleData}

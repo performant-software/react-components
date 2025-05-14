@@ -113,13 +113,6 @@ const RecordDetailPanel = (props: Props) => (
           />
         </div>
       )}
-      { (props.breadcrumbs || props.onGoBack) && (
-        <RecordDetailBreadcrumbs
-          history={props.breadcrumbs || []}
-          onGoBack={props.onGoBack}
-          className='absolute top-6 left-6 pr-6 max-w-[calc(100%_-4.5em)] z-10'
-        />
-      ) }
       {props.coverUrl && (
         <img
           alt={props.title}
@@ -127,12 +120,22 @@ const RecordDetailPanel = (props: Props) => (
           className='object-cover h-[220px] max-h-[220px] w-full'
         />
       )}
+      { (props.breadcrumbs || props.onGoBack) && (
+        <RecordDetailBreadcrumbs
+          history={props.breadcrumbs || []}
+          onGoBack={props.onGoBack}
+          className={clsx({
+            'absolute top-6 left-6 pr-6 max-w-[calc(100%_-4.5em)] z-10': !props.coverUrl,
+            'px-6 pt-6': props.coverUrl
+          })}
+        />
+      ) }
       <RecordDetailHeader
         title={props.title}
         icon={props.icon}
         classNames={{
-          root: clsx({ '!pt-16': props.breadcrumbs || props.onGoBack }, props.classNames?.header),
-          title: clsx(props.classNames?.title, { 'pr-6': props.onClose }), // make sure there's space for the close icon
+          root: clsx({ '!pt-16': !props.coverUrl && (props.breadcrumbs || props.onGoBack) }, props.classNames?.header),
+          title: clsx(props.classNames?.title, { 'pr-6': !props.coverUrl && props.onClose }), // make sure there's space for the close icon
           items: props.classNames?.items
         }}
         detailPageUrl={props.detailPageUrl}
