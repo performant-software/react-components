@@ -79,3 +79,19 @@ export const Video = () => (
     visible
   />
 );
+
+export const VideoWithCaptions = () => (
+  <MediaGallery
+    item={{
+      src: video,
+      transcriptions: [{
+        label: 'English',
+        language: 'en',
+        src: '/src/assets/test.vtt'
+      }],
+      type: 'video'
+    }}
+    onClose={action('close')}
+    visible
+  />
+);

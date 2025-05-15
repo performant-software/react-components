@@ -8,7 +8,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import PlayButton from './PlayButton';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer, { type Transcription } from './VideoPlayer';
 import VideoPlayerButton from './VideoPlayerButton';
 import './MediaGallery.css';
 
@@ -17,6 +17,7 @@ type Item = {
   embedded?: boolean,
   preview?: string,
   src?: string,
+  transcriptions?: Array<Transcription>,
   type: 'image' | 'video'
 };
 
@@ -136,6 +137,7 @@ const MediaGallery = (props: Props) => {
               open={video}
               placeholder={props.item.preview}
               size='huge'
+              transcriptions={props.item.transcriptions}
               video={props.item.src}
             />
           )}

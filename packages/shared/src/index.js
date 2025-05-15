@@ -8,6 +8,7 @@ export { default as GoogleScript } from './components/GoogleScript';
 export { default as InfiniteScroll } from './components/InfiniteScroll';
 export { default as Keyboard } from './components/Keyboard';
 export { default as RichTextArea } from './components/RichTextArea';
+export { default as VideoTrack } from './components/VideoTrack';
 
 // Context
 export { default as ModalContext } from './context/ModalContext';

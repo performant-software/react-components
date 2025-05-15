@@ -269,3 +269,18 @@ export const Downloadable = () => (
     src={video}
   />
 );
+
+export const Transcriptions = () => (
+  <LazyVideo
+    image={{
+      alt: 'Test Image'
+    }}
+    preview={image}
+    src={video}
+    transcriptions={[{
+      label: 'English',
+      language: 'en',
+      src: '/src/assets/test.vtt'
+    }]}
+  />
+);
