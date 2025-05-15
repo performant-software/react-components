@@ -99,7 +99,7 @@ const VideoPlayer = (props: Props) => {
                   <VideoTrack
                     default={transcription.default}
                     key={transcription.language}
-                    kind='subtitles'
+                    kind='captions'
                     label={transcription.label}
                     srcLang={transcription.language}
                     src={transcription.src}
