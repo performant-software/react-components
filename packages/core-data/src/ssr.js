@@ -18,6 +18,7 @@ export { default as Input } from './components/Input';
 export { default as KeyValueList } from './components/KeyValueList';
 export { default as LoadAnimation } from './components/LoadAnimation';
 export { default as Modal } from './components/Modal';
+export { default as Notification } from './components/Notification';
 export { default as Pagination } from './components/Pagination';
 export { default as Pill } from './components/Pill';
 export { default as PlaceDetails } from './components/PlaceDetails';
