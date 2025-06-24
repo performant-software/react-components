@@ -65,3 +65,29 @@ export const Transition = () => {
     </>
   );
 };
+
+export const Timeout = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        onClick={() => setOpen(true)}
+      >
+        Open
+      </Button>
+      <Notification
+        content='Anyone with a link can now view this file.'
+        header='Successfully saved!'
+        icon={{
+          className: 'fill-green-400',
+          name: 'info',
+          size: 24
+        }}
+        onClose={() => setOpen(false)}
+        open={open}
+        timeout={2000}
+      />
+    </>
+  );
+};

@@ -1,7 +1,8 @@
 // @flow
 
 import { Transition } from '@headlessui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import _ from 'underscore';
 import Icon from './Icon';
 
 type Props = {
@@ -13,22 +14,33 @@ type Props = {
     size?: number
   },
   onClose: () => void,
-  open?: boolean
+  open?: boolean,
+  timeout?: number
 };
 
-const Notification = (props: Props) => (
-  <div
-    aria-live='assertive'
-    className='pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6'
-  >
+const Notification = (props: Props) => {
+  /**
+   * If a `timeout` prop is provided, call the `onClose` callback after the specified interval.
+   */
+  useEffect(() => {
+    if (props.open && props.timeout) {
+      _.delay(props.onClose, props.timeout);
+    }
+  }, [props.open, props.timeout]);
+
+  return (
     <div
-      className='flex w-full flex-col items-center space-y-4 sm:items-end'
+      aria-live='assertive'
+      className='pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6 z-10'
     >
-      <Transition
-        show={props.open}
+      <div
+        className='flex w-full flex-col items-center space-y-4 sm:items-end'
       >
-        <div
-          className={`
+        <Transition
+          show={props.open}
+        >
+          <div
+            className={`
             pointer-events-auto 
             w-full 
             max-w-sm 
@@ -49,43 +61,43 @@ const Notification = (props: Props) => (
             data-closed:data-enter:sm:translate-x-2 
             data-closed:data-enter:sm:translate-y-0
           `}
-        >
-          <div
-            className='p-4'
           >
             <div
-              className='flex items-start'
+              className='p-4'
             >
               <div
-                className='shrink-0'
+                className='flex items-start'
               >
-                { props.icon && (
-                  <Icon
-                    className={props.icon.className}
-                    name={props.icon.name}
-                    size={props.icon.size}
-                  />
-                )}
-              </div>
-              <div
-                className='ml-3 w-0 flex-1 pt-0.5'
-              >
-                <p
-                  className='text-sm font-medium text-gray-900'
+                <div
+                  className='shrink-0'
                 >
-                  { props.header }
-                </p>
-                <p
-                  className='mt-1 text-sm text-gray-500'
+                  { props.icon && (
+                    <Icon
+                      className={props.icon.className}
+                      name={props.icon.name}
+                      size={props.icon.size}
+                    />
+                  )}
+                </div>
+                <div
+                  className='ml-3 w-0 flex-1 pt-0.5'
                 >
-                  { props.content }
-                </p>
-              </div>
-              <div
-                className='ml-4 flex shrink-0'
-              >
-                <button
-                  className={`
+                  <p
+                    className='text-sm font-medium text-gray-900'
+                  >
+                    { props.header }
+                  </p>
+                  <p
+                    className='mt-1 text-sm text-gray-500'
+                  >
+                    { props.content }
+                  </p>
+                </div>
+                <div
+                  className='ml-4 flex shrink-0'
+                >
+                  <button
+                    className={`
                     inline-flex 
                     rounded-md 
                     bg-white 
@@ -96,25 +108,26 @@ const Notification = (props: Props) => (
                     focus:ring-offset-2 
                     focus:outline-hidden
                   `}
-                  onClick={props.onClose}
-                  type='button'
-                >
-                  <span
-                    className='sr-only'
+                    onClick={props.onClose}
+                    type='button'
                   >
-                    Close
-                  </span>
-                  <Icon
-                    name='close'
-                  />
-                </button>
+                    <span
+                      className='sr-only'
+                    >
+                      Close
+                    </span>
+                    <Icon
+                      name='close'
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Transition>
+        </Transition>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Notification;
