@@ -229,7 +229,7 @@ const FacetTimeline = (props: Props) => {
         ]}
         classNames={{
           ...props.classNames,
-          range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-primary-500', 'border', 'border-black', props.classNames?.range),
+          range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-primary', 'border', 'border-black', props.classNames?.range),
           root: clsx('ml-14', 'mr-5', props.classNames?.root),
           track: clsx('cursor-grab', 'active:cursor-grabbing', 'h-5', 'mb-4', props.classNames?.track),
           thumb: clsx('opacity-0', 'w-[1px]', props.classNames?.thumb),
