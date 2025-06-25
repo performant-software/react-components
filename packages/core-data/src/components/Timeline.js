@@ -340,6 +340,7 @@ const Timeline = (props: Props) => {
   return (
     <div
       className={clsx(
+        'relative',
         'grow',
         'px-4',
         'pt-6',
