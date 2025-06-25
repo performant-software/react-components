@@ -340,7 +340,6 @@ const Timeline = (props: Props) => {
   return (
     <div
       className={clsx(
-        'relative',
         'grow',
         'px-4',
         'pt-6',
@@ -357,7 +356,7 @@ const Timeline = (props: Props) => {
       onPointerUp={onDragEnd}
       style={{ scrollbarWidth: 'none' }}
     >
-      <div className='fixed top-5 right-5 z-30 flex flex-row'>
+      <div className='absolute top-5 right-5 z-30 flex flex-row'>
         <ButtonGroup
           className='h-12'
           rounded
