@@ -32,7 +32,7 @@ import ZoomOutIcon from '../icons/ZoomOutIcon';
 type Props = {
   className?: string,
   name: string,
-  size: number,
+  size?: number,
   style?: any
 };
 
