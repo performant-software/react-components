@@ -61,7 +61,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    *
    * @type {function(*): *}
    */
-  const renderItem = useCallback((field) => {
+  const renderItem = useCallback((field, index) => {
     let rendered;
 
     const fieldValue = props.data && props.data[field.uuid];
@@ -70,6 +70,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.Input
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
@@ -82,6 +83,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.Input
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
@@ -96,6 +98,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
         <Form.Dropdown
           clearable
           error={isError(field)}
+          key={index}
           label={field.column_name}
           multiple={field.allow_multiple}
           required={field.required}
@@ -103,7 +106,9 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           onChange={(e, { value }) => onChange(field, value)}
           selectOnBlur={false}
           selection
-          value={fieldValue}
+          value={field.allow_multiple
+            ? (fieldValue || [])
+            : fieldValue}
         />
       );
     }
@@ -112,6 +117,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.TextArea
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
@@ -124,6 +130,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.Input
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
         >
@@ -139,6 +146,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.Input
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
         >
@@ -157,6 +165,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
         <Form.Checkbox
           checked={!!fieldValue}
           error={isError(field)}
+          key={index}
           label={field.column_name}
           onChange={(e, { checked }) => onChange(field, checked)}
         />
@@ -167,6 +176,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       rendered = (
         <Form.Input
           error={isError(field)}
+          key={index}
           label={field.column_name}
           required={field.required}
         >
