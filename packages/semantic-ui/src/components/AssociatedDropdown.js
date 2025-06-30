@@ -281,6 +281,7 @@ class AssociatedDropdown extends Component<Props, State> {
     return (
       <Button
         {..._.defaults(button, defaults)}
+        key={name}
       />
     );
   }
