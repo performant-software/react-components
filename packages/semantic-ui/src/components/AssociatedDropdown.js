@@ -280,7 +280,7 @@ class AssociatedDropdown extends Component<Props, State> {
 
     return (
       <Button
-        {..._.defaults(button, defaults)}
+        {..._.defaults(_.omit(button, 'accept'), defaults)}
         key={name}
       />
     );
