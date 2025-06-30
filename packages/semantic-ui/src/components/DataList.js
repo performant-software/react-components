@@ -614,7 +614,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
           onChange={this.onSearchChange.bind(this)}
           size='small'
-          value={this.state.search}
+          value={this.state.search || ''}
         />
       );
     }

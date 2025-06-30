@@ -326,6 +326,7 @@ class DataTable extends Component<Props, State> {
           content={content}
           header={title}
           hideOnScroll
+          key={`${action.name}-${index}`}
           mouseEnterDelay={500}
           position='top right'
           trigger={actionButton}
@@ -459,6 +460,7 @@ class DataTable extends Component<Props, State> {
     return (
       <Ref
         innerRef={this.columnRefs[column.name]}
+        key={column.name}
       >
         <Table.HeaderCell
           key={column.name}
