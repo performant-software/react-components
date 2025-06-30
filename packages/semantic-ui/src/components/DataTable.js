@@ -588,9 +588,9 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const allSelected = this.props.items
+    const allSelected = !!(this.props.items
       && this.props.items.length
-      && _.every(this.props.items, this.props.isRowSelected.bind(this));
+      && _.every(this.props.items, this.props.isRowSelected.bind(this)));
 
     return (
       <Table.HeaderCell
