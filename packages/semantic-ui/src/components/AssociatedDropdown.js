@@ -147,7 +147,11 @@ class AssociatedDropdown extends Component<Props, State> {
   onOptionSelection(e: Event, { value }: { value: any }) {
     this.setState((state) => {
       const option = _.findWhere(state.options, { value }) || {};
-      this.setState({ searchQuery: option.text, value: option.value });
+
+      return {
+        searchQuery: option.text,
+        value: option.value
+      };
     });
 
     const item = _.findWhere(this.state.items, { id: value });
