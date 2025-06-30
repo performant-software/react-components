@@ -1,7 +1,12 @@
 // @flow
 
 import { Browser, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
-import React, { Component, createRef, type Element } from 'react';
+import React, {
+  Component,
+  createRef,
+  Fragment,
+  type Element
+} from 'react';
 import {
   Checkbox,
   Button,
@@ -509,9 +514,10 @@ class DataTable extends Component<Props, State> {
     }
 
     return (
-      <>
+      <Fragment
+        key={index}
+      >
         <Table.Row
-          key={index}
           onClick={this.props.expandableRows ? handleCellClick : () => { }}
           className={this.props.expandableRows ? 'expandable' : ''}
         >
@@ -524,7 +530,7 @@ class DataTable extends Component<Props, State> {
             { this.props.expandPanel && this.props.expandPanel(item, this.state.activePanel) }
           </Table.Row>
         )}
-      </>
+      </Fragment>
     );
   }
 
