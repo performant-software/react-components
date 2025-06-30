@@ -74,7 +74,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
-          value={fieldValue}
+          value={fieldValue || ''}
         />
       );
     }
@@ -87,7 +87,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
-          value={fieldValue}
+          value={fieldValue || 0}
           type='number'
         />
       );
@@ -108,7 +108,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           selection
           value={field.allow_multiple
             ? (fieldValue || [])
-            : fieldValue}
+            : (fieldValue || '')}
         />
       );
     }
@@ -121,7 +121,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
           label={field.column_name}
           required={field.required}
           onChange={(e, { value }) => onChange(field, value)}
-          value={fieldValue}
+          value={fieldValue || ''}
         />
       );
     }
