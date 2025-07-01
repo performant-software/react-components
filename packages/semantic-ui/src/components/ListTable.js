@@ -55,14 +55,6 @@ type Props = DataListProps & DataTableProps & {
  * <a href="https://github.com/performant-software/resource-api">GitHub page</a> for more details.
  */
 const ListTable = useDataList((props: Props) => {
-  const {
-    configurable = true,
-    tableProps = {
-      celled: true,
-      sortable: true
-    }
-  } = props;
-
   const prevColumns = Hooks.usePrevious(props.columns);
 
   /**
@@ -122,12 +114,18 @@ const ListTable = useDataList((props: Props) => {
   return (
     <DataTable
       {...props}
-      configurable={configurable}
       onColumnClick={onColumnClick.bind(this)}
-      tableProps={tableProps}
     />
   );
 });
+
+ListTable.defaultProps = {
+  configurable: true,
+  tableProps: {
+    celled: true,
+    sortable: true
+  }
+};
 
 export default ListTable;
 
