@@ -128,9 +128,10 @@ const LayerMenu = (props: Props) => {
                 <div
                   aria-selected={isVisible(index)}
                   className='option'
-                  role='option'
+                  key={index}
                   onClick={() => toggleVisibility(index)}
                   onKeyDown={() => toggleVisibility(index)}
+                  role='option'
                   tabIndex={index}
                 >
                   <div
