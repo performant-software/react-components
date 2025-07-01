@@ -450,13 +450,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Sets the perPage value and reloads the data.
+     * Sets the perPage value and reloads the data. We'll also reset the page to "1" to ensure the requested page
+     * is valid.
      *
      * @param e
      * @param value
      */
     onPerPageChange(e: Event, { value }: { value: number }) {
-      this.setState({ perPage: value }, this.fetchData.bind(this));
+      this.setState({ page: 1, perPage: value }, this.fetchData.bind(this));
     }
 
     /**
