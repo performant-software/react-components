@@ -603,7 +603,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       return (
         <Button
           key={index}
-          {...button}
+          {..._.omit(button, 'accept')}
         />
       );
     }

@@ -19,6 +19,7 @@ import './LazyImage.css';
 
 type Props = {
   children?: Node,
+  className?: string,
   dimmable: boolean,
   download?: string,
   duration?: number,
@@ -53,8 +54,12 @@ const LazyImage = (props: Props) => {
       classNames.push('hidden');
     }
 
+    if (props.className) {
+      classNames.push(props.className);
+    }
+
     return classNames.join(' ');
-  }, [loaded]);
+  }, [loaded, props.className]);
 
   if (!visible) {
     return (

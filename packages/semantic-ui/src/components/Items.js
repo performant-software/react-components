@@ -333,6 +333,7 @@ class ItemsClass extends Component<Props, {}> {
           content={content}
           header={title}
           hideOnScroll
+          key={index}
           mouseEnterDelay={500}
           position='top right'
           trigger={actionButton}
