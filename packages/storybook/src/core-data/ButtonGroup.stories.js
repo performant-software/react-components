@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Button from '../../../core-data/src/components/Button';
 import ButtonGroup from '../../../core-data/src/components/ButtonGroup';
+import Icon from '../../../core-data/src/components/Icon';
 
 export default {
   title: 'Components/Core Data/ButtonGroup',
@@ -60,6 +61,37 @@ export const Rounded = () => {
         primary={active === 'timeline'}
       >
         Timeline
+      </Button>
+    </ButtonGroup>
+  );
+};
+
+export const Icons = () => {
+  const [active, setActive] = useState('list');
+
+  return (
+    <ButtonGroup
+      icon
+    >
+      <Button
+        icon
+        onClick={() => setActive('list')}
+        primary={active === 'list'}
+      >
+        <Icon
+          name='list'
+        />
+        List
+      </Button>
+      <Button
+        icon
+        onClick={() => setActive('table')}
+        primary={active === 'table'}
+      >
+        <Icon
+          name='table'
+        />
+        Table
       </Button>
     </ButtonGroup>
   );
