@@ -15,7 +15,7 @@ const ButtonGroup = (props: Props) => (
     className={clsx(
       'inline-flex',
       { '[&>:first-child]:rounded-s-md [&>:last-child]:rounded-e-md': props.rounded && !props.icon },
-      { 'bg-white border border-1 rounded-full [&>*]:border-none': props.icon },
+      { 'bg-white border border-1 rounded-full [&>*]:border-none [&>*]:rounded-full': props.icon },
       props.className
     )}
   >

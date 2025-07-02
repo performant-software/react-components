@@ -74,7 +74,6 @@ export const Icons = () => {
       icon
     >
       <Button
-        icon
         onClick={() => setActive('list')}
         primary={active === 'list'}
       >
@@ -84,7 +83,6 @@ export const Icons = () => {
         List
       </Button>
       <Button
-        icon
         onClick={() => setActive('table')}
         primary={active === 'table'}
       >
