@@ -829,7 +829,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
               textAlign='left'
             >
               { showCount ? this.renderRecordCount() : '' }
-              { _.map(buttons, (button) => button.render()) }
+              { _.map(buttons, (button, index) => button.render(index)) }
             </Grid.Column>
             <Grid.Column
               textAlign='right'
