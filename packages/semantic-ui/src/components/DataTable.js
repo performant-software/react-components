@@ -1,7 +1,12 @@
 // @flow
 
 import { Browser, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
-import React, { Component, createRef, type Element } from 'react';
+import React, {
+  Component,
+  createRef,
+  Fragment,
+  type Element
+} from 'react';
 import {
   Checkbox,
   Button,
@@ -326,6 +331,7 @@ class DataTable extends Component<Props, State> {
           content={content}
           header={title}
           hideOnScroll
+          key={`${action.name}-${index}`}
           mouseEnterDelay={500}
           position='top right'
           trigger={actionButton}
@@ -459,6 +465,7 @@ class DataTable extends Component<Props, State> {
     return (
       <Ref
         innerRef={this.columnRefs[column.name]}
+        key={column.name}
       >
         <Table.HeaderCell
           key={column.name}
@@ -507,9 +514,10 @@ class DataTable extends Component<Props, State> {
     }
 
     return (
-      <>
+      <Fragment
+        key={index}
+      >
         <Table.Row
-          key={index}
           onClick={this.props.expandableRows ? handleCellClick : () => { }}
           className={this.props.expandableRows ? 'expandable' : ''}
         >
@@ -522,7 +530,7 @@ class DataTable extends Component<Props, State> {
             { this.props.expandPanel && this.props.expandPanel(item, this.state.activePanel) }
           </Table.Row>
         )}
-      </>
+      </Fragment>
     );
   }
 
@@ -580,9 +588,9 @@ class DataTable extends Component<Props, State> {
       return null;
     }
 
-    const allSelected = this.props.items
+    const allSelected = !!(this.props.items
       && this.props.items.length
-      && _.every(this.props.items, this.props.isRowSelected.bind(this));
+      && _.every(this.props.items, this.props.isRowSelected.bind(this)));
 
     return (
       <Table.HeaderCell

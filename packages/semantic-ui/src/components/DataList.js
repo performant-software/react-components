@@ -450,13 +450,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
-     * Sets the perPage value and reloads the data.
+     * Sets the perPage value and reloads the data. We'll also reset the page to "1" to ensure the requested page
+     * is valid.
      *
      * @param e
      * @param value
      */
     onPerPageChange(e: Event, { value }: { value: number }) {
-      this.setState({ perPage: value }, this.fetchData.bind(this));
+      this.setState({ page: 1, perPage: value }, this.fetchData.bind(this));
     }
 
     /**
@@ -614,7 +615,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
           onChange={this.onSearchChange.bind(this)}
           size='small'
-          value={this.state.search}
+          value={this.state.search || ''}
         />
       );
     }

@@ -260,17 +260,19 @@ export const ExtraButtons = useDragDrop(() => (
   <ListTable
     actions={actions}
     buttons={[{
-      render: () => (
+      render: (index) => (
         <Button
           content='Button 1'
+          key={index}
           onClick={action('button1')}
         />
       )
     }, {
       location: 'bottom',
-      render: () => (
+      render: (index) => (
         <Button
           content='Button 2'
+          key={index}
           onClick={action('button2')}
         />
       )

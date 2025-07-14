@@ -53,7 +53,7 @@ const DateInput = (props: Props) => {
     <Input
       aria-label='Date Input'
       className='date-input icon'
-      icon='calendar alternate outline'
+      icon
       iconPosition='left'
     >
       <Icon
