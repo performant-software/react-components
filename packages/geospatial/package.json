@@ -24,7 +24,7 @@
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^5.6.1",
-    "react-icons": "^5.0.1",
+    "react-icons": "^5.5.0",
     "react-map-gl": "^8.0.4",
     "underscore": "^1.13.7"
   },
