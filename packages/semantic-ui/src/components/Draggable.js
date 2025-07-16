@@ -9,9 +9,7 @@ type Props = {
   direction: 'horizontal' | 'vertical',
   id: any,
   index: number,
-  onDrag: (dragIndex: number, hoverIndex: number) => void,
-  onDragEnd?: () => void,
-  onDragStart?: () => void
+  onDrag: (dragIndex: number, hoverIndex: number) => void
 };
 
 const DIRECTION_VERTICAL = 'vertical';
@@ -22,6 +20,7 @@ const Draggable = (props: Props) => {
   const { index, id, direction = DIRECTION_VERTICAL } = props;
 
   const ref = useRef(null);
+
   const [, drop] = useDrop({
     accept: TYPE_ANY,
     hover(i, monitor) {
@@ -86,9 +85,8 @@ const Draggable = (props: Props) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: TYPE_ANY, id, index },
-    begin: () => props.onDragStart && props.onDragStart(),
-    end: () => props.onDragEnd && props.onDragEnd(),
+    type: TYPE_ANY,
+    item: { id, index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
