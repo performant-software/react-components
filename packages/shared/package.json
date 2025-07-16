@@ -18,8 +18,8 @@
     "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@react-google-maps/api": "^2.8.1",
-    "axios": "^0.26.1",
+    "@react-google-maps/api": "^2.20.7",
+    "axios": "^1.10.0",
     "citeproc": "^2.4.62",
     "i18next": "^19.4.4",
     "moment-islamic-civil": "ACGC/moment-islamic-civil",

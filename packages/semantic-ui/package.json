@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.7",
-    "axios": "^0.26.1",
+    "axios": "^1.10.0",
     "i18next": "^19.4.4",
     "rc-slider": "^10.2.0",
     "react-calendar": "^3.3.0",
