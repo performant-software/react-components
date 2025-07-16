@@ -17,6 +17,9 @@ const mapStyle = `https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTil
 export const Default = () => (
   <Peripleo>
     <PeripleoMap
+      canvasContextAttributes={{
+        preserveDrawingBuffer: true
+      }}
       defaultBounds={[
         [-74.123501, 40.679546],
         [-73.796486, 40.805444]

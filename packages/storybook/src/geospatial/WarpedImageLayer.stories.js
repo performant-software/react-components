@@ -17,6 +17,9 @@ const mapStyle = `https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTil
 export const Default = () => (
   <Map
     attributionControl={false}
+    canvasContextAttributes={{
+      preserveDrawingBuffer: true
+    }}
     initialViewState={{
       bounds: [
         [-74.123501, 40.679546],
