@@ -49,5 +49,8 @@
       "\\.[jt]sx?$": "babel-jest"
     },
     "verbose": true
+  },
+  "resolutions": {
+    "canvas": "link:./node_modules/.cache/null"
   }
 }
