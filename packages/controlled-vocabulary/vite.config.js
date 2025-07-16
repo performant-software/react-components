@@ -23,6 +23,7 @@ export default defineConfig(() => ({
   build: {
     sourcemap: true,
     lib: {
+      cssFileName: 'style',
       entry: './src/index.js',
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`

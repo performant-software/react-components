@@ -9,7 +9,7 @@ export default defineConfig(() => ({
   esbuild: {
     include: /\.js$/,
     exclude: [],
-    loader: 'jsx',
+    loader: 'jsx'
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -24,6 +24,7 @@ export default defineConfig(() => ({
     cssCodeSplit: true,
     sourcemap: true,
     lib: {
+      cssFileName: 'style',
       entry: [
         './src/index.js',
         './src/tailwind.js',

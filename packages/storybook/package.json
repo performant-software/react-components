@@ -58,6 +58,6 @@
     "storybook": "^7.0.26",
     "tailwindcss": "^4.1.4",
     "underscore": "^1.13.2",
-    "vite": "^5.1.4"
+    "vite": "^7.0.4"
   }
 }
