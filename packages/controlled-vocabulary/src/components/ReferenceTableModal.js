@@ -29,14 +29,14 @@ const ReferenceTableModal = (props: EditContainerProps) => (
             label={i18n.t('ReferenceTableModal.labels.name')}
             onChange={props.onTextInputChange.bind(this, 'name')}
             required={props.isRequired('name')}
-            value={props.item.name}
+            value={props.item.name || ''}
           />
           <Form.Input
             error={props.isError('key')}
             label={i18n.t('ReferenceTableModal.labels.key')}
             onChange={props.onTextInputChange.bind(this, 'key')}
             required={props.isRequired('key')}
-            value={props.item.key}
+            value={props.item.key || ''}
           />
           <Header
             content={i18n.t('ReferenceTableModal.labels.referenceCodes')}

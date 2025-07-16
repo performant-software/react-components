@@ -11426,7 +11426,7 @@ i18next@^19.4.4:
   dependencies:
     "@babel/runtime" "^7.12.0"
 
-i18next@^21.9.1, i18next@^21.9.2:
+i18next@^21.9.1:
   version "21.10.0"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.10.0.tgz#85429af55fdca4858345d0e16b584ec29520197d"
   integrity sha512-YeuIBmFsGjUfO3qBmMOc0rQaun4mIpGKET5WDwvu8lU7gvwpcariZLNtL0Fzj+zazcHUrlXHiptcFhBMFaxzfg==

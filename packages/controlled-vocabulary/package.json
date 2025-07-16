@@ -18,9 +18,9 @@
     "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
-    "i18next": "^21.9.2",
-    "semantic-ui-react": "^2.1.2",
-    "underscore": "^1.13.2"
+    "i18next": "^25.3.2",
+    "semantic-ui-react": "^2.1.5",
+    "underscore": "^1.13.7"
   },
   "peerDependencies": {
     "@performant-software/semantic-components": "^3.0.7",
