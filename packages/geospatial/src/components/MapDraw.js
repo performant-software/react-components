@@ -239,12 +239,12 @@ const MapDraw = (props: Props) => {
       { props.geocoding && (
         <GeocodingControl
           apiKey={props.apiKey}
+          key={props.geocoding}
           marker={false}
+          pickedResultStyle={props.geocoding === 'polygon' ? 'full-geometry' : 'marker-only'}
           position='top-left'
           onSelection={onSelection}
-          showFullGeometry={props.geocoding === 'polygon'}
           showResultMarkers={false}
-          key={props.geocoding}
         />
       )}
       { props.navigation && (
