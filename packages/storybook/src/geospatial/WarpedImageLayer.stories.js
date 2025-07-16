@@ -2,7 +2,7 @@
 
 import maplibregl from 'maplibre-gl';
 import React from 'react';
-import { Map } from 'react-map-gl';
+import { Map } from 'react-map-gl/maplibre';
 import Env from '../utils/Environment';
 import WarpedImageLayer from '../../../geospatial/src/components/WarpedImageLayer';
 

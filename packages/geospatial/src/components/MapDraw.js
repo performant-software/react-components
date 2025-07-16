@@ -11,8 +11,11 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { type MapboxMap, NavigationControl } from 'react-map-gl';
-import { FullscreenControl } from 'react-map-gl/maplibre';
+import Map, {
+  FullscreenControl,
+  type MapboxMap,
+  NavigationControl
+} from 'react-map-gl/maplibre';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import GeocodingControl from './GeocodingControl';

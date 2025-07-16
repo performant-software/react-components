@@ -23,10 +23,10 @@
     "@maptiler/geocoding-control": "^1.4.1",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
-    "maplibre-gl": "^3.6.2",
+    "maplibre-gl": "^5.6.1",
     "react-icons": "^5.0.1",
-    "react-map-gl": "^7.1.6",
-    "underscore": "^1.13.6"
+    "react-map-gl": "^8.0.4",
+    "underscore": "^1.13.7"
   },
   "peerDependencies": {
     "@peripleo/maplibre": "^0.8.7",

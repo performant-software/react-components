@@ -9,7 +9,7 @@ import {
   useState
 } from 'react';
 import { createPortal } from 'react-dom';
-import { type MapboxMap, useControl } from 'react-map-gl';
+import { type MapboxMap, useControl } from 'react-map-gl/maplibre';
 import _ from 'underscore';
 
 /**

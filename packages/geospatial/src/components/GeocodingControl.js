@@ -3,7 +3,7 @@
 import { GeocodingControl as MapTilerGeocoding } from '@maptiler/geocoding-control/maplibregl';
 import maplibregl from 'maplibre-gl';
 import { forwardRef, useImperativeHandle } from 'react';
-import { useControl, type ControlPosition } from 'react-map-gl';
+import { useControl, type ControlPosition } from 'react-map-gl/maplibre';
 import './GeocodingControl.css';
 
 type Props = {
