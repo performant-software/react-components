@@ -2,9 +2,9 @@
 
 import { InfiniteScroll } from '@performant-software/shared-components';
 import React, { Component } from 'react';
-import uuid from 'react-uuid';
 import { Loader } from 'semantic-ui-react';
 import _ from 'underscore';
+import { v4 as uuid } from 'uuid';
 import i18n from '../i18n/i18n';
 import Items, { type Props as ItemsProps } from './Items';
 import './ItemCollection.css';

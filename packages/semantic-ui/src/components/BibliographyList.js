@@ -8,7 +8,6 @@ import React, {
   useState,
   type ComponentType
 } from 'react';
-import uuid from 'react-uuid';
 import {
   Button,
   Grid,
@@ -16,6 +15,7 @@ import {
   Message
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import { v4 as uuid } from 'uuid';
 import BibliographyModal from './BibliographyModal';
 import BibliographySearchInput from './BibliographySearchInput';
 import i18n from '../i18n/i18n';
