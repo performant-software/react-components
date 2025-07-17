@@ -15,10 +15,7 @@ const config = {
   ],
   core: {
     builder: {
-      name: '@storybook/builder-vite',
-      options: {
-        viteConfigPath: './vite.config.js',
-      },
+      name: '@storybook/builder-vite'
     }
   },
   framework: {
