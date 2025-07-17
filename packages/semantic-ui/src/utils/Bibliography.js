@@ -45,6 +45,7 @@ const apiCheckCache = (key) => {
 
   try {
     cacheTimes = JSON.parse(localStorage.getItem('zotero-bib-api-cache')) || {};
+    // eslint-disable-next-line no-unused-vars
   } catch (e) {
     // ignore
   }
@@ -85,7 +86,7 @@ const getFieldsAndItem = (item, itemTypeFields, itemTypes) => {
     .filter((f) => f && !hiddenFields.includes(f.field))
     .concat([
       itemTypeFields.find((itf) => itf.field === 'abstractNote'),
-      itemTypeFields.find((itf) => itf.field === 'extra'),
+      itemTypeFields.find((itf) => itf.field === 'extra')
     ]);
 
   // Add Original Date field to book and bookSection #188

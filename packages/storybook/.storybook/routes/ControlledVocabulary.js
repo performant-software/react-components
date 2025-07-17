@@ -46,6 +46,6 @@ const addRoutes = (router) => {
   });
 };
 
-module.exports = {
+export default {
   addRoutes
 };

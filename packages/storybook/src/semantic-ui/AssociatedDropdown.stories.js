@@ -469,9 +469,9 @@ export const CustomButtons = () => (
 export const AdditionalButtons = () => (
   <AssociatedDropdown
     buttons={[{
-      name: 'add',
+      name: 'add'
     }, {
-      name: 'clear',
+      name: 'clear'
     }, {
       basic: true,
       name: 'navigate',

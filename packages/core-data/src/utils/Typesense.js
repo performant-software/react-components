@@ -77,7 +77,7 @@ const createRouting = (config: TypesenseConfig) => ({
 
       const uiState = {
         [config.index_name]: {
-          query: q,
+          query: q
         }
       };
 

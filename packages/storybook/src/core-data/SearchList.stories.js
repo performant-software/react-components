@@ -23,7 +23,7 @@ export const Default = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -37,7 +37,7 @@ export const Default = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA}
       itemTitle='name'
@@ -51,7 +51,7 @@ export const TitleCallback = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -65,7 +65,7 @@ export const TitleCallback = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA}
       itemTitle={(item) => `This record's name is "${item.name}"`}
@@ -79,7 +79,7 @@ export const OneResult = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -93,7 +93,7 @@ export const OneResult = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA.slice(0, 1)}
       itemTitle='name'
@@ -116,7 +116,7 @@ export const EventHandlers = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -130,7 +130,7 @@ export const EventHandlers = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA}
       itemTitle='name'
@@ -147,7 +147,7 @@ export const CustomStyles = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -161,7 +161,7 @@ export const CustomStyles = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       className='bg-red-100 border-2 border-red-900 rounded-md'
       items={LOTS_OF_DATA}
@@ -176,7 +176,7 @@ export const ControlledHighlight = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -190,7 +190,7 @@ export const ControlledHighlight = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA}
       itemTitle='name'
@@ -205,7 +205,7 @@ export const ControlledHighlightWithOnClick = () => (
       attributes={[
         {
           label: 'UUID',
-          name: 'uuid',
+          name: 'uuid'
         },
         {
           label: 'Record ID',
@@ -219,7 +219,7 @@ export const ControlledHighlightWithOnClick = () => (
           render: (item) => (item.coordinates
             ? `${item.coordinates[0]}, ${item.coordinates[1]}`
             : '')
-        },
+        }
       ]}
       items={LOTS_OF_DATA}
       itemTitle='name'
@@ -242,7 +242,7 @@ export const HugeAmountOfData = () => {
         attributes={[
           {
             label: 'UUID',
-            name: 'uuid',
+            name: 'uuid'
           },
           {
             label: 'Record ID',
@@ -256,7 +256,7 @@ export const HugeAmountOfData = () => {
             render: (item) => (item.coordinates
               ? `${item.coordinates[0]}, ${item.coordinates[1]}`
               : '')
-          },
+          }
         ]}
         items={items}
         itemTitle='name'

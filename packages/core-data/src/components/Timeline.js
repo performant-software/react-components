@@ -118,7 +118,7 @@ const Timeline = (props: Props) => {
    */
   const range = useMemo(() => ({
     min: new Date(props.range.min, 0, 1),
-    max: new Date(props.range.max, 0, 1),
+    max: new Date(props.range.max, 0, 1)
   }), [props.range]);
 
   /**
@@ -189,7 +189,7 @@ const Timeline = (props: Props) => {
     (event, prevEvents) => _.some(prevEvents, (prevEvent) => prevEvent.yOffset === event.yOffset
         && event.xOffset < prevEvent.xOffset + EVENT_WIDTH
         && event.xOffset + EVENT_WIDTH > prevEvent.xOffset),
-    [],
+    []
   );
 
   /**
@@ -249,7 +249,7 @@ const Timeline = (props: Props) => {
     // produce date and x offset for each tick
     const majorTicks = timeTicks(tMin, tMax, nMajorTicks).map((date) => ({
       value: date,
-      xOffset: scale(date),
+      xOffset: scale(date)
     }));
     // Ensure the last major tick is at tMax (if not already included)
     if (majorTicks.length > 0) {
@@ -279,7 +279,7 @@ const Timeline = (props: Props) => {
               const minScale = scaleTime().domain(minDomain).range(minRange).nice();
               const minTicks = _.map(minScale.ticks(nMinorTicks), (date) => ({
                 value: date,
-                xOffset: minScale(date),
+                xOffset: minScale(date)
               }));
               // skip the minor ticks that are equivalent to major ticks
               const filtered = _.filter(minTicks, (date) => !_.map(
@@ -313,7 +313,7 @@ const Timeline = (props: Props) => {
    */
   const ticks = useMemo(() => ({
     major: ticksBounds?.width ? generateTicks(min, max, ticksBounds.width, 'major') : [],
-    minor: ticksBounds?.width ? generateTicks(min, max, ticksBounds.width, 'minor') : [],
+    minor: ticksBounds?.width ? generateTicks(min, max, ticksBounds.width, 'minor') : []
   }), [min, max, ticksBounds.width]);
 
   /**
@@ -352,7 +352,7 @@ const Timeline = (props: Props) => {
           'justify-end',
           'overflow-x-scroll',
           'select-none',
-          dragging ? 'cursor-grabbing' : 'cursor-grab',
+          dragging ? 'cursor-grabbing' : 'cursor-grab'
         )}
         ref={mergeRefs([frameRef, draggableRef])}
         onPointerMove={onDrag}
@@ -396,12 +396,12 @@ const Timeline = (props: Props) => {
                 key={event.uuid}
                 style={{
                   left: `${event.xOffset}px`,
-                  bottom: `${event.yOffset + TIMELINE_PADTOP}px`,
+                  bottom: `${event.yOffset + TIMELINE_PADTOP}px`
                 }}
               >
                 <svg
                   className={clsx(
-                    'absolute',
+                    'absolute'
                   )}
                   height={event.yOffset + TIMELINE_PADTOP + MARKER_DIAMETER}
                   width={MARKER_DIAMETER}
@@ -447,7 +447,7 @@ const Timeline = (props: Props) => {
                     'hover:bg-neutral-200',
                     'text-neutral-800',
                     event.anchorRight ? 'rounded-bl' : 'rounded-br',
-                    'mb-1',
+                    'mb-1'
                   )}
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => props.onClick(event)}
@@ -481,7 +481,7 @@ const Timeline = (props: Props) => {
                       className='translate-y-8'
                       key={value}
                       style={{
-                        textAnchor: 'middle',
+                        textAnchor: 'middle'
                       }}
                       fill='currentColor'
                     >

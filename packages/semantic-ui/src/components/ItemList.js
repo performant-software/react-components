@@ -123,7 +123,7 @@ const ItemList = useDataList((props: Props) => {
 ItemList.defaultProps = {
   dimmable: true,
   filters: {},
-  searchable: true,
+  searchable: true
 };
 
 export default ItemList;

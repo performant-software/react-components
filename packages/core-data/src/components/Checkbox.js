@@ -40,7 +40,7 @@ const Checkbox = (props: Props) => (
     checked={props.checked}
     className={clsx(
       'rounded-sm hover:bg-transparent',
-      props.className,
+      props.className
     )}
     disabled={props.disabled}
     id={props.id}
@@ -50,7 +50,7 @@ const Checkbox = (props: Props) => (
       <Icon
         className={clsx(
           { 'fill-primary': props.checked },
-          { 'fill-black': !props.checked },
+          { 'fill-black': !props.checked }
         )}
         name={props.checked ? 'checkbox_filled' : 'checkbox'}
       />

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import ListLoader from '../../../semantic-ui/src/components/ListLoader';
 
 export default {

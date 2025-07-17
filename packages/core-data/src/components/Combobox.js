@@ -129,8 +129,9 @@ const Combobox = (props: Props) => {
             `}
           >
             <div className='grow flex gap-1 flex-wrap p-2'>
-              {props.values.map((value) => (
+              {props.values.map((value, index) => (
                 <ComboboxValue
+                  key={index}
                   onClick={() => props.onChange(value)}
                   value={value}
                 />

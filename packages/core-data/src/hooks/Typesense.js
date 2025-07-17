@@ -8,6 +8,7 @@ import {
   useState
 } from 'react';
 import PersistentSearchStateContext from '../context/PersistentSearchState';
+import type { SearchResult } from '../types/typesense/SearchResult';
 
 export const useCachedHits = () => {
   const { cachedHits } = useContext(PersistentSearchStateContext);
@@ -24,7 +25,7 @@ export const useGeoSearch = () => {
   return geoSearch;
 };
 
-export const useSearchCompleted = (callback: ((hits: TypesenseSearchResult[]) => void), deps: Array<any>) => {
+export const useSearchCompleted = (callback: ((hits: SearchResult[]) => void), deps: Array<any>) => {
   const { observe, unobserve } = useContext(PersistentSearchStateContext);
 
   useEffect(() => {

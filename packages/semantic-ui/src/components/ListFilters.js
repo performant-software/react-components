@@ -363,7 +363,7 @@ const ListFilters = (props: Props) => {
                         options={getOperatorsByType(filter.type)}
                         onChange={(e, { value }) => props.onSaveChildAssociation('filters', {
                           ..._.omit(filter, 'value'),
-                          operator: value,
+                          operator: value
                         })}
                         selection
                         value={filter.operator}

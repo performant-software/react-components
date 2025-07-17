@@ -96,7 +96,7 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
       return props.renderHeader({
         onItemClick: props.onItemSelection.bind(this),
         selectedItem: props.selectedItem,
-        selectedItems: props.selectedItems,
+        selectedItems: props.selectedItems
       });
     }
 

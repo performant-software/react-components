@@ -8,7 +8,7 @@ import CancelButton from '../../../semantic-ui/src/components/CancelButton';
 export default {
   title: 'Components/Semantic UI/CancelButton',
   decorators: [withKnobs],
-  component: CancelButton,
+  component: CancelButton
 };
 
 export const Default = () => (

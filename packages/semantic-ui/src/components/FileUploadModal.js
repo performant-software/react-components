@@ -217,7 +217,6 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
 
       // Do the upload
       try {
-        // eslint-disable-next-line no-await-in-loop
         await props.onSave(item);
       } catch (e) {
         error = e;

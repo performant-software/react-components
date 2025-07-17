@@ -1,6 +1,6 @@
 // @flow
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const addRoutes = (router) => {
   router.use('/translate', createProxyMiddleware({
@@ -10,6 +10,6 @@ const addRoutes = (router) => {
   }));
 };
 
-module.exports = {
+export default {
   addRoutes
 };

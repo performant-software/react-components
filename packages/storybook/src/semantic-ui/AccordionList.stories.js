@@ -96,7 +96,7 @@ export const Selectable = () => (
       },
       {
         render: () => <Button key='2'>Test 2</Button>
-      },
+      }
     ]}
     canAddItem={() => boolean('Can add', true)}
     canDeleteItem={() => boolean('Can delete', true)}

@@ -7,8 +7,9 @@ import i18n from '../i18n/i18n';
 import Modal from './Modal';
 
 type CanvasMetadataPanelProps = {
-  canvas?: object,
+  canvas?: any
 };
+
 const CanvasMetadataPanel = (props: CanvasMetadataPanelProps) => (
   props.canvas?.metadata ? (
     <dl className='p-6.5 pt-0 text-base'>
@@ -64,9 +65,9 @@ const MediaGallery = (props: Props) => (
               id: 'metadata2',
               informationPanel: {
                 component: CanvasMetadataPanel,
-                label: props.metadataLabel || i18n.t('MediaGallery.metadata'),
-              },
-            },
+                label: props.metadataLabel || i18n.t('MediaGallery.metadata')
+              }
+            }
           ]}
         />
       )}

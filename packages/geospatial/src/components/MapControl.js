@@ -110,7 +110,6 @@ const MapControl = (props) => {
    */
   useEffect(() => {
     if (props.mapRef) {
-      // eslint-disable-next-line no-param-reassign
       props.mapRef.current = map;
     }
   }, [map, props.mapRef]);

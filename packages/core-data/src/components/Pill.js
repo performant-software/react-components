@@ -10,24 +10,28 @@ type Props = {
    * (Optional) Custom Tailwind classes for the pill.
    */
   className?: string,
+
   /**
    * Text to display inside the pill.
    */
   label: string,
+
   /**
    * (Optional) Callback fired when the X button is clicked. The X button will only be rendered if onRemove is provided.
    * @param
    */
-  onRemove?: (data) => any,
+  onRemove?: (data: any) => any,
+
   /**
    * If `true`, the button will display with the primary background color.
    */
   primary?: boolean,
+
   /**
    * If `true`, the button will display with the secondary background color.
    */
   secondary?: boolean
-}
+};
 
 const Pill = (props: Props) => (
   <div

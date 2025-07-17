@@ -84,14 +84,14 @@ type Props = {
   /**
    * The set of layers to render.
    */
-  overlays: Array<LayerType>
+  overlays: Array<Layer>
 };
 
 /**
  * This component renders a set of overlay layers.
  */
 const OverlayLayers = (props: Props) => (
-  _.map(props.overlays, (overlay: LayerType, index: number) => (
+  _.map(props.overlays, (overlay: Layer, index: number) => (
     <OverlayLayer
       key={index}
       overlay={overlay}

@@ -84,7 +84,7 @@ const RelatedEvents = (props: Props) => {
               { 'bg-event-selected': !isPreviousDisabled },
               { 'hover:bg-event-selected': !isPreviousDisabled },
               { 'text-white': !isPreviousDisabled },
-              { 'border-event-selected': !isPreviousDisabled },
+              { 'border-event-selected': !isPreviousDisabled }
             )}
             disabled={isPreviousDisabled}
             onClick={onPrevious}
@@ -126,7 +126,7 @@ const RelatedEvents = (props: Props) => {
               { 'bg-event-selected': !isNextDisabled },
               { 'hover:bg-event-selected': !isNextDisabled },
               { 'text-white': !isNextDisabled },
-              { 'border-event-selected': !isNextDisabled },
+              { 'border-event-selected': !isNextDisabled }
             )}
             disabled={isNextDisabled}
             onClick={onNext}

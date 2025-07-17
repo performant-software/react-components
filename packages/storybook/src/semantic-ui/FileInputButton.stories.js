@@ -1,7 +1,7 @@
 // @flow
 
 import { action } from '@storybook/addon-actions';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
 

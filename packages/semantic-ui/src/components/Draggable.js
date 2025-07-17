@@ -79,17 +79,16 @@ const Draggable = (props: Props) => {
       // // Generally it's better to avoid mutations,
       // // but it's good here for the sake of performance
       // // to avoid expensive index searches.
-      // eslint-disable-next-line no-param-reassign
       i.index = hoverIndex;
-    },
+    }
   });
 
   const [{ isDragging }, drag] = useDrag({
     type: TYPE_ANY,
     item: { id, index },
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+      isDragging: monitor.isDragging()
+    })
   });
 
   drag(drop(ref));

@@ -10,26 +10,32 @@ type SearchListItemProps = {
    * Attributes to display (only the first three are shown)
    */
   attributes?: Attribute[],
+
   /**
    * Search item object
    */
   item: any,
+
   /**
    * Boolean that determines whether to highlight the item
    */
   isHighlight?: boolean,
+
   /**
    * Callback that fires when an item is clicked
    */
   onClick?: (item: any) => void,
+
   /**
    * Callback that fires when the pointer begins to hover over an item
    */
   onPointerEnter?: (item: any) => void,
+
   /**
    * Callback that fires when the pointer stops hovering over an item
    */
   onPointerLeave?: (item: any) => void,
+
   /**
    * Title of the record
    */
@@ -38,7 +44,7 @@ type SearchListItemProps = {
 
 type ItemWrapperProps = {
   children: Element<any>,
-  ...Props
+  ...SearchListItemProps
 }
 
 /**

@@ -19,10 +19,10 @@ const data = [{
   name: 'Parent 1',
   children: [{
     id: 3,
-    name: 'Child 1',
+    name: 'Child 1'
   }, {
     id: 4,
-    name: 'Child 2',
+    name: 'Child 2'
   }]
 }, {
   id: 2,
@@ -153,7 +153,7 @@ export const Selectable = () => (
       },
       {
         render: () => <Button key='2'>Test 2</Button>
-      },
+      }
     ]}
     collectionName='items'
     getChildItems={(items, item) => item.children}
@@ -196,7 +196,7 @@ export const SelectableControlled = () => {
         },
         {
           render: () => <Button key='2'>Test 2</Button>
-        },
+        }
       ]}
       collectionName='items'
       getChildItems={(items, item) => item.children}

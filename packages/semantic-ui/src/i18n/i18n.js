@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { createInstance } from 'i18next';
 
 import en from './en.json';
 
@@ -8,7 +8,7 @@ const resources = {
   }
 };
 
-const i18n = i18next.createInstance();
+const i18n = createInstance();
 
 i18n
   .init({
@@ -16,7 +16,7 @@ i18n
     fallbackLng: 'en',
     lng: 'en',
     interpolation: {
-      escapeValue: false,
+      escapeValue: false
     },
     resources
   });

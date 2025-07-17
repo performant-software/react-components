@@ -170,7 +170,7 @@ const TreeGraph = (props: Props) => {
     if (props.layout === Layout.polar) {
       origin = {
         x: innerWidth / 2,
-        y: innerHeight / 2,
+        y: innerHeight / 2
       };
       sizeWidth = 2 * Math.PI;
       sizeHeight = (Math.min(innerWidth, innerHeight) / 2) * (depth / 2);

@@ -161,7 +161,7 @@ export const Sorting = useDragDrop(() => (
       sorts: [{
         label: 'Chapter/Verse',
         value: 'chapter_verse'
-      }],
+      }]
     }, {
       id: 'annotations',
       group: 'Text',

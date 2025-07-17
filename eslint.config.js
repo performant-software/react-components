@@ -1,0 +1,103 @@
+// @flow
+
+import js from '@eslint/js';
+import babelParser from '@babel/eslint-parser';
+import flowtype from 'eslint-plugin-flowtype';
+import importPlugin from 'eslint-plugin-import';
+import jest from 'eslint-plugin-jest';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import react from 'eslint-plugin-react';
+import globals from 'globals';
+
+export default [
+  importPlugin.flatConfigs.recommended,
+  js.configs.recommended,
+  react.configs.flat.recommended,
+  {
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: {
+        ...globals.browser,
+        ...jest.environments.globals.globals,
+        __dirname: 'readonly',
+        Atomics: 'readonly',
+        JSX: 'readonly',
+        SharedArrayBuffer: 'readonly',
+        TimeoutID: 'readonly',
+        process: 'readonly'
+      },
+      parser: babelParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        },
+        requireConfigFile: true,
+        babelOptions: {
+          parserOpts: {
+            plugins: ['jsx']
+          }
+        }
+      },
+      sourceType: 'module'
+    },
+    plugins: {
+      react,
+      flowtype,
+      // import: importPlugin,
+      jest,
+      'jsx-a11y': jsxA11y
+    },
+    rules: {
+      'class-methods-use-this': 'off',
+      'comma-dangle': ['error', 'never'],
+      "import/no-named-as-default": "off",
+      'import/no-unresolved': ['error', {
+        ignore: [
+          '@samvera/clover-iiif.*',
+          '@tailwindcss/vite',
+          'react-map-gl/maplibre'
+        ]
+      }],
+      'import/prefer-default-export': 'off',
+      'jsx-a11y/media-has-caption': 'off',
+      'jsx-quotes': ['error', 'prefer-single'],
+      'lines-between-class-members': 'off',
+      'max-len': ['error', {
+        code: 120,
+        ignoreStrings: true
+      }],
+      'no-underscore-dangle': 'off',
+      'no-use-before-define': 'off',
+      'quote-props': ['error', 'as-needed', {
+        keywords: false,
+        unnecessary: true,
+        numbers: true
+      }],
+      'react/display-name': 'off',
+      'react/default-props-match-prop-types': 'off',
+      'react/destructuring-assignment': 'off',
+      'react/jsx-filename-extension': [1, {
+        extensions: ['.js', '.jsx']
+      }],
+      'react/jsx-no-bind': 'off',
+      'react/jsx-props-no-spreading': 'off',
+      'react/no-array-index-key': 'off',
+      'react/no-did-update-set-state': 'off',
+      'react/prefer-stateless-function': 'off',
+      'react/require-default-props': 'off',
+      'react/sort-comp': 'off',
+      'react/static-property-placement': 'off',
+      'semi-style': ['error', 'last']
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    }
+  }, {
+    ignores: [
+      '**/dist/*'
+    ]
+  }
+];

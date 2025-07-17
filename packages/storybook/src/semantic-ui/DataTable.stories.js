@@ -125,7 +125,7 @@ export const Default = useDragDrop(() => (
     buttons={[
       {
         render: () => <Button key='1'>Test</Button>
-      },
+      }
     ]}
     columns={columns}
     items={items}
@@ -247,7 +247,7 @@ export const CsvExport = useDragDrop(() => (
     buttons={[
       {
         render: () => <Button key='1'>Test</Button>
-      },
+      }
     ]}
     columns={columns}
     csvExportButton={{

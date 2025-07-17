@@ -25,18 +25,18 @@ const data = {
       }, {
         name: 'C',
         children: [{
-          name: 'C1',
+          name: 'C1'
         }, {
           name: 'D',
           children: [{
-            name: 'D1',
+            name: 'D1'
           }, {
-            name: 'D2',
+            name: 'D2'
           }, {
-            name: 'D3',
-          }],
-        }],
-      }],
+            name: 'D3'
+          }]
+        }]
+      }]
     },
     {
       name: 'Z'

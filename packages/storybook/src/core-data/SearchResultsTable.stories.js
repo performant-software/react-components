@@ -17,7 +17,7 @@ const LOTS_OF_HITS = shuffle([
   ...hits,
   ...hits,
   ...hits,
-  ...hits,
+  ...hits
 ]);
 
 export default {

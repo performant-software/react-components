@@ -11,5 +11,5 @@ export type AnnotationPage = {
     label: string;
     total: number;
   };
-  items: Annotation<T>[];
+  items: Annotation[];
 };

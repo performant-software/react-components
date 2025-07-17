@@ -43,7 +43,7 @@ class Base {
 
   // Protected
 
-  buildItem(params = {}) {
+  buildItem() {
     // Implemented in sub-classes
     return {};
   }

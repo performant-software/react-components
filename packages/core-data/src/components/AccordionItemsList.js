@@ -85,12 +85,10 @@ const AccordionItemsList = (props: Props) => (
                     relation.renderItem ? (
                       relation.renderItem(item)
                     ) : (
-                      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                       <li
                         key={idxx}
                         onClick={item.onClick}
                         onKeyDown={item.onClick}
-                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                         tabIndex={item.onClick ? '0' : '-1'}
                         className={
                         clsx(

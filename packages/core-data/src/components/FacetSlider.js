@@ -266,7 +266,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           'items-center',
           'pt-4',
           !_.isEmpty(rightActions) ? 'px-4' : '',
-          _.isEmpty(bottomActions) && props.ticks ? 'pb-7' : '',
+          _.isEmpty(bottomActions) && props.ticks ? 'pb-7' : ''
         )}
       >
         {!props.hideStepButtons && (
@@ -329,7 +329,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
                     className='translate-y-8'
                     key={value}
                     style={{
-                      textAnchor: 'middle',
+                      textAnchor: 'middle'
                     }}
                     fill='currentColor'
                   >
