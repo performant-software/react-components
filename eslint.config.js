@@ -44,7 +44,6 @@ export default [
     plugins: {
       react,
       flowtype,
-      // import: importPlugin,
       jest,
       'jsx-a11y': jsxA11y
     },
