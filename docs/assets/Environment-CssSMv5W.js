@@ -1,0 +1,1 @@
+const e=()=>{},n=()=>{},s=()=>"hudson_valley",t=()=>"0yeLZMVq6VtUGmyy7wTSzdmli9dXs2fA",o=()=>"mk0zu5rvf46oa2h7p-1.a1.typesense.net",y={getGoogleMapsApiKey:e,getMapTilerKey:n,getTypesenseCollection:s,getTypesenseSearchKey:t,getTypesenseSearchUrl:o};export{y as E};

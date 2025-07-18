@@ -1,0 +1,1 @@
+function a(b,r,e){e===void 0&&(e={});var f={type:"Feature"};return(e.id===0||e.id)&&(f.id=e.id),e.bbox&&(f.bbox=e.bbox),f.properties=r||{},f.geometry=b,f}function d(b,r){r===void 0&&(r={});var e={type:"FeatureCollection"};return r.id&&(e.id=r.id),r.bbox&&(e.bbox=r.bbox),e.features=b,e}export{a,d as f};
