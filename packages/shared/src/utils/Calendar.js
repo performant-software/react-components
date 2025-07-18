@@ -1,7 +1,6 @@
 // @flow
 
 import moment from 'moment-islamic-civil';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'moment/min/locales';
 
 const DEFAULT_LOCALE = 'en';

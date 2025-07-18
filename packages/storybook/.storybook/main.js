@@ -58,5 +58,6 @@ const config = {
 export default config;
 
 function getAbsolutePath(value) {
+  // eslint-disable-next-line no-undef
   return dirname(require.resolve(join(value, "package.json")));
 }

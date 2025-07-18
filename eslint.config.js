@@ -3,7 +3,7 @@
 import js from '@eslint/js';
 import babelParser from '@babel/eslint-parser';
 import flowtype from 'eslint-plugin-flowtype';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import jest from 'eslint-plugin-jest';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
@@ -51,15 +51,9 @@ export default [
     rules: {
       'class-methods-use-this': 'off',
       'comma-dangle': ['error', 'never'],
-      "import/no-named-as-default": "off",
-      'import/no-unresolved': ['error', {
-        ignore: [
-          '@samvera/clover-iiif.*',
-          '@tailwindcss/vite',
-          'react-map-gl/maplibre'
-        ]
-      }],
-      'import/prefer-default-export': 'off',
+      "import-x/no-named-as-default": "off",
+      "import-x/no-named-as-default-member": "off",
+      'import-x/prefer-default-export': 'off',
       'jsx-a11y/media-has-caption': 'off',
       'jsx-quotes': ['error', 'prefer-single'],
       'lines-between-class-members': 'off',
