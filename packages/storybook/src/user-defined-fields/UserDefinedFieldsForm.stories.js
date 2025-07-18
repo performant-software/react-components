@@ -1,13 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import UserDefinedFieldsForm from '../../../user-defined-fields/src/components/UserDefinedFieldsForm';
 
 export default {
   title: 'Components/User Defined Fields/UserDefinedFieldsForm',
-  decorators: [withKnobs]
+  component: UserDefinedFieldsForm
 };
 
 export const Default = () => {

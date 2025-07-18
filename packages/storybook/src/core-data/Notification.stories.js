@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useState } from 'react';
 import Button from '../../../core-data/src/components/Button';
 import Notification from '../../../core-data/src/components/Notification';

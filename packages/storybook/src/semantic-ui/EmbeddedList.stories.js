@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { optionsKnob as options } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React, { useState } from 'react';
 import { Button, Container, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -9,7 +8,6 @@ import AddModal from '../components/AddModal';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
 import EmbeddedList, { SORT_DESCENDING } from '../../../semantic-ui/src/components/EmbeddedList';
 import items from '../data/Movies.json';
-import { SemanticColors } from '../services/Colors';
 import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
@@ -55,10 +53,6 @@ export const Default = useDragDrop(() => (
 export const AddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
-    addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
-    }}
     onDelete={action('delete')}
     columns={columns}
     items={items}
@@ -123,10 +117,6 @@ export const Empty = useDragDrop(() => (
 export const EmptyAddButton = useDragDrop(() => (
   <EmbeddedList
     actions={actions}
-    addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
-    }}
     onDelete={action('delete')}
     columns={columns}
     items={[]}
@@ -185,10 +175,6 @@ const EmbeddedListModal = (props: EmbeddedListModalProps) => (
     >
       <EmbeddedList
         actions={actions}
-        addButton={{
-          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-          color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
-        }}
         onDelete={action('delete')}
         columns={columns}
         items={items}

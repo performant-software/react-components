@@ -7,7 +7,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
   esbuild: {
-    include: /\.js$/,
+    include: /.*\.jsx?$/,
     exclude: [],
     loader: 'jsx'
   },

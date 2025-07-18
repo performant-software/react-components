@@ -1,14 +1,13 @@
 // @flow
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import MasonryGrid from '../../../semantic-ui/src/components/MasonryGrid';
 import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/MasonryGrid',
-  decorators: [withKnobs]
+  component: MasonryGrid
 };
 
 const IMAGE_COUNT = 50;

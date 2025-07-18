@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import audio from '../assets/SampleAudio.mp3';
 import LazyAudio from '../../../semantic-ui/src/components/LazyAudio';
@@ -10,7 +9,7 @@ import image from '../assets/test-image.jpg';
 
 export default {
   title: 'Components/Semantic UI/LazyAudio',
-  decorators: [withKnobs]
+  component: LazyAudio
 };
 
 export const Default = () => (

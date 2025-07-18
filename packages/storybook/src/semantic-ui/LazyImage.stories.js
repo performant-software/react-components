@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { Button, Card, Item } from 'semantic-ui-react';
 import image from '../assets/test-image.jpg';
 import LazyImage from '../../../semantic-ui/src/components/LazyImage';

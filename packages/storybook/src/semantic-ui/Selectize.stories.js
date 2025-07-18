@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, number, text } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
 import AddModal from '../components/AddModal';
@@ -14,7 +13,7 @@ import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/Selectize',
-  decorators: [withKnobs]
+  component: Selectize
 };
 
 const items = [{
@@ -382,11 +381,11 @@ export const Default = () => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 );
 
@@ -404,11 +403,11 @@ export const SingleSelect = () => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 );
 
@@ -425,7 +424,7 @@ export const CustomHeader = () => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderHeader={({ onItemClick, selectedItem, selectedItems }) => (
@@ -448,7 +447,7 @@ export const CustomHeader = () => (
       />
     )}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 );
 
@@ -465,7 +464,7 @@ export const CustomRender = () => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderItems={({ isSelected, items: innerItems, onSelect }) => (
@@ -483,7 +482,7 @@ export const CustomRender = () => (
       </Card.Group>
     )}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 );
 
@@ -501,11 +500,11 @@ export const MaxSelection = () => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderItem={(item) => `${item.first_name} ${item.last_name}`}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 );
 
@@ -522,7 +521,7 @@ export const Images = withImages((props) => (
     onClose={action('close')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items: props.images,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onSave={action('save')}
     renderHeader={({ onItemClick, selectedItem, selectedItems }) => (
@@ -553,6 +552,6 @@ export const Images = withImages((props) => (
         ))}
       </Card.Group>
     )}
-    title={text('Title', 'Select some')}
+    title='Select some'
   />
 ), 50);

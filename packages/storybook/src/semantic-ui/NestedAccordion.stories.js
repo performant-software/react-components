@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import _ from 'underscore';
 import NestedAccordion from '../../../semantic-ui/src/components/NestedAccordion';
 

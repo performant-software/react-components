@@ -1,13 +1,11 @@
 // @flow
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import Toaster from '../../../semantic-ui/src/components/Toaster';
 
 export default  {
   title: 'Components/Semantic UI/Toaster',
-  component: Toaster,
-  decorators: [withKnobs]
+  component: Toaster
 };
 
 export const Info = () => {

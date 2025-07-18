@@ -1,20 +1,19 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, files } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import image from '../assets/test-image.jpg';
 import PhotoViewer from '../../../semantic-ui/src/components/PhotoViewer';
 
 export default {
   title: 'Components/Semantic UI/PhotoViewer',
-  decorators: [withKnobs]
+  component: PhotoViewer
 };
 
 export const Default = () => (
   <PhotoViewer
     alt='Test Image'
-    image={files('Image', '.png, .jpg, .jpeg', [image])}
+    image={image}
     onClose={action('close')}
     open
   />

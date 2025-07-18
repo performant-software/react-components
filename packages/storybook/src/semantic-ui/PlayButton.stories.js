@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PlayButton from '../../../semantic-ui/src/components/PlayButton';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const onClick = action('play');
 

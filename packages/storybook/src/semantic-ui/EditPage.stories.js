@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React from 'react';
 import { Form } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -149,7 +148,6 @@ const ToasterForm = () => (
           text: item.company,
           description: item.country
         })}
-        upward={boolean('Open upward', false)}
       />
     </Form.Input>
   </div>

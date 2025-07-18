@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, number } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import {
   Confirm,
   Header,
@@ -14,7 +13,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/DataTable',
-  decorators: [withKnobs]
+  component: DataTable
 };
 
 const actions = [{
@@ -235,8 +234,6 @@ export const Pagination = useDragDrop(() => (
     onCopy={action('copy')}
     onDelete={action('delete')}
     onSave={action('save')}
-    page={number('Page', 1)}
-    pages={number('Pages', 10)}
     showRecordCount
   />
 ));

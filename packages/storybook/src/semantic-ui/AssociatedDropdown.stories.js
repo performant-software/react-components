@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import { Form, Modal } from 'semantic-ui-react';
 import AddModal from '../components/AddModal';
 import Api from '../services/Api';
@@ -11,7 +10,7 @@ import { type EditContainerProps } from '../../../shared/src/components/EditCont
 
 export default {
   title: 'Components/Semantic UI/AssociatedDropdown',
-  decorators: [withKnobs]
+  component: AssociatedDropdown
 };
 
 const items = [{
@@ -328,14 +327,13 @@ export const Default = () => (
     }}
     onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
     onSelection={action('selection')}
-    placeholder={text('Placeholder', 'Search')}
+    placeholder='Search'
     renderOption={(item) => ({
       key: item.id,
       value: item.id,
       text: item.company,
       description: item.country
     })}
-    upward={boolean('Open upward', false)}
   />
 );
 
@@ -387,14 +385,13 @@ export const WithEditButton = () => (
     }}
     onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
     onSelection={action('selection')}
-    placeholder={text('Placeholder', 'Search')}
+    placeholder='Search'
     renderOption={(item) => ({
       key: item.id,
       value: item.id,
       text: item.company,
       description: item.country
     })}
-    upward={boolean('Open upward', false)}
   />
 );
 
@@ -415,14 +412,13 @@ export const FormField = () => (
         }}
         onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
         onSelection={action('selection')}
-        placeholder={text('Placeholder', 'Search')}
+        placeholder='Search'
         renderOption={(item) => ({
           key: item.id,
           value: item.id,
           text: item.company,
           description: item.country
         })}
-        upward={boolean('Open upward', false)}
       />
     </Form.Input>
   </Form>
@@ -455,14 +451,13 @@ export const CustomButtons = () => (
     }}
     onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
     onSelection={action('selection')}
-    placeholder={text('Placeholder', 'Search')}
+    placeholder='Search'
     renderOption={(item) => ({
       key: item.id,
       value: item.id,
       text: item.company,
       description: item.country
     })}
-    upward={boolean('Open upward', false)}
   />
 );
 
@@ -493,13 +488,12 @@ export const AdditionalButtons = () => (
     }}
     onSearch={(search) => Api.onLoad({ items, search, sort_by: 'text' })}
     onSelection={action('selection')}
-    placeholder={text('Placeholder', 'Search')}
+    placeholder='Search'
     renderOption={(item) => ({
       key: item.id,
       value: item.id,
       text: item.company,
       description: item.country
     })}
-    upward={boolean('Open upward', false)}
   />
 );

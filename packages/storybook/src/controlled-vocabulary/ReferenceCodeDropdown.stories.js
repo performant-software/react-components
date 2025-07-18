@@ -1,13 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import ReferenceCodeDropdown from '../../../controlled-vocabulary/src/components/ReferenceCodeDropdown';
 
 export default {
   title: 'Components/Controlled Vocabulary/ReferenceCodeDropdown',
-  decorators: [withKnobs]
+  component: ReferenceCodeDropdown
 };
 
 export const Default = () => (

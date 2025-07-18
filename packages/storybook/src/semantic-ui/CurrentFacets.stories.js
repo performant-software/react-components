@@ -1,14 +1,12 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React from 'react';
 import CurrentFacets from '../../../semantic-ui/src/components/CurrentFacets';
 
 export default {
   title: 'Components/Semantic UI/CurrentFacets',
-  component: CurrentFacets,
-  decorators: [withKnobs]
+  component: CurrentFacets
 };
 
 const createRefinement = (label) => ({

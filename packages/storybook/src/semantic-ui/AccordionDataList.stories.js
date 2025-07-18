@@ -1,8 +1,7 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import AccordionDataList from '../../../semantic-ui/src/components/AccordionDataList';
@@ -11,7 +10,7 @@ import Api from '../services/Api';
 
 export default {
   title: 'Components/Semantic UI/AccordionDataList',
-  decorators: [withKnobs]
+  component: AccordionDataList
 };
 
 const data = [{
@@ -41,14 +40,11 @@ const data = [{
 export const Default = () => (
   <AccordionDataList
     actions={[{
-      name: 'edit',
-      accept: () => boolean('Can edit', true)
+      name: 'edit'
     }, {
-      name: 'copy',
-      accept: () => boolean('Can copy', true)
+      name: 'copy'
     }, {
-      name: 'delete',
-      accept: () => boolean('Can delete', true)
+      name: 'delete'
     }]}
     collectionName='items'
     getChildItems={(items, item) => item.children}
@@ -70,14 +66,11 @@ export const Default = () => (
 export const WithRecordCount = () => (
   <AccordionDataList
     actions={[{
-      name: 'edit',
-      accept: () => boolean('Can edit', true)
+      name: 'edit'
     }, {
-      name: 'copy',
-      accept: () => boolean('Can copy', true)
+      name: 'copy'
     }, {
-      name: 'delete',
-      accept: () => boolean('Can delete', true)
+      name: 'delete'
     }]}
     collectionName='items'
     getChildItems={(items, item) => item.children}
@@ -100,14 +93,11 @@ export const WithRecordCount = () => (
 export const Sortable = () => (
   <AccordionDataList
     actions={[{
-      name: 'edit',
-      accept: () => boolean('Can edit', true)
+      name: 'edit'
     }, {
-      name: 'copy',
-      accept: () => boolean('Can copy', true)
+      name: 'copy'
     }, {
-      name: 'delete',
-      accept: () => boolean('Can delete', true)
+      name: 'delete'
     }]}
     collectionName='items'
     getChildItems={(items, item) => item.children}
@@ -138,14 +128,11 @@ export const Sortable = () => (
 export const Selectable = () => (
   <AccordionDataList
     actions={[{
-      name: 'edit',
-      accept: () => boolean('Can edit', true)
+      name: 'edit'
     }, {
-      name: 'copy',
-      accept: () => boolean('Can copy', true)
+      name: 'copy'
     }, {
-      name: 'delete',
-      accept: () => boolean('Can delete', true)
+      name: 'delete'
     }]}
     buttons={[
       {
@@ -181,14 +168,11 @@ export const SelectableControlled = () => {
   return (
     <AccordionDataList
       actions={[{
-        name: 'edit',
-        accept: () => boolean('Can edit', true)
+        name: 'edit'
       }, {
-        name: 'copy',
-        accept: () => boolean('Can copy', true)
+        name: 'copy'
       }, {
-        name: 'delete',
-        accept: () => boolean('Can delete', true)
+        name: 'delete'
       }]}
       buttons={[
         {

@@ -1,6 +1,5 @@
 // @flow
 
-import { boolean } from '@storybook/addon-knobs';
 import React, { useCallback, useRef } from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
 import Facet from '../../../semantic-ui/src/components/Facet';
@@ -72,7 +71,7 @@ export const Collapsed = () => (
 export const Divided = () => (
   <>
     <Facet
-      divided={boolean('Divided', true)}
+      divided
       title='Department'
     >
       <Form>
@@ -99,7 +98,7 @@ export const Divided = () => (
       </Form>
     </Facet>
     <Facet
-      divided={boolean('Divided', true)}
+      divided
       title='Brand'
     >
       <Form>

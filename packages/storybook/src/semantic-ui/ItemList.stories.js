@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { boolean, number } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React, { useCallback, useState } from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -33,7 +32,7 @@ export const Default = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={action('save')}
@@ -41,7 +40,7 @@ export const Default = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -55,7 +54,7 @@ export const AddButton = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={() => {
@@ -66,7 +65,7 @@ export const AddButton = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -78,7 +77,7 @@ export const DefaultView = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 20)
+      perPage: 20
     }))}
     onDelete={action('delete')}
     onSave={action('save')}
@@ -86,7 +85,7 @@ export const DefaultView = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -104,7 +103,7 @@ export const DeleteAllButton = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onDeleteAll={action('delete all')}
@@ -113,7 +112,7 @@ export const DeleteAllButton = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -129,7 +128,7 @@ export const Empty = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -148,7 +147,7 @@ export const EmptyAddButton = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -178,7 +177,7 @@ export const ExtraButtons = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
@@ -186,7 +185,7 @@ export const ExtraButtons = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -203,7 +202,7 @@ export const Filters = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
@@ -211,7 +210,7 @@ export const Filters = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -225,7 +224,7 @@ export const InitialSave = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
@@ -233,7 +232,7 @@ export const InitialSave = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
     saved
   />
 ));
@@ -245,7 +244,7 @@ export const Loading = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.sleep(5000).then(() => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     })))}
     onDelete={action('delete')}
     onSave={action('save')}
@@ -253,7 +252,7 @@ export const Loading = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -267,7 +266,7 @@ export const Polling = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={() => Promise.resolve()}
@@ -276,7 +275,7 @@ export const Polling = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -287,7 +286,7 @@ export const Sortable = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={action('save')}
@@ -295,7 +294,7 @@ export const Sortable = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
     sort={[{
       key: 'make',
       value: 'make',
@@ -347,7 +346,7 @@ export const Selectable = useDragDrop(() => {
       onCopy={action('copy')}
       onLoad={(params) => Api.onLoad(_.extend(params, {
         items,
-        perPage: number('Per page', 10)
+        perPage: 10
       }))}
       onDelete={action('delete')}
       onRowSelect={onRowSelect.bind(this)}
@@ -356,7 +355,7 @@ export const Selectable = useDragDrop(() => {
       renderExtra={(item) => item.address}
       renderHeader={(item) => <Header content={item.model} />}
       renderMeta={(item) => item.make}
-      searchable={boolean('Searchable', true)}
+      searchable
       selectable
     />
   );
@@ -369,7 +368,7 @@ export const SortDescending = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     onDelete={action('delete')}
     onSave={action('save')}
@@ -377,7 +376,7 @@ export const SortDescending = useDragDrop(() => (
     renderExtra={(item) => item.address}
     renderHeader={(item) => <Header content={item.model} />}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
     sort={[{
       key: 'make',
       value: 'make',
@@ -403,7 +402,7 @@ export const CustomListHeader = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     hideToggle
     onDelete={action('delete')}
@@ -418,7 +417,7 @@ export const CustomListHeader = useDragDrop(() => (
       />
     )}
     renderMeta={(item) => item.make}
-    searchable={boolean('Searchable', true)}
+    searchable
   />
 ));
 
@@ -429,7 +428,7 @@ export const NoListHeader = useDragDrop(() => (
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, {
       items,
-      perPage: number('Per page', 10)
+      perPage: 10
     }))}
     hideToggle
     onDelete={action('delete')}

@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useState } from 'react';
 import { Button, Form, Item } from 'semantic-ui-react';
 import FileUploadModal from '../../../semantic-ui/src/components/FileUploadModal';

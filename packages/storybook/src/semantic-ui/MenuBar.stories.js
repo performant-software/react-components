@@ -1,12 +1,10 @@
 // @flow
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import MenuBar from '../../../semantic-ui/src/components/MenuBar';
 
 export default {
-  title: 'Components/Semantic UI/MenuBar',
-  decorators: [withKnobs]
+  title: 'Components/Semantic UI/MenuBar'
 };
 
 export const Default = () => (

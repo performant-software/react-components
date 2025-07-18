@@ -1,14 +1,13 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import Api from '../services/Api';
 import RemoteDropdown from '../../../semantic-ui/src/components/RemoteDropdown';
 
 export default {
   title: 'Components/Semantic UI/RemoteDropdown',
-  decorators: [withKnobs]
+  component: RemoteDropdown
 };
 
 const onAddItem = (options, setOptions, value) => new Promise(
@@ -47,16 +46,12 @@ const colors = [{
 }];
 
 export const Default = () => {
-  const multiple = boolean('Multiple', false);
   const [options, setOptions] = useState(colors);
-  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
+  const [selectedValue, setSelectedValue] = useState('');
 
   return (
     <RemoteDropdown
-      allowAdditions={boolean('Allow additions', false)}
       collectionName='items'
-      fluid={boolean('Fluid', false)}
-      multiple={multiple}
       onAddItem={onAddItem.bind(this, options, setOptions)}
       onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
       onSelection={setSelectedValue.bind(this)}
@@ -67,16 +62,12 @@ export const Default = () => {
 };
 
 export const SelectedValue = () => {
-  const multiple = boolean('Multiple', false);
   const [options, setOptions] = useState(colors);
-  const [selectedValue, setSelectedValue] = useState(multiple ? ['Red'] : 'Red');
+  const [selectedValue, setSelectedValue] = useState('Red');
 
   return (
     <RemoteDropdown
-      allowAdditions={boolean('Allow additions', false)}
       collectionName='items'
-      fluid={boolean('Fluid', false)}
-      multiple={multiple}
       onAddItem={onAddItem.bind(this, options, setOptions)}
       onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
       onSelection={setSelectedValue.bind(this)}
@@ -189,16 +180,12 @@ const movies = [{
 }];
 
 export const LargeList = () => {
-  const multiple = boolean('Multiple', false);
   const [options, setOptions] = useState(movies);
-  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
+  const [selectedValue, setSelectedValue] = useState('');
 
   return (
     <RemoteDropdown
-      allowAdditions={boolean('Allow additions', false)}
       collectionName='items'
-      fluid={boolean('Fluid', false)}
-      multiple={multiple}
       onAddItem={onAddItem.bind(this, options, setOptions)}
       onLoad={(params) => Api.onLoad(_.extend(params, { items: options }))}
       onSelection={setSelectedValue.bind(this)}
@@ -209,16 +196,12 @@ export const LargeList = () => {
 };
 
 export const Pagination = () => {
-  const multiple = boolean('Multiple', false);
   const [options, setOptions] = useState(movies);
-  const [selectedValue, setSelectedValue] = useState(multiple ? [] : '');
+  const [selectedValue, setSelectedValue] = useState('');
 
   return (
     <RemoteDropdown
-      allowAdditions={boolean('Allow additions', false)}
       collectionName='items'
-      fluid={boolean('Fluid', false)}
-      multiple={multiple}
       onAddItem={onAddItem.bind(this, options, setOptions)}
       onLoad={(params) => Api.onLoad(_.extend(params, { items: options, perPage: 10 }))}
       onSelection={setSelectedValue.bind(this)}

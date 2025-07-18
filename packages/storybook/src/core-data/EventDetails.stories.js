@@ -3,7 +3,7 @@
 import { faker } from '@faker-js/faker';
 import { Map, Zoom } from '@peripleo/maplibre';
 import { Controls, Peripleo } from '@peripleo/peripleo';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React from 'react';
 import _ from 'underscore';
 import EventDetails from '../../../core-data/src/components/EventDetails';

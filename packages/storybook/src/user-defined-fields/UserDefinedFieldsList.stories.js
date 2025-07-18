@@ -1,14 +1,13 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import UserDefinedFieldsList from '../../../user-defined-fields/src/components/UserDefinedFieldsList';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/User Defined Fields/UserDefinedFieldsList',
-  decorators: [withKnobs]
+  component: UserDefinedFieldsList
 };
 
 export const Default = useDragDrop(() => {

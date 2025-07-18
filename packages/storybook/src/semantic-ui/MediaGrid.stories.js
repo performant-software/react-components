@@ -1,14 +1,13 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import MediaGrid from '../../../semantic-ui/src/components/MediaGrid';
 import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/MediaGrid',
-  decorators: [withKnobs]
+  component: MediaGrid
 };
 
 const IMAGE_COUNT = 20;

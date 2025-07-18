@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useEffect, useState } from 'react';
 import SearchList from '../../../core-data/src/components/SearchList';
 import data from '../data/typesense/Places.json';

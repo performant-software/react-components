@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { Form, Input } from 'semantic-ui-react';
 import Env from '../utils/Environment';
 import GooglePlacesSearch from '../../../semantic-ui/src/components/GooglePlacesSearch';

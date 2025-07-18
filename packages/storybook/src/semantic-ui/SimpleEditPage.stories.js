@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React from 'react';
 import { Form } from 'semantic-ui-react';
 import SimpleEditPage from '../../../semantic-ui/src/components/SimpleEditPage';

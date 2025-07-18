@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useEffect, useState } from 'react';
 import _ from 'underscore';
 import KeyValueList from '../../../core-data/src/components/KeyValueList';
