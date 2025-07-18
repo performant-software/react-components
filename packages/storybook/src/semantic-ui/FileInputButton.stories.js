@@ -1,14 +1,12 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import React, { useCallback } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
+import React from 'react';
 import FileInputButton from '../../../semantic-ui/src/components/FileInputButton';
 
 export default {
   title: 'Components/Semantic UI/FileInputButton',
-  component: FileInputButton,
-  decorators: [withKnobs]
+  component: FileInputButton
 };
 export const Default = () => {
 

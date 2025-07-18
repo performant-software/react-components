@@ -17,30 +17,37 @@ type Props = {
    * Attributes to display (only the first three will be shown)
    */
   attributes?: Attribute[],
+
   /**
    * Class name to apply to the root button element.
    */
   className?: string,
+
   /**
    * Optional callback that determines whether to highlight an item
    */
   isHighlight?: (item: any) => boolean,
+
   /**
    * Array of search result items
    */
   items: Array<any>,
+
   /**
    * Field name or callback function to return the title of an item
    */
   itemTitle: string | (item: any) => string,
+
   /**
    * Callback that fires when an item is clicked
    */
   onItemClick?: (item: any) => void,
+
   /**
    * Callback that fires when the pointer begins to hover over an item
    */
   onItemPointerEnter?: (item: any) => void,
+
   /**
    * Callback that fires when the pointer stops hovering over an item
    */
@@ -91,7 +98,6 @@ const SearchList = (props: Props) => {
       </div>
       <div
         className='overflow-y-auto h-full'
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         ref={listRef}
       >

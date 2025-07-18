@@ -12,7 +12,7 @@ export default defineConfig(() => ({
   esbuild: {
     include: /\.js$/,
     exclude: [],
-    loader: 'jsx',
+    loader: 'jsx'
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -26,6 +26,7 @@ export default defineConfig(() => ({
   build: {
     sourcemap: true,
     lib: {
+      cssFileName: 'style',
       entry: './src/index.js',
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`
@@ -44,8 +45,8 @@ export default defineConfig(() => ({
       '../../theme.config': resolve(root, '/src/css/theme.config'),
       '../src/css/site': resolve(root, '/src/css/site'),
       '../src/css/themes': resolve(root, '/src/css/themes'),
-      '~semantic-ui-less/theme.less': resolve(root, '../../node_modules/semantic-ui-less/theme.less'),
-    },
+      '~semantic-ui-less/theme.less': resolve(root, '../../node_modules/semantic-ui-less/theme.less')
+    }
   },
   css: {
     preprocessorOptions: {
@@ -53,7 +54,7 @@ export default defineConfig(() => ({
         math: 'always',
         relativeUrls: true,
         javascriptEnabled: true
-      },
-    },
+      }
+    }
   }
 }));

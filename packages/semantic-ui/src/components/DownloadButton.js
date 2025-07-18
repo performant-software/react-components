@@ -1,8 +1,8 @@
 // @flow
 
 import React, { useMemo } from 'react';
-import uuid from 'react-uuid';
 import { Icon } from 'semantic-ui-react';
+import { v4 as uuid } from 'uuid';
 import i18n from '../i18n/i18n';
 
 type Props = {

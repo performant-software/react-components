@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { optionsKnob as options } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React, {
   createRef,
   useEffect,
@@ -19,7 +18,6 @@ import AddModal from '../components/AddModal';
 import EditModal from '../../../semantic-ui/src/components/EditModal';
 import ItemCollection from '../../../semantic-ui/src/components/ItemCollection';
 import items from '../data/Movies.json';
-import { SemanticColors } from '../services/Colors';
 import TabbedModal from '../../../semantic-ui/src/components/TabbedModal';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 
@@ -52,8 +50,8 @@ export const AddButton = useDragDrop(() => (
   <ItemCollection
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
+      location: 'top',
+      color: 'grey'
     }}
     items={items}
     modal={{
@@ -126,8 +124,8 @@ export const EmptyAddButton = useDragDrop(() => (
   <ItemCollection
     actions={actions}
     addButton={{
-      location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-      color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
+      location: 'top',
+      color: 'grey'
     }}
     items={[]}
     modal={{
@@ -254,8 +252,8 @@ const ItemCollectionModal = (props: any) => (
       <ItemCollection
         actions={actions}
         addButton={{
-          location: options('Location', { Bottom: 'bottom', Top: 'top' }, 'top', { display: 'inline-radio' }),
-          color: options('Colors', SemanticColors, 'gray', { display: 'inline-radio' })
+          location: 'top',
+          color: 'grey'
         }}
         items={items}
         modal={{

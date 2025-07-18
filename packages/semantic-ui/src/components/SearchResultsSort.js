@@ -39,7 +39,7 @@ const SearchResultsSort = ({ useSortBy, ...props }: Props) => {
       options={_.map(options, (option) => ({
         key: option.value,
         value: option.value,
-        text: option.description || option.label,
+        text: option.description || option.label
       }))}
       text={label}
       value={value}

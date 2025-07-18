@@ -1,15 +1,14 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, number } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import HorizontalCards from '../../../semantic-ui/src/components/HorizontalCards';
 import useDragDrop from '../../../shared/src/utils/DragDrop';
 import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/HorizontalCards',
-  decorators: [withKnobs]
+  component: HorizontalCards
 };
 
 export const Default = withImages((props) => (
@@ -55,7 +54,7 @@ export const InlineImages = withImages((props) => (
 export const PerPage = withImages((props) => (
   <HorizontalCards
     items={props.images}
-    perPage={number('Per page', 4)}
+    perPage={4}
     renderDescription={(item) => item.description}
     renderHeader={(item) => item.title}
     renderImage={(item) => item.image}

@@ -153,7 +153,7 @@ VideoFrameSelector.defaultProps = {
     icon: 'image'
   },
   defaultInterval: 15,
-  title: i18n.t('VideoFrameSelector.title'),
+  title: i18n.t('VideoFrameSelector.title')
 };
 
 export default withTranslation()(VideoFrameSelector);

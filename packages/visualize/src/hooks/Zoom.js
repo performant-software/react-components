@@ -31,7 +31,7 @@ const DEFAULT_INITIAL_TRANSFORM = {
   translateX: 0,
   translateY: 0,
   skewX: 0,
-  skewY: 0,
+  skewY: 0
 };
 
 const withZoom: WithZoomType = (WrappedComponent: ComponentType<any>) => (props: Props) => {

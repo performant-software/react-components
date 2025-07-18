@@ -1,12 +1,11 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import KeyValuePairs from '../../../semantic-ui/src/components/KeyValuePairs';
 
 export default {
   title: 'Components/Semantic UI/KeyValuePairs',
-  decorators: [withKnobs]
+  component: KeyValuePairs
 };
 
 export const Default = () => {

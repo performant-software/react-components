@@ -51,7 +51,6 @@ const withEditPage = (WrappedComponent: ComponentType<any>, config: Config): any
       .then((record) => config.afterSave && config.afterSave(record, tab))
   ), [config.afterSave, config.onSave]);
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   const EditPage = (innerProps: any) => (
     <WrappedComponent
       {...innerProps}

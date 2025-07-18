@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React from 'react';
 import RelatedItems from '../../../core-data/src/components/RelatedItems';
 import { useEventsService } from '../../../core-data/src/hooks/CoreData';

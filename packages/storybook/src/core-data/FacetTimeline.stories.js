@@ -1,7 +1,7 @@
 // @flow
 
 import { faker } from '@faker-js/faker';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { List } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'underscore';
@@ -41,7 +41,7 @@ const createEvent = (count, range) => _.times(count, () => {
     name: faker.lorem.words({ min: 1, max: 8 }),
     description: faker.lorem.paragraph(),
     start_date: [date, date],
-    end_date: [],
+    end_date: []
   };
 });
 
@@ -84,7 +84,7 @@ export const Styled = () => (
         thumb: 'bg-white',
         track: 'bg-gray-400',
         reset: 'text-white',
-        marker: 'fill-gray-300',
+        marker: 'fill-gray-300'
       }}
       range={smallRange}
       refine={action('refine')}
@@ -110,7 +110,7 @@ export const EventModal = withCoreDataContextProvider(() => {
       ...event,
       name: events[i]?.name,
       uuid: events[i]?.uuid,
-      start_date: event.start_date,
+      start_date: event.start_date
     })));
   }, [events]);
 

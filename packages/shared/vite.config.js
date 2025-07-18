@@ -9,7 +9,7 @@ export default defineConfig(() => ({
   esbuild: {
     include: /\.js$/,
     exclude: [],
-    loader: 'jsx',
+    loader: 'jsx'
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -23,6 +23,7 @@ export default defineConfig(() => ({
   build: {
     sourcemap: true,
     lib: {
+      cssFileName: 'style',
       entry: './src/index.js',
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`

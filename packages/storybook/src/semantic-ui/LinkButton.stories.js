@@ -1,18 +1,15 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import LinkButton from '../../../semantic-ui/src/components/LinkButton';
 
 export default {
-  title: 'Components/Semantic UI/LinkButton',
-  decorators: [withKnobs]
+  title: 'Components/Semantic UI/LinkButton'
 };
 
 export const Default = () => (
   <LinkButton
-    content={text('Text', 'This is a link button')}
     onClick={action('onclick')}
   />
 );

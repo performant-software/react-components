@@ -19,7 +19,6 @@ type Props = {
 /**
  * A simple Save button component that accepts an onClick method and handles Saving state
  */
-
 const SaveButton = (props: Props) => (
   <Button
     onClick={props.onClick.bind(this)}

@@ -9,44 +9,51 @@ type Column = {
    * Label to use in the table header.
    */
   label?: string,
+
   /**
    * Name of the column. If no `render` prop is provided, the table will try to use item[name] to get the value.
    */
   name: string,
+
   /**
    * Function for fetching the display value from the item.
    * If this is provided, the component will put the result of this function
    * in the table cell instead of item[name].
    */
   render?: (item: any) => JSX.Element
-}
+};
 
 type Props = {
   /**
    * Columns to display in the table.
    */
   columns: Array<Column>,
+
   /**
    * Array of search hit objects.
    */
   hits: Array<any>,
+
   /**
    * Optional callback that determines whether to highlight an item
    */
   isHighlight?: (item: any) => boolean,
+
   /**
    * Callback that fires when a row is clicked
    */
   onRowClick?: (hit: any) => void,
+
   /**
     * Callback that fires when the pointer begins to hover over a row
     */
   onRowPointerEnter?: (hit: any) => void,
+
   /**
     * Callback that fires when the pointer stops hovering over a row
     */
   onRowPointerLeave?: (hit: any) => void
-}
+};
 
 const SearchResultsTable = (props: Props) => {
   /**

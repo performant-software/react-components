@@ -48,12 +48,10 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
    */
   const hasStateChanged = (a: any, b: any, ignorePageNo?: boolean) => {
     if (ignorePageNo && a) {
-      // eslint-disable-next-line no-param-reassign
       delete a.page;
     }
 
     if (ignorePageNo && b) {
-      // eslint-disable-next-line no-param-reassign
       delete b.page;
     }
 

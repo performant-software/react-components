@@ -9,28 +9,33 @@ type Props = {
    * Display date, which will override the default date formatting.
    */
   display?: string,
+
   /**
    * An object containing date-time formatting options used by JavaScript Date objects.
    */
-  formatOptions?: DateTimeFormatOptions,
+  formatOptions?: any,
+
   /**
    * Locale identifier (Unicode CLDR) for formatting dates and times.
    */
   locale?: string,
+
   /**
    * Callback fired when the date in the input field is changed.
    */
   onChange: (date: ?Date) => void,
+
   /**
    * Callback fired when the date input field is clicked, typically opening the actual method of
    * input (such as the <code>DatePicker</code> component).
    */
   onClick: () => void,
+
   /**
    * Current value of the date input form field, as a JavaScript Date object, or null.
    */
   value?: ?Date
-}
+};
 
 /**
  * This input component is used to display and clear a date. It must be used with an additional

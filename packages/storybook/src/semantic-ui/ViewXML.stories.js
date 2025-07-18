@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import LinkButton from '../../../semantic-ui/src/components/LinkButton';
 import ViewXML from '../../../semantic-ui/src/components/ViewXML';
 
@@ -125,9 +124,10 @@ const xml = '<?xml version="1.0"?>\n'
   + '      environment.</description>\n'
   + '  </book>\n'
   + '</catalog>';
+
 export default {
   title: 'Components/Semantic UI/ViewXML',
-  decorators: [withKnobs]
+  component: ViewXML
 };
 
 const style = {

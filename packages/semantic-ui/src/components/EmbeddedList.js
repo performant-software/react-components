@@ -2,8 +2,8 @@
 
 import React, { Component, type ComponentType } from 'react';
 import { Table } from 'semantic-ui-react';
-import uuid from 'react-uuid';
 import _ from 'underscore';
+import { v4 as uuid } from 'uuid';
 import DataTable, { type Props as DataTableProps } from './DataTable';
 import Draggable from './Draggable';
 import './EmbeddedList.css';

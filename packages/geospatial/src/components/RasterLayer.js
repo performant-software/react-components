@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Layer, Source } from 'react-map-gl';
+import { Layer, Source } from 'react-map-gl/maplibre';
 
 type Props = {
   maxzoom?: number,

@@ -9,7 +9,7 @@ import {
   useState
 } from 'react';
 import { createPortal } from 'react-dom';
-import { type MapboxMap, useControl } from 'react-map-gl';
+import { type MapboxMap, useControl } from 'react-map-gl/maplibre';
 import _ from 'underscore';
 
 /**
@@ -110,7 +110,6 @@ const MapControl = (props) => {
    */
   useEffect(() => {
     if (props.mapRef) {
-      // eslint-disable-next-line no-param-reassign
       props.mapRef.current = map;
     }
   }, [map, props.mapRef]);

@@ -5,7 +5,7 @@ import Welcome from './Welcome';
 
 export default {
   title: 'Overview/General',
-  component: Welcome,
+  component: Welcome
 };
 
 export const Introduction = () => <Welcome />;

@@ -5,7 +5,7 @@ import SaveButton from "../../../semantic-ui/src/components/SaveButton";
 
 export default {
   title: "Components/Semantic UI/SaveButton",
-  component: SaveButton,
+  component: SaveButton
 };
 
 export const Default = () => {

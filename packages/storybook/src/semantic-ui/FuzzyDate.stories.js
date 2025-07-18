@@ -1,8 +1,7 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, select, boolean } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 import ArrowButtons from '../../../semantic-ui/src/components/ArrowButtons';
@@ -15,12 +14,12 @@ import 'moment/locale/fr';
 
 export default {
   title: 'Components/Semantic UI/FuzzyDate',
-  decorators: [withKnobs]
+  component: FuzzyDate
 };
 
 export const Default = () => (
   <FuzzyDate
-    description={boolean('Show description', true)}
+    description
     onChange={action('change')}
   />
 );
@@ -114,8 +113,8 @@ const locales = {
 };
 
 export const Locales = () => {
-  const calendar = select('Calendar', calendars, calendars.Gregorian);
-  const locale = select('Locale', locales, locales.English);
+  const calendar = calendars.Gregorian;
+  const locale = locales.English;
 
   const [date, setDate] = useState({});
 

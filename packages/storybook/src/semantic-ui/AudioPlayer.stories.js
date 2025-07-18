@@ -1,14 +1,13 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import AudioPlayer from '../../../semantic-ui/src/components/AudioPlayer';
 import audio from '../assets/SampleAudio.mp3';
 
 export default {
   title: 'Components/Semantic UI/AudioPlayer',
-  decorators: [withKnobs]
+  component: AudioPlayer
 };
 
 export const Default = () => (

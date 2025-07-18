@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { Button } from 'semantic-ui-react';
 import VideoPlayer from '../../../semantic-ui/src/components/VideoPlayer';
 import video from '../assets/SampleVideo.mp4';

@@ -1,7 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
-import { number } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import React from 'react';
 import {
   Confirm,
@@ -179,8 +178,8 @@ export const Pagination = useDragDrop(() => (
     onCopy={action('copy')}
     onDelete={action('delete')}
     onSave={action('save')}
-    page={number('Page', 1)}
-    pages={number('Pages', 10)}
+    page={1}
+    pages={10}
     renderImage={(item) => <Image alt={item.image_alt} src={item.image} />}
     renderHeader={(item) => <Header content={item.header} />}
     renderMeta={(item) => item.id}

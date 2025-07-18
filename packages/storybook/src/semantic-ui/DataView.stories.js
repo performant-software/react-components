@@ -1,6 +1,5 @@
 // @flow
 
-import { select, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import _ from 'underscore';
 import DataView from '../../../semantic-ui/src/components/DataView';
@@ -8,7 +7,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Semantic UI/DataView',
-  decorators: [withKnobs]
+  component: DataView
 };
 
 export const Default = useDragDrop(() => (
@@ -146,7 +145,7 @@ export const ColumnCustomization = useDragDrop(() => (
         sortable: true
       }]
     }]}
-    layout={select('Layout', ['top', 'left'], 'left')}
+    layout='left'
     title='EVQ'
   />
 ));
@@ -161,7 +160,7 @@ export const Sorting = useDragDrop(() => (
       sorts: [{
         label: 'Chapter/Verse',
         value: 'chapter_verse'
-      }],
+      }]
     }, {
       id: 'annotations',
       group: 'Text',

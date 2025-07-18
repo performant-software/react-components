@@ -1,12 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import DateInput from '../../../semantic-ui/src/components/DateInput';
 
 export default {
   title: 'Components/Semantic UI/DateInput',
-  component: DateInput,
+  component: DateInput
 };
 
 export const Default = () => {

@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React from 'react';
 import SearchResultsTable from '../../../core-data/src/components/SearchResultsTable';
 import hits from '../data/typesense/Places.json';
@@ -17,7 +17,7 @@ const LOTS_OF_HITS = shuffle([
   ...hits,
   ...hits,
   ...hits,
-  ...hits,
+  ...hits
 ]);
 
 export default {

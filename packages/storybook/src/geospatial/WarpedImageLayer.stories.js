@@ -2,7 +2,7 @@
 
 import maplibregl from 'maplibre-gl';
 import React from 'react';
-import { Map } from 'react-map-gl';
+import { Map } from 'react-map-gl/maplibre';
 import Env from '../utils/Environment';
 import WarpedImageLayer from '../../../geospatial/src/components/WarpedImageLayer';
 
@@ -17,6 +17,9 @@ const mapStyle = `https://api.maptiler.com/maps/basic-v2/style.json?key=${mapTil
 export const Default = () => (
   <Map
     attributionControl={false}
+    canvasContextAttributes={{
+      preserveDrawingBuffer: true
+    }}
     initialViewState={{
       bounds: [
         [-74.123501, 40.679546],

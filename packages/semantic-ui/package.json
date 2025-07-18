@@ -18,19 +18,19 @@
     "build": "vite build && flow-copy-source -v src types"
   },
   "dependencies": {
-    "@react-google-maps/api": "^2.8.1",
-    "axios": "^0.26.1",
-    "i18next": "^19.4.4",
-    "rc-slider": "^10.2.0",
-    "react-calendar": "^3.3.0",
-    "react-color": "^2.18.1",
-    "react-i18next": "^11.4.0",
-    "react-pdf": "^7.1.1",
-    "react-syntax-highlighter": "^15.5.0",
-    "react-uuid": "^1.0.2",
+    "@react-google-maps/api": "^2.20.7",
+    "axios": "^1.10.0",
+    "i18next": "^25.3.2",
+    "rc-slider": "^11.1.8",
+    "react-calendar": "^6.0.0",
+    "react-color": "^2.19.3",
+    "react-i18next": "^15.6.0",
+    "react-pdf": "^10.0.1",
+    "react-syntax-highlighter": "^15.6.1",
     "semantic-ui-less": "2.4.1",
-    "semantic-ui-react": "^2.1.2",
-    "underscore": "^1.13.2",
+    "semantic-ui-react": "^2.1.5",
+    "underscore": "^1.13.7",
+    "uuid": "^11.1.0",
     "zotero-api-client": "^0.40.0",
     "zotero-translation-client": "^5.0.1"
   },
@@ -38,8 +38,8 @@
     "@performant-software/shared-components": "^3.0.7",
     "@samvera/clover-iiif": "^2.3.2",
     "react": ">= 16.13.1 < 19.0.0",
-    "react-dnd": "^11.1.3",
-    "react-dnd-html5-backend": "^11.1.3",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": ">= 16.13.1 < 19.0.0"
   },
   "devDependencies": {
@@ -49,6 +49,6 @@
     "less": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vite": "^5.1.4"
+    "vite": "^7.0.4"
   }
 }

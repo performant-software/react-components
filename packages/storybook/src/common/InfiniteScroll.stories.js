@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useEffect, useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
 import Cars from '../data/Cars.json';
@@ -10,7 +9,7 @@ import useDragDrop from '../../../shared/src/utils/DragDrop';
 
 export default {
   title: 'Components/Common/InfiniteScroll',
-  decorators: [withKnobs]
+  component: InfiniteScroll
 };
 
 const PER_PAGE = 10;

@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import _ from 'underscore';
 import { Button } from 'semantic-ui-react';
 import AccordionList from '../../../semantic-ui/src/components/AccordionList';
@@ -11,7 +10,7 @@ import Api from '../services/Api';
 
 export default {
   title: 'Components/Semantic UI/AccordionList',
-  decorators: [withKnobs]
+  component: AccordionList
 };
 
 const data = [{
@@ -42,9 +41,6 @@ const data = [{
 
 export const Default = () => (
   <AccordionList
-    canAddItem={() => boolean('Can add', true)}
-    canDeleteItem={() => boolean('Can delete', true)}
-    canEditItem={() => boolean('Can edit', true)}
     collectionName='items'
     getChildItems={(items, item) => _.where(items, { parent_id: item.id })}
     getRootItems={(items) => _.where(items, { parent_id: null })}
@@ -66,9 +62,6 @@ export const Default = () => (
 
 export const WithRecordCount = () => (
   <AccordionList
-    canAddItem={() => boolean('Can add', true)}
-    canDeleteItem={() => boolean('Can delete', true)}
-    canEditItem={() => boolean('Can edit', true)}
     collectionName='items'
     getChildItems={(items, item) => _.where(items, { parent_id: item.id })}
     getRootItems={(items) => _.where(items, { parent_id: null })}
@@ -96,11 +89,8 @@ export const Selectable = () => (
       },
       {
         render: () => <Button key='2'>Test 2</Button>
-      },
+      }
     ]}
-    canAddItem={() => boolean('Can add', true)}
-    canDeleteItem={() => boolean('Can delete', true)}
-    canEditItem={() => boolean('Can edit', true)}
     collectionName='items'
     getChildItems={(items, item) => _.where(items, { parent_id: item.id })}
     getRootItems={(items) => _.where(items, { parent_id: null })}

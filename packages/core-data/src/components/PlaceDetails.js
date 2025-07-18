@@ -17,7 +17,7 @@ type Props = {
    *
    * @param
    */
-  onLoad: (data) => any
+  onLoad: (data: any) => any
 };
 
 /**

@@ -1,15 +1,14 @@
 // @flow
 
 import React, { useEffect, useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import _ from 'underscore';
 import MediaList from '../../../semantic-ui/src/components/MediaList';
 import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/MediaList',
-  decorators: [withKnobs]
+  component: MediaList
 };
 
 const IMAGE_COUNT = 50;

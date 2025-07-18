@@ -73,7 +73,7 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
     items,
     refine,
     searchForItems,
-    toggleShowMore,
+    toggleShowMore
   } = useRefinementList({ ...props, operator });
 
   const searchRef = useRef();

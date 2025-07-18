@@ -2,7 +2,7 @@
 
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { forwardRef, useImperativeHandle } from 'react';
-import { useControl, type ControlPosition, type MapboxMap } from 'react-map-gl';
+import { useControl, type ControlPosition, type MapboxMap } from 'react-map-gl/maplibre';
 
 type Props = {
   position?: ControlPosition;

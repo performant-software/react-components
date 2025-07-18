@@ -1,6 +1,6 @@
 // @flow
 
-import { DocsContainer } from '@storybook/addon-docs';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
 import React, { useRef } from 'react';
 import ModalContext from '../../shared/src/context/ModalContext';
 
@@ -79,3 +79,4 @@ export const parameters = {
     }
   }
 };
+export const tags = ['autodocs'];

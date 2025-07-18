@@ -43,7 +43,7 @@ const StyleSelector = (props: Props) => {
       }))}
       search
       searchInput={{
-        'aria-label': 'Search styles',
+        'aria-label': 'Search styles'
       }}
       selectOnBlur={false}
       selection

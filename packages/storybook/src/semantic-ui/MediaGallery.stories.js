@@ -1,15 +1,14 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import MediaGallery from '../../../semantic-ui/src/components/MediaGallery';
 import video from '../assets/SampleVideo.mp4';
 import withImages from '../hooks/Images';
 
 export default {
   title: 'Components/Semantic UI/MediaGallery',
-  decorators: [withKnobs]
+  component: MediaGallery
 };
 
 const IMAGE_COUNT = 50;

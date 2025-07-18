@@ -1,13 +1,12 @@
 // @flow
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import ReferenceCodeFormLabel from '../../../controlled-vocabulary/src/components/ReferenceCodeFormLabel';
 
 export default {
   title: 'Components/Controlled Vocabulary/ReferenceCodeFormLabel',
-  decorators: [withKnobs]
+  component: ReferenceCodeFormLabel
 };
 
 export const Default = () => (

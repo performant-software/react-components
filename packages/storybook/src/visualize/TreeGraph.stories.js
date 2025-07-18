@@ -1,13 +1,12 @@
 // @flow
 
 import React, { useCallback, useState } from 'react';
-import { select, withKnobs } from '@storybook/addon-knobs';
 import _ from 'underscore';
 import TreeGraph from '../../../visualize/src/components/TreeGraph';
 
 export default {
   title: 'Components/Visualize/TreeGraph',
-  decorators: [withKnobs]
+  component: TreeGraph
 };
 
 const data = {
@@ -25,18 +24,18 @@ const data = {
       }, {
         name: 'C',
         children: [{
-          name: 'C1',
+          name: 'C1'
         }, {
           name: 'D',
           children: [{
-            name: 'D1',
+            name: 'D1'
           }, {
-            name: 'D2',
+            name: 'D2'
           }, {
-            name: 'D3',
-          }],
-        }],
-      }],
+            name: 'D3'
+          }]
+        }]
+      }]
     },
     {
       name: 'Z'
@@ -86,9 +85,6 @@ export const Default = () => {
     >
       <TreeGraph
         data={items}
-        layout={select('Layout', ['cartesian', 'polar'])}
-        linkType={select('Link Type', ['curve', 'line', 'step'])}
-        orientation={select('Orientation', ['horizontal', 'vertical'])}
         renderNode={(node) => (
           <button
             onClick={() => setItems(updateNode(node, items))}

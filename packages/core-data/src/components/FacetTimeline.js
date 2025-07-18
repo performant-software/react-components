@@ -190,7 +190,7 @@ const FacetTimeline = (props: Props) => {
     // produce year and x offset for each tick
     return scale.ticks(nTicks).map((year) => ({
       value: year,
-      xOffset: scale(year),
+      xOffset: scale(year)
     }));
   }, []);
 
@@ -200,7 +200,7 @@ const FacetTimeline = (props: Props) => {
    */
   const ticks = useMemo(() => ({
     major: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'major') : [],
-    minor: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'minor') : [],
+    minor: sliderBounds?.width ? generateTicks(min, max, sliderBounds.width, 'minor') : []
   }), [min, max, sliderBounds.width]);
 
   return (
@@ -232,7 +232,7 @@ const FacetTimeline = (props: Props) => {
           range: clsx('cursor-grab', 'active:cursor-grabbing', 'bg-primary', 'border', 'border-black', props.classNames?.range),
           root: clsx('ml-14', 'mr-5', props.classNames?.root),
           track: clsx('cursor-grab', 'active:cursor-grabbing', 'h-5', 'mb-4', props.classNames?.track),
-          thumb: clsx('opacity-0', 'w-[1px]', props.classNames?.thumb),
+          thumb: clsx('opacity-0', 'w-[1px]', props.classNames?.thumb)
         }}
         hideStepButtons
         max={max}

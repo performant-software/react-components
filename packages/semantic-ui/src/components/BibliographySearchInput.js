@@ -18,7 +18,7 @@ type Props = {
    * Callback fired when the translator is successful.
    * @param items
    */
-  onFind: (items: array<any>) => void
+  onFind: (items: Array<any>) => void
 };
 
 /**
@@ -57,7 +57,7 @@ const BibliographySearchInput = (props: Props) => {
 
     const translator = new ZoteroTranslationClient({
       translateURL: translateUrl,
-      persist: false,
+      persist: false
     });
 
     if (BibliographyUtils.isUrl(searchQuery)) {

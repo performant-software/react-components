@@ -45,7 +45,6 @@ const CreatorField = (props: Props) => {
    * @type {unknown}
    */
   const label = useMemo(() => (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label>
       <Dropdown
         onChange={onUpdate.bind(this, 'creatorType')}

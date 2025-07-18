@@ -11,8 +11,11 @@ import React, {
   useState,
   type Node
 } from 'react';
-import Map, { type MapboxMap, NavigationControl } from 'react-map-gl';
-import { FullscreenControl } from 'react-map-gl/maplibre';
+import Map, {
+  FullscreenControl,
+  type MapboxMap,
+  NavigationControl
+} from 'react-map-gl/maplibre';
 import _ from 'underscore';
 import DrawControl from './DrawControl';
 import GeocodingControl from './GeocodingControl';
@@ -236,12 +239,12 @@ const MapDraw = (props: Props) => {
       { props.geocoding && (
         <GeocodingControl
           apiKey={props.apiKey}
+          key={props.geocoding}
           marker={false}
+          pickedResultStyle={props.geocoding === 'polygon' ? 'full-geometry' : 'marker-only'}
           position='top-left'
           onSelection={onSelection}
-          showFullGeometry={props.geocoding === 'polygon'}
           showResultMarkers={false}
-          key={props.geocoding}
         />
       )}
       { props.navigation && (

@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { Form } from 'semantic-ui-react';
 import English from 'simple-keyboard-layouts/build/layouts/english';
 import Arabic from 'simple-keyboard-layouts/build/layouts/arabic';
@@ -9,7 +8,7 @@ import KeyboardField from '../../../semantic-ui/src/components/KeyboardField';
 
 export default {
   title: 'Components/Semantic UI/KeyboardField',
-  decorators: [withKnobs]
+  component: KeyboardField
 };
 
 export const Default = () => {
@@ -19,11 +18,10 @@ export const Default = () => {
     <Form>
       <KeyboardField
         id='test-field'
-        label={text('Field name', 'Field')}
+        label='Field'
         layout={English}
         name='test-field'
         onChange={(e, data) => setValue(data.value)}
-        required={boolean('Required', false)}
         value={value}
       >
         <input
@@ -43,11 +41,10 @@ export const MultipleOnOneForm = () => {
     <Form>
       <KeyboardField
         id='test-field-1'
-        label={text('Field name', 'Field')}
+        label='Field'
         layout={English}
         name='test-field-1'
         onChange={(e, data) => setValue(data.value)}
-        required={boolean('Required', false)}
         value={value}
       >
         <input
@@ -57,11 +54,10 @@ export const MultipleOnOneForm = () => {
       </KeyboardField>
       <KeyboardField
         id='test-field-2'
-        label={text('Field name', 'Field')}
+        label='Field'
         layout={Arabic}
         name='test-field-2'
         onChange={(e, data) => setValue2(data.value)}
-        required={boolean('Required', false)}
         value={value2}
       >
         <input
@@ -126,11 +122,10 @@ export const WithAlternativeCharacters = () => {
     <Form>
       <KeyboardField
         id='test-field'
-        label={text('Field name', 'Field')}
+        label='Field'
         layout={exampleTransliterationLayout}
         name='test-field'
         onChange={(e, data) => setValue(data.value)}
-        required={boolean('Required', false)}
         value={value}
       >
         <input

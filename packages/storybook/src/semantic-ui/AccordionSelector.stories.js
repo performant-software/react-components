@@ -1,8 +1,7 @@
 // @flow
 
 import React, { useState } from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import AccordionSelector from '../../../semantic-ui/src/components/AccordionSelector';
@@ -11,7 +10,7 @@ import Api from '../services/Api';
 
 export default {
   title: 'Components/Semantic UI/AccordionSelector',
-  decorators: [withKnobs]
+  component: AccordionSelector
 };
 
 const data = [{
@@ -337,7 +336,6 @@ export const Default = () => {
             return Promise.resolve({});
           }
         }}
-        multiple={boolean('Multiple', false)}
         onClose={() => {
           action('close')();
           setVisible(false);
@@ -356,7 +354,6 @@ export const Default = () => {
         open={visible}
         renderItem={(item) => `${item.first_name} ${item.last_name} (${item.title})`}
         showToggle={() => true}
-        title={text('Title', 'Select some')}
       />
     </>
   );

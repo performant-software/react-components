@@ -1,7 +1,7 @@
 // @flow
 
 import { faker } from '@faker-js/faker';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';

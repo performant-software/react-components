@@ -1,34 +1,27 @@
 // @flow
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from 'storybook/actions';
 import LoginModal from '../../../semantic-ui/src/components/LoginModal';
 
 export default {
   title: 'Components/Semantic UI/LoginModal',
-  decorators: [withKnobs]
+  component: LoginModal
 };
 
 export const Default = () => (
   <LoginModal
-    disabled={boolean('Disabled', false)}
-    loginFailed={boolean('Login failed', false)}
     onClose={action('close')}
     onLogin={action('login')}
     onPasswordChange={action('password-change')}
     onUsernameChange={action('username-change')}
-    open={boolean('Open', true)}
   />
 );
 
 export const NoCloseButton = () => (
   <LoginModal
-    disabled={boolean('Disabled', false)}
-    loginFailed={boolean('Login failed', false)}
     onLogin={action('login')}
     onPasswordChange={action('password-change')}
     onUsernameChange={action('username-change')}
-    open={boolean('Open', true)}
   />
 );

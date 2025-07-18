@@ -1,8 +1,8 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React, { useCallback, useRef } from 'react';
-import { Button, Checkbox, List } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import FacetList from '../../../semantic-ui/src/components/FacetList';
 
 export default {

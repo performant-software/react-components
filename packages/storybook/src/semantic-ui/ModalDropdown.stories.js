@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Form, Modal } from 'semantic-ui-react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import ModalDropdown from '../../../semantic-ui/src/components/ModalDropdown';
 
 export default {

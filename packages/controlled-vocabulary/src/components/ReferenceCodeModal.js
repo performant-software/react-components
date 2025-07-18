@@ -26,7 +26,7 @@ const ReferenceCodeModal = (props: EditContainerProps) => (
             label={i18n.t('ReferenceCodeModal.labels.name')}
             onChange={props.onTextInputChange.bind(this, 'name')}
             required={props.isRequired('name')}
-            value={props.item.name}
+            value={props.item.name || ''}
           />
         </Modal.Content>
         { props.children }

@@ -18,7 +18,10 @@ import {
 import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import ColumnResize from './ColumnResize';
-import useColumnSelector, { type Props as ColumnSelectorProps } from './DataTableColumnSelector';
+import useColumnSelector, {
+  type Column,
+  type Props as ColumnSelectorProps
+} from './DataTableColumnSelector';
 import useList, { type Action, type Props as ListProps } from './List';
 import './DataTable.css';
 
@@ -632,7 +635,7 @@ DataTable.defaultProps = {
   renderItem: undefined,
   showRecordCount: false,
   sortColumn: undefined,
-  sortDirection: undefined,
+  sortDirection: undefined
 };
 
 export default useColumnSelector(useList(DataTable));

@@ -1,10 +1,7 @@
 // @flow
 
-import React, {
-  useEffect,
-  useState
-} from 'react';
-import { Layer, Source } from 'react-map-gl';
+import React from 'react';
+import { Layer, Source } from 'react-map-gl/maplibre';
 import MapStyles from '../utils/MapStyles';
 
 type Props = {

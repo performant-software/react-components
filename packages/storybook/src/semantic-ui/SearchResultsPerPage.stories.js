@@ -1,6 +1,6 @@
 // @flow
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import React from 'react';
 import _ from 'underscore';
 import SearchResultsPerPage from '../../../semantic-ui/src/components/SearchResultsPerPage';

@@ -28,7 +28,7 @@ type Props = {
   src?: string
 };
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
 const LazyDocument = (props: Props) => {
   const [dimmer, setDimmer] = useState(false);

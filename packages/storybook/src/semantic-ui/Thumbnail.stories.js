@@ -1,13 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { Button } from 'semantic-ui-react';
 import Thumbnail from '../../../semantic-ui/src/components/Thumbnail';
 
 export default {
   title: 'Components/Semantic UI/Thumbnail',
-  decorators: [withKnobs]
+  component: Thumbnail
 };
 
 export const Default = () => {

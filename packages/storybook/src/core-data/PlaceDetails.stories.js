@@ -1,7 +1,7 @@
 // @flow
 
 import { Dialog, Transition } from '@headlessui/react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { X } from 'lucide-react';
 import React, { useState, Fragment } from 'react';
 import PlaceDetails from '../../../core-data/src/components/PlaceDetails';

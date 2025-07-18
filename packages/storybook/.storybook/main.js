@@ -1,30 +1,28 @@
 // @flow
 
-import path from 'path';
+import path, { dirname, join } from 'path';
 import _ from 'underscore';
 
 const config = {
   stories: ['../src/**/*.stories.js'],
+
   addons: [
-    '@storybook/addon-a11y',
-    '@storybook/addon-actions',
-    '@storybook/addon-backgrounds',
-    '@storybook/addon-docs',
-    '@storybook/addon-knobs',
-    '@storybook/addon-links'
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-links")
   ],
+
   core: {
     builder: {
-      name: '@storybook/builder-vite',
-      options: {
-        viteConfigPath: './vite.config.js',
-      },
+      name: getAbsolutePath("@storybook/builder-vite")
     }
   },
+
   framework: {
-    name: '@storybook/react-vite',
+    name: getAbsolutePath("@storybook/react-vite"),
     options: {}
   },
+
   babel: (options) => {
     // Remove the override applied from @storybook/react
     _.each(options.overrides, (o) => {
@@ -49,9 +47,17 @@ const config = {
 
     return options;
   },
-  docs: {
-    autodocs: true
+
+  docs: {},
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
   }
 };
 
 export default config;
+
+function getAbsolutePath(value) {
+  // eslint-disable-next-line no-undef
+  return dirname(require.resolve(join(value, "package.json")));
+}
