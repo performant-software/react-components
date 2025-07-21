@@ -147,6 +147,7 @@ export default [
       }],
       'react/jsx-no-bind': 'off',
       'react/jsx-props-no-spreading': 'off',
+      'import-x/no-unresolved': [ 2, {ignore: '\\.tsx$'}],
       'react/no-array-index-key': 'off',
       'react/no-did-update-set-state': 'off',
       'react/prefer-stateless-function': 'off',
