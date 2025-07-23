@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text } from '../catalyst/text';
 
 const Test: React.FC = () => (
-  <Text>
+  <p className='h-10 bg-gray-100'>
     hello
-  </Text>
+  </p>
 );
 
 export default Test;
