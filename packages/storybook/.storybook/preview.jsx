@@ -1,7 +1,7 @@
 // @flow
 
 import { DocsContainer } from '@storybook/addon-docs/blocks';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 import ModalContext from '../../shared/src/context/ModalContext';
 
 // Component package styles
@@ -15,9 +15,6 @@ import '../../visualize/dist/style.css';
 
 // Storybook styles
 import './styles/index.css';
-
-// Tailwind styles
-import '../src/index.css';
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.
@@ -36,6 +33,22 @@ if (import.meta.env.A11Y_TAGS) {
     }
   }
 }
+
+export const decorators = [
+  (Story, context) => {
+    const storyPath = context.parameters.fileName || context.title;
+    
+    useEffect(() => {
+      if (storyPath.includes('tailwind-ui')) {
+        import('../src/tailwind-ui.css');
+      } else if (storyPath.includes('core-data')) {
+        import('../src/core-data.css');
+      }
+    }, [storyPath]);
+    
+    return <Story />;
+  }
+];
 
 export const parameters = {
   a11y,
