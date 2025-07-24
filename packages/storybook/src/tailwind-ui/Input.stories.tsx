@@ -20,6 +20,19 @@ export const Default = () => {
   )
 }
 
+export const Placeholder = () => {
+  const [val, setVal] = useState('')
+
+  return (
+    <Input
+      label='Name'
+      placeholder='Jane Doe'
+      onChange={(str) => setVal(str)}
+      value={val}
+    />
+  )
+}
+
 export const Disabled = () => {
   const [val, setVal] = useState('')
 
