@@ -44,6 +44,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-docgen": "^6.0.1",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-map-gl": "^8.0.4",
     "semantic-ui-react": "^2.1.2",
     "simple-keyboard-layouts": "^3.1.87",
