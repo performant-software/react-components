@@ -23,7 +23,7 @@ interface Props {
 const Input: React.FC<Props> = (props) => {
   return (
     <Field
-      className='flex flex-col gap-2 text-zinc-950 dark:text-white group'
+      className='flex flex-col gap-2 text-zinc-950 dark:text-white group font-sans'
       data-disabled={props.disabled}
     >
       {props.label && (
@@ -42,7 +42,7 @@ const Input: React.FC<Props> = (props) => {
           />
         )}
         <HeadlessInput
-          className={clsx('focus:outline-none grow bg-transparent', props.classes?.input)}
+          className={clsx('focus:outline-none grow bg-transparent leading-6', props.classes?.input)}
           disabled={props.disabled}
           placeholder={props.placeholder}
           onChange={e => props.onChange(e.target.value)}

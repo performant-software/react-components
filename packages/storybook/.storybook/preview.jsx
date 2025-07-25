@@ -6,9 +6,7 @@ import ModalContext from '../../shared/src/context/ModalContext';
 
 // Component package styles
 import '../../controlled-vocabulary/dist/style.css';
-import '../../core-data/dist/packages/core-data/src/index.css';
 import '../../geospatial/dist/style.css';
-import '../../semantic-ui/dist/style.css';
 import '../../shared/dist/style.css';
 import '../../user-defined-fields/dist/style.css';
 import '../../visualize/dist/style.css';
@@ -36,13 +34,16 @@ if (import.meta.env.A11Y_TAGS) {
 
 export const decorators = [
   (Story, context) => {
-    const storyPath = context.parameters.fileName || context.title;
+    const storyPath = context.parameters.fileName;
     
     useEffect(() => {
-      if (storyPath.includes('tailwind-ui')) {
+      if (storyPath.startsWith('./src/tailwind-ui')) {
         import('../src/tailwind-ui.css');
-      } else if (storyPath.includes('core-data')) {
+      } else if (storyPath.startsWith('./src/core-data')) {
         import('../src/core-data.css');
+        import('../../core-data/dist/packages/core-data/src/index.css');
+      } else if (storyPath.startsWith('./src/semantic-ui')) {
+        import('../../semantic-ui/dist/style.css')
       }
     }, [storyPath]);
     
