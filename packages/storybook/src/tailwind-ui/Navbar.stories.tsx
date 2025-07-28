@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "../../../tailwind-ui/src/components/Navbar";
 import faircopyLogo from '../assets/faircopy_logo.svg'
 import { action } from 'storybook/actions';
-import { FaUser } from "react-icons/fa";
+import { FaSignOutAlt, FaUser, FaUsers } from "react-icons/fa";
 
 export default {
   title: 'Components/TailwindUI/Navbar',
@@ -31,6 +31,8 @@ export const Default = () => {
       </Navbar.Tabs>
       <Navbar.Controls>
         <FaUser />
+        <FaUsers />
+        <FaSignOutAlt />
       </Navbar.Controls>
     </Navbar>
   )

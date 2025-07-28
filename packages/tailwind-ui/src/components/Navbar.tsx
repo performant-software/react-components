@@ -28,7 +28,7 @@ interface LogoProps {
 
 Navbar.Logo = (props: LogoProps) => {
   return (
-    <div className='pr-4 max-h-8'>
+    <div className='pr-4 max-h-8 shrink-0'>
       {props.children}
     </div>
   )
@@ -51,7 +51,7 @@ interface Tab {
 }
 
 Navbar.Tab = (props: Tab) => {
-  const wrapperClass = `text-sm p-2 font-semibold relative`
+  const wrapperClass = `text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200`
 
   // for a11y, render as links when a URL is passed
   const wrapper = useMemo(() => ({
@@ -70,7 +70,7 @@ Navbar.Tab = (props: Tab) => {
       {props.label}
       {props.active && (
         <div
-          className='absolute bottom-[-4px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950'
+          className='absolute bottom-[-6px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950'
         />
       )}
     </wrapper.component>
@@ -83,7 +83,7 @@ interface ControlProps {
 
 Navbar.Controls = (props: ControlProps) => {
   return (
-    <div>
+    <div className='flex gap-4'>
       {props.children}
     </div>
   )
