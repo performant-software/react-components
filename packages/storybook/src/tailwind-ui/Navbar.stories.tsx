@@ -37,3 +37,29 @@ export const Default = () => {
     </Navbar>
   )
 }
+
+export const WithLinks = () => {
+  return (
+    <Navbar divider>
+      <Navbar.Logo>
+        <img src={faircopyLogo} />
+      </Navbar.Logo>
+      <Navbar.Tabs>
+        <Navbar.Tab
+          active
+          label='Soup'
+          url={'/soup'}
+        />
+        <Navbar.Tab
+          label='Sandwiches'
+          url={'/sandwiches'}
+        />
+      </Navbar.Tabs>
+      <Navbar.Controls>
+        <FaUser />
+        <FaUsers />
+        <FaSignOutAlt />
+      </Navbar.Controls>
+    </Navbar>
+  )
+}
