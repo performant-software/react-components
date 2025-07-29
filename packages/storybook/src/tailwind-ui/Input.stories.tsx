@@ -9,7 +9,7 @@ export default {
 };
 
 export const Default = () => {
-  const [val, setVal] = useState('')
+  const [val, setVal] = useState('');
 
   return (
     <Input
@@ -17,11 +17,11 @@ export const Default = () => {
       onChange={(str) => setVal(str)}
       value={val}
     />
-  )
-}
+  );
+};
 
 export const Placeholder = () => {
-  const [val, setVal] = useState('')
+  const [val, setVal] = useState('');
 
   return (
     <Input
@@ -30,11 +30,11 @@ export const Placeholder = () => {
       onChange={(str) => setVal(str)}
       value={val}
     />
-  )
-}
+  );
+};
 
 export const Disabled = () => {
-  const [val, setVal] = useState('')
+  const [val, setVal] = useState('');
 
   return (
     <Input
@@ -44,34 +44,34 @@ export const Disabled = () => {
       onChange={(str) => setVal(str)}
       value={val}
     />
-  )
-}
+  );
+};
 
 export const Error = () => {
-  const [val, setVal] = useState('')
+  const [val, setVal] = useState('');
 
   return (
     <Input
       label='Name'
       error
-      helperText="I have an error!"
+      helperText='I have an error!'
       onChange={(str) => setVal(str)}
       value={val}
     />
-  )
-}
+  );
+};
 
 export const Icons = () => {
-  const [val, setVal] = useState('')
+  const [val, setVal] = useState('');
 
   return (
     <Input
       label='Country'
       iconLeft={MdLocationOn}
       iconRight={FaRegQuestionCircle}
-      helperText="I have icons!"
+      helperText='I have icons!'
       onChange={(str) => setVal(str)}
       value={val}
     />
-  )
-}
+  );
+};

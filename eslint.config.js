@@ -9,6 +9,42 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+
+const commonRules = {
+  'class-methods-use-this': 'off',
+  '@stylistic/comma-dangle': ['error', 'never'],
+  "import-x/no-named-as-default": "off",
+  "import-x/no-named-as-default-member": "off",
+  'import-x/prefer-default-export': 'off',
+  'jsx-a11y/media-has-caption': 'off',
+  '@stylistic/jsx-quotes': ['error', 'prefer-single'],
+  '@stylistic/lines-between-class-members': 'off',
+  '@stylistic/max-len': ['error', {
+    code: 120,
+    ignoreStrings: true
+  }],
+  'no-underscore-dangle': 'off',
+  'no-use-before-define': 'off',
+  '@stylistic/quote-props': ['error', 'as-needed', {
+    keywords: false,
+    unnecessary: true,
+    numbers: true
+  }],
+  'react/display-name': 'off',
+  'react/default-props-match-prop-types': 'off',
+  'react/destructuring-assignment': 'off',
+  'react/jsx-no-bind': 'off',
+  'react/jsx-props-no-spreading': 'off',
+  'react/no-array-index-key': 'off',
+  'react/no-did-update-set-state': 'off',
+  'react/prefer-stateless-function': 'off',
+  'react/require-default-props': 'off',
+  'react/sort-comp': 'off',
+  'react/static-property-placement': 'off',
+  '@stylistic/semi-style': ['error', 'last'],
+  '@stylistic/semi': ['error', 'always']
+};
 
 export default [
   importX.flatConfigs.recommended,
@@ -50,41 +86,10 @@ export default [
       '@stylistic': stylistic
     },
     rules: {
-      'class-methods-use-this': 'off',
-      '@stylistic/comma-dangle': ['error', 'never'],
-      "import-x/no-named-as-default": "off",
-      "import-x/no-named-as-default-member": "off",
-      'import-x/prefer-default-export': 'off',
-      'jsx-a11y/media-has-caption': 'off',
-      '@stylistic/jsx-quotes': ['error', 'prefer-single'],
-      '@stylistic/lines-between-class-members': 'off',
-      '@stylistic/max-len': ['error', {
-        code: 120,
-        ignoreStrings: true
-      }],
-      'no-underscore-dangle': 'off',
-      'no-use-before-define': 'off',
-      '@stylistic/quote-props': ['error', 'as-needed', {
-        keywords: false,
-        unnecessary: true,
-        numbers: true
-      }],
-      'react/display-name': 'off',
-      'react/default-props-match-prop-types': 'off',
-      'react/destructuring-assignment': 'off',
+      ...commonRules,
       'react/jsx-filename-extension': [1, {
         extensions: ['.js', '.jsx']
-      }],
-      'react/jsx-no-bind': 'off',
-      'react/jsx-props-no-spreading': 'off',
-      'react/no-array-index-key': 'off',
-      'react/no-did-update-set-state': 'off',
-      'react/prefer-stateless-function': 'off',
-      'react/require-default-props': 'off',
-      'react/sort-comp': 'off',
-      'react/static-property-placement': 'off',
-      '@stylistic/semi-style': ['error', 'last'],
-      '@stylistic/semi': ['error', 'always']
+      }]
     },
     settings: {
       react: {
@@ -119,51 +124,23 @@ export default [
       react,
       '@typescript-eslint': typescriptEslint,
       jest,
-      'jsx-a11y': jsxA11y
+      'jsx-a11y': jsxA11y,
+      '@stylistic': stylistic
     },
     rules: {
-      'class-methods-use-this': 'off',
-      'comma-dangle': ['error', 'never'],
-      "import-x/no-named-as-default": "off",
-      "import-x/no-named-as-default-member": "off",
-      'import-x/prefer-default-export': 'off',
-      'jsx-a11y/media-has-caption': 'off',
-      'jsx-quotes': ['error', 'prefer-single'],
-      'lines-between-class-members': 'off',
-      'max-len': ['error', {
-        code: 120,
-        ignoreStrings: true
-      }],
-      'no-underscore-dangle': 'off',
-      'quote-props': ['error', 'as-needed', {
-        keywords: false,
-        unnecessary: true,
-        numbers: true
-      }],
-      'react/display-name': 'off',
-      'react/default-props-match-prop-types': 'off',
-      'react/destructuring-assignment': 'off',
-      'react/jsx-filename-extension': [1, {
-        extensions: ['.tsx']
-      }],
-      'react/jsx-no-bind': 'off',
-      'react/jsx-props-no-spreading': 'off',
-      'import-x/no-unresolved': [ 2, {ignore: '\\.tsx$'}],
-      'react/no-array-index-key': 'off',
-      'react/no-did-update-set-state': 'off',
-      'react/prefer-stateless-function': 'off',
-      'react/require-default-props': 'off',
-      'react/sort-comp': 'off',
-      'react/static-property-placement': 'off',
-      'semi-style': ['error', 'last'],
-      'no-use-before-define': 'off',
-      'no-unused-vars': 'off',
-      'no-shadow': 'off'
+      ...commonRules,
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error"]
     },
     settings: {
       react: {
         version: 'detect'
-      }
+      },
+      'import-x/resolver-next': [
+        createTypeScriptImportResolver({
+          project: 'packages/*/{ts,js}config.json'
+        })
+      ]
     }
   },
   {
