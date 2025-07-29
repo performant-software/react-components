@@ -50,8 +50,6 @@ interface Tab {
 }
 
 Navbar.Tab = (props: Tab) => {
-  const wrapperClass = `text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200 dark:text-white hover:dark:bg-zinc-600`
-
   // for a11y, render as links when a URL is passed
   const wrapper = useMemo(() => ({
     component: props.url ? 'a' : 'button',
@@ -63,7 +61,7 @@ Navbar.Tab = (props: Tab) => {
   return (
     <wrapper.component
       data-active={props.active}
-      className={wrapperClass}
+      className='text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200 dark:text-white hover:dark:bg-zinc-600'
       {...wrapper.props}
     >
       {props.label}
