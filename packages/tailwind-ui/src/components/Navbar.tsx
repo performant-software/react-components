@@ -51,7 +51,7 @@ interface Tab {
 }
 
 Navbar.Tab = (props: Tab) => {
-  const wrapperClass = `text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200`
+  const wrapperClass = `text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200 dark:text-white hover:dark:bg-zinc-600`
 
   // for a11y, render as links when a URL is passed
   const wrapper = useMemo(() => ({
@@ -70,7 +70,7 @@ Navbar.Tab = (props: Tab) => {
       {props.label}
       {props.active && (
         <div
-          className='absolute bottom-[-6px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950'
+          className='absolute bottom-[-6px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950 dark:bg-white'
         />
       )}
     </wrapper.component>

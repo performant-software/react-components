@@ -30,9 +30,9 @@ export const Default = () => {
         />
       </Navbar.Tabs>
       <Navbar.Controls>
-        <FaUser />
-        <FaUsers />
-        <FaSignOutAlt />
+        <FaUser className="dark:text-white" />
+        <FaUsers className="dark:text-white" />
+        <FaSignOutAlt className="dark:text-white" />
       </Navbar.Controls>
     </Navbar>
   )
@@ -56,9 +56,9 @@ export const WithLinks = () => {
         />
       </Navbar.Tabs>
       <Navbar.Controls>
-        <FaUser />
-        <FaUsers />
-        <FaSignOutAlt />
+        <FaUser className="dark:text-white" />
+        <FaUsers className="dark:text-white" />
+        <FaSignOutAlt className="dark:text-white" />
       </Navbar.Controls>
     </Navbar>
   )
