@@ -3,11 +3,20 @@ import Navbar from "../../../tailwind-ui/src/components/Navbar";
 import faircopyLogo from '../assets/faircopy_logo.svg'
 import { action } from 'storybook/actions';
 import { FaSignOutAlt, FaUser, FaUsers } from "react-icons/fa";
+import Input from "../../../tailwind-ui/src/components/Input";
 
 export default {
   title: 'Components/TailwindUI/Navbar',
   component: Navbar
 };
+
+const CustomLink = ({href, label}) => {
+  return (
+    <div className="bg-red-200 rounded-full p-2 hover:bg-green-400">
+      <a href={href}>{label}</a>
+    </div>
+  )
+}
 
 export const Default = () => {
   const [active, setActive] = useState('soup')
@@ -48,11 +57,39 @@ export const WithLinks = () => {
         <Navbar.Tab
           active
           label='Soup'
-          url={'/soup'}
+          href={'/soup'}
         />
         <Navbar.Tab
           label='Sandwiches'
-          url={'/sandwiches'}
+          href={'/sandwiches'}
+        />
+      </Navbar.Tabs>
+      <Navbar.Controls>
+        <FaUser className="dark:text-white" />
+        <FaUsers className="dark:text-white" />
+        <FaSignOutAlt className="dark:text-white" />
+      </Navbar.Controls>
+    </Navbar>
+  )
+}
+
+export const WithCustomTabComponents = () => {
+  return (
+    <Navbar divider>
+      <Navbar.Logo>
+        <img src={faircopyLogo} />
+      </Navbar.Logo>
+      <Navbar.Tabs>
+        <Navbar.Tab
+          active
+          as={CustomLink}
+          label='Soup'
+          href='/soup'
+        />
+        <Navbar.Tab
+          as={CustomLink}
+          label='Sandwiches'
+          href='/sandwiches'
         />
       </Navbar.Tabs>
       <Navbar.Controls>
