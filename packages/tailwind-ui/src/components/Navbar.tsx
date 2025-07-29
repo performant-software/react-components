@@ -43,11 +43,10 @@ Navbar.Tabs = (props: { children: React.ElementType | React.ElementType[] }) => 
 }
 
 interface Tab {
-  as?: React.FC
-  label: string
   active: boolean
-  url?: string
+  label: string
   onClick?: string
+  url?: string
 }
 
 Navbar.Tab = (props: Tab) => {
