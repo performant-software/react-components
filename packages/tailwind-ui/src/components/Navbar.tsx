@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { findElement } from '../util/components';
+import { findChild } from '../util/components';
 
 interface Props {
   children: React.ElementType | React.ElementType[]
@@ -7,9 +7,9 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = (props) => {
-  const logo = findElement(props.children, Navbar.Logo)
-  const tabs = findElement(props.children, Navbar.Tabs)
-  const controls = findElement(props.children, Navbar.Controls)
+  const logo = findChild(props.children, Navbar.Logo)
+  const tabs = findChild(props.children, Navbar.Tabs)
+  const controls = findChild(props.children, Navbar.Controls)
 
   return (
     <nav className='w-full flex justify-between items-center text-zinc-950'>
