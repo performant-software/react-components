@@ -1,5 +1,5 @@
-import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
 
 interface Props {
   ariaLabel?: string
@@ -35,17 +35,17 @@ const Button: React.FC<Props> = (props) => {
           'py-1 px-2 text-sm': size === 's' && !props.iconOnly,
           'py-1.5 px-2.5 text-sm': size === 'base' && !props.iconOnly,
           'py-2 px-3 text-sm': size === 'l' && !props.iconOnly,
-          'py-2 px-4 text-base': size === 'xl' && !props.iconOnly,
+          'py-2 px-4 text-base': size === 'xl' && !props.iconOnly
         },
         props.className
       )}
       disabled={props.disabled}
       onClick={props.onClick}
-      type={"button" || props.type}
+      type={props.type || 'button'}
     >
       {props.children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

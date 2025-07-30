@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '../../../tailwind-ui/src/components/Button';
-import { MdLocationOn } from "react-icons/md";
-import { FaPlus, FaRegQuestionCircle } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import DarkContainer from './DarkContainer';
 
 export default {
@@ -22,8 +21,8 @@ export const Default = () => {
         click me
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export const Dark = () => {
   return (
@@ -40,42 +39,42 @@ export const Dark = () => {
         </Button>
       </div>
     </DarkContainer>
-  )
-}
+  );
+};
 
 export const Disabled = () => {
   return (
     <div className='flex flex-wrap gap-8'>
       <Button disabled variant='filled'>
-        don't click me
+        don&apos;t click me
       </Button>
       <Button disabled variant='outline'>
-        don't click me
+        don&apos;t click me
       </Button>
       <Button disabled variant='plain'>
-        don't click me
+        don&apos;t click me
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export const DisabledDark = () => {
   return (
     <DarkContainer>
       <div className='flex flex-wrap gap-8'>
         <Button disabled variant='filled'>
-          don't click me
+          don&apos;t click me
         </Button>
         <Button disabled variant='outline'>
-          don't click me
+          don&apos;t click me
         </Button>
         <Button disabled variant='plain'>
-          don't click me
+          don&apos;t click me
         </Button>
       </div>
     </DarkContainer>
-  )
-}
+  );
+};
 
 export const Icons = () => {
   return (
@@ -90,8 +89,8 @@ export const Icons = () => {
         <FaPlus />
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export const IconsDark = () => (
   <DarkContainer>
@@ -107,7 +106,7 @@ export const IconsDark = () => (
       </Button>
     </div>
   </DarkContainer>
-)
+);
 
 export const CustomClass = () => (
   <Button
@@ -115,7 +114,7 @@ export const CustomClass = () => (
   >
     click me
   </Button>
-)
+);
 
 export const AriaLabel = () => (
   <Button
@@ -123,4 +122,4 @@ export const AriaLabel = () => (
   >
     click me
   </Button>
-)
+);
