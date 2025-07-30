@@ -11,7 +11,7 @@ const Card: React.FC<Props> = (props) => {
   const bottom = Element.findByType(props.children, Card.Bottom)
 
   return (
-    <div className='rounded-lg shadow-md'>
+    <div className='rounded-lg shadow-md divide-y divide-zinc-200'>
       {top}
       {middle}
       {bottom}
@@ -25,7 +25,7 @@ interface TopProps {
 
 Card.Top = (props: TopProps) => {
   return (
-    <div>
+    <div className='py-5 px-6'>
       {props.children}
     </div>
   )
@@ -37,7 +37,7 @@ interface MiddleProps {
 
 Card.Middle = (props: MiddleProps) => {
   return (
-    <div>
+    <div className='py-5 px-6'>
       {props.children}
     </div>
   )
@@ -49,7 +49,7 @@ interface BottomProps {
 
 Card.Bottom = (props: BottomProps) => {
   return (
-    <div>
+    <div className='py-5 px-6'>
       {props.children}
     </div>
   )
