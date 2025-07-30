@@ -29,7 +29,7 @@ if (import.meta.env.A11Y_TAGS) {
         values: import.meta.env.A11Y_TAGS.split(',')
       }
     }
-  }
+  };
 }
 
 export const decorators = [
@@ -43,7 +43,7 @@ export const decorators = [
         import('../src/core-data.css');
         import('../../core-data/dist/packages/core-data/src/index.css');
       } else if (storyPath.startsWith('./src/semantic-ui')) {
-        import('../../semantic-ui/dist/style.css')
+        import('../../semantic-ui/dist/style.css');
       }
     }, [storyPath]);
     
@@ -71,7 +71,7 @@ export const parameters = {
             </div>
           </DocsContainer>
         </ModalContext.Provider>
-      )
+      );
     }
   },
   backgrounds: {
