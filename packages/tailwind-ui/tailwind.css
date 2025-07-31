@@ -1,5 +1,6 @@
 @theme {
   --color-primary: #43639D;
+  --color-primary-light: #718FBF;
 
   --color-content-primary: var(--color-zinc-950);
   --color-content-seconday: var(--color-zinc-500);
