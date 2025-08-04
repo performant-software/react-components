@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from '../../../tailwind-ui/src/components/Dropdown';
-import { FaPersonBooth } from 'react-icons/fa';
-import { MdEditDocument, MdSettings } from 'react-icons/md';
+import { FaPaperclip, FaUser } from 'react-icons/fa';
+import { MdSettings } from 'react-icons/md';
 
 export default {
   title: 'Components/TailwindUI/Dropdown',
@@ -35,17 +35,40 @@ export const Icons = () => {
         Explore
       </Dropdown.Button>
       <Dropdown.Item
-        icon={FaPersonBooth}
+        icon={FaUser}
         label='People'
       />
       <Dropdown.Item
-        icon={MdEditDocument}
+        icon={FaPaperclip}
         label='Documents'
       />
       <Dropdown.Divider />
       <Dropdown.Item
         icon={MdSettings}
         label='Settings'
+      />
+    </Dropdown>
+  );
+};
+
+export const Descriptions = () => {
+  return (
+    <Dropdown>
+      <Dropdown.Button>
+        Explore
+      </Dropdown.Button>
+      <Dropdown.Item
+        label='People'
+        description='Members of this project.'
+      />
+      <Dropdown.Item
+        label='Documents'
+        description='Census, tax records, and credit card statements.'
+      />
+      <Dropdown.Divider />
+      <Dropdown.Item
+        label='Settings'
+        description='Project and user settings.'
       />
     </Dropdown>
   );

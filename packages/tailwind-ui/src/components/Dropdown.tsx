@@ -10,19 +10,19 @@ interface Props {
 
 const Dropdown: React.FC<Props> = (props) => {
   const button = Element.findByType(props.children, Dropdown.Button);
-  const items = Element.findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
+  const menuContents = Element.findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
 
   return (
     <Menu>
       {button}
       <MenuItems
-        anchor='bottom'
+        anchor='bottom start'
         className={clsx(
           'flex flex-col bg-zinc-50 border border-zinc-200 rounded-xl shadow-lg focus:outline-none',
           props.className
         )}
       >
-        {items}
+        {menuContents}
       </MenuItems>
     </Menu>
   );
@@ -38,7 +38,7 @@ Dropdown.Button = (props: MenuButtonProps) => {
 };
 
 interface DropdownItemProps {
-  label: string
+  label?: string
   description?: string
   icon?: React.FC
 }
@@ -46,19 +46,22 @@ interface DropdownItemProps {
 Dropdown.Item = (props: DropdownItemProps) => {
   return (
     <MenuItem
-      className='bg-red px-4 py-2 hover:cursor-pointer text-zinc-500'
+      className='bg-red px-4 py-2 hover:cursor-pointer text-zinc-500 flex flex-col text-sm'
     >
-      <span className='flex gap-3 items-center'>
-        {props.icon && <props.icon />}
-        <span className='text-black'>{props.label}</span>
-      </span>
+      <div>
+        <span className='flex gap-3 items-center'>
+          {props.icon && <props.icon size={16} />}
+          <span className='text-black h-full'>{props.label}</span>
+        </span>
+        {props.description && <p className='text-zinc-500 text-xs'>{props.description}</p>}
+      </div>
     </MenuItem>
   );
 };
 
 Dropdown.Divider = () => {
   return (
-    <div className='w-full h-1 bg-zinc-200 px-4 py-2' />
+    <div className='w-auto h-px bg-zinc-200 mx-4 my-1' />
   );
 };
 
