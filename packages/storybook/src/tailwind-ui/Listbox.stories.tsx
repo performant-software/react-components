@@ -53,3 +53,21 @@ export const Disabled = () => {
     />
   );
 };
+
+
+export const CustomStyles = () => {
+  const [value, setValue] = useState(options[0]);
+
+  return (
+    <Listbox
+      classes={{
+        button: 'text-red-200',
+        option: 'data-selected:bg-purple-500!',
+        options: 'bg-yellow-500'
+      }}
+      onChange={setValue}
+      options={options}
+      value={value}
+    />
+  );
+};
