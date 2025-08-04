@@ -10,7 +10,7 @@ interface Props {
 
 const Dropdown: React.FC<Props> = (props) => {
   const button = Element.findByType(props.children, Dropdown.Button);
-  const items = Element.findByType(props.children, Dropdown.Item);
+  const items = Element.findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
 
   return (
     <Menu>
