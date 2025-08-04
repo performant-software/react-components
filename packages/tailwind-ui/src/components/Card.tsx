@@ -8,7 +8,7 @@ interface Props {
 
 const Card: React.FC<Props> = (props) => {
   return (
-    <div className={clsx('rounded-lg shadow-md divide-y divide-zinc-200 dark:bg-zinc-900 dark:text-white dark:divide-zinc-700', props.className)}>
+    <div className={clsx('rounded-lg shadow-sm divide-y divide-zinc-200 dark:bg-zinc-900 dark:text-white dark:divide-zinc-700', props.className)}>
       {props.children}
     </div>
   );
@@ -21,9 +21,7 @@ interface CardSectionProps {
 }
 
 Card.Section = (props: CardSectionProps) => {
-  const padded = typeof props.padded === 'undefined'
-    ? true
-    : props.padded;
+  const { padded = true } = props;
 
   return (
     <div className={clsx({ 'py-5 px-6': padded }, props.className)}>
