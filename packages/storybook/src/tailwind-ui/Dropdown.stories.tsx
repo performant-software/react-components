@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from '../../../tailwind-ui/src/components/Dropdown';
 import { FaPaperclip, FaUser } from 'react-icons/fa';
 import { MdSettings } from 'react-icons/md';
+import faircopyLogo from '../assets/faircopy_logo.svg';
 
 export default {
   title: 'Components/TailwindUI/Dropdown',
@@ -13,6 +14,26 @@ export const Default = () => {
     <Dropdown>
       <Dropdown.Button>
         Explore
+      </Dropdown.Button>
+      <Dropdown.Item
+        label='People'
+      />
+      <Dropdown.Item
+        label='Documents'
+      />
+      <Dropdown.Divider />
+      <Dropdown.Item
+        label='Settings'
+      />
+    </Dropdown>
+  );
+};
+
+export const CustomButton = () => {
+  return (
+    <Dropdown>
+      <Dropdown.Button>
+        <img src={faircopyLogo} />
       </Dropdown.Button>
       <Dropdown.Item
         label='People'
