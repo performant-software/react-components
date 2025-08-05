@@ -10,7 +10,7 @@ const Dialog: React.FC = (props: DialogProps) => {
     >
       <DialogBackdrop
         className={clsx(
-          'fixed inset-0 bg-black/10 flex justify-center justify-center text-zinc-950'
+          'fixed inset-0 bg-black/10 flex justify-center text-zinc-950'
         )}
       >
         <DialogPanel
