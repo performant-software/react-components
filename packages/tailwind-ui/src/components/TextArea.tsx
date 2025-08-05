@@ -23,7 +23,10 @@ interface Props {
 const TextArea: React.FC<Props> = (props) => {
   return (
     <Field
-      className={props.classes?.field}
+      className={clsx(
+        'font-sans',
+        props.classes?.field
+      )}
       data-disabled={props.disabled}
     >
       {props.label && (
