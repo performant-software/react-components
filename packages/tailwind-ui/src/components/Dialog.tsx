@@ -9,9 +9,7 @@ const Dialog: React.FC = (props: DialogProps) => {
       className='relative z-50'
     >
       <DialogBackdrop
-        className={clsx(
-          'fixed inset-0 bg-black/10 flex justify-center text-zinc-950'
-        )}
+        className='fixed inset-0 bg-black/10 flex justify-center text-zinc-950'
       >
         <DialogPanel
           className={clsx(
