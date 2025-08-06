@@ -5,3 +5,5 @@ export { default as Input } from './components/Input';
 export { default as Listbox } from './components/Listbox';
 export { default as Navbar } from './components/Navbar';
 export { default as Dialog } from './components/Dialog';
+export { default as RadioGroup } from './components/RadioGroup';
+export { default as Switch } from './components/Switch';
