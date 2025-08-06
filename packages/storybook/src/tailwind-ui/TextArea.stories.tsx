@@ -33,6 +33,20 @@ export const Placeholder = () => {
   );
 };
 
+export const CustomRowCount = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <TextArea
+      label='Description'
+      helperText='This will be shown under the product title.'
+      onChange={setValue}
+      rows={1}
+      value={value}
+    />
+  );
+};
+
 export const Error = () => {
   const [value, setValue] = useState('');
 

@@ -13,10 +13,11 @@ interface Props {
   disabled?: boolean
   error?: boolean
   label?: string
-  helperText?: string
   errorText?: string
+  helperText?: string
   onChange: (val: string) => any
   placeholder?: string
+  rows?: number
   value?: string
 }
 
@@ -55,7 +56,7 @@ const TextArea: React.FC<Props> = (props) => {
           props.classes?.textarea
         )}
         data-error={props.error}
-        rows={3}
+        rows={props.rows || 3}
         disabled={props.disabled}
         placeholder={props.placeholder}
         onChange={e => props.onChange(e.target.value)}
