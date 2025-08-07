@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Checkbox from '../../../tailwind-ui/src/components/Checkbox';
+import Checkbox from '../../../performant-ui/src/components/Checkbox';
 
 export default {
-  title: 'Components/TailwindUI/Checkbox',
+  title: 'Components/Performant UI/Checkbox',
   component: Checkbox
 };
 

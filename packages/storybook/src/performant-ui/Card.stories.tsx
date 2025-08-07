@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '../../../tailwind-ui/src/components/Card';
+import Card from '../../../performant-ui/src/components/Card';
 import fc from '../assets/faircopy_image.png';
 
 export default {
-  title: 'Components/TailwindUI/Card',
+  title: 'Components/Performant UI/Card',
   component: Card
 };
 

@@ -37,8 +37,8 @@ export const decorators = [
     const storyPath = context.parameters.fileName;
     
     useEffect(() => {
-      if (storyPath.startsWith('./src/tailwind-ui')) {
-        import('../src/tailwind-ui.css');
+      if (storyPath.startsWith('./src/performant-ui')) {
+        import('../src/performant-ui.css');
       } else if (storyPath.startsWith('./src/core-data')) {
         import('../src/core-data.css');
         import('../../core-data/dist/packages/core-data/src/index.css');

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Navbar from "../../../tailwind-ui/src/components/Navbar";
+import Navbar from "../../../performant-ui/src/components/Navbar";
 import faircopyLogo from '../assets/faircopy_logo.svg'
 import { action } from 'storybook/actions';
 import { FaSignOutAlt, FaUser, FaUsers } from "react-icons/fa";
-import Input from "../../../tailwind-ui/src/components/Input";
+import Input from "../../../performant-ui/src/components/Input";
 
 export default {
-  title: 'Components/TailwindUI/Navbar',
+  title: 'Components/Performant UI/Navbar',
   component: Navbar
 };
 

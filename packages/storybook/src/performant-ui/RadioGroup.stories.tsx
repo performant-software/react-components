@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import RadioGroup from '../../../tailwind-ui/src/components/RadioGroup';
+import RadioGroup from '../../../performant-ui/src/components/RadioGroup';
 
 export default {
-  title: 'Components/TailwindUI/RadioGroup',
+  title: 'Components/Performant UI/RadioGroup',
   component: RadioGroup
 };
 

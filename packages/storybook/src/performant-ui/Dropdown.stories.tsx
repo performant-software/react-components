@@ -1,11 +1,11 @@
 import React from 'react';
-import Dropdown from '../../../tailwind-ui/src/components/Dropdown';
+import Dropdown from '../../../performant-ui/src/components/Dropdown';
 import { FaPaperclip, FaUser } from 'react-icons/fa';
 import { MdSettings } from 'react-icons/md';
 import faircopyLogo from '../assets/faircopy_logo.svg';
 
 export default {
-  title: 'Components/TailwindUI/Dropdown',
+  title: 'Components/Performant UI/Dropdown',
   component: Dropdown
 };
 

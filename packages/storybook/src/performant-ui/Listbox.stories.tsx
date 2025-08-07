@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Listbox from '../../../tailwind-ui/src/components/Listbox';
+import Listbox from '../../../performant-ui/src/components/Listbox';
 
 export default {
-  title: 'Components/TailwindUI/Listbox',
+  title: 'Components/Performant UI/Listbox',
   component: Listbox
 };
 

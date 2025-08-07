@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../../../tailwind-ui/src/components/Button';
+import Button from '../../../performant-ui/src/components/Button';
 import { FaPlus } from "react-icons/fa";
 import DarkContainer from './DarkContainer';
 
 export default {
-  title: 'Components/TailwindUI/Button',
+  title: 'Components/Performant UI/Button',
   component: Button
 };
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Dialog from '../../../tailwind-ui/src/components/Dialog';
-import { Button } from '../../../tailwind-ui/src';
+import Dialog from '../../../performant-ui/src/components/Dialog';
+import { Button } from '../../../performant-ui/src';
 
 export default {
-  title: 'Components/TailwindUI/Dialog',
+  title: 'Components/Performant UI/Dialog',
   component: Dialog
 };
 

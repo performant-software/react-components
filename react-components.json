@@ -5,7 +5,7 @@
     "packages/geospatial",
     "packages/semantic-ui",
     "packages/shared",
-    "packages/tailwind-ui",
+    "packages/performant-ui",
     "packages/user-defined-fields",
     "packages/visualize"
   ],

@@ -1,9 +1,9 @@
 import React from 'react';
-import Badge from '../../../tailwind-ui/src/components/Badge';
+import Badge from '../../../performant-ui/src/components/Badge';
 import DarkContainer from './DarkContainer';
 
 export default {
-  title: 'Components/TailwindUI/Badge',
+  title: 'Components/Performant UI/Badge',
   component: Badge
 };
 

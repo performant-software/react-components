@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Switch from '../../../tailwind-ui/src/components/Switch';
+import Switch from '../../../performant-ui/src/components/Switch';
 
 export default {
-  title: 'Components/TailwindUI/Switch',
+  title: 'Components/Performant UI/Switch',
   component: Switch
 };
 

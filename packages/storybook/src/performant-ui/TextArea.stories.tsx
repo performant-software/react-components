@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TextArea from '../../../tailwind-ui/src/components/TextArea';
+import TextArea from '../../../performant-ui/src/components/TextArea';
 
 export default {
-  title: 'Components/TailwindUI/TextArea',
+  title: 'Components/Performant UI/TextArea',
   component: TextArea
 };
 

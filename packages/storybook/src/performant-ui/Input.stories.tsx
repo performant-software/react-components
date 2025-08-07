@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Input from '../../../tailwind-ui/src/components/Input';
+import Input from '../../../performant-ui/src/components/Input';
 import { MdLocationOn } from "react-icons/md";
 import { FaRegQuestionCircle } from "react-icons/fa";
 
 export default {
-  title: 'Components/TailwindUI/Input',
+  title: 'Components/Performant UI/Input',
   component: Input
 };
 
