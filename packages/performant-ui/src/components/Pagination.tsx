@@ -59,6 +59,7 @@ const Pagination: React.FC<Props> = (props) => {
               <Button
                 className='min-w-10'
                 onClick={() => props.onChange(pg)}
+                key={pg}
                 variant={pg === props.current ? 'filled' : 'outline'}
               >
                 {pg}
@@ -68,6 +69,7 @@ const Pagination: React.FC<Props> = (props) => {
             return (
               <Button
                 className='min-w-10'
+                key={Math.random()}
                 disabled
                 variant='outline'
               >
