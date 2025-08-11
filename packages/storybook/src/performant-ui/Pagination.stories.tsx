@@ -1,13 +1,31 @@
-import React from 'react';
-import Pagination from '../../../tailwind-ui/src/components/Pagination';
+import React, { useState } from 'react';
+import Pagination from '../../../performant-ui/src/components/Pagination';
 
 export default {
-  title: 'Components/TailwindUI/Pagination',
+  title: 'Components/Performant UI/Pagination',
   component: Pagination
 };
 
 export const Default = () => {
+  const [page, setPage] = useState(1);
+
   return (
-    <Pagination />
+    <Pagination
+      pageCount={50}
+      current={page}
+      onChange={setPage}
+    />
+  );
+};
+
+export const SmallPageCount = () => {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination
+      pageCount={5}
+      current={page}
+      onChange={setPage}
+    />
   );
 };

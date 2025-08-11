@@ -1,42 +1,91 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Button from './Button';
-import { HiArrowLongLeft, HiArrowLongRight } from 'react-icons/hi2';
+import { HiArrowLongLeft, HiArrowLongRight, HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface Props {
   className?: string
-  count: number
   current: number
+  onChange: (page: number) => void
+  pageCount: number
 }
 
-const getFirstThree = (count: number, current: number) => {
-  if (count <= 3) {
-    return [1, 2, 3];
+const getPageBatches = (count: number, current: number) => {
+  if (count <= 7) {
+    const arr = []
+    for (let i = 1; i <= count; i++) {
+      arr.push(i)
+    }
+    return arr;
   }
 
-  if (count >= current - 2) {
-    return [count - 2, count - 1, count];
+  if (current > 3 && current < count - 2) {
+    return [1, null, current - 1, current, current + 1, null, count]
+  }
+
+  if (current >= count - 2) {
+    return [1, 2, 3, null, count - 2, count - 1, count];
+  }
+
+  if (current <= 3) {
+    return [1, 2, 3, null, count - 2, count - 1, count]
   }
 
   return [];
 };
 
 const Pagination: React.FC<Props> = (props) => {
-  // const firstThree = useMemo(() => )
+  const batches = useMemo(
+    () => getPageBatches(props.pageCount, props.current),
+    [props.pageCount, props.current]
+  );
+
+  const onNext = useCallback(() => props.onChange(props.current + 1), [props.current])
+  const onPrevious = useCallback(() => props.onChange(props.current - 1), [props.current])
 
   return (
-    <div className='flex justify-between'>
-      <Button variant='plain'>
-        <span className='flex gap-2 items-center'>
-          <HiArrowLongLeft />
-          Previous
-        </span>
-      </Button>
-      <Button variant='plain'>
-        <span className='flex gap-2 items-center'>
-          Next
-          <HiArrowLongRight />
-        </span>
-      </Button>
+    <div className='flex justify-between font-sans'>
+      <div className='flex gap-1'>
+        <Button
+          className='w-10'
+          disabled={props.current <= 1}
+          onClick={onPrevious}
+          variant='outline'
+        >
+          <HiChevronLeft />
+        </Button>
+        {batches.map(pg => {
+          if (pg) {
+            return (
+              <Button
+                className='min-w-10'
+                onClick={() => props.onChange(pg)}
+                variant={pg === props.current ? 'filled' : 'outline'}
+              >
+                {pg}
+              </Button>
+            )
+          } else {
+            return (
+              <Button
+                className='min-w-10'
+                disabled
+                variant='outline'
+              >
+                ...
+              </Button>
+            )
+          }
+        })}
+        <Button
+          className='w-10'
+          disabled={props.current >= props.pageCount}
+          onClick={onNext}
+          variant='outline'
+        >
+          <HiChevronRight />
+        </Button>
+      </div>
     </div>
   );
 };
