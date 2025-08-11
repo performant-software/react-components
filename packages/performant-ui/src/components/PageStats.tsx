@@ -8,7 +8,7 @@ interface Props {
 
 const PageStats: React.FC<Props> = (props) => {
   const start = (props.perPage * (props.page - 1)) + 1
-  const end = Math.min(start + props.perPage - 1, props.count)
+  const end = Math.min(start + props.perPage - 1, props.itemCount)
 
   return (
     <p className='text-sm font-sans'>

@@ -47,7 +47,6 @@ const Pagination: React.FC<Props> = (props) => {
     <div className='flex justify-between font-sans'>
       <div className='flex gap-1'>
         <Button
-          className='w-10'
           disabled={props.current <= 1}
           onClick={onPrevious}
           variant='outline'
@@ -78,7 +77,6 @@ const Pagination: React.FC<Props> = (props) => {
           }
         })}
         <Button
-          className='w-10'
           disabled={props.current >= props.pageCount}
           onClick={onNext}
           variant='outline'
