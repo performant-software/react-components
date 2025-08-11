@@ -10,8 +10,14 @@ interface Props {
   pageCount: number
 }
 
+// How many buttons to render
+const PAGE_BUTTON_COUNT = 7
+
+// Max number of items to show on the edges
+const MAX_ITEMS_ON_EDGES = 3
+
 const getPageBatches = (count: number, current: number) => {
-  if (count <= 7) {
+  if (count <= PAGE_BUTTON_COUNT) {
     const arr = []
     for (let i = 1; i <= count; i++) {
       arr.push(i)
@@ -19,15 +25,15 @@ const getPageBatches = (count: number, current: number) => {
     return arr;
   }
 
-  if (current > 3 && current < count - 2) {
+  if (current > MAX_ITEMS_ON_EDGES && current <= count - MAX_ITEMS_ON_EDGES) {
     return [1, null, current - 1, current, current + 1, null, count]
   }
 
-  if (current >= count - 2) {
+  if (current > count - MAX_ITEMS_ON_EDGES) {
     return [1, 2, 3, null, count - 2, count - 1, count];
   }
 
-  if (current <= 3) {
+  if (current <= MAX_ITEMS_ON_EDGES) {
     return [1, 2, 3, null, count - 2, count - 1, count]
   }
 
