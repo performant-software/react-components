@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MediaSelect from '../../../performant-ui/src/components/MediaSelect';
 import { FaPlus } from "react-icons/fa";
 
@@ -8,7 +8,15 @@ export default {
 };
 
 export const Default = () => {
+  const [files, setFiles] = useState([])
+
   return (
-    <MediaSelect />
+    <MediaSelect
+      description='This will be visible to clients on the project.'
+      fileDescription='PNG, JPG, GIF up to 2MB'
+      label='Label'
+      onChange={setFiles}
+      value={files}
+    />
   );
 };
