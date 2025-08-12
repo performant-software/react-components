@@ -201,6 +201,27 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Sets the value of the passed property on JSON object.
+     *
+     * @param key
+     * @param jsonKey
+     * @param e
+     * @param value
+     */
+    onJsonInputChange(key: string, jsonKey: string, e: Event, { value }: any) {
+      this.setState((state) => ({
+        item: {
+          ...state.item,
+          [key]: {
+            ...state.item[key],
+            [jsonKey]: value
+          }
+        },
+        validationErrors: _.omit(state.validationErrors, key)
+      }));
+    }
+
+    /**
      * Marks the passed child for delete form the passed association. This function is called if the child record
      * has an ID value.
      *
@@ -387,6 +408,7 @@ const useEditContainer = (WrappedComponent: ComponentType<any>) => (
           onCheckboxInputChange={this.onCheckboxInputChange.bind(this)}
           onClearValidationError={this.onClearValidationError.bind(this)}
           onDeleteChildAssociation={this.onDeleteChildAssociation.bind(this)}
+          onJsonInputChange={this.onJsonInputChange.bind(this)}
           onMultiAddChildAssociations={this.onMultiAddChildAssociations.bind(this)}
           onReset={this.onReset.bind(this)}
           onSave={this.onSave.bind(this)}
@@ -450,6 +472,7 @@ export type EditContainerProps = {
   onAssociationInputChange: (idKey: string, valueKey: string, item: any) => void,
   onCheckboxInputChange: (key: string, value: any) => void,
   onClearValidationError: (...keys: Array<string>) => void,
+  onJsonInputChange: (key: string, jsonKey: string, e: ?Event, value: any) => void,
   onDeleteChildAssociation: (association: string, child: any) => void,
   onMultiAddChildAssociations: (association: string, Array<any>) => void,
   onReset: () => void,
