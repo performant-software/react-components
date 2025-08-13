@@ -9,7 +9,6 @@ interface Props {
   multiple?: boolean
   onChange: (arg: FileList) => void
   onRemoveFile?: (index: number) => void
-  value?: any
 }
 
 interface FileInfo {
