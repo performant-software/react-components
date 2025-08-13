@@ -25,15 +25,17 @@ export const Default = () => {
   return (
     <Table label='Ancient Roman Books'>
       <Table.Head>
-        <Table.HeadCell>
-          Title
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Author
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Genre
-        </Table.HeadCell>
+        <Table.Row>
+          <Table.HeadCell>
+            Title
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Author
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Genre
+          </Table.HeadCell>
+        </Table.Row>
       </Table.Head>
       {data.map(d => (
         <Table.Row
@@ -58,15 +60,17 @@ export const NoLabel = () => {
   return (
     <Table>
       <Table.Head>
-        <Table.HeadCell>
-          Title
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Author
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Genre
-        </Table.HeadCell>
+        <Table.Row>
+          <Table.HeadCell>
+            Title
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Author
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Genre
+          </Table.HeadCell>
+        </Table.Row>
       </Table.Head>
       {data.map(d => (
         <Table.Row
@@ -94,15 +98,17 @@ export const Customized = () => {
       label='Ancient Roman Books'
     >
       <Table.Head>
-        <Table.HeadCell>
-          Title
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Author
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Genre
-        </Table.HeadCell>
+        <Table.Row>
+          <Table.HeadCell>
+            Title
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Author
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Genre
+          </Table.HeadCell>
+        </Table.Row>
       </Table.Head>
       {data.map(d => (
         <Table.Row

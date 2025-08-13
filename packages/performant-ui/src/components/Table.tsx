@@ -39,7 +39,11 @@ const Table: React.FC<Props> = (props) => {
         )}
       >
         {head}
-        {rows}
+        {rows.length > 0 && (
+          <tbody>
+            {rows}
+          </tbody>
+        )}
       </table>
     </div>
   )
