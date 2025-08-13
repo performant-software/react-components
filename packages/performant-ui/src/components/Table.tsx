@@ -1,5 +1,5 @@
 import React from 'react'
-import { Element } from '@performant-software/shared-components';
+import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
 interface Props {
@@ -12,8 +12,8 @@ interface Props {
 }
 
 const Table: React.FC<Props> = (props) => {
-  const head = Element.findByType(props.children, Table.Head);
-  const rows = Element.findByType(props.children, Table.Row);
+  const head = findByType(props.children, Table.Head);
+  const rows = findByType(props.children, Table.Row);
 
   return (
     <div

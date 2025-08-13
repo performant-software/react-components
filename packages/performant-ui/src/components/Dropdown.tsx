@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, MenuButton, MenuButtonProps, MenuItem, MenuItems } from '@headlessui/react';
-import { Element } from '@performant-software/shared-components';
+import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
 interface Props {
@@ -9,8 +9,8 @@ interface Props {
 }
 
 const Dropdown: React.FC<Props> = (props) => {
-  const button = Element.findByType(props.children, Dropdown.Button);
-  const menuContents = Element.findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
+  const button = findByType(props.children, Dropdown.Button);
+  const menuContents = findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
 
   return (
     <Menu>

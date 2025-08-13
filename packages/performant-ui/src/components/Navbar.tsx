@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { Element } from '@performant-software/shared-components';
+import { findByType } from '../helpers/Element';
 
 interface Props {
   children: React.ElementType | React.ElementType[]
@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = (props) => {
-  const logo = Element.findByType(props.children, Navbar.Logo);
-  const tabs = Element.findByType(props.children, Navbar.Tabs);
-  const controls = Element.findByType(props.children, Navbar.Controls);
+  const logo = findByType(props.children, Navbar.Logo);
+  const tabs = findByType(props.children, Navbar.Tabs);
+  const controls = findByType(props.children, Navbar.Controls);
 
   return (
     <nav className='w-full flex justify-between items-center text-zinc-950'>
