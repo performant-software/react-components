@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Table from '../../../performant-ui/src/components/Table';
+import { Button } from '../../../performant-ui/src';
+import { FaUser } from 'react-icons/fa';
 
 export default {
   title: 'Components/Performant UI/Table',
@@ -20,6 +22,39 @@ const data = [
 ]
 
 export const Default = () => {
+  return (
+    <Table label='Ancient Roman Books'>
+      <Table.Head>
+        <Table.HeadCell>
+          Title
+        </Table.HeadCell>
+        <Table.HeadCell>
+          Author
+        </Table.HeadCell>
+        <Table.HeadCell>
+          Genre
+        </Table.HeadCell>
+      </Table.Head>
+      {data.map(d => (
+        <Table.Row
+          key={d.name}
+        >
+          <Table.Cell>
+            {d.title}
+          </Table.Cell>
+          <Table.Cell>
+            {d.name}
+          </Table.Cell>
+          <Table.Cell>
+            {d.genre}
+          </Table.Cell>
+        </Table.Row>
+      ))}
+    </Table>
+  );
+};
+
+export const NoLabel = () => {
   return (
     <Table>
       <Table.Head>
@@ -45,6 +80,42 @@ export const Default = () => {
           </Table.Cell>
           <Table.Cell>
             {d.genre}
+          </Table.Cell>
+        </Table.Row>
+      ))}
+    </Table>
+  );
+};
+
+export const Customized = () => {
+  return (
+    <Table
+      classes={{ table: 'bg-red-100'}}
+      label='Ancient Roman Books'
+    >
+      <Table.Head>
+        <Table.HeadCell>
+          Title
+        </Table.HeadCell>
+        <Table.HeadCell>
+          Author
+        </Table.HeadCell>
+        <Table.HeadCell>
+          Genre
+        </Table.HeadCell>
+      </Table.Head>
+      {data.map(d => (
+        <Table.Row
+          key={d.name}
+        >
+          <Table.Cell className='italic'>
+            {d.title}
+          </Table.Cell>
+          <Table.Cell className='flex items-center justify-center'>
+            <FaUser />
+          </Table.Cell>
+          <Table.Cell>
+            <Button>Download</Button>
           </Table.Cell>
         </Table.Row>
       ))}

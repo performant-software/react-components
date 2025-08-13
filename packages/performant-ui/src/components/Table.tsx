@@ -3,6 +3,11 @@ import { Element } from '@performant-software/shared-components';
 import clsx from 'clsx';
 
 interface Props {
+  classes?: {
+    container?: string,
+    header?: string,
+    table?: string
+  }
   label?: string
 }
 
@@ -12,10 +17,26 @@ const Table: React.FC<Props> = (props) => {
 
   return (
     <div
-      className='rounded-xl border border-zinc-200 bg-white px-8 pt-8 pb-12'
+      className={clsx(
+        'rounded-xl border border-zinc-200 bg-white px-8 pt-8 pb-12 font-sans w-full',
+        props.classes?.container
+      )}
     >
+      {props.label && (
+        <h3
+          className={clsx(
+            'text-gray-900 font-semibold mb-4',
+            props.classes?.header
+          )}
+        >
+          {props.label}
+        </h3>
+      )}
       <table
-        className=''
+        className={clsx(
+          'w-full text-sm',
+          props.classes?.table
+        )}
       >
         {head}
         {rows}
@@ -32,6 +53,7 @@ interface ChildElementProps {
 Table.Head = (props: ChildElementProps) => (
   <thead
     className={clsx(
+      'border-b border-zinc-200 text-zinc-500',
       props.className
     )}
   >
@@ -42,12 +64,23 @@ Table.Head = (props: ChildElementProps) => (
 Table.HeadCell = (props: ChildElementProps) => (
   <th
     className={clsx(
-      'py-4 px-6',
+      'py-2.5 px-6 text-left',
       props.className
     )}
   >
     {props.children}
   </th>
+)
+
+Table.Row = (props: ChildElementProps) => (
+  <tr
+    className={clsx(
+      'font-zinc-950 border-b border-zinc-100',
+      props.className
+    )}
+  >
+    {props.children}
+  </tr>
 )
 
 Table.Cell = (props: ChildElementProps) => (
@@ -59,16 +92,6 @@ Table.Cell = (props: ChildElementProps) => (
   >
     {props.children}
   </td>
-)
-
-Table.Row = (props: ChildElementProps) => (
-  <tr
-    className={clsx(
-      props.className
-    )}
-  >
-    {props.children}
-  </tr>
 )
 
 export default Table
