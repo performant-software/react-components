@@ -1,13 +1,16 @@
 // @flow
 
-import { ObjectJs as ObjectUtils, Timer } from '@performant-software/shared-components';
-import React, { Component, type ComponentType } from 'react';
-import uuid from 'react-uuid';
-import _ from 'underscore';
-import { Icon, Input, Message } from 'semantic-ui-react';
-import i18n from '../i18n/i18n';
-import ListSessionUtils from '../utils/ListSession';
-import Toaster from './Toaster';
+import {
+  ObjectJs as ObjectUtils,
+  Timer,
+} from "@performant-software/shared-components";
+import React, { Component, type ComponentType } from "react";
+import uuid from "react-uuid";
+import _ from "underscore";
+import { Icon, Input, Message } from "semantic-ui-react";
+import i18n from "../i18n/i18n";
+import ListSessionUtils from "../utils/ListSession";
+import Toaster from "./Toaster";
 
 type Props = {
   /**
@@ -53,7 +56,7 @@ type Props = {
     defaults?: any,
     props?: any,
     onChange?: (filter: any) => Promise<any>,
-    showLabels?: boolean
+    showLabels?: boolean,
   },
 
   /**
@@ -113,8 +116,8 @@ type Props = {
    */
   session?: {
     key: string,
-    storage: typeof sessionStorage
-  }
+    storage: typeof sessionStorage,
+  },
 };
 
 type State = {
@@ -129,11 +132,11 @@ type State = {
   saved: boolean,
   search: ?string,
   sortColumn: ?string,
-  sortDirection: ?string
+  sortDirection: ?string,
 };
 
-const SORT_ASCENDING = 'ascending';
-const SORT_DESCENDING = 'descending';
+const SORT_ASCENDING = "ascending";
+const SORT_DESCENDING = "descending";
 
 /**
  * Returns a function to wrap the passed component as a DataList. The DataList component is intended to be used to load
@@ -142,12 +145,12 @@ const SORT_DESCENDING = 'descending';
  *
  * @param WrappedComponent
  */
-const useDataList = (WrappedComponent: ComponentType<any>) => (
+const useDataList = (WrappedComponent: ComponentType<any>) =>
   class extends Component<Props, State> {
     // Default props
     static defaultProps = {
       filters: {},
-      searchable: true
+      searchable: true,
     };
 
     // Polling
@@ -169,7 +172,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     componentDidMount() {
       if (this.props.polling) {
-        this.pollingInterval = setInterval(this.fetchData.bind(this), this.props.polling);
+        this.pollingInterval = setInterval(
+          this.fetchData.bind(this),
+          this.props.polling
+        );
       }
     }
 
@@ -201,9 +207,12 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     afterDelete() {
       if (this.state.items.length === 1) {
-        return this.setState((state) => ({
-          page: (state.page - 1) > 1 ? state.page - 1 : 1
-        }), this.fetchData.bind(this));
+        return this.setState(
+          (state) => ({
+            page: state.page - 1 > 1 ? state.page - 1 : 1,
+          }),
+          this.fetchData.bind(this)
+        );
       }
 
       return this.fetchData();
@@ -225,13 +234,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       // Set the loading indicator and fetch the data.
       this.setState({ loading: true }, () => {
-        const {
-          page,
-          perPage,
-          search,
-          sortColumn,
-          sortDirection
-        } = this.state;
+        const { page, perPage, search, sortColumn, sortDirection } = this.state;
 
         const params = {
           ...this.state.filters,
@@ -239,23 +242,22 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           search,
           per_page: perPage,
           sort_by: sortColumn,
-          sort_direction: sortDirection
+          sort_direction: sortDirection,
         };
 
-        this.props
-          .onLoad(params)
-          .then(({ data }) => {
-            const items = data[this.props.collectionName];
-            const { pages, count } = data.list;
+        this.props.onLoad(params).then(({ data }) => {
+          const items = data[this.props.collectionName];
+          const { pages, count } = data.list;
 
-            this.setState({
-              count,
-              items,
-              page,
-              pages,
-              loading: false
-            });
+          this.setState({
+            count,
+            items,
+            page,
+            pages,
+            user: data.user,
+            loading: false,
           });
+        });
       });
     }
 
@@ -272,7 +274,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       if (props.filters && props.filters.defaults) {
         _.each(props.filters.defaults.filters, (f) => {
-          const filter = _.findWhere(props.filters.props.filters, { key: f.key });
+          const filter = _.findWhere(props.filters.props.filters, {
+            key: f.key,
+          });
 
           if (filter) {
             filters.push(this.onCreateFilter({ ...filter, ...f }));
@@ -297,10 +301,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       const filters = session.filters || this.getDefaultFilters(props);
       const page = session.page || 1;
-      const perPage = session.perPage || props.defaultPerPage || _.first(props.perPageOptions);
+      const perPage =
+        session.perPage ||
+        props.defaultPerPage ||
+        _.first(props.perPageOptions);
       const search = session.search || props.defaultSearch || null;
       const sortColumn = session.sortColumn || props.defaultSort || null;
-      const sortDirection = session.sortDirection || props.defaultSortDirection || null;
+      const sortDirection =
+        session.sortDirection || props.defaultSortDirection || null;
 
       return {
         count: 0,
@@ -314,7 +322,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         saved: props.saved || false,
         search,
         sortColumn,
-        sortDirection
+        sortDirection,
       };
     }
 
@@ -342,7 +350,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     onClearSearch(e) {
       // Clear the current search
-      this.onSearchChange(e, { value: '' });
+      this.onSearchChange(e, { value: "" });
 
       // Focus on the search input
       this.searchRef?.inputRef?.current?.focus();
@@ -361,7 +369,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     onCreateFilter(filter) {
       return {
         ...filter,
-        uid: uuid()
+        uid: uuid(),
       };
     }
 
@@ -393,9 +401,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         return Promise.resolve();
       }
 
-      return this.props
-        .onDeleteAll()
-        .then(this.afterDeleteAll.bind(this));
+      return this.props.onDeleteAll().then(this.afterDeleteAll.bind(this));
     }
 
     /**
@@ -436,7 +442,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      *
      */
     onInit(page?: number = 1) {
-      this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
+      this.setState(
+        { sortColumn: "", sortDirection: "", page },
+        this.fetchData.bind(this)
+      );
     }
 
     /**
@@ -471,8 +480,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         return Promise.resolve();
       }
 
-      return Promise.resolve(this.props.onSave(item))
-        .then(() => this.setState({ saved: true }, this.fetchData.bind(this)));
+      return Promise.resolve(this.props.onSave(item)).then(() =>
+        this.setState({ saved: true }, this.fetchData.bind(this))
+      );
     }
 
     /**
@@ -503,11 +513,17 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       let sortDirection = direction;
 
       if (!sortDirection) {
-        sortDirection = this.state.sortColumn === sortColumn && this.state.sortDirection === SORT_ASCENDING
-          ? SORT_DESCENDING : SORT_ASCENDING;
+        sortDirection =
+          this.state.sortColumn === sortColumn &&
+          this.state.sortDirection === SORT_ASCENDING
+            ? SORT_DESCENDING
+            : SORT_ASCENDING;
       }
 
-      this.setState({ sortColumn, sortDirection, page }, this.fetchData.bind(this));
+      this.setState(
+        { sortColumn, sortDirection, page },
+        this.fetchData.bind(this)
+      );
     }
 
     /**
@@ -532,8 +548,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
               props: {
                 ...props,
                 onCreateFilter: this.onCreateFilter.bind(this),
-                item: this.state.filters
-              }
+                item: this.state.filters,
+              },
             }}
             items={this.state.items}
             loading={this.state.loading}
@@ -551,30 +567,31 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
             sortColumn={this.state.sortColumn}
             sortDirection={this.state.sortDirection}
           />
-          { this.state.saved && (
+          {this.state.saved && (
             <Toaster
               onDismiss={() => this.setState({ saved: false })}
               type={Toaster.MessageTypes.positive}
             >
-              <Message.Header
-                content={i18n.t('Common.messages.save.header')}
-              />
+              <Message.Header content={i18n.t("Common.messages.save.header")} />
               <Message.Content
-                content={i18n.t('Common.messages.save.content')}
+                content={i18n.t("Common.messages.save.content")}
               />
             </Toaster>
           )}
-          { this.state.error && (
+          {this.state.error && (
             <Toaster
               onDismiss={() => this.setState({ error: false })}
               timeout={0}
               type={Toaster.MessageTypes.negative}
             >
               <Message.Header
-                content={i18n.t('Common.messages.error.header')}
+                content={i18n.t("Common.messages.error.header")}
               />
               <Message.List
-                items={this.props.resolveErrors && this.props.resolveErrors(this.state.error)}
+                items={
+                  this.props.resolveErrors &&
+                  this.props.resolveErrors(this.state.error)
+                }
               />
             </Toaster>
           )}
@@ -594,17 +611,17 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       return (
         <Input
-          aria-label='Search'
-          type='text'
-          icon={(
+          aria-label="Search"
+          type="text"
+          icon={
             <Icon
               link={!_.isEmpty(this.state.search)}
-              name={_.isEmpty(this.state.search) ? 'search' : 'times'}
+              name={_.isEmpty(this.state.search) ? "search" : "times"}
               onClick={this.onClearSearch.bind(this)}
             />
-          )}
+          }
           input={{
-            'aria-label': 'search'
+            "aria-label": "search",
           }}
           ref={(ref) => {
             this.searchRef = ref;
@@ -613,7 +630,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
           onKeyDown={Timer.clearSearchTimer.bind(this)}
           onKeyUp={Timer.setSearchTimer.bind(this, this.onSearch.bind(this))}
           onChange={this.onSearchChange.bind(this)}
-          size='small'
+          size="small"
           value={this.state.search}
         />
       );
@@ -629,14 +646,8 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         return;
       }
 
-      const {
-        filters,
-        page,
-        perPage,
-        search,
-        sortColumn,
-        sortDirection
-      } = this.state;
+      const { filters, page, perPage, search, sortColumn, sortDirection } =
+        this.state;
 
       ListSessionUtils.setSession(key, storage, {
         filters,
@@ -644,19 +655,13 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         perPage,
         search,
         sortColumn,
-        sortDirection
+        sortDirection,
       });
     }
-  }
-);
+  };
 
 export default useDataList;
 
-export {
-  SORT_ASCENDING,
-  SORT_DESCENDING
-};
+export { SORT_ASCENDING, SORT_DESCENDING };
 
-export type {
-  Props
-};
+export type { Props };
