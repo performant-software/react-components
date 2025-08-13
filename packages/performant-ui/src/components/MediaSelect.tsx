@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { HiOutlineTrash, HiPhoto } from 'react-icons/hi2'
 
 interface Props {
@@ -6,6 +6,7 @@ interface Props {
   description?: string
   fileDescription?: string
   label?: string
+  files?: FileInfo
   multiple?: boolean
   onChange: (arg: FileList) => void
   onRemoveFile?: (index: number) => void
@@ -21,7 +22,6 @@ const BYTES_PER_MB = Math.pow(BYTES_PER_KB, 2)
 
 const MediaSelect: React.FC<Props> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [fileInfo, setFileInfo] = useState<FileInfo[]>([]);
 
   const openDialog = () => inputRef.current?.click();
 
@@ -33,18 +33,17 @@ const MediaSelect: React.FC<Props> = (props) => {
     }
   }, []);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
-    props.onChange(files);
-
-    if (files) {
-      const fileArray = Array.from(files)
-      setFileInfo(fileArray.map(f => ({
+  const fileInfo = useMemo(() => {
+    if (props.files) {
+      const fileArray = Array.from(props.files)
+      return fileArray.map(f => ({
         name: f.name,
         size: getFileSize(f.size)
-      })))
+      }))
     }
-  }
+  }, [props.files])
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.target.files)
 
   return (
     <>

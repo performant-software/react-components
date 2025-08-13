@@ -15,9 +15,9 @@ export const Default = () => {
     <MediaSelect
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
+      files={files}
       label='Label'
       onChange={setFiles}
-      value={files}
     />
   );
 };
@@ -29,10 +29,10 @@ export const Multiple = () => {
     <MediaSelect
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
+      files={files}
       label='Label'
       multiple
       onChange={setFiles}
-      value={files}
     />
   );
 };
@@ -42,9 +42,9 @@ export const NoHelperText = () => {
 
   return (
     <MediaSelect
+      files={files}
       multiple
       onChange={setFiles}
-      value={files}
     />
   );
 };
@@ -56,11 +56,11 @@ export const WithRemove = () => {
     <MediaSelect
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
+      files={files}
       label='Label'
       multiple
       onChange={setFiles}
       onRemoveFile={action('click')}
-      value={files}
     />
   );
 };
