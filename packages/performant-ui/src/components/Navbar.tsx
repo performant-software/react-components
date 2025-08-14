@@ -2,12 +2,31 @@ import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { findByType } from '../helpers/Element';
 
-interface Props {
+interface NavbarProps {
   children: React.ReactNode
   divider?: boolean;
 }
 
-const Navbar: React.FC<Props> = (props) => {
+interface ChildrenProps {
+  children: React.ReactNode
+}
+
+interface TabProps {
+  active: boolean
+  as?: React.FC | string
+  href?: string
+  label: string
+  onClick?: string
+}
+
+type NavbarComponent = React.FC<NavbarProps> & {
+  Controls: React.FC<ChildrenProps>
+  Tab: React.FC<TabProps>
+  Tabs: React.FC<ChildrenProps>
+  Logo: React.FC<ChildrenProps>
+}
+
+const Navbar: NavbarComponent = (props) => {
   const logo = findByType(props.children, Navbar.Logo);
   const tabs = findByType(props.children, Navbar.Tabs);
   const controls = findByType(props.children, Navbar.Controls);
@@ -28,11 +47,7 @@ const Navbar: React.FC<Props> = (props) => {
   );
 };
 
-interface LogoProps {
-  children: React.ReactNode
-}
-
-Navbar.Logo = (props: LogoProps) => {
+Navbar.Logo = (props: ChildrenProps) => {
   return (
     <div className='pr-4 max-h-8 shrink-0'>
       {props.children}
@@ -40,7 +55,7 @@ Navbar.Logo = (props: LogoProps) => {
   );
 };
 
-Navbar.Tabs = (props: { children: React.ReactNode }) => {
+Navbar.Tabs = (props: ChildrenProps) => {
   return (
     <div className='flex gap-3 pl-4'>
       {props.children}
@@ -48,15 +63,7 @@ Navbar.Tabs = (props: { children: React.ReactNode }) => {
   );
 };
 
-interface Tab {
-  active: boolean
-  as?: React.FC | string
-  href?: string
-  label: string
-  onClick?: string
-}
-
-Navbar.Tab = (props: Tab) => {
+Navbar.Tab = (props: TabProps) => {
   const WrapperComponent = useMemo(() => props.href ? 'a' : 'button', [props.href]);
 
   // for a11y, render as links when a URL is passed
@@ -88,11 +95,7 @@ Navbar.Tab = (props: Tab) => {
   );
 };
 
-interface ControlProps {
-  children: React.ReactNode
-}
-
-Navbar.Controls = (props: ControlProps) => {
+Navbar.Controls = (props: ChildrenProps) => {
   return (
     <div className='flex gap-4'>
       {props.children}

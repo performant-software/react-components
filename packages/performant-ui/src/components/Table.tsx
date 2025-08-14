@@ -2,7 +2,7 @@ import React from 'react'
 import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
-interface Props {
+interface TableProps {
   classes?: {
     container?: string,
     header?: string,
@@ -11,7 +11,19 @@ interface Props {
   label?: string
 }
 
-const Table: React.FC<Props> = (props) => {
+interface ChildElementProps {
+  children: React.ReactNode
+  className?: string
+}
+
+type TableComponent = React.FC<TableProps> & {
+  Cell: React.FC<ChildElementProps>
+  Row: React.FC<ChildElementProps>
+  HeadCell: React.FC<ChildElementProps>
+  Head: React.FC<ChildElementProps>
+}
+
+const Table: TableComponent = (props) => {
   const head = findByType(props.children, Table.Head);
   const rows = findByType(props.children, Table.Row);
 
@@ -47,11 +59,6 @@ const Table: React.FC<Props> = (props) => {
       </table>
     </div>
   )
-}
-
-interface ChildElementProps {
-  children: React.ReactNode
-  className?: string
 }
 
 Table.Head = (props: ChildElementProps) => (

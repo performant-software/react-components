@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface Props {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
 }
 
 const DarkContainer: React.FC<Props> = ({ children }) => {

@@ -3,12 +3,24 @@ import { Menu, MenuButton, MenuButtonProps, MenuItem, MenuItems } from '@headles
 import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
-interface Props {
+interface DropdownProps {
   children: React.ReactNode
   className?: string
 }
 
-const Dropdown: React.FC<Props> = (props) => {
+interface DropdownItemProps {
+  label?: string
+  description?: string
+  icon?: React.FC
+}
+
+type DropdownComponent = React.FC<DropdownProps> & {
+  Button: React.FC<MenuButtonProps>
+  Divider: React.FC
+  Item: React.FC<DropdownItemProps>
+}
+
+const Dropdown: DropdownComponent = (props) => {
   const button = findByType(props.children, Dropdown.Button);
   const menuContents = findByType(props.children, [Dropdown.Item, Dropdown.Divider]);
 
@@ -37,11 +49,11 @@ Dropdown.Button = (props: MenuButtonProps) => {
   );
 };
 
-interface DropdownItemProps {
-  label?: string
-  description?: string
-  icon?: React.FC
-}
+Dropdown.Divider = () => {
+  return (
+    <div className='w-auto h-px bg-zinc-200 mx-4 my-1' />
+  );
+};
 
 Dropdown.Item = (props: DropdownItemProps) => {
   return (
@@ -56,12 +68,6 @@ Dropdown.Item = (props: DropdownItemProps) => {
         {props.description && <p className='text-zinc-500 text-xs'>{props.description}</p>}
       </div>
     </MenuItem>
-  );
-};
-
-Dropdown.Divider = () => {
-  return (
-    <div className='w-auto h-px bg-zinc-200 mx-4 my-1' />
   );
 };
 

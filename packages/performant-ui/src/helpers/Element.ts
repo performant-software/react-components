@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const findByType = (children: any, component: any) => {
   const components = [];
 
