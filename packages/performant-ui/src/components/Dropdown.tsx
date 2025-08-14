@@ -4,7 +4,7 @@ import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
 interface Props {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   className?: string
 }
 

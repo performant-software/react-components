@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 
 interface Props {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   className?: string
 }
 
@@ -15,7 +15,7 @@ const Card: React.FC<Props> = (props) => {
 };
 
 interface CardSectionProps {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   className?: string
   padded?: boolean
 }

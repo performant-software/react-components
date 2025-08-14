@@ -50,7 +50,7 @@ const Table: React.FC<Props> = (props) => {
 }
 
 interface ChildElementProps {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   className?: string
 }
 

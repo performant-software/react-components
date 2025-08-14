@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 interface Props {
   ariaLabel?: string
   className?: string
-  children?: React.ElementType | React.ElementType[]
+  children?: React.ReactNode
   disabled?: boolean
   iconOnly?: boolean
   onClick?: (...args: any[]) => any

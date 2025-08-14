@@ -11,7 +11,7 @@ const colors = {
 
 interface Props {
   className?: string
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   color?: keyof typeof colors
 }
 

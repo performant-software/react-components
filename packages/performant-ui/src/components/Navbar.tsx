@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { findByType } from '../helpers/Element';
 
 interface Props {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
   divider?: boolean;
 }
 
@@ -29,7 +29,7 @@ const Navbar: React.FC<Props> = (props) => {
 };
 
 interface LogoProps {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
 }
 
 Navbar.Logo = (props: LogoProps) => {
@@ -40,7 +40,7 @@ Navbar.Logo = (props: LogoProps) => {
   );
 };
 
-Navbar.Tabs = (props: { children: React.ElementType | React.ElementType[] }) => {
+Navbar.Tabs = (props: { children: React.ReactNode }) => {
   return (
     <div className='flex gap-3 pl-4'>
       {props.children}
@@ -89,7 +89,7 @@ Navbar.Tab = (props: Tab) => {
 };
 
 interface ControlProps {
-  children: React.ElementType | React.ElementType[]
+  children: React.ReactNode
 }
 
 Navbar.Controls = (props: ControlProps) => {

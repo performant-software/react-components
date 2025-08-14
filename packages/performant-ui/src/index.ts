@@ -1,3 +1,5 @@
+import '../tailwind.css'
+
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
 export { default as Card } from './components/Card';
