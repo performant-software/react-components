@@ -4,8 +4,7 @@ import path, { dirname, join } from 'path';
 import _ from 'underscore';
 
 const config = {
-  stories: ['../src/**/*.stories.js'],
-
+  stories: ['../src/**/*.stories.@(js|tsx)'],
   addons: [
     getAbsolutePath("@storybook/addon-a11y"),
     getAbsolutePath("@storybook/addon-docs"),

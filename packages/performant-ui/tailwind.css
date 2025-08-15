@@ -1,0 +1,27 @@
+@theme {
+  --color-primary: #43639D;
+  --color-primary-light: #718FBF;
+
+  --color-content-primary: var(--color-zinc-950);
+  --color-content-seconday: var(--color-zinc-500);
+  --color-content-tertiary: var(--color-zinc-400);
+
+  --color-content-inverse-primary: #fff;
+  --color-content-inverse-secondary: var(--color-zinc-400);
+  --color-content-inverse-tertiary: var(--color-zinc-500);
+
+  --font-sans: 'Inter', sans-serif;
+}
+
+@layer base {
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role='button']:disabled {
+    cursor: default;
+  }
+}
