@@ -12,7 +12,7 @@ interface TableProps {
 }
 
 interface ChildElementProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
 }
 

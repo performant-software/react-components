@@ -20,6 +20,20 @@ export const Default = () => {
   );
 };
 
+export const Password = () => {
+  const [val, setVal] = useState('');
+
+  return (
+    <Input
+      label='Name'
+      placeholder='Enter something secure!'
+      onChange={(str) => setVal(str)}
+      type='password'
+      value={val}
+    />
+  );
+};
+
 export const Placeholder = () => {
   const [val, setVal] = useState('');
 

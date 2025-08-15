@@ -2,6 +2,8 @@ import React from 'react';
 import { Description, Field, Input as HeadlessInput, Label } from '@headlessui/react';
 import clsx from 'clsx';
 
+type InputType = 'text' | 'password' | 'email' | 'url' | 'tel' | 'search' | 'number'
+
 interface Props {
   classes?: {
     field?: string
@@ -14,6 +16,7 @@ interface Props {
   helperText?: string
   iconLeft?: React.FC
   iconRight?: React.FC
+  type?: InputType
   label?: string
   onChange: (val: string) => any
   placeholder?: string
@@ -45,6 +48,7 @@ const Input: React.FC<Props> = (props) => (
         disabled={props.disabled}
         placeholder={props.placeholder}
         onChange={e => props.onChange(e.target.value)}
+        type={props.type}
         value={props.value}
       />
       {props.iconRight && (
