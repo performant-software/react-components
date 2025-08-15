@@ -33,6 +33,19 @@ export const Placeholder = () => {
   );
 };
 
+export const HelperText = () => {
+  const [val, setVal] = useState('');
+
+  return (
+    <Input
+      label='Name'
+      helperText='This is helper text.'
+      onChange={(str) => setVal(str)}
+      value={val}
+    />
+  );
+};
+
 export const Disabled = () => {
   const [val, setVal] = useState('');
 

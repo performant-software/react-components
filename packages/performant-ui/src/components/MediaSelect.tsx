@@ -6,15 +6,10 @@ interface Props {
   description?: string
   fileDescription?: string
   label?: string
-  files?: FileInfo
+  files?: FileList
   multiple?: boolean
   onChange: (arg: FileList) => void
   onRemoveFile?: (index: number) => void
-}
-
-interface FileInfo {
-  name: string
-  size: string
 }
 
 const BYTES_PER_KB = 1024
@@ -34,13 +29,12 @@ const MediaSelect: React.FC<Props> = (props) => {
   }, []);
 
   const fileInfo = useMemo(() => {
-    if (props.files) {
-      const fileArray = Array.from(props.files)
-      return fileArray.map(f => ({
-        name: f.name,
-        size: getFileSize(f.size)
-      }))
-    }
+    const fileArray = props.files ? Array.from(props.files) : []
+
+    return fileArray.map(f => ({
+      name: f.name,
+      size: getFileSize(f.size)
+    }))
   }, [props.files])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.target.files)
