@@ -56,7 +56,7 @@ const Input: React.FC<Props> = (props) => (
     </div>
     {props.helperText && (
       <Description 
-        className={clsx('text-sm font-medium data-[error]:text-red-700 data-[error]:dark:text-red-400 text-sm group-data-[disabled]:text-zinc-400', props.classes?.description)}
+        className={clsx('text-sm font-medium text-zinc-500 data-[error]:text-red-700 data-[error]:dark:text-red-400 group-data-[disabled]:text-zinc-300', props.classes?.description)}
         data-error={props.error}
       >
         {props.helperText}
