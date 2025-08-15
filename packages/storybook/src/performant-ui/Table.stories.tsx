@@ -37,21 +37,23 @@ export const Default = () => {
           </Table.HeadCell>
         </Table.Row>
       </Table.Head>
-      {data.map(d => (
-        <Table.Row
-          key={d.name}
-        >
-          <Table.Cell>
-            {d.title}
-          </Table.Cell>
-          <Table.Cell>
-            {d.name}
-          </Table.Cell>
-          <Table.Cell>
-            {d.genre}
-          </Table.Cell>
-        </Table.Row>
-      ))}
+      <Table.Body>
+        {data.map(d => (
+          <Table.Row
+            key={d.name}
+          >
+            <Table.Cell>
+              {d.title}
+            </Table.Cell>
+            <Table.Cell>
+              {d.name}
+            </Table.Cell>
+            <Table.Cell>
+              {d.genre}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table>
   );
 };
@@ -72,21 +74,23 @@ export const NoLabel = () => {
           </Table.HeadCell>
         </Table.Row>
       </Table.Head>
-      {data.map(d => (
-        <Table.Row
-          key={d.name}
-        >
-          <Table.Cell>
-            {d.title}
-          </Table.Cell>
-          <Table.Cell>
-            {d.name}
-          </Table.Cell>
-          <Table.Cell>
-            {d.genre}
-          </Table.Cell>
-        </Table.Row>
-      ))}
+      <Table.Body>
+        {data.map(d => (
+          <Table.Row
+            key={d.name}
+          >
+            <Table.Cell>
+              {d.title}
+            </Table.Cell>
+            <Table.Cell>
+              {d.name}
+            </Table.Cell>
+            <Table.Cell>
+              {d.genre}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table>
   );
 };
@@ -110,21 +114,23 @@ export const Customized = () => {
           </Table.HeadCell>
         </Table.Row>
       </Table.Head>
-      {data.map(d => (
-        <Table.Row
-          key={d.name}
-        >
-          <Table.Cell className='italic'>
-            {d.title}
-          </Table.Cell>
-          <Table.Cell className='flex items-center justify-center'>
-            <FaUser />
-          </Table.Cell>
-          <Table.Cell>
-            <Button>Download</Button>
-          </Table.Cell>
-        </Table.Row>
-      ))}
+      <Table.Body>
+        {data.map(d => (
+          <Table.Row
+            key={d.name}
+          >
+            <Table.Cell className='italic'>
+              {d.title}
+            </Table.Cell>
+            <Table.Cell className='flex items-center justify-center'>
+              <FaUser />
+            </Table.Cell>
+            <Table.Cell>
+              <Button>Download</Button>
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table>
   );
 };
