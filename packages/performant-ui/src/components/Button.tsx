@@ -21,7 +21,7 @@ const Button: React.FC<Props> = (props) => {
     <button 
       aria-label={props.ariaLabel}
       className={clsx(
-        'font-semibold rounded-md outline-offset-2 focus:outline-2 focus:outline-primary disabled:opacity-50',
+        'font-semibold rounded-md outline-offset-2 focus:outline-2 focus:outline-primary disabled:opacity-50 hover:cursor-pointer',
         {
           'bg-primary text-white hover:brightness-110': variant === 'filled',
           'bg-white border border-zinc-200 hover:bg-zinc-200 dark:hover:bg-white/5 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:disabled:text-zinc-400': variant === 'outline',

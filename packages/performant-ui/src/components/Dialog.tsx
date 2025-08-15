@@ -2,7 +2,11 @@ import React from 'react';
 import { Dialog as HeadlessDialog, DialogBackdrop, DialogPanel, DialogProps } from '@headlessui/react';
 import clsx from 'clsx';
 
-const Dialog: React.FC = (props: DialogProps) => {
+interface Props extends DialogProps {
+  children: React.ReactNode
+}
+
+const Dialog: React.FC = (props: Props) => {
   return (
     <HeadlessDialog
       {...props}

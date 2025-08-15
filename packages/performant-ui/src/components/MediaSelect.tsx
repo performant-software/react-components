@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { HiOutlineTrash, HiPhoto } from 'react-icons/hi2'
+import Button from './Button'
 
 interface Props {
   accept?: string
@@ -42,7 +43,7 @@ const MediaSelect: React.FC<Props> = (props) => {
   return (
     <>
       <button
-        className='w-full flex items-center justify-center py-8 text-zinc-500 flex-col gap-4 rounded-lg border border-dashed shadow-sm border-zinc-200'
+        className='w-full flex items-center justify-center py-8 text-zinc-500 flex-col gap-4 rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer'
         onClick={openDialog}
         type='button'
       >
@@ -64,12 +65,13 @@ const MediaSelect: React.FC<Props> = (props) => {
             <p className='text-xs'>{file.size}</p>
           </div>
           {props.onRemoveFile && (
-            <button
+            <Button
+              iconOnly
               onClick={() => props.onRemoveFile(index)}
-              type='button'
+              variant='plain'
             >
               <HiOutlineTrash size={16} />
-            </button>
+            </Button>
           )}
         </div>
       ))}

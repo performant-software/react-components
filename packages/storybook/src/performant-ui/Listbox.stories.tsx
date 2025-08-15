@@ -9,23 +9,23 @@ export default {
 const options = [
   {
     id: 1,
-    name: 'Baltimore'
+    label: 'Baltimore'
   },
   {
     id: 2,
-    name: 'Cincinnati'
+    label: 'Cincinnati'
   },
   {
     id: 3,
-    name: 'Chicago'
+    label: 'Chicago'
   },
   {
     id: 4,
-    name: 'Minneapolis'
+    label: 'Minneapolis'
   },
   {
     id: 5,
-    name: 'Montreal'
+    label: 'Montreal'
   }
 ];
 
@@ -36,6 +36,19 @@ export const Default = () => {
     <Listbox
       onChange={setValue}
       options={options}
+      value={value}
+    />
+  );
+};
+
+export const Placeholder = () => {
+  const [value, setValue] = useState(null);
+
+  return (
+    <Listbox
+      options={options}
+      placeholder='Select one'
+      onChange={setValue}
       value={value}
     />
   );

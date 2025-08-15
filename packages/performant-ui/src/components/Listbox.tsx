@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 interface ListboxItem {
   id: number,
-  value: string
+  label: string
 }
 
 interface Props {
@@ -18,7 +18,8 @@ interface Props {
   disabled?: boolean;
   options: ListboxItem[];
   onChange: (arg: ListboxItem) => any;
-  value: ListboxItem;
+  placeholder?: string
+  value?: ListboxItem;
 }
 
 const Listbox: React.FC<Props> = (props) => (
@@ -29,7 +30,9 @@ const Listbox: React.FC<Props> = (props) => (
       className={clsx('group flex items-center justify-between gap-3 py-2 px-3 rounded-lg border border-zinc-200 bg-white shadow-sm data-disabled:opacity-50 outline-2 outline-offset-2 outline-transparent focus:outline-primary text-black text-sm font-semibold', props.classes?.button)}
       disabled={props.disabled}
     >
-      {props.value.name}
+      {props.value
+        ? <span>{props.value.label}</span>
+        : <span className='text-zinc-500'>{props.placeholder}</span>}
       <HiChevronUpDown
         aria-hidden='true'
         size={20}
@@ -42,15 +45,15 @@ const Listbox: React.FC<Props> = (props) => (
     >
       {props.options.map((option) => (
         <ListboxOption
-          className={clsx('group hover:bg-primary hover:text-white flex items-center gap-2 py-2 pl-2.5 pr-4 hover:cursor-pointer gap-2.5 text-sm text-zinc-950', props.classes?.option)}
-          key={option.name}
+          className={clsx('group hover:bg-primary hover:text-white flex items-center gap-2 py-2 pl-2.5 pr-4 hover:cursor-pointer text-sm text-zinc-950', props.classes?.option)}
+          key={option.label}
           value={option}
         >
           <HiCheck
             className='invisible size-4 fill-zinc-500 group-hover:fill-white group-data-selected:visible'
             size={20}
           />
-          <div className='text-sm/6'>{option.name}</div>
+          <div className='text-sm/6'>{option.label}</div>
         </ListboxOption>
       ))}
     </ListboxOptions>
