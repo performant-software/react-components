@@ -52,7 +52,7 @@ const TextArea: React.FC<Props> = (props) => {
       )}
       <Textarea
         className={clsx(
-          'rounded-lg bg-white outline-2 outline-zinc-200 hover:outline-zinc-300 focus:outline-blue-500 focus:hover:outline-blue-600 py-1.5 px-3 mt-2 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 data-[error]:not-focus:outline-red-500 data-[error]:hover:not-focus:outline-red-600 flex gap-2 items-center',
+          'rounded-lg bg-white outline outline-zinc-200 hover:outline-zinc-300 focus:outline-blue-500 focus:hover:outline-blue-600 py-1.5 px-3 mt-2 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 data-[error]:not-focus:outline-red-500 data-[error]:hover:not-focus:outline-red-600 flex gap-2 items-center',
           props.classes?.textarea
         )}
         data-error={props.error}

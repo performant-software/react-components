@@ -31,7 +31,7 @@ const Input: React.FC<Props> = (props) => (
       </Label>
     )}
     <div
-      className='rounded-lg bg-white border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 hover:dark:border-zinc-600 focus-within:border-blue-500 py-1.5 px-3 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 group-data-[disabled]:dark:bg-zinc-800 data-[error]:border-red-500 data-[error]:hover:border-red-600 data-[error]:hover:dark:border-red-500 flex gap-2 items-center dark:bg-black'
+      className='rounded-lg bg-white outline outline-zinc-200 dark:outline-zinc-700 hover:outline-zinc-300 hover:dark:outline-zinc-600 focus-within:outline-blue-500 focus-within:hover:outline-blue-600 py-1.5 px-3 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 group-data-[disabled]:dark:bg-zinc-800 data-[error]:outline-red-500 data-[error]:hover:outline-red-600 data-[error]:hover:dark:outline-red-500 flex gap-2 items-center dark:bg-black'
       data-error={props.error}
     >
       {props.iconLeft && (
