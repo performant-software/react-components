@@ -42,39 +42,46 @@ const MediaSelect: React.FC<Props> = (props) => {
 
   return (
     <>
-      <button
-        className='w-full flex items-center justify-center py-8 text-zinc-500 flex-col gap-4 rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer'
-        onClick={openDialog}
-        type='button'
-      >
-        <HiPhoto
-          size={48}
-        />
-        <div>
-          <p><span className='text-black font-semibold'>Upload a file</span> or drag and drop</p>
-          {props.fileDescription && (<p>{props.fileDescription}</p>)}
-        </div>
-      </button>
-      {fileInfo.map((file, index) => (
-        <div
-          className='py-2.5 px-3 rounded-xl border border-zinc-200 bg-white flex justify-between items-center mt-2'
-          key={file.name}
+      <div className='flex flex-col gap-2'>
+        {props.label && (
+          <span className='text-sm font-semibold'>
+            {props.label}
+          </span>
+        )}
+        <button
+          className='w-full flex items-center justify-center py-8 text-zinc-500 flex-col gap-4 rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer'
+          onClick={openDialog}
+          type='button'
         >
+          <HiPhoto
+            size={48}
+          />
           <div>
-            <p className='text-sm font-semibold'>{file.name}</p>
-            <p className='text-xs'>{file.size}</p>
+            <p><span className='text-black font-semibold'>Upload a file</span> or drag and drop</p>
+            {props.fileDescription && (<p>{props.fileDescription}</p>)}
           </div>
-          {props.onRemoveFile && (
-            <Button
-              iconOnly
-              onClick={() => props.onRemoveFile(index)}
-              variant='plain'
-            >
-              <HiOutlineTrash size={16} />
-            </Button>
-          )}
-        </div>
-      ))}
+        </button>
+        {fileInfo.map((file, index) => (
+          <div
+            className='py-2.5 px-3 rounded-xl border border-zinc-200 bg-white flex justify-between items-center mt-2'
+            key={file.name}
+          >
+            <div>
+              <p className='text-sm font-semibold'>{file.name}</p>
+              <p className='text-xs'>{file.size}</p>
+            </div>
+            {props.onRemoveFile && (
+              <Button
+                iconOnly
+                onClick={() => props.onRemoveFile(index)}
+                variant='plain'
+              >
+                <HiOutlineTrash size={16} />
+              </Button>
+            )}
+          </div>
+        ))}
+      </div>
       <input
         accept={props.accept}
         className='hidden'

@@ -16,6 +16,20 @@ export const Default = () => {
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
       files={files}
+      onChange={setFiles}
+    />
+  );
+};
+
+export const WithLabel = () => {
+  const [files, setFiles] = useState([])
+
+  return (
+    <MediaSelect
+      description='This will be visible to clients on the project.'
+      label='Project Image'
+      fileDescription='PNG, JPG, GIF up to 2MB'
+      files={files}
       label='Label'
       onChange={setFiles}
     />
@@ -30,7 +44,6 @@ export const Multiple = () => {
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
       files={files}
-      label='Label'
       multiple
       onChange={setFiles}
     />
@@ -57,7 +70,6 @@ export const WithRemove = () => {
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
       files={files}
-      label='Label'
       multiple
       onChange={setFiles}
       onRemoveFile={action('click')}
