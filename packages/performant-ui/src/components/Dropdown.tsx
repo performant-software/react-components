@@ -48,12 +48,14 @@ Dropdown.Button = (props: MenuButtonProps) => {
     />
   );
 };
+Dropdown.Button.displayName = 'Dropdown.Button'
 
 Dropdown.Divider = () => {
   return (
     <div className='w-auto h-px bg-zinc-200 mx-4 my-1' />
   );
 };
+Dropdown.Divider.displayName = 'Dropdown.Divider'
 
 Dropdown.Item = (props: DropdownItemProps) => {
   return (
@@ -70,5 +72,6 @@ Dropdown.Item = (props: DropdownItemProps) => {
     </MenuItem>
   );
 };
+Dropdown.Item.displayName = 'Dropdown.Item'
 
 export default Dropdown;
