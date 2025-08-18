@@ -16,7 +16,7 @@ const Avatar: React.FC<Props> = (props) => {
   return (
     <div
       className={clsx(
-        'overflow-hidden rounded-full bg-black text-white inline select-none w-10 h-10 font-sans',
+        'overflow-hidden rounded-full bg-black text-white select-none w-10 h-10 font-sans',
         props.classes?.container,
       )}
     >

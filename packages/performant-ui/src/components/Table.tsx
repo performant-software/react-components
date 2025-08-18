@@ -1,5 +1,4 @@
 import React from 'react'
-import { findByType } from '../helpers/Element';
 import clsx from 'clsx';
 
 interface TableProps {
@@ -26,9 +25,6 @@ type TableComponent = React.FC<TableProps> & {
 }
 
 const Table: TableComponent = (props) => {
-  const head = findByType(props.children, Table.Head);
-  const body = findByType(props.children, Table.Body);
-
   return (
     <div
       className={clsx(
@@ -52,8 +48,7 @@ const Table: TableComponent = (props) => {
           props.classes?.table
         )}
       >
-        {head}
-        {body}
+        {props.children}
       </table>
     </div>
   )
@@ -104,13 +99,11 @@ Table.Cell = (props: ChildElementProps) => (
 )
 
 Table.Body = (props: ChildElementProps) => {
-  const rows = findByType(props.children, Table.Row);
-
   return (
     <tbody
       className={props.className}
     >
-      {rows}
+      {props.children}
     </tbody>
   )
 }
