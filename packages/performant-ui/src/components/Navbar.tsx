@@ -32,7 +32,7 @@ const Navbar: NavbarComponent = (props) => {
   const controls = findByType(props.children, Navbar.Controls);
 
   return (
-    <nav className='w-full flex justify-between items-center text-zinc-950'>
+    <nav className='w-full flex justify-between items-center text-zinc-950 px-8 py-3'>
       <div
         className={clsx(
           'flex',
