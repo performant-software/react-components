@@ -23,6 +23,7 @@ export { default as i18n } from './i18n/i18n';
 
 // Services
 export { default as BaseService } from './services/BaseService';
+export { default as TripleEyeEffable } from './services/TripleEyeEffable';
 
 // Transforms
 export { default as Attachments } from './transforms/Attachments';
