@@ -63,7 +63,20 @@ const upload = (item: ItemType, url: string = DEFAULT_URL) => new Promise<ItemTy
     .catch(reject);
 });
 
+/**
+ * Uploads the "content" attribute for all of the passed item, if present.
+ *
+ * @param items
+ * @param url
+ *
+ * @returns {Promise<Awaited<unknown>[]>}
+ */
+const uploadAll = (items: Array<ItemType>, url: string = DEFAULT_URL) => {
+  return Promise.all(_.map(items, (item) => upload(item, url)));
+};
+
 export default {
   directUpload,
-  upload
+  upload,
+  uploadAll
 };
