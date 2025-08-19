@@ -54,6 +54,7 @@ Navbar.Logo = (props: ChildrenProps) => {
     </div>
   );
 };
+Navbar.Logo.displayName = 'Navbar.Logo'
 
 Navbar.Tabs = (props: ChildrenProps) => {
   return (
@@ -62,6 +63,7 @@ Navbar.Tabs = (props: ChildrenProps) => {
     </div>
   );
 };
+Navbar.Tabs.displayName = 'Navbar.Tabs'
 
 Navbar.Tab = (props: TabProps) => {
   const WrapperComponent = useMemo(() => props.href ? 'a' : 'button', [props.href]);
@@ -94,6 +96,7 @@ Navbar.Tab = (props: TabProps) => {
     </WrapperComponent>
   );
 };
+Navbar.Tab.displayName = 'Navbar.Tab'
 
 Navbar.Controls = (props: ChildrenProps) => {
   return (
@@ -102,5 +105,6 @@ Navbar.Controls = (props: ChildrenProps) => {
     </div>
   );
 };
+Navbar.Controls.displayName = 'Navbar.Controls'
 
 export default Navbar;
