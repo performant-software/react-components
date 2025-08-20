@@ -11,26 +11,45 @@ type BlobType = {
   signed_id: string
 };
 
+type HeadersType = {
+  [key: string]: string
+};
+
+type OptionsType = {
+  delegate?: any,
+  headers?: HeadersType,
+  url?: string
+};
+
 const DEFAULT_URL = '/triple_eye_effable/direct_uploads';
+
+const DEFAULT_OPTIONS = {
+  url: DEFAULT_URL
+};
 
 /**
  * Uploads the passed file to the passed active_storage URL.
  *
  * @param file
  * @param url
+ * @param delegate
+ * @param headers
+ *
  * @returns {Promise<BlobType>}
  */
-const directUpload = (file, url: string) => new Promise<BlobType>((resolve, reject) => {
-  const upload = new DirectUpload(file, url);
+const directUpload = (file: File, url: string, delegate: any, headers: HeadersType) =>
+  new Promise<BlobType>((resolve, reject) => {
+    const upload = new DirectUpload(file, url, delegate, headers);
 
-  upload.create((error, blob) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(blob);
-    }
-  });
-});
+    upload.create((error, blob) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(blob);
+      }
+    });
+  }
+);
 
 /**
  * Replaces the "content" attribute with the "signed_id" from the blob in the passed item.
@@ -46,33 +65,38 @@ const setSignedId = (item: ItemType, blob: BlobType) => _.extend(item, { content
  * Uploads the "content" attribute for the passed item, if present.
  *
  * @param item
- * @param url
+ * @param options
  *
  * @returns {Promise<ItemType>}
  */
-const upload = (item: ItemType, url: string = DEFAULT_URL) => new Promise<ItemType>((resolve, reject) => {
-  // Return the item if no "content" attribute is present
-  if (!item.content) {
-    resolve(item);
-  }
+const upload = (item: ItemType, options: OptionsType = {}) =>
+  new Promise<ItemType>((resolve, reject) => {
+    // Return the item if no "content" attribute is present
+    if (!item.content) {
+      resolve(item);
+    }
 
-  // Direct upload the file, set the signed ID, and return the passed item.
-  return directUpload(item.content, url)
-    .then((blob) => setSignedId(item, blob))
-    .then(resolve)
-    .catch(reject);
-});
+    // Populate default options
+    const { delegate, headers, url } = _.defaults(options, DEFAULT_OPTIONS);
+
+    // Direct upload the file, set the signed ID, and return the passed item.
+    return directUpload(item.content, url, delegate, headers)
+      .then((blob) => setSignedId(item, blob))
+      .then(resolve)
+      .catch(reject);
+  }
+);
 
 /**
  * Uploads the "content" attribute for all of the passed item, if present.
  *
  * @param items
- * @param url
+ * @param options
  *
  * @returns {Promise<Awaited<unknown>[]>}
  */
-const uploadAll = (items: Array<ItemType>, url: string = DEFAULT_URL) => {
-  return Promise.all(_.map(items, (item) => upload(item, url)));
+const uploadAll = (items: Array<ItemType>, options: OptionsType = {}) => {
+  return Promise.all(_.map(items, (item) => upload(item, options)));
 };
 
 export default {
