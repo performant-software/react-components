@@ -25,7 +25,7 @@ interface Props {
 
 const Input: React.FC<Props> = (props) => (
   <Field
-    className='flex flex-col gap-2 text-zinc-950 dark:text-white group font-sans'
+    className='flex flex-col gap-2 text-zinc-950 group font-sans'
     data-disabled={props.disabled}
   >
     {props.label && (
@@ -34,12 +34,12 @@ const Input: React.FC<Props> = (props) => (
       </Label>
     )}
     <div
-      className='rounded-lg bg-white outline outline-zinc-200 dark:outline-zinc-700 hover:outline-zinc-300 hover:dark:outline-zinc-600 focus-within:outline-blue-500 focus-within:hover:outline-blue-600 py-1.5 px-3 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 group-data-[disabled]:dark:bg-zinc-800 data-[error]:outline-red-500 data-[error]:hover:outline-red-600 data-[error]:hover:dark:outline-red-500 flex gap-2 items-center dark:bg-black'
+      className='rounded-lg bg-white outline outline-zinc-200 hover:outline-zinc-300 focus-within:outline-blue-500 focus-within:hover:outline-blue-600 py-1.5 px-3 group-data-[disabled]:bg-zinc-50 group-data-[disabled]:text-zinc-400 data-[error]:outline-red-500 data-[error]:hover:outline-red-600 flex gap-2 items-center'
       data-error={props.error}
     >
       {props.iconLeft && (
         <props.iconLeft
-          className='fill-zinc-400 dark:fill-zinc-500'
+          className='fill-zinc-400'
           size={16}
         />
       )}
@@ -53,14 +53,14 @@ const Input: React.FC<Props> = (props) => (
       />
       {props.iconRight && (
         <props.iconRight
-          className='fill-zinc-400 dark:fill-zinc-500'
+          className='fill-zinc-400'
           size={16}
         />
       )}
     </div>
     {props.helperText && (
       <Description 
-        className={clsx('text-sm font-medium text-zinc-500 data-[error]:text-red-700 data-[error]:dark:text-red-400 group-data-[disabled]:text-zinc-300', props.classes?.description)}
+        className={clsx('text-sm font-medium text-zinc-500 data-[error]:text-red-700 group-data-[disabled]:text-zinc-300', props.classes?.description)}
         data-error={props.error}
       >
         {props.helperText}

@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import React from 'react';
 
 const colors = {
-  faircopy: 'bg-[#E9ECF5] hover:bg-[#CED8E9] text-[#324872] dark:bg-[#2C3E60] dark:text-[#718FBF] hover:dark:bg-[#324872]',
-  green: 'bg-green-100 hover:bg-green-200 text-green-500 dark:bg-green-900 dark:text-green-400 hover:dark:bg-green-800',
-  gray: 'bg-gray-100 hover:bg-gray-200 text-gray-500 dark:bg-gray-900 dark:text-gray-400 hover:dark:bg-gray-800',
-  red: 'bg-red-100 hover:bg-red-200 text-red-500 dark:bg-red-900 dark:text-red-400 hover:dark:bg-red-800',
-  blue: 'bg-blue-100 hover:bg-blue-200 text-blue-500 dark:bg-blue-900 dark:text-blue-400 hover:dark:bg-blue-800'
+  faircopy: 'bg-[#E9ECF5] hover:bg-[#CED8E9] text-[#324872]',
+  green: 'bg-green-100 hover:bg-green-200 text-green-500',
+  gray: 'bg-gray-100 hover:bg-gray-200 text-gray-500',
+  red: 'bg-red-100 hover:bg-red-200 text-red-500',
+  blue: 'bg-blue-100 hover:bg-blue-200 text-blue-500'
 } as const;
 
 interface Props {

@@ -19,7 +19,7 @@ type CardComponent = React.FC<CardProps> & {
 const Card: CardComponent = (props) => {
   return (
     <div className={clsx(
-      'rounded-lg shadow-sm divide-y divide-zinc-200 dark:bg-zinc-900 dark:text-white dark:divide-zinc-700',
+      'rounded-lg shadow-sm divide-y divide-zinc-200',
       props.className
     )}>
       {props.children}

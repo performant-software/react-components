@@ -24,8 +24,8 @@ const Button: React.FC<Props> = (props) => {
         'font-semibold rounded-md outline-offset-2 focus:outline-2 focus:outline-primary disabled:opacity-50 hover:cursor-pointer',
         {
           'bg-primary text-white hover:brightness-110': variant === 'filled',
-          'bg-white border border-zinc-200 hover:bg-zinc-200 dark:hover:bg-white/5 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:disabled:text-zinc-400': variant === 'outline',
-          'hover:bg-black/10 dark:text-white dark:hover:bg-transparent dark:disabled:text-zinc-400': variant === 'plain',
+          'bg-white border border-zinc-200 hover:bg-zinc-200': variant === 'outline',
+          'hover:bg-black/10': variant === 'plain',
           'py-1 px-1': size === 'xs' && props.iconOnly,
           'py-1.5 px-1.5': size === 's' && props.iconOnly,
           'py-2 px-2': size === 'base' && props.iconOnly,

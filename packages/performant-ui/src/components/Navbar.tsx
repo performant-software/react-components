@@ -4,6 +4,7 @@ import { findByType } from '../helpers/Element';
 
 interface NavbarProps {
   children: React.ReactNode
+  className?: string
   divider?: boolean;
 }
 
@@ -11,7 +12,7 @@ interface ChildrenProps {
   children: React.ReactNode
 }
 
-interface TabProps {
+interface TabProps extends any {
   active: boolean
   as?: React.FC | string
   href?: string
@@ -32,7 +33,12 @@ const Navbar: NavbarComponent = (props) => {
   const controls = findByType(props.children, Navbar.Controls);
 
   return (
-    <nav className='w-full flex justify-between items-center text-zinc-950 px-8 py-3'>
+    <nav
+      className={clsx(
+        'w-full flex justify-between items-center text-zinc-950 px-8 py-3',
+        props.className
+      )}
+    >
       <div
         className={clsx(
           'flex',
@@ -84,13 +90,13 @@ Navbar.Tab = (props: TabProps) => {
   return (
     <WrapperComponent
       data-active={props.active}
-      className='text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200 dark:text-white hover:dark:bg-zinc-600'
+      className='text-sm p-2 font-semibold relative rounded-lg hover:bg-gray-200'
       {...wrapperProps}
     >
       {props.label}
       {props.active && (
         <div
-          className='absolute bottom-[-6px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950 dark:bg-white'
+          className='absolute bottom-[-6px] left-[0px] w-full h-0.5 rounded-full bg-zinc-950'
         />
       )}
     </WrapperComponent>
