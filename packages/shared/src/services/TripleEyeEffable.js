@@ -1,6 +1,5 @@
 // @flow
 
-// import { DirectUpload } from '@rails/activestorage';
 import _ from 'underscore';
 
 type ItemType = {
