@@ -1,6 +1,6 @@
 // @flow
 
-import { DirectUpload } from '@rails/activestorage';
+// import { DirectUpload } from '@rails/activestorage';
 import _ from 'underscore';
 
 type ItemType = {
@@ -39,14 +39,17 @@ const DEFAULT_OPTIONS = {
  */
 const directUpload = (file: File, url: string, delegate: any, headers: HeadersType) =>
   new Promise<BlobType>((resolve, reject) => {
-    const upload = new DirectUpload(file, url, delegate, headers);
+    import('@rails/activestorage').then((module) => {
+      const { DirectUpload } = module;
+      const upload = new DirectUpload(file, url, delegate, headers);
 
-    upload.create((error, blob) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(blob);
-      }
+      upload.create((error, blob) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(blob);
+        }
+      });
     });
   }
 );
