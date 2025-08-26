@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Navbar from "../../../performant-ui/src/components/Navbar";
 import faircopyLogo from '../assets/faircopy_logo.svg'
-import { action } from 'storybook/actions';
 import { FaSignOutAlt, FaUser, FaUsers } from "react-icons/fa";
 import Input from "../../../performant-ui/src/components/Input";
 

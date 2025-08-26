@@ -3,6 +3,7 @@ import Dropdown from '../../../performant-ui/src/components/Dropdown';
 import { FaPaperclip, FaUser } from 'react-icons/fa';
 import { MdSettings } from 'react-icons/md';
 import faircopyLogo from '../assets/faircopy_logo.svg';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Components/Performant UI/Dropdown',
@@ -44,6 +45,32 @@ export const CustomButton = () => {
       <Dropdown.Divider />
       <Dropdown.Item
         label='Settings'
+      />
+    </Dropdown>
+  );
+};
+
+export const onClick = () => {
+  return (
+    <Dropdown>
+      <Dropdown.Button>
+        Explore
+      </Dropdown.Button>
+      <Dropdown.Item
+        icon={FaUser}
+        label='People'
+        onClick={action('click')}
+      />
+      <Dropdown.Item
+        icon={FaPaperclip}
+        label='Documents'
+        onClick={action('click')}
+      />
+      <Dropdown.Divider />
+      <Dropdown.Item
+        icon={MdSettings}
+        label='Settings'
+        onClick={action('click')}
       />
     </Dropdown>
   );

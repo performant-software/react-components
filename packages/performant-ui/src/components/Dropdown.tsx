@@ -12,6 +12,7 @@ interface DropdownItemProps {
   label?: string
   description?: string
   icon?: React.FC
+  onClick: (...args: any[]) => any
 }
 
 type DropdownComponent = React.FC<DropdownProps> & {
@@ -61,6 +62,7 @@ Dropdown.Item = (props: DropdownItemProps) => {
   return (
     <MenuItem
       className='bg-red px-4 py-2 hover:cursor-pointer text-zinc-500 flex flex-col text-sm'
+      onClick={props.onClick}
     >
       <div>
         <span className='flex gap-3 items-center'>
