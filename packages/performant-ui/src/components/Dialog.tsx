@@ -6,7 +6,7 @@ interface Props extends DialogProps {
   children: React.ReactNode
 }
 
-const Dialog: React.FC = (props: Props) => {
+const Dialog: React.FC<Props> = (props: Props) => {
   return (
     <HeadlessDialog
       {...props}

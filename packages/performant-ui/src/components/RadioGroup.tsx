@@ -3,6 +3,7 @@ import { Radio, RadioGroup as HeadlessRadioGroup, Label, Description, Field } fr
 import clsx from 'clsx';
 
 interface RadioOption {
+  id: string | number
   label: string,
   description?: string
 }

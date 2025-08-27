@@ -5,7 +5,7 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 import clsx from 'clsx';
 
 interface ListboxItem {
-  id: number,
+  id: number | string,
   label: string
 }
 
@@ -57,7 +57,7 @@ const Listbox: React.FC<Props> = (props) => (
         {props.options.map((option) => (
           <ListboxOption
             className={clsx('group hover:bg-primary hover:text-white flex items-center gap-2 py-2 pl-2.5 pr-4 hover:cursor-pointer text-sm text-zinc-950 w-(--button-width)', props.classes?.option)}
-            key={option.label}
+            key={option.id}
             value={option}
           >
             <HiCheck
