@@ -41,6 +41,19 @@ export const Default = () => {
   );
 };
 
+export const Labeled = () => {
+  const [value, setValue] = useState(null);
+
+  return (
+    <Listbox
+      options={options}
+      label='City'
+      onChange={setValue}
+      value={value}
+    />
+  );
+};
+
 export const Placeholder = () => {
   const [value, setValue] = useState(null);
 
