@@ -1,44 +1,52 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { HiOutlineTrash, HiPhoto } from 'react-icons/hi2'
 import Button from './Button'
+import clsx from 'clsx'
 
 interface Props {
   accept?: string
   description?: string
   fileDescription?: string
   label?: string
-  files?: FileList
-  multiple?: boolean
+  imageUrl?: string
   onChange: (arg: FileList) => void
   onRemoveFile?: (index: number) => void
 }
 
-const BYTES_PER_KB = 1024
-const BYTES_PER_MB = Math.pow(BYTES_PER_KB, 2)
-
 const MediaSelect: React.FC<Props> = (props) => {
+  const [imageUrl, setImageUrl] = useState<string | undefined>(props.imageUrl)
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const openDialog = () => inputRef.current?.click();
 
-  const getFileSize = useCallback((bytes: number) => {
-    if (bytes < BYTES_PER_MB) {
-      return `${(bytes / BYTES_PER_KB).toFixed(2)} KB`
-    } else {
-      return `${(bytes / BYTES_PER_MB).toFixed(2)} MB`
+  const onCleanup = useCallback((url: string) => {
+    if (url !== props.imageUrl) {
+      URL.revokeObjectURL(url)
     }
-  }, []);
+  }, [props.imageUrl])
 
-  const fileInfo = useMemo(() => {
-    const fileArray = props.files ? Array.from(props.files) : []
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageUrl(prev => {
+      const newUrl =  URL.createObjectURL(Array.from(e.target.files)[0])
 
-    return fileArray.map(f => ({
-      name: f.name,
-      size: getFileSize(f.size)
-    }))
-  }, [props.files])
+      if (prev) {
+        onCleanup(prev)
+      }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.target.files)
+      return newUrl
+    })
+
+    props.onChange(e.target.files)
+  }, [props.onChange, setImageUrl])
+
+  useEffect(() => {
+    return () => {
+      if (imageUrl) {
+        onCleanup(imageUrl)
+      }
+    }
+  }, [])
 
   return (
     <>
@@ -49,43 +57,32 @@ const MediaSelect: React.FC<Props> = (props) => {
           </span>
         )}
         <button
-          className='w-full flex items-center justify-center py-8 text-zinc-500 flex-col gap-4 rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer'
+          className='w-full rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer group relative overflow-hidden'
+          data-populated={!!imageUrl || undefined}
           onClick={openDialog}
           type='button'
         >
-          <HiPhoto
-            size={48}
-          />
-          <div>
-            <p><span className='text-black font-semibold'>Upload a file</span> or drag and drop</p>
-            {props.fileDescription && (<p>{props.fileDescription}</p>)}
+          {imageUrl && (
+            <img
+              alt="Selected image"
+              className='absolute w-full h-full object-cover'
+              src={imageUrl}
+            />
+          )}
+          <div className='flex w-full h-full items-center justify-center py-8 flex-col gap-4 group-data-populated:opacity-0 group-data-populated:hover:opacity-100 transition-opacity group-hover:backdrop-blur-3xl bg-gray-500/25 text-zinc-500 group-data-populated:text-zinc-100 group-data-populated:hover:bg-gray-500/75'>
+            <HiPhoto
+              size={48}
+            />
+            <div>
+              <p className='font-semibold'>Upload a file</p>
+              {props.fileDescription && (<p>{props.fileDescription}</p>)}
+            </div>
           </div>
         </button>
-        {fileInfo.map((file, index) => (
-          <div
-            className='py-2.5 px-3 rounded-xl border border-zinc-200 bg-white flex justify-between items-center mt-2'
-            key={file.name}
-          >
-            <div>
-              <p className='text-sm font-semibold'>{file.name}</p>
-              <p className='text-xs'>{file.size}</p>
-            </div>
-            {props.onRemoveFile && (
-              <Button
-                iconOnly
-                onClick={() => props.onRemoveFile(index)}
-                variant='plain'
-              >
-                <HiOutlineTrash size={16} />
-              </Button>
-            )}
-          </div>
-        ))}
       </div>
       <input
         accept={props.accept}
         className='hidden'
-        multiple={props.multiple}
         onChange={onChange}
         ref={inputRef}
         type="file"

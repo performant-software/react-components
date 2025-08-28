@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MediaSelect from '../../../performant-ui/src/components/MediaSelect';
 import { FaPlus } from "react-icons/fa";
 import { action } from 'storybook/actions';
+import fc from '../assets/faircopy_image.png';
 
 export default {
   title: 'Components/Performant UI/MediaSelect',
@@ -15,8 +16,20 @@ export const Default = () => {
     <MediaSelect
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
-      files={files}
-      onChange={setFiles}
+      onChange={action('change')}
+    />
+  );
+};
+
+export const Prepopulated = () => {
+  const [files, setFiles] = useState([])
+
+  return (
+    <MediaSelect
+      description='This will be visible to clients on the project.'
+      fileDescription='PNG, JPG, GIF up to 2MB'
+      onChange={action('change')}
+      imageUrl={fc}
     />
   );
 };
@@ -29,23 +42,8 @@ export const WithLabel = () => {
       description='This will be visible to clients on the project.'
       label='Project Image'
       fileDescription='PNG, JPG, GIF up to 2MB'
-      files={files}
       label='Label'
-      onChange={setFiles}
-    />
-  );
-};
-
-export const Multiple = () => {
-  const [files, setFiles] = useState([])
-
-  return (
-    <MediaSelect
-      description='This will be visible to clients on the project.'
-      fileDescription='PNG, JPG, GIF up to 2MB'
-      files={files}
-      multiple
-      onChange={setFiles}
+      onChange={action('change')}
     />
   );
 };
@@ -55,9 +53,7 @@ export const NoHelperText = () => {
 
   return (
     <MediaSelect
-      files={files}
-      multiple
-      onChange={setFiles}
+      onChange={action('change')}
     />
   );
 };
@@ -69,9 +65,7 @@ export const WithRemove = () => {
     <MediaSelect
       description='This will be visible to clients on the project.'
       fileDescription='PNG, JPG, GIF up to 2MB'
-      files={files}
-      multiple
-      onChange={setFiles}
+      onChange={action('change')}
       onRemoveFile={action('click')}
     />
   );
