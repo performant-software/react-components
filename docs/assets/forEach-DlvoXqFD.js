@@ -1,1 +1,0 @@
-import{w as i,o as r,r as o}from"./getElementType-DI6MxAvz.js";function u(n,e){for(var t=-1,f=n==null?0:n.length;++t<f&&e(n[t],t,n)!==!1;);return n}function c(n){return typeof n=="function"?n:i}function a(n,e){var t=o(n)?u:r;return t(n,c(e))}export{a as f};

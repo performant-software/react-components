@@ -1,0 +1,16 @@
+import{j as r}from"./iframe-FoyjJkLC.js";import{_ as p}from"./index-default-B8-H6N8J.js";import{R as a}from"./RelatedPeople-DV3MQdbk.js";import{b as l}from"./CoreData-VzwnZdK9.js";import{w as d}from"./CoreDataContextProvider-Bvl6hy97.js";import"./RelatedList-BBFkCcMc.js";import"./clsx-B-dksMZM.js";import"./LoadAnimation-CmDA6Da1.js";import"./createLucideIcon-aafPa_pM.js";const g={title:"Components/Core Data/RelatedPeople",component:a},t=d(()=>{const o=l();return r.jsx(a,{onLoad:e=>o.fetchRelatedPeople("1",e)})}),s=d(()=>{const o=l();return r.jsx(a,{onLoad:e=>o.fetchRelatedPeople("1",e),renderItem:e=>r.jsx("p",{children:`My name is ${e.first_name} ${e.middle_name}           ${e.last_name} but you can just call me ${e.first_name}`})})}),n=d(()=>{const o=l();return r.jsx(a,{itemsPerRow:2,onLoad:e=>o.fetchRelatedPeople("1",e)})}),c=d(()=>r.jsx(a,{emptyMessage:"No related people",onLoad:()=>Promise.resolve()})),i=d(()=>{const o=l();return r.jsx(a,{onLoad:e=>o.fetchRelatedPeople("1",e).then(m=>(p.extend(m.list,{pages:5,count:22}),m)),showMoreLabel:"Load More"})});t.__docgenInfo={description:"",methods:[],displayName:"Default"};s.__docgenInfo={description:"",methods:[],displayName:"CustomRender"};n.__docgenInfo={description:"",methods:[],displayName:"Horizontal"};c.__docgenInfo={description:"",methods:[],displayName:"EmptyList"};i.__docgenInfo={description:"",methods:[],displayName:"Pagination"};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+  return <RelatedPeople onLoad={params => PlacesService.fetchRelatedPeople('1', params)} />;
+})`,...t.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:"withCoreDataContextProvider(() => {\n  const PlacesService = usePlacesService();\n  return <RelatedPeople onLoad={params => PlacesService.fetchRelatedPeople('1', params)} renderItem={item => <p>\n          {`My name is ${item.first_name} ${item.middle_name}\\\n           ${item.last_name} but you can just call me ${item.first_name}`}\n        </p>} />;\n})",...s.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+  return <RelatedPeople itemsPerRow={2} onLoad={params => PlacesService.fetchRelatedPeople('1', params)} />;
+})`,...n.parameters?.docs?.source}}};c.parameters={...c.parameters,docs:{...c.parameters?.docs,source:{originalSource:"withCoreDataContextProvider(() => <RelatedPeople emptyMessage='No related people' onLoad={() => Promise.resolve()} />)",...c.parameters?.docs?.source}}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:`withCoreDataContextProvider(() => {
+  const PlacesService = usePlacesService();
+  return <RelatedPeople onLoad={params => PlacesService.fetchRelatedPeople('1', params).then(response => {
+    _.extend(response.list, {
+      pages: 5,
+      count: 22
+    });
+    return response;
+  })} showMoreLabel='Load More' />;
+})`,...i.parameters?.docs?.source}}};const C=["Default","CustomRender","Horizontal","EmptyList","Pagination"];export{s as CustomRender,t as Default,c as EmptyList,n as Horizontal,i as Pagination,C as __namedExportsOrder,g as default};

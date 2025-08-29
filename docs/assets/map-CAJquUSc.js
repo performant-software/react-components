@@ -1,1 +1,0 @@
-import{n as p,o as f,p as i,q as m,r as y}from"./getElementType-DI6MxAvz.js";function b(a,r){var s=-1,e=p(a)?Array(a.length):[];return f(a,function(n,t,u){e[++s]=r(n,t,u)}),e}function h(a,r){var s=y(a)?i:b;return s(a,m(r))}export{h as m};
