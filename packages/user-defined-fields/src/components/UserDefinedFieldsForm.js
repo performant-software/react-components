@@ -196,7 +196,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
    */
   useEffect(() => {
     // If the fields have been provided as a prop, there is no need to query them here.
-    if (!_.isEmpty(fields)) {
+    if (props.fields) {
       return;
     }
 
