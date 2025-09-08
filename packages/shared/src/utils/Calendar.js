@@ -2,6 +2,7 @@
 
 import moment from 'moment-islamic-civil';
 import 'moment/min/locales';
+import _ from 'underscore';
 
 const DEFAULT_LOCALE = 'en';
 
@@ -170,12 +171,30 @@ class Calendar {
   }
 
   /**
+   * Parses the passed date string for use with Moment, handling negative dates.
+   *
+   * @param dateString
+   */
+  parseNegative(dateString) {
+    // only need to make changes if it is formatted -YYYY-MM-DD
+    const match = dateString.match(/^-(\d{4})(-\d{2}-\d{2})$/);
+    if (!match) {
+      return dateString;
+    }
+    const [m, year, rest] = match;
+    // moment expects -YYYYYY-MM-DD for BC dates (i.e. ISO without timezone)
+    const paddedYear = year.padStart(6, '0');
+    return `-${paddedYear}${rest}`;
+  }
+
+  /**
    * Wraps the passed date/string in a moment object.
    *
    * @param date
    */
   moment(date: ?any = null) {
-    const m = date ? moment(date) : moment();
+    const parsedDate = _.isString(date) ? this.parseNegative(date) : date;
+    const m = parsedDate ? moment(parsedDate) : moment();
     m.locale(this.locale);
     return m;
   }

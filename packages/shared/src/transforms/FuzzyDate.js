@@ -42,26 +42,6 @@ class FuzzyDate {
       _destroy: date._destroy
     };
   }
-
-  /**
-   * Returns the passed FuzzyDateable object for PUT/POST requests.
-   *
-   * @param dateable
-   * @param attribute
-   *
-   * @returns {{}}
-   */
-  toPayload(dateable, attribute) {
-    const date = dateable[attribute];
-
-    if (!date) {
-      return null;
-    }
-
-    return {
-      [attribute]: this.toData(date)
-    };
-  }
 }
 
 const FuzzyDateTransform: FuzzyDate = new FuzzyDate();
