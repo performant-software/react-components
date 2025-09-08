@@ -50,6 +50,8 @@ class FuzzyDate {
    * @param attribute
    *
    * @returns {{}}
+   * 
+   * @deprecated Deprecated. Use `toData` when updating form state instead.
    */
   toPayload(dateable, attribute) {
     const date = dateable[attribute];
