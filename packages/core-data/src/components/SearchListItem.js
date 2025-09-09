@@ -101,24 +101,27 @@ const SearchListItem = (props: SearchListItemProps) => {
         >
           {props.tags && props.tags.length > 0 && (
             <div className='flex flex-wrap gap-2'>
-              {props.tags.map((tag) => (
-                <Pill
-                  className={tag.className}
-                  label={props.item[tag.attribute]}
-                  key={tag.attribute}
-                />
-              ))}
+              {props.tags.map((tag) => {
+                if (props.item[tag.attribute]) {
+                  return (
+                    <Pill
+                      className={tag.className}
+                      label={props.item[tag.attribute]}
+                      key={tag.attribute}
+                    />
+                  );
+                }
+              })}
             </div>
           )}
           <p className='font-bold text-neutral-800'>{props.title}</p>
           {props.attributes && attributeValues.some(Boolean) && (
             <ul className='list-none'>
               {props.attributes.slice(0, 3).map((att, idx) => (
-                <>
+                <React.Fragment key={att.name}>
                   {!!attributeValues[idx] && (
                     <li
                       className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
-                      key={att.name}
                     >
                       <Icon
                         className='min-w-[13px]'
@@ -128,7 +131,7 @@ const SearchListItem = (props: SearchListItemProps) => {
                       {attributeValues[idx]}
                     </li>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </ul>
           )}
