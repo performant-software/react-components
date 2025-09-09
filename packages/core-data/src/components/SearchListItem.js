@@ -4,6 +4,7 @@ import React, { type Element, useMemo } from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
+import Pill from "./Pill.js";
 
 type SearchListItemProps = {
   /**
@@ -39,7 +40,12 @@ type SearchListItemProps = {
   /**
    * Title of the record
    */
-  title: string
+  title: string,
+
+  /**
+   * List of attributes that appear as pills on the top of the item
+   */
+  tags?: { attribute: string, className?: string }[]
 };
 
 type ItemWrapperProps = {
@@ -93,6 +99,17 @@ const SearchListItem = (props: SearchListItemProps) => {
             ? () => props.onPointerLeave(props.item)
             : undefined}
         >
+          {props.tags && props.tags.length > 0 && (
+            <div className='flex flex-wrap gap-2'>
+              {props.tags.map((tag) => (
+                <Pill
+                  className={tag.className}
+                  label={props.item[tag.attribute]}
+                  key={tag.attribute}
+                />
+              ))}
+            </div>
+          )}
           <p className='font-bold text-neutral-800'>{props.title}</p>
           {props.attributes && attributeValues.some(Boolean) && (
             <ul className='list-none'>
