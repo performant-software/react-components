@@ -4,6 +4,7 @@ import React, { type Element, useMemo } from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
+import Pill from './Pill';
 
 type SearchListItemProps = {
   /**
@@ -39,7 +40,12 @@ type SearchListItemProps = {
   /**
    * Title of the record
    */
-  title: string
+  title: string,
+
+  /**
+   * List of attributes that appear as pills on the top of the item
+   */
+  tags?: { attribute: string, primary?: boolean, secondary?: boolean }[]
 };
 
 type ItemWrapperProps = {
@@ -76,6 +82,28 @@ const SearchListItem = (props: SearchListItemProps) => {
     return props.item[attribute.name];
   }), [props.attributes, props.item]);
 
+  const tags = useMemo(() => {
+    const result = [];
+
+    if (!props.tags) {
+      return result;
+    }
+
+    props.tags.forEach(tag => {
+      const value = props.item[tag.attribute];
+
+      if (value) {
+        result.push({
+          value,
+          primary: tag.primary,
+          secondary: tag.secondary,
+        });
+      }
+    });
+
+    return result;
+  }, [props.tags, props.item]);
+
   return (
     <li
       className={clsx(
@@ -93,15 +121,26 @@ const SearchListItem = (props: SearchListItemProps) => {
             ? () => props.onPointerLeave(props.item)
             : undefined}
         >
+          {tags.length > 0 && (
+            <div className='flex flex-wrap gap-2'>
+              {tags.map((tag, idx) => (
+                <Pill
+                  primary={tag.primary}
+                  secondary={tag.secondary}
+                  label={tag.value}
+                  key={idx}
+                />
+              ))}
+            </div>
+          )}
           <p className='font-bold text-neutral-800'>{props.title}</p>
           {props.attributes && attributeValues.some(Boolean) && (
             <ul className='list-none'>
               {props.attributes.slice(0, 3).map((att, idx) => (
-                <>
+                <React.Fragment key={att.name}>
                   {!!attributeValues[idx] && (
                     <li
                       className='text-sm text-neutral-800 flex gap-2 items-center list-none pl-5 pt-1'
-                      key={att.name}
                     >
                       <Icon
                         className='min-w-[13px]'
@@ -111,7 +150,7 @@ const SearchListItem = (props: SearchListItemProps) => {
                       {attributeValues[idx]}
                     </li>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </ul>
           )}

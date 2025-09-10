@@ -45,6 +45,40 @@ export const Default = () => (
   </div>
 );
 
+export const WithTags = () => (
+  <div className='h-[600px] w-[360px]'>
+    <SearchList
+      attributes={[
+        {
+          label: 'UUID',
+          name: 'uuid'
+        },
+        {
+          label: 'Record ID',
+          name: 'record_id',
+          icon: 'person'
+        },
+        {
+          label: 'Location',
+          name: 'geometry',
+          icon: 'location',
+          render: (item) => (item.coordinates
+            ? `${item.coordinates[0]}, ${item.coordinates[1]}`
+            : '')
+        }
+      ]}
+      tags={[
+        {
+          attribute: 'type',
+          primary: true
+        }
+      ]}
+      items={LOTS_OF_DATA}
+      itemTitle='name'
+    />
+  </div>
+);
+
 export const TitleCallback = () => (
   <div className='h-[600px] w-[360px]'>
     <SearchList

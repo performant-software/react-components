@@ -51,7 +51,12 @@ type Props = {
   /**
    * Callback that fires when the pointer stops hovering over an item
    */
-  onItemPointerLeave?: (item: any) => void
+  onItemPointerLeave?: (item: any) => void,
+
+  /**
+   * List of attributes that appear as pills on the top of the item
+   */
+  tags?: { attribute: string, primary?: boolean, secondary?: boolean }[]
 };
 
 const LIMIT_STEP = 50;
@@ -119,6 +124,7 @@ const SearchList = (props: Props) => {
               onClick={props.onItemClick}
               onPointerEnter={props.onItemPointerEnter}
               onPointerLeave={props.onItemPointerLeave}
+              tags={props.tags}
             />
           ))}
         </InfiniteScroll>
