@@ -70,7 +70,7 @@ export const WithTags = () => (
       tags={[
         {
           attribute: 'type',
-          className: 'bg-red-200 border-red-200!'
+          color: 'primary'
         }
       ]}
       items={LOTS_OF_DATA}

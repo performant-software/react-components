@@ -4,7 +4,7 @@ import React, { type Element, useMemo } from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
-import Pill from "./Pill.js";
+import Pill from './Pill';
 
 type SearchListItemProps = {
   /**
@@ -45,7 +45,7 @@ type SearchListItemProps = {
   /**
    * List of attributes that appear as pills on the top of the item
    */
-  tags?: { attribute: string, className?: string }[]
+  tags?: { attribute: string, color?: 'primary' | 'secondary' }[]
 };
 
 type ItemWrapperProps = {
@@ -82,6 +82,31 @@ const SearchListItem = (props: SearchListItemProps) => {
     return props.item[attribute.name];
   }), [props.attributes, props.item]);
 
+  const tags = useMemo(() => {
+    const result = [];
+
+    if (!props.tags) {
+      return result;
+    }
+
+    props.tags.forEach(tag => {
+      const value = props.item[tag.attribute];
+      const bgColor = tag.color || 'primary';
+      const textColor = bgColor === 'primary'
+        ? 'white'
+        : 'black';
+
+      if (value) {
+        result.push({
+          value,
+          className: `bg-${bgColor} border-${bgColor} text-${textColor}`
+        });
+      }
+    });
+
+    return result;
+  }, [props.tags, props.item]);
+
   return (
     <li
       className={clsx(
@@ -99,19 +124,15 @@ const SearchListItem = (props: SearchListItemProps) => {
             ? () => props.onPointerLeave(props.item)
             : undefined}
         >
-          {props.tags && props.tags.length > 0 && (
+          {tags.length > 0 && (
             <div className='flex flex-wrap gap-2'>
-              {props.tags.map((tag) => {
-                if (props.item[tag.attribute]) {
-                  return (
-                    <Pill
-                      className={tag.className}
-                      label={props.item[tag.attribute]}
-                      key={tag.attribute}
-                    />
-                  );
-                }
-              })}
+              {tags.map((tag, idx) => (
+                <Pill
+                  className={tag.className}
+                  label={tag.value}
+                  key={idx}
+                />
+              ))}
             </div>
           )}
           <p className='font-bold text-neutral-800'>{props.title}</p>

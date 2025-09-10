@@ -56,7 +56,7 @@ type Props = {
   /**
    * List of attributes that appear as pills on the top of the item
    */
-  tags?: { attribute: string, className?: string }[]
+  tags?: { attribute: string, color?: 'primary' | 'secondary' }[]
 };
 
 const LIMIT_STEP = 50;
