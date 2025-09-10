@@ -45,7 +45,7 @@ type SearchListItemProps = {
   /**
    * List of attributes that appear as pills on the top of the item
    */
-  tags?: { attribute: string, color?: 'primary' | 'secondary' }[]
+  tags?: { attribute: string, primary?: boolean, secondary?: boolean }[]
 };
 
 type ItemWrapperProps = {
@@ -91,15 +91,12 @@ const SearchListItem = (props: SearchListItemProps) => {
 
     props.tags.forEach(tag => {
       const value = props.item[tag.attribute];
-      const bgColor = tag.color || 'primary';
-      const textColor = bgColor === 'primary'
-        ? 'white'
-        : 'black';
 
       if (value) {
         result.push({
           value,
-          className: `bg-${bgColor} border-${bgColor} text-${textColor}`
+          primary: tag.primary,
+          secondary: tag.secondary,
         });
       }
     });
@@ -128,7 +125,8 @@ const SearchListItem = (props: SearchListItemProps) => {
             <div className='flex flex-wrap gap-2'>
               {tags.map((tag, idx) => (
                 <Pill
-                  className={tag.className}
+                  primary={tag.primary}
+                  secondary={tag.secondary}
                   label={tag.value}
                   key={idx}
                 />
