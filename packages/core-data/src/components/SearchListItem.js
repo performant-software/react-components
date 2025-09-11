@@ -97,7 +97,7 @@ const SearchListItem = (props: SearchListItemProps) => {
         result.push({
           value,
           primary: tag.primary,
-          secondary: tag.secondary,
+          secondary: tag.secondary
         });
       }
     });
