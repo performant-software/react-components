@@ -11,7 +11,5 @@
 [lints]
 
 [options]
-esproposal.export_star_as=enable
-module.file_ext=.less
 
 [strict]
