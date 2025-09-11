@@ -69,7 +69,7 @@ export const WithTags = () => (
       ]}
       tags={[
         {
-          attribute: 'type',
+          name: 'geometry.type',
           primary: true
         }
       ]}
