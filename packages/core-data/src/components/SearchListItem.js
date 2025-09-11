@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import Icon from './Icon';
 import { type Attribute } from '../types/SearchList';
 import Pill from './Pill';
+import { ObjectJs } from '@performant-software/shared-components';
 
 type SearchListItemProps = {
   /**
@@ -45,7 +46,7 @@ type SearchListItemProps = {
   /**
    * List of attributes that appear as pills on the top of the item
    */
-  tags?: { attribute: string, primary?: boolean, secondary?: boolean }[]
+  tags?: { name: string, primary?: boolean, secondary?: boolean }[]
 };
 
 type ItemWrapperProps = {
@@ -90,7 +91,7 @@ const SearchListItem = (props: SearchListItemProps) => {
     }
 
     props.tags.forEach(tag => {
-      const value = props.item[tag.attribute];
+      const value = ObjectJs.getNestedValue(props.item, tag.name);
 
       if (value) {
         result.push({
