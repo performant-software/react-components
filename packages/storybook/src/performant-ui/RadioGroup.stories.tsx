@@ -81,3 +81,16 @@ export const CustomStyles = () => {
     />
   );
 };
+
+export const Disabled = () => {
+  const [value, setValue] = useState(options[0]);
+
+  return (
+    <RadioGroup
+      disabled
+      onChange={setValue}
+      options={options}
+      value={value}
+    />
+  );
+};

@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { HiOutlineTrash, HiPhoto } from 'react-icons/hi2'
-import Button from './Button'
-import clsx from 'clsx'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { HiOutlineTrash, HiPhoto } from 'react-icons/hi2';
+import Button from './Button';
+import clsx from 'clsx';
 
 interface Props {
   accept?: string
   description?: string
+  disabled?: boolean
   fileDescription?: string
   label?: string
   imageUrl?: string
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const MediaSelect: React.FC<Props> = (props) => {
-  const [imageUrl, setImageUrl] = useState<string | undefined>(props.imageUrl)
+  const [imageUrl, setImageUrl] = useState<string | undefined>(props.imageUrl);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,31 +23,31 @@ const MediaSelect: React.FC<Props> = (props) => {
 
   const onCleanup = useCallback((url: string) => {
     if (url !== props.imageUrl) {
-      URL.revokeObjectURL(url)
+      URL.revokeObjectURL(url);
     }
-  }, [props.imageUrl])
+  }, [props.imageUrl]);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUrl(prev => {
-      const newUrl =  URL.createObjectURL(Array.from(e.target.files)[0])
+      const newUrl =  URL.createObjectURL(Array.from(e.target.files)[0]);
 
       if (prev) {
-        onCleanup(prev)
+        onCleanup(prev);
       }
 
-      return newUrl
-    })
+      return newUrl;
+    });
 
-    props.onChange(e.target.files)
-  }, [props.onChange, setImageUrl])
+    props.onChange(e.target.files);
+  }, [props.onChange, setImageUrl]);
 
   useEffect(() => {
     return () => {
       if (imageUrl) {
-        onCleanup(imageUrl)
+        onCleanup(imageUrl);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <>
@@ -57,14 +58,15 @@ const MediaSelect: React.FC<Props> = (props) => {
           </span>
         )}
         <button
-          className='w-full rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer group relative overflow-hidden'
+          className='w-full rounded-lg border border-dashed shadow-sm border-zinc-200 hover:cursor-pointer group relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed'
+          disabled={props.disabled}
           data-populated={!!imageUrl || undefined}
           onClick={openDialog}
           type='button'
         >
           {imageUrl && (
             <img
-              alt="Selected image"
+              alt='Selected image'
               className='absolute w-full h-full object-cover'
               src={imageUrl}
             />
@@ -83,12 +85,13 @@ const MediaSelect: React.FC<Props> = (props) => {
       <input
         accept={props.accept}
         className='hidden'
+        disabled={props.disabled}
         onChange={onChange}
         ref={inputRef}
-        type="file"
+        type='file'
       />
     </>
-  )
-}
+  );
+};
 
-export default MediaSelect
+export default MediaSelect;

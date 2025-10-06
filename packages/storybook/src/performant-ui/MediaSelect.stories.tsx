@@ -70,3 +70,16 @@ export const WithRemove = () => {
     />
   );
 };
+
+export const Disabled = () => {
+  const [files, setFiles] = useState([])
+
+  return (
+      <MediaSelect
+          description='This will be visible to clients on the project.'
+          disabled
+          fileDescription='PNG, JPG, GIF up to 2MB'
+          onChange={action('change')}
+      />
+  );
+};

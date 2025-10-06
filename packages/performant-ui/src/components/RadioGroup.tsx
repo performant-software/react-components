@@ -16,6 +16,7 @@ interface Props {
     label?: string,
     description?: string
   }
+  disabled?: boolean
   onChange: (arg: RadioOption) => any
   options?: RadioOption[]
   value: RadioOption
@@ -30,16 +31,17 @@ const RadioGroup: React.FC<Props> = (props) => {
       )}
       onChange={props.onChange}
     >
-      {props.options.map(opt => (
+      {props.options?.map(opt => (
         <Field
           className={clsx(
-            'group text-zinc-950 font-semibold focus:outline-none',
+            'group text-zinc-950 font-semibold focus:outline-none disabled-opacity-50',
             props.classes?.field
           )}
+          disabled={props.disabled}
           key={opt.id}
         >
           <Radio
-            className='flex gap-2 hover:cursor-pointer'
+            className='flex gap-2 hover:cursor-pointer group-data-disabled:opacity-50 group-data-disabled:grayscale'
             value={opt}
           >
             <RadioIcon
@@ -49,7 +51,7 @@ const RadioGroup: React.FC<Props> = (props) => {
             <div>
               <Label
                 className={clsx(
-                  'hover:cursor-pointer',
+                  'hover:cursor-pointer group-data-disabled:hover:cursor-default',
                   props.classes?.label
                 )}
               >
