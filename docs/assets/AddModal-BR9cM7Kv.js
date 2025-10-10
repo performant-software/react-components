@@ -1,0 +1,1 @@
+import{j as e}from"./iframe-DlkFaX8z.js";import{M as d}from"./Modal-BuBli_Mf.js";const r=o=>e.jsxs(d,{open:!0,children:[e.jsx(d.Header,{children:"Add"}),e.jsx(d.Content,{children:"Add something here"}),o.children]});r.__docgenInfo={description:"",methods:[],displayName:"AddModal",props:{children:{required:!0,flowType:{name:"Node"},description:""}}};export{r as A};
