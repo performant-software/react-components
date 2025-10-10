@@ -156,19 +156,19 @@ const MapDraw = (props: Props) => {
   /**
    * Adds the selected geometry to the map.
    *
-   * @type {(function({detail: *}): void)|*}
+   * @type {(function({feature: *}): void)|*}
    */
-  const onSelection = useCallback(({ detail }) => {
-    if (isValid(detail)) {
+  const onSelection = useCallback(({ feature }) => {
+    if (isValid(feature)) {
       // Add the geometry to the map
-      drawRef.current.add(detail.geometry);
+      drawRef.current.add(feature.geometry);
 
       // Trigger the onChange prop
       onChange();
 
       // Call the onGeocoding selection callback
       if (props.onGeocodingSelection) {
-        props.onGeocodingSelection(detail);
+        props.onGeocodingSelection(feature);
       }
     }
   }, [isValid, onChange, props.onGeocodingSelection]);
