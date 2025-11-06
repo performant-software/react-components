@@ -4,18 +4,16 @@ import { flowPlugin, esbuildFlowPlugin } from '@bunchtogether/vite-plugin-flow';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig(() => ({
   esbuild: {
-    include: /\.js$/,
+    include: /\.(js|jsx|ts|tsx)$/,
     exclude: [],
-    loader: 'jsx'
+    loader: 'tsx',
   },
   optimizeDeps: {
     esbuildOptions: {
-      loader: {
-        '.js': 'jsx'
-      },
       plugins: [esbuildFlowPlugin()]
     }
   },
@@ -32,6 +30,10 @@ export default defineConfig(() => ({
   plugins: [
     react(),
     flowPlugin(),
-    tailwindcss()
+    tailwindcss(),
+    dts({
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.stories.{ts,tsx}']
+    })
   ]
 }));

@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '../../performant-ui/tailwind.css';
+@source '../../performant-ui/';
+
+@custom-variant dark (&:where(.dark, .dark *));
