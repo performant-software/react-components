@@ -121,7 +121,7 @@ const SimpleEditPage: any = (props: Props) => {
       <Menu
         {...props.menuProps}
       >
-        { tabs?.length > 1 && _.map(tabs, (item) => (
+        {tabs?.length > 1 && _.map(tabs, (item) => (
           <Menu.Item
             active={item.key === currentTab}
             disabled={props.loading || props.saving}
@@ -136,7 +136,7 @@ const SimpleEditPage: any = (props: Props) => {
           <Menu.Item
             className='button-container'
           >
-            { props.editable && (
+            {props.editable && (
               <Button
                 content={i18n.t('Common.buttons.save')}
                 disabled={props.loading || props.saving}
@@ -161,7 +161,7 @@ const SimpleEditPage: any = (props: Props) => {
           context={contentRef}
           offset={20}
         >
-          { menu }
+          {menu}
         </Sticky>
       );
     }
@@ -195,7 +195,7 @@ const SimpleEditPage: any = (props: Props) => {
     >
       <Grid.Row>
         <Grid.Column>
-          { renderTabs() }
+          {renderTabs()}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
@@ -214,9 +214,9 @@ const SimpleEditPage: any = (props: Props) => {
                   header={i18n.t('Common.errors.save')}
                   list={props.errors}
                 />
-                { tab && tab.props.children }
+                {tab && tab.props.children}
               </Form>
-              { saved && (
+              {saved && (
                 <Toaster
                   onDismiss={() => setSaved(false)}
                   type={Toaster.MessageTypes.positive}

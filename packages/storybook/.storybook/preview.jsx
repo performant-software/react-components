@@ -1,23 +1,18 @@
 // @flow
 
 import { DocsContainer } from '@storybook/addon-docs/blocks';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 import ModalContext from '../../shared/src/context/ModalContext';
 
 // Component package styles
 import '../../controlled-vocabulary/dist/style.css';
-import '../../core-data/dist/packages/core-data/src/index.css';
 import '../../geospatial/dist/style.css';
-import '../../semantic-ui/dist/style.css';
 import '../../shared/dist/style.css';
 import '../../user-defined-fields/dist/style.css';
 import '../../visualize/dist/style.css';
 
 // Storybook styles
 import './styles/index.css';
-
-// Tailwind styles
-import '../src/index.css';
 
 /**
  * If a list of accessibility tags are provided, only run the tests for those specific tags.
@@ -34,8 +29,27 @@ if (import.meta.env.A11Y_TAGS) {
         values: import.meta.env.A11Y_TAGS.split(',')
       }
     }
-  }
+  };
 }
+
+export const decorators = [
+  (Story, context) => {
+    const storyPath = context.parameters.fileName;
+    
+    useEffect(() => {
+      if (storyPath.startsWith('./src/performant-ui')) {
+        import('../src/performant-ui.css');
+      } else if (storyPath.startsWith('./src/core-data')) {
+        import('../src/core-data.css');
+        import('../../core-data/dist/packages/core-data/src/index.css');
+      } else if (storyPath.startsWith('./src/semantic-ui')) {
+        import('../../semantic-ui/dist/style.css');
+      }
+    }, [storyPath]);
+    
+    return <Story />;
+  }
+];
 
 export const parameters = {
   a11y,
@@ -57,7 +71,7 @@ export const parameters = {
             </div>
           </DocsContainer>
         </ModalContext.Provider>
-      )
+      );
     }
   },
   backgrounds: {
