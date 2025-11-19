@@ -1,0 +1,1 @@
+import{R as r}from"./iframe-CzTKQtwy.js";const m=(p,n)=>{const e=[],s=[n.displayName||n.name];return r.Children.forEach(p,a=>{const t=a&&a.type&&(a.type.displayName||a.type.name);s.includes(t)&&e.push(a)}),e},y={findByType:m};export{y as m};
