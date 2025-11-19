@@ -84,7 +84,7 @@ const Pagination = (props: Props) => {
     )}
     >
       <span className='font-bold'>
-        {i18n.t('Pagination.rowsPerPage')}
+        {i18n.t('Pagination.recordsPerPage')}
       </span>
       <HitsPerPage
         hitsPerPage={props.hitsPerPage}

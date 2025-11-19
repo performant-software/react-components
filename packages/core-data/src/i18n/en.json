@@ -31,7 +31,7 @@
   "Pagination": {
     "next": "Next",
     "previous": "Previous",
-    "rowsPerPage": "Rows per page"
+    "recordsPerPage": "Records per page"
   },
   "Slider": {
     "end": "End",
