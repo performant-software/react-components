@@ -1,0 +1,19 @@
+import{j as s}from"./iframe-DjZg4LCJ.js";import{_ as l}from"./index-default-B8-H6N8J.js";import{_ as o}from"./index-default-C0I3bBxV.js";import{D as d}from"./DropdownButton-BPubSgbi.js";import{i as c}from"./i18n-DkobdbHY.js";import"./Button-BfwSthv4.js";import"./extends-CCbyfPlC.js";import"./inheritsLoose-1HkgTRWY.js";import"./setPrototypeOf-DgZC2w_0.js";import"./getElementType-CAZyNRJI.js";import"./Icon-tpspPEMM.js";import"./Label-Bh5L599Z.js";import"./ModernAutoControlledComponent-BMzS269y.js";import"./assertThisInitialized-B9jnkVVz.js";import"./includes-CONzxizI.js";import"./toFinite-BAYWAdIs.js";import"./forEach-A59iOPX4.js";import"./Dimmer-CCyRt7B_.js";import"./Portal-ryYdJBeB.js";import"./keyboardKey-Dib6OvmA.js";import"./map-DtdA0n9n.js";import"./Dropdown-F4rgfcN7.js";import"./without--0CyYUzZ.js";import"./isArrayLikeObject-CUXhdROG.js";import"./isEmpty-BBVcPIVn.js";import"./deburr-DugsZdwn.js";import"./index-CxAXPjQd.js";import"./_baseSet-Dvm44Wtg.js";import"./_baseAssignValue-8K9yYogk.js";import"./_arrayReduce-CrxnWFSq.js";import"./filter-CPefKB_L.js";import"./i18next-eNuDfwAU.js";const m=({useHitsPerPage:n,options:a})=>{const{items:t,refine:p}=n({items:o.map(a,(e,i)=>({label:e,value:e,default:i===0}))}),{value:u}=o.findWhere(t,{isRefined:!0});return s.jsx(d,{basic:!0,icon:"list",onChange:(e,i)=>p(i.value),options:o.map(t,e=>({key:e.value,value:e.value,text:e.label})),text:c.t("SearchResultsPerPage.labels.show",{value:u}),value:u})};m.__docgenInfo={description:"This component is used with the `useHitsPerPage` hook from Instant Search Hooks and renders a dropdown with\noptions for the number of records to display per page.",methods:[],displayName:"SearchResultsPerPage",props:{useHitsPerPage:{required:!0,flowType:{name:"signature",type:"function",raw:`(props: any) => ({
+  items: Array<{ value: number, label: string, default: boolean}>,
+  refine: (value: number) => void
+})`,signature:{arguments:[{name:"props",type:{name:"any"}}],return:{name:"signature",type:"object",raw:`{
+  items: Array<{ value: number, label: string, default: boolean}>,
+  refine: (value: number) => void
+}`,signature:{properties:[{key:"items",value:{name:"Array",elements:[{name:"signature",type:"object",raw:"{ value: number, label: string, default: boolean}",signature:{properties:[{key:"value",value:{name:"number",required:!0}},{key:"label",value:{name:"string",required:!0}},{key:"default",value:{name:"boolean",required:!0}}]}}],raw:"Array<{ value: number, label: string, default: boolean}>",required:!0}},{key:"refine",value:{name:"signature",type:"function",raw:"(value: number) => void",signature:{arguments:[{name:"value",type:{name:"number"}}],return:{name:"void"}},required:!0}}]}}}},description:"Instant-Search hook to provide number of hits per page values."},options:{required:!0,flowType:{name:"Array",elements:[{name:"number"}],raw:"Array<number>"},description:"An array of numeric values to present to the user as the number of records to display per page."}}};const{action:f}=__STORYBOOK_MODULE_ACTIONS__,F={title:"Components/Semantic UI/SearchResultsPerPage",component:m},r=()=>s.jsx("div",{style:{minHeight:"400px"},children:s.jsx(m,{options:[10,25,50,100],useHitsPerPage:({items:n})=>({items:l.map(n,(a,t)=>({...a,isRefined:t===0})),refine:f("refine")})})});r.__docgenInfo={description:"",methods:[],displayName:"Default"};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`() => <div style={{
+  minHeight: '400px'
+}}>
+    <SearchResultsPerPage options={[10, 25, 50, 100]} useHitsPerPage={({
+    items
+  }) => ({
+    items: _.map(items, (item, index) => ({
+      ...item,
+      isRefined: index === 0
+    })),
+    refine: action('refine')
+  })} />
+  </div>`,...r.parameters?.docs?.source}}};const G=["Default"];export{r as Default,G as __namedExportsOrder,F as default};
