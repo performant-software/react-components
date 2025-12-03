@@ -133,7 +133,13 @@ const getDate = (event: EventType) => {
 
   if (_.isNumber(date)) {
     // Typesense date is a Unix timestamp, which is in seconds, so convert to ms
-    return new Date(date * ONE_SECOND);
+    const jsDate = new Date(date * ONE_SECOND);
+    // prevent timezone errors by just using year, month, date
+    return new Date(
+      jsDate.getUTCFullYear(),
+      jsDate.getUTCMonth(),
+      jsDate.getUTCDate()
+    );
   }
 
   return date;
