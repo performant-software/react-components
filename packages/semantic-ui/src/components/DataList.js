@@ -114,7 +114,13 @@ type Props = {
   session?: {
     key: string,
     storage: typeof sessionStorage
-  }
+  },
+
+  /**
+   * The item in the list to update. This is useful if the items can be modified outside of the list and should
+   * reflect the changes without loading the entire list.
+   */
+  updateItem?: any
 };
 
 type State = {
@@ -182,6 +188,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     componentDidUpdate(prevProps: Props) {
       if (prevProps.saved !== this.props.saved && this.props.saved) {
         this.setState({ saved: this.props.saved }, this.fetchData.bind(this));
+      }
+
+      if (prevProps.updateItem !== this.props.updateItem && this.props.updateItem) {
+        this.onUpdateItem();
       }
     }
 
@@ -435,7 +445,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * When no columns are sortable, load data as is
      *
      */
-    onInit(page?: number = 1) {
+    onInit(page: number = 1) {
       this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
     }
 
@@ -500,7 +510,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @param direction
      * @param page
      */
-    onSort(sortColumn: string, direction?: string, page?: number = 1) {
+    onSort(sortColumn: string, direction?: string, page: number = 1) {
       let sortDirection = direction;
 
       if (!sortDirection) {
@@ -509,6 +519,12 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }
 
       this.setState({ sortColumn, sortDirection, page }, this.fetchData.bind(this));
+    }
+
+    onUpdateItem() {
+      this.setState((state) => ({
+        items: _.map(state.items, (item) => item.id !== this.props.updateItem.id ? item : this.props.updateItem)
+      }));
     }
 
     /**
