@@ -20,6 +20,19 @@ export const Default = () => {
   );
 };
 
+export const Disabled = () => {
+  const [query, setQuery] = useState('I\'m disabled');
+
+  return (
+    <Input
+      disabled
+      onChange={(val) => setQuery(val)}
+      placeholder='Search'
+      value={query}
+    />
+  );
+};
+
 export const NotClearable = () => {
   const [query, setQuery] = useState('');
 

@@ -199,3 +199,23 @@ export const ListView = () => {
     </>
   );
 };
+
+// example of a single date at the exact beginning of the range, which
+// was causing errors due to timezone conversion
+const singleDate = {
+  end_date: [-662688000, -631152000],
+  end_year: [1949, 1950],
+  name: 'African Progressive Association Founded',
+  start_date: [-946771200, -915148800],
+  start_year: [1940, 1941],
+  uuid: '52f568cb-3036-478f-8a0c-62e93c1f0f20'
+};
+
+export const SingleItem = () => (
+  <FacetTimeline
+    data={[singleDate]}
+    range={{min: 1940, max: 1954}}
+    refine={action('refine')}
+    start={[1940, 1954]}
+  />
+);

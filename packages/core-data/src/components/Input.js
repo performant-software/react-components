@@ -20,6 +20,10 @@ type Props = {
    */
   clearable?: boolean,
   /**
+   * (Optional) Whether the input is disabled.
+   */
+  disabled?: boolean,
+  /**
    * (Optional) Placeholder text to show when the user hasn't typed anything.
    */
   placeholder?: string,
@@ -65,6 +69,7 @@ const Input = (props: Props) => {
         'text-md',
         'fill-neutral-800',
         'focus-within:border-primary',
+        { 'opacity-50': props.disabled },
         props.className
       )}
     >
@@ -76,7 +81,8 @@ const Input = (props: Props) => {
       )}
       <input
         aria-label={props.ariaLabel}
-        className='grow bg-transparent focus:outline-none w-full'
+        className='group grow bg-transparent focus:outline-none w-full disabled:opacity-50'
+        disabled={props.disabled}
         placeholder={props.placeholder}
         onBlur={(e) => props.onBlur(e.target.value)}
         onChange={(e) => props.onChange(e.target.value)}
@@ -87,6 +93,7 @@ const Input = (props: Props) => {
         <button
           aria-label={i18n.t('Input.clear')}
           className='p-2 rounded-full flex items-center justify-center relative left-2'
+          disabled={props.disabled}
           onClick={() => props.onChange('')}
           type='button'
         >
