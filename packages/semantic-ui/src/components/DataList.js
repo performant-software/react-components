@@ -97,12 +97,6 @@ type Props = {
   polling?: number,
 
   /**
-   * If true, the list state will be reinitialized and the data re-fetched. This is useful for operations that change
-   * the state of the list outside of this component.
-   */
-  reinitialize?: boolean,
-
-  /**
    * If true, the data for the list will be re-fetched. This is useful for operations that change the state of the
    * list outside of this component.
    */
@@ -211,10 +205,6 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       if (prevProps.updateItem !== this.props.updateItem && this.props.updateItem) {
         this.onUpdateItem();
-      }
-
-      if (prevProps.reinitialize !== this.props.reinitialize && this.props.reinitialize) {
-        this.setState(this.initializeState(this.props), this.fetchData.bind(this));
       }
 
       if (prevProps.reload !== this.props.reload && this.props.reload) {
