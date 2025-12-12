@@ -90,6 +90,12 @@ type Props = {
   polling?: number,
 
   /**
+   * If true, the data for the list will be re-fetched. This is useful for operations that change the state of the
+   * list outside of this component.
+   */
+  reload?: boolean,
+
+  /**
    * Callback fired when an error occurs. The passed error can take any form and is up to the consuming component to
    * interpret. The return value should be an array of user-friendly error messages.
    */
@@ -192,6 +198,10 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
 
       if (prevProps.updateItem !== this.props.updateItem && this.props.updateItem) {
         this.onUpdateItem();
+      }
+
+      if (prevProps.reload !== this.props.reload && this.props.reload) {
+        this.fetchData();
       }
     }
 
