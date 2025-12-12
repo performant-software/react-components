@@ -74,6 +74,13 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
 
   /**
+   * Callback fired when the list is reloaded as a result of an operation outside of this component.
+   *
+   * @param state
+   */
+  onReload?: (state: any) => any,
+
+  /**
    * Callback fired when an item is saved via the add/edit modal.
    */
   onSave?: (item: any) => Promise<any>,
@@ -88,6 +95,12 @@ type Props = {
    * can be useful in order to show progress (file upload, download, etc) that must be retrieved from the server.
    */
   polling?: number,
+
+  /**
+   * If true, the list state will be reinitialized and the data re-fetched. This is useful for operations that change
+   * the state of the list outside of this component.
+   */
+  reinitialize?: boolean,
 
   /**
    * If true, the data for the list will be re-fetched. This is useful for operations that change the state of the
@@ -200,8 +213,12 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
         this.onUpdateItem();
       }
 
+      if (prevProps.reinitialize !== this.props.reinitialize && this.props.reinitialize) {
+        this.setState(this.initializeState(this.props), this.fetchData.bind(this));
+      }
+
       if (prevProps.reload !== this.props.reload && this.props.reload) {
-        this.fetchData();
+        this.setState(this.onReload.bind(this), this.fetchData.bind(this));
       }
     }
 
@@ -478,6 +495,21 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     onPerPageChange(e: Event, { value }: { value: number }) {
       this.setState({ page: 1, perPage: value }, this.fetchData.bind(this));
+    }
+
+    /**
+     * Calls the onReload prop if provided and returns the value.
+     *
+     * @param state
+     *
+     * @returns {*}
+     */
+    onReload(state) {
+      if (!this.props.onReload) {
+        return state;
+      }
+
+      return this.props.onReload(state);
     }
 
     /**
