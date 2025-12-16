@@ -553,6 +553,9 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       this.setState({ sortColumn, sortDirection, page }, this.fetchData.bind(this));
     }
 
+    /**
+     * Replaces the item in the list with the updateItem.
+     */
     onUpdateItem() {
       this.setState((state) => ({
         items: _.map(state.items, (item) => item.id !== this.props.updateItem.id ? item : this.props.updateItem)
