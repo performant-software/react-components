@@ -74,6 +74,13 @@ type Props = {
   onLoad: (params: any) => Promise<any>,
 
   /**
+   * Callback fired when the list is reloaded as a result of an operation outside of this component.
+   *
+   * @param state
+   */
+  onReload?: (state: any) => any,
+
+  /**
    * Callback fired when an item is saved via the add/edit modal.
    */
   onSave?: (item: any) => Promise<any>,
@@ -88,6 +95,12 @@ type Props = {
    * can be useful in order to show progress (file upload, download, etc) that must be retrieved from the server.
    */
   polling?: number,
+
+  /**
+   * If true, the data for the list will be re-fetched. This is useful for operations that change the state of the
+   * list outside of this component.
+   */
+  reload?: boolean,
 
   /**
    * Callback fired when an error occurs. The passed error can take any form and is up to the consuming component to
@@ -114,7 +127,13 @@ type Props = {
   session?: {
     key: string,
     storage: typeof sessionStorage
-  }
+  },
+
+  /**
+   * The item in the list to update. This is useful if the items can be modified outside of the list and should
+   * reflect the changes without loading the entire list.
+   */
+  updateItem?: any
 };
 
 type State = {
@@ -182,6 +201,14 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
     componentDidUpdate(prevProps: Props) {
       if (prevProps.saved !== this.props.saved && this.props.saved) {
         this.setState({ saved: this.props.saved }, this.fetchData.bind(this));
+      }
+
+      if (prevProps.updateItem !== this.props.updateItem && this.props.updateItem) {
+        this.onUpdateItem();
+      }
+
+      if (prevProps.reload !== this.props.reload && this.props.reload) {
+        this.setState(this.onReload.bind(this), this.fetchData.bind(this));
       }
     }
 
@@ -435,7 +462,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * When no columns are sortable, load data as is
      *
      */
-    onInit(page?: number = 1) {
+    onInit(page: number = 1) {
       this.setState({ sortColumn: '', sortDirection: '', page }, this.fetchData.bind(this));
     }
 
@@ -458,6 +485,21 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      */
     onPerPageChange(e: Event, { value }: { value: number }) {
       this.setState({ page: 1, perPage: value }, this.fetchData.bind(this));
+    }
+
+    /**
+     * Calls the onReload prop if provided and returns the value.
+     *
+     * @param state
+     *
+     * @returns {*}
+     */
+    onReload(state) {
+      if (!this.props.onReload) {
+        return state;
+      }
+
+      return this.props.onReload(state);
     }
 
     /**
@@ -500,7 +542,7 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
      * @param direction
      * @param page
      */
-    onSort(sortColumn: string, direction?: string, page?: number = 1) {
+    onSort(sortColumn: string, direction?: string, page: number = 1) {
       let sortDirection = direction;
 
       if (!sortDirection) {
@@ -509,6 +551,15 @@ const useDataList = (WrappedComponent: ComponentType<any>) => (
       }
 
       this.setState({ sortColumn, sortDirection, page }, this.fetchData.bind(this));
+    }
+
+    /**
+     * Replaces the item in the list with the updateItem.
+     */
+    onUpdateItem() {
+      this.setState((state) => ({
+        items: _.map(state.items, (item) => item.id !== this.props.updateItem.id ? item : this.props.updateItem)
+      }));
     }
 
     /**
