@@ -227,7 +227,16 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
     }
 
     _.each(geometryObjects, (geometryObject) => {
-      const geometry = _.get(geometryObject, geometryPath);
+      let geometry;
+      let transform = false;
+
+      // TODO: Comment me!
+      if (geometryPath) {
+        geometry = _.get(geometryObject, geometryPath);
+        transform = true;
+      } else if (options.geometries) {
+        geometry = options.geometries[geometryObject.uuid];
+      }
 
       const include = geometry && (!options.type || geometry.type === options.type);
 
@@ -238,7 +247,7 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
 
         const relatedRecords = _.get(result, objectPath);
 
-        if (relatedRecords) {
+        if (relatedRecords && transform) {
           trimmedResult = ObjectUtils.setNestedValue(
             result,
             objectPath,
