@@ -9,6 +9,9 @@ import type { Event as EventType } from '../types/Event';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
 type Options = {
+  geometries: {
+    [uuid: string]: any
+  },
   type?: string
 };
 
@@ -231,12 +234,12 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
       let transform = false;
 
       // TODO: Comment me!
-      if (geometryPath) {
-        geometry = _.get(geometryObject, geometryPath);
-        transform = true;
-      } else if (options.geometries) {
+      if (options.geometries) {
         const object = options.geometries[geometryObject.uuid];
         geometry = object?.geometry;
+      } else {
+        geometry = _.get(geometryObject, geometryPath);
+        transform = true;
       }
 
       const include = geometry && (!options.type || geometry.type === options.type);
