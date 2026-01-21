@@ -235,7 +235,8 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
         geometry = _.get(geometryObject, geometryPath);
         transform = true;
       } else if (options.geometries) {
-        geometry = options.geometries[geometryObject.uuid];
+        const object = options.geometries[geometryObject.uuid];
+        geometry = object?.geometry;
       }
 
       const include = geometry && (!options.type || geometry.type === options.type);
