@@ -1,7 +1,7 @@
 // @flow
 
 import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
-import { feature, featureCollection } from '@turf/turf';
+import { feature, featureCollection, truncate } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
@@ -204,7 +204,9 @@ const toFeature = (record: any, item: any, geometry: any) => {
   };
 
   const id = parseInt(record.record_id, 10);
-  return feature(geometry, properties, { id });
+  const data = feature(geometry, properties, { id });
+
+  return truncate(data, { precision: 3, coordinates: 2 });
 };
 
 /**
