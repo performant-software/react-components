@@ -312,8 +312,9 @@ const getFeatures = (features, results, path, options) => {
         const trimmedResult = trimResult(result, objectPath);
 
         const record = _.find(newFeatures, (f) => f.properties?.uuid === place.uuid);
+        const item = _.find(record.properties?.items, (item) => item.uuid === trimmedResult.uuid);
 
-        if (record) {
+        if (record && !item) {
           record.properties?.items.push(trimmedResult);
         } else {
           newFeatures.push(toFeature(place, trimmedResult, geometry));
