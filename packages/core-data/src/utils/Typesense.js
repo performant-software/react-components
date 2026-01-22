@@ -286,10 +286,15 @@ const getFeatures = (features, results, path, options) => {
   const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
   const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
 
+  // TODO: How to remove items that are no longer in the results?
+  const placeIds = [];
+
   _.each(results, (result) => {
     const places = _.isEmpty(objectPath) ? result : ObjectUtils.getNestedValue(result, objectPath);
 
     _.each(places, (place) => {
+      placeIds.push(place.uuid);
+
       let geometry;
 
       if (options.geometries) {
@@ -314,13 +319,13 @@ const getFeatures = (features, results, path, options) => {
     });
   });
 
-  return newFeatures;
+  return _.filter(newFeatures, (feature) => placeIds.includes(feature.properties.uuid));
 };
 
 const createFeatureCollection = (features) => featureCollection(features);
 
 const getGeometryByPath = (place, path) => {
-  return _.get(path, path);
+  return _.get(place, path);
 };
 
 const getGeometryByHash = (place, hash) => {
