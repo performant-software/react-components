@@ -350,20 +350,21 @@ const getGeometryByHash = (place, hash) => {
 };
 
 const trimResult = (result, objectPath) => {
-  let value = { ...result };
-
-  const relatedRecords = _.get(result, objectPath);
-
-  if (relatedRecords) {
-    const trimmedPlaces = _.map(relatedRecords, (r) => ({ ...r, geometry: undefined }));
-    value = ObjectUtils.setNestedValue(value, objectPath, trimmedPlaces);
-  }
-
-  value._rawTypesenseHit = undefined;
-  value._snippetResult = undefined;
-  value._highlightResult = undefined;
-
-  return value;
+  return _.pick(result, 'id', 'uuid', 'record_id', 'name', 'names');
+  // let value = { ...result };
+  //
+  // const relatedRecords = _.get(result, objectPath);
+  //
+  // if (relatedRecords) {
+  //   const trimmedPlaces = _.map(relatedRecords, (r) => ({ ...r, geometry: undefined }));
+  //   value = ObjectUtils.setNestedValue(value, objectPath, trimmedPlaces);
+  // }
+  //
+  // value._rawTypesenseHit = undefined;
+  // value._snippetResult = undefined;
+  // value._highlightResult = undefined;
+  //
+  // return value;
 };
 
 export default {
