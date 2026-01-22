@@ -280,11 +280,75 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
   return featureCollection(features);
 };
 
+const getFeatures = (features, results, path, options) => {
+  const newFeatures = [...features];
+
+  const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
+  const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
+
+  _.each(results, (result) => {
+    const places = _.isEmpty(objectPath) ? result : ObjectUtils.getNestedValue(result, objectPath);
+
+    _.each(places, (place) => {
+      let geometry;
+
+      if (options.geometries) {
+        geometry = getGeometryByHash(place, options.geometries);
+      } else {
+        geometry = getGeometryByPath(place, geometryPath);
+      }
+
+      const include = geometry && (!options.type || geometry.type === options.type);
+
+      if (include) {
+        const trimmedResult = trimResult(result, objectPath);
+
+        const record = _.find(newFeatures, (f) => f.properties?.uuid === place.uuid);
+
+        if (record) {
+          record.properties?.items.push(trimmedResult);
+        } else {
+          newFeatures.push(toFeature(place, trimmedResult, geometry));
+        }
+      }
+    });
+  });
+
+  return newFeatures;
+};
+
+const getGeometryByPath = (place, path) => {
+  return _.get(path, path);
+};
+
+const getGeometryByHash = (place, hash) => {
+  const object = hash[place?.uuid];
+  return object?.geometry;
+};
+
+const trimResult = (result, objectPath) => {
+  let value = { ...result };
+
+  const relatedRecords = _.get(result, objectPath);
+
+  if (relatedRecords) {
+    const trimmedPlaces = _.map(relatedRecords, (r) => ({ ...r, geometry: undefined }));
+    value = ObjectUtils.setNestedValue(value, objectPath, trimmedPlaces);
+  }
+
+  value._rawTypesenseHit = undefined;
+  value._snippetResult = undefined;
+  value._highlightResult = undefined;
+
+  return value;
+};
+
 export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
   getDate,
+  getFeatures,
   getFieldId,
   getRelationshipId,
   toFeature,
