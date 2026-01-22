@@ -288,8 +288,11 @@ const getFeatures = (features, results, path, options) => {
 
   // TODO: How to remove items that are no longer in the results?
   const placeIds = [];
+  const recordIds = [];
 
   _.each(results, (result) => {
+    recordIds.push(result.uuid);
+
     const places = _.isEmpty(objectPath) ? result : ObjectUtils.getNestedValue(result, objectPath);
 
     _.each(places, (place) => {
@@ -319,7 +322,16 @@ const getFeatures = (features, results, path, options) => {
     });
   });
 
-  return _.filter(newFeatures, (feature) => placeIds.includes(feature.properties.uuid));
+  return _.chain(newFeatures)
+    .filter((feature) => placeIds.includes(feature.properties.uuid))
+    .map((feature) => ({
+      ...feature,
+      properties: {
+        ...feature.properties,
+        items: _.filter(feature.properties.items, (item) => recordIds.includes(item.uuid))
+      }
+    }))
+    .value();
 };
 
 const createFeatureCollection = (features) => featureCollection(features);
