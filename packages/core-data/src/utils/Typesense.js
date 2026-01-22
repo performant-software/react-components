@@ -317,6 +317,8 @@ const getFeatures = (features, results, path, options) => {
   return newFeatures;
 };
 
+const createFeatureCollection = (features) => featureCollection(features);
+
 const getGeometryByPath = (place, path) => {
   return _.get(path, path);
 };
@@ -345,6 +347,7 @@ const trimResult = (result, objectPath) => {
 
 export default {
   createCachedHits,
+  createFeatureCollection,
   createRouting,
   createTypesenseAdapter,
   getDate,
