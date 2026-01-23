@@ -200,7 +200,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
     name: record.name,
     names: record.names?.map((toponym: string) => ({ toponym })),
     type: record.type,
-    items: [item]
+    items: [item],
+    url: record.url
   };
 
   const id = parseInt(record.record_id, 10);
@@ -286,7 +287,6 @@ const getFeatures = (features, results, path, options) => {
   const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
   const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
 
-  // TODO: How to remove items that are no longer in the results?
   const placeIds = [];
   const recordIds = [];
 
@@ -299,19 +299,19 @@ const getFeatures = (features, results, path, options) => {
       placeIds.push(place.uuid);
 
       let geometry;
+      let geometryUrl;
 
       if (options.geometries) {
-        geometry = getGeometryByHash(place, options.geometries);
+        geometryUrl = getGeometryUrl(place, options.geometries);
       } else {
-        geometry = getGeometryByPath(place, geometryPath);
+        geometry = getGeometry(place, geometryPath);
       }
 
-      const include = geometry && (!options.type || geometry.type === options.type);
+      const include = geometryUrl || (geometry && (!options.type || geometry.type === options.type));
 
       if (include) {
-        const trimmedResult = trimResult(result, objectPath);
-
         const record = _.find(newFeatures, (f) => f.properties?.uuid === place.uuid);
+        const trimmedResult = trimResult(result, objectPath);
 
         if (record) {
           const item = _.find(record.properties?.items, (item) => item.uuid === trimmedResult.uuid);
@@ -320,7 +320,7 @@ const getFeatures = (features, results, path, options) => {
             record.properties?.items.push(trimmedResult);
           }
         } else {
-          newFeatures.push(toFeature(place, trimmedResult, geometry));
+          newFeatures.push(toFeature({ ...place, url: geometryUrl }, trimmedResult, geometry));
         }
       }
     });
@@ -338,32 +338,16 @@ const getFeatures = (features, results, path, options) => {
 
 const createFeatureCollection = (features) => featureCollection(features);
 
-const getGeometryByPath = (place, path) => {
+const getGeometry = (place, path) => {
   return _.get(place, path);
 };
 
-const getGeometryByHash = (place, hash) => {
+const getGeometryUrl = (place, hash) => {
   const object = hash[place?.uuid];
-  return object?.geometry;
+  return object?.url;
 };
 
-const trimResult = (result, objectPath) => {
-  return _.pick(result, 'id', 'uuid', 'record_id', 'name', 'names');
-  // let value = { ...result };
-  //
-  // const relatedRecords = _.get(result, objectPath);
-  //
-  // if (relatedRecords) {
-  //   const trimmedPlaces = _.map(relatedRecords, (r) => ({ ...r, geometry: undefined }));
-  //   value = ObjectUtils.setNestedValue(value, objectPath, trimmedPlaces);
-  // }
-  //
-  // value._rawTypesenseHit = undefined;
-  // value._snippetResult = undefined;
-  // value._highlightResult = undefined;
-  //
-  // return value;
-};
+const trimResult = (result) => _.pick(result, 'id', 'uuid', 'record_id', 'name', 'names');
 
 export default {
   createCachedHits,
