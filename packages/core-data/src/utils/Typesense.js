@@ -326,16 +326,14 @@ const getFeatures = (features, results, path, options) => {
     });
   });
 
-  return _.chain(newFeatures)
-    .filter((feature) => placeIds.includes(feature.properties.uuid))
-    .map((feature) => ({
-      ...feature,
-      properties: {
-        ...feature.properties,
-        items: _.filter(feature.properties.items, (item) => recordIds.includes(item.uuid))
-      }
-    }))
-    .value();
+  return _.map(newFeatures, (feature) => ({
+    ...feature,
+    properties: {
+      ...feature.properties,
+      visible: placeIds.includes(feature.properties.uuid),
+      items: _.filter(feature.properties.items, (item) => recordIds.includes(item.uuid))
+    }
+  }));
 };
 
 const createFeatureCollection = (features) => featureCollection(features);
