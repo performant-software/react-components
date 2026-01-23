@@ -113,6 +113,9 @@ const GeoJSONLayerTest = (props: Props) => {
         ...fillStyle,
         source: `source-${id}`,
         filter: ['!=', '$type', 'Point'],
+        layout: {
+          visibility: visible ? 'visible' : 'none'
+        },
         metadata: {
           interactive: props.interactive
         }
@@ -122,7 +125,10 @@ const GeoJSONLayerTest = (props: Props) => {
         id: `layer-${id}-line`,
         ...strokeStyle,
         source: `source-${id}`,
-        filter: ['!=', '$type', 'Point']
+        filter: ['!=', '$type', 'Point'],
+        layout: {
+          visibility: visible ? 'visible' : 'none'
+        }
       });
     }
 
@@ -131,6 +137,9 @@ const GeoJSONLayerTest = (props: Props) => {
       ...pointStyle,
       filter: ['==', '$type', 'Point'],
       source: `source-${id}`,
+      layout: {
+        visibility: visible ? 'visible' : 'none'
+      },
       metadata: {
         interactive: props.interactive
       }
