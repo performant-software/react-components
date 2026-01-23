@@ -76,11 +76,11 @@ const GeoJSONLayerTest = (props: Props) => {
       }
 
       if (layerIds.has(`layer-${props.id}-line`)) {
-        map.setLayoutProperty(`layer-${props.id}-fill`, 'visibility', visible ? 'visible' : 'none');
+        map.setLayoutProperty(`layer-${props.id}-line`, 'visibility', visible ? 'visible' : 'none');
       }
 
       if (layerIds.has(`layer-${props.id}-point`)) {
-        map.setLayoutProperty(`layer-${props.id}-fill`, 'visibility', visible ? 'visible' : 'none');
+        map.setLayoutProperty(`layer-${props.id}-point`, 'visibility', visible ? 'visible' : 'none');
       }
     }
   }, [visible, map]);
