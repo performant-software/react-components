@@ -86,7 +86,12 @@ type Props = {
   /**
    * GeoJSON layer stroke style
    */
-  strokeStyle?: { [key: string]: any }
+  strokeStyle?: { [key: string]: any },
+
+  /**
+   * If true, the layer will be visible on the map.
+   */
+  visible?: boolean
 };
 
 const DEFAULT_BUFFER = 2;
@@ -141,6 +146,7 @@ const LocationMarkers = (props: Props) => {
         interactive={props.interactive}
         strokeStyle={props.strokeStyle}
         pointStyle={props.pointStyle}
+        visible={props.visible}
       />
     </>
   );
