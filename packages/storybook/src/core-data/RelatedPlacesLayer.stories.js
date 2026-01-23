@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import { Map, Zoom } from '@peripleo/maplibre';
-import { Controls, Peripleo } from '@peripleo/peripleo';
+import { Map } from '@peripleo/maplibre';
+import { Peripleo } from '@peripleo/peripleo';
 import mapStyle from '../data/MapStyles.json';
 import RelatedPlacesLayer from '../../../core-data/src/components/RelatedPlacesLayer';
 import { useEventsService } from '../../../core-data/src/hooks/CoreData';
@@ -21,11 +21,6 @@ export const Default = withCoreDataContextProvider(() => {
       <Map
         style={mapStyle}
       >
-        <Controls
-          position='topright'
-        >
-          <Zoom />
-        </Controls>
         <div
           style={{
             width: '100%',

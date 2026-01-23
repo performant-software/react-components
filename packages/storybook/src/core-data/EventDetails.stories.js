@@ -1,8 +1,8 @@
 // @flow
 
 import { faker } from '@faker-js/faker';
-import { Map, Zoom } from '@peripleo/maplibre';
-import { Controls, Peripleo } from '@peripleo/peripleo';
+import { Map } from '@peripleo/maplibre';
+import { Peripleo } from '@peripleo/peripleo';
 import { action } from 'storybook/actions';
 import React from 'react';
 import _ from 'underscore';
@@ -48,11 +48,6 @@ export const RelatedRecords = withCoreDataContextProvider(() => {
           <Map
             style={mapStyle}
           >
-            <Controls
-              position='topright'
-            >
-              <Zoom />
-            </Controls>
             <div
               style={{
                 width: '100%',

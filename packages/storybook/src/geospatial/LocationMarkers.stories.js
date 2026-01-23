@@ -1,7 +1,7 @@
 // @flow
 
-import { Peripleo, Controls } from '@peripleo/peripleo';
-import { Map, Zoom } from '@peripleo/maplibre';
+import { Map } from '@peripleo/maplibre';
+import { Peripleo } from '@peripleo/peripleo';
 import React from 'react';
 import geometryCollection from '../data/GeometryCollection.json';
 import LocationMarkers from '../../../geospatial/src/components/LocationMarkers';
@@ -17,11 +17,6 @@ export const Default = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -47,11 +42,6 @@ export const Animation = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -78,11 +68,6 @@ export const Buffer = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -109,11 +94,6 @@ export const MultiplePoints = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -134,11 +114,6 @@ export const NoZoom = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -167,11 +142,6 @@ export const EmptyDataSet = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
@@ -191,11 +161,6 @@ export const InvalidDataSet = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',
