@@ -3,7 +3,7 @@
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Map } from 'maplibre-gl';
 import {
-  Tooltip,
+  HoverTooltip,
   removeLayerIfExists,
   removeSourceIfExists,
   useLoadedMap
@@ -171,7 +171,7 @@ const GeoJSONLayerTest = (props: Props) => {
   }, [props.pointStyle]);
 
   return props.tooltip ? (
-    <Tooltip
+    <HoverTooltip
       layerId={[`layer-${id}-point`, `layer-${id}-fill`]}
       tooltip={props.tooltip} />
   ) : null;
