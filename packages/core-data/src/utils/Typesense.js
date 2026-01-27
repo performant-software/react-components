@@ -304,11 +304,14 @@ const getFeatures = (features, results, path, options) => {
 
       let geometry;
       let geometryUrl;
+      let layerId;
 
       if (options.geometries) {
         geometryUrl = getGeometryUrl(place, options.geometries);
+        layerId = `layer-${place.uuid}-fill`;
       } else {
         geometry = getGeometry(place, geometryPath);
+        layerId = `layer-${place.uuid}-point`;
       }
 
       const include = geometryUrl || (geometry && (!options.type || geometry.type === options.type));
@@ -324,7 +327,7 @@ const getFeatures = (features, results, path, options) => {
             record.properties?.items.push(trimmedResult);
           }
         } else {
-          newFeatures.push(toFeature({ ...place, url: geometryUrl }, trimmedResult, geometry));
+          newFeatures.push(toFeature({ ...place, layerId, url: geometryUrl }, trimmedResult, geometry));
         }
       }
     });
