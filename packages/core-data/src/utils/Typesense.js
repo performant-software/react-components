@@ -201,7 +201,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
     names: record.names?.map((toponym: string) => ({ toponym })),
     type: record.type,
     items: [item],
-    url: record.url
+    url: record.url,
+    layerId: record.layerId
   };
 
   const id = parseInt(record.record_id, 10);
