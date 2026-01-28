@@ -89,13 +89,9 @@ const toFeature = (record: any, item: any, geometry: any) => {
   };
 
   const id = parseInt(record.record_id, 10);
-  let data = feature(geometry, properties, { id });
+  const data = geometry ? truncate(geometry, { precision: 3, coordinates: 2 }) : geometry;
 
-  if (geometry) {
-    data = truncate(data, { precision: 3, coordinates: 2 });
-  }
-
-  return data;
+  return feature(data, properties, { id });
 };
 
 /**
