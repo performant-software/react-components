@@ -1,6 +1,7 @@
 // @flow
 
 import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
+import { Map as MapUtils } from '@performant-software/geospatial';
 import { feature, featureCollection, truncate } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
@@ -167,6 +168,31 @@ const getFieldId = (attribute: string) => {
 };
 
 /**
+ * Returns the geometry object for the passed place/path.
+ *
+ * @param place
+ * @param path
+ *
+ * @returns {*}
+ */
+const getGeometry = (place, path) => {
+  return _.get(place, path);
+};
+
+/**
+ * Returns the geometry URL for the passed place.
+ *
+ * @param place
+ * @param hash
+ *
+ * @returns {*}
+ */
+const getGeometryUrl = (place, hash) => {
+  const object = hash[place?.uuid];
+  return object?.url;
+};
+
+/**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
  *
  * @param attribute
@@ -189,6 +215,8 @@ const getRelationshipId = (attribute: string) => {
  * @param geometry
  *
  * @returns {Feature<*, {ccode: [], record_id: *, names: *, name: *, id: *, title: *, type: *, uuid: *, items: [*]}>}
+ *
+ * @deprecated
  */
 const toFeature = (record: any, item: any, geometry: any) => {
   const properties = {
@@ -223,6 +251,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
  * @param options
  *
  * @returns {FeatureCollection<Geometry, Properties>}
+ *
+ * @deprecated
  */
 const toFeatureCollection = (results: Array<any>, path: string, options: Options = {}) => {
   const features = [];
@@ -238,17 +268,7 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
     }
 
     _.each(geometryObjects, (geometryObject) => {
-      let geometry;
-      let transform = false;
-
-      // TODO: Comment me!
-      if (options.geometries) { // TODO: Check for empty
-        const object = options.geometries[geometryObject?.uuid];
-        geometry = object?.geometry;
-      } else {
-        geometry = _.get(geometryObject, geometryPath);
-        transform = true;
-      }
+      const geometry = _.get(geometryObject, geometryPath);
 
       const include = geometry && (!options.type || geometry.type === options.type);
 
@@ -259,7 +279,7 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
 
         const relatedRecords = _.get(result, objectPath);
 
-        if (relatedRecords && transform) {
+        if (relatedRecords) {
           trimmedResult = ObjectUtils.setNestedValue(
             result,
             objectPath,
@@ -286,6 +306,16 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
   return featureCollection(features);
 };
 
+/**
+ * Returns a set of GeoJSON features for the passed results.
+ *
+ * @param features
+ * @param results
+ * @param path
+ * @param options
+ *
+ * @returns {*}
+ */
 const getFeatures = (features, results, path, options) => {
   const newFeatures = [...features];
 
@@ -328,7 +358,7 @@ const getFeatures = (features, results, path, options) => {
             record.properties?.items.push(trimmedResult);
           }
         } else {
-          newFeatures.push(toFeature({ ...place, layerId, url: geometryUrl }, trimmedResult, geometry));
+          newFeatures.push(MapUtils.toFeature({ ...place, layerId, url: geometryUrl }, trimmedResult, geometry));
         }
       }
     });
@@ -344,22 +374,17 @@ const getFeatures = (features, results, path, options) => {
   }));
 };
 
-const createFeatureCollection = (features) => featureCollection(features);
-
-const getGeometry = (place, path) => {
-  return _.get(place, path);
-};
-
-const getGeometryUrl = (place, hash) => {
-  const object = hash[place?.uuid];
-  return object?.url;
-};
-
+/**
+ * Trims the Typesense document to only include data needed for map visualizations.
+ *
+ * @param result
+ *
+ * @returns {*}
+ */
 const trimResult = (result) => _.pick(result, 'id', 'uuid', 'record_id', 'name', 'names');
 
 export default {
   createCachedHits,
-  createFeatureCollection,
   createRouting,
   createTypesenseAdapter,
   getDate,
