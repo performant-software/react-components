@@ -316,7 +316,7 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
  *
  * @returns {*}
  */
-const getFeatures = (features, results, path, options) => {
+const getFeatures = (features, results, path, options = {}) => {
   const newFeatures = [...features];
 
   const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
