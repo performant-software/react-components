@@ -328,7 +328,7 @@ const getFeatures = (features, results, path, options = {}) => {
   _.each(results, (result) => {
     recordIds.push(result.uuid);
 
-    const places = _.isEmpty(objectPath) ? result : ObjectUtils.getNestedValue(result, objectPath);
+    const places = _.isEmpty(objectPath) ? [result] : ObjectUtils.getNestedValue(result, objectPath);
 
     _.each(places, (place) => {
       placeIds.push(place.uuid);
