@@ -73,6 +73,26 @@ const getBoundingBox = (data, bufferDistance = null) => {
  */
 const removeLayer = (map, layerId) => map && map.removeLayer(layerId);
 
+/**
+ * Wraps the passed record in a feature.
+ *
+ * @param record
+ * @param item
+ * @param geometry
+ *
+ * @returns {Feature<Geometry, {
+ *  id: *,
+ *  ccode: [],
+ *  title: *,
+ *  uuid: *,
+ *  record_id: *,
+ *  name: *,
+ *  names: *,
+ *  type: *,
+ *  items: [*],
+ *  url: *
+ * }>}
+ */
 const toFeature = (record: any, item: any, geometry: any) => {
   const properties = {
     id: record.record_id,
@@ -84,8 +104,7 @@ const toFeature = (record: any, item: any, geometry: any) => {
     names: record.names?.map((toponym: string) => ({ toponym })),
     type: record.type,
     items: [item],
-    url: record.url,
-    layerId: record.layerId
+    url: record.url
   };
 
   const id = parseInt(record.record_id, 10);

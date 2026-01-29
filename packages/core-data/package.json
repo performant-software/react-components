@@ -1,6 +1,6 @@
 {
   "name": "@performant-software/core-data",
-  "version": "3.1.13-beta.14",
+  "version": "3.1.13-beta.25",
   "description": "A package of components used with the Core Data platform.",
   "license": "MIT",
   "main": "./dist/index.cjs.js",
@@ -48,10 +48,10 @@
     "underscore": "^1.13.2"
   },
   "peerDependencies": {
-    "@performant-software/geospatial": "^3.1.13-beta.14",
-    "@performant-software/shared-components": "^3.1.13-beta.14",
-    "@peripleo/maplibre": "^0.8.8",
-    "@peripleo/peripleo": "^0.8.8",
+    "@performant-software/geospatial": "^3.1.13-beta.25",
+    "@performant-software/shared-components": "^3.1.13-beta.25",
+    "@peripleo/maplibre": "^0.8.9",
+    "@peripleo/peripleo": "^0.8.9",
     "react": ">= 16.13.1 < 19.0.0",
     "react-dom": ">= 16.13.1 < 19.0.0",
     "tailwindcss": "^4.1.4"

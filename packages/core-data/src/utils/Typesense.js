@@ -339,10 +339,8 @@ const getFeatures = (features, results, path, options = {}) => {
 
       if (options.geometries) {
         geometryUrl = getGeometryUrl(place, options.geometries);
-        layerId = `layer-${place.uuid}-fill`;
       } else {
         geometry = getGeometry(place, geometryPath);
-        layerId = `layer-${place.uuid}-point`;
       }
 
       const include = geometryUrl || (geometry && (!options.type || geometry.type === options.type));

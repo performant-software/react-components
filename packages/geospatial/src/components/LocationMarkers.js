@@ -1,7 +1,6 @@
 // @flow
 
-import { PulsingMarkerLayer, useLoadedMap } from '@peripleo/maplibre';
-import GeoJSONLayer from './GeoJSONLayerTest';
+import { GeoJSONLayer, PulsingMarkerLayer, useLoadedMap } from '@peripleo/maplibre';
 import React, { useEffect, useMemo } from 'react';
 import _ from 'underscore';
 import MapStyles from '../utils/MapStyles';
