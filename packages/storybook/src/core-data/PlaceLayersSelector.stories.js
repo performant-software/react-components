@@ -1,7 +1,7 @@
 // @flow
 
-import { Map, Zoom } from '@peripleo/maplibre';
-import { Controls, Peripleo } from '@peripleo/peripleo';
+import { Map } from '@peripleo/maplibre';
+import { Peripleo } from '@peripleo/peripleo';
 import React from 'react';
 import LocationMarkers from '../../../geospatial/src/components/LocationMarkers';
 import mapStyle from '../data/MapStyles.json';
@@ -18,11 +18,6 @@ export const Default = () => (
     <Map
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',

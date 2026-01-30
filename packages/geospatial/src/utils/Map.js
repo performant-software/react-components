@@ -1,7 +1,14 @@
 // @flow
 
 import { WarpedMapLayer } from '@allmaps/maplibre';
-import { bbox, bboxPolygon, buffer } from '@turf/turf';
+import {
+  bbox,
+  bboxPolygon,
+  buffer,
+  feature,
+  featureCollection,
+  truncate
+} from '@turf/turf';
 import _ from 'underscore';
 
 const MIN_LATITUDE = -90;
@@ -74,6 +81,55 @@ const getBoundingBox = (data, bufferDistance = null) => {
 const removeLayer = (map, layerId) => map && map.removeLayer(layerId);
 
 /**
+ * Wraps the passed record in a feature.
+ *
+ * @param record
+ * @param item
+ * @param geometry
+ *
+ * @returns {Feature<Geometry, {
+ *  id: *,
+ *  ccode: [],
+ *  title: *,
+ *  uuid: *,
+ *  record_id: *,
+ *  name: *,
+ *  names: *,
+ *  type: *,
+ *  items: [*],
+ *  url: *
+ * }>}
+ */
+const toFeature = (record: any, item: any, geometry: any) => {
+  const properties = {
+    id: record.record_id,
+    ccode: [],
+    title: record.name,
+    uuid: record.uuid,
+    record_id: record.record_id,
+    name: record.name,
+    names: record.names?.map((toponym: string) => ({ toponym })),
+    type: record.type,
+    items: [item],
+    url: record.url
+  };
+
+  const id = parseInt(record.record_id, 10);
+  const data = geometry ? truncate(geometry, { precision: 3, coordinates: 2 }) : geometry;
+
+  return feature(data, properties, { id });
+};
+
+/**
+ * Returns a feature collection for the passed set of features.
+ *
+ * @param features
+ *
+ * @returns {FeatureCollection<Geometry, GeoJsonProperties>}
+ */
+const toFeatureCollection = (features: Array<any>) => featureCollection(features);
+
+/**
  * Validates that the passed bounding box contains finite coordinates.
  *
  * @param boundingBox
@@ -108,6 +164,8 @@ export default {
   addGeoreferenceLayer,
   getBoundingBox,
   removeLayer,
+  toFeature,
+  toFeatureCollection,
   validateBoundingBox,
   validateCoordinates
 };

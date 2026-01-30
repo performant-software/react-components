@@ -1,7 +1,7 @@
 // @flow
 
-import { Map as PeripleoMap, Zoom } from '@peripleo/maplibre';
-import { Controls, Peripleo } from '@peripleo/peripleo';
+import { Map as PeripleoMap } from '@peripleo/maplibre';
+import { Peripleo } from '@peripleo/peripleo';
 import React from 'react';
 import Env from '../utils/Environment';
 import WarpedImageLayerPeripleo from '../../../geospatial/src/components/WarpedImageLayerPeripleo';
@@ -26,11 +26,6 @@ export const Default = () => (
       ]}
       style={mapStyle}
     >
-      <Controls
-        position='topright'
-      >
-        <Zoom />
-      </Controls>
       <div
         style={{
           width: '100%',

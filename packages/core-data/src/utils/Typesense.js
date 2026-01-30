@@ -1,7 +1,8 @@
 // @flow
 
 import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
-import { feature, featureCollection } from '@turf/turf';
+import { Map as MapUtils } from '@performant-software/geospatial';
+import { feature, featureCollection, truncate } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
@@ -9,6 +10,9 @@ import type { Event as EventType } from '../types/Event';
 import type { TypesenseSearchResult } from '../types/typesense/SearchResult';
 
 type Options = {
+  geometries: {
+    [uuid: string]: any
+  },
   type?: string
 };
 
@@ -164,6 +168,31 @@ const getFieldId = (attribute: string) => {
 };
 
 /**
+ * Returns the geometry object for the passed place/path.
+ *
+ * @param place
+ * @param path
+ *
+ * @returns {*}
+ */
+const getGeometry = (place, path) => {
+  return _.get(place, path);
+};
+
+/**
+ * Returns the geometry URL for the passed place.
+ *
+ * @param place
+ * @param hash
+ *
+ * @returns {*}
+ */
+const getGeometryUrl = (place, hash) => {
+  const object = hash[place?.uuid];
+  return object?.url;
+};
+
+/**
  * Takes a <relationship-uuid>.<field-uuid>_facet formatted attribute and returns the parsed relationship UUID.
  *
  * @param attribute
@@ -186,6 +215,8 @@ const getRelationshipId = (attribute: string) => {
  * @param geometry
  *
  * @returns {Feature<*, {ccode: [], record_id: *, names: *, name: *, id: *, title: *, type: *, uuid: *, items: [*]}>}
+ *
+ * @deprecated
  */
 const toFeature = (record: any, item: any, geometry: any) => {
   const properties = {
@@ -197,7 +228,9 @@ const toFeature = (record: any, item: any, geometry: any) => {
     name: record.name,
     names: record.names?.map((toponym: string) => ({ toponym })),
     type: record.type,
-    items: [item]
+    items: [item],
+    url: record.url,
+    layerId: record.layerId
   };
 
   const id = parseInt(record.record_id, 10);
@@ -212,6 +245,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
  * @param options
  *
  * @returns {FeatureCollection<Geometry, Properties>}
+ *
+ * @deprecated
  */
 const toFeatureCollection = (results: Array<any>, path: string, options: Options = {}) => {
   const features = [];
@@ -265,11 +300,87 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
   return featureCollection(features);
 };
 
+/**
+ * Returns a set of GeoJSON features for the passed results.
+ *
+ * @param features
+ * @param results
+ * @param path
+ * @param options
+ *
+ * @returns {*}
+ */
+const getFeatures = (features, results, path, options = {}) => {
+  const newFeatures = [...features];
+
+  const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
+  const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
+
+  const placeIds = [];
+  const recordIds = [];
+
+  _.each(results, (result) => {
+    recordIds.push(result.uuid);
+
+    const places = _.isEmpty(objectPath) ? [result] : ObjectUtils.getNestedValue(result, objectPath);
+
+    _.each(places, (place) => {
+      placeIds.push(place.uuid);
+
+      let geometry;
+      let geometryUrl;
+      let layerId;
+
+      if (options.geometries) {
+        geometryUrl = getGeometryUrl(place, options.geometries);
+      } else {
+        geometry = getGeometry(place, geometryPath);
+      }
+
+      const include = geometryUrl || (geometry && (!options.type || geometry.type === options.type));
+
+      if (include) {
+        const record = _.find(newFeatures, (f) => f.properties?.uuid === place.uuid);
+        const trimmedResult = trimResult(result, objectPath);
+
+        if (record) {
+          const item = _.find(record.properties?.items, (item) => item.uuid === trimmedResult.uuid);
+
+          if (!item) {
+            record.properties?.items.push(trimmedResult);
+          }
+        } else {
+          newFeatures.push(MapUtils.toFeature({ ...place, layerId, url: geometryUrl }, trimmedResult, geometry));
+        }
+      }
+    });
+  });
+
+  return _.map(newFeatures, (feature) => ({
+    ...feature,
+    properties: {
+      ...feature.properties,
+      visible: placeIds.includes(feature.properties.uuid),
+      items: _.filter(feature.properties.items, (item) => recordIds.includes(item.uuid))
+    }
+  }));
+};
+
+/**
+ * Trims the Typesense document to only include data needed for map visualizations.
+ *
+ * @param result
+ *
+ * @returns {*}
+ */
+const trimResult = (result) => _.pick(result, 'id', 'uuid', 'record_id', 'name', 'names');
+
 export default {
   createCachedHits,
   createRouting,
   createTypesenseAdapter,
   getDate,
+  getFeatures,
   getFieldId,
   getRelationshipId,
   toFeature,
