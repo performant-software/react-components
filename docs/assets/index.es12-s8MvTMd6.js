@@ -1,0 +1,1 @@
+import{r as e}from"./iframe-ZimVXjeC.js";const o=500,m=()=>{const r=e.useRef(),t=e.useCallback(()=>{clearTimeout(r.current)},[]),s=e.useCallback((c,a=o)=>{r.current=setTimeout(c,a)},[]);return{clearTimer:t,setTimer:s}};export{m as T};

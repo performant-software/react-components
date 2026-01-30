@@ -1,0 +1,1 @@
+import{o as i,a0 as n,q as u,r as o}from"./getElementType-wnuRSg6C.js";function b(r,t){var a=[];return i(r,function(e,s,f){t(e,s,f)&&a.push(e)}),a}function p(r,t){var a=o(r)?n:b;return a(r,u(t))}export{p as f};
