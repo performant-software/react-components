@@ -1,7 +1,14 @@
 // @flow
 
 import { WarpedMapLayer } from '@allmaps/maplibre';
-import { bbox, bboxPolygon, buffer, feature, featureCollection, truncate } from '@turf/turf';
+import {
+  bbox,
+  bboxPolygon,
+  buffer,
+  feature,
+  featureCollection,
+  truncate
+} from '@turf/turf';
 import _ from 'underscore';
 
 const MIN_LATITUDE = -90;
