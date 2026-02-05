@@ -454,6 +454,22 @@ export const Loading = useDragDrop(() => (
   />
 ));
 
+export const Pagination = useDragDrop(() => (
+  <ListTable
+    actions={actions}
+    collectionName='items'
+    columns={columns}
+    defaultPerPage={10}
+    onCopy={action('copy')}
+    onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
+    onDelete={action('delete')}
+    onSave={action('save')}
+    pagination={['top', 'bottom']}
+    perPageOptions={[10, 25, 50, 100]}
+    searchable
+  />
+));
+
 export const PerPage = useDragDrop(() => (
   <ListTable
     actions={actions}

@@ -18,6 +18,11 @@ import EditModal from './EditModal';
 import FilterLabels from './FilterLabels';
 import './List.css';
 
+const PaginationLocations = {
+  top: 'top',
+  bottom: 'bottom'
+};
+
 type Action = {
   accept: (item: any) => boolean,
   as: ComponentType,
@@ -38,6 +43,8 @@ type ListButton = {
   accept?: () => boolean,
   render: (index?: number) => Element<any>
 };
+
+type PaginationLocation = Array<typeof PaginationLocations.bottom | typeof PaginationLocations.top>;
 
 type Props = {
   /**
@@ -175,6 +182,11 @@ type Props = {
   pages?: number,
 
   /**
+   * Location(s) of the pagination component.
+   */
+  pagination?: PaginationLocation,
+
+  /**
    * The number of records to display per page.
    */
   perPage?: number,
@@ -252,6 +264,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       modal: undefined,
       page: 1,
       pages: 1,
+      pagination: [PaginationLocations.bottom],
       onColumnClick: () => {},
       onCopy: undefined,
       onPageChange: () => {},
@@ -558,6 +571,17 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Returns true if the pagination component should be rendered for the passed location.
+     *
+     * @param location
+     *
+     * @returns {false|*}
+     */
+    isPagination(location) {
+      return this.props.pages && this.props.pages > 1 && _.contains(this.props.pagination, location);
+    }
+
+    /**
      * Renders the add button.
      *
      * @returns {*}
@@ -806,8 +830,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         renderFooter = true;
       }
 
-      const hasPages = this.props.pages && this.props.pages > 1;
-      if (hasPages) {
+      const renderPagination = this.isPagination(PaginationLocations.bottom);
+      if (renderPagination) {
         renderFooter = true;
       }
 
@@ -834,7 +858,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
             <Grid.Column
               textAlign='right'
             >
-              { hasPages ? this.renderPagination() : ''}
+              { renderPagination ? this.renderPagination() : ''}
             </Grid.Column>
           </Grid>
         </div>
@@ -872,6 +896,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       }
 
       const hasLabels = filters && filters.showLabels && !_.isEmpty(filters.props.item.filters);
+
+      const renderPagination = this.isPagination(PaginationLocations.top);
+      if (renderPagination) {
+        renderHeader = true;
+      }
 
       if (!renderHeader) {
         return null;
@@ -931,6 +960,17 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                     onClear={() => filters.onChange({ filters: [] })}
                     onClick={(filter) => this.onRemoveFilter(filter)}
                   />
+                </Grid.Column>
+              </Grid.Row>
+            )}
+            { renderPagination && (
+              <Grid.Row
+                columns={1}
+              >
+                <Grid.Column
+                  textAlign='right'
+                >
+                  { this.renderPagination() }
                 </Grid.Column>
               </Grid.Row>
             )}
