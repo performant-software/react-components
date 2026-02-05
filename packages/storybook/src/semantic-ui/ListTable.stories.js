@@ -460,6 +460,9 @@ export const Pagination = useDragDrop(() => (
     collectionName='items'
     columns={columns}
     defaultPerPage={10}
+    modal={{
+      component: AddModal
+    }}
     onCopy={action('copy')}
     onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
     onDelete={action('delete')}
@@ -524,13 +527,16 @@ export const RecordCount = useDragDrop(() => (
     actions={actions}
     collectionName='items'
     columns={columns}
+    defaultPerPage={10}
+    modal={{
+      component: AddModal
+    }}
     onCopy={action('copy')}
-    onLoad={(params) => Api.onLoad(_.extend(params, {
-      items,
-      perPage: 10
-    }))}
+    onLoad={(params) => Api.onLoad(_.extend(params, { items }))}
     onDelete={action('delete')}
     onSave={action('save')}
+    perPageOptions={[10, 25, 50, 100]}
+    recordCount={['top', 'bottom']}
     searchable
     showRecordCount
   />

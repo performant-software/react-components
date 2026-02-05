@@ -23,6 +23,11 @@ const PaginationLocations = {
   bottom: 'bottom'
 };
 
+const RecordCountLocations = {
+  top: 'top',
+  bottom: 'bottom'
+};
+
 type Action = {
   accept: (item: any) => boolean,
   as: ComponentType,
@@ -45,6 +50,8 @@ type ListButton = {
 };
 
 type PaginationLocation = Array<typeof PaginationLocations.bottom | typeof PaginationLocations.top>;
+
+type RecordCountLocation = Array<typeof RecordCountLocations.bottom | typeof RecordCountLocations.top>;
 
 type Props = {
   /**
@@ -195,6 +202,11 @@ type Props = {
    * The options to display in the dropdown for the per page selector.
    */
   perPageOptions?: Array<number>,
+
+  /**
+   * Location(s) of the record count component.
+   */
+  recordCount?: RecordCountLocation,
 
   /**
    * Custom render function for the modal that appears on the "delete" action.
@@ -582,6 +594,17 @@ const useList = (WrappedComponent: ComponentType<any>) => (
     }
 
     /**
+     * Returns true if the record count component should be rendered for the passed location.
+     *
+     * @param location
+     *
+     * @returns {*}
+     */
+    isRecordCount(location) {
+      return _.contains(this.props.recordCount, location);
+    }
+
+    /**
      * Renders the add button.
      *
      * @returns {*}
@@ -826,7 +849,7 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       let renderFooter = false;
 
       const buttons = this.getButtons('bottom');
-      if (buttons && buttons.length) {
+      if (!_.isEmpty(buttons)) {
         renderFooter = true;
       }
 
@@ -835,8 +858,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         renderFooter = true;
       }
 
-      const showCount = this.props.count && this.props.showRecordCount;
-      if (showCount) {
+      const renderCount = this.isRecordCount(RecordCountLocations.bottom);
+      if (renderCount) {
         renderFooter = true;
       }
 
@@ -845,21 +868,33 @@ const useList = (WrappedComponent: ComponentType<any>) => (
       }
 
       return (
-        <div className='footer'>
-          <Grid
-            columns={2}
-          >
-            <Grid.Column
-              textAlign='left'
-            >
-              { showCount ? this.renderRecordCount() : '' }
-              { _.map(buttons, (button, index) => button.render(index)) }
-            </Grid.Column>
-            <Grid.Column
-              textAlign='right'
-            >
-              { renderPagination ? this.renderPagination() : ''}
-            </Grid.Column>
+        <div
+          className='footer'
+        >
+          <Grid>
+            { !_.isEmpty(buttons) && (
+              <Grid.Row>
+                <Grid.Column>
+                  { _.map(buttons, (button, index) => button.render(index)) }
+                </Grid.Column>
+              </Grid.Row>
+            )}
+            { (renderCount || renderPagination) && (
+              <Grid.Row
+                columns={2}
+              >
+                <Grid.Column
+                  textAlign='left'
+                >
+                  { renderCount ? this.renderRecordCount() : '' }
+                </Grid.Column>
+                <Grid.Column
+                  textAlign='right'
+                >
+                  { renderPagination ? this.renderPagination() : ''}
+                </Grid.Column>
+              </Grid.Row>
+            )}
           </Grid>
         </div>
       );
@@ -902,6 +937,11 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         renderHeader = true;
       }
 
+      const renderCount = this.isRecordCount(RecordCountLocations.top);
+      if (renderCount) {
+        renderHeader = true;
+      }
+
       if (!renderHeader) {
         return null;
       }
@@ -912,7 +952,6 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         >
           <Grid
             className={hasLabels ? 'filter-labels' : undefined}
-            verticalAlign='top'
           >
             <Grid.Row
               columns={2}
@@ -963,14 +1002,20 @@ const useList = (WrappedComponent: ComponentType<any>) => (
                 </Grid.Column>
               </Grid.Row>
             )}
-            { renderPagination && (
+            { (renderCount || renderPagination) && (
               <Grid.Row
-                columns={1}
+                columns={2}
+                verticalAlign='middle'
               >
+                <Grid.Column
+                  textAlign='left'
+                >
+                  { renderCount ? this.renderRecordCount() : '' }
+                </Grid.Column>
                 <Grid.Column
                   textAlign='right'
                 >
-                  { this.renderPagination() }
+                  { renderPagination ? this.renderPagination() : '' }
                 </Grid.Column>
               </Grid.Row>
             )}
@@ -1028,9 +1073,12 @@ const useList = (WrappedComponent: ComponentType<any>) => (
      */
     renderRecordCount() {
       const { count } = this.props;
+
       return (
-        <p className='record-count'>
-          {`${Number(count).toLocaleString()} ${i18n.t('List.record', { count })}`}
+        <p
+          className='record-count'
+        >
+          { i18n.t('List.labels.recordCount', { count })}
         </p>
       );
     }
