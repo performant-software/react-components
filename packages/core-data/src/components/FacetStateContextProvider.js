@@ -89,6 +89,7 @@ type Props = {
 
 const TYPE_AUTO = 'auto';
 const TYPE_INT_ARRAY = 'int64[]';
+const TYPE_INT = 'int64';
 
 /**
  * This component renders a context that queries the Typesense collection and returns a list of all facetable
@@ -120,14 +121,17 @@ const FacetStateContextProvider = (props: Props) => {
   const listFacets = useMemo(() => (
     _.filter(facets, (field: any) => isValid(field)
       && field.facet && field.type !== TYPE_AUTO
-      && field.type !== TYPE_INT_ARRAY)
+      && field.type !== TYPE_INT_ARRAY
+      && field.type !== TYPE_INT)
   ), [facets, isValid]);
 
   /**
    * Memo-ize the range facets.
    */
   const rangeFacets = useMemo(() => (
-    _.filter(facets, (field: any) => isValid(field) && field.facet && field.type === TYPE_INT_ARRAY)
+    _.filter(facets, (field: any) => (
+      isValid(field) && field.facet && (field.type === TYPE_INT_ARRAY || field.type === TYPE_INT))
+    )
   ), [facets, isValid]);
 
   /**
@@ -165,14 +169,14 @@ const FacetStateContextProvider = (props: Props) => {
           key={facet.name}
           useRefinementList={props.useRefinementList}
         />
-      ))}
+      )) }
       { _.map(rangeFacets, (facet) => (
         <RangeProxy
           attribute={facet.name}
           key={facet.name}
           useRange={props.useRange}
         />
-      ))}
+      )) }
       { props.children }
     </FacetStateContext.Provider>
   );
