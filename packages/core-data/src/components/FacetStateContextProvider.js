@@ -96,7 +96,7 @@ const TYPE_INT = 'int64';
  * attributes.
  */
 const FacetStateContextProvider = (props: Props) => {
-  const [facets, setFacets] = useState < Array < string >> ([]);
+  const [facets, setFacets] = useState<Array<string>>([]);
 
   /**
    * Returns true if the passed field should be included as a facet.
@@ -129,7 +129,9 @@ const FacetStateContextProvider = (props: Props) => {
    * Memo-ize the range facets.
    */
   const rangeFacets = useMemo(() => (
-    _.filter(facets, (field: any) => isValid(field) && field.facet && (field.type === TYPE_INT_ARRAY || field.type === TYPE_INT))
+    _.filter(facets, (field: any) => (
+      isValid(field) && field.facet && (field.type === TYPE_INT_ARRAY || field.type === TYPE_INT))
+    )
   ), [facets, isValid]);
 
   /**
@@ -161,21 +163,21 @@ const FacetStateContextProvider = (props: Props) => {
         rangeAttributes
       }}
     >
-      {_.map(listFacets, (facet) => (
+      { _.map(listFacets, (facet) => (
         <RefinementListProxy
           attribute={facet.name}
           key={facet.name}
           useRefinementList={props.useRefinementList}
         />
-      ))}
-      {_.map(rangeFacets, (facet) => (
+      )) }
+      { _.map(rangeFacets, (facet) => (
         <RangeProxy
           attribute={facet.name}
           key={facet.name}
           useRange={props.useRange}
         />
-      ))}
-      {props.children}
+      )) }
+      { props.children }
     </FacetStateContext.Provider>
   );
 };
