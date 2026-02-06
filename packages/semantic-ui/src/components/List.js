@@ -209,6 +209,13 @@ type Props = {
   recordCount?: RecordCountLocation,
 
   /**
+   * Callback fired to render a custom record count label.
+   *
+   * @param count
+   */
+  recordCountLabel?: (count: number) => string,
+
+  /**
    * Custom render function for the modal that appears on the "delete" action.
    */
   renderDeleteModal?: ({ selectedItem: any, onCancel: () => void, onConfirm: () => void }) => Element<any>,
@@ -1078,7 +1085,8 @@ const useList = (WrappedComponent: ComponentType<any>) => (
         <p
           className='record-count'
         >
-          { i18n.t('List.labels.recordCount', { count })}
+          { this.props.recordCountLabel && this.props.recordCountLabel(count) }
+          { !this.props.recordCountLabel && i18n.t('List.labels.recordCount', { count }) }
         </p>
       );
     }
