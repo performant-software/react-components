@@ -6,8 +6,7 @@ import {
   bboxPolygon,
   buffer,
   feature,
-  featureCollection,
-  truncate
+  featureCollection
 } from '@turf/turf';
 import _ from 'underscore';
 
@@ -115,9 +114,7 @@ const toFeature = (record: any, item: any, geometry: any) => {
   };
 
   const id = parseInt(record.record_id, 10);
-  const data = geometry ? truncate(geometry, { precision: 3, coordinates: 2 }) : geometry;
-
-  return feature(data, properties, { id });
+  return feature(geometry, properties, { id });
 };
 
 /**
