@@ -4,6 +4,7 @@ import React, { Component, type ComponentType } from 'react';
 import { Button, Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 import { SORT_ASCENDING } from './DataList';
+import ListSessionUtils from '../utils/ListSession';
 
 type Sort = {
   key: string,
@@ -19,6 +20,10 @@ type Props = {
   hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   renderListHeader?: () => JSX.Element,
+  session?: {
+    key: string,
+    storage: typeof sessionStorage
+  },
   sort?: Array<Sort>,
   sortColor?: string,
   sortColumn?: string,
@@ -62,8 +67,12 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
     constructor(props: any) {
       super(props);
 
+      // set view based on session storage if present
+      const { key, storage } = props.session || {};
+      const session = ListSessionUtils.restoreSession(key, storage) || {};
+
       this.state = {
-        view: props.defaultView || Views.list
+        view: session.view  || props.defaultView || Views.list
       };
     }
 
@@ -105,6 +114,31 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
       }
 
       this.props.onSort(sort.value, sortDirection);
+    }
+
+    /**
+     * Updates the session whenever the view state changes.
+     *
+     * @param prevProps
+     * @param prevState
+     */
+    componentDidUpdate(prevProps: Props, prevState: State) {
+      if (prevState.view !== this.state.view) {
+        this.setSession();
+      }
+    }
+
+    /**
+     * Sets the view property on the session.
+     */
+    setSession() {
+      const { key, storage } = this.props.session || {};
+
+      if (!key) {
+        return;
+      }
+
+      ListSessionUtils.setSession(key, storage, { view: this.state.view });
     }
 
     /**
