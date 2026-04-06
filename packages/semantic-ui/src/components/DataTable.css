@@ -1,8 +1,3 @@
-.data-table .ui.table .actions-cell {
-  white-space: nowrap;
-  width: 1px;
-}
-
 .data-table .empty-button {
   display: inline;
   margin-left: 5px;
@@ -38,6 +33,8 @@
   position: relative;
 }
 
+.ui.table.data-table td.actions-cell,
 .data-table.ui.celled.table tr td.actions-cell {
   white-space: nowrap;
+  width: 1px;
 }
