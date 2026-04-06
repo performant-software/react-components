@@ -640,6 +640,10 @@ DataTable.defaultProps = {
 
 export default useColumnSelector(useList(DataTable));
 
+export {
+  DataTable as DataTableComponent
+};
+
 export type {
   Props
 };

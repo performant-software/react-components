@@ -16,6 +16,8 @@ import i18n from '../i18n/i18n';
 import useList from './List';
 import useItemsToggle, { Views } from './ItemsToggle';
 import Draggable from './Draggable';
+import useColumnSelector from './DataTableColumnSelector';
+import { DataTableComponent } from './DataTable';
 import './Items.css';
 
 import type { Props as ListProps } from './List';
@@ -214,6 +216,7 @@ class ItemsClass extends Component<Props, {}> {
       >
         { this.renderList() }
         { this.renderGrid() }
+        { this.renderTable() }
         { this.renderEmptyList() }
         { this.props.children }
       </div>
@@ -503,13 +506,31 @@ class ItemsClass extends Component<Props, {}> {
       </Item.Group>
     );
   }
+
+  /**
+   * Renders the table view.
+   *
+   * @returns {null|*}
+   */
+  renderTable() {
+    if (this.props.view !== Views.table || !(this.props.items && this.props.items.length)) {
+      return null;
+    }
+
+    return (
+      <DataTableComponent
+        {...this.props}
+        loading={false} /* prevent duplicate loading spinners */
+      />
+    );
+  }
 }
 
 ItemsClass.defaultProps = {
   actions: []
 };
 
-const Items = useItemsToggle(useList(ItemsClass));
+const Items = useItemsToggle(useColumnSelector(useList(ItemsClass)));
 export default Items;
 
 export type {

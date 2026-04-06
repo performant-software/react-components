@@ -5,6 +5,7 @@ import React, { Component, type ComponentType, type Element } from 'react';
 import { Checkbox, Dropdown, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import Draggable from './Draggable';
+import { Views } from './ItemsToggle';
 import ListSessionUtils from '../utils/ListSession';
 import type { Props as ListProps } from './List';
 import './DataTableColumnSelector.css';
@@ -49,7 +50,13 @@ type Props = ListProps & {
   /**
    * If <code>true</code>, columns can be shown/hidden by the user.
    */
-  configurable?: boolean
+  configurable?: boolean,
+
+  /**
+   * Used in multi-view environments to hide the column selector if a view is selected, and it is not the
+   * table view.
+   */
+  view?: number,
 };
 
 type State = {
@@ -204,10 +211,12 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
         return null;
       }
 
+      const isTableView = this.props.view === undefined || this.props.view === Views.table;
+
       return (
         <>
           { this.props.renderListHeader && this.props.renderListHeader() }
-          { this.props.configurable && (
+          { this.props.configurable && isTableView && (
             <Dropdown
               aria-label='Select Columns'
               basic

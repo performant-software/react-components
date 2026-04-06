@@ -14,6 +14,7 @@ type Sort = {
 
 type Props = {
   basic?: boolean,
+  columns?: Array<any>,
   defaultView?: number,
   hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
@@ -30,7 +31,8 @@ type State = {
 
 const Views = {
   list: 0,
-  grid: 1
+  grid: 1,
+  table: 2
 };
 
 /**
@@ -153,6 +155,15 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
                 icon='grid layout'
                 onClick={() => this.setState({ view: Views.grid })}
               />
+              { !_.isEmpty(this.props.columns) && (
+                <Button
+                  active={this.state.view === Views.table}
+                  aria-label='Table View'
+                  basic={this.props.basic}
+                  icon='table'
+                  onClick={() => this.setState({ view: Views.table })}
+                />
+              )}
             </>
           )}
           { !_.isEmpty(this.props.sort) && this.props.onSort && (
