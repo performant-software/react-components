@@ -4,6 +4,7 @@ import React, { Component, type ComponentType } from 'react';
 import { Button, Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 import { SORT_ASCENDING } from './DataList';
+import ListSessionUtils from '../utils/ListSession';
 
 type Sort = {
   key: string,
@@ -14,10 +15,15 @@ type Sort = {
 
 type Props = {
   basic?: boolean,
+  columns?: Array<any>,
   defaultView?: number,
   hideToggle?: boolean,
   onSort?: (sortColumn: string, sortDirection?: ?string) => void,
   renderListHeader?: () => JSX.Element,
+  session?: {
+    key: string,
+    storage: typeof sessionStorage
+  },
   sort?: Array<Sort>,
   sortColor?: string,
   sortColumn?: string,
@@ -30,7 +36,8 @@ type State = {
 
 const Views = {
   list: 0,
-  grid: 1
+  grid: 1,
+  table: 2
 };
 
 /**
@@ -60,8 +67,12 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
     constructor(props: any) {
       super(props);
 
+      // set view based on session storage if present
+      const { key, storage } = props.session || {};
+      const session = ListSessionUtils.restoreSession(key, storage) || {};
+
       this.state = {
-        view: props.defaultView || Views.list
+        view: session.view  || props.defaultView || Views.list
       };
     }
 
@@ -103,6 +114,31 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
       }
 
       this.props.onSort(sort.value, sortDirection);
+    }
+
+    /**
+     * Updates the session whenever the view state changes.
+     *
+     * @param prevProps
+     * @param prevState
+     */
+    componentDidUpdate(prevProps: Props, prevState: State) {
+      if (prevState.view !== this.state.view) {
+        this.setSession();
+      }
+    }
+
+    /**
+     * Sets the view property on the session.
+     */
+    setSession() {
+      const { key, storage } = this.props.session || {};
+
+      if (!key) {
+        return;
+      }
+
+      ListSessionUtils.setSession(key, storage, { view: this.state.view });
     }
 
     /**
@@ -153,6 +189,15 @@ const useItemsToggle = (WrappedComponent: ComponentType<any>) => (
                 icon='grid layout'
                 onClick={() => this.setState({ view: Views.grid })}
               />
+              { !_.isEmpty(this.props.columns) && (
+                <Button
+                  active={this.state.view === Views.table}
+                  aria-label='Table View'
+                  basic={this.props.basic}
+                  icon='table'
+                  onClick={() => this.setState({ view: Views.table })}
+                />
+              )}
             </>
           )}
           { !_.isEmpty(this.props.sort) && this.props.onSort && (
