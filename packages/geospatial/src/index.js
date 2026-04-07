@@ -1,11 +1,13 @@
 // @flow
 
 // Components
+export { default as CertaintyLayer } from './components/CertaintyLayer';
 export { default as DrawControl } from './components/DrawControl';
 export { default as GeoJsonLayer } from './components/GeoJsonLayer';
 export { default as GeocodingControl } from './components/GeocodingControl';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as LocationMarkers } from './components/LocationMarkers';
+export { default as MapCertaintyControl } from './components/MapCertaintyControl';
 export { default as MapControl } from './components/MapControl';
 export { default as MapDraw } from './components/MapDraw';
 export { default as RasterLayer } from './components/RasterLayer';
