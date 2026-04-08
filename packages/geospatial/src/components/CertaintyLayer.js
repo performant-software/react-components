@@ -44,8 +44,6 @@ const CertaintyLayer = (props: Props) => {
     return featureCollection(features);
   }, [props.geometry, props.certaintyRadius]);
 
-  console.log(circles);
-
   return (
     <Source
       data={circles}

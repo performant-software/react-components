@@ -9,11 +9,54 @@ import {
   featureCollection
 } from '@turf/turf';
 import _ from 'underscore';
+import circle from '@turf/circle';
 
 const MIN_LATITUDE = -90;
 const MAX_LATITUDE = 90;
 const MIN_LONGITUDE = -180;
 const MAX_LONGITUDE = 180;
+
+/**
+ * Returns a GeoJSON circle feature with the given center point and radius.
+ * @param point - The center point of the circle.
+ * @param radius - The radius of the circle in kilometers.
+ * @returns {Feature<Geometry, Properties>} - The GeoJSON circle feature.
+ */
+const buildCircle = (point, radius) => (
+  circle(point.coordinates, radius, { units: 'kilometers', steps: 32 })
+);
+
+/**
+ * Returns a GeoJSON feature collection containing circles for each item in the given array.
+ */
+const getCertaintyCircles = (
+  items,
+  getCertaintyRadius: (item: any) => number | undefined
+) => {
+  const features = [];
+
+  for (const item of items) {
+    if (getCertaintyRadius(item)) {
+      if (item.geometry?.type === 'FeatureCollection') {
+        for (const childFeature of item.geometry.features) {
+          if (childFeature.geometry?.type === 'Point') {
+            features.push(buildCircle(childFeature.geometry, getCertaintyRadius(item)));
+          }
+        }
+      } else if (item.geometry.type === 'GeometryCollection') {
+        for (const geometry of item.geometry.geometries) {
+          if (geometry.type === 'Point') {
+            features.push(buildCircle(geometry, getCertaintyRadius(item)));
+          }
+        }
+      } else if (item.geometry?.type === 'Point') {
+        features.push(buildCircle(item.geometry, getCertaintyRadius(item)));
+      }
+    }
+  }
+
+  return featureCollection(features);
+};
 
 /**
  * Adds the geo-referenced image layer to the passed map.
@@ -85,6 +128,7 @@ const removeLayer = (map, layerId) => map && map.removeLayer(layerId);
  * @param record
  * @param item
  * @param geometry
+ * @param originalProperties
  *
  * @returns {Feature<Geometry, {
  *  id: *,
@@ -99,7 +143,7 @@ const removeLayer = (map, layerId) => map && map.removeLayer(layerId);
  *  url: *
  * }>}
  */
-const toFeature = (record: any, item: any, geometry: any) => {
+const toFeature = (record: any, item: any, geometry: any, originalProperties?: any) => {
   const properties = {
     id: record.record_id,
     ccode: [],
@@ -110,7 +154,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
     names: record.names?.map((toponym: string) => ({ toponym })),
     type: record.type,
     items: [item],
-    url: record.url
+    url: record.url,
+    originalProperties: originalProperties || {}
   };
 
   const id = parseInt(record.record_id, 10);
@@ -159,6 +204,7 @@ const validateCoordinates = (coordinates) => {
 
 export default {
   addGeoreferenceLayer,
+  getCertaintyCircles,
   getBoundingBox,
   removeLayer,
   toFeature,
