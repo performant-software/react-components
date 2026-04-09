@@ -1,6 +1,7 @@
 // @flow
 
 // Components
+export { default as CertaintyLayer } from './components/CertaintyLayer';
 export { default as DrawControl } from './components/DrawControl';
 export { default as GeoJsonLayer } from './components/GeoJsonLayer';
 export { default as GeocodingControl } from './components/GeocodingControl';

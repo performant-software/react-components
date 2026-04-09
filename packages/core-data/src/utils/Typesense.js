@@ -2,7 +2,7 @@
 
 import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import { Map as MapUtils } from '@performant-software/geospatial';
-import { feature, featureCollection, truncate } from '@turf/turf';
+import { feature, featureCollection } from '@turf/turf';
 import { history } from 'instantsearch.js/es/lib/routers';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
 import _ from 'underscore';
@@ -180,6 +180,16 @@ const getGeometry = (place, path) => {
 };
 
 /**
+ * Returns the properties object for the passed place/path.
+ *
+ * @param place
+ * @param path
+ */
+const getProperties = (place, path) => {
+  return _.get(place, path) || {};
+};
+
+/**
  * Returns the geometry URL for the passed place.
  *
  * @param place
@@ -230,7 +240,8 @@ const toFeature = (record: any, item: any, geometry: any) => {
     type: record.type,
     items: [item],
     url: record.url,
-    layerId: record.layerId
+    layerId: record.layerId,
+    originalProperties: record.properties
   };
 
   const id = parseInt(record.record_id, 10);
@@ -310,11 +321,20 @@ const toFeatureCollection = (results: Array<any>, path: string, options: Options
  *
  * @returns {*}
  */
-const getFeatures = (features, results, path, options = {}) => {
+const getFeatures = (
+  features,
+  results,
+  geometryPath,
+  propertiesPath,
+  options = {}
+) => {
   const newFeatures = [...features];
 
-  const objectPath = path.substring(0, path.lastIndexOf(ATTRIBUTE_DELIMITER));
-  const geometryPath = path.substring(path.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, path.length);
+  const objectPath = geometryPath.substring(0, geometryPath.lastIndexOf(ATTRIBUTE_DELIMITER));
+  const geoJsonPath = geometryPath.substring(geometryPath.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, geometryPath.length);
+  const originalPropertiesPath = propertiesPath
+    ? propertiesPath.substring(propertiesPath.lastIndexOf(ATTRIBUTE_DELIMITER) + 1, propertiesPath.length)
+    : null;
 
   const placeIds = [];
   const recordIds = [];
@@ -334,8 +354,12 @@ const getFeatures = (features, results, path, options = {}) => {
       if (options.geometries) {
         geometryUrl = getGeometryUrl(place, options.geometries);
       } else {
-        geometry = getGeometry(place, geometryPath);
+        geometry = getGeometry(place, geoJsonPath);
       }
+
+      const properties = originalPropertiesPath
+        ? getProperties(place, originalPropertiesPath)
+        : null;
 
       const include = geometryUrl || (geometry && (!options.type || geometry.type === options.type));
 
@@ -350,7 +374,11 @@ const getFeatures = (features, results, path, options = {}) => {
             record.properties?.items.push(trimmedResult);
           }
         } else {
-          newFeatures.push(MapUtils.toFeature({ ...place, layerId, url: geometryUrl }, trimmedResult, geometry));
+          newFeatures.push(MapUtils.toFeature({
+            ...place,
+            layerId,
+            url: geometryUrl
+          }, trimmedResult, geometry, properties));
         }
       }
     });
