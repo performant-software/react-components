@@ -1,0 +1,15 @@
+import{j as a}from"./iframe-C1yIdUxi.js";import{_ as t}from"./index-default-B8-H6N8J.js";import{T as e}from"./TabbedModal-DA_ekZUG.js";import"./index.es28-CsdHyStT.js";import"./index.es26-DzY7CKAT.js";import"./Menu-C8BjwoVA.js";import"./extends-CCbyfPlC.js";import"./inheritsLoose-1HkgTRWY.js";import"./setPrototypeOf-DgZC2w_0.js";import"./map-DI4b9sYh.js";import"./getElementType-DsntGQ7s.js";import"./ModernAutoControlledComponent-Br5d4aPK.js";import"./assertThisInitialized-B9jnkVVz.js";import"./_arrayReduce-CrxnWFSq.js";import"./deburr-CsC_e8aR.js";import"./Icon-DP6yU2re.js";import"./Header-BQhSNLQy.js";import"./Label-CBP1P9vD.js";import"./includes-nZJWD_tR.js";import"./toFinite-B9I2iPB2.js";import"./forEach-arEyhVRZ.js";import"./Dimmer-D0u62siH.js";import"./Portal-DNbWDsez.js";import"./keyboardKey-oXYFUeDu.js";import"./Modal-NeQJmB7y.js";import"./index-DPL7h8to.js";import"./_baseSet-BgUXd7hu.js";import"./_baseAssignValue-DVGLO0YS.js";import"./isEmpty-y8pYZl69.js";import"./index-DypBny8e.js";import"./Button-CJTFn35h.js";import"./index-default-C0I3bBxV.js";const z={title:"Components/Semantic UI/TabbedModal",component:e},o=()=>a.jsxs(e,{header:"Modal Header",open:!0,children:[a.jsx(e.Tab,{name:"Tab 1",children:a.jsx("div",{children:"Tab 1 content"})}),a.jsx(e.Tab,{name:"Tab 2",children:a.jsx("div",{children:"Tab 2 content"})})]}),d=()=>a.jsx(e,{header:"Modal Header",open:!0,children:t.times(3,n=>a.jsx(e.Tab,{name:`Tab ${n}`,children:a.jsx("div",{children:`Tab ${n} content`})}))}),r=()=>a.jsxs(e,{header:"Modal Header",open:!0,children:[a.jsx(e.Tab,{name:"Tab 1",children:a.jsx("div",{children:"Tab 1 content"})}),a.jsx(e.Tab,{name:"Tab 2",children:a.jsx("div",{children:"Tab 2 content"})})]});o.__docgenInfo={description:"",methods:[],displayName:"Default"};d.__docgenInfo={description:"",methods:[],displayName:"DynamicTabs"};r.__docgenInfo={description:"",methods:[],displayName:"NamedTabs"};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`() => <TabbedModal header='Modal Header' open>
+    <TabbedModal.Tab name='Tab 1'>
+      <div>Tab 1 content</div>
+    </TabbedModal.Tab>
+    <TabbedModal.Tab name='Tab 2'>
+      <div>Tab 2 content</div>
+    </TabbedModal.Tab>
+  </TabbedModal>`,...o.parameters?.docs?.source}}};d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:"() => {\n  return <TabbedModal header='Modal Header' open>\n      {_.times(3, index => <TabbedModal.Tab name={`Tab ${index}`}>\n          <div>{`Tab ${index} content`}</div>\n        </TabbedModal.Tab>)}\n    </TabbedModal>;\n}",...d.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`() => <TabbedModal header='Modal Header' open>
+    <TabbedModal.Tab name='Tab 1'>
+      <div>Tab 1 content</div>
+    </TabbedModal.Tab>
+    <TabbedModal.Tab name='Tab 2'>
+      <div>Tab 2 content</div>
+    </TabbedModal.Tab>
+  </TabbedModal>`,...r.parameters?.docs?.source}}};const A=["Default","DynamicTabs","NamedTabs"];export{o as Default,d as DynamicTabs,r as NamedTabs,A as __namedExportsOrder,z as default};
