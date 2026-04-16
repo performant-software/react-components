@@ -374,11 +374,19 @@ const getFeatures = (
             record.properties?.items.push(trimmedResult);
           }
         } else {
-          newFeatures.push(MapUtils.toFeature({
+          const feature = MapUtils.toFeature({
             ...place,
             layerId,
             url: geometryUrl
-          }, trimmedResult, geometry, properties));
+          }, trimmedResult, geometry, properties);
+
+          const certaintyRadius = feature.properties?.originalProperties?.certainty_radius;
+
+          if (certaintyRadius) {
+            newFeatures.push(MapUtils.toCertaintyCircle(feature, certaintyRadius));
+          } else {
+            newFeatures.push(feature);
+          }
         }
       }
     });

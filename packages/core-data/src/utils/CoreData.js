@@ -35,5 +35,5 @@ const toFeatureCollection = (places) => featureCollection(_.map(places, toFeatur
 
 export default {
   toFeature,
-  toFeatureCollection,
+  toFeatureCollection
 };
