@@ -31,7 +31,7 @@ const CertaintyLayer = (props: Props) => {
         {...MapStyles.fill}
         id='certainty-layer'
         paint={{
-          ...MapStyles.fill.paint,
+          ...MapStyles.fill.paint
         }}
       />
     </Source>

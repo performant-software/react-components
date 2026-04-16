@@ -41,29 +41,11 @@ const toCertaintyCircle = (item, radius: number) => {
       }
     }
 
-    return {
-      ...item,
-      geometry: {
-        type: 'GeometryCollection',
-        geometries: children
-      }
-    };
+    return featureCollection(children);
   } else if (item.geometry?.type === 'GeometryCollection') {
-    let children = [];
-    for (const geometry of item.geometry.geometries) {
-
-      if (geometry.type === 'Point') {
-        children.push(buildCircle(geometry, radius));
-      }
-    }
-
-    return {
-      ...item,
-      geometry: {
-        ...item.geometry,
-        geometries: children
-      }
-    };
+    return featureCollection(item.geometry.geometries.map((geometry) => geometry.type === 'Point'
+      ? buildCircle(geometry, radius)
+      : feature(geometry)));
   } else if (item.geometry?.type === 'Point') {
     const { geometry, type } = buildCircle(item.geometry, radius);
     return {
