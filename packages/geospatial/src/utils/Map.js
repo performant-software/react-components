@@ -26,36 +26,36 @@ const buildCircle = (point, radius) => (
   circle(point.coordinates, radius, { units: 'kilometers', steps: 32 })
 );
 
-/**
- * Returns a GeoJSON feature collection containing circles for each item in the given array.
- */
-const getCertaintyCircles = (
-  items,
-  getCertaintyRadius: (item: any) => number | undefined
-) => {
-  const features = [];
+const toCertaintyCircle = (item, radius: number) => {
+  if (item.geometry?.type === 'FeatureCollection') {
+    let children = [];
 
-  for (const item of items) {
-    if (getCertaintyRadius(item)) {
-      if (item.geometry?.type === 'FeatureCollection') {
-        for (const childFeature of item.geometry.features) {
-          if (childFeature.geometry?.type === 'Point') {
-            features.push(buildCircle(childFeature.geometry, getCertaintyRadius(item)));
-          }
-        }
-      } else if (item.geometry.type === 'GeometryCollection') {
-        for (const geometry of item.geometry.geometries) {
-          if (geometry.type === 'Point') {
-            features.push(buildCircle(geometry, getCertaintyRadius(item)));
-          }
-        }
-      } else if (item.geometry?.type === 'Point') {
-        features.push(buildCircle(item.geometry, getCertaintyRadius(item)));
+    for (const childFeature of item.geometry.features) {
+      if (childFeature.geometry?.type === 'Point') {
+        const { geometry, type } = buildCircle(childFeature.geometry, radius);
+        children.push({
+          ...childFeature,
+          geometry,
+          type
+        });
       }
     }
+
+    return featureCollection(children);
+  } else if (item.geometry?.type === 'GeometryCollection') {
+    return featureCollection(item.geometry.geometries.map((geometry) => geometry.type === 'Point'
+      ? buildCircle(geometry, radius)
+      : feature(geometry)));
+  } else if (item.geometry?.type === 'Point') {
+    const { geometry, type } = buildCircle(item.geometry, radius);
+    return {
+      ...item,
+      geometry,
+      type
+    };
   }
 
-  return featureCollection(features);
+  return item;
 };
 
 /**
@@ -204,7 +204,7 @@ const validateCoordinates = (coordinates) => {
 
 export default {
   addGeoreferenceLayer,
-  getCertaintyCircles,
+  toCertaintyCircle,
   getBoundingBox,
   removeLayer,
   toFeature,
