@@ -20,7 +20,7 @@ const FilterLabels = (props: Props) => {
    * @type {function(*): string}
    */
   const getContent = useCallback((filter) => {
-    // Content will always container the label
+    // Content will always contain the label
     const content = [filter.label];
 
     // If an option can be found, use the text from the operator
@@ -29,9 +29,25 @@ const FilterLabels = (props: Props) => {
       content.push(option.text);
     }
 
+    let displayValue = filter.value;
+
+    if (filter.searchQuery) {
+      // prefer searchQuery as the default display label
+      displayValue = filter.searchQuery;
+    } else if (filter.options) {
+      // get text label from dropdown/select filters
+      const selectedOption = _.findWhere(filter.options, { value: filter.value });
+      if (selectedOption) {
+        displayValue = selectedOption.text;
+      }
+    } else if (filter.type === 'boolean') {
+      // format booleans as capitalized strings
+      displayValue = filter.value ? 'True' : 'False';
+    }
+
     // Append the value in quotes, if present
-    if (filter.value) {
-      content.push(`"${filter.value}"`);
+    if (displayValue !== undefined && displayValue !== null && displayValue !== '') {
+      content.push(`"${displayValue}"`);
     }
 
     return content.join(' ');
