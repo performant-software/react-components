@@ -1,3 +1,0 @@
-import{j as e}from"./iframe-CDKtSUh7.js";import"./index.es28-Db5bh1d3.js";import{L as n}from"./index.es3-B5llofzq.js";import{F as i}from"./Form-V9Mme2Wd.js";import{M as r}from"./Modal-BdRM98xc.js";const o=t=>e.jsxs(r,{as:i,open:!0,children:[e.jsx(r.Header,{children:"Add Filter"}),e.jsx(r.Content,{children:e.jsx(i.Input,{label:"Test",onChange:t.onTextInputChange.bind(void 0,"test"),value:t.item.test||""})}),t.children]}),p=n(o);o.__docgenInfo={description:"",methods:[],displayName:"FilterModal",props:{item:{required:!0,flowType:{name:"signature",type:"object",raw:`{
-  test: string
-}`,signature:{properties:[{key:"test",value:{name:"string",required:!0}}]}},description:""}}};export{p as F};

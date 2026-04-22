@@ -1,0 +1,1 @@
+const o=(t,e,n)=>new Date(t).toLocaleDateString(e,n),a=t=>{if(!t)return null;const e=new Date(t);return e.setTime(e.getTime()+e.getTimezoneOffset()*60*1e3),e},i={formatDate:o,withoutTime:a};export{i as s};
