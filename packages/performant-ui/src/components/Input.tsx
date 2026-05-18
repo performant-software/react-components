@@ -26,7 +26,7 @@ interface Props {
 const Input: React.FC<Props> = (props) => (
   <Field
     className='flex flex-col gap-2 text-zinc-950 group font-sans'
-    data-disabled={props.disabled}
+    data-disabled={props.disabled || undefined}
   >
     {props.label && (
       <Label className={clsx('text-sm font-semibold', props.classes?.label)}>
