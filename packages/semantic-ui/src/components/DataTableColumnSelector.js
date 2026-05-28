@@ -15,6 +15,8 @@ type Column = {
   hidden?: boolean,
   label?: string,
   name: string,
+  onHide?: (item: any) => void,
+  onShow?: (item: any) => void,
   render?: (item: any) => Element<any>,
   renderHeader?: (item: any) => Element<any>,
   resolve?: (item: any) => any,
@@ -138,6 +140,13 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
         }
       });
 
+      // Run any onShow callbacks on first render
+      _.each(columns, (column) => {
+        if (!column.hidden && column.onShow) {
+          column.onShow();
+        }
+      });
+
       return {
         columns
       };
@@ -149,6 +158,14 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
      * @param column
      */
     onColumnCheckbox(column: Column) {
+      if (column.hidden && column.onShow) {
+        column.onShow();
+      }
+
+      if (!column.hidden && column.onHide) {
+        column.onHide();
+      }
+
       this.setState((state) => ({
         columns: _.map(state.columns, (c) => (c.name === column.name ? { ...c, hidden: !c.hidden } : c))
       }));
@@ -224,6 +241,7 @@ const useColumnSelector = (WrappedComponent: ComponentType<any>) => (
               icon='cog'
               className='icon configure-button open-right'
               closeOnBlur={false}
+              scrolling
             >
               <Dropdown.Menu>
                 { this.state.columns
