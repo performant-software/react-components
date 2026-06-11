@@ -16,6 +16,7 @@ const baseDirectory = process.cwd();
 const beta = args.tag === 'beta';
 
 const PUBLISH_CONFIRM = 'PUBLISH';
+const OTP_PATTERN = /^\d{6}$/;
 
 /**
  * Returns the user input for the passed message.
@@ -25,6 +26,28 @@ const PUBLISH_CONFIRM = 'PUBLISH';
  * @returns {Promise<unknown>}
  */
 const ask = (message) => new Promise((resolve) => rl.question(message, (answer) => resolve(answer)));
+
+/**
+ * Prompts for an NPM one-time password until a valid 6-digit code is entered.
+ *
+ * @returns {Promise<string>}
+ */
+const askForOTP = async () => {
+  let otp;
+
+  while (!otp) {
+    const answer = await ask('Enter your NPM one-time password (6 digits). This will be used for all packages, so wait for a new OTP with a fresh time limit: ');
+    const trimmed = answer.trim();
+
+    if (OTP_PATTERN.test(trimmed)) {
+      otp = trimmed;
+    } else {
+      console.log('Invalid code. Please enter exactly 6 digits.');
+    }
+  }
+
+  return otp;
+};
 
 /**
  * Reads the file at the passed path and converts it to JSON.
@@ -118,37 +141,39 @@ const updateVersion = (directory, version) => {
 };
 
 /**
- * Publishes a package for the passed directory.
+ * Builds the package for the passed directory.
  *
  * @param directory
- * @param version
- * @param runPublish
  */
-const publish = (directory, version, runPublish) => {
-  const commands = [
-    `cd ${directory}`,
-    'yarn build'
-  ];
+const build = (directory) => {
+  console.log('');
+  console.log('');
+  console.log(`Building ${directory}...`);
 
-  if (runPublish) {
-    if (beta) {
-      commands.push(`yarn publish --access public --tag beta --new-version ${version}`);
-    } else {
-      commands.push(`yarn publish --access public --new-version ${version}`);
-    }
-  }
+  execSync(`cd ${directory} && yarn build`, { stdio: 'inherit' });
+};
 
-  if (runPublish) {
-    console.log('');
-    console.log('');
-    console.log(`Publishing ${directory}...`);
-  } else {
-    console.log('');
-    console.log('');
-    console.log(`Building ${directory}...`);
-  }
+/**
+ * Publishes the package for the passed directory. The version is read from package.json
+ * (already set by updateVersion), so no --new-version flag is needed.
+ *
+ * @param directory
+ * @param otp
+ */
+const publishPackage = (directory, otp) => {
+  console.log('');
+  console.log('');
+  console.log(`Publishing ${directory}...`);
 
-  execSync(commands.join(' && '), { stdio: 'inherit' });
+  const command = [
+    'npm publish',
+    '--access public',
+    beta ? '--tag beta' : '',
+    `--otp ${otp}`,
+    '--registry https://registry.npmjs.org/'
+  ].filter(Boolean).join(' ');
+
+  execSync(`cd ${directory} && ${command}`, { stdio: 'inherit' });
 };
 
 /**
@@ -166,13 +191,22 @@ const run = async () => {
   const publishResponse = await ask(publishPrompt.join(''));
   const runPublish = publishResponse === PUBLISH_CONFIRM;
 
+  // 1. Update versions and build all packages.
   _.each(packages, (directory) => {
-    // Update the package.json version and any dependencies and devDependencies
     updateVersion(directory, version);
-
-    // Build and publish the package
-    publish(directory, version, runPublish);
+    build(directory);
   });
+
+  // 2. Prompt for OTP and publish each package.
+  if (runPublish) {
+    const otp = await askForOTP();
+
+    _.each(packages, (directory) => {
+      publishPackage(directory, otp);
+    });
+  }
+
+  rl.close();
 };
 
 run();
