@@ -7,6 +7,9 @@
   "module": "./dist/index.es.js",
   "style": "./dist/style.css",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.es.js",

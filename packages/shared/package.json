@@ -6,6 +6,9 @@
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
   "style": "./dist/style.css",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": {
