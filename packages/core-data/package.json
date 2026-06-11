@@ -5,6 +5,9 @@
   "license": "MIT",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
+  "files": [
+    "dist"
+  ],
   "style": "./dist/style.css",
   "type": "module",
   "exports": {
