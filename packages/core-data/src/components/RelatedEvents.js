@@ -33,7 +33,7 @@ type Props = {
   selected?: EventType
 };
 
-const RelatedEvents = (props: Props) => {
+const RelatedEvents = ({description = true, defaultPage = 1, onClick = () => {}, ...props}: Props) => {
   const {
     data: { events } = {},
     isNextDisabled,
@@ -62,10 +62,10 @@ const RelatedEvents = (props: Props) => {
   return (
     <div>
       <EventsList
-        description={props.description}
+        description={description}
         events={events}
         isSelected={isSelected}
-        onClick={props.onClick}
+        onClick={onClick}
       />
       { pages > 1 && (
         <div
@@ -138,12 +138,6 @@ const RelatedEvents = (props: Props) => {
       )}
     </div>
   );
-};
-
-RelatedEvents.defaultProps = {
-  description: true,
-  defaultPage: 1,
-  onClick: () => {}
 };
 
 export default RelatedEvents;

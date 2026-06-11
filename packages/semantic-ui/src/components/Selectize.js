@@ -196,17 +196,17 @@ const SelectizeGrid = useDataList(useList((props: GridProps) => {
   );
 }));
 
-const Selectize = (props: Props) => {
+const Selectize = ({centered = false, modal = undefined, multiple = true, searchable = true, selectedItems = [], ...props}: Props) => {
   const [error, setError] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
-  const [selectedItems, setSelectedItems] = useState(props.selectedItems || []);
+  const [selectedItems, setSelectedItems] = useState(selectedItems || []);
 
   /**
    * Sets the allowMultiple prop to "true" if the multiple prop is a boolean or non-zero integer.
    *
    * @type {boolean}
    */
-  const allowMultiple = useMemo(() => !!props.multiple, [props.multiple]);
+  const allowMultiple = useMemo(() => !!multiple, [multiple]);
 
   /**
    * Sets the allowed number of items that can be selected. If the multiple prop is a boolean, this will be
@@ -215,8 +215,8 @@ const Selectize = (props: Props) => {
    * @type {boolean|number}
    */
   const allowedCount = useMemo(() => (
-    _.isNumber(props.multiple) ? props.multiple : Number.MAX_SAFE_INTEGER
-  ), [props.multiple]);
+    _.isNumber(multiple) ? multiple : Number.MAX_SAFE_INTEGER
+  ), [multiple]);
 
   /**
    * Returns true if the passed item is selected.
@@ -246,7 +246,7 @@ const Selectize = (props: Props) => {
         item
       ]);
     }
-  }, [isSelected, props.multiple]);
+  }, [isSelected, multiple]);
 
   /**
    * Selects or deselects the single passed item.
@@ -268,19 +268,19 @@ const Selectize = (props: Props) => {
    * @type {(function(*=): (*))|*}
    */
   const onSave = useCallback((item) => {
-    if (props.modal && props.modal.onSave) {
-      return props.modal.onSave(item).then((saved) => onSelect(saved));
+    if (modal && modal.onSave) {
+      return modal.onSave(item).then((saved) => onSelect(saved));
     }
 
     return Promise.resolve();
-  }, [onSelect, props.modal]);
+  }, [onSelect, modal]);
 
   return (
     <ModalContext.Consumer>
       { (mountNode) => (
         <Modal
           as={Form}
-          centered={props.centered}
+          centered={centered}
           className='selectize'
           mountNode={mountNode}
           noValidate
@@ -333,14 +333,6 @@ const Selectize = (props: Props) => {
       )}
     </ModalContext.Consumer>
   );
-};
-
-Selectize.defaultProps = {
-  centered: false,
-  modal: undefined,
-  multiple: true,
-  searchable: true,
-  selectedItems: []
 };
 
 export default Selectize;

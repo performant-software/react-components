@@ -11,28 +11,21 @@ type Props = {
   url?: string,
 };
 
-const RasterLayer = (props: Props) => (
+const RasterLayer = ({maxzoom = 22, minzoom = 0, opacity = 0.7, tileSize = 256, ...props}: Props) => (
   <Source
-    tileSize={props.tileSize}
+    tileSize={tileSize}
     tiles={[props.url]}
     type='raster'
   >
     <Layer
       type='raster'
       paint={{
-        'raster-opacity': props.opacity
+        'raster-opacity': opacity
       }}
-      minzoom={props.minzoom}
-      maxzoom={props.maxzoom}
+      minzoom={minzoom}
+      maxzoom={maxzoom}
     />
   </Source>
 );
-
-RasterLayer.defaultProps = {
-  maxzoom: 22,
-  minzoom: 0,
-  opacity: 0.7,
-  tileSize: 256
-};
 
 export default RasterLayer;

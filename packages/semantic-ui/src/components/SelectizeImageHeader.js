@@ -46,20 +46,20 @@ type CardProps = {
 
 const DEFAULT_PER_PAGE = 5;
 
-const SelectizeCard = (props: CardProps) => (
+const SelectizeCard = ({header = undefined, image = undefined, meta = undefined, renderExtra = undefined, ...props}: CardProps) => (
   <Card
     raised={props.selected}
     link
     onClick={props.onClick}
   >
-    { props.image && _.isString(props.image) && (
+    { image && _.isString(image) && (
       <Image
         size='small'
-        src={props.image}
+        src={image}
       />
     )}
-    { !!props.image && !_.isString(props.image) && props.image }
-    { !props.image && (
+    { !!image && !_.isString(image) && image }
+    { !image && (
       <Segment
         placeholder
       >
@@ -70,17 +70,17 @@ const SelectizeCard = (props: CardProps) => (
       </Segment>
     )}
     <Card.Content>
-      { props.header && (
+      { header && (
         <Card.Header>
           <Header
             as='h6'
-            content={props.header}
+            content={header}
           />
         </Card.Header>
       )}
-      { props.meta && (
+      { meta && (
         <Card.Meta
-          content={props.meta}
+          content={meta}
         />
       )}
       { props.description && (
@@ -112,14 +112,7 @@ const SelectizeCard = (props: CardProps) => (
   </Card>
 );
 
-SelectizeCard.defaultProps = {
-  header: undefined,
-  image: undefined,
-  meta: undefined,
-  renderExtra: undefined
-};
-
-const SelectizeImageHeader = (props: Props) => {
+const SelectizeImageHeader = ({collapsable = true, onItemClick = () => {}, perPage = DEFAULT_PER_PAGE, renderExtra = undefined, ...props}: Props) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
@@ -133,14 +126,14 @@ const SelectizeImageHeader = (props: Props) => {
     let records = null;
 
     if (page && props.selectedItems && props.selectedItems.length) {
-      const startIndex = (page - 1) * (props.perPage || DEFAULT_PER_PAGE);
-      const endIndex = startIndex + (props.perPage || DEFAULT_PER_PAGE);
+      const startIndex = (page - 1) * (perPage || DEFAULT_PER_PAGE);
+      const endIndex = startIndex + (perPage || DEFAULT_PER_PAGE);
 
       records = props.selectedItems.slice(startIndex, endIndex);
     }
 
     return records;
-  }, [page, props.perPage, props.selectedItems]);
+  }, [page, perPage, props.selectedItems]);
 
   /**
    * Sets the pagination label.
@@ -148,12 +141,12 @@ const SelectizeImageHeader = (props: Props) => {
    * @type {string}
    */
   const pagination = useMemo(() => {
-    const startIndex = (page - 1) * (props.perPage || DEFAULT_PER_PAGE);
-    const endIndex = startIndex + (props.perPage || DEFAULT_PER_PAGE);
+    const startIndex = (page - 1) * (perPage || DEFAULT_PER_PAGE);
+    const endIndex = startIndex + (perPage || DEFAULT_PER_PAGE);
     const total = props.selectedItems.length;
 
     return `${startIndex + 1} - ${Math.min(endIndex, total)} of ${total}`;
-  }, [page, props.perPage, props.selectedItems]);
+  }, [page, perPage, props.selectedItems]);
 
   /**
    * Changes the current page number. If the next page is invalid, we move to the first page or last page.
@@ -176,10 +169,10 @@ const SelectizeImageHeader = (props: Props) => {
    * Set the number of pages when the perPage or selectedItems props change.
    */
   useEffect(() => {
-    if (props.perPage && props.selectedItems) {
-      setPages(Math.ceil(props.selectedItems.length / props.perPage));
+    if (perPage && props.selectedItems) {
+      setPages(Math.ceil(props.selectedItems.length / perPage));
     }
-  }, [props.perPage, props.selectedItems]);
+  }, [perPage, props.selectedItems]);
 
   /**
    * If we're removing the last item on the page, decrement the page by 1.
@@ -213,22 +206,22 @@ const SelectizeImageHeader = (props: Props) => {
               onClick={onPageChange.bind(this, -1)}
             />
             <Card.Group
-              itemsPerRow={props.perPage}
+              itemsPerRow={perPage}
             >
               { _.map(items, (item) => (
                 <SelectizeCard
                   description={props.renderDescription && props.renderDescription(item)}
-                  extra={props.renderExtra && props.renderExtra(item)}
+                  extra={renderExtra && renderExtra(item)}
                   header={props.renderHeader && props.renderHeader(item)}
                   image={props.renderImage && props.renderImage(item)}
                   meta={props.renderMeta && props.renderMeta(item)}
                   key={item.id}
                   onClick={() => (
                     props.selectedItem === item
-                      ? props.onItemClick(null)
-                      : props.onItemClick(item)
+                      ? onItemClick(null)
+                      : onItemClick(item)
                   )}
-                  onDelete={() => props.onItemClick(item)}
+                  onDelete={() => onItemClick(item)}
                   selected={item === props.selectedItem}
                 />
               ))}
@@ -249,7 +242,7 @@ const SelectizeImageHeader = (props: Props) => {
         <div />
         <div>{ pagination }</div>
         <div>
-          { props.collapsable && (
+          { collapsable && (
             <Button
               as='a'
               basic
@@ -264,13 +257,6 @@ const SelectizeImageHeader = (props: Props) => {
       </div>
     </Segment>
   );
-};
-
-SelectizeImageHeader.defaultProps = {
-  collapsable: true,
-  onItemClick: () => {},
-  perPage: DEFAULT_PER_PAGE,
-  renderExtra: undefined
 };
 
 export default SelectizeImageHeader;

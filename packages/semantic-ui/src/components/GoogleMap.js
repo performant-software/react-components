@@ -35,11 +35,16 @@ type Props = {
 const DEFAULT_ZOOM = 1;
 const DEFAULT_ZOOM_MARKER = 12;
 
-const GoogleMap = (props: Props) => {
+const GoogleMap = ({containerStyle = {
+    height: '400px'
+  }, defaultCenter = {
+    lat: 0,
+    lng: 0
+  }, ...props}: Props) => {
   // Convert the position props to floats to avoid Javascript errors.
   const position = Map.getPosition(props.position);
 
-  const [center, setCenter] = useState(position || props.defaultCenter);
+  const [center, setCenter] = useState(position || defaultCenter);
   const [map, setMap] = useState();
 
   /**
@@ -96,7 +101,7 @@ const GoogleMap = (props: Props) => {
     <MapComponent
       center={center}
       mapContainerClassName={props.className}
-      mapContainerStyle={props.containerStyle}
+      mapContainerStyle={containerStyle}
       onClick={onDragEnd}
       onLoad={onLoad}
       zoom={zoom}
@@ -111,16 +116,6 @@ const GoogleMap = (props: Props) => {
       )}
     </MapComponent>
   );
-};
-
-GoogleMap.defaultProps = {
-  containerStyle: {
-    height: '400px'
-  },
-  defaultCenter: {
-    lat: 0,
-    lng: 0
-  }
 };
 
 export default GoogleMap;

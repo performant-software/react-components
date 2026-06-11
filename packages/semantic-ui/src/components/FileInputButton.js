@@ -20,7 +20,7 @@ type Props = {
  * from their file system. This component also accepts
  * all of the props of the Semantic UI <code>Button</code> component.
  */
-const FileInputButton = ({ onSelection, multiple, ...buttonProps }: Props) => {
+const FileInputButton = ({ onSelection, multiple = false,  ...buttonProps }: Props) => {
   const fileInputRef = useRef();
 
   /**
@@ -57,10 +57,6 @@ const FileInputButton = ({ onSelection, multiple, ...buttonProps }: Props) => {
       />
     </>
   );
-};
-
-FileInputButton.defaultProps = {
-  multiple: false
 };
 
 export default FileInputButton;

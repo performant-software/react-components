@@ -9,20 +9,15 @@ type Props = {
   size: string
 };
 
-const LazyLoader = (props: Props) => (
+const LazyLoader = ({active = false, size = 'small', ...props}: Props) => (
   <Image
     className='lazy-loader'
-    size={props.size}
+    size={size}
   >
     <Loader
-      active={props.active}
+      active={active}
     />
   </Image>
 );
-
-LazyLoader.defaultProps = {
-  active: false,
-  size: 'small'
-};
 
 export default LazyLoader;

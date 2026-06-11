@@ -11,24 +11,18 @@ type Props = {
   width?: number
 }
 
-const ColorButton = (props: Props) => (
+const ColorButton = ({height = undefined, onClick = undefined, width = undefined, ...props}: Props) => (
   <Button
     className='color-button'
-    onClick={props.onClick && props.onClick.bind(this)}
+    onClick={onClick && onClick.bind(this)}
     style={{
       backgroundColor: props.color,
-      cursor: props.onClick ? 'pointer' : 'default',
-      height: props.height,
-      width: props.width
+      cursor: onClick ? 'pointer' : 'default',
+      height: height,
+      width: width
     }}
     title='color-button'
   />
 );
-
-ColorButton.defaultProps = {
-  height: undefined,
-  onClick: undefined,
-  width: undefined
-};
 
 export default ColorButton;

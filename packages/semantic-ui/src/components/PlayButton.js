@@ -22,28 +22,22 @@ type Props = {
 /**
  * This component can be used as a toggle for playing media.
  */
-const PlayButton = (props: Props) => (
+const PlayButton = ({onClick = undefined, size = 'massive', style = undefined, ...props}: Props) => (
   <Button
     className='play-button'
     color='black'
     icon='play'
     onClick={(e) => {
-      if (props.onClick) {
+      if (onClick) {
         e.stopPropagation();
 
-        // $FlowFixMe - Not really an issue since we're checking for props.onClick above.
-        props.onClick();
+        // $FlowFixMe - Not really an issue since we're checking for onClick above.
+        onClick();
       }
     }}
-    size={props.size}
-    style={props.style}
+    size={size}
+    style={style}
   />
 );
-
-PlayButton.defaultProps = {
-  onClick: undefined,
-  size: 'massive',
-  style: undefined
-};
 
 export default PlayButton;

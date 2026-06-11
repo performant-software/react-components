@@ -15,7 +15,7 @@ type MarkerProps = {
   value: number
 };
 
-const SliderMarker = (props: MarkerProps) => {
+const SliderMarker = ({position = 'top', ...props}: MarkerProps) => {
   const [initialized, setInitialized] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -37,7 +37,7 @@ const SliderMarker = (props: MarkerProps) => {
 
     // Set a new timer
     setTimer(() => setOpen(false));
-  }, [props.value]);
+  }, [value]);
 
   /**
    * Sets the initialized state.
@@ -46,7 +46,7 @@ const SliderMarker = (props: MarkerProps) => {
     if (!initialized) {
       setInitialized(true);
     }
-  }, [props.value]);
+  }, [value]);
 
   return (
     <Tooltip.Provider>
@@ -69,13 +69,13 @@ const SliderMarker = (props: MarkerProps) => {
           />
         </Tooltip.Trigger>
         <Tooltip.Content
-          side={props.position}
+          side={position}
           sideOffset={5}
         >
           <div
             className='bg-white p-2 text-black rounded-md shadow-md shadow-gray-1000'
           >
-            { props.value }
+            { value }
           </div>
           <Tooltip.Arrow
             className='fill-white'
@@ -84,10 +84,6 @@ const SliderMarker = (props: MarkerProps) => {
       </Tooltip.Root>
     </Tooltip.Provider>
   );
-};
-
-SliderMarker.defaultProps = {
-  position: 'top'
 };
 
 type Action = {
@@ -168,7 +164,7 @@ type Props = {
   value: [number, number]
 };
 
-const Slider = (props: Props) => {
+const Slider = ({classNames = {}, value = [], ...props}: Props) => {
   /**
    * Adjusts the values entered by the user based on range
    * and step constraints.
@@ -207,7 +203,7 @@ const Slider = (props: Props) => {
   }, [props.onValueCommit, props.onValueChange, props.min, props.max]);
 
   return (
-    <div className={props.classNames?.container}>
+    <div className={classNames?.container}>
       {(props.icon || props.label) && (
       <div
         className='flex gap-2 items-center justify-center w-full'
@@ -234,7 +230,7 @@ const Slider = (props: Props) => {
         <RadixSlider.Root
           className={clsx(
             'relative flex flex-grow h-5 touch-none items-center w-full',
-            props.classNames.root
+            classNames.root
           )}
           max={props.max}
           min={props.min}
@@ -242,30 +238,30 @@ const Slider = (props: Props) => {
           onValueChange={props.onValueChange}
           onValueCommit={props.onValueCommit}
           step={1}
-          value={props.value}
+          value={value}
         >
           <RadixSlider.Track
             className={clsx(
               'relative h-1 w-full grow bg-gray-100',
-              props.classNames.track
+              classNames.track
             )}
           >
             <RadixSlider.Range
               className={clsx(
                 'absolute h-full bg-neutral-800',
-                props.classNames.range
+                classNames.range
               )}
             />
           </RadixSlider.Track>
           <SliderMarker
-            className={props.classNames.thumb}
+            className={classNames.thumb}
             position={props.position}
-            value={props.value[0]}
+            value={value[0]}
           />
           <SliderMarker
-            className={props.classNames.thumb}
+            className={classNames.thumb}
             position={props.position}
-            value={props.value[1]}
+            value={value[1]}
           />
         </RadixSlider.Root>
       </div>
@@ -276,32 +272,27 @@ const Slider = (props: Props) => {
           ariaLabel={i18n.t('Slider.start')}
           className={clsx(
             'rounded-md !w-20',
-            props.classNames.input
+            classNames.input
           )}
           clearable={false}
-          onBlur={(val) => onInputCommit([parseInt(val, 10), props.value[1]])}
-          onChange={(val) => props.onValueChange([parseInt(val, 10), props.value[1]])}
-          value={props.value[0]}
+          onBlur={(val) => onInputCommit([parseInt(val, 10), value[1]])}
+          onChange={(val) => props.onValueChange([parseInt(val, 10), value[1]])}
+          value={value[0]}
         />
         <Input
           ariaLabel={i18n.t('Slider.end')}
           className={clsx(
             'rounded-md !w-20',
-            props.classNames.input
+            classNames.input
           )}
           clearable={false}
-          onBlur={(val) => onInputCommit([props.value[0], parseInt(val, 10)])}
-          onChange={(val) => props.onValueChange([props.value[0], parseInt(val, 10)])}
-          value={props.value[1]}
+          onBlur={(val) => onInputCommit([value[0], parseInt(val, 10)])}
+          onChange={(val) => props.onValueChange([value[0], parseInt(val, 10)])}
+          value={value[1]}
         />
       </div>
     </div>
   );
-};
-
-Slider.defaultProps = {
-  classNames: {},
-  value: []
 };
 
 export default Slider;

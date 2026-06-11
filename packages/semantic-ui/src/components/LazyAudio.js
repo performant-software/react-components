@@ -30,10 +30,10 @@ type Props = {
   src?: string
 };
 
-const LazyAudio = (props: Props) => {
+const LazyAudio = ({dimmable = true, duration = 1000, preview = undefined, size = 'medium', src = undefined, ...props}: Props) => {
   const [dimmer, setDimmer] = useState(false);
   const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(!props.preview);
+  const [loaded, setLoaded] = useState(!preview);
   const [modal, setModal] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -47,7 +47,7 @@ const LazyAudio = (props: Props) => {
         <Loader
           active
           inline='centered'
-          size={props.size}
+          size={size}
         />
       </Visibility>
     );
@@ -56,7 +56,7 @@ const LazyAudio = (props: Props) => {
   return (
     <>
       <Transition
-        duration={props.duration}
+        duration={duration}
         visible
       >
         <Dimmer.Dimmable
@@ -70,10 +70,10 @@ const LazyAudio = (props: Props) => {
           { !loaded && (
             <LazyLoader
               active
-              size={props.size}
+              size={size}
             />
           )}
-          { !error && props.preview && (
+          { !error && preview && (
             <Image
               {...props.image}
               onError={() => {
@@ -84,15 +84,15 @@ const LazyAudio = (props: Props) => {
                 setError(false);
                 setLoaded(true);
               }}
-              size={props.size}
-              src={props.preview}
+              size={size}
+              src={preview}
             />
           )}
-          { (error || !props.preview) && (
+          { (error || !preview) && (
             <Image
               {...props.image}
               className='placeholder-image'
-              size={props.size}
+              size={size}
             >
               <Icon
                 name='file audio outline'
@@ -100,14 +100,14 @@ const LazyAudio = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { (src || props.children) && dimmable && (
             <Dimmer
               active={dimmer}
             >
               <div
                 className='buttons'
               >
-                { props.src && (
+                { src && (
                   <Button
                     content={props.playButtonLabel || i18n.t('LazyAudio.buttons.play')}
                     icon='play circle outline'
@@ -128,24 +128,16 @@ const LazyAudio = (props: Props) => {
           )}
         </Dimmer.Dimmable>
       </Transition>
-      { props.src && (
+      { src && (
         <AudioPlayer
           onClose={() => setModal(false)}
           open={modal}
           size='large'
-          src={props.src}
+          src={src}
         />
       )}
     </>
   );
-};
-
-LazyAudio.defaultProps = {
-  dimmable: true,
-  duration: 1000,
-  preview: undefined,
-  size: 'medium',
-  src: undefined
 };
 
 export default LazyAudio;

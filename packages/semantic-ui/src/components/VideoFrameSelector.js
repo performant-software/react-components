@@ -26,9 +26,13 @@ const INTERVAL_STEP = 1;
 const MIN_INTERVAL = 1;
 const MAX_INTERVAL = 300;
 
-const VideoFrameSelector = (props: Props) => {
+const VideoFrameSelector = ({button = {
+    basic: true,
+    content: i18n.t('VideoFrameSelector.buttons.select'),
+    icon: 'image'
+  }, defaultInterval = 15, title = i18n.t('VideoFrameSelector.title'), ...props}: Props) => {
   const [duration, setDuration] = useState(0);
-  const [interval, setInterval] = useState(props.defaultInterval);
+  const [interval, setInterval] = useState(defaultInterval);
   const [time, setTime] = useState(0);
   const [modal, setModal] = useState(false);
 
@@ -43,7 +47,7 @@ const VideoFrameSelector = (props: Props) => {
   return (
     <>
       <Button
-        {...props.button}
+        {...button}
         onClick={() => setModal(true)}
       />
       <ModalContext.Consumer>
@@ -56,7 +60,7 @@ const VideoFrameSelector = (props: Props) => {
             size='small'
           >
             <Modal.Header
-              content={props.title}
+              content={title}
             />
             <Modal.Content>
               <Segment>
@@ -144,16 +148,6 @@ const VideoFrameSelector = (props: Props) => {
       </ModalContext.Consumer>
     </>
   );
-};
-
-VideoFrameSelector.defaultProps = {
-  button: {
-    basic: true,
-    content: i18n.t('VideoFrameSelector.buttons.select'),
-    icon: 'image'
-  },
-  defaultInterval: 15,
-  title: i18n.t('VideoFrameSelector.title')
 };
 
 export default withTranslation()(VideoFrameSelector);

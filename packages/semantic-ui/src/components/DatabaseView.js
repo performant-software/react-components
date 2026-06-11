@@ -18,7 +18,7 @@ type Props = {
   url: string
 };
 
-const DatabaseView = (props: Props) => {
+const DatabaseView = ({columnCount = Number.MAX_SAFE_INTEGER, ...props}: Props) => {
   const [columns, setColumns] = useState([]);
   const [selectedTable, setSelectedTable] = useState();
   const [tables, setTables] = useState([]);
@@ -74,8 +74,8 @@ const DatabaseView = (props: Props) => {
     label: column.column_name,
     resolve: resolveValue.bind(this, column),
     sortable: true,
-    hidden: index > props.columnCount
-  })), [columns, resolveValue, props.columnCount]);
+    hidden: index > columnCount
+  })), [columns, resolveValue, columnCount]);
 
   return (
     <div
@@ -117,10 +117,6 @@ const DatabaseView = (props: Props) => {
       </div>
     </div>
   );
-};
-
-DatabaseView.defaultProps = {
-  columnCount: Number.MAX_SAFE_INTEGER
 };
 
 export default DatabaseView;

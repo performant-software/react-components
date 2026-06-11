@@ -49,7 +49,7 @@ type RowProps = {
 /**
  * This component renders a list of search results returned from a Core Data Typesense index.
  */
-const SearchResultsList = (props: Props) => {
+const SearchResultsList = ({itemSize = 88, ...props}: Props) => {
   const {
     hits,
     hover,
@@ -119,17 +119,13 @@ const SearchResultsList = (props: Props) => {
           height={height}
           itemCount={hits.length}
           width={width}
-          itemSize={props.itemSize}
+          itemSize={itemSize}
         >
           { Row }
         </FixedSizeList>
       )}
     </AutoSizer>
   );
-};
-
-SearchResultsList.defaultProps = {
-  itemSize: 88
 };
 
 export default SearchResultsList;

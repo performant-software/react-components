@@ -17,7 +17,7 @@ const KEY_SHIFT = '{shift}';
 const LAYOUT_DEFAULT = 'default';
 const LAYOUT_SHIFT = 'shift';
 
-const KeyboardSimple = (props: Props) => {
+const KeyboardSimple = ({keyboardClass = 'simple-keyboard', ...props}: Props) => {
   const keyboardRef = useRef();
 
   // Toggles the layout name for Shift and CapsLock keys.
@@ -34,7 +34,7 @@ const KeyboardSimple = (props: Props) => {
   // Sets up the keyboard reference and the initial value when the component is first rendered.
   useEffect(() => {
     const { layout, onChange } = props;
-    keyboardRef.current = new Keyboard(`.${props.keyboardClass}`, { ...layout, onChange, onKeyPress });
+    keyboardRef.current = new Keyboard(`.${keyboardClass}`, { ...layout, onChange, onKeyPress });
     keyboardRef.current.setInput(props.value);
   }, []);
 
@@ -45,11 +45,7 @@ const KeyboardSimple = (props: Props) => {
     }
   }, [props.value]);
 
-  return <div className={props.keyboardClass} />;
-};
-
-KeyboardSimple.defaultProps = {
-  keyboardClass: 'simple-keyboard'
+  return <div className={keyboardClass} />;
 };
 
 export default KeyboardSimple;

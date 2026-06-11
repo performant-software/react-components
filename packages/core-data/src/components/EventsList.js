@@ -33,7 +33,7 @@ type Props = {
   onClick?: (event: EventType) => void
 };
 
-const EventsList = (props: Props) => (
+const EventsList = ({isSelected = () => false, onClick = () => {}, ...props}: Props) => (
   <ul
     className={props.className}
   >
@@ -51,11 +51,11 @@ const EventsList = (props: Props) => (
               'inline-flex',
               'flex-col',
               'rounded-none',
-              { 'hover:bg-event-selected': props.isSelected(event) },
-              { 'text-white': props.isSelected(event) },
-              { 'bg-event-selected': props.isSelected(event) }
+              { 'hover:bg-event-selected': isSelected(event) },
+              { 'text-white': isSelected(event) },
+              { 'bg-event-selected': isSelected(event) }
             )}
-            onClick={() => props.onClick(event)}
+            onClick={() => onClick(event)}
             type='button'
           >
             <div
@@ -78,7 +78,7 @@ const EventsList = (props: Props) => (
               <p
                 className={clsx(
                   'py-2',
-                  { 'text-muted': !props.isSelected(event) }
+                  { 'text-muted': !isSelected(event) }
                 )}
               >
                 { event.description }
@@ -90,10 +90,5 @@ const EventsList = (props: Props) => (
     ))}
   </ul>
 );
-
-EventsList.defaultProps = {
-  isSelected: () => false,
-  onClick: () => {}
-};
 
 export default EventsList;

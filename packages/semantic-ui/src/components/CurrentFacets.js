@@ -16,7 +16,7 @@ type Props = CurrentRefinementsProps & {
 /**
  * This component can be used to display the facets/refinements currently applied to an InstantSearch index.
  */
-const CurrentFacets = ({ useCurrentRefinements, ...props }: Props) => {
+const CurrentFacets = ({ useCurrentRefinements, limit = undefined,  ...props }: Props) => {
   const [modal, setModal] = useState(false);
   const { items } = useCurrentRefinements(props);
 
@@ -58,10 +58,6 @@ const CurrentFacets = ({ useCurrentRefinements, ...props }: Props) => {
       />
     </>
   );
-};
-
-CurrentFacets.defaultProps = {
-  limit: undefined
 };
 
 export default CurrentFacets;

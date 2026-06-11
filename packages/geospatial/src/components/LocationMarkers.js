@@ -99,7 +99,7 @@ const DEFAULT_BUFFER = 2;
 /**
  * This component renders a location marker to be used in a Peripleo context.
  */
-const LocationMarkers = (props: Props) => {
+const LocationMarkers = ({buffer = DEFAULT_BUFFER, fillStyle = MapStyles.fill, fitBoundingBox = true, pointStyle = MapStyles.point, strokeStyle = MapStyles.stroke, ...props}: Props) => {
   const map = useLoadedMap();
 
   /**
@@ -113,14 +113,14 @@ const LocationMarkers = (props: Props) => {
    * Sets the bounding box on the map.
    */
   useEffect(() => {
-    if (map && data && props.fitBoundingBox) {
-      const bbox = MapUtils.getBoundingBox(data, props.buffer);
+    if (map && data && fitBoundingBox) {
+      const bbox = MapUtils.getBoundingBox(data, buffer);
 
       if (bbox) {
         map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
       }
     }
-  }, [map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
+  }, [map, buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, fitBoundingBox]);
 
   if (!data) {
     return null;
@@ -141,23 +141,15 @@ const LocationMarkers = (props: Props) => {
         clusterProperties={props.clusterProperties}
         clusterRadius={props.clusterRadius}
         data={props.data}
-        fillStyle={props.fillStyle}
+        fillStyle={fillStyle}
         id={props.layerId}
         interactive={props.interactive}
-        strokeStyle={props.strokeStyle}
-        pointStyle={props.pointStyle}
+        strokeStyle={strokeStyle}
+        pointStyle={pointStyle}
         visible={props.visible}
       />
     </>
   );
-};
-
-LocationMarkers.defaultProps = {
-  buffer: DEFAULT_BUFFER,
-  fillStyle: MapStyles.fill,
-  fitBoundingBox: true,
-  pointStyle: MapStyles.point,
-  strokeStyle: MapStyles.stroke
 };
 
 export default LocationMarkers;

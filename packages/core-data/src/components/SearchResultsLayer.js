@@ -44,7 +44,7 @@ type Props = {
 /**
  * This component renders a map layer for the search results from a Typesense search index.
  */
-const SearchResultsLayer = (props: Props) => {
+const SearchResultsLayer = ({fitBoundingBox = true, ...props}: Props) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const map = useMap();
@@ -59,12 +59,12 @@ const SearchResultsLayer = (props: Props) => {
     props.boundingBoxOptions,
     props.buffer,
     props.data,
-    props.fitBoundingBox,
+    fitBoundingBox,
     props.searching
   ];
 
   useEffect(() => {
-    if (props.fitBoundingBox && props.data && mapLoaded && !props.searching) {
+    if (fitBoundingBox && props.data && mapLoaded && !props.searching) {
       // Set the bounding box on the map
       const bbox = MapUtils.getBoundingBox(props.data, props.buffer);
 
@@ -101,10 +101,6 @@ const SearchResultsLayer = (props: Props) => {
       fitBoundingBox={false}
     />
   );
-};
-
-SearchResultsLayer.defaultProps = {
-  fitBoundingBox: true
 };
 
 export default SearchResultsLayer;

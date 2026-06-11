@@ -25,7 +25,7 @@ type Props = {
   value: Item | Array<Item>
 };
 
-const ReferenceCodeDropdown = (props: Props) => {
+const ReferenceCodeDropdown = ({disabled = false, fluid = true, multiple = false, placeholder = undefined, ...props}: Props) => {
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
@@ -34,8 +34,8 @@ const ReferenceCodeDropdown = (props: Props) => {
    */
   const value = useMemo(() => {
     const v = _.pluck(_.filter(props.value, (x) => !x._destroy), 'reference_code_id');
-    return props.multiple ? v : _.first(v);
-  }, [props.multiple, props.value]);
+    return multiple ? v : _.first(v);
+  }, [multiple, props.value]);
 
   /**
    * Converts the passed ID to a reference code item.
@@ -73,7 +73,7 @@ const ReferenceCodeDropdown = (props: Props) => {
   const onChange = useCallback((e, data) => {
     let referenceCodeIds;
 
-    if (props.multiple) {
+    if (multiple) {
       referenceCodeIds = data.value;
     } else {
       referenceCodeIds = _.compact([data.value]);
@@ -100,7 +100,7 @@ const ReferenceCodeDropdown = (props: Props) => {
     });
 
     props.onChange(items);
-  }, [toItem, props.multiple, props.onChange, props.value]);
+  }, [toItem, multiple, props.onChange, props.value]);
 
   /**
    * Loads the list of reference codes from the server.
@@ -123,26 +123,19 @@ const ReferenceCodeDropdown = (props: Props) => {
   return (
     <Dropdown
       clearable
-      disabled={loading || props.disabled}
-      fluid={props.fluid}
+      disabled={loading || disabled}
+      fluid={fluid}
       loading={loading}
-      multiple={props.multiple}
+      multiple={multiple}
       onChange={onChange}
       options={options}
-      placeholder={props.placeholder}
+      placeholder={placeholder}
       search
       selection
       selectOnBlur={false}
       value={value}
     />
   );
-};
-
-ReferenceCodeDropdown.defaultProps = {
-  disabled: false,
-  fluid: true,
-  multiple: false,
-  placeholder: undefined
 };
 
 export default ReferenceCodeDropdown;

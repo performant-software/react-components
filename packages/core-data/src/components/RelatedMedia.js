@@ -49,7 +49,7 @@ const DEFAULT_THUMBNAIL_WIDTH = 80;
 /**
  * This component renders the related Core Data media records as well as a gallery viewer.
  */
-const RelatedMedia = (props: Props) => {
+const RelatedMedia = ({thumbnailHeight = DEFAULT_THUMBNAIL_HEIGHT, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH, ...props}: Props) => {
   const [manifestUrl, setManifestUrl] = useState<string>();
 
   /**
@@ -67,8 +67,8 @@ const RelatedMedia = (props: Props) => {
         onClick={() => setManifestUrl(id)}
         thumbnail={_.map(thumbnail, (t) => ({
           ...t,
-          width: props.thumbnailWidth,
-          height: props.thumbnailHeight
+          width: thumbnailWidth,
+          height: thumbnailHeight
         }))}
       />
       <div
@@ -77,7 +77,7 @@ const RelatedMedia = (props: Props) => {
         { label }
       </div>
     </div>
-  ), [props.thumbnailHeight, props.thumbnailWidth]);
+  ), [thumbnailHeight, thumbnailWidth]);
 
   return (
     <>
@@ -98,11 +98,6 @@ const RelatedMedia = (props: Props) => {
       )}
     </>
   );
-};
-
-RelatedMedia.defaultProps = {
-  thumbnailHeight: DEFAULT_THUMBNAIL_HEIGHT,
-  thumbnailWidth: DEFAULT_THUMBNAIL_WIDTH
 };
 
 export default RelatedMedia;

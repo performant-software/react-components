@@ -14,7 +14,7 @@ type Props = {
   size?: string
 };
 
-const PhotoViewer = (props: Props) => {
+const PhotoViewer = ({size = 'small', ...props}: Props) => {
   const [error, setError] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ const PhotoViewer = (props: Props) => {
           mountNode={mountNode}
           onClose={props.onClose.bind(this)}
           open={props.open}
-          size={props.size}
+          size={size}
         >
           <Modal.Content>
             { error && (
@@ -50,10 +50,6 @@ const PhotoViewer = (props: Props) => {
       )}
     </ModalContext.Consumer>
   );
-};
-
-PhotoViewer.defaultProps = {
-  size: 'small'
 };
 
 export default PhotoViewer;

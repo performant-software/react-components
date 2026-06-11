@@ -16,10 +16,17 @@ type Props = {
   xml: string
 };
 
-const ViewXML = (props: Props) => {
+const ViewXML = ({opener = {
+    component: Button,
+    props: {
+      content: i18n.t('ViewXML.buttons.view')
+    }
+  }, style = {
+    maxHeight: '70vh'
+  }, ...props}: Props) => {
   const [showModal, setShowModal] = useState(false);
-  const OpenerComponent = props.opener.component;
-  const openerProps = props.opener.props;
+  const OpenerComponent = opener.component;
+  const openerProps = opener.props;
 
   return (
     <ModalContext.Consumer>
@@ -61,18 +68,6 @@ const ViewXML = (props: Props) => {
       )}
     </ModalContext.Consumer>
   );
-};
-
-ViewXML.defaultProps = {
-  opener: {
-    component: Button,
-    props: {
-      content: i18n.t('ViewXML.buttons.view')
-    }
-  },
-  style: {
-    maxHeight: '70vh'
-  }
 };
 
 export default ViewXML;

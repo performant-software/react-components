@@ -37,16 +37,16 @@ const TRANSITION_DURATION = 700;
  * This is a simple messaging pane that drops from the top of
  * the page and displays that child elements
  */
-const Toaster = (props: Props) => {
+const Toaster = ({onDismiss = undefined, timeout = 3000, type = Toaster.MessageTypes.info, ...props}: Props) => {
   const [visible, setVisible] = useState(true);
 
   /*
    * If a timeout is provided, automatically hide the message after <code>timeout</code> milliseconds.
    */
-  if (props.timeout && props.timeout > 0) {
+  if (timeout && timeout > 0) {
     _.delay(() => {
       setVisible(false);
-    }, props.timeout);
+    }, timeout);
   }
 
   /*
@@ -54,8 +54,8 @@ const Toaster = (props: Props) => {
    * by <code>TRANSITION_DURATION</code> milliseconds in order for the transition to run.
    */
   useEffect(() => {
-    if (!visible && props.onDismiss) {
-      _.delay(props.onDismiss.bind(this), TRANSITION_DURATION);
+    if (!visible && onDismiss) {
+      _.delay(onDismiss.bind(this), TRANSITION_DURATION);
     }
   }, [visible]);
 
@@ -68,11 +68,11 @@ const Toaster = (props: Props) => {
     >
       <Message
         className='toaster'
-        info={props.type === Toaster.MessageTypes.info}
-        negative={props.type === Toaster.MessageTypes.negative}
+        info={type === Toaster.MessageTypes.info}
+        negative={type === Toaster.MessageTypes.negative}
         onDismiss={() => setVisible(false)}
-        positive={props.type === Toaster.MessageTypes.positive}
-        warning={props.type === Toaster.MessageTypes.warning}
+        positive={type === Toaster.MessageTypes.positive}
+        warning={type === Toaster.MessageTypes.warning}
       >
         { props.children }
       </Message>
@@ -85,12 +85,6 @@ Toaster.MessageTypes = {
   negative: 'negative',
   positive: 'positive',
   warning: 'warning'
-};
-
-Toaster.defaultProps = {
-  onDismiss: undefined,
-  timeout: 3000,
-  type: Toaster.MessageTypes.info
 };
 
 export default Toaster;

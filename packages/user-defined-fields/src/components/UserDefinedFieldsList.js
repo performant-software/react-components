@@ -27,7 +27,11 @@ const OMIT_PROPS = [
 
 const DEFAULT_ORDER = 0;
 
-const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
+const UserDefinedFieldsList: ComponentType<any> = ({actions = [{
+    name: 'edit'
+  }, {
+    name: 'delete'
+  }], ...props}: Props) => {
   /**
    * Returns true if the passed column should be hidden by default.
    *
@@ -81,14 +85,6 @@ const UserDefinedFieldsList: ComponentType<any> = (props: Props) => {
       onSave={(udf) => UserDefinedFieldsService.save(udf)}
     />
   );
-};
-
-UserDefinedFieldsList.defaultProps = {
-  actions: [{
-    name: 'edit'
-  }, {
-    name: 'delete'
-  }]
 };
 
 export default UserDefinedFieldsList;

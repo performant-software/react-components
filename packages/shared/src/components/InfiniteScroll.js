@@ -18,7 +18,7 @@ type Props = {
   onBottomReached: () => void
 };
 
-const InfiniteScroll = (props: Props) => {
+const InfiniteScroll = ({offset = 0, ...props}: Props) => {
   const [height, setHeight] = useState(0);
   const containerRef = useRef();
 
@@ -48,7 +48,7 @@ const InfiniteScroll = (props: Props) => {
     if (element) {
       const { scrollTop, clientHeight, scrollHeight } = element;
 
-      if ((scrollTop + clientHeight) >= (scrollHeight - props.offset)) {
+      if ((scrollTop + clientHeight) >= (scrollHeight - offset)) {
         props.onBottomReached();
       }
     }
@@ -117,10 +117,6 @@ const InfiniteScroll = (props: Props) => {
       { props.children }
     </Component>
   );
-};
-
-InfiniteScroll.defaultProps = {
-  offset: 0
 };
 
 export default InfiniteScroll;

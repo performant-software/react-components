@@ -62,8 +62,8 @@ type Props = {
 /**
  * This component can be used as a wrapper to display various types of facets (list, toggle, etc).
  */
-const Facet = (props: Props) => {
-  const [active, setActive] = useState(props.defaultActive);
+const Facet = ({children = undefined, defaultActive = true, divided = false, visible = true, ...props}: Props) => {
+  const [active, setActive] = useState(defaultActive);
 
   /**
    * Sets the class name variable for the Accordion component.
@@ -73,7 +73,7 @@ const Facet = (props: Props) => {
   const className = useMemo(() => {
     const classNames = ['facet'];
 
-    if (!props.visible) {
+    if (!visible) {
       classNames.push('hidden');
     }
 
@@ -82,7 +82,7 @@ const Facet = (props: Props) => {
     }
 
     return classNames.join(' ');
-  }, [props.className, props.visible]);
+  }, [props.className, visible]);
 
   /**
    * Expose collapse/expand functions on the ref object to allow parent components to imperatively open/close.
@@ -123,21 +123,14 @@ const Facet = (props: Props) => {
         <Accordion.Content
           active={active}
         >
-          { props.children }
+          { children }
         </Accordion.Content>
       </Accordion>
-      { props.divided && (
+      { divided && (
         <Divider />
       )}
     </>
   );
-};
-
-Facet.defaultProps = {
-  children: undefined,
-  defaultActive: true,
-  divided: false,
-  visible: true
 };
 
 export type {

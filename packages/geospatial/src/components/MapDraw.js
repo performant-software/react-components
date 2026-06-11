@@ -121,7 +121,7 @@ const GeometryTypes = {
  * This component renders a map with controls for drawing one or more geometries. Geometries can be a point (lat/long),
  * a line, or a polygon.
  */
-const MapDraw = (props: Props) => {
+const MapDraw = ({buffer = DEFAULT_BUFFER, cooperativeGestures = true, preserveDrawingBuffer = false, zoomDuration = DEFAULT_ZOOM_DELAY, ...props}: Props) => {
   const [loaded, setLoaded] = useState(false);
 
   const drawRef = useRef<MapboxDraw>();
@@ -193,10 +193,10 @@ const MapDraw = (props: Props) => {
   useEffect(() => {
     if (loaded && props.data) {
       // Sets the bounding box for the current geometry
-      const bbox = MapUtils.getBoundingBox(props.data, props.buffer);
+      const bbox = MapUtils.getBoundingBox(props.data, buffer);
 
       if (bbox) {
-        mapRef.current.fitBounds(bbox, { duration: props.zoomDuration });
+        mapRef.current.fitBounds(bbox, { duration: zoomDuration });
       }
 
       // Handle special cases for geometry collection (not supported by mabox-gl-draw) and point
@@ -213,11 +213,11 @@ const MapDraw = (props: Props) => {
   return (
     <Map
       attributionControl={false}
-      cooperativeGestures={props.cooperativeGestures}
+      cooperativeGestures={cooperativeGestures}
       mapLib={maplibregl}
       maxPitch={props.maxPitch}
       onLoad={() => setLoaded(true)}
-      preserveDrawingBuffer={props.preserveDrawingBuffer}
+      preserveDrawingBuffer={preserveDrawingBuffer}
       ref={mapRef}
       style={style}
       mapStyle={mapStyleUrl}
@@ -256,13 +256,6 @@ const MapDraw = (props: Props) => {
       { props.children }
     </Map>
   );
-};
-
-MapDraw.defaultProps = {
-  buffer: DEFAULT_BUFFER,
-  cooperativeGestures: true,
-  preserveDrawingBuffer: false,
-  zoomDuration: DEFAULT_ZOOM_DELAY
 };
 
 export default MapDraw;

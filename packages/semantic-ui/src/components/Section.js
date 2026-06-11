@@ -10,8 +10,8 @@ type Props = {
   visible?: boolean
 }
 
-const Section = (props: Props) => {
-  if (!props.visible) {
+const Section = ({divided = true, header = undefined, visible = true, ...props}: Props) => {
+  if (!visible) {
     return null;
   }
 
@@ -19,23 +19,17 @@ const Section = (props: Props) => {
     <div
       className='section'
     >
-      { props.header && (
+      { header && (
         <Header
-          content={props.header}
+          content={header}
         />
       )}
       { props.children }
       <Divider
-        hidden={!props.divided}
+        hidden={!divided}
       />
     </div>
   );
-};
-
-Section.defaultProps = {
-  divided: true,
-  header: undefined,
-  visible: true
 };
 
 export default Section;

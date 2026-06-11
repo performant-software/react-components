@@ -109,7 +109,7 @@ const Status = {
  * The <code>FileUploadModal</code> is a convenience wrapper for the <code>FileUpload</code> component, allowing
  * it to render in a modal.
  */
-const FileUploadModal: ComponentType<any> = (props: Props) => {
+const FileUploadModal: ComponentType<any> = ({closeOnComplete = true, itemComponentProps = {}, strategy = Strategy.batch, showPageLoader = true, ...props}: Props) => {
   const [items, setItems] = useState([]);
   const [uploadCount, setUploadCount] = useState(0);
   const [uploading, setUploading] = useState(false);
@@ -178,10 +178,10 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       props.onComplete();
     }
 
-    if (props.closeOnComplete) {
+    if (closeOnComplete) {
       props.onClose();
     }
-  }, [props.closeOnComplete, props.onClose]);
+  }, [closeOnComplete, props.onClose]);
 
   /**
    * Deletes the passed item from the state.
@@ -344,12 +344,12 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
     // Upload the files
     onValidate()
       .then(() => (
-        props.strategy === Strategy.batch
+        strategy === Strategy.batch
           ? onBatchUpload()
           : onSingleUpload()
       ))
       .finally(onComplete);
-  }, [onBatchUpload, onComplete, onSingleUpload, onValidate, props.strategy]);
+  }, [onBatchUpload, onComplete, onSingleUpload, onValidate, strategy]);
 
   /**
    * Renders the error message for the passed item.
@@ -378,7 +378,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
    * @type {(function(*): (null|*))|*}
    */
   const renderStatus = useCallback((index) => {
-    if (props.strategy !== Strategy.single) {
+    if (strategy !== Strategy.single) {
       return null;
     }
 
@@ -387,7 +387,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
         status={statuses[index]}
       />
     );
-  }, [statuses, props.strategy]);
+  }, [statuses, strategy]);
 
   /**
    * Memoization and case correction for the <code>headerComponent</code> prop.
@@ -412,7 +412,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
           mountNode={mountNode}
           open
         >
-          { props.showPageLoader && (
+          { showPageLoader && (
             <Dimmer
               active={uploading}
               inverted
@@ -423,8 +423,8 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
             </Dimmer>
           )}
           <Modal.Header>
-            { props.strategy === Strategy.batch && i18n.t('FileUploadModal.title') }
-            { props.strategy === Strategy.single && (
+            { strategy === Strategy.batch && i18n.t('FileUploadModal.title') }
+            { strategy === Strategy.single && (
               <FileUploadProgress
                 completed={uploadCount}
                 total={items.length}
@@ -484,7 +484,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
             >
               { _.map(items, (item, index) => (
                 <UploadItem
-                  {...props.itemComponentProps}
+                  {...itemComponentProps}
                   isError={(key) => _.contains(item.errors, key)}
                   isRequired={(key) => !!(props.required && props.required[key])}
                   item={item}
@@ -504,7 +504,7 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
               content={i18n.t('Common.buttons.upload')}
               disabled={uploading || uploadCount > 0 || _.isEmpty(items)}
               icon='cloud upload'
-              loading={uploading && !props.showPageLoader}
+              loading={uploading && !showPageLoader}
               onClick={onUpload}
               primary
             />
@@ -520,13 +520,6 @@ const FileUploadModal: ComponentType<any> = (props: Props) => {
       )}
     </ModalContext.Consumer>
   );
-};
-
-FileUploadModal.defaultProps = {
-  closeOnComplete: true,
-  itemComponentProps: {},
-  strategy: Strategy.batch,
-  showPageLoader: true
 };
 
 export default FileUploadModal;

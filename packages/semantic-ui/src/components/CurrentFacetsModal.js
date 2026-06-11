@@ -25,10 +25,10 @@ type Props = {
 /**
  * This component displays all of the facets currently applied, without any limit.
  */
-const CurrentFacetsModal = (props: Props) => (
+const CurrentFacetsModal = ({open = undefined, ...props}: Props) => (
   <Modal
     centered={false}
-    open={props.open}
+    open={open}
   >
     <Modal.Header
       content={i18n.t('CurrentFacetsModal.title')}
@@ -47,9 +47,5 @@ const CurrentFacetsModal = (props: Props) => (
     </Modal.Actions>
   </Modal>
 );
-
-CurrentFacetsModal.defaultProps = {
-  open: undefined
-};
 
 export default CurrentFacetsModal;

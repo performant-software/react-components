@@ -16,7 +16,7 @@ type MarkerProps = {
   value: number
 };
 
-const SliderMarker = (props: MarkerProps) => {
+const SliderMarker = ({position = 'top', ...props}: MarkerProps) => {
   const [initialized, setInitialized] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -70,7 +70,7 @@ const SliderMarker = (props: MarkerProps) => {
           />
         </Tooltip.Trigger>
         <Tooltip.Content
-          side={props.position}
+          side={position}
           sideOffset={5}
         >
           <div
@@ -85,10 +85,6 @@ const SliderMarker = (props: MarkerProps) => {
       </Tooltip.Root>
     </Tooltip.Provider>
   );
-};
-
-SliderMarker.defaultProps = {
-  position: 'top'
 };
 
 type Action = {
@@ -200,7 +196,7 @@ type Props = {
   value: [number, number]
 };
 
-const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
+const FacetSlider = forwardRef(({classNames = {}, step = 1, value = [], ...props}) => {
   const { clearTimer, setTimer } = useTimer();
 
   /**
@@ -209,9 +205,9 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
    * @type {(function(): void)|*}
    */
   const onLeft = useCallback(() => {
-    const [start, end] = props.value;
+    const [start, end] = value;
 
-    let newStart = start - props.step;
+    let newStart = start - step;
     if (newStart < props.min) {
       newStart = props.min;
     }
@@ -223,7 +219,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
       clearTimer();
       setTimer(() => props.onValueCommit([newStart, end]));
     }
-  }, [props.min, props.onValueChange, props.onValueCommit, props.step, props.value]);
+  }, [props.min, props.onValueChange, props.onValueCommit, step, value]);
 
   /**
    * Callback fired when the right button is clicked. This function increments the max range value by the "step" prop.
@@ -231,9 +227,9 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
    * @type {(function(): void)|*}
    */
   const onRight = useCallback(() => {
-    const [start, end] = props.value;
+    const [start, end] = value;
 
-    let newEnd = end + props.step;
+    let newEnd = end + step;
     if (newEnd > props.max) {
       newEnd = props.max;
     }
@@ -245,7 +241,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
       clearTimer();
       setTimer(() => props.onValueCommit([start, newEnd]));
     }
-  }, [props.max, props.onValueChange, props.onValueCommit, props.step, props.value]);
+  }, [props.max, props.onValueChange, props.onValueCommit, step, value]);
 
   /**
    * Filtered actions by position.
@@ -277,7 +273,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
               'py-3',
               'disabled:opacity-50',
               'disabled:hover:bg-transparent',
-              props.classNames.button
+              classNames.button
             )}
             onClick={onLeft}
             type='button'
@@ -288,7 +284,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
         <Slider.Root
           className={clsx(
             'relative flex flex-grow h-5 touch-none items-center w-full',
-            props.classNames.root
+            classNames.root
           )}
           max={props.max}
           min={props.min}
@@ -297,18 +293,18 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           onValueCommit={props.onValueCommit}
           ref={ref}
           step={1}
-          value={props.value}
+          value={value}
         >
           <Slider.Track
             className={clsx(
               'relative h-1 w-full grow bg-gray-100',
-              props.classNames.track
+              classNames.track
             )}
           >
             <Slider.Range
               className={clsx(
                 'absolute h-full bg-gray-600',
-                props.classNames.range
+                classNames.range
               )}
             />
           </Slider.Track>
@@ -345,14 +341,14 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
             </svg>
             )}
           <SliderMarker
-            className={props.classNames.thumb}
+            className={classNames.thumb}
             position={props.position}
-            value={props.value[0]}
+            value={value[0]}
           />
           <SliderMarker
-            className={props.classNames.thumb}
+            className={classNames.thumb}
             position={props.position}
-            value={props.value[1]}
+            value={value[1]}
           />
         </Slider.Root>
         {!props.hideStepButtons && (
@@ -363,7 +359,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
               'py-3',
               'disabled:opacity-50',
               'disabled:hover:bg-transparent',
-              props.classNames.button
+              classNames.button
             )}
             onClick={onRight}
             type='button'
@@ -375,7 +371,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
           <div
             className={clsx(
               'flex justify-center items-center py-3 text-gray-600',
-              props.classNames.reset
+              classNames.reset
             )}
           >
             { _.map(rightActions, (action, index) => (
@@ -408,7 +404,7 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
         <div
           className={clsx(
             'flex justify-center items-center w-full py-3 text-gray-600',
-            props.classNames.zoom
+            classNames.zoom
           )}
         >
           { _.map(bottomActions, (action, index) => (
@@ -434,12 +430,6 @@ const FacetSlider = forwardRef((props: Props, ref: HTMLElement) => {
     </>
   );
 });
-
-FacetSlider.defaultProps = {
-  classNames: {},
-  step: 1,
-  value: []
-};
 
 export default FacetSlider;
 

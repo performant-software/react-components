@@ -15,7 +15,7 @@ type Props = {
   role?: string
 };
 
-const DropdownMenu = (props: Props) => {
+const DropdownMenu = ({onClick = undefined, ...props}: Props) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
@@ -56,8 +56,8 @@ const DropdownMenu = (props: Props) => {
         {...props}
         open={open}
         onClick={() => {
-          if (props.onClick) {
-            props.onClick();
+          if (onClick) {
+            onClick();
           }
 
           setOpen(false);
@@ -69,10 +69,6 @@ const DropdownMenu = (props: Props) => {
       </Dropdown>
     </Ref>
   );
-};
-
-DropdownMenu.defaultProps = {
-  onClick: undefined
 };
 
 export default DropdownMenu;

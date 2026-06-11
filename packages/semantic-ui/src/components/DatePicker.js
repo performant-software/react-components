@@ -15,7 +15,7 @@ type Props = {
   value: ?Date
 };
 
-const DatePicker = (props: Props) => {
+const DatePicker = ({closeOnSelection = true, ...props}: Props) => {
   const [calendar, setCalendar] = useState(false);
   const calendarWrapper = useRef<any>(null);
 
@@ -58,7 +58,7 @@ const DatePicker = (props: Props) => {
             locale={props.locale}
             onChange={(date) => {
               props.onChange(date);
-              if (props.closeOnSelection) {
+              if (closeOnSelection) {
                 setCalendar(false);
               }
             }}
@@ -76,10 +76,6 @@ const DatePicker = (props: Props) => {
       </Transition>
     </>
   );
-};
-
-DatePicker.defaultProps = {
-  closeOnSelection: true
 };
 
 export default DatePicker;

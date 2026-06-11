@@ -39,7 +39,7 @@ type Props = {
   transcriptions?: Array<Transcription>
 };
 
-const LazyVideo = (props: Props) => {
+const LazyVideo = ({autoPlay = false, dimmable = true, duration = 1000, embedded = false, icon = 'right circle arrow', size = 'medium', ...props}: Props) => {
   const [dimmer, setDimmer] = useState(false);
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(!(props.preview || props.src));
@@ -75,7 +75,7 @@ const LazyVideo = (props: Props) => {
         <Loader
           active
           inline='centered'
-          size={props.size}
+          size={size}
         />
       </Visibility>
     );
@@ -84,7 +84,7 @@ const LazyVideo = (props: Props) => {
   return (
     <>
       <Transition
-        duration={props.duration}
+        duration={duration}
         visible
       >
         <Dimmer.Dimmable
@@ -98,7 +98,7 @@ const LazyVideo = (props: Props) => {
           { !loaded && (
             <LazyLoader
               active
-              size={props.size}
+              size={size}
             />
           )}
           { !error && props.preview && (
@@ -114,14 +114,14 @@ const LazyVideo = (props: Props) => {
                 setLoaded(true);
               }}
               src={props.preview}
-              size={props.size}
+              size={size}
             />
           )}
           { !error && !props.preview && props.src && (
             <Image
               {...props.image}
               className={getClassNames()}
-              size={props.size}
+              size={size}
             >
               <video
                 onError={() => {
@@ -140,7 +140,7 @@ const LazyVideo = (props: Props) => {
             <Image
               {...props.image}
               className={getClassNames('placeholder-image')}
-              size={props.size}
+              size={size}
             >
               <Icon
                 name='image'
@@ -148,7 +148,7 @@ const LazyVideo = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { (props.src || props.children) && dimmable && (
             <Dimmer
               active={dimmer}
             >
@@ -178,9 +178,9 @@ const LazyVideo = (props: Props) => {
       </Transition>
       { props.src && (
         <VideoPlayer
-          autoPlay={props.autoPlay}
-          embedded={props.embedded}
-          icon={props.icon}
+          autoPlay={autoPlay}
+          embedded={embedded}
+          icon={icon}
           onClose={() => setModal(false)}
           open={modal}
           placeholder={props.preview}
@@ -191,15 +191,6 @@ const LazyVideo = (props: Props) => {
       )}
     </>
   );
-};
-
-LazyVideo.defaultProps = {
-  autoPlay: false,
-  dimmable: true,
-  duration: 1000,
-  embedded: false,
-  icon: 'right circle arrow',
-  size: 'medium'
 };
 
 export default LazyVideo;
