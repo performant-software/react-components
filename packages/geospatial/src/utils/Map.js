@@ -6,7 +6,7 @@ import {
   bboxPolygon,
   buffer,
   feature,
-  featureCollection,
+  featureCollection
 } from '@turf/turf';
 import _ from 'underscore';
 import circle from '@turf/circle';
