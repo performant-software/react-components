@@ -13,7 +13,10 @@ const point = {
     'circle-stroke-width': 1,
     'circle-color': [
       'case',
-      ['boolean', ['feature-state', 'hover'], false],
+      ['any',
+        ['boolean', ['feature-state', 'hover'], false],
+        ['boolean', ['feature-state', 'selected'], false]
+      ],
       '#3b62ff',
       '#ff623b'
     ],
