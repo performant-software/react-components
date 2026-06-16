@@ -7,6 +7,7 @@ import {
   bearing,
   bezierSpline,
   buffer,
+  centroid,
   destination,
   distance,
   feature,
@@ -211,14 +212,17 @@ const validateCoordinates = (coordinates) => {
 /**
  * Returns a GeoJSON FeatureCollection of LineStrings (arcs) for the passed coordinates.
  *
- * @param coordinates
+ * @param features
  * @param options
  *
  * @returns {FeatureCollection<LineString, GeoJsonProperties>}
  */
-const toArcs = (coordinates, options = {}) => {
-  const { curvature = 0.2 } = options;
-  const features = [];
+const toArcs = (features, options = {}) => {
+  const { curvature = -0.2 } = options;
+
+  const coordinates = features.map(feature => centroid(feature).geometry.coordinates);
+
+  const arcFeatures = [];
 
   for (let i = 0; i < coordinates.length - 1; i += 1) {
     const start = coordinates[i];
@@ -239,10 +243,10 @@ const toArcs = (coordinates, options = {}) => {
       index: i
     };
 
-    features.push(arc);
+    arcFeatures.push(arc);
   }
 
-  return featureCollection(features);
+  return featureCollection(arcFeatures);
 };
 
 export default {
