@@ -16,6 +16,7 @@ export { default as HitsPerPage } from './components/HitsPerPage';
 export { default as LayerMenu } from './components/LayerMenu';
 export { default as MediaGallery } from './components/MediaGallery';
 export { default as Notification } from './components/Notification';
+export { default as OverlayLayer } from './components/OverlayLayer';
 export { default as OverlayLayers } from './components/OverlayLayers';
 export { default as PersistentSearchStateContextProvider } from './components/PersistentSearchStateContextProvider';
 export { default as PlaceLayersSelector } from './components/PlaceLayersSelector';
