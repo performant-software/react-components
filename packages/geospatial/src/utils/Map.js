@@ -4,9 +4,16 @@ import { WarpedMapLayer } from '@allmaps/maplibre';
 import {
   bbox,
   bboxPolygon,
+  bearing,
+  bezierSpline,
   buffer,
+  centroid,
+  destination,
+  distance,
   feature,
-  featureCollection
+  featureCollection,
+  lineString,
+  midpoint
 } from '@turf/turf';
 import _ from 'underscore';
 import circle from '@turf/circle';
@@ -202,11 +209,52 @@ const validateCoordinates = (coordinates) => {
   return valid;
 };
 
+/**
+ * Returns a GeoJSON FeatureCollection of LineStrings (arcs) for the passed coordinates.
+ *
+ * @param features
+ * @param options
+ *
+ * @returns {FeatureCollection<LineString, GeoJsonProperties>}
+ */
+const toArcs = (features, options = {}) => {
+  const { curvature = -0.2 } = options;
+
+  const coordinates = features.map(feature => centroid(feature).geometry.coordinates);
+
+  const arcFeatures = [];
+
+  for (let i = 0; i < coordinates.length - 1; i += 1) {
+    const start = coordinates[i];
+    const end = coordinates[i + 1];
+
+    const d = distance(start, end);
+    const m = midpoint(start, end);
+    const b = bearing(start, end);
+
+    const offsetBearing = b + 90 > 180 ? b + 90 - 360 : b + 90;
+    const dest = destination(m, d * curvature, offsetBearing);
+
+    const line = lineString([start, dest.geometry.coordinates, end]);
+    const arc = bezierSpline(line);
+
+    arc.properties = {
+      ...arc.properties,
+      index: i
+    };
+
+    arcFeatures.push(arc);
+  }
+
+  return featureCollection(arcFeatures);
+};
+
 export default {
   addGeoreferenceLayer,
   toCertaintyCircle,
   getBoundingBox,
   removeLayer,
+  toArcs,
   toFeature,
   toFeatureCollection,
   validateBoundingBox,
