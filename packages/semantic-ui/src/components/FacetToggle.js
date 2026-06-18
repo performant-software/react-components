@@ -10,7 +10,7 @@ type Props = FacetProps & ToggleRefinementProps;
 /**
  * This component is used with the `useToggleRefinement` hook from Instant Search Hooks.
  */
-const FacetToggle = forwardRef(({ useToggleRefinement, ...props }: Props, ref: HTMLElement) => {
+const FacetToggle = forwardRef(({ useToggleRefinement, children = undefined, defaultActive = true, divided = false, visible = true,  ...props }: Props, ref: HTMLElement) => {
   const {
     value: {
       isRefined,
@@ -51,7 +51,5 @@ const FacetToggle = forwardRef(({ useToggleRefinement, ...props }: Props, ref: H
     </Facet>
   );
 });
-
-FacetToggle.defaultProps = Facet.defaultProps;
 
 export default FacetToggle;

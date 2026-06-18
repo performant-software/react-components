@@ -55,7 +55,7 @@ type Props = HitsProps & {
  * This component is used with the `useHits` hook from Instant Search Hooks and renders a pass-through to the
  * `ItemCollection` component.
  */
-const SearchResults = ({ useHits, ...props }: Props) => {
+const SearchResults = ({ useHits, as = undefined, asProps = undefined, link = undefined, renderDescription = undefined, renderEmptyList = undefined, renderExtra = undefined, renderHeader = undefined, renderImage = undefined, renderMeta = undefined,  ...props }: Props) => {
   const { hits } = useHits(props);
 
   const {
@@ -85,18 +85,6 @@ const SearchResults = ({ useHits, ...props }: Props) => {
       renderMeta={renderMeta}
     />
   );
-};
-
-SearchResults.defaultProps = {
-  as: undefined,
-  asProps: undefined,
-  link: undefined,
-  renderDescription: undefined,
-  renderEmptyList: undefined,
-  renderExtra: undefined,
-  renderHeader: undefined,
-  renderImage: undefined,
-  renderMeta: undefined
 };
 
 export default SearchResults;

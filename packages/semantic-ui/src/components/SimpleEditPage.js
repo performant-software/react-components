@@ -72,7 +72,10 @@ type Props = EditContainerProps & {
  * This component can be used to render the layout for a form/page with edit capabilities. Use in conjunction with the
  * `withEditPage` higher-order component for a fully fledged record editing environment.
  */
-const SimpleEditPage: any = (props: Props) => {
+const SimpleEditPage: any = ({editable = true, menuProps = {
+    pointing: true,
+    secondary: true
+  }, ...props}: Props) => {
   const [currentTab, setCurrentTab] = useState();
   const [saved, setSaved] = useState(false);
 
@@ -119,7 +122,7 @@ const SimpleEditPage: any = (props: Props) => {
   const renderTabs = useCallback(() => {
     const menu = (
       <Menu
-        {...props.menuProps}
+        {...menuProps}
       >
         { tabs?.length > 1 && _.map(tabs, (item) => (
           <Menu.Item
@@ -136,7 +139,7 @@ const SimpleEditPage: any = (props: Props) => {
           <Menu.Item
             className='button-container'
           >
-            { props.editable && (
+            { editable && (
               <Button
                 content={i18n.t('Common.buttons.save')}
                 disabled={props.loading || props.saving}
@@ -235,14 +238,6 @@ const SimpleEditPage: any = (props: Props) => {
       </Grid.Row>
     </Grid>
   );
-};
-
-SimpleEditPage.defaultProps = {
-  editable: true,
-  menuProps: {
-    pointing: true,
-    secondary: true
-  }
 };
 
 const Tab = (props: any) => props.children;

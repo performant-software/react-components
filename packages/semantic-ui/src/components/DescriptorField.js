@@ -20,23 +20,17 @@ type Props = {
  *
  * @constructor
  */
-const DescriptorField = (props: Props) => (
+const DescriptorField = ({delayInterval = 1000, renderPopup = undefined, popupContent = undefined, ...props}: Props) => (
   <Popup
     className={props.className}
-    content={props.popupContent}
+    content={popupContent}
     hoverable
-    mouseEnterDelay={props.delayInterval}
-    trigger={props.renderPopup
-      ? props.renderPopup()
+    mouseEnterDelay={delayInterval}
+    trigger={renderPopup
+      ? renderPopup()
       : (<span className='text'>{ props.content }</span>)}
     wide
   />
 );
-
-DescriptorField.defaultProps = {
-  delayInterval: 1000,
-  renderPopup: undefined,
-  popupContent: undefined
-};
 
 export default DescriptorField;

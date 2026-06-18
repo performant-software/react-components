@@ -31,7 +31,7 @@ type Props = {
   viewButtonLabel?: string
 };
 
-const LazyImage = (props: Props) => {
+const LazyImage = ({dimmable = true, duration = 1000, size = 'medium', ...props}: Props) => {
   const [dimmer, setDimmer] = useState(false);
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(!(props.src || props.preview));
@@ -71,7 +71,7 @@ const LazyImage = (props: Props) => {
         <Loader
           active
           inline='centered'
-          size={props.size}
+          size={size}
         />
       </Visibility>
     );
@@ -80,7 +80,7 @@ const LazyImage = (props: Props) => {
   return (
     <>
       <Transition
-        duration={props.duration}
+        duration={duration}
         visible
       >
         <Dimmer.Dimmable
@@ -94,7 +94,7 @@ const LazyImage = (props: Props) => {
           { !loaded && (
             <LazyLoader
               active
-              size={props.size}
+              size={size}
             />
           )}
           { !error && (props.preview || props.src) && (
@@ -109,7 +109,7 @@ const LazyImage = (props: Props) => {
                 setError(false);
                 setLoaded(true);
               }}
-              size={props.size}
+              size={size}
               src={props.preview || props.src}
             />
           )}
@@ -117,7 +117,7 @@ const LazyImage = (props: Props) => {
             <Image
               {...props.image}
               className={getClassNames('placeholder-image')}
-              size={props.size}
+              size={size}
             >
               <Icon
                 name='image'
@@ -125,7 +125,7 @@ const LazyImage = (props: Props) => {
               />
             </Image>
           )}
-          { (props.src || props.children) && props.dimmable && (
+          { (props.src || props.children) && dimmable && (
             <Dimmer
               active={dimmer}
             >
@@ -163,12 +163,6 @@ const LazyImage = (props: Props) => {
       )}
     </>
   );
-};
-
-LazyImage.defaultProps = {
-  dimmable: true,
-  duration: 1000,
-  size: 'medium'
 };
 
 export default LazyImage;

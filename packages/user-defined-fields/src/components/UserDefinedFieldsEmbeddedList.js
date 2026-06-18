@@ -23,7 +23,11 @@ const OMIT_PROPS = [
 
 const DEFAULT_ORDER = 0;
 
-const UserDefinedFieldsEmbeddedList = (props: Props) => {
+const UserDefinedFieldsEmbeddedList = ({actions = [{
+    name: 'edit'
+  }, {
+    name: 'delete'
+  }], ...props}: Props) => {
   /**
    * Returns true if the passed column should be hidden by default.
    *
@@ -73,14 +77,6 @@ const UserDefinedFieldsEmbeddedList = (props: Props) => {
       }}
     />
   );
-};
-
-UserDefinedFieldsEmbeddedList.defaultProps = {
-  actions: [{
-    name: 'edit'
-  }, {
-    name: 'delete'
-  }]
 };
 
 export default UserDefinedFieldsEmbeddedList;

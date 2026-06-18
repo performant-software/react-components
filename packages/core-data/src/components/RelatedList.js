@@ -50,7 +50,7 @@ type Props = {
 /**
  * This component is a helper component used to structure the lists for the other `Related*` components.
  */
-const RelatedList = (props: Props) => {
+const RelatedList = ({itemsPerRow = 1, ...props}: Props) => {
   const [items, setItems] = useState([]);
 
   const {
@@ -93,12 +93,12 @@ const RelatedList = (props: Props) => {
         className={clsx(
           'grid',
           'gap-2',
-          { 'grid-cols-1': props.itemsPerRow === 1 },
-          { 'grid-cols-2': props.itemsPerRow === 2 },
-          { 'grid-cols-3': props.itemsPerRow === 3 },
-          { 'grid-cols-4': props.itemsPerRow === 4 },
-          { 'grid-cols-5': props.itemsPerRow === 5 },
-          { 'grid-cols-6': props.itemsPerRow === 6 },
+          { 'grid-cols-1': itemsPerRow === 1 },
+          { 'grid-cols-2': itemsPerRow === 2 },
+          { 'grid-cols-3': itemsPerRow === 3 },
+          { 'grid-cols-4': itemsPerRow === 4 },
+          { 'grid-cols-5': itemsPerRow === 5 },
+          { 'grid-cols-6': itemsPerRow === 6 },
           props.className
         )}
       >
@@ -129,10 +129,6 @@ const RelatedList = (props: Props) => {
     </div>
 
   );
-};
-
-RelatedList.defaultProps = {
-  itemsPerRow: 1
 };
 
 export default RelatedList;

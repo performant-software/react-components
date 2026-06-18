@@ -34,7 +34,7 @@ type Props = {
   renderMeta?: (item: any) => Element<any> | string,
 };
 
-const HorizontalCards = (props: Props) => {
+const HorizontalCards = ({perPage = 4, ...props}: Props) => {
   const [marginWidth, setMarginWidth] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
   const [scrollPage, setScrollPage] = useState(0);
@@ -48,8 +48,8 @@ const HorizontalCards = (props: Props) => {
    * @type {function(): {flex: string}}
    */
   const cardStyle = useMemo(() => ({
-    flex: `0 0 ${(pageWidth / props.perPage) - marginWidth}px`
-  }), [pageWidth, marginWidth, props.perPage]);
+    flex: `0 0 ${(pageWidth / perPage) - marginWidth}px`
+  }), [pageWidth, marginWidth, perPage]);
 
   /**
    * Helper function to concatenate class names.
@@ -289,10 +289,6 @@ const HorizontalCards = (props: Props) => {
       </div>
     </div>
   );
-};
-
-HorizontalCards.defaultProps = {
-  perPage: 4
 };
 
 export default HorizontalCards;

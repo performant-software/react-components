@@ -19,7 +19,7 @@ type Props = {
  * This component displays the passed items as labels. If a <code>count</code> prop is provided, the component
  * will display a "+" button.
  */
-const CurrentFacetLabels = (props: Props) => (
+const CurrentFacetLabels = ({count = undefined, onShowMore = undefined, ...props}: Props) => (
   <Label.Group>
     { _.map(props.items, (item, index) => (
       <Label
@@ -28,20 +28,15 @@ const CurrentFacetLabels = (props: Props) => (
         onRemove={item.onClick}
       />
     ))}
-    { props.count && props.count > props.items.length && props.onShowMore && (
+    { count && count > props.items.length && onShowMore && (
       <Label
         as={Button}
-        content={`+${props.count - props.items.length}`}
-        onClick={props.onShowMore}
+        content={`+${count - props.items.length}`}
+        onClick={onShowMore}
       />
     )}
   </Label.Group>
 );
-
-CurrentFacetLabels.defaultProps = {
-  count: undefined,
-  onShowMore: undefined
-};
 
 export default CurrentFacetLabels;
 

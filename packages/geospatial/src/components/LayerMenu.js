@@ -23,7 +23,7 @@ type Props = {
 
 const MENU_PADDING = 30;
 
-const LayerMenu = (props: Props) => {
+const LayerMenu = ({position = 'top-left', ...props}: Props) => {
   const [canvasHeight, setCanvasHeight] = useState(0);
   const [visible, setVisible] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -102,7 +102,7 @@ const LayerMenu = (props: Props) => {
     <>
       <MapControl
         mapRef={mapRef}
-        position={props.position}
+        position={position}
       >
         <button
           aria-label='Toggle Menu'
@@ -153,10 +153,6 @@ const LayerMenu = (props: Props) => {
       { visibleChildren }
     </>
   );
-};
-
-LayerMenu.defaultProps = {
-  position: 'top-left'
 };
 
 export default LayerMenu;

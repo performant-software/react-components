@@ -23,7 +23,7 @@ const RADIX = 10;
 /**
  * This component can be used with the `useRange` hook from Instant Search Hooks.
  */
-const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLElement) => {
+const FacetSlider = forwardRef(({ useRangeSlider, children = undefined, defaultActive = true, divided = false, visible = true, editable = false,  ...props }: Props, ref: HTMLElement) => {
   const {
     start,
     range,
@@ -138,10 +138,5 @@ const FacetSlider = forwardRef(({ useRangeSlider, ...props }: Props, ref: HTMLEl
     </Facet>
   );
 });
-
-FacetSlider.defaultProps = {
-  ...Facet.defaultProps,
-  editable: false
-};
 
 export default FacetSlider;

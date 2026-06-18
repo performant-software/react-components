@@ -66,11 +66,16 @@ const Orientation = {
   vertical: 'vertical'
 };
 
-const TreeGraph = (props: Props) => {
+const TreeGraph = ({layout = Layout.cartesian, linkColor = '#B2B09B', linkType = LinkType.line, linkWidth = 1, margin = {
+    top: 30,
+    left: 30,
+    right: 30,
+    bottom: 70
+  }, offset = 0, orientation = Orientation.horizontal, stepPercent = 0.5, ...props}: Props) => {
   const ref = useRef();
 
-  const innerWidth = props.parentWidth - props.margin.left - props.margin.right;
-  const innerHeight = props.parentHeight - props.margin.top - props.margin.bottom;
+  const innerWidth = props.parentWidth - margin.left - margin.right;
+  const innerHeight = props.parentHeight - margin.top - margin.bottom;
 
   /**
    * Sets the link component based on the layout, linkType, and orientation props.
@@ -80,38 +85,38 @@ const TreeGraph = (props: Props) => {
   const LinkComponent = useMemo(() => {
     let value;
 
-    if (props.layout === Layout.polar) {
-      if (props.linkType === LinkType.step) {
+    if (layout === Layout.polar) {
+      if (linkType === LinkType.step) {
         value = LinkRadialStep;
-      } else if (props.linkType === LinkType.curve) {
+      } else if (linkType === LinkType.curve) {
         value = LinkRadialCurve;
-      } else if (props.linkType === LinkType.line) {
+      } else if (linkType === LinkType.line) {
         value = LinkRadialLine;
       } else {
         value = LinkRadial;
       }
-    } else if (props.orientation === Orientation.vertical) {
-      if (props.linkType === LinkType.step) {
+    } else if (orientation === Orientation.vertical) {
+      if (linkType === LinkType.step) {
         value = LinkVerticalStep;
-      } else if (props.linkType === LinkType.curve) {
+      } else if (linkType === LinkType.curve) {
         value = LinkVerticalCurve;
-      } else if (props.linkType === LinkType.line) {
+      } else if (linkType === LinkType.line) {
         value = LinkVerticalLine;
       } else {
         value = LinkVertical;
       }
-    } else if (props.linkType === LinkType.step) {
+    } else if (linkType === LinkType.step) {
       value = LinkHorizontalStep;
-    } else if (props.linkType === LinkType.curve) {
+    } else if (linkType === LinkType.curve) {
       value = LinkHorizontalCurve;
-    } else if (props.linkType === LinkType.line) {
+    } else if (linkType === LinkType.line) {
       value = LinkHorizontalLine;
     } else {
       value = LinkHorizontal;
     }
 
     return value;
-  }, [props.layout, props.linkType, props.orientation]);
+  }, [layout, linkType, orientation]);
 
   /**
    * Returns the depth of the last expanded node.
@@ -137,11 +142,11 @@ const TreeGraph = (props: Props) => {
     let top;
     let left;
 
-    if (props.layout === Layout.polar) {
+    if (layout === Layout.polar) {
       const [radialX, radialY] = pointRadial(x, y);
       top = radialY;
       left = radialX;
-    } else if (props.orientation === Orientation.vertical) {
+    } else if (orientation === Orientation.vertical) {
       top = y;
       left = x;
     } else {
@@ -153,7 +158,7 @@ const TreeGraph = (props: Props) => {
       top,
       left
     };
-  }, [props.layout, props.orientation]);
+  }, [layout, orientation]);
 
   /**
    * Returns the position and size of the root node.
@@ -167,7 +172,7 @@ const TreeGraph = (props: Props) => {
 
     const depth = getMaxDepth(props.data, 1);
 
-    if (props.layout === Layout.polar) {
+    if (layout === Layout.polar) {
       origin = {
         x: innerWidth / 2,
         y: innerHeight / 2
@@ -176,7 +181,7 @@ const TreeGraph = (props: Props) => {
       sizeHeight = (Math.min(innerWidth, innerHeight) / 2) * (depth / 2);
     } else {
       origin = { x: 0, y: 0 };
-      if (props.orientation === Orientation.vertical) {
+      if (orientation === Orientation.vertical) {
         sizeWidth = innerWidth;
         sizeHeight = innerHeight;
       } else {
@@ -190,7 +195,7 @@ const TreeGraph = (props: Props) => {
       sizeHeight,
       origin
     };
-  }, [getMaxDepth, innerHeight, innerWidth, props.data, props.layout, props.orientation]);
+  }, [getMaxDepth, innerHeight, innerWidth, props.data, layout, orientation]);
 
   const renderNode = useCallback((node) => (
     <foreignObject>
@@ -217,7 +222,7 @@ const TreeGraph = (props: Props) => {
         { renderNode(node) }
       </Group>
     );
-  }, [renderNode, props.layout, props.orientation, props.linkType]);
+  }, [renderNode, layout, orientation, linkType]);
 
   /**
    * Resizes the "circle" and "rect" elements based on the text contained in the group. This effect will also
@@ -247,7 +252,7 @@ const TreeGraph = (props: Props) => {
         }
       });
     }
-  }, [props.data, props.layout, props.orientation, props.linkType]);
+  }, [props.data, layout, orientation, linkType]);
 
   return (
     <div
@@ -259,13 +264,13 @@ const TreeGraph = (props: Props) => {
     >
       <svg
         width={props.parentWidth}
-        height={props.parentHeight - props.offset}
+        height={props.parentHeight - offset}
         ref={props.zoom.containerRef}
       >
         { props.renderZoomContainer() }
         <Group
-          top={props.margin.top}
-          left={props.margin.left}
+          top={margin.top}
+          left={margin.left}
           transform={props.zoom.toString()}
         >
           <Tree
@@ -283,9 +288,9 @@ const TreeGraph = (props: Props) => {
                   <LinkComponent
                     key={i}
                     data={link}
-                    percent={props.stepPercent}
-                    stroke={props.linkColor}
-                    strokeWidth={props.linkWidth}
+                    percent={stepPercent}
+                    stroke={linkColor}
+                    strokeWidth={linkWidth}
                     fill='none'
                   />
                 ))}
@@ -297,22 +302,6 @@ const TreeGraph = (props: Props) => {
       </svg>
     </div>
   );
-};
-
-TreeGraph.defaultProps = {
-  layout: Layout.cartesian,
-  linkColor: '#B2B09B',
-  linkType: LinkType.line,
-  linkWidth: 1,
-  margin: {
-    top: 30,
-    left: 30,
-    right: 30,
-    bottom: 70
-  },
-  offset: 0,
-  orientation: Orientation.horizontal,
-  stepPercent: 0.5
 };
 
 const TreeGraphComponent: ComponentType<any> = withParentSize(withZoom(TreeGraph));

@@ -12,14 +12,14 @@ type Props = {
   url?: string
 };
 
-const GeoJsonLayer = (props: Props) => (
+const GeoJsonLayer = ({fillStyle = MapStyles.fill.paint, pointStyle = MapStyles.point.paint, strokeStyle = MapStyles.stroke.paint, ...props}: Props) => (
   <Source
     data={props.data || props.url}
     type='geojson'
   >
     <Layer
       filter={['!=', '$type', 'Point']}
-      paint={props.fillStyle}
+      paint={fillStyle}
       type='fill'
     />
     <Layer
@@ -29,16 +29,10 @@ const GeoJsonLayer = (props: Props) => (
     />
     <Layer
       filter={['==', '$type', 'Point']}
-      paint={props.pointStyle}
+      paint={pointStyle}
       type='circle'
     />
   </Source>
 );
-
-GeoJsonLayer.defaultProps = {
-  fillStyle: MapStyles.fill.paint,
-  pointStyle: MapStyles.point.paint,
-  strokeStyle: MapStyles.stroke.paint
-};
 
 export default GeoJsonLayer;

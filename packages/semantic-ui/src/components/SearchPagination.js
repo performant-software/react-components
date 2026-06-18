@@ -16,7 +16,7 @@ type Props = PaginationProps & {
  * that can be selected by the user. If the `scrollToTop` prop is set to `true`, the window will scroll to the top
  * after applying a new value.
  */
-const SearchPagination = ({ usePagination, ...props }: Props) => {
+const SearchPagination = ({ usePagination, scrollToTop = false,  ...props }: Props) => {
   const { currentRefinement, nbPages: pages, refine } = usePagination(props);
   const onPageChange = useCallback((e, { activePage }) => refine(activePage - 1), [refine]);
 
@@ -43,10 +43,6 @@ const SearchPagination = ({ usePagination, ...props }: Props) => {
       totalPages={pages}
     />
   );
-};
-
-SearchPagination.defaultProps = {
-  scrollToTop: false
 };
 
 export default SearchPagination;

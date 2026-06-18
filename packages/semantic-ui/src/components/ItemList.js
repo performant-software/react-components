@@ -48,7 +48,7 @@ type Props = DataListProps & ItemsProps & {
  * hood, the <code>DataList</code> component handles calling the API, storing the records, filters, etc, and
  * the <code>Items</code> component handles the presentation.
  */
-const ItemList = useDataList((props: Props) => {
+const ItemList = useDataList(({dimmable = true, filters = {}, searchable = true, ...props}: Props) => {
   useEffect(() => {
     const { page } = props;
 
@@ -99,7 +99,7 @@ const ItemList = useDataList((props: Props) => {
   return (
     <>
       <Dimmer
-        active={props.dimmable && props.loading}
+        active={dimmable && props.loading}
         inverted
       >
         <Loader
@@ -119,11 +119,5 @@ const ItemList = useDataList((props: Props) => {
     </>
   );
 });
-
-ItemList.defaultProps = {
-  dimmable: true,
-  filters: {},
-  searchable: true
-};
 
 export default ItemList;

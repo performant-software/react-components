@@ -63,7 +63,7 @@ const OPERATOR_AND = 'and';
  * This component is used with the `useRefinementList` hook from Instant Search Hooks. If the `searchable` prop
  * is "true", the component will also render a search box used to filter the list of facet values.
  */
-const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLElement) => {
+const FacetList = forwardRef(({ useRefinementList, children = undefined, defaultActive = true, divided = false, visible = true, defaultOperator = OPERATOR_OR,  ...props }: Props, ref: HTMLElement) => {
   const [operator, setOperator] = useState(props.defaultOperator || OPERATOR_OR);
 
   const {
@@ -225,10 +225,5 @@ const FacetList = forwardRef(({ useRefinementList, ...props }: Props, ref: HTMLE
     </Facet>
   );
 });
-
-FacetList.defaultProps = {
-  ...Facet.defaultProps,
-  defaultOperator: OPERATOR_OR
-};
 
 export default FacetList;

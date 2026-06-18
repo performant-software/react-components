@@ -125,7 +125,7 @@ const List = useDataList((props) => {
   );
 });
 
-const DataView = (props: Props) => {
+const DataView = ({columnCount = 5, layout = 'left', ...props}: Props) => {
   const [activeItem, setActiveItem] = useState();
   const [selectedRecord, setSelectedRecord] = useState();
 
@@ -178,7 +178,7 @@ const DataView = (props: Props) => {
         label: col.trim().replace(/^\w/, (c) => c.toUpperCase()).replaceAll('_', ' '),
         sortable: false,
         resolve: (item) => resolveValue(item, col),
-        hidden: index > props.columnCount,
+        hidden: index > columnCount,
         index
       };
 
@@ -296,10 +296,10 @@ const DataView = (props: Props) => {
    * If we're using the sidebar layout, set the padding so the fixed positioned menu does not overlap the content.
    */
   useEffect(() => {
-    if (props.layout === 'left' && menuRef && menuRef.current) {
+    if (layout === 'left' && menuRef && menuRef.current) {
       setPaddingLeft(menuRef.current.offsetWidth);
     }
-  }, [menuRef, props.layout]);
+  }, [menuRef, layout]);
 
   /**
    * Calculates the key value when the active item or columns are changed. This is done to force re-rendering
@@ -323,7 +323,7 @@ const DataView = (props: Props) => {
     <div
       className='data-view'
     >
-      { props.layout === 'top' && (
+      { layout === 'top' && (
         <MenuBar
           header={{
             content: props.title
@@ -331,7 +331,7 @@ const DataView = (props: Props) => {
           items={menu}
         />
       )}
-      { props.layout === 'left' && (
+      { layout === 'left' && (
         <MenuSidebar
           contextRef={menuRef}
           header={{
@@ -403,11 +403,6 @@ const DataView = (props: Props) => {
       )}
     </div>
   );
-};
-
-DataView.defaultProps = {
-  columnCount: 5,
-  layout: 'left'
 };
 
 export default DataView;

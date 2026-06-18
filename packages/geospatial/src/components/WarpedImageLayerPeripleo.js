@@ -26,7 +26,7 @@ type Props = {
   url?: string
 };
 
-const WarpedImageLayer = (props: Props) => {
+const WarpedImageLayer = ({opacity = 0.5, ...props}: Props) => {
   const map = useLoadedMap();
 
   /**
@@ -39,7 +39,7 @@ const WarpedImageLayer = (props: Props) => {
 
     MapUtils.addGeoreferenceLayer(map, props.id, {
       manifest: props.manifest,
-      opacity: props.opacity,
+      opacity: opacity,
       url: props.url
     });
 
@@ -47,10 +47,6 @@ const WarpedImageLayer = (props: Props) => {
   }, [map]);
 
   return null;
-};
-
-WarpedImageLayer.defaultProps = {
-  opacity: 0.5
 };
 
 export default WarpedImageLayer;

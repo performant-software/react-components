@@ -9,7 +9,7 @@ type Props = {
   style?: any
 };
 
-const Thumbnail = (props: Props) => {
+const Thumbnail = ({style = {}, ...props}: Props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Thumbnail = (props: Props) => {
           {...props}
           onLoad={() => setLoading(false)}
           style={{
-            ...props.style,
+            ...style,
             visibility: loading ? 'hidden' : 'visible'
           }}
         />
@@ -38,10 +38,6 @@ const Thumbnail = (props: Props) => {
       )}
     </div>
   );
-};
-
-Thumbnail.defaultProps = {
-  style: {}
 };
 
 export default Thumbnail;

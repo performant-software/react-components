@@ -30,10 +30,10 @@ type Props = {
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
-const LazyDocument = (props: Props) => {
+const LazyDocument = ({dimmable = true, duration = 1000, pdf = false, preview = undefined, size = 'medium', src = undefined, ...props}: Props) => {
   const [dimmer, setDimmer] = useState(false);
   const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(!props.preview);
+  const [loaded, setLoaded] = useState(!preview);
   const [visible, setVisible] = useState(false);
 
   /**
@@ -65,7 +65,7 @@ const LazyDocument = (props: Props) => {
         <Loader
           active
           inline='centered'
-          size={props.size}
+          size={size}
         />
       </Visibility>
     );
@@ -74,7 +74,7 @@ const LazyDocument = (props: Props) => {
   return (
     <>
       <Transition
-        duration={props.duration}
+        duration={duration}
         visible
       >
         <Dimmer.Dimmable
@@ -88,10 +88,10 @@ const LazyDocument = (props: Props) => {
           {!loaded && (
             <LazyLoader
               active
-              size={props.size}
+              size={size}
             />
           )}
-          {!error && props.preview && (
+          {!error && preview && (
             <Image
               {...props.image}
               className={getClassNames()}
@@ -103,18 +103,18 @@ const LazyDocument = (props: Props) => {
                 setError(false);
                 setLoaded(true);
               }}
-              src={props.preview}
-              size={props.size}
+              src={preview}
+              size={size}
             />
           )}
-          {!error && loaded && !props.preview && props.src && props.pdf && (
+          {!error && loaded && !preview && src && pdf && (
             <Image
               {...props.image}
               className={getClassNames()}
-              size={props.size}
+              size={size}
             >
               <Document
-                file={props.src}
+                file={src}
                 onLoadError={(e) => console.log(e.message)}
               >
                 <Page
@@ -125,11 +125,11 @@ const LazyDocument = (props: Props) => {
               </Document>
             </Image>
           )}
-          {(error || (!props.preview && !(props.src && props.pdf))) && (
+          {(error || (!preview && !(src && pdf))) && (
             <Image
               {...props.image}
               className={getClassNames('placeholder-image')}
-              size={props.size}
+              size={size}
             >
               <Icon
                 name='file alternate outline'
@@ -137,7 +137,7 @@ const LazyDocument = (props: Props) => {
               />
             </Image>
           )}
-          {(props.download || props.src || props.children) && props.dimmable && (
+          {(props.download || src || props.children) && dimmable && (
             <Dimmer
               active={dimmer}
             >
@@ -147,7 +147,7 @@ const LazyDocument = (props: Props) => {
                 {props.download && (
                   <DownloadButton
                     primary
-                    url={props.download || props.src}
+                    url={props.download || src}
                   />
                 )}
                 {props.children}
@@ -158,15 +158,6 @@ const LazyDocument = (props: Props) => {
       </Transition>
     </>
   );
-};
-
-LazyDocument.defaultProps = {
-  dimmable: true,
-  duration: 1000,
-  pdf: false,
-  preview: undefined,
-  size: 'medium',
-  src: undefined
 };
 
 export default LazyDocument;

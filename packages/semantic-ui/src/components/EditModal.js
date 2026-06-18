@@ -40,7 +40,7 @@ type Props = EditContainerProps & {
  * component uses the <code>EditContainer</code> higher-order component to facilitate all of the editing functionality.
  * This component is responsible for rendering the container in which the editable form is rendered.
  */
-const EditModal = useEditContainer((props: Props) => {
+const EditModal = useEditContainer(({showLoading = true, ...props}: Props) => {
   const OuterComponent = props.component;
 
   const [showToaster, setShowToaster] = useState(false);
@@ -50,7 +50,7 @@ const EditModal = useEditContainer((props: Props) => {
     <OuterComponent
       {...props}
     >
-      { props.showLoading && props.loading && (
+      { showLoading && props.loading && (
         <Dimmer
           active={props.loading}
           inverted
@@ -110,9 +110,5 @@ const EditModal = useEditContainer((props: Props) => {
     </OuterComponent>
   );
 });
-
-EditModal.defaultProps = {
-  showLoading: true
-};
 
 export default EditModal;

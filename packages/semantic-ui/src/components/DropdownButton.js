@@ -24,20 +24,20 @@ type Props = {
   value: any
 };
 
-const DropdownButton = (props: Props) => {
+const DropdownButton = ({color = undefined, icon = undefined, selectOnBlur = false, ...props}: Props) => {
   const dropdownRef = useRef();
 
   return (
     <Button.Group
       basic={props.basic}
       className='dropdown-button'
-      color={props.color}
+      color={color}
     >
       <Button
         aria-label='Select'
         content={props.text}
         disabled={props.disabled}
-        icon={props.icon}
+        icon={icon}
         onClick={(e) => dropdownRef.current && dropdownRef.current.handleClick(e)}
       />
       <Dropdown
@@ -50,18 +50,12 @@ const DropdownButton = (props: Props) => {
         options={props.options}
         ref={dropdownRef}
         scrolling={props.scrolling}
-        selectOnBlur={props.selectOnBlur}
+        selectOnBlur={selectOnBlur}
         trigger={<></>}
         value={props.value}
       />
     </Button.Group>
   );
-};
-
-DropdownButton.defaultProps = {
-  color: undefined,
-  icon: undefined,
-  selectOnBlur: false
 };
 
 export default DropdownButton;

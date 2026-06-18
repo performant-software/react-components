@@ -37,7 +37,7 @@ type Props = {
   video: string
 };
 
-const VideoPlayer = (props: Props) => {
+const VideoPlayer = ({autoPlay = false, embedded = false, icon = 'right circle arrow', size = 'small', ...props}: Props) => {
   const [error, setError] = useState(false);
 
   const embedRef = useRef();
@@ -65,7 +65,7 @@ const VideoPlayer = (props: Props) => {
           mountNode={mountNode}
           onClose={props.onClose.bind(this)}
           open={props.open}
-          size={props.size}
+          size={size}
         >
           <Modal.Content>
             { error && (
@@ -75,22 +75,22 @@ const VideoPlayer = (props: Props) => {
                 icon='exclamation circle'
               />
             )}
-            { props.embedded && (
+            { embedded && (
               <Ref
                 innerRef={embedRef}
               >
                 <Embed
-                  active={props.autoPlay}
-                  icon={props.icon}
-                  iframe={props.autoPlay ? { allow: 'autoplay' } : undefined}
+                  active={autoPlay}
+                  icon={icon}
+                  iframe={autoPlay ? { allow: 'autoplay' } : undefined}
                   placeholder={props.placeholder}
-                  url={`${props.video}${props.autoPlay ? '?autoplay=true' : ''}`}
+                  url={`${props.video}${autoPlay ? '?autoplay=true' : ''}`}
                 />
               </Ref>
             )}
-            { !props.embedded && (
+            { !embedded && (
               <video
-                autoPlay={props.autoPlay}
+                autoPlay={autoPlay}
                 controls
                 onError={() => setError(true)}
                 src={props.video}
@@ -112,13 +112,6 @@ const VideoPlayer = (props: Props) => {
       )}
     </ModalContext.Consumer>
   );
-};
-
-VideoPlayer.defaultProps = {
-  autoPlay: false,
-  embedded: false,
-  icon: 'right circle arrow',
-  size: 'small'
 };
 
 export default VideoPlayer;
