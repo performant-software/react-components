@@ -13,6 +13,12 @@ type Props = {
   animate?: boolean,
 
   /**
+   * (Optional) bounding box to fit the map to.
+   * If not provided, the bounding box will be calculated from the data.
+   */
+  boundingBox?: any,
+
+  /**
    * (Optional) data to pass to the fitToBounds function.
    */
   boundingBoxData?: any,
@@ -114,13 +120,21 @@ const LocationMarkers = (props: Props) => {
    */
   useEffect(() => {
     if (map && data && props.fitBoundingBox) {
-      const bbox = MapUtils.getBoundingBox(data, props.buffer);
+      const bbox = props.boundingBox ?? MapUtils.getBoundingBox(data, props.buffer);
 
       if (bbox) {
         map.fitBounds(bbox, props.boundingBoxOptions, props.boundingBoxData);
       }
     }
-  }, [map, props.buffer, props.data, props.boundingBoxData, props.boundingBoxOptions, props.fitBoundingBox]);
+  }, [
+    map,
+    props.buffer,
+    props.data,
+    props.boundingBox,
+    props.boundingBoxData,
+    props.boundingBoxOptions,
+    props.fitBoundingBox
+  ]);
 
   if (!data) {
     return null;
