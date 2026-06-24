@@ -1,0 +1,1 @@
+import{b as i}from"./_baseAssignValue-yJv1-bft.js";import{B as t}from"./_getPrototype-dFVwFHqx.js";var n=Object.prototype,p=n.hasOwnProperty;function e(r,a,o){var s=r[a];(!(p.call(r,a)&&t(s,o))||o===void 0&&!(a in r))&&i(r,a,o)}export{e as a};

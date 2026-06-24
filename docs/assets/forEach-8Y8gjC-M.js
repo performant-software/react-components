@@ -1,0 +1,1 @@
+import{a as n}from"./_arrayEach-DpGxo2Of.js";import{s as o,n as f}from"./getElementType-wYlxU5u7.js";import{i}from"./_getPrototype-dFVwFHqx.js";function s(r){return typeof r=="function"?r:o}function p(r,a){var t=i(r)?n:f;return t(r,s(a))}export{p as f};
