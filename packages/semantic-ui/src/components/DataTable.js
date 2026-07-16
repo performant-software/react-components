@@ -317,8 +317,8 @@ class DataTable extends Component<Props, State> {
         {...asProps(item)}
         basic
         compact
-        color={action.color}
-        icon={action.icon}
+        color={action.resolveColor ? action.resolveColor(item) : action.color}
+        icon={action.resolveIcon ? action.resolveIcon(item) : action.icon}
         key={`${action.name}-${index}`}
         onClick={action.onClick && action.onClick.bind(this, item, index)}
         title={action.title}
