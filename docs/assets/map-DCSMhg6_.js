@@ -1,1 +1,0 @@
-import{n as i,o as p,p as u}from"./getElementType-wYlxU5u7.js";import{f as m,i as y}from"./_getPrototype-dFVwFHqx.js";function b(a,r){var s=-1,e=m(a)?Array(a.length):[];return i(a,function(n,t,f){e[++s]=r(n,t,f)}),e}function h(a,r){var s=y(a)?p:b;return s(a,u(r))}export{h as m};
