@@ -1,7 +1,7 @@
 {
   "AccordionList": {
-    "deleteContent": "Are you sure you want to remove this record?",
-    "deleteHeader": "Confirm Remove",
+    "deleteContent": "Are you sure you want to delete this record?",
+    "deleteHeader": "Confirm Delete",
     "record": "Record",
     "record_plural": "Records"
   },
@@ -48,8 +48,8 @@
         "title": "Copy"
       },
       "delete": {
-        "content": "Removes the record, permanently",
-        "title": "Remove"
+        "content": "Deletes the record, permanently",
+        "title": "Delete"
       },
       "edit": {
         "content": "Opens the modal to edit the record",
@@ -119,8 +119,8 @@
         "title": "Copy"
       },
       "delete": {
-        "content": "Removes the record, permanently",
-        "title": "Remove"
+        "content": "Deletes the record, permanently",
+        "title": "Delete"
       },
       "edit": {
         "content": "Opens the modal to edit the record",
@@ -204,7 +204,7 @@
   "ItemList": {
     "actions": {
       "copy": "Copy",
-      "delete": "Remove",
+      "delete": "Delete",
       "edit": "Edit"
     },
     "buttons": {
@@ -254,10 +254,10 @@
       "csvExport": "CSV Export",
       "deleteAll": "Delete all"
     },
-    "deleteAllContent": "Are you sure you want to remove all records? This action cannot be undone.",
-    "deleteAllHeader": "Confirm Remove All",
-    "deleteContent": "Are you sure you want to remove this record?",
-    "deleteHeader": "Confirm Remove",
+    "deleteAllContent": "Are you sure you want to delete all records? This action cannot be undone.",
+    "deleteAllHeader": "Confirm Delete All",
+    "deleteContent": "Are you sure you want to delete this record?",
+    "deleteHeader": "Confirm Delete",
     "emptyList": "No matching records found.",
     "emptyListAdd": "You haven't added any yet. Click <1><0><0></0><1></1></0></1> to get started.",
     "labels": {
