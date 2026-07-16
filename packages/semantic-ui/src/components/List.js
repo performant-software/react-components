@@ -31,6 +31,8 @@ type Action = {
     title: string
   },
   render?: (item: any, index: number) => Element<any>,
+  resolveColor?: (item: any) => ?string,
+  resolveIcon?: (item: any) => ?string,
   title?: string
 };
 
