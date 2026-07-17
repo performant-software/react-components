@@ -589,3 +589,9 @@ FuzzyDate.defaultProps = {
 };
 
 export default FuzzyDate;
+
+export {
+  ACCURACY_DATE,
+  ACCURACY_MONTH,
+  ACCURACY_YEAR
+};

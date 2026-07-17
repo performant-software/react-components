@@ -3,8 +3,9 @@
 import React, { useCallback } from 'react';
 import { Button, Label } from 'semantic-ui-react';
 import _ from 'underscore';
-import { Date as DateUtils } from '@performant-software/shared-components';
+import { Browser, Calendar } from '@performant-software/shared-components';
 import i18n from '../i18n/i18n';
+import { ACCURACY_YEAR } from './FuzzyDate';
 import { FilterOperatorOptions, type Filter } from './ListFilters';
 import './FilterLabels.css';
 
@@ -45,11 +46,19 @@ const FilterLabels = (props: Props) => {
       // format booleans as capitalized strings
       displayValue = filter.value ? 'True' : 'False';
     } else if (filter.type === 'date' && typeof filter.value === 'object' && filter.value !== null) {
-      // format FuzzyDate objects
-      const { startDate, endDate, range } = filter.value;
-      const formattedStart = startDate ? DateUtils.formatDate(startDate) : '';
+      // format FuzzyDate objects to selected accuracy
+      const { accuracy = ACCURACY_YEAR, startDate, endDate, range } = filter.value;
+
+      const calendar = new Calendar(
+        Browser.isBrowser() && navigator.language,
+        Calendar.Calendars.gregorian
+      );
+
+      const formatDate = (value) => calendar.format(value, accuracy);
+      const formattedStart = startDate ? formatDate(startDate) : '';
+
       if (range && endDate) {
-        displayValue = `${formattedStart} - ${DateUtils.formatDate(endDate)}`;
+        displayValue = `${formattedStart} - ${formatDate(endDate)}`;
       } else {
         displayValue = formattedStart;
       }
