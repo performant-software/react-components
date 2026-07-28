@@ -1,7 +1,7 @@
 // @flow
 
 import { Timer } from '@performant-software/shared-components';
-import React, { Component, type ComponentType } from 'react';
+import React, { Component, createRef, type ComponentType } from 'react';
 import {
   Button,
   Dropdown,
@@ -31,7 +31,7 @@ type Props = {
     onSave: (item: any) => Promise<any>,
     state: any
   },
-  onSearch: (search: string) => Promise<any>,
+  onSearch: (search: string, page: number) => Promise<any>,
   onSelection: (item: any) => void,
   placeholder?: string,
   renderOption: (option: any) => Option,
@@ -44,8 +44,11 @@ type Props = {
 type State = {
   items: Array<any>,
   loading: boolean,
+  loadingMore: boolean,
   modalAdd: boolean,
   options: Array<Option>,
+  page: number,
+  pages: number,
   saved: boolean,
   searchQuery: string,
   value: ?number | ?string
@@ -57,8 +60,16 @@ const BUTTON_EDIT = 'edit';
 
 const TIMEOUT = 500;
 
+// distance (px) from the bottom of the menu to start loading the next pg of results
+const SCROLL_OFFSET = 10;
+const LOADING_OPTION = '__loading__';
+
 class AssociatedDropdown extends Component<Props, State> {
   static defaultProps: any;
+
+  container: { current: null | HTMLDivElement };
+
+  handleMenuScroll: (e: Event) => void;
 
   timeout: ?TimeoutID;
 
@@ -73,15 +84,29 @@ class AssociatedDropdown extends Component<Props, State> {
     this.state = {
       items: [],
       loading: false,
+      loadingMore: false,
       modalAdd: false,
       modalEdit: false,
       options: [],
+      page: 1,
+      pages: 1,
       saved: false,
       searchQuery: props.searchQuery || '',
       value: props.value || ''
     };
 
+    this.container = createRef();
+    this.handleMenuScroll = this.onMenuScroll.bind(this);
     this.timeout = null;
+  }
+
+  /**
+   * Adds a scroll listener to lazy-load additional pages of results.
+   */
+  componentDidMount() {
+    if (this.container.current) {
+      this.container.current.addEventListener('scroll', this.handleMenuScroll, true);
+    }
   }
 
   /**
@@ -97,6 +122,15 @@ class AssociatedDropdown extends Component<Props, State> {
 
     if (prevProps.onSearch !== this.props.onSearch) {
       this.onSearch();
+    }
+  }
+
+  /**
+   * Removes the scroll listener.
+   */
+  componentWillUnmount() {
+    if (this.container.current) {
+      this.container.current.removeEventListener('scroll', this.handleMenuScroll, true);
     }
   }
 
@@ -159,10 +193,70 @@ class AssociatedDropdown extends Component<Props, State> {
   }
 
   /**
-   * Executes the search to load the options.
+   * Returns the list of options to render, appending a disabled "loading" option while the next page of
+   * results is loading.
+   *
+   * @returns {*[]}
+   */
+  getOptions() {
+    const options = [...this.state.options];
+
+    if (this.state.loadingMore) {
+      options.push({
+        key: LOADING_OPTION,
+        value: LOADING_OPTION,
+        disabled: true,
+        text: i18n.t('Common.messages.loading')
+      });
+    }
+
+    return options;
+  }
+
+  /**
+   * Loads the next page of results when the menu is scrolled to the bottom.
+   *
+   * @param e
+   */
+  onMenuScroll(e: Event) {
+    const menu = e.target;
+
+    // only load more on scroll events originating from the dropdown
+    if (!(menu instanceof HTMLElement) || !menu.classList.contains('menu')) {
+      return;
+    }
+
+    const { scrollTop, clientHeight, scrollHeight } = menu;
+
+    if ((scrollTop + clientHeight) >= (scrollHeight - SCROLL_OFFSET)) {
+      this.onLoadMore();
+    }
+  }
+
+  /**
+   * Loads the next page of results and appends them to the current list.
+   */
+  onLoadMore() {
+    const {
+      loading,
+      loadingMore,
+      page,
+      pages
+    } = this.state;
+
+    // bail if a request is already in progress, or all pages have loaded
+    if (loading || loadingMore || page >= pages) {
+      return;
+    }
+
+    this.setState((state) => ({ loadingMore: true, page: state.page + 1 }), this.search.bind(this));
+  }
+
+  /**
+   * Executes the search to load the first page of options.
    */
   onSearch() {
-    this.setState({ loading: true }, this.search.bind(this));
+    this.setState({ loading: true, page: 1, pages: 1 }, this.search.bind(this));
   }
 
   /**
@@ -176,13 +270,40 @@ class AssociatedDropdown extends Component<Props, State> {
   }
 
   search() {
+    const { page, searchQuery } = this.state;
+
     this.props
-      .onSearch(this.state.searchQuery)
+      .onSearch(searchQuery, page)
       .then(({ data }) => {
         const items = data[this.props.collectionName];
-        const options = items.map(this.props.renderOption.bind(this));
+        const pages = data.list ? data.list.pages : 1;
 
-        this.setState({ items, options, loading: false });
+        this.setState((state) => {
+          // for the first page, replace the current result set
+          if (page <= 1) {
+            return {
+              items,
+              options: items.map(this.props.renderOption.bind(this)),
+              pages,
+              loading: false,
+              loadingMore: false
+            };
+          }
+
+          // for subsequent pages, append any new records (by id).
+          const existingIds = new Set(_.pluck(state.items, 'id'));
+          const newItems = _.filter(items, (item) => !existingIds.has(item.id));
+          const newOptions = newItems.map(this.props.renderOption.bind(this));
+
+          return {
+            items: [...state.items, ...newItems],
+            options: [...state.options, ...newOptions],
+            // stop paginating if this page had nothing new
+            pages: newItems.length ? pages : page,
+            loading: false,
+            loadingMore: false
+          };
+        });
       });
   }
 
@@ -196,7 +317,10 @@ class AssociatedDropdown extends Component<Props, State> {
       <div
         className='association-dropdown'
       >
-        <div className='dropdown-container'>
+        <div
+          className='dropdown-container'
+          ref={this.container}
+        >
           <Dropdown
             className={`inline-dropdown ${this.props.className || ''}`}
             disabled={this.state.loading}
@@ -206,9 +330,10 @@ class AssociatedDropdown extends Component<Props, State> {
             onChange={this.onOptionSelection.bind(this)}
             onOpen={this.onOpen.bind(this)}
             onSearchChange={this.onSearchChange.bind(this)}
-            options={this.state.options}
+            options={this.getOptions()}
             placeholder={this.props.placeholder}
-            search={() => this.state.options}
+            scrolling
+            search={() => this.getOptions()}
             searchInput={{
               'aria-label': this.props.collectionName,
               className: 'dropdown-search-input',
