@@ -14,7 +14,7 @@ const i18n = createInstance();
 
 i18n
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: 'en',
     lng: 'en',
     interpolation: {
