@@ -1,0 +1,15 @@
+import{r as i,j as p}from"./iframe-gJjXuBGV.js";import{D as c}from"./DateInput-B5yrfe5u.js";import"./Icon-D9WoHwnx.js";import"./extends-CCbyfPlC.js";import"./inheritsLoose-1HkgTRWY.js";import"./setPrototypeOf-DgZC2w_0.js";import"./getElementType-rS5bWeP6.js";import"./_getPrototype-dFVwFHqx.js";import"./Input-DwH3oRiJ.js";import"./includes-DBCycrK6.js";import"./toFinite-Dfj0KU41.js";import"./toNumber-DIkYOhwr.js";import"./map-DzenaboV.js";import"./Label-BHCi0xQd.js";import"./ModernAutoControlledComponent-CNYE1dRd.js";import"./assertThisInitialized-B9jnkVVz.js";import"./forEach-CprgDfIV.js";import"./_arrayEach-DpGxo2Of.js";import"./Dimmer-CNHruUYP.js";import"./Portal-HcKdfz5h.js";import"./keyboardKey-DQq2vlf6.js";import"./Button-BY8YxsVr.js";const{action:d}=__STORYBOOK_MODULE_ACTIONS__,E={title:"Components/Semantic UI/DateInput",component:c},o=()=>{const[e,t]=i.useState(new Date);return p.jsx(c,{onChange:a=>t(a),onClick:d("click"),value:e})},n=()=>{const[e,t]=i.useState(new Date);return p.jsx(c,{locale:"de",onChange:a=>t(a),onClick:d("click"),value:e})},r=()=>{const[e,t]=i.useState(new Date);return p.jsx(c,{formatOptions:{weekday:"long",day:"numeric",month:"numeric",hour:"numeric"},locale:"fr",onChange:a=>t(a),onClick:d("click"),value:e})},s=()=>{const[e,t]=i.useState(new Date);return p.jsx(c,{display:e?`Today is ${e}`:"Cleared!",onChange:a=>t(a),onClick:d("click"),value:e})};o.__docgenInfo={description:"",methods:[],displayName:"Default"};n.__docgenInfo={description:"",methods:[],displayName:"WithLocale"};r.__docgenInfo={description:"",methods:[],displayName:"WithLocaleAndFormatOptions"};s.__docgenInfo={description:"",methods:[],displayName:"WithDisplay"};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`() => {
+  const [date, setDate] = useState(new Date());
+  return <DateInput onChange={d => setDate(d)} onClick={action('click')} value={date} />;
+}`,...o.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`() => {
+  const [date, setDate] = useState(new Date());
+  return <DateInput locale='de' onChange={d => setDate(d)} onClick={action('click')} value={date} />;
+}`,...n.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`() => {
+  const [date, setDate] = useState(new Date());
+  return <DateInput formatOptions={{
+    weekday: 'long',
+    day: 'numeric',
+    month: 'numeric',
+    hour: 'numeric'
+  }} locale='fr' onChange={d => setDate(d)} onClick={action('click')} value={date} />;
+}`,...r.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:"() => {\n  const [date, setDate] = useState(new Date());\n  return <DateInput display={date ? `Today is ${date}` : 'Cleared!'} onChange={d => setDate(d)} onClick={action('click')} value={date} />;\n}",...s.parameters?.docs?.source}}};const T=["Default","WithLocale","WithLocaleAndFormatOptions","WithDisplay"];export{o as Default,s as WithDisplay,n as WithLocale,r as WithLocaleAndFormatOptions,T as __namedExportsOrder,E as default};
