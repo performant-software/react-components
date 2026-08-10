@@ -21,6 +21,7 @@ type Option = {
 };
 
 type Props = {
+  autoFocus?: boolean,
   buttons?: Array<ButtonProps>,
   className?: string,
   collectionName: string,
@@ -336,6 +337,7 @@ class AssociatedDropdown extends Component<Props, State> {
             search={() => this.getOptions()}
             searchInput={{
               'aria-label': this.props.collectionName,
+              autoFocus: this.props.autoFocus,
               className: 'dropdown-search-input',
               onKeyDown: Timer.clearSearchTimer.bind(this),
               onKeyUp: Timer.setSearchTimer.bind(this, this.onSearch.bind(this))
