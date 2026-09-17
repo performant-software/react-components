@@ -19,6 +19,23 @@ export const Default = () => {
   );
 };
 
+export const MinMaxDates = () => {
+  const [date, setDate] = useState(null);
+
+  const today = new Date();
+  const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+  const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+
+  return (
+    <DatePicker
+      maxDate={maxDate}
+      minDate={minDate}
+      onChange={(d) => setDate(d)}
+      value={date}
+    />
+  );
+};
+
 export const Uncontrolled = () => (
   <DatePicker
     onChange={() => {}}

@@ -11,6 +11,8 @@ type Props = {
   closeOnSelection?: boolean,
   formatOptions?: any,
   locale?: string,
+  maxDate?: Date,
+  minDate?: Date,
   onChange: (date: ?Date) => void,
   value: ?Date
 };
@@ -56,6 +58,8 @@ const DatePicker = (props: Props) => {
         >
           <Calendar
             locale={props.locale}
+            maxDate={props.maxDate}
+            minDate={props.minDate}
             onChange={(date) => {
               props.onChange(date);
               if (props.closeOnSelection) {
