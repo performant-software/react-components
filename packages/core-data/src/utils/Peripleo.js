@@ -27,15 +27,22 @@ const filterLayers = (config: RuntimeConfig) => {
 const normalize = (config: RuntimeConfig) => ({
   ...config,
   layers: config.layers || [],
-  search: _.map(config.search, (search) => ({
-    ...search,
-    typesense: {
-      ...search.typesense,
-      port: search.typesense.port || '443',
-      protocol: search.typesense.protocol || 'https',
-      sort_by: `_text_match:desc${search.typesense.default_sort ? `,${search.typesense.default_sort}:asc` : ''}`
+  search: _.map(config.search, (search) => {
+    // Pass through non-Typesense search configs (e.g. static indexes)
+    if (!search.typesense) {
+      return search;
     }
-  })),
+
+    return {
+      ...search,
+      typesense: {
+        ...search.typesense,
+        port: search.typesense.port || '443',
+        protocol: search.typesense.protocol || 'https',
+        sort_by: `_text_match:desc${search.typesense.default_sort ? `,${search.typesense.default_sort}:asc` : ''}`
+      }
+    };
+  }),
   core_data: {
     ...config.core_data,
 
