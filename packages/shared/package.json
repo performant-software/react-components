@@ -17,6 +17,9 @@
     },
     "./style.css": "./dist/style.css"
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "build": "vite build && flow-copy-source -v src types"
   },
