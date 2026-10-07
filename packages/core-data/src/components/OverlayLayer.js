@@ -9,14 +9,18 @@ type OverlayLayerProps = {
   /**
    * The overlay layer to render.
    */
-  overlay: Layer
+  overlay: Layer;
+  /**
+   * Optional ID to order the layer before
+   */
+  beforeId?: string;
 };
 
 /**
  * This component renders a GeoJSONLayer or RasterLayer component depending on the `layer_type` of the passed `overlay`.
  */
 const OverlayLayer = (props: OverlayLayerProps) => {
-  const { overlay } = props;
+  const { overlay, beforeId } = props;
 
   if (overlay.layer_type === 'geojson') {
     return (
@@ -35,6 +39,7 @@ const OverlayLayer = (props: OverlayLayerProps) => {
       <RasterLayer
         id={overlay.name}
         url={overlay.url}
+        beforeId={beforeId}
       />
     );
   }
