@@ -205,7 +205,7 @@ const UserDefinedFieldsForm: ComponentType<any> = (props: Props) => {
       defineable_type: props.defineableType,
       per_page: 0,
       required: props.required,
-      sort_by: 'order',
+      sort_by: ['order', 'column_name'],
       table_name: props.tableName
     };
 
