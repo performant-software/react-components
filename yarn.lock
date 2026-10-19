@@ -3197,10 +3197,10 @@
     remark-rehype "^11.1.0"
     unified "^11.0.4"
 
-"@peripleo/maplibre@^0.8.11":
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/@peripleo/maplibre/-/maplibre-0.8.11.tgz#da3f7d7daf82b801bbbb9cccaa264cbaaec898a5"
-  integrity sha512-lw9alhKlmmp+N1ho8CQ8PjManHwAvx0PsobfJ2lFWeUl4dVhZub3nmskm/JG+u6/aw7DxTNxMjZ5oBSzk6wj5Q==
+"@peripleo/maplibre@^0.8.12":
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/@peripleo/maplibre/-/maplibre-0.8.12.tgz#96204e7ea47ba6b37dd6367e084dd2bb9463e71f"
+  integrity sha512-WvPinxntwby4RcQtjunqgcX8tLzkl8dYUPf65FRIn94kim6jdLotzbvpGtY5Nroi54iOlbFPYRxC97oeBtRVfA==
   dependencies:
     "@floating-ui/react" "^0.27.16"
     "@phosphor-icons/react" "^2.1.10"
@@ -3208,10 +3208,10 @@
     maplibre-gl "^4.7.1"
     nanoid "^5.1.6"
 
-"@peripleo/peripleo@^0.8.11":
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/@peripleo/peripleo/-/peripleo-0.8.11.tgz#fcffd04934f2f3bcae5f34d340de29a1ac682e70"
-  integrity sha512-RSGL1Z+Dxe+hBYExEaYuU2LnUD20s6EjqC/ExveYPmSfzXBzjpSz5/qgfvvUjgRuoxk6hZ7z4/41cBHA4pM5EQ==
+"@peripleo/peripleo@^0.8.12":
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/@peripleo/peripleo/-/peripleo-0.8.12.tgz#e3de2a679679ed45a8e06c41a2ae7a91385c5426"
+  integrity sha512-6kljxrZi9lXHXVtRyz4FAMvl/O509/QxTUvMuVHyxRoltORAkDYwnN9l+O0qtXJTO9QvxYkzhfcvekx2jBqAMA==
 
 "@phosphor-icons/react@^2.1.10":
   version "2.1.10"
