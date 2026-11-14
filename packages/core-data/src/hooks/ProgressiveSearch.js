@@ -10,7 +10,8 @@ import type { SearchResult } from '../types/typesense/SearchResult';
 import {
   CACHE_ACTION_RESET,
   CACHE_ACTION_SKIP,
-  getCacheAction
+  getCacheAction,
+  isCurrentPage
 } from '../utils/ProgressiveSearch';
 import TypesenseUtils from '../utils/Typesense';
 
@@ -87,12 +88,22 @@ const useProgressiveSearch = (infiniteHits, transformResults = null) => {
   /**
    * Loads the next page after each page is cached. Once the last page is in the cache, notifies the observers
    * with the complete set of hits.
+   *
+   * The cache can change more than once before the next page arrives, because InstantSearch can deliver the
+   * first page twice (a second search goes out when a widget mounts after the first one). Each change sets a
+   * timer, so a timer asks for the next page only if no other timer has asked since the latest results arrived
+   * (see `isCurrentPage`).
    */
   useEffect(() => {
     const { isLastPage, showMore } = infiniteHits;
 
     if (!isLastPage && showMore) {
-      setTimeout(() => showMore(), 25);
+      setTimeout(() => {
+        if (isCurrentPage(lastResults.current)) {
+          showMore();
+        }
+      }, 25);
+
       return;
     }
 
