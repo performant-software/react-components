@@ -9,6 +9,7 @@ import {
 } from 'react';
 import PersistentSearchStateContext from '../context/PersistentSearchState';
 import type { SearchResult } from '../types/typesense/SearchResult';
+import { canFilterByBounds } from '../utils/GeoSearch';
 
 export const useCachedHits = () => {
   const { cachedHits } = useContext(PersistentSearchStateContext);
@@ -54,16 +55,12 @@ export const useGeoSearchToggle = () => {
     const northEast = bounds.getNorthEast();
     const southWest = bounds.getSouthWest();
 
-    // Note TypeSense seems to be buggy. If the bounds are too large,
-    // it will return 0 results. (Note that lng values >180, <(-180) DO NOT
-    // seem to be the problem!)
-    const extent = northEast.lng - southWest.lng;
-    if (extent > 200) {
-      if (isRefinedWithMap()) {
-        clearMapRefinement();
-      }
-    } else {
+    // Typesense cannot filter by bounds that span half of the globe or more (see `canFilterByBounds`), so the
+    // filter is dropped until the map shows less.
+    if (canFilterByBounds(northEast, southWest)) {
       refine({ northEast, southWest });
+    } else if (isRefinedWithMap()) {
+      clearMapRefinement();
     }
   }, [map, isRefinedWithMap()]);
 
