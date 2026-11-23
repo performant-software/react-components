@@ -136,21 +136,22 @@ class EmbeddedList extends Component<Props, State> {
   }
 
   /**
-   * Saves the passed item, resets the state, and reloads the data. This function returns a promise so that calls can
-   * be chained together.
+   * Saves the passed item, resets the state, and reloads the data. This function returns a promise, chained to
+   * whatever promise the onSave prop itself returns (if any), so that calls can be chained together and callers can
+   * properly await the result and surface any errors.
    *
    * @param item
    *
    * @returns {Promise}
    */
   onSave(item: any) {
-    const uid = item.uid ? item.uid : uuid();
-
-    if (this.props.onSave) {
-      this.props.onSave({ ...item, uid });
+    if (!this.props.onSave) {
+      return Promise.resolve();
     }
 
-    return Promise.resolve();
+    const uid = item.uid ? item.uid : uuid();
+
+    return Promise.resolve(this.props.onSave({ ...item, uid }));
   }
 
   /**

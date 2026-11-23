@@ -134,19 +134,21 @@ class ItemCollection extends Component<Props, State> {
   }
 
   /**
-   * Calls the onSave prop and returns a promise.
+   * Calls the onSave prop and returns a promise, chaining to whatever promise the onSave prop itself returns (if
+   * any) so that callers can properly await the result and surface any errors.
    *
    * @param item
    *
    * @returns {Promise<unknown>}
    */
   onSave(item: any) {
-    if (this.props.onSave) {
-      const uid = item.uid ? item.uid : uuid();
-      this.props.onSave({ ...item, uid });
+    if (!this.props.onSave) {
+      return Promise.resolve();
     }
 
-    return Promise.resolve();
+    const uid = item.uid ? item.uid : uuid();
+
+    return Promise.resolve(this.props.onSave({ ...item, uid }));
   }
 
   /**
