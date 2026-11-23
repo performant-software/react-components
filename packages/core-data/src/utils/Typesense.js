@@ -25,7 +25,8 @@ type TypesenseConfig = {
   protocol: string,
   query_by: string,
   sort_by: string,
-  exclude_fields: string
+  exclude_fields?: string,
+  include_fields?: string
 };
 
 const ATTRIBUTE_DELIMITER = '.';
@@ -98,31 +99,34 @@ const createRouting = (config: TypesenseConfig) => ({
   }
 });
 
-const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => (
-  new TypesenseInstantsearchAdapter({
-    server: {
-      apiKey: config.api_key,
-      nodes: [
-        {
-          host: config.host,
-          port: config.port || 443,
-          protocol: config.protocol || 'https'
-        }
-      ],
-      cacheSearchResultsForSeconds: 120,
-      connectionTimeoutSeconds: config.connection_timeout,
-      timeoutSeconds: config.timeout
-    },
-    geoLocationField: 'coordinates',
-    additionalSearchParameters: {
-      query_by: config.query_by,
-      limit: config.limit || 250,
-      sort_by: config.sort_by,
-      exclude_fields: config.exclude_fields
-    },
-    ...options
-  })
-);
+const createTypesenseAdapter = (config: TypesenseConfig, options = {}) => {
+  return (
+    new TypesenseInstantsearchAdapter({
+      server: {
+        apiKey: config.api_key,
+        nodes: [
+          {
+            host: config.host,
+            port: config.port || 443,
+            protocol: config.protocol || 'https'
+          }
+        ],
+        cacheSearchResultsForSeconds: 120,
+        connectionTimeoutSeconds: config.connection_timeout,
+        timeoutSeconds: config.timeout
+      },
+      geoLocationField: 'coordinates',
+      additionalSearchParameters: {
+        query_by: config.query_by,
+        limit: config.limit || 250,
+        sort_by: config.sort_by,
+        exclude_fields: config.exclude_fields,
+        include_fields: config.include_fields
+      },
+      ...options
+    })
+  );
+};
 
 /**
  * Returns passed event's start date as a JavaScript Date object.
