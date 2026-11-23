@@ -25,3 +25,19 @@ export const getCacheAction = (results: any, previousResults: any): string => {
 
   return (results.page || 0) === 0 ? CACHE_ACTION_RESET : CACHE_ACTION_MERGE;
 };
+
+/**
+ * Says whether the passed results are those of the page that the search state currently points at.
+ *
+ * `showMore` asks InstantSearch for the page after the one that the search state points at, and InstantSearch
+ * points `results._state` at the current search state on every render. Once a later page has been requested,
+ * the page in the state therefore differs from the page in the latest results until that page arrives. A second
+ * `showMore` in that window would request two pages at once, and the hits of the first can be lost.
+ *
+ * @param results  The results the hook processed last.
+ *
+ * @returns {boolean} `true` when no other page has been requested since the results arrived.
+ */
+export const isCurrentPage = (results: any): boolean => (
+  (results?._state?.page || 0) === (results?.page || 0)
+);

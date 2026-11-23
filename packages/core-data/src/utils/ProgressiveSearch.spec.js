@@ -1,4 +1,4 @@
-import { getCacheAction } from './ProgressiveSearch';
+import { getCacheAction, isCurrentPage } from './ProgressiveSearch';
 
 const results = (page, extra = {}) => ({ page, hits: [], ...extra });
 
@@ -37,5 +37,32 @@ describe('getCacheAction', () => {
 
     expect(getCacheAction(stale, undefined)).toEqual('reset');
     expect(getCacheAction(fresh, stale)).toEqual('reset');
+  });
+});
+
+describe('isCurrentPage', () => {
+  it('is true when the search state points at the page of the results', () => {
+    expect(isCurrentPage(results(0, { _state: { page: 0 } }))).toEqual(true);
+    expect(isCurrentPage(results(2, { _state: { page: 2 } }))).toEqual(true);
+  });
+
+  it('is true for a first page when the search state carries no page number', () => {
+    expect(isCurrentPage(results(0, { _state: {} }))).toEqual(true);
+    expect(isCurrentPage(results(undefined, { _state: {} }))).toEqual(true);
+  });
+
+  it('is false once a later page has been requested', () => {
+    // InstantSearch points `_state` on the latest results at the current search state
+    // (optimistic UI), so the state's page runs ahead of the results' page while a
+    // request for a later page is in flight.
+    const first = results(0, { _state: { page: 0 } });
+    expect(isCurrentPage(first)).toEqual(true);
+
+    first._state = { page: 1 };
+    expect(isCurrentPage(first)).toEqual(false);
+  });
+
+  it('is false when a new search has started since the results arrived', () => {
+    expect(isCurrentPage(results(3, { _state: { page: 0 } }))).toEqual(false);
   });
 });
