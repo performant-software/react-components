@@ -1,1 +1,0 @@
-import{G as e}from"./index.es28-C2cdhF5o.js";import"./iframe-BlgROd_x.js";import{_ as o}from"./index-default-B8-H6N8J.js";const a=t=>o.compact([e.getDateView(t.start_date),e.getDateView(t.end_date)]).join(" - "),p={getDateView:a};export{p as E};
